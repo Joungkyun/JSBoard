@@ -373,7 +373,7 @@ function check_htmltable($str,$rep='') {
 # m -> 0 : ips 에 등록된 Ip 에서의 링크만 허락
 #      1 : ips 에 등록된 Ip 에서의 링크만 막음
 #
-function check_dhyper($c=0,$wips='',$m=0,$ips='') {
+function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
   global $langs;
 
   # $c 설정이 있고, list read from write page 에서만 체크
@@ -381,31 +381,38 @@ function check_dhyper($c=0,$wips='',$m=0,$ips='') {
     # global.ph 에 $board[dhyper] 가 정의 되어 있으면 체크 목록을 합침
     $ips = trim($wips) ? "$wips;$ips" : $ips;
 
-    # 레퍼럴이 존재하지 않거나 ips 변수가 없으면 체크 중지
-    if(!trim($ips) || !$_SERVER[HTTP_REFERER]) return;
+    # $i = 0 -> 전체 어드민에서의 설정 체크
+    # $i = 1 -> 게시판 어드민에서의 설정 체크
+    for($i=0;$i<2;$i++) {
+      if($i === 0 && !trim($wips)) continue;
+      $ips_value = ($i === 0) ? $wips : $ips;
+      $m_value = ($i === 0) ? $am : $m;
 
-    # 레퍼럴에서 서버 이름만 추출
-    preg_match("/^(http:\/\/)?([^\/]+)/i",$_SERVER[HTTP_REFERER],$chks);
-    # 추출한 이름의 ip 를 구함
-    $chk = gethostbyname($chks[2]);
+      # 레퍼럴이 존재하지 않거나 ips_value 변수가 없으면 체크 중지
+      if(!trim($ips_value) || !$_SERVER[HTTP_REFERER]) return;
 
-    # chk 가 자신과 동일하면 체크 중지
-    if($chk == $_SERVER[SERVER_ADDR]) return;
+      # 레퍼럴에서 서버 이름만 추출
+      preg_match("/^(http:\/\/)?([^\/]+)/i",$_SERVER[HTTP_REFERER],$chks);
+      # 추출한 이름의 ip 를 구함
+      $chk = gethostbyname($chks[2]);
 
-    $addr = explode(";",$ips);
-    for($i=0;$i<sizeof($addr);$i++) {
-      if(!preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|\.$/i",$addr[$i])) $addr[$i] .= ".";
-      $addr[$i] = str_replace(".","\.",$addr[$i]);
-      if(preg_match("/^$addr[$i]/i",$chk)) $val = 1;
-    }
+      # chk 가 자신과 동일하면 체크 중지
+      if($chk == $_SERVER[SERVER_ADDR]) return;
 
-    switch($m) {
-      case '1' :
-        if($val) print_error($langs[chk_hy],250,250,1);
-        break;
-      default:
-        if(!$val) print_error($langs[chk_hy],250,250,1);
-        break;
+      $addr = explode(";",$ips_value);
+      for($j=0;$j<sizeof($addr);$j++) {
+        if(!preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|\.$/i",$addr[$j])) $addr[$j] .= ".";
+        $addr[$j] = str_replace(".","\.",$addr[$j]);
+        if(preg_match("/^$addr[$j]/i",$chk)) $val = 1;
+      }
+      switch($m_value) {
+        case '1' :
+          if($val) print_error($langs[chk_hy],250,250,1);
+          break;
+        default:
+          if(!$val) print_error($langs[chk_hy],250,250,1);
+          break;
+      }
     }
   }
 }
