@@ -21,6 +21,7 @@ Wed, Sep 22 2004
 	- removed DEFAULT VALUE on auto_increment field.
 	  support mysql 4.1
 	- fixed miss print of article subject include special charactors
+	- fixed .ph subfix description problem
 
 Tue, Aug 17 2004
   by JoungKyun Kim <http://www.oops.org>
