@@ -199,8 +199,8 @@ if((!$board[mode] || $board[mode] == 6) && $board[super] != 1) {
 <TR><TD ALIGN=right><?=$wrap[ment]?></TD></TR>
 <TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
 <?=$print[passform]?>
-<INPUT TYPE=submit VALUE="Regist">&nbsp;
-<INPUT TYPE=reset VALUE="Reset"<?=$orig_option?>>&nbsp;
+<INPUT TYPE=submit VALUE="Regist">
+<INPUT TYPE=reset VALUE="Reset"<?=$orig_option?>>
 <INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List">
 <INPUT TYPE=button onClick=history.back() VALUE="Back">
 </TD></TR>
