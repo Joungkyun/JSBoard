@@ -236,21 +236,21 @@ function search_hl($list) {
   switch($o['sc']) {
     case 'n':
       for($i=0;$i<sizeof($strs);$i++) {
-        $strs[$i] = trim($strs[$i]);
+        $strs[$i] = trim(quotemeta($strs[$i]));
         $list['name'] = preg_replace("/{$strs[$i]}/i","{$hl[0]}\\0{$hl[1]}",$list['name']);
         $list['name'] = preg_replace("/$regex2/i","\\1\\2\\3",$list['name']);
       }
       break;
     case 't':
       for($i=0;$i<sizeof($strs);$i++) {
-        $strs[$i] = trim($strs[$i]);
+        $strs[$i] = trim(quotemeta($strs[$i]));
         $list['title'] = preg_replace("/{$strs[$i]}/i","{$hl[0]}\\0{$hl[1]}",$list['title']);
         $list['title'] = preg_replace($src,$tar,$list['title']);
       }
       break;
     case 'c':
       for($i=0;$i<sizeof($strs);$i++) {
-        $strs[$i] = trim($strs[$i]);
+        $strs[$i] = trim(quotemeta($strs[$i]));
         $list['text'] = preg_replace("/{$strs[$i]}/i", "{$hl[0]}\\0{$hl[1]}", $list['text']);
         while(true) {
           if(preg_match("/($regex1)|($regex2)|($regex3)/i",$list['text']))
@@ -261,7 +261,7 @@ function search_hl($list) {
       break;
     case 'a':
       for($i=0;$i<sizeof($strs);$i++) {
-        $strs[$i] = trim($strs[$i]);
+        $strs[$i] = trim(quotemeta($strs[$i]));
         $list['name'] = preg_replace("/{$strs[$i]}/i","{$hl[0]}\\0{$hl[1]}",$list['name']);
         $list['name'] = preg_replace($src,$tar,$list['name']);
 
