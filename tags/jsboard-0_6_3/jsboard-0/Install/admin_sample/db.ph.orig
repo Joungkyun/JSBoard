@@ -1,0 +1,7 @@
+<?
+$db_server = "localhost"; // DB 서버 주소
+$db_user   = "DBuser";     // DB 사용자
+$db_name   = "DBname";     // DB 이름
+$db_pass   = "DBpass"; // DB 암호
+$user_ip_addr = "127.0.0.1";  // 관리자 IP (관리자가 게시물 읽을시 히트수 증가 안함)
+?>
