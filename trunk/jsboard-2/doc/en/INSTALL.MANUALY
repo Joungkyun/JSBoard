@@ -27,7 +27,7 @@ with no warranty, use this software at your own risk.
 ===================================  Caution   ===================================
 
 First,
-JSBoard v2.0 requires php 4.1.0 compiled with --with-regex=php option.
+JSBoard v2.0 requires over php 4.1.0
 
 Second, 
 If you install it on a system other than Redhat, Debian or FreeBSD, you must read
@@ -70,7 +70,7 @@ windows.
 
   [ PHP ]
 
-    4.1.0 or later and compiled with --with-regex=php
+    4.1.0 or later
 
 
     Following is a configuration example.
