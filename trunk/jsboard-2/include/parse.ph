@@ -2,7 +2,7 @@
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
   if (!$html) $text = eregi_replace("&amp;(#|amp)","&\\1",$text);
-  $text = str_replace("&amp;","&",$text);
+  else $text = str_replace("&amp;","&",$text);
   return $text;
 }
 

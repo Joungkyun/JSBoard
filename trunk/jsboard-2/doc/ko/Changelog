@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
+2002.5. 6 by 김정균 <http://www.oops.org>
+	- html 사용안함에서 &nbsp; 문자가 blank 문자로 출력되는 것 수정
+
 2002.5. 3 by 임은재 <http://kldp.org/~eunjea/>
 	- get_agent 함수에 links 와 w3m 추가
 

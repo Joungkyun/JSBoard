@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0pre4
 
+Mon, May  6 2002 by JoungKyun Kim  <http://www.oops.org>
+	- fixed print of &nbsp; charactor
+
 Fri, May  3 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- added links, w3m in entry of get_agent function 
 
