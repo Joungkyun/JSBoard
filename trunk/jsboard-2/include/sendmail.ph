@@ -197,8 +197,8 @@ function mail_header($to,$from,$title,$mta=0) {
   global $langs,$boundary;
 
   # mail header ∏¶ ¿€º∫ 
-  $boundary = get_boundary_msg(preg_replace("/@.+$/i","",$to));
-  $header = "Message-ID: <".generate_mail_id().">\r\n".
+  $boundary = get_boundary_msg();
+  $header = "Message-ID: <".generate_mail_id(preg_replace("/@.+$/i","",$to)).">\r\n".
             "From: JSBoard Message <$from>\r\n".
             "MIME-Version: 1.0\r\n";
 
