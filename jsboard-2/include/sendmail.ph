@@ -202,7 +202,8 @@ function mail_header($to,$from,$title,$mta=0) {
             "From: JSBoard Message <$from>\r\n".
             "MIME-Version: 1.0\r\n";
 
-  if(!$mta) $header .= "To: $to\r\n".
+  if(!$mta) $header .= "Date: ".date ("D, j M Y H:i:s T",time())."\r\n".
+                       "To: $to\r\n".
                        "Subject: $title\r\n";
 
   $header .= "Content-Type: multipart/alternative;\r\n".
