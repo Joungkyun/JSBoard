@@ -1,13 +1,5 @@
 <?php
 
-/************************************************************************
-*                                                                       *
-*                 OOPS Administration Center v1.3                       *
-*                     Scripted by JoungKyun Kim                         *
-*               admin@oops.org http://www.oops.org                      *
-*                                                                       *
-************************************************************************/
-
 include("./include/html_head.ph");
 
 include("../include/db.ph") ;
