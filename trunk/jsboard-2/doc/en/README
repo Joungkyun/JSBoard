@@ -16,7 +16,7 @@ Our project is located in http://jsboard.kldp.org
 
 REQUIREMENT
 
-OS : RedHat(6.2,7.x),Debian(Woody),FreeBSD 3.5,Windog NT,Windog 2000
+OS : RedHat(6.2,7.x),Debian(Woody),FreeBSD 4.x,Windog NT,Windog 2000
      Other OS is not test. NetBSD and Solaris don't officialy support,
      but any site is operation with JSBoard as DIY.
 

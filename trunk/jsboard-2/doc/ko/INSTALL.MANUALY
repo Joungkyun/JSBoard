@@ -93,23 +93,30 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
 
     PHP 4.1 기준
 
-    ./configure --with-apxs=/usr/sbin/apxs \
+    ./configure --prefix=/usr \  
+                --with-apxs=/usr/sbin/apxs \  
                 --with-config-file-path=/usr/lib/php \
-                --disable-debug
+                --disable-debug \
+                --with-exec-dir=/usr/bin \
                 --with-regex=php \
                 --with-mod_charset \
+                --with-gd=shared \
                 --with-mysql=shared \
+                --with-ttf \
                 --enable-sigchild \
                 --enable-socket \
-                --enable-mailparse \
+                --enable-gd-native-ttf \
                 --enable-safe-mode \
                 --enable-inline-optimization \
                 --enable-magic-quotes \
+                --enable-mailparse \
                 --enable-track-vars \
                 --enable-debugger \
+                --enable-mbstring \
+                --enable-mbstr-enc-trans \
+                --enable-mbregex \
                 --enable-sysvsem \
                 --enable-sysvshm
-
 
   * 체크 사항 *
 

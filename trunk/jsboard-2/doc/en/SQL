@@ -27,7 +27,6 @@ JSBoard main table
 | bfsize | int(4)       | YES  |     | NULL    |                |  Size of upload file
 +--------+--------------+------+-----+---------+----------------+
 
-requests mean of moder record to redhands at linux.sarang.net
 
 
 JSBoard userdb table
@@ -43,3 +42,21 @@ JSBoard userdb table
 | passwd   | varchar(100) |      |     |         |                | Password of User(encryption)
 | position | int(1)       |      | MUL | 0       |                | Whole admin check
 +----------+--------------+------+-----+---------+----------------+
+
+
+
+JSBoard comment table
+
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| no     | int(6)      |      | PRI | NULL    | auto_increment |    Unique Number
+| reno   | int(20)     |      | MUL | 0       |                |    Number of parents article
+| rname  | tinytext    | YES  |     | NULL    |                |    name of writer
+| name   | tinytext    | YES  |     | NULL    |                |    ID of writer
+| passwd | varchar(56) | YES  |     | NULL    |                |    password
+| text   | mediumtext  | YES  |     | NULL    |                |    comment body
+| host   | tinytext    | YES  |     | NULL    |                |    regist address of comment
+| date   | int(11)     |      |     | 0       |                |    regist date of comment
++--------+-------------+------+-----+---------+----------------+
+

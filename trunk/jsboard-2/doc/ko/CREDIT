@@ -37,17 +37,6 @@ profile은 잘 모르겠음. 메일 주소만 알고 win32 버젼을 관리하고 있다.
 
 
 
-CVS Server 관리		:  김영민 <blhole at hotmail.com>
-------------------------------------------------------------
-
-JSBoard v0.5 를 개발 하셨으며 JSBoard Open Project 의 CVS 서버를 제공 하셨었
-다. 현재는 사정상 CVS 서버가 운영이 중지가 되어있다.
-
-http://network.uos.ac.kr/
-
-
-
-
 Special Thanks		: 임은재 <eunjea at kldp.org>
 ------------------------------------------------------------
 
@@ -124,7 +113,6 @@ http://hacksware.com/
 역대 버젼 개발 참여자
 ------------------------------------------------------------
 
-홍영득 <cyberowl at both.info>		v2.0
 최기수 <choiks at nuri.net>		v1.3, v2.0
 차경묵 <dimanche at dimanche.net>	v0.6, v0.7
 김정균 <admin at oops.org>		v0.6, v0.7, v0.8, v1.0 v1.1

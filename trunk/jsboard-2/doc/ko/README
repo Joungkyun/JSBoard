@@ -11,7 +11,7 @@ JSBoard는 김병찬 <redhands at linux.sarang.net> 님께서 공개한 게시판을 토대로 하
 
 Platform
 
-RedHat(6.2,7.x),Debian(Woody),FreeBSD 3.5,Windog NT,Windog 2000 이 설치되어 있는
+RedHat(6.2,7.x),Debian(Woody),FreeBSD 4.x,Windog NT,Windog 2000 이 설치되어 있는
 모든 서버. 위의 OS외에서는 공식적으로 test가 되어진바 없다. 현재 개발자들이 사용
 을 할수있는 환경은 위의 OS밖에 없기 때문에 다른 OS로의 공식 포팅문제는 아직 언급
 을 할 수 있는 환경이 아니다. 이는 다른 업체및 개인의 후원이 없이는 아직은 불가능
@@ -41,19 +41,20 @@ win32용 버젼을 다운 받아야 한다.
 
 설치
 
-Root의 권한을 가지고 있는 사용자들에게는 INSTALLER 를 제공하고 있다. 단 계정유저
-라든지 INSTALLER로 설치가 어려운 사용자들을 위하여 INSTALL.MANUALY 문서를 제공하
-고 있다. 자신의 환경에 알맞은 INSTALL문서를 보기 바란다.
+JSBoard 는 웹 인터페이스의 installer 를 제공한다. 웹 인터페이스의 설치가 잘 되지
+않을 경우를 대비해서 수동으로 설치를 할 수 있는 문서 역시 제공한다. 웹인터페이스
+의 설치는 ISNTALL 문서를 참고하고, 수동설치는 INSTALL.MANUALY 문서를 참고하면 된
+다. 자신의 환경에 알맞은 INSTALL문서를 보기 바란다.
 
 
 개발자의 의무
 
-개발자는 설치에 있어 필요한 부분을 제공 하기는 하나 이는 의무에 속하지는 않는다.
-그러니 개발자를 귀찮게 하지 말기 바란다. :-)
+개발자는 설치 및 운영에 있어 필요한 부분을 제공 하기는 하나 이는 의무에 속하지는
+않는다. 그러니 개발자를 귀찮게 하지 말기 바란다. :-)
 
 
 라이센스
 
 JSBoard의 모든 code 는 GPL2 를 따른다.
 
-2002년 01월 16일 김정균 <http://www.oops.org>
+2002년 07월 21일 김정균 <http://www.oops.org>
