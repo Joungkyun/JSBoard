@@ -15,6 +15,7 @@ $langs[conj] = "관련글";
 $langs[c_na] = "이름";
 $langs[c_ps] = "암호";
 $langs[c_en] = "입력";
+$langs[c_lu] = "정렬";
 
 # write.php
 $langs[w_ment] = "띄어쓰기 없이 쓰거나 HTML 미사용 시 한줄을 너무 길게 쓰지 마십시오.";

@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
+2002.5.27 by 김정균 <http://www.oops.org>
+	- 코멘트에서 정렬을 유저가 직접 선택할 수 있도록 변경
+
 2002.5.26 by 김정균 <http://www.oops.org>
 	- 게시판 관리자를 여러명 지정할 수 있게 변경
 	- 첨부파일 링크 방식을 설정할 수 있도록 수정
