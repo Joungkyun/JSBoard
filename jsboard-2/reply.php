@@ -45,6 +45,8 @@ else $reti = "^$reti";
 $list[text] = preg_replace("/<([^<>\n]+)\n([^\n<>]+)>/i", "<\\1 \\2>", $list[text]);
 $list[text] = str_replace("^", ": ", $list[text]);
 $list[text] = preg_replace("/\n/", "\n: ", $list[text]);
+# 본문에 html tag 가 존재할 경우를 대비
+$list[text] = htmlspecialchars($list[text]);
 
 if($list[html]) $html_chk_ok = " checked";
 else $html_chk_no = " checked";
