@@ -147,23 +147,13 @@ function get_board_info($table) {
   $today  = get_date();
 
   # date 필드를 비교해서 오늘 올라온 글의 갯수를 가져옴
-  $sql    = search2sql($o, 0);
-
-  if(!$sql) {
-    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$today'");
-    $tcount = sql_result($result, 0, "COUNT(*)");
-    sql_free_result($result);
-  }
-
-  # 게시판의 전체 글의 갯수를 가져옴
   $sql    = search2sql($o);
-  $result = sql_query("SELECT COUNT(*) FROM $table $sql");
-  $acount = sql_result($result, 0, "COUNT(*)");
-  sql_free_result($result);
+  $result = sql_query("SELECT COUNT(1/(date > '$today')), COUNT(*) FROM $table $sql");
+  $A = sql_fetch_array($result);
 
-  $count[all]    = $acount;	# 전체 글 수
-  $count[today]  = $tcount;	# 오늘 글 수
-    
+  $count[all]    = $A[1];	# 전체 글 수
+  $count[today]  = $A[0];	# 오늘 글 수
+
   return $count;
 }
 
