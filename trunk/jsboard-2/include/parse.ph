@@ -477,7 +477,7 @@ function file_upload($fn,$updir) {
     $fcname[2] = "/(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$/i";
     $fvname[2] = "\\1_\\2.phps";
 
-    $f[name] = preg_replace($fcname, $fvname, $f[name]);
+    $ufile[name] = preg_replace($fcname, $fvname, $ufile[name]);
 
     mkdir("data/$table/$upload[dir]/$updir",0755);
     move_uploaded_file($ufile[tmp_name],"data/$table/$upload[dir]/$updir/".$ufile[name]);
