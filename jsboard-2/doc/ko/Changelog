@@ -64,6 +64,7 @@ If you wnat to see windog's change log, see also
     않는것 수정
 36. spam check 에 글제목도 추가
 37. Installer 에서 외부 DB 를 지정했을 경우 global.ph 에 반영되지 않던것 수정
+38. session_unregisted() 함수를 session_destroy() 로 변경
 
 
 -----------------------------------------------------------------------------

@@ -63,7 +63,7 @@ if ($m == "login") {
   }
 
   # 세션을 삭제
-  session_unregister("$jsboard");
+  session_destroy();
 
   # admin login 상태를 삭제
   SetCookie("c{$jsboard}[id]","",0,"/");
