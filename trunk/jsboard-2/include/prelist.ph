@@ -10,7 +10,7 @@ $prlist['path'] = "/webroot/jsboard-version";
 
 # JSBoard가 설치되어 있는 웹 경로
 # 마지막에 /를 붙이면 안됨
-$prlist['wpath'] = "http://domain.com/jsboard-version";
+$prlist['wpath'] = "http://도메인/jsboard-version";
 
 include_once "{$prlist['path']}/config/global.ph";
 include_once "{$prlist['path']}/include/error.ph";
