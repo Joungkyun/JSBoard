@@ -46,7 +46,7 @@ if($board[rnname] && eregi("^(2|3|5|7)",$board[mode]))
 else $list[cname] = $list[name];
 
 if($list[email]) $list[uname] = url_link($list[email], $list[cname], $no);
-else $list[uname] = $list[ename];
+else $list[uname] = $list[cname];
 if($list[url]) {
   if(eregi("^http://", $list[url])) $list[uname] .= " [" . url_link($list[url], "$langs[ln_url]", $color[r2_fg]) . "]";
   else $list[uname] .= " [" . url_link("http://$list[url]", "$langs[ln_url]") . "]";
