@@ -14,8 +14,8 @@ $designer['ver'] = "A7";
 # Language configuration
 ##############################################################
 $langs['code'] = "ko";		# 게시판 언어
-$langs['font'] = "GulimChe";	# 고정폭 폰트
-$langs['vfont'] = "Gulim";	# 가변폭 폰드
+$langs['font'] = "굴림체";	# 고정폭 폰트
+$langs['vfont'] = "굴림";	# 가변폭 폰드
 
 ##############################################################
 # Color configuration
