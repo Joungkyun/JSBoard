@@ -79,7 +79,7 @@ function prelist($t,$inc,$limit=3,$cut=30,$cn=0,$cd=0,$ce=0,$cc=0,$l=0) {
         { $p[title] = cut_string($p[title],$cut).".."; }
     }
 
-    $p[link] = "<LI TYPE=disc><a href=$prlist[wpath]/read.php?table=$t&no=$p[no]$p[l] title=\"$p[preview]\">$p[title]</a>";
+    $p[link] = "<a href=$prlist[wpath]/read.php?table=$t&no=$p[no]$p[l] title=\"$p[preview]\">$p[title]</a>";
 
     #리스트 출력
     print_prlist($p);
