@@ -13,7 +13,7 @@ if ($m == "login") {
     sql_connect($db[server], $db[user], $db[pass]);
     sql_select_db($db[name]);
   }
-  $r = get_authinfo($lu);
+  $r = $lu ? get_authinfo($lu) : "";
 
   if($r[position] == 1 && !$edb[uses]) mysql_close();
 
