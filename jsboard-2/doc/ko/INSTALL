@@ -183,7 +183,11 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
 
   1-4. php.ini 의 설정
 
-    일단 글쓰기를 할때 ' 또는 " 문자가 제대로 입력이 안되고 에러가나는 경우가 존
+    JSBoard 를 운영하기 위해서는 우선 php.ini 의 short_open_tag = On 설정이 있어
+    야 한다. 일부 배포본에서 short_open_tag = Off 로 되어 있는 경우가 있는데, 이
+    경우 정상 작동을 하지 않는다.
+
+    또한 글쓰기를 할때 ' 또는 " 문자가 제대로 입력이 안되고 에러가나는 경우가 존
     재한다. 이는 php.ini 에서
 
     magic_quotes_gpc = ON

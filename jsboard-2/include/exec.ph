@@ -1,4 +1,4 @@
-<?
+<?php
 # JSBoard에서 사용되는 system 명령어 목록
 $exec['mv']	= "/bin/mv";
 $exec['ls']	= "/bin/ls";

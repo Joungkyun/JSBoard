@@ -1,4 +1,4 @@
-<?
+<?php
 if(preg_match("/(write|edit|reply|read)\.php/i",$_SERVER['PHP_SELF']))
   session_cache_limiter('nocache, must-revalidate');
 

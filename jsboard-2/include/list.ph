@@ -1,4 +1,4 @@
-<?
+<?php
 function print_list($table, $list, $r=0)
 {
   global $color, $board, $langs, $enable, $print, $td_array;

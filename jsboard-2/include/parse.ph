@@ -1,4 +1,4 @@
-<?
+<?php
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
   if (!$html) $text = preg_replace("/&amp;(#|amp)/i","&\\1",$text);

@@ -1,4 +1,4 @@
-<?
+<?php
 function replication_mode($db) {
   $db['userver'] = $db['userver'] ? $db['userver'] : $db['server'];
   if(!preg_match("/#/",$db['userver'])) $db['userver'] .= "#w";

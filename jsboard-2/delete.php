@@ -1,4 +1,4 @@
-<?
+<?php
 include "./include/header.ph";
 
 $board['super'] = $board['adm'] ? 1 : $board['super'];

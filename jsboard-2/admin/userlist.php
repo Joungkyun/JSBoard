@@ -1,4 +1,4 @@
-<?
+<?php
 $path['type'] = "admin";
 include "include/admin_head.ph";
 

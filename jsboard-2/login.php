@@ -1,4 +1,4 @@
-<?
+<?php
 include "./include/version.ph";
 include "./include/print.ph";
 include "./include/get.ph";

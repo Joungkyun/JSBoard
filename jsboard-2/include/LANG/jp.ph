@@ -1,4 +1,4 @@
-<?
+<?php
 setlocale(LC_ALL,"jp");
 # Language Charactor Set
 $langs[charset] = "Shift_JIS";

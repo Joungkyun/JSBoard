@@ -1,4 +1,4 @@
-<?
+<?php
 include_once "include/print.ph";
 # GET/POST 변수를 제어
 parse_query_str();

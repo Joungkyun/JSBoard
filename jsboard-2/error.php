@@ -1,4 +1,4 @@
-<?
+<?php
 include "include/header.ph";
 
 $str = urldecode($str);

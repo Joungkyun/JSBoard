@@ -1,4 +1,4 @@
-<?
+<?php
 # 페이지 로딩 시간 시작
 $p_time[] = microtime();
 include "include/header.ph";

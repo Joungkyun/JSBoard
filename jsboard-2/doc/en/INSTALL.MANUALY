@@ -176,6 +176,11 @@ windows.
 
   1-4. php.ini configuration
 
+    value of short_open_tag is must On. If this value is off, for example Redhat 8.x
+    Jsboard has not right operation.
+
+    short_open_tag = On
+
     There is a problem with typing ' or " in text area. Set following options to 
     fix it.
 

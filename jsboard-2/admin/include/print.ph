@@ -1,4 +1,4 @@
-<?
+<?php
 # html head 읽어오기
 function htmlhead() {
   global $version,$color,$langs,$board;

@@ -1,4 +1,4 @@
-<?
+<?php
 # 서버의 REQUEST_METHOD 형태에 따라 변수를 체크하는 함수
 # register_globals 값이 off 일 경우 편리하게 사용
 #

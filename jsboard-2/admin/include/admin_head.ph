@@ -1,4 +1,4 @@
-<?
+<?php
 $sadmin['pern']   = 10;
 if($path['type'] == "user_admin") {
   $dpath = "..";

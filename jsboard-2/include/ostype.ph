@@ -1,4 +1,4 @@
-<?
+<?php
 # OS 마다 틀리게 적용되는 변수값을 지정을 한다.
 # get OS type for password field in MySQL and
 # sample files
