@@ -2,12 +2,12 @@
 <HEAD>
 <META HTTP-EQUIV=Cache-Control CONTENT=No-Cache>
 <META HTTP-EQUIV=Pragma	CONTENT=No-Cache>
-<TITLE>JSBoard <?=$board[ver]?> Login page</TITLE>
+<TITLE>JSBoard <?=$board['ver']?> Login page</TITLE>
 <STYLE TYPE="text/css">
-A:LINK, A:VISITED, A:ACTIVE { TEXT-DECORATION: NONE; COLOR:<?=$color[text]?>; }
-A:HOVER { TEXT-DECORATION:UNDERLINE; COLOR:<?=$color[text]?>; }
+A:LINK, A:VISITED, A:ACTIVE { TEXT-DECORATION: NONE; COLOR:<?=$color['text']?>; }
+A:HOVER { TEXT-DECORATION:UNDERLINE; COLOR:<?=$color['text']?>; }
 TD { FONT: 12px tahoma; COLOR:#555555; }
-INPUT {font: 11px tahoma; color:<?=$color[m_fg]?>; border-width:1; border-style:solid; border-color:<?=$color[d_bg]?>; padding-left:1px; padding-right:1px; background-color:<?=$color[m_bg]?>; }
+INPUT {font: 11px tahoma; color:<?=$color['m_fg']?>; border-width:1; border-style:solid; border-color:<?=$color['d_bg']?>; padding-left:1px; padding-right:1px; background-color:<?=$color['m_bg']?>; }
 </STYLE>
 <script language=JavaScript>
 <!--
@@ -22,7 +22,7 @@ function InputFocus() {
 //-->
 </script>
 </HEAD>
-<BODY BGCOLOR=<?=$color[b_bg]?> onLoad=InputFocus()>
+<BODY BGCOLOR=<?=$color['b_bg']?> onLoad=InputFocus()>
 
 <?
 include "html/head.ph";
@@ -43,11 +43,11 @@ if($mode == "comment") {
 <FORM NAME=auth METHOD=POST ACTION=<?=$actpage?>>
 <TABLE WIDTH=200 BORDER=0 CELLPADDING=3 CELLSPACING=0>
 <TR>
-<TD BGCOLOR=<?=$color[t_bg]?> ALIGN=CENTER><FONT STYLE="FONT: 14px Tahoma; COLOR:<?=$color[t_fg]?>; FONT-WEIGHT:bold"><?=$ment?></FONT></TD>
+<TD BGCOLOR=<?=$color['t_bg']?> ALIGN=CENTER><FONT STYLE="FONT: 14px Tahoma; COLOR:<?=$color['t_fg']?>; FONT-WEIGHT:bold"><?=$ment?></FONT></TD>
 </TR>
 
 <TR>
-<TD BGCOLOR=<?=$color[m_bg]?> ALIGN=CENTER>
+<TD BGCOLOR=<?=$color['m_bg']?> ALIGN=CENTER>
 <IMG SRC=images/blank.gif WIDTH=1 HEIGHT=4 ALT=''><BR>
 
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=100%>
