@@ -3,14 +3,14 @@
 function htmlhead() {
   global $version,$color,$langs,$board;
 
-  $file_lo = $_SERVER[PHP_SELF];
+  $file_lo = $_SERVER['PHP_SELF'];
   $fileself = explode("admin/",$file_lo);
   $fileself = $fileself[1];
 
-  if ($fileself == "auth.php") $sub_title = "$langs[p_wa]";
-  elseif ($fileself == "admin.php") $sub_title = "$langs[p_aa]";
-  elseif ($fileself == "admin_info.php") $sub_title = "$langs[p_wv]";
-  elseif ($fileself == "userlist.php") $sub_title = "$langs[p_ul]";
+  if ($fileself == "auth.php") $sub_title = "{$langs['p_wa']}";
+  elseif ($fileself == "admin.php") $sub_title = "{$langs['p_aa']}";
+  elseif ($fileself == "admin_info.php") $sub_title = "{$langs['p_wv']}";
+  elseif ($fileself == "userlist.php") $sub_title = "{$langs['p_ul']}";
 
   include "./include/html_ahead.ph";
 }
@@ -46,7 +46,7 @@ function java_scr() {
 #
 function complete_adminpass() {
   global $langs;
-  $str = str_replace("\n","\\n",$langs[p_cp]);
+  $str = str_replace("\n","\\n",$langs['p_cp']);
   echo "<script>\nalert('$str')\n" .
        "window.close()\n</script>";
   exit;
@@ -97,7 +97,7 @@ function err_msg($str = "Ocourrenct unknown error",$mode = 0) {
 # 패스워드 변경을 안하면 변경을 하게끔 귀찮게 메시지 뿌리기 :-)
 function print_chgpass($pass) {
   global $langs;
-  if ($pass == crypt("0000",$pass)) print_notice($langs[p_chm],250,35);
+  if ($pass == crypt("0000",$pass)) print_notice($langs['p_chm'],250,35);
 }
 
 function userlist_sortlink($t,$c='') {
@@ -105,19 +105,19 @@ function userlist_sortlink($t,$c='') {
   if(!$c) {
     for($i=a;$i<=z;$i++) {
       if(strlen($i) == 2) break;
-      if($t != $i) $index .= "<A HREF=$_SERVER[PHP_SELF]?t=$i><FONT STYLE=\"color:$color[text]\">".strtoupper($i)."</FONT></A>\n";
-      else $index .= "<FONT STYLE=\"color:$color[t_bg];font-weight:bold\">".strtoupper($i)."</FONT>\n";
+      if($t != $i) $index .= "<A HREF={$_SERVER['PHP_SELF']}?t=$i><FONT STYLE=\"color:{$color['text']}\">".strtoupper($i)."</FONT></A>\n";
+      else $index .= "<FONT STYLE=\"color:{$color['t_bg']};font-weight:bold\">".strtoupper($i)."</FONT>\n";
     }
-    if($t) $index .= "<A HREF=$_SERVER[PHP_SELF]><FONT STYLE=\"color:$color[text]\">ALL</FONT></A>\n";
-    else $index .= "<FONT STYLE=\"color:$color[t_bg];font-weight:bold\">ALL</FONT>\n";
+    if($t) $index .= "<A HREF={$_SERVER['PHP_SELF']}><FONT STYLE=\"color:{$color['text']}\">ALL</FONT></A>\n";
+    else $index .= "<FONT STYLE=\"color:{$color['t_bg']};font-weight:bold\">ALL</FONT>\n";
   } else {
     $p = array("1" => "가", "2" => "나", "3" => "다", "4" => "라",
                "5" => "마", "6" => "바", "7" => "사", "8" => "아",
                "9" => "자", "10" => "차", "11" => "카", "12" => "타",
                "13" => "파", "14" => "하");
     for($i=1;$i<=14;$i++) {
-      if($t != $p[$i]) $index .= "<A HREF=$_SERVER[PHP_SELF]?t=$p[$i]><FONT STYLE=\"color:$color[text]\">$p[$i]</FONT></A>\n";
-      else $index .= "<FONT STYLE=\"color:$color[t_bg];font-weight:bold\">$p[$i]</FONT>\n";
+      if($t != $p[$i]) $index .= "<A HREF={$_SERVER['PHP_SELF']}?t={$p[$i]}><FONT STYLE=\"color:{$color['text']}\">{$p[$i]}</FONT></A>\n";
+      else $index .= "<FONT STYLE=\"color:{$color['t_bg']};font-weight:bold\">{$p[$i]}</FONT>\n";
     }
   }
   return $index;

@@ -1,11 +1,11 @@
 <?
-$path[type] = "admin";
+$path['type'] = "admin";
 include "./include/admin_head.ph";
 
 htmlhead();
 # session 이 등록되어 있지 않으면 로그인 화면으로.
-if(!session_is_registered("$jsboard") || $_SESSION[$jsboard][pos] != 1)
-  print_error($langs[login_err]);
+if(!session_is_registered("$jsboard") || $_SESSION[$jsboard]['pos'] != 1)
+  print_error($langs['login_err']);
 
 # input 문의 size를 browser별로 맞추기 위한 설정
 $size = form_size(9);
@@ -16,21 +16,21 @@ if(!$mode) {
        "<table width=100% height=100% border=0 cellpadding=0 cellspacing=0>\n".
        "<tr><td align=center>\n".
 
-       "<font color=$color[t_bg]><b>Admin Center Password Change</b></font>\n".
+       "<font color={$color['t_bg']}><b>Admin Center Password Change</b></font>\n".
        "<table width=240 border=0 cellpadding=2>\n".
-       "<tr bgcolor=$color[t_bg]><form method=POST action=\"act.php\">\n".
-       "<td><font color=$color[t_fg]>Passwd</font></td>\n".
+       "<tr bgcolor={$color['t_bg']}><form method=POST action=\"act.php\">\n".
+       "<td><font color={$color['t_fg']}>Passwd</font></td>\n".
        "<td align=center><input type=password name=admincenter_pass size=$size></td>\n".
        "</tr>\n\n".
 
-       "<tr bgcolor=$color[t_bg]>\n".
-       "<td><font color=$color[t_fg]>Re Passwd</font></td>\n".
+       "<tr bgcolor={$color['t_bg']}>\n".
+       "<td><font color={$color['t_fg']}>Re Passwd</font></td>\n".
        "<td align=center><input type=password name=readmincenter_pass size=$size></td>\n".
        "</tr>\n\n".
 
        "<tr>\n<td colspan=2 align=center>\n".
-       "<input type=submit value=$langs[b_sm]>\n".
-       "<input type=reset value=$langs[b_reset]>\n".
+       "<input type=submit value={$langs['b_sm']}>\n".
+       "<input type=reset value={$langs['b_reset']}>\n".
        "</td>\n</tr>\n\n".
 
        "<input type=hidden name=mode value=manager_config>\n".
@@ -61,23 +61,23 @@ if(!$mode) {
   echo "<BR>\n".
        "<form name='global_chg' method='post' action='act.php'>\n".
        "<table border=0 cellpadding=2 cellspacing=1 width=100%>\n".
-       "<tr><td bgcolor=$color[t_bg] align=center>\n\n".
+       "<tr><td bgcolor={$color['t_bg']} align=center>\n\n".
        "<table border=0 cellpadding=1 cellspacing=1 width=100%>\n".
        "<tr><td align=center>\n".
-       "<font style=\"font-size:20px;font-family:tahoma;color:$color[t_fg]\"><b>Global Configuration</b></font>\n".
+       "<font style=\"font-size:20px;font-family:tahoma;color:{$color['t_fg']}\"><b>Global Configuration</b></font>\n".
        "</td></tr>\n".
-       "<tr><td bgcolor=$color[b_bg] align=center>\n".
+       "<tr><td bgcolor={$color['b_bg']} align=center>\n".
        "<textarea name=glob[vars] rows=25 cols=\"$textsize\">$global_con</textarea>\n".
        "</td></tr>\n\n".
        "<tr><td align=center>\n".
-       "<font style=\"font-size:20px;font-family:tahoma;color:$color[t_fg]\"><b>SPAMER LIST</b></font>\n".
+       "<font style=\"font-size:20px;font-family:tahoma;color:{$color['t_fg']}\"><b>SPAMER LIST</b></font>\n".
        "</td></tr>\n".
-       "<tr><td bgcolor=$color[b_bg]>&nbsp;\n".
-       "<br><font color=$color[text]>$langs[spamer_m]</font><p>".
+       "<tr><td bgcolor={$color['b_bg']}>&nbsp;\n".
+       "<br><font color={$color['text']}>{$langs['spamer_m']}</font><p>".
        "<center><textarea name=glob[spam] rows=10 cols=\"$textsize\">$spamlist</textarea></center>\n</td></tr>\n\n".
        "<tr><td align=center>\n".
-       "<input type=submit value=$langs[b_sm]>\n".
-       "<input type=reset value=$langs[b_reset]>\n".
+       "<input type=submit value={$langs['b_sm']}>\n".
+       "<input type=reset value={$langs['b_reset']}>\n".
        "<input type=hidden name=mode value=global_chg>\n".
        "</td></tr>\n</table>\n\n".
        "</td></tr>\n</table>\n</form>\n";
