@@ -72,7 +72,7 @@ if(!$np) {
 
 <!-#######################################################################-->
 <!-  $td_width[ ] : print width ratio on table                            -->
-<!-                 config in theme/theme_name/config.ph                  -->
+<!-                 config in theme/theme_name/config.php                 -->
 <!-#######################################################################-->
 <!---- Start main table ----->
 <TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0>
