@@ -165,6 +165,17 @@ if (!$mode) {
     elseif (file_exists("/etc/debian_version")) $os_type = "Debian";
   } else $os_type = $_ENV[OSTYPE];
 
+  if(!$os_type) {
+    $os_type = php_uname();
+    if (preg_match("/freebsd/i",$os_type)) $os_type = "FreeBSD";
+    elseif (preg_match("/openbsd/i",$os_type)) $os_type = "OpenBSD";
+    elseif (preg_match("/netbsd/i",$os_type)) $os_type = "NetBSD";
+    elseif (preg_match("/windows/i",$os_type)) $os_type = "Windows";
+    elseif (preg_match("/linux/i",$os_type)) $os_type = "Linux";
+    elseif (preg_match("/solaris/i",$os_type)) $os_type = "Solaris";
+    else $os_type = "Unknowns";
+  }
+
   echo "<form method=POST action=$_SERVER[PHP_SELF]>\n\n" .
        "<table width=400 border=0 cellpadding=5>\n" .
        "<tr><td bgcolor=#D3DAC3 align=center>\n" .
