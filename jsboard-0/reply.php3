@@ -88,3 +88,4 @@ while($list = dfetch_row($result)) {
 </center>
 
 </td></tr></table>
+<? include("include/$table/footer.ph"); ?>
