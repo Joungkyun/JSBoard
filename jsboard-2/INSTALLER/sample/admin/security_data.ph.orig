@@ -1,5 +1,0 @@
-<?
-$security['stamp'] = 1;
-$security['serial'] = "1";
-$security['prints'] = 0;
-?>
