@@ -96,7 +96,7 @@ if ( $mode != 'manager_config') {
 
     // 현재 디렉토리를 변경
     chdir("../data/$new_table");
-    exec("$exec[ln] ../../config/themes/white.themes default.themes");    
+    exec("$exec[ln] ../../config/themes/basic.themes default.themes");    
     chdir("../../admin");
 
     mysql_close();

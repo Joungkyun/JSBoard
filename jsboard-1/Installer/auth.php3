@@ -4,7 +4,7 @@ $path[type] = "Install";
 $copydate = time();
 $copydate = date("Y",$copydate);
 
-require("../config/themes/white.themes");
+require("../config/themes/basic.themes");
 require("./include/passwd.ph");
 
 if ($langss == "ko") $langs[code] = "ko";

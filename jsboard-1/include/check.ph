@@ -172,11 +172,11 @@ function icon_check($tail,$fn) {
 
 function check_dnlink($table,$list) {
   global $upload;
-  if (eregi("(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm)$",$list[bofile])) {
-    $dn = "act.php3?o[at]=dn&dn[tb]=$table&dn[udir]=$upload[dir]&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
+  if (eregi("(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch)$",$list[bofile])) {
+    $dn = "act.php3?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
   } else {
-    if ($list[bfsize] < 51200) $dn = "act.php3?o[at]=dn&dn[tb]=$table&dn[udir]=$upload[dir]&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
-    else $dn = "./data/$table/files/$list[bcfile]/$list[bofile]";
+    if ($list[bfsize] < 51200) $dn = "act.php3?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
+    else $dn = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
   }
   return $dn;
 }
