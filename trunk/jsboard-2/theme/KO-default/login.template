@@ -13,11 +13,7 @@ TD { FONT: 12px tahoma; COLOR:#555555; }
 <script language=JavaScript>
 <!--
 function InputFocus() {
-<? if($mode == "comment") { ?>
-  document.auth.lp.focus();
-<? } else { ?>
   document.auth.lu.focus();
-<? } ?>
   return;
 }
 //-->
@@ -30,7 +26,7 @@ include "html/head.ph";
 if($table) { include "data/$table/html_head.ph"; }
 
 if($mode == "comment") {
-  $actpage = "./act.php";
+  $actpage = "./atc.php";
   $ment = "Comment Delete";
 } else {
   $actpage = "./session.php";
