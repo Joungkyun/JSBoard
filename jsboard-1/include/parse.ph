@@ -397,7 +397,7 @@ function file_upload($fn,$updir) {
   $ufile[type] = $HTTP_POST_FILES[$fn][type];
   $ufile[tmp_name] = $HTTP_POST_FILES[$fn][tmp_name];
 
-  if(is_uploaded_file($ufile[tmp_name])) {
+  if(is_uploaded_file($ufile[tmp_name]) && $ufile[size] > 0) {
     if ($ufile[size] > $upload[maxsize]) {
       print_error($langs[act_md]);
       exit;
