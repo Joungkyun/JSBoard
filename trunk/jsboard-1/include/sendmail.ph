@@ -135,6 +135,14 @@ function mailcheck($to,$from,$title,$body) {
   if(!trim($body)) print_error($langs[mail_body_chk_drr],250,150,1);
 }
 
+function generate_mail_id($uid) {
+  $id = date("YmdHis", time());
+  mt_srand ((float) microtime() * 1000000);
+  $randval = mt_rand();
+  $id .= $randval. "@$uid";
+  return $id;
+}
+
 function mail_header($to,$from,$title,$mta='') {
   global $langs;
 
@@ -143,12 +151,13 @@ function mail_header($to,$from,$title,$mta='') {
   else  $charbit = "7bit";
 
   # mail header ∏¶ ¿€º∫ 
-  $header = "From: JSBoard Message <$from>\n".
-            "MIME-Version: 1.0\n".
-            "Content-Type: text/plain; charset=$langs[charset]\n".
-            "Content-Transfer-Encoding: $charbit\n";
-  if(!$mta) $header .= "To: $to\n".
-                       "Subject: $title\n\n";
+  $header = "Message-ID: <".generate_mail_id(preg_replace("/@.+$/i","",$to)).">\r\n".
+            "From: JSBoard Message <$from>\r\n".
+            "MIME-Version: 1.0\r\n".
+            "Content-Type: text/plain; charset=$langs[charset]\r\n".
+            "Content-Transfer-Encoding: $charbit\r\n";
+  if(!$mta) $header .= "To: $to\r\n".
+                       "Subject: $title\r\n\r\n";
 
   return $header;
 }
@@ -233,7 +242,7 @@ function sendmail($rmail,$fm=0) {
   $dbname  = "DB Name           : $rmail[table]";
   $dbloca  = "DB Location       : $webboard_address";
   #$repart  = "Reply Article     : $reply_article";
-  $nofm    = "\n$dbname\n$dbloca\n$repart";
+  $nofm    = "\r\n$dbname\r\n$dbloca\r\n$repart";
   $mailurl = "Email             : $rmail[pemail]";
   $homeurl = "HomeURL           : $rmail[url]";
 
