@@ -29,18 +29,18 @@ function sql_select_db($name,$c='') {
 
 # mysql_query - MySQL에 SQL 질의를 보냄
 #               http://www.php.net/manual/function.mysql-query.php
-function sql_query($query,$c='') {
+function sql_query($query,$c='',$noerr='') {
   $return = $c ? mysql_query($query,$c) : mysql_query($query);
-  sql_error(mysql_errno(), mysql_error());
+  if(!$noerr) sql_error(mysql_errno(), mysql_error());
 
   return $return;
 }
 
 # mysql_db_query - MySQL에 Database 를 선택해 SQL 질의를 보냄
 #               http://www.php.net/manual/function.mysql-db-query.php
-function sql_db_query($db,$query,$c='') {
+function sql_db_query($db,$query,$c='',$noerr='') {
   $return = $c ? mysql_db_query($db,$query,$c) : mysql_query($db,$query);
-  sql_error(mysql_errno(), mysql_error());
+  if(!$noerr) sql_error(mysql_errno(), mysql_error());
 
   return $return;
 }
