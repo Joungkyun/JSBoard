@@ -54,8 +54,13 @@ else $dlook_no = "checked";
 if($enable[dwho]) $dwho_ok = "checked";
 else $dwho_no = "checked";
 
+if(!$upload[yesno]) $upload_disable = " disabled";
+
 if($cupload[yesno]) $up_ok = "checked";
 else $up_no = "checked";
+
+if($cupload[dnlink]) $uplink_ok = "checked";
+else $uplink_no = "checked";
 
 if($rmail[admin]) $amail_ok = "checked";
 else $amail_no = "checked";
@@ -476,8 +481,17 @@ function fresize(value,name) {
 <TR>
 <TD BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR><?=$langs[ua_fp]?></font></TD>
 <TD COLSPAN=4>
-<INPUT TYPE=radio name=ua[upload] <?=$up_ok?> value=1 id=RADIO><?=$langs[ua_p]?>
-<INPUT TYPE=radio name=ua[upload] <?=$up_no?> value=0 id=RADIO><?=$langs[ua_n]?>
+<INPUT TYPE=radio<?=$upload_disable?> name=ua[upload] <?=$up_ok?> value=1 id=RADIO><?=$langs[ua_p]?>
+<INPUT TYPE=radio<?=$upload_disable?> name=ua[upload] <?=$up_no?> value=0 id=RADIO><?=$langs[ua_n]?>
+</TD>
+<TD BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR><?=$langs[ua_fl]?></font></TD>
+<TD COLSPAN=4>
+<INPUT TYPE=radio<?=$upload_disable?> name=ua[up_link] <?=$uplink_ok?> value=1 id=RADIO><?=$langs[ua_fld]?>
+<INPUT TYPE=radio<?=$upload_disable?> name=ua[uplink] <?=$uplink_no?> value=0 id=RADIO><?=$langs[ua_flh]?>
 </TD>
 <TD BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
 </TR>

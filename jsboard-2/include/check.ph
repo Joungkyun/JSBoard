@@ -240,12 +240,17 @@ function icon_check($t,$fn) {
 }
 
 function check_dnlink($table,$list) {
-  global $upload;
-  if (eregi("(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs|\.ppt|\.xls)$",$list[bofile])) {
-    $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
+  global $upload, $cupload;
+
+  if(!$cupload[dnlink]) {
+    if (eregi("(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs|\.ppt|\.xls)$",$list[bofile])) {
+      $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
+    } else {
+      if ($list[bfsize] < 51200) $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
+      else $dn = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
+    }
   } else {
-    if ($list[bfsize] < 51200) $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
-    else $dn = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
+    $dn = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
   }
   return $dn;
 }
