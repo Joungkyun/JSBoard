@@ -66,6 +66,7 @@ Version   : jsboard-2.0pre4
 40. added check of iframe when registrated article
 41. removed check of $table in error.php
 42. fixed forward agent information when use prelist() function
+43. changed header of download
 
 
 -----------------------------------------------------------------------------

@@ -432,13 +432,18 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   if($dn[dl] = file_operate($dn[path],"r","Don't open $dn[name]")) {
     if($agent[br] == "MSIE" && $agent[vr] == 5.5) {
       header("Content-Type: doesn/matter");
+      header("Content-Length: ".filesize("$dn[path]"));
       header("Content-Disposition: attachment; filename=".$dn[name]);
       header("Content-Transfer-Encoding: binary");
     } else {
       Header("Content-type: file/unknown");
+      header("Content-Length: ".filesize("$dn[path]"));
       Header("Content-Disposition: attachment; filename=".$dn[name]);
       Header("Content-Description: PHP Generated Data");
     }
+    Header("Pragma: no-cache");
+    Header("Expires: 0");
+
     echo $dn[dl];
   }
 } elseif($o[at] == "ma") {
