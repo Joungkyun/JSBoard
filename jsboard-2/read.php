@@ -113,7 +113,7 @@ if($alert) {
       $langs[hlinked] = "<A HREF=javascript:new_windows('./whois.php?table=$table&host=$list[host]',0,1,0,600,480)>".
                         "<font color=$color[text]>$list[dhost]</font></a>";
     else $langs[hlinked] = "<font color=$color[text]>$list[dhost]</font>";
-    $print[regist] = "Regist Addr [ $langs[hlinked] ]";
+    $print[regist] = "Register [ $langs[hlinked] ]";
   }
   
   # 첨부 파일 관련 변수
