@@ -49,65 +49,7 @@ while($list = dfetch_row($result)) {
     $text   = eregi_replace("\n", "\r\n", $text);
     $text   = nl2br($text);
     
-
-    /* Auto URL link 변환 */
-    if (!eregi("a href=",$text)) {
-
-      /* 외부 이미지 링크 보호 */
-      $text   = eregi_replace("src=http","src=http_image", $text);
-
-      $text   = eregi_replace("&amp;","&",$text);
-      $text   = eregi_replace("([^(\"|')]|^)((http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+)",
-                              "\\1<a href=\"\\2\" target=\"_blank\"><font color=\"$r3_fg\">\\2</font></a>", $text);
-
-      /* 외부 이미지 링크 복원 */
-      $text   = eregi_replace("src=http_image","src=http", $text);
-
-    } else {
-      $text   = eregi_replace("&amp;","&",$text);
-      $text   = eregi_replace(" target=_+[a-z,A-Z]+","", $text);
-
-      /* URL link에 따옴표를 쓰지 않을 경우 */
-      $text   = eregi_replace("(&lt;|<)+a+ +href=+(http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+(&gt;|>)+((http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+)(&lt;|<)+/a+(&gt;|>)",
-                              "\\4", $text);
-
-      /* URL link에 따옴표를 쓸 경우 */
-      $text   = eregi_replace("(&lt;|<)+a+ +href=+(\"|&quot;)+(http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+(\"|&quot;)+(&gt;|>)+((http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+)(&lt;|<)+/a+(&gt;|>)",
-                              "\\6", $text);
-
-      /* 외부 이미지 링크 보호 */
-      $text   = eregi_replace("src=http","src=http_image", $text);
-
-      $text   = eregi_replace("([^(\"|')]|^)((http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+)",
-                              "\\1<a href=\"\\2\" target=\"_blank\"><font color=\"$r3_fg\">\\2</font></a>", $text);
-
-      /* 외부 이미지 링크 복원 */
-      $text   = eregi_replace("src=http_image","src=http", $text);
-    }
-
-
-    /* Auto Email link 변환 */
-
-    /* 적수님 원본 */
-    //  $text   = eregi_replace("([A-Za-z0-9]+@[A-Za-z0-9\-\.]+\.+[A-Za-z0-9\-\.]+)", 
-    //                          "<a href=\"mailto:\\1\"><font color=\"$r3_fg\">\\1</font></a>", $text); 
-
-    if (!eregi("mailto:", $text)) {
-      $text   = eregi_replace("([A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+)",
-                              "<a href=\"mailto:\\1\"><font color=\"$r3_fg\">\\1</font></a>", $text);
-    } else {
-
-      $text   = eregi_replace("(<|&lt;)+a+ +href=mailto:+[A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+(>|&gt;)+([A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+)</a>",
-                              "\\3", $text);
-
-      $text   = eregi_replace("(<|&lt;)+a+ +href=+(\"|&quot;)+mailto:+[A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+(\"|&quot;)+(>|gt;)+([A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+)</a>",
-                              "\\5", $text);
-
-      $text   = eregi_replace("([A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+)",
-                              "<a href=\"mailto:\\1\"><font color=\"$r3_fg\">\\1</font></a>", $text);
-
-    }
-
+    $text   = auto_link($text);
 
     $text   = eregi_replace("<br>\n", "<br>", $text);
 
