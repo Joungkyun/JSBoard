@@ -54,7 +54,7 @@ function form_size($size, $print = 0) {
     if($agent[os] == "NT") {
       if($agent[ln] == "KO") $size *= 2.2; # ÇÑ±ÛÆÇ
       else {
-        if ($langs[code] == "ko") $size *= 2.4;
+        if ($langs[code] == "ko") $size *= 2.3;
         else $size *= 1.8;
       }
     } else $size *= 2.6;
