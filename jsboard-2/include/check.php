@@ -1,22 +1,4 @@
 <?php
-# 안전하게 include 를 하는 함수
-#
-function include_safe ($path, $once = 0) {
-  $path = trim ($path);
-
-  if ( ! $path || ! file_exists ($path) )
-    print_error ("$path file not found", 250, 150, 1);
-
-  if ( preg_match ('!/\.+!', $path) )
-    print_error ("$path is ugly path", 250, 150, 1);
-
-  if ( $once ) {
-    include_once $path;
-  } else {
-    include $path;
-  }
-}
-
 # table 이름에 meta character 가 포함되어 있는지 검사하는 함수
 # $name -> 변수값
 # $i    -> null 이라도 상관없을 경우 1
