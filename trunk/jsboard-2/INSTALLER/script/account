@@ -25,7 +25,6 @@ else
 fi
 
 cp -Rp ../sample/admin/global.ph.orig ../../config/global.ph
-cp -Rp ../sample/admin/security_data.ph.orig ../../config/security_data.ph
 cp -Rp ../sample/admin/spam_list.txt.orig ../../config/spam_list.txt
 if [ -d "../../data/test" ]; then
   cp -Rp ../sample/data/* ../../data/test/
@@ -39,7 +38,6 @@ chmod 707 ../../data
 chmod 707 ../../data/test
 chmod 707 ../../data/test/files
 chmod 660 ../../config/global.ph
-chmod 606 ../../config/security_data.ph
 chmod 660 ../../config/spam_list.txt
 chmod 606 ../../data/test/config.ph
 chmod 606 ../../data/test/html_head.ph

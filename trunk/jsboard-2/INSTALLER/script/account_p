@@ -30,7 +30,6 @@ chmod 707 -R ../../data
 chmod 606 ../../data/*/files/*/*
 chmod 606 ../../data/*/*.*
 chmod 660 ../../config/global.ph
-chmod 606 ../../config/security_data.ph
 chmod 660 ../../config/spam_list.txt
 
 echo
