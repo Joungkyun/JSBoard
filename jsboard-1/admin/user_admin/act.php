@@ -84,7 +84,7 @@ else $chg[amark] = 0;
 $chg[ore] = $chg[ore] ? 1 : 0;
 
 # Option of print conjunct list when reply
-$chg[re_list] = $chg[re_list] ? 1 : 0;
+$chg[re_list] = $ua[re_list] ? 1 : 0;
 
 # Board Basic Configuration
 if($ua[title] && $ua[title] != $board[title])

@@ -106,7 +106,7 @@ function get_list($table, $pages, $reply = 0)
     if($reply[ck]) $sql = search2sql($reply);
     else $sql = search2sql($o);
 
-    if ($enable[re_list] && preg_match("read\.php",$PHP_SELF)) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
+    if ($enable[re_list] && preg_match("/read\.php/i",$PHP_SELF)) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
     else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT $pages[no], $board[perno]";
 
     $result = sql_query($query);
