@@ -15,6 +15,10 @@ file.
 
 Version   : jsboard-2.0.11
 
+Wed, Apr  6 2005
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed some of key control
+
 Wed, Mar 31 2005
   by JoungKyun Kim <http://www.oops.org>
 	- add $prlist[starttag], $prlist[endtag] variables for preview function
