@@ -202,7 +202,7 @@ function search_hl($list) {
 
   $regex1 = "(<\/?)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)";
   $regex2 = "(<\/?FONT[^<>]+)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)";
-  $regex3 = "(HREF|SRC)=([^<]*)$hl[0]([^<]*)<\/FONT>([^>]*)";
+  $regex3 = "(HREF|SRC)=([^<>]*)$hl[0]([^<]*)<\/FONT>([^>]*)";
 
   $src = array("/$regex1/i","/$regex2/i");
   $tar = array("\\1\\2\\3","\\1\\2\\3");

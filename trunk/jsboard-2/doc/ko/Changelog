@@ -86,6 +86,7 @@ If you wnat to see windog's change log, see also
 56. IP Blocking 기능 추가
 57. magic quotes 설정을 강제로 지정
 58. url 에 검색어가 여러개 존재할 때 검색어 하이라이트 기능이 깨지는 것 수정
+59. mbstring 함수 지원 - check_spam() function
 
 
 -----------------------------------------------------------------------------
