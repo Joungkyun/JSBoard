@@ -12,7 +12,7 @@ $prlist[path] = "/usr/local/www/data/jsboard";
 # 마지막에 /를 붙이면 안됨
 $prlist[wpath] = "http://10.0.0.1/jsboard";
 
-include "$prlist[path]/config/global.ph";
+include_once "$prlist[path]/config/global.ph";
 include_once "$prlist[path]/include/error.ph";
 include_once "$prlist[path]/include/parse.ph";
 include_once "$prlist[path]/include/check.ph";
