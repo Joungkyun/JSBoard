@@ -347,7 +347,7 @@ function check_htmltable($str,$rep='') {
 #      1 : ips 에 등록된 Ip 에서의 링크만 막음
 #
 function check_dhyper($m,$ips) {
-  global $langs,$board[dhyper];
+  global $langs,$board;
   # 레퍼럴이 존재하지 않거나 ips 변수가 없으면 체크 중지
   if(!trim($ips) || !$_SERVER[HTTP_REFERER]) return;
 
