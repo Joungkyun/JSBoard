@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.5
 
+2003.01.30
+  by 김정균 <http://www.oops.org>
+	- 어드민 페이지에서 multibyte 언어모드시 문자 깨지는 것 수정
+
 2003.01.23
   by 김정균 <http://www.oops.org>
 	- mozilla netscape style sheet 보정
