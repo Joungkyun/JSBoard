@@ -20,6 +20,11 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.7
 
+2003.12.03
+  by 김정균 <http://www.oops.org>
+	- 타 OS 와의 호환성을 위하여 exec 함수 완전 제거
+          대체 함수로 unlink_r 함수 추가
+
 2003.11.05
   by 김정균 <http://www.oops.org>
 	- 메일 발송 파싱 에러 수정

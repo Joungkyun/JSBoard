@@ -13,13 +13,13 @@
 #
 #################################################################################
 #
-#                              Quick Installation in JSBoard 2.0 v0.3
+#                              Quick Installation in JSBoard 2.0 v0.4
 #
 #################################################################################
 
 
 Writer : JoungKyun Kim <http://www.oops.org>, SIGTERM <younman@hanmail.net>
-Date   : Oct 27 2002
+Date   : Dec 03 2003
 
 This is an installation manual for JSBoard 2.0 on Unix-Like Machines. jsboard comes 
 with no warranty, use this software at your own risk.
@@ -40,11 +40,10 @@ windows.
 **** Contents ****
 
   1. Pre-requisites
-    1-1. testing exec() function
-    1-2. testing MySQL function
-    1-3. Web server configuration
-    1-4. php.ini configuration
-    1-5. modified install script for Solaris or SunOS
+    1-1. testing MySQL function
+    1-2. Web server configuration
+    1-3. php.ini configuration
+    1-4. modified install script for Solaris or SunOS
   2. Installing JSBoard
   3. Changign passowrd of JSBoard super admin
   4. Security in JSBoard
@@ -74,13 +73,12 @@ windows.
 
 
     Following is a configuration example.
-    PHP 4.1 
+    PHP 4.1
 
     ./configure --prefix=/usr \  
                 --with-apxs=/usr/sbin/apxs \  
                 --with-config-file-path=/usr/lib/php \
                 --disable-debug \
-                --with-exec-dir=/usr/bin \
                 --with-regex=php \
                 --with-mod_charset \
                 --with-gd=shared \
@@ -101,35 +99,37 @@ windows.
                 --enable-sysvsem \
                 --enable-sysvshm
 
+  of PHP 4.3.3
+
+    ./configure --prefix=/usr \
+                --with-apxs=/usr/sbin/apxs \
+                --with-config-file-path=/usr/lib/php \
+                --disable-debug \
+                --with-regex=php \
+                --with-mod_charset \
+                --with-gd=shared \
+                --enable-gd-native-ttf \
+                --with-jpeg-dir=/usr/lib \
+                --with-png-dir=/usr/lib \
+                --with-freetype-dir=/usr/lib \
+                --with-mysql=shared \
+                --enable-mbstring=shared,all \
+                --enable-mbregex \
+                --enable-sigchild \
+                --enable-safe-mode \
+                --enable-inline-optimization \
+                --enable-magic-quotes \
+                --enable-track-vars \
+                --enable-debugger \
+                --enable-sysvsem \
+                --enable-sysvshm
+
   * Check List *
 
   Make sure that your PHP installation supports MySQL functions and php.ini satisfies 
   requirements.
 
-  1-1. testing exec() function
-
-    First, create test.php with following code. This code will run on Linux systems 
-    or other Unicies.
-
-    <?php
-    echo "## exec() function test ##<p><br>\n\n";
-    exec("echo \"exec() function check: Success\"", $test);
-
-    echo $test[0];
-    ?>
-
-    Place it on your web server and call it from your browser to see if it prints 
-    following message crrectly.
-
-    -------------------------------------------------
-    ## exec() function test ##
-
-    exec() function check : Success
-    -------------------------------------------------
-
-    If you didn't get right output then please check your PHP installation. 
-
-  1-2. Testing MySQL function
+  1-1. Testing MySQL function
 
     Create info.php with following code on your web tree.
 
@@ -166,7 +166,7 @@ windows.
     shell> mysql -u root -p -h DB_server_address
 
 
-  1-3. Web server configuration
+  1-2. Web server configuration
 
     The index file of jsboard is index.php. and files have .ph as their extensions 
     so you may want to add following in your httpd.conf file. 
@@ -174,7 +174,7 @@ windows.
     AddType application/x-httpd-php .php .php3 .ph
                                                ----
 
-  1-4. php.ini configuration
+  1-3. php.ini configuration
 
     value of short_open_tag is must On. If this value is off, for example Redhat 8.x
     Jsboard has not right operation.

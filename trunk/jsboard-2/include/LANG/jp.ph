@@ -316,9 +316,7 @@ $langs[st_ltot] = "全体";
 # Inatllation
 $langs[waitm] = "Jsboardを使うための環境設定を検査しています<br>\n5秒後に結果を見られます<p>もし Linux用 Netscape 4.x を使ったら次のページで<br>自動で移らないこともあります.<br>この時は doc/ko/INSTALL.MANUALY 文書を参照して設置をしてください";
 $langs[wait] = "[ 5秒間待ってください ]";
-$langs[os_check] ="Linuxではない他の OSの場合には jsboard/include/exec.ph で\nshell 命令たちの option 値段を適切に修正しなければなりません";
 $langs[mcheck] = "MySQL loginに失敗しました.\njsboard/INSTALLER/include/passwd.ph に MySQLの root\npasswordが正確か確認してくださって当たれば PHPの設置の時に\n--with-mysql オプションが入って行ったのか確認してください<br>\nもし DB serverが独立されていたら QuickInstall文書を参照\nして設置をなさってください";
-$langs[echeck] = "exec() 関数がまともに動作していないです.\nexec() 関数を使うためには php3.ini または php4では\nphp.iniが自分の位置になければなりません.\nphpinfo() 関数を使って php,iniの位置を把握した\n後にその位置に php.iniがあるのか確認してください";
 $langs[icheck] = "httpd.confの DirectoryIndex 指示者に index.phpを追加<br>\nしてくださって apacheを再実行してください.";
 $langs[pcheck] = "設置をする前に先に jsboard/INSTALLER/scriptで\npreinstall を行わなければなりません. INSTALL文書を\n参照してください";
 $langs[auser] = "設置に一度失敗したら doc/ko/INSTALL.MANUALY を見て受動で設置しなければならないです.";

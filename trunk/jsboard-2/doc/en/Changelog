@@ -19,6 +19,11 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.7
 
+Tue, Dec  3 2003
+  by JoungKyun Kim <http://www.oops.org>
+	- removed exec function and added unlink_r function
+	  for portable other OS
+
 Tue, Nov  5 2003
   by JoungKyun Kim <http://www.oops.org>
 	- fixed parse error when send register article mail
