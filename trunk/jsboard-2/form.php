@@ -11,6 +11,7 @@ if($mode == "photo") {
   meta_char_check($upload[dir]);
   upload_name_chk($f[n]);
 
+  $f[n] = urlencode($f[n]);
   $print[head] = "VIEW ORIGINAL IMAGE";
   $print[body] = "<a href=javascript:window.close()>".
            "<img src=./data/$table/$upload[dir]/$f[c]/$f[n] width=$f[w] height=$f[h] border=0>".

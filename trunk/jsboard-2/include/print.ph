@@ -580,7 +580,7 @@ function print_preview_src($print=0) {
   else return $t;
 }
 
-function print_newwindow_src($upload,$cpuload,$dwho) {
+function print_newwindow_src($upload,$cupload,$dwho) {
   if(($upload && $cupload) || $dwho) {
     echo "<script LANGUAGE=JavaScript>\n".
          "  <!-- Begin\n".

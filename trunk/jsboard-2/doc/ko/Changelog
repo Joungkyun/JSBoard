@@ -21,7 +21,7 @@ Attention : OOPS administration Center is not GPL.
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2001년 12월 10일
+작성일 : 2001년 12월 11일
 버전   : jsboard-2.0pre3
 
 * 변경된점
@@ -66,6 +66,12 @@ Attention : OOPS administration Center is not GPL.
 38. 이름검색시 에러 수정
 39. 유저 등록시 url 에 http:// 가 붙지 않도록 통일
 40. search_hl() 함수의 오타 수정
+41. prelist 의 include bug 수정
+42. auto_link() 함수 수정
+43. whois 검색 기능 사용안할 경우 큰 이미지 원본보기 기능 안되는것 수정
+44. 원본 이미지 보기에서 IE 의 UTF-8(한글 파일 이름) 문제 해결
+45. 게시판 관리자의 include 파일 출력 순서 수정
+46. session_destory() 함수를 session_unregister() 함수로 변경
 
 
 -----------------------------------------------------------------------------

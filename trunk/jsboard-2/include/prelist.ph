@@ -1,7 +1,7 @@
 <?
 ########################################################################
 # JSBoard Pre List v0.2
-# Scripted By JoungKyun Kim 2000.10.11
+# Scripted By JoungKyun Kim 2000.12.10
 ########################################################################
 
 # JSBoard가 설치되어 있는 절대 경로
@@ -56,6 +56,7 @@ function prelist($t,$inc,$limit=3,$cut=30,$cn=0,$cd=0,$ce=0,$cc=0,$l=0) {
     include "$prlist[path]/include/parse.ph";
     include "$prlist[path]/include/check.ph";
     include "$prlist[path]/include/sql.ph";
+    include "$prlist[path]/include/get.ph";
   }
 
   sql_connect($db[server], $db[user], $db[pass]);

@@ -21,7 +21,7 @@ Attention : OOPS administration Center is not GPL.
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Dec 10 2001
+Date      : Wed, Dec 11 2001
 Version   : jsboard-2.0pre3
 
 
@@ -66,6 +66,12 @@ Version   : jsboard-2.0pre3
 38. fixed name search problem
 39. When registed user, removed http:// string in url
 40. fixed typo in search_hl()
+41. fixed include bug in prelist.ph
+42. modified auto_link() function
+43. fixed typo in print_newwindow_src() function
+44. fixed UTF-8 problem of IE in view original image file
+45. fixed order by include file in user admin
+46. changed to session_unregisted() function from session_destory() function
 
 
 -----------------------------------------------------------------------------
