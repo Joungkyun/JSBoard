@@ -11,6 +11,9 @@ $langs[perm_err] = "Sorry, you don't have access permission on this page";
 # read.php
 $langs[ln_url] = "Homepage";
 $langs[conj] = "Replies";
+$langs[c_na] = "Name";
+$langs[c_ps] = "Pass";
+$langs[c_en] = "ENTER";
 
 # write.php
 $langs[w_ment] = "Don't write a long sentence unless you use HTML code or spaces";
@@ -155,6 +158,10 @@ $langs[ua_ore_n] = "Choice";
 $langs[ua_re_list]   = "Related Article";
 $langs[ua_re_list_y] = "Show";
 $langs[ua_re_list_n] = "Don't show";
+
+$langs[ua_comment]   = "Comment";
+$langs[ua_comment_y] = "Use";
+$langs[ua_comment_n] = "Don't use";
 
 $langs[ua_align]   = "Board Align";
 $langs[ua_align_c] = "Center";

@@ -16,6 +16,7 @@ A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
 A:hover {text-decoration:underline; color:#555555}
 INPUT {border:1x solid #555555;background-Color:silver;font-size:11px;font-family:±¼¸²Ã¼;color:#333333}
 SELECT {border:1x solid #555555;background-Color:silver;font:11px tahoma;color:#555555}
+TEXTAREA {border:1x solid #555555;background-Color:silver;font-size:13px;font-family:±¼¸²Ã¼;color:#333333}
 
 <?=$user_stylesheet?>
 -->
@@ -126,6 +127,7 @@ if(!$np) {
 <?=$preview[down]?>
 </FONT>
 <?=$print[rlists]?>
+<?=$print[comment]?>
 </TD></TR>
 </TABLE>
 

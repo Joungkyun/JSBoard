@@ -211,4 +211,42 @@ function print_narticle($table, $fg, $bg, $print = 0)
 
   return $article;
 }
+
+function get_comment($table,$no,$print=0) {
+  global $lines;
+
+  $sql = "SELECT * FROM {$table}_comm WHERE reno = '$no' ORDER BY no DESC";
+  $r = sql_query($sql);
+  
+  if(sql_num_rows($r) > 0) {
+    while ($list = sql_fetch_array($r)) {
+      if($lines[comment_design]) $lists .= $lines[comment_design];
+      $lists .= print_comment_art($table,$list);
+    }
+  }
+
+  if($print) echo $lists;
+  else return $lists;
+}
+
+function print_comment_art($table,$list,$print=0) {
+  global $board;
+
+  $list[name] = htmlspecialchars(trim($list[name]));
+  $list[date] = date("y.m.d",$list[date]);
+  $list[text] = htmlspecialchars(trim($list[text]));
+
+  if($board[rnname] && preg_match("/^(2|3|5|7)$/",$board[mode]))
+    $names = $list[rname] ? $list[rname] : $list[name];
+  else $names = $list[name];
+
+  $ret = "<TR>\n".
+         "<TD WIDTH=60 VALIGN=top><FONT Style=\"font-weight:bold\">$names</FONT></TD>\n".
+         "<TD>\n<PRE>\n$list[text]\n<PRE>\n</TD>\n".
+         "<TD WIDTH=20 VALIGN=top>$list[date]</TD>\n".
+         "</TR>\n";
+
+  if($print) echo $ret;
+  else return $ret;
+}
 ?>

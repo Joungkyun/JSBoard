@@ -400,40 +400,39 @@ function article_reply_list($table,$pages,$print=0) {
   $CPADDING = $lines[design] ? 0 : 1;
   
   if($print) {
-    $t = "<p>[ $langs[conj] ]<HR width=40% size=1 noshade align=left>\n".
-         "<TABLE WIDTH=100% border=0 CELLSPACING=1 CELLPADDING=$CPADDING>\n";
-    $t .= get_list($table,$pages,$o);
-    $t .= "<TR>\n".
-          "  <TD WIDTH=$td_width[1] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-          "  <TD WIDTH=$td_width[2] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-          "  <TD WIDTH=$td_width[3] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
+    $t = "<p>\n<TABLE WIDTH=100% border=0 CELLSPACING=1 CELLPADDING=$CPADDING>\n".
+         "<TR>\n".
+         "  <TD WIDTH=$td_width[1] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=4 ALT=''></TD>\n".
+         "  <TD WIDTH=$td_width[2] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+         "  <TD WIDTH=$td_width[3] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
 
     if ($upload[yesno] && $cupload[yesno])
-      $t .= "  <TD WIDTH=$td_width[4] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
+      $t .= "  <TD WIDTH=$td_width[4] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
 
-    $t .= "<TD WIDTH=$td_width[5] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-            "  <TD COLSPAN=2 WIDTH=$td_width[6] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-            "</TR>\n".
-            "</TABLE>\n";
+    $t .= "<TD WIDTH=$td_width[5] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+          "  <TD COLSPAN=2 WIDTH=$td_width[6] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+          "</TR>\n";
+    $t .= get_list($table,$pages,$o);
+    $t .= "</TABLE>\n";
     return $t;
   } else {
     echo "<p>[ $langs[conj] ]<HR width=40% size=1 noshade align=left>\n".
-         "<TABLE WIDTH=100% border=0 CELLSPACING=1 CELLPADDING=1>\n";
+         "<TABLE WIDTH=100% border=0 CELLSPACING=1 CELLPADDING=1>\n".
+         "<TR>\n".
+         "  <TD WIDTH=$td_width[1] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=4 ALT=''></TD>\n".
+         "  <TD WIDTH=$td_width[2] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+         "  <TD WIDTH=$td_width[3] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
+
+    if ($upload[yesno] && $cupload[yesno])
+      echo "  <TD WIDTH=$td_width[4] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
+  
+    echo "<TD WIDTH=$td_width[5] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+         "  <TD COLSPAN=2 WIDTH=$td_width[6] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+         "</TR>\n";
 
     get_list($table,$pages,$o,1);
 
-    echo "<TR>\n".
-         "  <TD WIDTH=$td_width[1] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-         "  <TD WIDTH=$td_width[2] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-         "  <TD WIDTH=$td_width[3] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
-
-    if ($upload[yesno] && $cupload[yesno])
-      echo "  <TD WIDTH=$td_width[4] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
-  
-    echo "<TD WIDTH=$td_width[5] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-         "  <TD COLSPAN=2 WIDTH=$td_width[6] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-         "</TR>\n".
-         "</TABLE>\n";
+    echo "</TABLE>\n";
   }
 }
 
@@ -853,5 +852,47 @@ function detail_searchform($p='') {
 
   if($p) echo $form;
   else return $form;
+}
+
+function print_comment($table,$no,$print=0) {
+  global $board, $color, $size, $rname, $page, $langs;
+  global $pre_regist;
+  $textareasize = $size[text]-form_size(8);
+
+  if (preg_match("/^(2|3|5|7)$/",$board[mode])) {
+    if($board[super] != 1) $disable = " disabled";
+    else $disable = "";
+  } else $disable = "";
+
+  $t = "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=1 BGCOLOR=$color[l5_bg]>\n".
+       "<FORM METHOD=POST ACTION=act.php>\n".
+       "<TR>\n".
+       "<TD COLSPAN=2 BACKGROUND=./images/dotline.gif><IMG SRC=./images/blank.gif WIDTH=1 HEIGHT=4 BORDER=0 ALT=''></TD>\n".
+       "</TR>\n".
+       "<TR>\n".
+       "<TD ALIGN=right>\n".
+       "$langs[c_na] <INPUT TYPE=text$disable NAME=atc[name] SIZE=$size[pass] VALUE=\"$pre_regist[name]\"><BR>\n".
+       "$langs[c_ps] <INPUT TYPE=password NAME=atc[passwd] SIZE=$size[pass]>\n".
+       "</TD>\n".
+       "<TD ROWSPAN=2 ALIGN=center>\n".
+       "<TEXTAREA NAME=atc[text] COLS=$textareasize ROWS=3 WRAP=hard></TEXTAREA>\n".
+       "</TD>\n".
+       "</TR>\n".
+       "<TR BGCOLOR=$color[l5_bg]>\n".
+       "<TD ALIGN=right><INPUT TYPE=submit VALUE=\"$langs[c_en]\"></TD>\n".
+       "</TR>\n".
+       "<INPUT TYPE=hidden NAME=atc[no] VALUE=$no>\n".
+       "<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"$pre_regist[rname]\">\n".
+       "<INPUT TYPE=hidden NAME=table VALUE=$table>\n".
+       "<INPUT TYPE=hidden NAME=page VALUE=$page>\n".
+       "<INPUT TYPE=hidden NAME=o[at] VALUE=\"c_write\">\n".
+       "</FORM>\n".
+       "</TABLE>\n".
+       "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=5 BGCOLOR=$color[l5_bg]>\n".
+       get_comment($table,$no,0).
+       "</TABLE>\n";
+
+  if($print) echo $t;
+  else return $t;
 }
 ?>

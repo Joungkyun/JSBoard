@@ -36,6 +36,9 @@ $chg[ore] = $us[ore] ? 1 : 0;
 # Option of print conjunct list when reply
 $chg[re_list] = $ua[re_list] ? 1 : 0;
 
+# Option of print comment function
+$chg[comment] = $ua[comment] ? 1 : 0;
+
 # Board Basic Configuration
 if($ua[title] && $ua[title] != $board[title])
   $chg[title] = "$ua[title]";
@@ -147,6 +150,10 @@ $chg_conf = "<?
 # 글읽기에서 관련글이 있을 경우 관련글 리스트를 보여줄지 여부 설정
 #
 \$enable[re_list] = $chg[re_list];		# 0 - 보여주지 않음 1 - 보여줌
+
+# 커멘트 기능 사용여부
+#
+\$enable[comment] = $chg[comment];			# 0 - 보여주지 않음 1 - 보여줌
 
 
 ###############################################################################
