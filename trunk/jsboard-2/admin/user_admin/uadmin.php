@@ -93,14 +93,14 @@ else $nameck_n = "checked";
 $ipbl = trim($enable['ipbl']) ? parse_ipvalue($enable['ipbl'],1) : $langs['ua_dhyper3'];
 if(!$board['useipbl']) {
   $ipbl = "Prevent this function by super user!\n".
-          "If you want to this function, config \"\{$board['useipbl']}\" = 1; in global.ph";
+          "If you want to this function, config \"\$board['useipbl'] = 1;\" in global.ph";
   $ipbllinkro = " disabled";
 }
 
 $denylink = trim($enable['plink']) ? parse_ipvalue($enable['plink'],1) : $langs['ua_dhyper3'];
 if(!$board['usedhyper']) {
   $denylink = "Prevent this function by super user!\n".
-              "If you want to this function, config \"\{$board['usedhyer']}\" = 1; in global.ph";
+              "If you want to this function, config \"\$board['usedhyer'] = 1;\" in global.ph";
   $denylinkro = " disabled";
 }
 
