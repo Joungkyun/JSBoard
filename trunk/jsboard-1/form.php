@@ -96,6 +96,8 @@ TEXTAREA {font: 10pt $langs[font]; BACKGROUND-COLOR: $color[bgcol]; COLOR: $colo
 </TABLE>\n";
 } else {
   if($mode == "photo") {
+    include "include/lang.ph";
+    include "include/get.ph";
     include "include/error.ph";
     include "include/check.ph";
 

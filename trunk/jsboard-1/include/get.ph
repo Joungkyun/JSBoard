@@ -65,25 +65,13 @@ function get_agent() {
 
 # 오늘 자정을 기준으로 UNIX_TIMESTAMP의 형태로 시각을 뽑아오는 함수
 #
-# time    - 현재 시각의 UNIX TIMESTAMP를 가져옴
-#           http://www.php.net/manual/function.time.php
 # date    - UNIX TIMESTAMP를 지역 시간에 맞게 지정한 형식으로 출력
 #           http://www.php.net/manual/function.date.php
 # mktime  - 지정한 시각의 UNIX TIMESTAMP를 가져옴
 #           http://www.php.net/manual/function.mktime.php
-# explode - 구분 문자열을 기준으로 문자열을 나눔
-#           http://www.php.net/manual/function.explode.php
+#
 function get_date() {
-  # 현재의 시간을 $time에 저장
-  $time  = time();
-  # 년, 월, 일을 각각의 변수에 대입
-  $date  = date("m:d:Y", $time);
-  $date = explode(":", $date);
-
-  # 오늘 날짜에 자정을 기준으로 UNIX_TIMESTAMP 형식으로 만듬
-  #$today = mktime(0, 0, 0, $date[0], $date[1], $date[2]);
-  $today = mktime(date("H")-12, 0, 0, date("m"), date("d"), date("Y"));
-
+  $today = mktime(date("H")-12,0,0);
   return $today;
 }
 
@@ -358,6 +346,7 @@ function viewfile($tail) {
   if (@file_exists($upload_file)) {
     if (eregi("^(gif|jpg|png)$",$tail)) {
       $imginfo = GetImageSize($upload_file);
+      if($agent[br] == "MOZL") $list[bofile] = urlencode($list[bofile]);
       $uplink_file = "./form.php?mode=photo&table=$table&f[c]=$list[bcfile]&f[n]=$list[bofile]&f[w]=$imginfo[0]&f[h]=$imginfo[1]";
       if($imginfo[0] > $board[width] - 6 && !eregi("%",$board[width])) {
         $p[vars] = $imginfo[0]/$board[width];

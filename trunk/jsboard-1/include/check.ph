@@ -163,7 +163,7 @@ function enable_write($super,$user,$check,$ena, $cena = 1) {
   if($no) $nom = "&no=$no";
   $page = $page? "&page=$page" : "";
 
-  if ($wcheck && !$adminsession) {
+  if ($wcheck && !$adminsession && !$check) {
     SetCookie("pcheck","",0);
     header("Location: auth_ext.php?table=$table&ena=$ena&cena=$cena&kind=$kind$page$nom");
     die;
@@ -233,7 +233,7 @@ function upload_name_chk($f) {
   if(!trim($f)) print_error($langs[act_de]);
 
   # file 이름에서 특수문자가 있으면 에러 출력
-  if (eregi("[^\xA1-\xFEa-z0-9\._\-]|\.\.",$f)) {
+  if (eregi("[^\xA1-\xFEa-z0-9\._\-]|\.\.",urldecode($f))) {
     print_error($langs[act_de]);
     exit;
   }
@@ -246,12 +246,14 @@ function upload_name_chk($f) {
 function check_location($n=0) {
   global $rmail, $langs;
 
-  $r = gethostbyname(eregi_replace("http://([^/]+)/.*","\\1",getenv("HTTP_REFERER")));
-  $l = gethostbyname(eregi_replace("http://([^/]+)/.*","\\1",$rmail[bbshome]));
+  if($n) {
+    $r = gethostbyname(eregi_replace("http://([^/]+)/.*","\\1",getenv("HTTP_REFERER")));
+    $l = gethostbyname(eregi_replace("http://([^/]+)/.*","\\1",$rmail[bbshome]));
 
-  if ($r != $l) {
-    if($n) print_error("$langs[chk_lo]");
-    return 0;
+    if ($r != $l) {
+      print_error("$langs[chk_lo]");
+      return 0;
+    } else return 1;
   } else return 1;
 }
 ?>

@@ -183,7 +183,7 @@ $view[email]	= "yes";
 ##############################################################################
 $rmail[uses]	= "yes";
 # 메일을 발송할 서버를 지정
-$rmail[smtp]	= "127.0.0.1";
+$rmail[smtp]    = "127.0.0.1";
 #jsboard가 설치되어 있는 웹경로
 $rmail[bbshome]	= "http://url.com/jsboard/";
 

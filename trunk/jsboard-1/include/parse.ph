@@ -237,7 +237,7 @@ function auto_link($str) {
 
   $regex[file] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
   $regex[http] = "(http|https|ftp|telnet|news):\/\/(([\xA1-\xFEa-z0-9_\-]+\.[][\xA1-\xFEa-z0-9:;&#@=_~%\?\/\.\,\+\-]+)(\/|[\.]*[a-z0-9]))";
-  $regex[mail] = "([\xA1-\xFEa-z0-9_\.\-]+)@([\xA1-\xFEa-z0-9_\-]+\.[a-z0-9\-\._\-]+[\.]*[a-z0-9])";
+  $regex[mail] = "([\xA1-\xFEa-z0-9_\.\-]+)@([\xA1-\xFEa-z0-9_\-]+\.[a-z0-9\-\._\-]+[\.]*[\xA1-\xFEa-z0-9\?=]*)";
 
   # < 로 열린 태그가 그 줄에서 닫히지 않을 경우 nl2br()에서 <BR> 태그가
   # 붙어 깨지는 문제를 막기 위해 다음 줄까지 검사하여 이어줌
@@ -263,11 +263,11 @@ function auto_link($str) {
   $str = eregi_replace("#-#","@",$str);
   
   # link가 2개 겹쳤을때 이를 하나로 줄여줌
-  #$str = eregi_replace("(<a href=[\"']*($regex[http])[\"']*+[^>]*>)+<a href=[\"']*($regex[http])[\"']*+[^>]*>","\\1", $str);
-  #$str = eregi_replace("(<a href=[\"']*mailto:($regex[mail])[\"']*>)+<a href=[\"']*mailto:($regex[mail])[\"']*>","\\1", $str);
-  #$str = eregi_replace("</a></a>","</a>",$str);
-  #$str = eregi_replace("([a-z])(\.)*(\" target=\"_blank)\">","\\1\\3\">",$str);
-  #$str = eregi_replace("([a-z])(\.)*\">","\\1\">",$str);
+  $str = eregi_replace("(<a href=[\"']?($regex[http])[\"']?[^>]*>)(<a href=[\"']?($regex[http])[\"']?[^>]*>)+","\\1", $str);
+  $str = eregi_replace("(<a href=[\"']?mailto:($regex[mail])[\"']?>)(<a href=[\"']?mailto:($regex[mail])[\"']?>)+","\\1", $str);
+  $str = eregi_replace("</a></a>","</a>",$str);
+  $str = eregi_replace("([a-z])(\.)*(\" target=\"_blank)\">","\\1\\3\">",$str);
+  $str = eregi_replace("([a-z])(\.)*\">","\\1\">",$str);
   
   # file link시 target 을 삭제
   $str = eregi_replace("(\.($regex[file])\") target=\"_blank\"","\\1",$str);
@@ -277,10 +277,10 @@ function auto_link($str) {
 
 # Email 링크를 만들기 위한 함수
 function url_link($url, $str, $color, $no = 0) {
-  global $table, $board;
+  global $table, $board, $rmail;
 
   if(check_email($url)) {
-    if($board[mchk]) {
+    if($board[mchk] && $rmail[uses] == "yes") {
       $board[fwidth] = eregi("%",$board[width]) ? "550" : $board[width];
       $str = "<A HREF=javascript:new_windows('form.php?table=$table&no=$no','form',0,0,$board[fwidth],420)><FONT COLOR=\"$color\">$str</FONT></A>";
     } else {

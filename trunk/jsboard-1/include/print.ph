@@ -34,7 +34,7 @@ function form_size($size, $print = 0) {
     } else if($agent[os] == "WIN") {
       if($agent[ln] == "KO") $size *= 1.1; # 한글판
       else $size *= 1.3;
-    } elseif($agent[os] == "LINUX") $size *= 1.0;
+    } elseif($agent[os] == "LINUX") $size *= 1.8;
   }
 
   # 네스케이프 6
@@ -284,11 +284,11 @@ function list_cmd($str) {
  echo "\n<TABLE WIDTH=\"1%\" BORDER=\"0\" CELLSPACING=\"4\" CELLPADDING=\"0\" $str[align]>\n" .
       "<TR>\n" .
       " $str[sepa]$str[all]\n" .
-      " <TD WIDTH=\"1%\" NORWAP>$str[prev]</TD>\n" .
+      " <TD WIDTH=\"1%\" NOWRAP>$str[prev]</TD>\n" .
       " $str[sepa]\n" .
-      " <TD WIDTH=\"1%\" NORWAP>$str[next]</TD>\n" .
+      " <TD WIDTH=\"1%\" NOWRAP>$str[next]</TD>\n" .
       " $str[sepa]\n" .
-      " <TD WIDTH=\"1%\" NORWAP>$str[write]</TD>\n" .
+      " <TD WIDTH=\"1%\" NOWRAP>$str[write]</TD>\n" .
       " $str[sepa]$str[today]\n" .
       "</TR>\n</TABLE>";
 }

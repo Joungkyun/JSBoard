@@ -20,18 +20,18 @@ function mailcheck($to,$from,$title,$body) {
   if(!trim($body)) print_error($langs[mail_body_chk_drr]);
 }
 
-function socketmail($smtp='',$to,$from,$title,$body,$lang) {
+function socketmail($smtp,$to,$from,$title,$body,$lang) {
   global $langs;
   $smtp = !trim($smtp) ? "127.0.0.1" : $smtp;
 
   # 빈 문자열 체크
   mailcheck($to,$from,$title,$body);
-
+  
   # language type 을 결정
   if($lang == "ko") { $charset = "EUC-KR"; $charbit = "8bit"; }
   else  { $cahrset = "ISO-8859-1"; $charbit = "7bit"; }
 
-  # mail header 를 작성
+  # mail header 를 작성 
   $mail_header = "From: JSBoard Message<nouser@jsboard.kldp.org>\n".
                  "Organization: JSBoard Open Project\n".
                  "User-Agent: JSBoard Mail System\n".
@@ -46,14 +46,15 @@ function socketmail($smtp='',$to,$from,$title,$body,$lang) {
 
   $body = $mail_header.$body;
   $body = str_replace("\n","\r\n",str_replace("\r","",$body));
-
+  
   # smtp port 에 socket 을 연결
   $p = fsockopen($smtp,25,&$errno,&$errstr);
+
   if ($p) {
     fputs($p,"HELO $smtp\r\n");
-    fgets($p,512);
+    fgets($p,512); 
     fputs($p,"MAIL From: $from\r\n");
-    fgets($p,512);
+    fgets($p,512); 
     fputs($p,"RCPT To: $to\r\n");
     fgets($p,512);
     fputs($p,"data\r\n");
@@ -67,12 +68,9 @@ function socketmail($smtp='',$to,$from,$title,$body,$lang) {
 }
 
 function sendmail($rmail,$fm=0) {
-
   global $REMOTE_ADDR, $HTTP_USER_AGENT, $HTTP_ACCEPT_LANGUAGE, $SERVER_NAME, $langs;
-  global $mail_error, $mail_msg_header;
 
   $mail_msg_head = "$langs[sm_dr]";
-  $mail_error = "$langs[sm_ds]";
 
   if ($langs[code] == "ko") $time = date("Y/m/d (D) a h시i분");
   else $time = date("Y/m/d (D) a h:i");
@@ -121,47 +119,45 @@ function sendmail($rmail,$fm=0) {
     $homeurl = "To		: mailto:$rmail[reply_orig_email]";
   }
 
-  $message ="
-
-$mail_msg_header
-
-■ JSBOARD $rmail[table] message
-
-[ Server Infomation ]------------------------------------------------------
-ServerWare	: JSBoard-$rmail[version]
-Server Name	: $SERVER_NAME$nofm
-
-
-[ Article Infomation ]-----------------------------------------------------
-이 름		: $rmail[name]
-Email		: mailto:$rmail[email]
-$homeurl
-일 시		: $year $day $ampm $hms
----------------------------------------------------------------------------
-
-$rmail[text]
-
-
-
----------------------------------------------------------------------------
-REMOTE_ADDR : $REMOTE_ADDR
-HTTP_USER_AGENT : $HTTP_USER_AGENT
-HTTP_ACCEPT_LANGUAGE : $HTTP_ACCEPT_LANGUAGE
----------------------------------------------------------------------------
-
-OOPS Form mail service - http://www.oops.org
-Scripted by JoungKyun Kim
-";
+  $message = "\n".
+             "\n".
+             "$mail_msg_header\n".
+             "\n".
+             "■ JSBOARD $rmail[table] message\n".
+             "\n".
+             "[ Server Infomation ]------------------------------------------------------\n".
+             "ServerWare	: JSBoard-$rmail[version]\n".
+             "Server Name	: $SERVER_NAME$nofm\n".
+             "\n".
+             "\n".
+             "[ Article Infomation ]-----------------------------------------------------\n".
+             "이 름		: $rmail[name]\n".
+             "Email		: mailto:$rmail[email]\n".
+             "$homeurl\n".
+             "일 시		: $year $day $ampm $hms\n".
+             "---------------------------------------------------------------------------\n".
+             "\n".
+             "$rmail[text]\n".
+             "\n".
+             "\n".
+             "\n".
+             "---------------------------------------------------------------------------\n".
+             "REMOTE_ADDR : $REMOTE_ADDR\n".
+             "HTTP_USER_AGENT : $HTTP_USER_AGENT\n".
+             "HTTP_ACCEPT_LANGUAGE : $HTTP_ACCEPT_LANGUAGE\n".
+             "---------------------------------------------------------------------------\n".
+             "\n".
+             "OOPS Form mail service - http://www.oops.org\n".
+             "Scripted by JoungKyun Kim\n";
 
   if ($rmail[user] == "yes" && $rmail[reply_orig_email]) {
-    $to = $rmail[reply_orig_email];
-    if(!$rmail[email]) $rmail[email] = "nomail@jsboard.agent"; 
+    if(!$rmail[email]) $rmail[email] = "nomail@jsboard.agt"; 
     socketmail($rmail[smtp],$rmail[reply_orig_email],$rmail[email],$rmail[title],$message,$langs[code]);
   }
 
   if ($rmail[admin] == "yes" && $rmail[toadmin] != "") {
     $to = $rmail[toadmin];
-    if(!$rmail[email]) $rmail[email] = "nomail@jsboard.agent";
+    if(!$rmail[email]) $rmail[email] = "nomail@jsboard.agt";
     socketmail($rmail[smtp],$rmail[toadmin],$rmail[email],$rmail[title],$message,$langs[code]);
   }
 

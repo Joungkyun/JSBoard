@@ -279,6 +279,7 @@ $langs[ua_fp]	= "File Upload";
 
 $langs[ua_mail_p] = "Send";
 $langs[ua_mail_n] = "Don't";
+$langs[ua_while_wn] = "Limit this function by whole admin";
 
 $langs[ua_etc1]	= "Use URL";
 $langs[ua_etc2]	= "Use Email";

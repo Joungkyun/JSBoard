@@ -3,8 +3,8 @@ session_start();
 $path[type] = "user_admin";
 
 include "../../include/error.ph";
-include "../../include/get.ph";
 include "../include/check.ph";
+include "../../include/get.ph";
 
 # table 이름을 체크한다.
 table_name_check($table);

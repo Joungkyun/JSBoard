@@ -16,7 +16,7 @@ TEXTAREA {font: 10pt <? echo $langs[font] ?>; BACKGROUND-COLOR:<? echo $color[n2
 -->
 </STYLE>
 <?
-if($view[email] == "yes") {
+if($view[email] == "yes" || ($upload[yesno] == "yes" && $cupload[yesno] == "yes")) {
 echo "
 <script LANGUAGE=JavaScript>
 <!-- Begin

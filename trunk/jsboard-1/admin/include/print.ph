@@ -161,7 +161,7 @@ function get_lang_list($code) {
 # 패스워드 변경을 안하면 변경을 하게끔 귀찮게 메시지 뿌리기 :-)
 function print_chgpass($pass) {
   global $langs;
-  if ($pass == "i32GYg/RuTAs6") print_notice($langs[p_chm],250,35);
+  if ($pass == crypt("0000",$pass)) print_notice($langs[p_chm],250,35);
 }
 
 ?>

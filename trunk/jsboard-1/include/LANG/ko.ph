@@ -282,6 +282,7 @@ $langs[ua_fp] = "파일업로드";
 
 $langs[ua_mail_p] = "보냄";
 $langs[ua_mail_n] = "안보냄";
+$langs[ua_while_wn] = "전체 관리자가 기능을 제한했습니다.";
 
 $langs[ua_etc1] = "URL 등록";
 $langs[ua_etc2] = "Email 등록";
