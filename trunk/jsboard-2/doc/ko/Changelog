@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.7
 
+2004.02.18
+  by 김정균 <http://www.oops.org>
+	- 검색어 슬래쉬 파싱 에러 수정
+
 2004.02.14
   by 김정균 <http://www.oops.org>
 	- php unset() 함수 버그 수정
