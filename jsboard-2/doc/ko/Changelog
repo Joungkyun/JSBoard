@@ -21,7 +21,7 @@ Attention : OOPS administration Center is not GPL.
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2001년 12월  5일
+작성일 : 2001년 12월  6일
 버전   : jsboard-2.0pre3
 
 * 변경된점
@@ -62,6 +62,7 @@ Attention : OOPS administration Center is not GPL.
 34. 검색시 처음 변수값들이 post 로 넘어가는 것을 get 방식으로 전환
 35. mode 4,6 에서 일반 유저의 패스워드가 적용되지 않는 것 수정
 36. 설정 파일 convert 파일 수정
+37. 게시판 등록 안되는 문제 수정
 
 
 -----------------------------------------------------------------------------
