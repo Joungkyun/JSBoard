@@ -13,7 +13,7 @@ function qsql($n, $act)
     }
     if ($act == "search") {
 	if (strlen($sc_string) >= 2 || $sc_column == "today") {
-	    $sc_string = chop($sc_string);
+	    $sc_string = addslashes(chop($sc_string));
 
 	    if ($sc_column == "all") {
 		$sc_sql = "title LIKE \"%$sc_string%\" OR text LIKE \"%$sc_string%\" OR name LIKE \"%$sc_string%\"";
@@ -48,7 +48,7 @@ function plist($n, $act = "normal")
 
     global $table, $file_upload;  
     global $acount, $tcount, $apage, $pern;
-    global $scount, $page;
+    global $scount, $page, $user_del;
     global $sc_column, $sc_string, $search;
     global $width, $l0_bg, $l0_fg, $l1_bg, $l1_fg, $l2_bg, $l2_fg;
     
@@ -59,13 +59,21 @@ function plist($n, $act = "normal")
     }
 
     if($act != "reply" && $act != "relate" && $act != "search") {
-	echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\"><tr><td align=\"right\">\n" .
+	echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\">\n" .
+             "<tr><td align=\"left\">\n" .
+             "<a href=./admin/user_admin/auth.php3?db=$table>[admin]</a>\n" .
+             "</td>\n" .
+             "<td align=\"right\">\n" .
 	     "<font size=\"-1\">${acount}개의 글(오늘 올라온 글 ${tcount}개)이 있습니다. [ $page / $apage ]</font>\n" .
 	     "</td></tr></table>\n\n");
     }
     
     if($act == "search") {
-	echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\"><tr><td align=\"right\">\n" .
+	echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\">\n" .
+             "<tr><tr><td align=\"left\">\n" .
+             "<a href=./admin/user_admin/auth.php3?db=$table>[admin]</a>\n" .
+             "</td>\n" .
+             "<td align=\"right\">\n" .
 	     "<font size=\"-1\">${acount}개의 글이 검색되었습니다. [ $page / $apage ]</font>\n" .
 	     "</td></tr></table>\n\n");
     }
@@ -184,9 +192,9 @@ function vlist($no) {
 			$tail = substr( strrchr($bofile, "."), 1 );
 			if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram || $tail==hwp || $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj || $tail==tar || $tail==avi || $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp))
 			{
-			    echo"<td align=\"center\" bgcolor=\"$bg\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" border=\"0\" alt=\"$bofile\"></a></td>\n";
+			    echo"<td align=\"center\" bgcolor=\"$bg\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" width=16 height=16 border=0 alt=\"$bofile\"></a></td>\n";
 			}else {
-			    echo"<td align=\"center\" bgcolor=\"$bg\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/$tail.gif\" border=\"0\" alt=\"$bofile\"></a></td>\n";
+			    echo"<td align=\"center\" bgcolor=\"$bg\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/$tail.gif\" width=16 height=16 border=0 alt=\"$bofile\"></a></td>\n";
 			}
 		}else
 		{
