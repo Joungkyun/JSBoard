@@ -23,6 +23,7 @@ Version   : jsboard-2.0.5
 Wed, Jan 22 2003
   by JoungKyun Kim <http://www.oops.org>
 	- fixed function name to print_keymenu form pirnt_keymenu
+	- fixed don't parse article title when board width include %
 
 Thu, Jan 16 2003
   by JoungKyun Kim <http://www.oops.org>
