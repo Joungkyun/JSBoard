@@ -56,6 +56,7 @@ if($enable[dhost]) {
 
 if($board[rnname] && eregi("^(2|3|5|7)",$board[mode])) 
   $list[ename] = $list[rname] ? $list[rname] : $list[name];
+else $list[ename] = $list[name];
 
 if($list[email]) $list[uname] = url_link($list[email], $list[ename], $color[r2_fg], $no);
 else $list[uname] = $list[ename];
