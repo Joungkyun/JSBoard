@@ -35,6 +35,7 @@ If you wnat to see windog's change log, see also
 10. sendmail.ph 에서 Date Header 추가
 11. 관련글 보기 기능 작동 하지 않던 것 수정
 12. 미리보기 문자열에서 개행문자 때문에 발생하는 에러 수정
+13. INSTALL 파일 오타 수정
 
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)

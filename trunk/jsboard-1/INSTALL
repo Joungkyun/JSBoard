@@ -478,13 +478,13 @@ Linux, FreeBSD 이외의 OS에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문 서를
   # 계정 유저들은 QUICK_ISTALL 문서를 참조하도록 한다.
 
   jsboard-1.2버젼의 가장큰 변화는 확장자의 변화이다. 즉 1.1.x까지는 .php3
-  라는 확장자를 사용했지만 jsbaord-1.2 에서 부터는 .php 라는 이름 으로 변
+  라는 확장자를 사용했지만 jsboard-1.2 에서 부터는 .php 라는 이름 으로 변
   경이 되었다. 그래서 소스를 덮었씌우는 방법을 하면 안된다.
 
   jsboard-1.2.x 의 사용자들은 그냥 소스를 덮어 씌우는 방법을 해도 된다.
 
   일단은 임의의 디렉토리에 jsabord-1.3 version 을 풀어 놓도록 한다. 그 다
-  음 Insatller/script/ 로 이동을 하여 root.sh 를 실행 하도록 한다. 그리고
+  음 Installer/script/ 로 이동을 하여 root.sh 를 실행 하도록 한다. 그리고
   기존의 data/ 있는 모든 디렉토리들을 1.3/data 로 copy 를 하도록 하고,
   admin/include/config.ph 역시 1.3/admin/include 로 카피를 한다.
 
