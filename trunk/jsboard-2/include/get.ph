@@ -1,13 +1,13 @@
 <?
 # login 정보를 얻어오는 함수
 #
-function get_authinfo($id) {
-  global $PHP_SELF, $edb, $db;
+function get_authinfo($id,$nocry='') {
+  global $PHP_SELF, $edb, $db, ${$jsboard};
   if(eregi("user_admin",$PHP_SELF)) { $path = "../.."; }
   elseif(eregi("admin",$PHP_SELF)) { $path = ".."; }
   else { $path = "."; }
 
-  if($edb[uses] || ${jsboard}[external]) {
+  if($edb[uses] || ${$jsboard}[external]) {
     $connect = sql_connect($edb[server],$edb[user],$edb[pass]);    
 
     if($edb[sql]) $sql = $edb[sql];
@@ -21,7 +21,7 @@ function get_authinfo($id) {
     sql_free_result($result);
     mysql_close($connect);
 
-    if($edb[crypts]) $r[passwd] = crypt($r[passwd]);
+    if($edb[crypts] && !$nocry && $r[passwd]) $r[passwd] = crypt($r[passwd]);
 
     sql_connect($db[server], $db[user], $db[pass]);
     sql_select_db($db[name]);
