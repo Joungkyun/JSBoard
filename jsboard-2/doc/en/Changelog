@@ -19,6 +19,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.6
 
+Sun, Apr 13 2003
+  by JoungKyun Kim <http://www.oops.org>
+	- added preview function on BMP file format
+
 Sat, Apr 05 2003
   by JoungKyun Kim <http://www.oops.org>
 	- fixed IpBlocking/HyperLink edit bug
