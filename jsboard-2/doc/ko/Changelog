@@ -17,6 +17,9 @@ file.
 버전   : jsboard-2.0.7
 
 2004.03.05
+  by 김정균 <http://www.oops.org>
+	- jsboard 의 함수를 재사용하여 rss.php 를 재작성
+
   by 임은재 <http://kldp.org/~eunjea/>
 	- rss.php 에서 charset 을 설정 파일에서 받아오게 수정
 	- rss 의 XML 헤더 추가
