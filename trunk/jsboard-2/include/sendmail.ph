@@ -47,17 +47,15 @@ class maildaemon {
     $account = $dev[0];
     $host = $dev[1];
 
-    if(checkdnsrr($host,"MX")) {
-      if(getmxrr($host,$mx,$weight)) {
-        $idx = 0;
-        for($i=0;$i<sizeof($mx);$i++) {
-          $dest = $dest ? $dest : $weight[$i];
-          if($dest > $weight[$i]) {
-            $dest = $weight[$i];
-            $idx = $i;
-          }
+    if(checkdnsrr($host,"MX") && getmxrr($host,$mx,$weight)) {
+      $idx = 0;
+      for($i=0;$i<sizeof($mx);$i++) {
+        $dest = $dest ? $dest : $weight[$i];
+        if($dest > $weight[$i]) {
+          $dest = $weight[$i];
+          $idx = $i;
         }
-      } else return $host;
+      }
     } else return $host;
     return $mx[$idx];
   }
