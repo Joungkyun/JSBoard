@@ -20,9 +20,13 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.4
 
+Wed, Nov 27 2002
+  by Chilbong Kim <http://www.linuxchannel.net>
+	- modified human_fsize, get_hostname function
+
 Mon, Nov 20 2002
   by JoungKyun Kim <http://www.oops.org>
-	-fixed miss url of user config page on admin page
+	- fixed miss url of user config page on admin page
 
 
 -----------------------------------------------------------------------------

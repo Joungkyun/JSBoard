@@ -53,7 +53,7 @@ function get_hostname($reverse=0, $host=0)
                    'HTTP_X_FORWARDED','HTTP_FORWARDED_FOR','HTTP_FORWARDED',
                    'HTTP_COMING_FROM','HTTP_PROXY','HTTP_SP_HOST');
       foreach($tmp AS $v) if($_SERVER[$v] != $_SERVER[REMOTE_ADDR]) break;
-      if($_SERVER[$v]) $host = preg_replace(array('/unknown,/i','/,.*/'),array('',''),$_SERVER[$v]);
+      if($_SERVER[$v]) $host = preg_replace(array('/unknown,/i','/,.*/'),'',$_SERVER[$v]);
       $host = ($host = trim($host)) ? $host : $_SERVER[REMOTE_ADDR];
     }
     else $host = $_SERVER[REMOTE_ADDR];
@@ -360,9 +360,9 @@ function human_fsize($bfsize, $sub = "0") {
   $BYTES = number_format($bfsize) . " Bytes"; // 3자리를 기준으로 컴마
 
   if($bfsize < 1024) return $BYTES; # Bytes 범위
-  elseif($bfsize < 1048576) $bfsize = number_format(round($bfsize/1024)) . " KB"; # KBytes 범위
-  elseif($bfsize < 1073741827) $bfsize = number_format(round($bfsize/1048576)) . " MB"; # MB 범위
-  else $bfsize = number_format(round($bfsize/1073741827)) . " GB"; # GB 범위
+  elseif($bfsize < 1048576) $bfsize = number_format($bfsize/1024,1) . " KB"; # KBytes 범위
+  elseif($bfsize < 1073741827) $bfsize = number_format($bfsize/1048576,1) . " MB"; # MB 범위
+  else $bfsize = number_format($bfsize/1073741827,1) . " GB"; # GB 범위
 
   if($sub) $bfsize .= "($BYTES)";
 
