@@ -57,7 +57,7 @@ else
   cp -Rp ../ad_sample/$AD/spam_list.txt.orig ../../config/spam_list.txt
   cp -Rp ../ad_sample/$AD/allow_browser.txt.orig ../../config/allow_browser.txt
   cp -Rp ../ad_sample/$AD/config.ph.orig ../../admin/include/config.ph
-  if [ -d "../../data/test"]; then
+  if [ -d "../../data/test" ]; then
     cp -Rp ../sample/$AD/* ../../data/test/
   else
     cp -Rp ../sample/$AD ../../data/test

@@ -5,13 +5,10 @@
 //                 http://www.php.net/manual/function.getenv.php3
 // gethostbyaddr - IP 주소와 일치하는 호스트명을 가져옴
 //                 http://www.php.net/manual/function.gethostbyaddr.php3
-function get_hostname($reverse = 0) {
+function get_hostname() {
   // 아파치 환경 변수인 REMOTE_ADDR에서 접속자의 IP를 가져옴
   $host = getenv("REMOTE_ADDR");
-
-  // httpd.conf에서 HostnameLookup On 으로 설정했을 경우만 해당됨
   $check = @gethostbyaddr($host);
-  //$check = getenv("REMOTE_HOST");
 
   if($check) $host = $check;
   return $host;
@@ -328,7 +325,7 @@ function human_fsize($bfsize, $sub = "0") {
 } 
 
 function viewfile($tail) {
-  global $table, $list, $upload, $langs;
+  global $board, $table, $list, $upload;$langs;
   $upload_file = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
 
   $source1 = "<p><br>\n---- $list[bofile] $langs[inc_file] -------------------------- \n<p>\n<pre>\n";

@@ -1,10 +1,11 @@
 <?
 
 function print_error($str, $width = 250, $height = 100) {
-  global $table, $path;
+  global $table, $path, $prlist;
   $str = urlencode($str);
 
   if ($path[type] == "admin") $err_fn = "../error.php3";
+  elseif ($path[type] == "prelist") $err_fn = "$prlist[wpath]/error.php3";
   else $err_fn = "error.php3";
 
   echo "

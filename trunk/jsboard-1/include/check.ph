@@ -146,11 +146,13 @@ function check_net($ipaddr, $network, $netmask) {
 // 쓰기권한 체크 함수
 //
 function enable_write($super,$user,$check,$ena, $cena = 1) {
-  global $kind, $table, $no, $wcheck, $langs;
+  global $kind, $table, $no, $wcheck, $langs, $page;
 
   if($no) $nom = "&no=$no";
+  $page = $page? "&page=$page" : "";
+
   if ($wcheck) {
-    header("Location: auth_ext.php3?table=$table&ena=$ena&cena=$cena&kind=$kind$nom");
+    header("Location: auth_ext.php3?table=$table&ena=$ena&cena=$cena&kind=$kind$page$nom");
     die;
   }
 

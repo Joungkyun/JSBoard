@@ -25,7 +25,7 @@ $sinfo = get_send_info($table,$no);
 echo "<HTML>
 <HEAD>
 <META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=$langs[charset]\">
-<TITLE>Jsboard $version - °Ô½ÃÆÇ [Form Mail]</TITLE>
+<TITLE>Jsboard $version - [Form Mail]</TITLE>
 <STYLE TYPE=\"text/css\">
 <!--
 A:link, A:visited, A:active { TEXT-DECORATION: none; }

@@ -6,5 +6,5 @@ $sadmin[passwd] = "\$1\$Cx\$.2OyfWZCiPTc4sSw0vswc/"; // 전체 관리자 password
 $copy[name]     = "JoungKyun Kim";
 $copy[email]    = "admin@oops.org";
 $copy[url]      = "http://www.oops.org";
-$copy[version]  = "1.7";
+$copy[version]  = "1.8";
 ?>

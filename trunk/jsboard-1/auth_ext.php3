@@ -26,6 +26,7 @@ echo "
 $langs[au_ment]<br>
 <input type=password name=pcheck id=input size=$size>
 <input type=hidden name=table value=$table>
+<input type=hidden name=page value=$page>
 <input type=hidden name=no value=$no>
 </form>
 

@@ -97,23 +97,24 @@ $board[hls] = eregi_replace("><B><U>STR</U></B></FONT>","",$board[hls]);
 // html header의 정보를 가져 온다
 $top_head = get_file("../../html/head.ph");
 
-$top_head = eregi_replace("\\\\","",$top_head);
-$top_head = eregi_replace("(<\?|\?>|echo|\(\"|\"\))","",$top_head);
-$top_head = eregi_replace("if\((.*)}","",$top_head);
-$top_head = eregi_replace("\\\$version","$version",$top_head);
-$top_head = eregi_replace("\\\$sub_title","$board[title]",$top_head);
-$top_head = eregi_replace("(\\\$color)","",$top_head);
-$top_head = eregi_replace("\[bgcol\]","$color[bgcol]",$top_head);
-$top_head = eregi_replace("\[image\]","$color[image]",$top_head);
-$top_head = eregi_replace("\[text\]","$color[text]",$top_head);
-$top_head = eregi_replace("\[link\]","$color[link]",$top_head);
-$top_head = eregi_replace("\[vlink\]","$color[vlink]",$top_head);
-$top_head = eregi_replace("\[alink\]","$color[alink]",$top_head);
-$top_head = eregi_replace("\[l0_bg\]","$color[l0_bg]",$top_head);
-$top_head = eregi_replace("\[l1_bg\]","$color[l1_bg]",$top_head);
-$top_head = trim($top_head);
 $top_head = htmlspecialchars($top_head);
+$top_head = str_replace("&lt;? echo ","",$top_head);
+$top_head = eregi_replace(" \?&gt;(;|\}|&lt;|&quot;| -)","\\1",$top_head);
+$top_head = str_replace("\$table",$table,$top_head);
+$top_head = str_replace("\$version",$version,$top_head);
+$top_head = str_replace("\$langs[charset]",$langs[charset],$top_head);
+$top_head = str_replace("\$langs[font]",$langs[font],$top_head);
+$top_head = str_replace("\$color[bgcol]",$color[bgcol],$top_head);
+$top_head = str_replace("\$color[text]",$color[text],$top_head);
+$top_head = str_replace("\$color[l1_bg]",$color[l1_bg],$top_head);
+$top_head = str_replace("\$color[n0_bg]",$color[n0_bg],$top_head);
+$top_head = str_replace("\$color[image]",$color[image],$top_head);
+$top_head = str_replace("\$color[link]",$color[link],$top_head);
+$top_head = str_replace("\$color[vlink]",$color[vlink],$top_head);
+$top_head = str_replace("\$color[alink]",$color[alink],$top_head);
+$top_head = str_replace("  ","&nbsp;&nbsp;",$top_head);
 $top_head = nl2br($top_head);
+$top_head = trim($top_head);
 
 $html_head = get_file("../../data/$table/html_head.ph");
 

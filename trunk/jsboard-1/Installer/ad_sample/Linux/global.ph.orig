@@ -21,6 +21,7 @@ $enable[ore] = 0;       // 0 - 무조건 출력  1 - 선택사항
 /*****************************************************************************
   데이타베이스 관련 설정
 *****************************************************************************/
+# 데비안의 경우에는 $db[server]를 :/var/run/mysqld/mysqld.sock 로 지정할것
 $db[server] = ":/var/lib/mysql/mysql.sock";	// 서버 주소
 $db[user]   = "DBuser";				// 사용자
 $db[pass]   = "DBpass";				// 패스워드
@@ -190,6 +191,6 @@ if(@file_exists("data/$table/config.ph") && $board[uconf] == "yes")
 if(@file_exists("data/$table/default.themes") && $color[theme])
   { @include("data/$table/default.themes"); }
 
-$version = "1.1.0";
+$version = "1.1.1";
 
 ?>
