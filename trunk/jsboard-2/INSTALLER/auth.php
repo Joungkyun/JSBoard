@@ -109,7 +109,7 @@ if (!$mode) {
   # exec() 함수 작동 여부
   if (@exec("echo hello")) {
     $echeck = 1;
-    @exec("cat $apache_config_file | grep DirectoryIndex",$array);
+    @exec("cat $apache_config_file | grep -i DirectoryIndex",$array);
 
     # httpd.conf 의 DirectoryIndex 에 index.php 가 등록되어 있는지 여부
     for($i=0;$i<sizeof($array);$i++) {
