@@ -158,10 +158,10 @@ function sendmail($rmail,$fm=0) {
              "\r\n".
              "\r\n".
              "[ Article Infomation ]-----------------------------------------------------\r\n".
-             "이 름             : $rmail[name]\r\n".
+             "$langs[u_name]              : $rmail[name]\r\n".
              "Email             : $rmail[pemail]\r\n".
              "$homeurl\r\n".
-             "일 시             : $year $day $ampm $hms\r\n".
+             "$langs[a_t13]              : $year $day $ampm $hms\r\n".
              "---------------------------------------------------------------------------\r\n".
              "\r\n".
              "$rmail[text]\r\n".

@@ -24,17 +24,8 @@ $prlist[wpath] = "http://domain.com/jsboard-version";
 # 잘 연계해야함
 #
 function print_prlist($p) {
-  global $prlist;
-  if($prlist[type] == "main") {
-    $p[link] = eregi_replace("\[참고\]|\[TIP\]","",$p[link]);
-    echo "<Li type=disc>$p[link] $p[name] $p[date] $p[count]<br>\n";
-  } elseif ($prlist[type] == "proftpd") {
-    echo "$p[link] $p[name] $p[date] $p[count]<br>\n";
-  } else {
-    echo "$p[link] $p[name] $p[date] $p[count]<br>\n";
-  }
+  echo "$p[link] $p[name] $p[date] $p[count]<br>\n";
 }
-
 
 # PHP에 대해서 잘 모르신다고 생각하시는 분들은 건드리지 말것!!!
 # table 이름

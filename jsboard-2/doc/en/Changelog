@@ -18,20 +18,23 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Jan  5 2002
+Date      : Wed, Jan 14 2002
 Version   : jsboard-2.0pre4
 
 
-* 변경된점
-1. fixed userlist administrate with internal user database
-2. fixed sql that get max no field value, When retist reply article
-3. changed file_operate() function
-4. added environment various in get_hostname() function
-5. fixed auto_link() function
-6. added table check function when regist article to use html tag
-7. don't send mail when reply for own's article
-8. fixed hilighting bug of search string
-9. fixed fintering bug of under 2 search characters in detail search
+1. support over php 4.1.0
+2. fixed userlist administrate with internal user database
+3. fixed sql that get max no field value, When retist reply article
+4. changed file_operate() function
+5. added environment various in get_hostname() function
+6. fixed auto_link() function
+7. added table check function when regist article to use html tag
+8. don't send mail when reply for own's article
+9. fixed hilighting bug of search string
+10. fixed fintering bug of under 2 search characters in detail search
+11. removed miss table tag in theme
+12. fixed hard conding of korean code
+13. removed unuseful code in prelist.ph
 
 
 -----------------------------------------------------------------------------

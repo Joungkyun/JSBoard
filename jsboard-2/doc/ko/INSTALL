@@ -17,7 +17,7 @@
 #################################################################################
 
 작성 : 김정균 <http://www.oops.org>
-일시 : 2001.12.29
+일시 : 2002.01.05
 
 이 문서는 JSBoard 2.0  version의 설치를 위해 제공을 한다. 이 문서로 인한 피
 해나 JSBoard의 사용으로 인한 피해에 대해서는 아무런 책임을 질수 없으니 신중
@@ -31,7 +31,7 @@
 ===================================   주의   ===================================
 
 하나.
-JSBoard v2.0 은 PHP4 v4.0.3 이상 버젼에서 정상 작동을 하며, compile 을 할때
+JSBoard v2.0 은 PHP4 v4.1.0 이상 버젼에서 정상 작동을 하며, compile 을 할때
 configure 시에 --disable-session 옵션을 놓으면 절대 안된다. RH 7.x 호환배포
 본 에서는 php 를 컴파일 할때 --with-regex=php 를 주고 컴파일을 해야 한다.
 --with-regex=system 또는 --system-regex 옵션을 주었을때는 에러가 발생한다.
@@ -73,7 +73,34 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
 
   apache 1.3.x 이상
   MySQL 3.23.32 이상 (RPM 설치 권장 - ftp://ftp.oops.org)에서 받을수 있음
-  PHP-4.0.3 이상(RPM 설치 권장 - ftp://ftp.oops.org)에서 받을수 있음
+  PHP-4.1.0 이상(RPM 설치 권장 - ftp://ftp.oops.org)에서 받을수 있음
+
+  JSBoard 2.0 은  PHP4-4.1.0 이상 버젼에서 정상 작동을 하며, compile 시에 세션
+  기능을 빼면 절대 안된다.
+
+  JSBoard 를 사용하기 위해서 php 를 컴파일할때 주의할 점은 --with-regex=php 로
+  주어야 한다. --system-regex 나 --with-regex=system 으로 주지 말기를 바란다.
+
+  JSBoard 를 개발하는 환경은 다음과 같다.
+
+  PHP 4.1 기준
+
+  ./configure --with-apxs=/usr/sbin/apxs \
+              --with-config-file-path=/usr/lib/php \
+              --disable-debug
+              --with-regex=php \
+              --with-mod_charset \
+              --with-mysql=shared \
+              --enable-sigchild \
+              --enable-socket \
+              --enable-mailparse \
+              --enable-safe-mode \
+              --enable-inline-optimization \
+              --enable-magic-quotes \
+              --enable-track-vars \
+              --enable-debugger \
+              --enable-sysvsem \
+              --enable-sysvshm
 
   * 체크 사항 *
 

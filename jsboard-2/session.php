@@ -37,7 +37,7 @@ if ($m == "login") {
     session_register("$jsboard");
 
     # cookie 설정
-    $CookieTime = "time()+900";
+    $CookieTime = time()+900;
 
     if(eregi("MSIE",$agent[br]) && $agent[vr] == 5.5)
       $CookieTime = strftime("%A, %d-%b-%Y %H:%M:%S MST",$CookieTime);
@@ -65,6 +65,7 @@ if ($m == "login") {
 
   # 세션을 삭제
   session_unregister("$jsboard");
+
   # admin login 상태를 삭제
   SetCookie("c{$jsboard}[id]","",0,"/");
   SetCookie("c{$jsboard}[name]","",0,"/");
