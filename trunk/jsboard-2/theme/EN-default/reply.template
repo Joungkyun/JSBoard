@@ -68,7 +68,6 @@ if(!$np) {
 <TD ROWSPAN=9 WIDTH=10><IMG SRC=images/blank.gif WIDTH=10 HEIGHT=1 BORDER=0></TD>
 <TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0><BR></TD>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0><BR></TD>
-</TD>
 </TR>
 
 <!-#######################################################################-->

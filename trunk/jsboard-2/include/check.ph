@@ -312,17 +312,17 @@ function check_htmltable($str,$rep='') {
   } else {
     echo "\n##  TABLE CHECK RESULT\n".
          "##  ----------------------------------------------------------------------\n".
-         "##  OPEN  <TABLE>  TAG : $opentable\n".
-         "##  CLOSE </TABLE> TAG : $clstable\n##  \n".
+         "##  OPEN  TABLE TAG : $opentable\n".
+         "##  CLOSE TABLE TAG : $clstable\n##  \n".
 
-         "##  OPEN  <TH>     TAG : $openth\n".
-         "##  CLOSE </TH>    TAG : $clsth\n##  \n".
+         "##  OPEN  TH    TAG : $openth\n".
+         "##  CLOSE TH    TAG : $clsth\n##  \n".
 
-         "##  OPEN  <TR>     TAG : $opentr\n".
-         "##  CLOSE </TR>    TAG : $clstr\n##  \n".
+         "##  OPEN  TR    TAG : $opentr\n".
+         "##  CLOSE TR    TAG : $clstr\n##  \n".
 
-         "##  OPEN  <TD>     TAG : $opentd\n".
-         "##  CLOSE </TD>    TAG : $clstd\n\n";
+         "##  OPEN  TD    TAG : $opentd\n".
+         "##  CLOSE TD    TAG : $clstd\n\n";
   }
 }
 ?>
