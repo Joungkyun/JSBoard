@@ -35,7 +35,7 @@ mysql_close();
 # auth value check
 $ua[ad] = !trim($ua[ad]) ? "admin" : $ua[ad];
 $ua[rnname] = !trim($ua[rnname]) ? 0 : $ua[rnname];
-$ua[dopage] = trim($ua[dopage]) ? $ua[dopage] : "http://$board[path]/list.php?table=$table";
+$ua[dopage] = trim($ua[dopage]) ? $ua[dopage] : "http://$board[path]list.php?table=$table";
 
 # Permission Check
 if($ua[pre]) $chg[pre] = 1;
