@@ -1,4 +1,8 @@
 <?
+// 파일의 삭제, 등록, 수정
+//
+// $Id: act.php3,v 1.2 2002-04-06 22:32:41 oops Exp $
+//
 include("include/header.ph");
 include("include/$table/config.ph");
 
@@ -99,7 +103,7 @@ if ($act == "post" || $act == "edit") {
 	if (!$reno)
 	{
 		dquery("INSERT INTO $table VALUES ('', $last, $date, '$host', '$name', '$passwd',
-		'$email', '$url', '$title', '$text', 0, 0, 0, 0, 0,'$userfile_name','$bfilename',$userfile_size)");
+		'$email', '$url', '$title', '$text', 0, 0, 0, 0, 0,'$userfile_name','$bfilename','',$userfile_size)");
 	    $page = 1;
 	}
 	else
@@ -112,7 +116,7 @@ if ($act == "post" || $act == "edit") {
     }
 
 	    dquery("INSERT INTO $table VALUES ('', 0, $date, '$host', '$name', '$passwd', '$email', '$url',
-			'$title', '$text', 0, 0, $reno, $rede + 1, $reto, '$userfile_name','$bfilename',$userfile_size)");
+			'$title', '$text', 0, 0, $reno, $rede + 1, $reto, '$userfile_name','$bfilename','',$userfile_size)");
 	    dquery("UPDATE $table SET reyn = 1 WHERE no = $reno");
 	}
     }
@@ -130,12 +134,11 @@ if ($act == "post" || $act == "edit") {
 		dquery("UPDATE $table SET reyn = 0 WHERE no = $reno");
 	    }
 	    dquery("DELETE FROM $table WHERE no = $no");
-	    
 	}
-		// jinoos -- exec() 함수로 인한 오동작 방지 filesystem function 사용
+	// jinoos -- exec() 함수로 인한 오동작 방지 filesystem function 사용
 
-		unlink("$delete_filename");
-		rmdir("$delete_dir");
+	if ($delete_filename) unlink("$delete_filename");
+	if ($delete_dir) rmdir("$delete_dir");
     } else {
 	error("비밀번호가 틀립니다.");
     }

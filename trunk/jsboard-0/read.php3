@@ -1,4 +1,8 @@
 <?
+// 게시물의 내용을 출력
+//
+// $Id: read.php3,v 1.2 2002-04-06 22:32:41 oops Exp $
+//
 $no_button = $ndesc = 1;
 $sub_title = " [ 게시물 읽기 ]";
 
@@ -35,7 +39,8 @@ while($list = dfetch_row($result)) {
     $reto   = $list[14]; // 답장 맨 윗 글번호
     $bofile = $list[15]; // 파일이름
     $bcfile = $list[16]; // 파일경로
-    $bfsize = $list[17]; // 파일경로
+    $bfspec = $list[17]; // 파일구분
+    $bfsize = $list[18]; // 파일크기
 
     
     $num    = "$num 번 글:";
@@ -43,8 +48,6 @@ while($list = dfetch_row($result)) {
     $text   = eregi_replace("\r\n", "\n", $text);
     $text   = eregi_replace("\n", "\r\n", $text);
     $text   = nl2br($text);
-    
-    
 
     $text   = eregi_replace("([^(\"|')]|^)((http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+)",
                             "\\1<a href=\"\\2\"><font color=\"$r3_fg\">\\2</font></a>", $text);
@@ -64,6 +67,8 @@ while($list = dfetch_row($result)) {
 	                    "<a href=\"mailto:\\1\"><font color=\"$r3_fg\">\\1</font></a>", $text);  
 
     $text   = eregi_replace("<br>\n", "<br>", $text);
+        // 빈칸을 입력하여 포맷팅을 시켰을 경우에 제대로 나오게 하기위해 삽입
+    $text   = eregi_replace("  ", "&nbsp;&nbsp;", $text);
 
     if ($reto) {
 	$result = dquery("SELECT num FROM $table WHERE no = $reto");
@@ -73,7 +78,7 @@ while($list = dfetch_row($result)) {
     if (!$page) // page 번호 가져옴
 	$page = get_page($no);
 
-    if($email)
+    if($email && $use_email == "yes")
 	$name = "<a href=\"mailto:$email\"><font color=\"black\">$name</font></a>";
 
     echo("<p>\n<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"$r0_bg\"><tr><td>\n" .
@@ -94,31 +99,46 @@ while($list = dfetch_row($result)) {
 	++$refer; // 조회수 올림
     }
     echo("</td>\n" .
-	 "<td bgcolor=\"$r2_bg\"><font color=\"$r2_fg\">글쓴날: $date</font></td>\n" .
-	 "<td bgcolor=\"$r2_bg\"><font color=\"$r2_fg\">읽은수: $refer</font></td>\n" .
+      "<td bgcolor=\"$r2_bg\"><font color=\"$r2_fg\">글쓴날: $date</font></td>\n" .
+      "<td bgcolor=\"$r2_bg\"><font color=\"$r2_fg\">읽은수: $refer</font></td>\n" .
 	 "</tr>\n");
 
-	// jinoos -- 화일에 확장자를 검사해서 알맞은 아이콘으로 변화 시킨다. 
-	// jinoos -- 만일 화일이 없다면 "X" 볼드체로 변경다.
+    // jinoos -- 화일에 확장자를 검사해서 알맞은 아이콘으로 변화 시킨다. 
+    // jinoos -- 만일 화일이 없다면 "X" 볼드체로 변경다.
 
-	if($file_upload == "yes")
-	{
-		if($bofile)
-		{
-			$tail = substr( strrchr($bofile, "."), 1 );
-			if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram || $tail==hwp || $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj || $tail==tar || $tail==avi || $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp))
-			{
-				echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" border=\"0\" alt=\"$bofile\"> $bofile</a>\n";
-			}else{
-			echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/$tail.gif\" border=\"0\" alt=\"$bofile\"> $bofile</a>\n";
-			}
-			echo (" <font color=\"$r2_fg\">$bfsize Bytes</font></td></tr>");
-		}
-	}
+    if($file_upload == "yes")
+    {
+      if($bofile)
+      {
+        $tail = substr( strrchr($bofile, "."), 1 );
+	if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram ||
+          $tail==hwp || $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj ||
+          $tail==tar || $tail==avi || $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp))
+        {
+          echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\">".
+              "<a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" border=\"0\" alt=\"$bofile\"> $bofile</a>\n";
+        }
+        else
+        {
+          echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\">".
+              "<img src=\"images/$tail.gif\" border=\"0\" alt=\"$bofile\"> $bofile</a>\n";
+        }
+        $human_file_size = human_readable ($bfsize);
+        echo (" <font color=\"$r2_fg\"> ($human_file_size )</font></td></tr>");
+      }
+    }
 
-    echo("<tr><td colspan=\"3\" bgcolor=\"$r3_bg\">\n" .
-	 "<font color=\"$r3_fg\">\n$text\n</font>\n" .
-	 "</td></tr>\n");
+    echo("<tr><td colspan=\"3\" bgcolor=\"$r3_bg\">\n");
+
+     // 화상파일이면 바로 출력할 수 있도록 img 링크를 걸어준다.
+    $file_ext = strrchr ($bofile, ".");
+    if ($file_ext == ".jpg" || $file_ext == ".gif" ||
+     $file_ext == ".JPG" || $file_ext == ".GIF")
+    {
+       echo ("<img src=\"$filesavedir/$bcfile/$bofile\"><br>");
+    }
+    echo("<font color=\"$r3_fg\">\n<pre>$text\n</pre></font>\n" .
+         "</td></tr>\n");
     echo("</table>\n</td></tr></table>\n");
 
     $next = get_next($no);
@@ -173,4 +193,5 @@ while($list = dfetch_row($result)) {
 
     dquery("UPDATE $table SET refer = $refer WHERE no = $no");
 }
+include("include/$table/footer.ph");
 ?>

@@ -1,4 +1,8 @@
 <?
+// 게시물 삭제
+//
+// $Id: delete.php3,v 1.2 2002-04-06 22:32:41 oops Exp $
+//
 $no_button = $ndesc = 1;
 $sub_title   = " [ 게시물 삭제 ]";
 
@@ -31,8 +35,13 @@ while($list = dfetch_row($result)) {
     $reno   = $list[12]; // 답장 번호
     $bofile = $list[15]; // 파일이름
     $bcfile = $list[16]; // 파일경로
-    $bfsize = $list[17]; // 파일크기
+    $bfspec = $list[17]; // 파일구분
+    $bfsize = $list[18]; // 파일크기
 
+    if ($file_loginid == "yes") {
+      if ($name != $REMOTE_USER)
+         error("자신의 게시물만 삭제할 수 있습니다.");
+    }
     $date   = date("Y년 m월 d일 H시 i분", $date);
     $text   = eregi_replace("\r\n", "\n", $text);
     $text   = eregi_replace("\n", "\r\n", $text);
@@ -47,8 +56,10 @@ while($list = dfetch_row($result)) {
 	$url = "없음";
  // 삭제할 파일 이름 알아내는 루틴   
     if($bofile !="")
+    {
 	$delete_dir="$filesavedir/$bcfile";
 	$delete_filename="$filesavedir/$bcfile/$bofile";
+    }
 //    echo "$delete_file<p>";
 }
 
@@ -67,37 +78,48 @@ while($list = dfetch_row($result)) {
 </tr><tr>
   <td bgcolor="<? echo $r1_bg ?>"><font color="<? echo $r1_fg ?>">이름</font></td>
   <td width="100%" colspan="3" bgcolor="<? echo $r2_bg ?>"><? echo"<font color \"$r2_fg\">$name</font>" ?></td>
-</tr><tr>
-  <td bgcolor="<? echo $r1_bg ?>"><font color="<? echo $r1_fg ?>">메일</font></td>
-  <td width="100%" colspan="3" bgcolor="<? echo $r2_bg ?>"><? echo "<font color \"$r2_fg\">$email</font>" ?></td>
-</tr><tr>
-  <td bgcolor="<? echo $r1_bg ?>"><font color="<? echo $r1_fg ?>">홈페이지</font></td>
-  <td width="100%" colspan="3" bgcolor="<? echo $r2_bg ?>"><? echo "<font color \"$r2_fg\">$url</font>" ?></td>
-</tr><tr>
+</tr>
+<? if ($use_email == "yes") {
+  echo "<tr>".
+       "<td bgcolor=\"$r1_bg\"><font color=\"$r1_fg\">메일</font></td>".
+       "<td width=\"100%\" colspan=\"3\" bgcolor=\"$r2_bg\"><font color \"$r2_fg\">$email</font></td>".
+       "</tr>";
+} ?>
+<? if ($use_url == "yes") {
+  echo "<tr>".
+       "<td bgcolor=\"$r1_bg\"><font color=\"$r1_fg\">홈페이지</font></td>".
+       "<td width=\"100%\" colspan=\"3\" bgcolor=\"$r2_bg\"><font color=\"$r2_fg\">$url</font></td>".
+       "</tr>";
+} ?>
+<tr>
   <td bgcolor="<? echo $r1_bg ?>"><font color="<? echo $r1_fg ?>">제목</font></td>
   <td width="100%" colspan="3" bgcolor="<? echo $r2_bg ?>"><? echo "<font color \"$r2_fg\">$title</font>" ?></td>
 </tr>
-<tr>
-  <td bgcolor="<? echo $r1_bg ?>"><font color="<? echo $r1_fg ?>">파일</font></td>
 <?
-	// jinoos -- 화일에 확장자를 검사해서 알맞은 아이콘으로 변화 시킨다. 
-	// jinoos -- 만일 화일이 없다면 "X" 볼드체로 변경다.
-	if($file_upload == "yes")
-	{
-		if($bofile)
-		{
-			$tail = substr( strrchr($bofile, "."), 1 );
-			if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram || $tail==hwp || $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj || $tail==tar || $tail==avi || $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp))
-			{
-			    echo"<td bgcolor=\"$r2_bg\" colspan=\"3\"><img src=\"images/file.gif\" border=\"0\" alt=\"$bofile\"> $bofile</a>\n";
-			}else{
-			    echo"<td bgcolor=\"$r2_bg\" colspan=\"3\"><img src=\"images/$tail.gif\" border=\"0\" alt=\"$bofile\"> $bofile</a>\n";
-			}
-			    echo (" <font color=\"$r2_fg\">&nbsp;$bfsize Bytes</font></td></tr>");
-		}
-	}
+  // jinoos -- 화일에 확장자를 검사해서 알맞은 아이콘으로 변화 시킨다. 
+  // jinoos -- 만일 화일이 없다면 "X" 볼드체로 변경다.
+  if($file_upload == "yes")
+  {
+    echo "<tr>".
+         "<td bgcolor=\"$r1_bg\"><font color=\"$r1_fg\">파일</font></td>";
+    if($bofile)
+    {
+       $tail = substr( strrchr($bofile, "."), 1 );
+       if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram || $tail==hwp ||
+         $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj || $tail==tar || $tail==avi ||
+         $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp))
+       {
+         echo"<td bgcolor=\"$r2_bg\" colspan=\"3\"><img src=\"images/file.gif\" border=\"0\" alt=\"$bofile\"> $bofile</a>\n";
+       }
+       else
+       {
+         echo"<td bgcolor=\"$r2_bg\" colspan=\"3\"><img src=\"images/$tail.gif\" border=\"0\" alt=\"$bofile\"> $bofile</a>\n";
+       }
+       echo (" <font color=\"$r2_fg\">&nbsp;$bfsize Bytes</font></td></tr>");
+    }
+    echo "<tr>";
+  }
 ?>
-<tr>
   <td bgcolor="<? echo $r1_bg ?>"><font color="<? echo $r1_fg ?>">글쓴곳</font></td>
   <td width="100%" colspan="3" bgcolor="<? echo $r2_bg ?>"><? echo "<font color \"$r2_fg\">$host</font>" ?></td>
 </tr><tr>
@@ -108,7 +130,10 @@ while($list = dfetch_row($result)) {
 <center>
 <font size="2" color="<? echo $r0_fg ?>">
 <img src="images/n.gif" width="10" height="5" alt="" border="0"><br>
-암호: <input type="password" name="passwd" size="8" maxlength="8">
+<? if ($file_loginid == "no") {
+  echo "암호: <input type=\"password\" name=\"passwd\" size=\"8\" maxlength=\"8\">";
+}
+?>
 <input type="hidden" name="act" value="del">
 <input type="hidden" name="no" value="<? echo $no ?>">
 <input type="hidden" name="table" value="<? echo $table ?>">
@@ -124,3 +149,4 @@ while($list = dfetch_row($result)) {
 </center>
 
 </td></tr></table>
+<? include("include/$table/footer.ph"); ?>
