@@ -22,7 +22,7 @@ If you wnat to see windog's change log, see also
 
 2002.11.20
   by 김정균 <http://www.oops.org>
-	- fixed miss url of user config page on admin page
+	- 어드민 페이지에서 user 설정 페이지의 링크가 잘못된 것 수정
 
 
 -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ If you wnat to see windog's change log, see also
 2002.11.18
   by 김정균 <http://www.oops.org>
 	- 2.0.3 release
-	- fixed security bug of file upload
+	- 업로드 파일 체크 함수에서 잘못된 변수 수정 (보안 관련)
 
 
 -----------------------------------------------------------------------------
