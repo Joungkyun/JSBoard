@@ -14,9 +14,9 @@ $board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/ht
 
 if($board['super'] == 1 || $board['adm']) {
   if(@file_exists("./theme/{$print['theme']}/img/admin.gif"))
-    $print['adpath'] = "<IMG SRC=./theme/{$print['theme']}/img/admin.gif BORDER=0 ALT='{$langs['ln_titl']}'>";
+    $print['adpath'] = "<IMG SRC=\"./theme/{$print['theme']}/img/admin.gif\" BORDER=0 ALT='{$langs['ln_titl']}'>";
   else $print['adpath'] = "<FONT STYLE=\"font:12px tahoma;color:{$color['text']}\">&gt;&gt; admin </FONT>";
-  $print['admin'] = "<A HREF=./admin/user_admin/uadmin.php?table=$table TITLE='{$langs['ln_titl']}'>".
+  $print['admin'] = "<A HREF=\"./admin/user_admin/uadmin.php?table=$table\" TITLE='{$langs['ln_titl']}'>".
                   "{$print['adpath']}</A>";
 }
 
@@ -71,15 +71,15 @@ if(trim($notice['subject'])) {
   $notice_filno = $colspan_no - 1;
 
   if($notice['contents']) {
-    $notice['subject'] = "<A HREF=read.php?table=$table&alert=1>".
+    $notice['subject'] = "<A HREF=read.php?table=$table&amp;alert=1>".
                         "<FONT STYLE=\"color:{$color['nr_fg']}; font-weight:bold\">{$notice['subject']}</FONT></A>";
   } else {
     $notice['subject'] = "<FONT STYLE=\"color:{$color['nr_fg']}; font-weight:bold\">{$notice['subject']}</FONT>";
   }
 
   $print['lists'] = "<TR BGCOLOR={$color['nr_bg']}>\n".
-                  "<TD ALIGN=right><IMG SRC=./theme/{$print['theme']}/img/notice.gif BORDER=0>".
-                  "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT={$lines['height']} BORDER=0 ALIGN=absmiddle ALT=''></TD>\n".
+                  "<TD ALIGN=right><IMG SRC=\"./theme/{$print['theme']}/img/notice.gif\" BORDER=0>".
+                  "<IMG SRC=\"./images/blank.gif\" WIDTH=5 HEIGHT={$lines['height']} BORDER=0 ALIGN=\"middle\" ALT=''></TD>\n".
                   "<TD COLSPAN=$notice_filno>{$notice['subject']}</TD>\n</TR>\n\n";
 
   # 글 리스트들 사이에 디자인을 넣기 위한 코드
@@ -106,7 +106,7 @@ $print['sqltime'] = "SQL Time [ {$print['sqltime']} Sec ]";
 if($o['at'] == "d" || $o['at'] == "dp") $print['dsearch'] = detail_searchform();
 else {
   $page = $page ? $page : "1";
-  $print['dserlink'] = "<A HREF={$_SERVER['PHP_SELF']}?table=$table&page=$page&o[at]=dp>[ {$langs['detable_search_link']} ]</A>";
+  $print['dserlink'] = "<A HREF=\"{$_SERVER['PHP_SELF']}?table=$table&amp;page=$page&amp;o[at]=dp\">[ {$langs['detable_search_link']} ]</A>";
 }
 
 # 검색폼, 페이지폼 관련 변수
@@ -120,8 +120,8 @@ if ($enable['pre']) $print['preview_script'] = print_preview_src();
 if($enable['dhost']) {
   $list['dhost'] = get_hostname($enable['dlook']);
   if($enable['dwho'])
-    $list['dhost'] = "<A HREF=javascript:new_windows('./whois.php?table=$table&host={$list['dhost']}',0,1,0,600,480)>".
-                   "<font color={$color['text']}>{$list['dhost']}</font></a>";
+    $list['dhost'] = "<A HREF=\"javascript:new_windows('./whois.php?table=$table&amp;host={$list['dhost']}',0,1,0,600,480)\">".
+                   "<font color=\"{$color['text']}\">{$list['dhost']}</font></a>";
   $print['times'] = "Access [ {$list['dhost']} ] {$print['sqltime']}";
 } else $print['times'] = "{$print['pagetime']} {$print['sqltime']}";
 

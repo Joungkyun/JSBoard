@@ -266,7 +266,7 @@ $langs['spamer_m'] = "List words that you want to restrict line by line in SPAMM
 
 # ADMIN
 $langs['a_reset'] = "Reset password";
-$langs['sql_na'] = "<p><font color=red><b>Connection failed to the SQL Server!<p>\nCheck the DB server, DB user, DB password in \"jsboard/config/global.ph\"<br>\nIf your settings are correct,<br>execute \"flush privileges\" command as root user under MySQL</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ BACK ]</a><p>\n Copyleft 1999-2001 <a href=http://jsbord.kldp.org>JSBoard Open Project</a>";
+$langs['sql_na'] = "<p><font color=\"#ff0000\"><b>Connection failed to the SQL Server!<p>\nCheck the DB server, DB user, DB password in \"jsboard/config/global.ph\"<br>\nIf your settings are correct,<br>execute \"flush privileges\" command as root user under MySQL</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ BACK ]</a><p>\n Copyleft 1999-2001 <a href=\"http://jsbord.kldp.org\">JSBoard Open Project</a>";
 
 $langs['a_t1'] = "Board Name";
 $langs['a_t2'] = "Articles";
@@ -330,7 +330,7 @@ $langs['pcheck'] = "Must excute preinstall in jsboard/INSTALLER/script before In
 $langs['auser'] = "If you failed before, you must install manually. See doc/en/INSTALL.MANUALY document";
 
 $langs['inst_r'] = "Reset";
-$langs['sql_int_err']    = "<p><font color=red><b>Connection to SQL Server failed!<p>\nCheck the MySQL Root Password</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ BACK ]</a><p>\n Copyleft 1999-2001 <a href=http://jsboard.kldp.org>JSBoard Open Project</a>";
+$langs['sql_int_err']    = "<p><font color=\"#ff0000\"><b>Connection to SQL Server failed!<p>\nCheck the MySQL Root Password</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ BACK ]</a><p>\n Copyleft 1999-2001 <a href=\"http://jsboard.kldp.org\">JSBoard Open Project</a>";
 $langs['inst_chk_varp'] = "Specify DB password to use in DB.";
 $langs['inst_chk_varn'] = "Specify DB name to use in DB.";
 $langs['inst_chk_varu'] = "Specify DB user to use in DB.";

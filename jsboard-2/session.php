@@ -53,7 +53,7 @@ if ($m == "login") {
   }
 } else if ($m == "logout") {
   session_start();
-  include "./config/global.php";
+  include_once "./config/global.php";
 
   # 세션을 삭제
   session_destroy();
@@ -77,8 +77,8 @@ if ($m == "login") {
     }
 
     if(!trim($urls)) {
-      if ($table) {
-        meta_char_check($table,0,1);
+      if($table) {
+        meta_char_check ($table, 0, 1);
         include "./data/$table/config.php";
       }
       $urls = trim($print['dopage']) ? $print['dopage'] : "./login.php$var";

@@ -63,7 +63,7 @@ else $backbutton = "<INPUT TYPE=button VALUE=\"BACK\" onClick=\"history.back()\"
 
 if(!$m) {
   $print['body'] = "
-<SCRIPT LANGUAGE=JavaScript>
+<SCRIPT TYPE=\"text/javascript\">
 function id_check() {
   str = document.nreg.id.value;
   str = str.toLowerCase();

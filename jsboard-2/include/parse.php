@@ -391,7 +391,7 @@ function auto_link($str) {
   $src[] = "/{$regex['mail']}/i";
   $tar[] = "\\1 at \\2";
   $src[] = "/<A HREF=\"mailto:([^ ]+) at ([^\">]+)/i";
-  $tar[] = "<A HREF=\"act.php?o[at]=ma&target=\\1{$rmail['chars']}\\2";
+  $tar[] = "<A HREF=\"act.php?o[at]=ma&amp;target=\\1{$rmail['chars']}\\2";
 
   # email 주소를 변형한 뒤 URL 속의 @ 을 복구
   $src[] = "/_HTTPAT_/";
@@ -428,7 +428,7 @@ function url_link($url, $str = "", $no = 0) {
     $strs = str_replace("'", "\'", $strs);
 
     $url = str_replace("@",$rmail['chars'],$url);
-    $str = "<A HREF=./act.php?o[at]=ma&target=$url ".
+    $str = "<A HREF=./act.php?o[at]=ma&amp;target=$url ".
            "onMouseOut=\"window.status=''; return true;\" ".
            "onMouseOver=\"window.status='Send mail to $strs'; return true;\"{$mailTarget}>$str</A>{$mailFrame}";
   } else if(check_url($url)) {

@@ -103,7 +103,7 @@ function prelist($t,$limit=3,$cut=30) {
         { $p['title'] = cut_string($p['title'],$cut).".."; }
     }
 
-    $p['link'] = "<a href={$prlist['wpath']}/read.php?table=$t&no={$p['no']}{$p['l']} {$p['preview']}>{$p['title']}</a>";
+    $p['link'] = "<a href=\"{$prlist['wpath']}/read.php?table=$t&amp;no={$p['no']}{$p['l']}\" {$p['preview']}>{$p['title']}</a>";
 
     #리스트 출력
     print_prlist($p);

@@ -50,10 +50,10 @@ while( $rss_article[$i] = sql_fetch_array($result) ) {
   $rss_article[$i]['date'] = date ("r", $rss_article[$i]['date']);
   #$rss_article[$i]['date'] = date("Y-m-d",$rss_article[$i]['date'] ) . 'T' . date("H:i:sO", $rss_article[$i]['date']);
 
-  $rss_article[$i]['text'] = preg_replace ("!\n!", "<br />\n", $rss_article[$i]['text']);
-  $rss_article[$i]['text'] = auto_link ($rss_article[$i]['text']);
+  if ( $rss['is_des'] ) {
+    $rss_article[$i]['text'] = preg_replace ("!\n!", "<br />\n", $rss_article[$i]['text']);
+    $rss_article[$i]['text'] = auto_link ($rss_article[$i]['text']);
 
-  if ($rss['is_des']) {
     $_body = "<table width=\"100%\" border=0 cellpadding=0 cellspacing=1>\n" .
              "<tr><td bgcolor=#000000>\n" .
              "<table width=\"100%\" border=0 cellpadding=3 cellspacing=1>\n" .
