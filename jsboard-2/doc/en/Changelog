@@ -19,6 +19,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.6
 
+Mon, Jul 28 2003
+  by JoungKyun Kim <http://www.oops.org>
+	- changed comment algorithm (needed convert db)
+
 Wed, Jul 23 2003
   by JoungKyun Kim <http://www.oops.org>
 	- fixed php injection bug on login.php

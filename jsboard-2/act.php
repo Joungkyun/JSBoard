@@ -59,11 +59,11 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     sql_free_result($result);
 
     sql_query("INSERT INTO $table (no,num,idx,date,host,name,rname,passwd,email,url,
-                                   title,text,refer,reyn,reno,rede,reto,html,bofile,
+                                   title,text,refer,reyn,reno,rede,reto,html,comm,bofile,
                                    bcfile,bfsize)
                       VALUES ('','{$atc['mxnum']}','{$atc['mxidx']}',{$atc['date']},'{$atc['host']}',
                               '{$atc['name']}','{$atc['rname']}','{$atc['passwd']}','{$atc['email']}',
-                              '{$atc['url']}','{$atc['title']}','{$atc['text']}',0,0,0,0,0,'{$atc['html']}',
+                              '{$atc['url']}','{$atc['title']}','{$atc['text']}',0,0,0,0,0,'{$atc['html']}', 0,
                               '{$upfile['name']}','{$bfilename}','{$upfile['size']}')");
 
     # mail 보내는 부분
@@ -138,11 +138,11 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     sql_query("UPDATE $table SET idx = idx + 1 WHERE (idx + 0) >= '{$atc['idx']}'");
     sql_query("UPDATE $table SET reyn = 1 WHERE no = '{$atc['reno']}'");
     sql_query("INSERT INTO $table (no,num,idx,date,host,name,rname,passwd,email,url,
-                                   title,text,refer,reyn,reno,rede,reto,html,bofile,
+                                   title,text,refer,reyn,reno,rede,reto,html,comm,bofile,
                                    bcfile,bfsize)
                       VALUES ('',0,'{$atc['idx']}','{$atc['date']}','{$atc['host']}','{$atc['name']}','{$atc['rname']}',
                               '{$atc['passwd']}','{$atc['email']}','{$atc['url']}','{$atc['title']}','{$atc['text']}',
-                              0,0,'{$atc['reno']}','{$atc['rede']}','{$atc['reto']}','{$atc['html']}','{$upfile['name']}',
+                              0,0,'{$atc['reno']}','{$atc['rede']}','{$atc['reto']}','{$atc['html']}',0,'{$upfile['name']}',
                               '{$bfilename}','{$upfile['size']}')");
     sql_query("UNLOCK TABLES");
 
@@ -351,6 +351,8 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     $sql = "INSERT INTO {$table}_comm (no,reno,rname,name,passwd,text,host,date) ".
            "VALUES ('','{$atc['no']}','{$atc['rname']}','{$atc['name']}','{$atc['passwd']}','{$atc['text']}','$host','$dates')";
     sql_query($sql);
+    $sql = "UPDATE {$table} SET comm = comm + 1 WHERE no = {$atc['no']}";
+    sql_query($sql);
     set_cookie($atc,1);
   }
 
@@ -364,6 +366,8 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     }
 
     sql_query("DELETE FROM {$table}_comm WHERE no = '$cid'");
+    $sql = "UPDATE {$table} SET comm = comm - 1 WHERE no = {$no}";
+    sql_query($sql);
   }
 
   # 게시물 검사 함수

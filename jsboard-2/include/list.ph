@@ -80,8 +80,8 @@ function print_list($table, $list, $r=0)
     $list['preview'] = " onMouseOver=\"drs('{$list['ptext']}'); return true;\" onMouseOut=\"nd(); return true;\"";
   }
 
-  if($enable['comment'] && $list['cmtSize'] > 0)
-    $comment_size = "<FONT STYLE=\"font: 9px tahoma;\">[{$list['cmtSize']}]</FONT>";
+  if($enable['comment'] && $list['comm'] > 0)
+    $comment_size = "<FONT STYLE=\"font: 9px tahoma;\">[{$list['comm']}]</FONT>";
 
   # UPLOAD 관련 설정
   if($upload['yesno']) {
@@ -159,21 +159,10 @@ function get_list($table,$pages,$reply=0,$print=0)
   $readchk = (preg_match("/read\.php/i",$_SERVER['PHP_SELF']) && $enable['re_list']) ? 1 : 0;
   $limits = $readchk ? "" : " Limit {$pages['no']}, {$board['perno']}";
 
-  if($enable['comment']) {
-    $sql = $reply['ck'] ? search2sql($reply,1,1) : search2sql($o,1,1);
-
-    # main column
-    $columns = "tb.no, tb.num, tb.idx, tb.date, tb.name, tb.rname, tb.email, tb.url, ".
-               "tb.title, tb.text, tb.refer, tb.reyn, tb.reno, tb.rede, tb.reto, tb.html, ".
-               "tb.bofile, tb.bcfile, tb.bfsize";
-
-    $query = "SELECT $columns, COUNT(cmt.reno) AS cmtSize\n".
-             "  FROM {$table} AS tb LEFT JOIN {$table}_comm AS cmt ON tb.no = cmt.reno $sql\n".
-             "  GROUP BY tb.no ORDER BY idx DESC{$limits};";
-  } else {
-    $sql = $reply['ck'] ? search2sql($reply) : search2sql($o);
-    $query = "SELECT * FROM $table $sql ORDER BY idx DESC{$limits}";
-  }
+  $sql = $reply['ck'] ? search2sql($reply,1) : search2sql($o);
+  $columns = 'no, num, idx, date, name, rname, email, url, title, text, '.
+             'refer, reyn, reno, rede, reto, html, comm, bofile, bcfile, bfsize';
+  $query = "SELECT {$columns} FROM {$table} {$sql} ORDER BY idx DESC{$limits}";
 
   $result = sql_query($query);
   if(sql_num_rows($result)) {

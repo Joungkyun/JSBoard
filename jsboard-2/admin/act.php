@@ -82,6 +82,7 @@ if($mode == 'db_create')  {
                      rede int(6) DEFAULT '0' NOT NULL,
                      reto int(6) DEFAULT '0' NOT NULL,
                      html int(1) DEFAULT '1' NOT NULL,
+                     comm int(6) DEFAULT '0' NOT NULL,
                      bofile varchar(100),
                      bcfile varchar(100),
                      bfsize int(4),
@@ -91,6 +92,7 @@ if($mode == 'db_create')  {
                      KEY reno (reno),
                      KEY date (date),
                      KEY reto (reto),
+                     KEY comm (comm),
                      PRIMARY KEY (no))";
 
   $create_comm = "CREATE TABLE {$new_table}_comm (
@@ -108,9 +110,9 @@ if($mode == 'db_create')  {
   $passwd_ext = crypt($passwd_ext);
 
   $insert_data = "INSERT INTO $new_table (no,num,idx,date,host,name,passwd,email,url,title,
-                         text,refer,reyn,reno,rede,reto,html,bofile,bcfile,bfsize)
+                         text,refer,reyn,reno,rede,reto,html,comm,bofile,bcfile,bfsize)
                          VALUES ('',1,1,$date,'$host_ext','$name_ext','$passwd_ext','$email_ext',
-                         '$url_ext','$subj_msg','$text_msg',0,0,0,0,0,0,'','','')";
+                         '$url_ext','$subj_msg','$text_msg',0,0,0,0,0,0,0,'','','')";
 
   mysql_query($create_table, $connect);
   sql_error(mysql_errno(),mysql_error());
