@@ -86,6 +86,9 @@ case ${AUSES} in
   *) AUSES=0;;
 esac
 
+ASMTP=$(sed -n -e '/rmail\[smtp\]/ s/.*rmail\[smtp\][^=]*=[^\"0-9a-zA-Z\xA1-\xFE\.]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${ASMTP}" = "" ] && ASMTP="127.0.0.1"
+
 ABBS=$(sed -n -e '/rmail\[bbshome\]/ s/.*rmail\[bbshome\][^=]*=[^\"0-9a-zA-Z\xA1-\xFE\.]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
 [ "${ABBS}" = "" ] && ABBS="http://127.0.0.1/jsboard/"
 
@@ -191,6 +194,11 @@ echo "<?
 #  Mail Configuration
 ##############################################################################
 \$rmail[uses]     = ${AUSES};
+# MTA configuration
+# no value            -> send mail with self method of JSBoard
+# mail server address -> send mail with selected mail server
+# WARN : windows version can't select self method of JSBoard
+\$rmail[mta]      = "${ASMTP}";
 # charactor of converted mail address
 \$rmail[chars]    = \"__at__\";
 

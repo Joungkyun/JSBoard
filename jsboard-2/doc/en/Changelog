@@ -86,6 +86,7 @@ Version   : jsboard-2.0pre4
 60. added single quote on all variables in all sql query
 61. fixed syntax error on wordwrap
 62. fixed problem of changed original text in edit/reply mode
+63. enabled to use external mail server
 
 
 -----------------------------------------------------------------------------
