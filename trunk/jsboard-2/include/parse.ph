@@ -200,13 +200,13 @@ function search_hl($list) {
     $strs = explode("!explode!",$strs);
   }
 
-  $regex1 = "/(<\/?)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)/i";
-  $regex2 = "/(<\/?FONT[^<>]+)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)/i";
-  $regex3 = "/(HREF|SRC)=([^<]*)$hl[0]([^<]*)<\/FONT>([^>]*)/i";
+  $regex1 = "(<\/?)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)";
+  $regex2 = "(<\/?FONT[^<>]+)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)";
+  $regex3 = "(HREF|SRC)=([^<]*)$hl[0]([^<]*)<\/FONT>([^>]*)";
 
-  $src = array($regex1,$regex2);
+  $src = array("/$regex1/i","/$regex2/i");
   $tar = array("\\1\\2\\3","\\1\\2\\3");
-  $tsrc = array($regex1,$regex2,$regex3);
+  $tsrc = array("/$regex1/i","/$regex2/i","/$regex3/i");
   $ttar = array("\\1\\2\\3","\\1\\2\\3","\\1=\\2\\3\\4");
 
   if(!$o[er]) $str = quotemeta($str);
@@ -230,7 +230,11 @@ function search_hl($list) {
       for($i=0;$i<sizeof($strs);$i++) {
         $strs[$i] = trim($strs[$i]);
         $list[text] = preg_replace("/$strs[$i]/i", "$hl[0]\\0$hl[1]", $list[text]);
-        $list[text] = preg_replace($tsrc,$ttar,$list[text]);
+        while(true) {
+          if(preg_match("/($regex1)|($regex2)|($regex3)/i",$list[text]))
+            $list[text] = preg_replace($tsrc,$ttar,$list[text]);
+          else break;
+        }
       }
       break;
     case 'a':
@@ -240,7 +244,11 @@ function search_hl($list) {
         $list[name] = preg_replace($src,$tar,$list[name]);
 
         $list[text] = preg_replace("/$strs[$i]/i", "$hl[0]\\0$hl[1]", $list[text]);
-        $list[text] = preg_replace($tsrc,$ttar,$list[text]);
+        while(true) {
+          if(preg_match("/($regex1)|($regex2)|($regex3)/i",$list[text]))
+            $list[text] = preg_replace($tsrc,$ttar,$list[text]);
+          else break;
+        }
 
         $list[title] = preg_replace("/$strs[$i]/i", "$hl[0]\\0$hl[1]", $list[title]);
         $list[title] = preg_replace($src,$tar,$list[title]);
