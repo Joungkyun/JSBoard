@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  2월  7일
+작성일 : 2002년  2월  8일
 버전   : jsboard-2.0pre4
 
 
@@ -63,6 +63,7 @@ If you wnat to see windog's change log, see also
 35. 상세 검색에서 동일날자의 글을 검색시 12시 이후에 등록된 글이 검색되지
     않는것 수정
 36. spam check 에 글제목도 추가
+37. Installer 에서 외부 DB 를 지정했을 경우 global.ph 에 반영되지 않던것 수정
 
 
 -----------------------------------------------------------------------------
