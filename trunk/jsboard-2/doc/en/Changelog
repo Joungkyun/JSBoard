@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.1
 
+Sun, Jul 28 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed enable to use php with board administrator permission
+
 Wed, Jul 24 2002
   by JoungKyun Kim <http://www.oops.org>
 	- removed $AUCONF on conv_udate script
