@@ -12,13 +12,15 @@ function qsql($n, $act)
 	$result = dquery("SELECT no FROM $table WHERE reno = $n ORDER BY no DESC");
     }
     if ($act == "search") {
-	if (strlen($sc_string) >= 2 || $sc_column == "today") {
+	if (strlen($sc_string) >= 1 || $sc_column == "today") {
 	    $sc_string = addslashes(chop($sc_string));
 
 	    if ($sc_column == "all") {
 		$sc_sql = "title LIKE \"%$sc_string%\" OR text LIKE \"%$sc_string%\" OR name LIKE \"%$sc_string%\"";
 	    } else if ($sc_column == "today") {
 		$sc_sql = "date > $today";
+	    } else if ($sc_column == "no") {
+		$sc_sql = "num = \"$sc_string\"";
 	    } else {
 		$sc_sql = "$sc_column LIKE \"%$sc_string%\"";
 	    }
@@ -50,7 +52,7 @@ function plist($n, $act = "normal")
     global $acount, $tcount, $apage, $pern;
     global $scount, $page, $user_del;
     global $sc_column, $sc_string, $search;
-    global $width, $l0_bg, $l0_fg, $l1_bg, $l1_fg, $l2_bg, $l2_fg;
+    global $width, $l0_bg, $l0_fg, $l1_bg, $l1_fg, $l2_bg, $l2_fg, $sch_bg;
 
     if ($file_upload == "yes") { $colspan_num = "7" ; }
     else { $colspan_num = "6" ; }
@@ -121,7 +123,7 @@ function vlist($no) {
     global $table, $file_upload, $filesavedir;
     global $sc_string, $search, $page, $today;
     global $namel, $titll;
-    global $l2_bg, $l2_fg, $l3_bg, $l3_fg, $t0_bg;
+    global $l2_bg, $l2_fg, $l3_bg, $l3_fg, $t0_bg, $mo_bg;
 
     $lists = dquery("SELECT * FROM $table WHERE no = $no");
 
@@ -143,11 +145,12 @@ function vlist($no) {
 	$titl   = $titll - $rede;
 	$title  = cut_string($title,$titl) ; 
 	$date2  = $date;
-	$date   = date("y-m-d", $date);
+	$date   = date("Y-m-d", $date);
 	// Y2K east egg - JoungKyun Kim :-)
-	$date	= eregi_replace("00","Y2K",$date);
+	// $date	= eregi_replace("00","Y2K",$date);
 
 	if($sc_string) {
+	    // $no    = eregi_replace(($sc_string), "<font color=\"darkred\"><b>\\0</b></font>", $no);
 	    $name  = eregi_replace(($sc_string), "<font color=\"darkred\"><b>\\0</b></font>", $name);
 	    $title = eregi_replace(($sc_string), "<font color=\"darkred\"><b>\\0</b></font>", $title);
 	}
@@ -172,9 +175,9 @@ function vlist($no) {
 	if($email)
 	    $name = "<a href=\"mailto:$email\"><font color=\"$fg\">$name </font> </a>";
 
-	echo("<tr>\n" .
-	     "<td align=\"right\" bgcolor=\"$bg\"><font color=\"$fg\">$num</font></td>\n" .
-	     "<td align=\"left\" bgcolor=\"$bg\"><a href=\"read.php3?table=$table&no=$no&page=$page$search\"><font color=\"$fg\">$title </font></a></td>\n" .
+	echo("<tr onMouseOver=\"this.style.backgroundColor='$mo_bg'\"  onMouseOut=\"this.style.backgroundColor=''\";>\n" .
+	     "<td align=\"right\"><font color=\"$fg\">$num</font></td>\n" .
+	     "<td align=\"left\" bgcolor=\"$bg\"><a href=\"read.php3?table=$table&no=$no&$search\"><font color=\"$fg\">$title </font></a></td>\n" .
 	     "<td align=\"right\" bgcolor=\"$bg\"><font color=\"$fg\">$name </font></td>\n" );
 	
 
