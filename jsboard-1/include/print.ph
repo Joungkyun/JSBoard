@@ -49,7 +49,7 @@ function form_size($size, $print = 0) {
   }
 
   # 인터넷 익스플로러
-  if($agent[br] == "MSIE") {
+  if(eregi("MSIE",$agent[br])) {
     if ($agent[os] == "NT")
       if ($langs[code] == "ko") $size *= 2.3;
       else $size *= 2.6;
@@ -57,6 +57,7 @@ function form_size($size, $print = 0) {
   }
 
   if($agent[br] == "LYNX") $size *= 2;
+  if($agent[br] == "KONQ") $size *= 2.6;
 
   $size = intval($size);
   if($print) echo $size;
@@ -486,7 +487,7 @@ function article_reply_list($table,$pages) {
 function print_preview_src() {
   global $color, $agent;
 
-  if($agent[br] == "MSIE") {
+  if(eregi("MSIE",$agent[br])) {
     $script_for_browser = "  over = overDiv.style;\n".
                           "  document.onmousemove = mouseMove;\n\n".
 
