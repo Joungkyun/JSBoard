@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.5
 
+Wed, Dec 28 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed setlocale bug on php 4.3.0
+
 Wed, Dec 25 2002
   by JoungKyun Kim <http://www.oops.org>
 	- fixed display bad http protol by emoticon function
