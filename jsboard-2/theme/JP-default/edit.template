@@ -1,13 +1,13 @@
 <HTML>
 <HEAD>
 <!-#######################################################################-->
-<!-  $langs[charset] : print charset code                                 -->
-<!-  $board[ver]     : version information in webboard                    -->
+<!-  $langs['charset'] : print charset code                               -->
+<!-  $board['ver']     : version information in webboard                  -->
 <!-  get_title()     : print header title in webbared                     -->
 <!-  $user_stylesheet : User Defined StyleSheet                           -->
 <!-#######################################################################-->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs[charset]?>">
-<TITLE>Jsboard <?=$board[ver]?> - <?=get_title()?></TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE>Jsboard <?=$board['ver']?> - <?=get_title()?></TITLE>
 
 <STYLE TYPE=text/css>
 <!--
@@ -27,7 +27,7 @@ TEXTAREA {font: 13px ±¼¸²Ã¼; color:#333333; border-width:1; border-style:solid; 
 <?
 if(!$np) {
   # Design per user
-  include "$board[headpath]";
+  include "{$board['headpath']}";
   # Input by whole admin
   include "html/head.ph";
 }
@@ -35,13 +35,13 @@ if(!$np) {
 <!-------------------- End Header Design   -------------------->
 
 <!-#######################################################################-->
-<!-  $board[align] : print align of webboard. It's config in board admin  -->
-<!-  $board[width] : print width of webboard. It's config in board admin  -->
-<!-  $board[formtype] : print form option to use upload image             -->
+<!-  $board['align'] : print align of webboard. It's config in board admin-->
+<!-  $board['width'] : print width of webboard. It's config in board admin-->
+<!-  $board['formtype'] : print form option to use upload image           -->
 <!-#######################################################################-->
-<DIV ALIGN=<?=$board[align]?>>
-<FORM NAME=editp METHOD=post ACTION=act.php<?=$board[formtype]?>>
-<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<DIV ALIGN=<?=$board['align']?>>
+<FORM NAME=editp METHOD=post ACTION=act.php<?=$board['formtype']?>>
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN=bottom COLSPAN=2>
 <IMG SRC=./theme/EN-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
@@ -61,7 +61,7 @@ if(!$np) {
 </TR>
 </TABLE>
 
-<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -71,38 +71,38 @@ if(!$np) {
 </TR>
 
 <!-#######################################################################-->
-<!-  $size[name]  : print size of input of name filed                     -->
-<!-  $list[name]  : print registed name                                   -->
+<!-  $size['name']  : print size of input of name filed                   -->
+<!-  $list['name']  : print registed name                                 -->
 <!-#######################################################################-->
 <TR>
 <TD WIDTH=80><B>Name</B></TD>
-<TD><INPUT TYPE=text NAME=atc[name] SIZE=<?=$size[name]?> MAXLENGTH=50 VALUE="<?=$list[name]?>"<?=$disable?>></TD>
+<TD><INPUT TYPE=text NAME=atc[name] SIZE=<?=$size['name']?> MAXLENGTH=50 VALUE="<?=$list['name']?>"<?=$disable?>></TD>
 </TR>
 
 <!-#######################################################################-->
-<!-  $view[email]          : print email field                            -->
-<!-  $list[email]          : print registed email                         -->
+<!-  $view['email']          : print email field                          -->
+<!-  $list['email']          : print registed email                       -->
 <!-#######################################################################-->
 <?
-if($view[email] || trim($list[email])) {
+if($view['email'] || trim($list['email'])) {
   echo "
 <TR>
 <TD><B>Email</B></TD>
-<TD><INPUT TYPE=text NAME=atc[email] SIZE=$size[name] MAXLENGTH=255 VALUE=\"$list[email]\"$disable></TD>
+<TD><INPUT TYPE=text NAME=atc[email] SIZE={$size['name']} MAXLENGTH=255 VALUE=\"{$list['email']}\"$disable></TD>
 </TR>\n";
 }
 ?>
 
 <!-#######################################################################-->
-<!-  $view[url]             : print url field                             -->
-<!-  $list[url]             : print registed url                          -->
+<!-  $view['url']             : print url field                           -->
+<!-  $list['url']             : print registed url                        -->
 <!-#######################################################################-->
 <?
-if($view[url] || trim($list[url])) {
+if($view['url'] || trim($list['url'])) {
   echo "
 <TR>
 <TD><B>Homepage</B></TD>
-<TD><INPUT TYPE=text NAME=atc[url] SIZE=$size[name] MAXLENGTH=255 VALUE=\"$list[url]\"$disable></TD>
+<TD><INPUT TYPE=text NAME=atc[url] SIZE={$size['name']} MAXLENGTH=255 VALUE=\"{$list['url']}\"$disable></TD>
 </TR>\n";
 }
 ?>
@@ -123,34 +123,34 @@ if($view[url] || trim($list[url])) {
 <!-  print upload field                                                   -->
 <!-#######################################################################-->
 <?
-if($list[bofile]) {
+if($list['bofile']) {
   echo "<TR>\n".
        "<TD><B>File</B></TD>\n".
        "<TD>\n".
        "<A HREF=$down_link>\n".
-       "<IMG SRC=images/$icon width=16 height=16 border=0 alt=$list[bofile] align=absmiddle>\n".
-       "<FONT style=\"color:$color[text]\">$list[bofile]</FONT></A> - $hfsize &nbsp; &nbsp;\n".
+       "<IMG SRC=images/$icon width=16 height=16 border=0 alt={$list['bofile']} align=absmiddle>\n".
+       "<FONT style=\"color:{$color['text']}\">{$list['bofile']}</FONT></A> - $hfsize &nbsp; &nbsp;\n".
        "<INPUT TYPE=CHECKBOX NAME=atc[fdel] VALUE=1> Delete File\n";
 }
 
-if ($upload[yesno] && $cupload[yesno] && $noup != 1) {
+if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
   echo "<TR>\n".
        "<TD><B>Edit File</B></TD>\n".
        "<TD>\n".
-       "<INPUT TYPE=HIDDEN NAME=max_file_size VALUE=$upload[maxsize]>\n".
-       "<INPUT TYPE=file NAME=userfile SIZE=$size[uplo] MAXLENGTH=256>\n".
+       "<INPUT TYPE=HIDDEN NAME=max_file_size VALUE={$upload['maxsize']}>\n".
+       "<INPUT TYPE=file NAME=userfile SIZE={$size['uplo']} MAXLENGTH=256>\n".
        "</TD>\n".
        "</TR>\n";
 }
 ?>
 
 <!-#######################################################################-->
-<!-  $size[titl]  : size of title input form                              -->
-<!-  $list[title] : print for modified subject                            -->
+<!-  $size['titl']  : size of title input form                            -->
+<!-  $list['title'] : print for modified subject                          -->
 <!-#######################################################################-->
 <TR>
 <TD><B>Subject</B></TD>
-<TD><INPUT TYPE=text NAME=atc[title] SIZE=<?=$size[titl]?> MAXLENGTH=100 VALUE="<?=$list[title]?>"></TD>
+<TD><INPUT TYPE=text NAME=atc[title] SIZE=<?=$size['titl']?> MAXLENGTH=100 VALUE="<?=$list['title']?>"></TD>
 </TR>
 
 <TR>
@@ -159,16 +159,16 @@ if ($upload[yesno] && $cupload[yesno] && $noup != 1) {
 <!-  if IE and NS6 case, print textarea size operation button             -->
 <!-#######################################################################-->
 <?
-if(eregi("^(0|4|6)$",$board[mode]) && !$board[super]) {
+if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
   echo "<TD><B>Password</B></TD>\n".
        "<TD>\n".
        "$passment\n".
        "<IMG SRC=./images/blank.gif WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>\n".
-       "TextSize Operation $print[operate]\n".
+       "TextSize Operation {$print['operate']}\n".
        "</TD>\n";
 } else {
   echo "<TD COLSPAN=2 ALIGN=right>\n".
-       "TextSize Operation $print[operate]\n".
+       "TextSize Operation {$print['operate']}\n".
        "</TD>\n";
 }
 ?>
@@ -179,20 +179,20 @@ if(eregi("^(0|4|6)$",$board[mode]) && !$board[super]) {
 </TR>
 </TABLE>
 
-<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
 </TABLE>
 
-<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD BGCOLOR=<?=$color[l5_bg]?> ALIGN=CENTER>
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR=<?=$color['l5_bg']?> ALIGN=CENTER>
 
 <!-#######################################################################-->
-<!-  $wrap[op]   : print wrap option of textarea                          -->
-<!-  $size[text] : print size of textarea                                 -->
-<!-  $list[text] : print content of original content for modified         -->
+<!-  $wrap['op']   : print wrap option of textarea                        -->
+<!-  $size['text'] : print size of textarea                               -->
+<!-  $list['text'] : print content of original content for modified       -->
 <!-#######################################################################-->
 <!-- =============================== Contents =============================== -->
-<TEXTAREA NAME=epost <?=$wrap[op]?> ROWS=10 COLS=<?=$size[text]?>><?="$list[text]\n\n"?></TEXTAREA>
+<TEXTAREA NAME=epost <?=$wrap['op']?> ROWS=10 COLS=<?=$size['text']?>><?="$list['text']\n\n"?></TEXTAREA>
 <!-- =============================== Contents =============================== -->
 
 </TD></TR>
@@ -200,15 +200,15 @@ if(eregi("^(0|4|6)$",$board[mode]) && !$board[super]) {
 
 
 <!-#######################################################################-->
-<!- $wrap[ment] : if wrap option isn't hard, print warn message           -->
+<!- $wrap['ment'] : if wrap option isn't hard, print warn message         -->
 <!- $table.$page      : print link option to back list                    -->
-<!- $print[passform]  : hidden value for regist reply article             -->
+<!- $print['passform']  : hidden value for regist reply article           -->
 <!- $orig_option      : back to original size of textarea                 -->
 <!-#######################################################################-->
-<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD ALIGN=right><?=$wrap[ment]?></TD></TR>
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN=right><?=$wrap['ment']?></TD></TR>
 <TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
-<?=$print[passform]?>
+<?=$print['passform']?>
 <INPUT TYPE=submit VALUE=Modify>
 <INPUT TYPE=reset VALUE="Reset"<?=$orig_option?>>
 <INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List">
@@ -230,7 +230,7 @@ if(!$np) {
   # Input by whole admin
   include "html/tail.ph";
   # Design per user
-  include "$board[tailpath]";
+  include "{$board['tailpath']}";
 }
 ?>
 <!-------------------- End   Tail Design ------------------->
