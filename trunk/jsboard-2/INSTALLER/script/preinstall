@@ -145,11 +145,12 @@ fi
 
 if [ "${langs}" = "ko" ]; then
   echo
-  echo "작업이 완료 되었습니다. 브라우져로 jsboard/INSTALLER/ 로 접속하여"
-  echo "설치를 계속 하시기 바랍니다."
+  echo "작업이 완료 되었습니다. jsboard/INSTALLER/include/passwd.ph 의 정보를"
+  echo "적절히 수정한 후에, 브라우져로 jsboard/INSTALLER/ 로 접속하여 echo 설"
+  echo "치를 계속 하시기 바랍니다."
 else
   echo
-  echo "Complete this working. And access jsboard/INSTALLER with web browser,"
-  echo "continue install jop"
+  echo "Complete this working. After Edit jsboard/INSTALLER/include/passwd.ph and"
+  echo " access jsboard/INSTALLER with web browser, continue install jop"
 fi
 exit 0
