@@ -77,6 +77,11 @@ $board[usedhyper] = 0;
 #  Mail Configuration
 ##############################################################################
 $rmail[uses]     = 1;
+# MTA configuration
+# no value            -> send mail with self method of JSBoard
+# mail server address -> send mail with selected mail server
+# WARN : windows version can't select self method of JSBoard
+$rmail[mta]      = "127.0.0.1";
 $rmail[chars]    = "__at__";
 
 

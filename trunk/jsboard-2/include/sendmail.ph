@@ -206,13 +206,12 @@ function mail_header($to,$from,$title) {
             "To: $to\r\n".
             "Subject: $title\n".
             "Content-Type: multipart/alternative;\r\n".
-            "              boundary=\"$boundary\"\r\n\r\n".
-            "This is a multi-part message in MIME format.\r\n\r\n";
+            "              boundary=\"$boundary\"\r\n\r\n";
 
   return $header;
 }
 
-function socketmail($to,$from,$title,$pbody,$hbody) {
+function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
   global $langs,$boundary;
 
   # 빈 문자열 체크
@@ -226,7 +225,8 @@ function socketmail($to,$from,$title,$pbody,$hbody) {
 
   # body 를 구성
   $body = str_replace("\n","\r\n",str_replace("\r","",$pbody));
-  $body = "--$boundary\r\n".
+  $body = "This is a multi-part message in MIME format.\r\n\r\n".
+          "--$boundary\r\n".
           "Content-Type: text/plain;\r\n".
           "              charset=$langs[charset]\r\n".
           "Content-Transfer-Encoding: base64\r\n\r\n".
@@ -244,12 +244,18 @@ function socketmail($to,$from,$title,$pbody,$hbody) {
   $mails[from] = $from;
   $mails[text] = $mail_header.$body;
 
-  new maildaemon($mails);
+  if($mta) {
+    ini_set("SMTP","$smtp");
+    mail($mails[to],$title,$body,$mail_header,"-f$mails[from]");
+  } else {
+    new maildaemon($mails);
+  }
 }
 
 function sendmail($rmail) {
   global $langs;
 
+  $rmail[mta] = $rmail[mta] ? $rmail[mta] : 0;
   $mail_msg_head = "$langs[sm_dr]";
 
   if ($langs[code] == "ko") $time = date("Y/m/d (D) a h시i분");
@@ -333,11 +339,11 @@ function sendmail($rmail) {
   $htmltext = get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm);
 
   if ($rmail[user] && $rmail[reply_orig_email] && $rmail[email] != $rmail[toadmin]) {
-    socketmail($rmail[reply_orig_email],$rmail[email],$rmail[title],&$message,&$htmltext);
+    socketmail($rmail[mta],$rmail[reply_orig_email],$rmail[email],$rmail[title],&$message,&$htmltext);
   }
 
   if ($rmail[admin] && $rmail[toadmin] != "" && $rmail[email] != $rmail[toadmin]) {
-    socketmail($rmail[toadmin],$rmail[email],$rmail[title],&$message,&$htmltext);
+    socketmail($rmail[mta],$rmail[toadmin],$rmail[email],$rmail[title],&$message,&$htmltext);
   }
 }
 ?>
