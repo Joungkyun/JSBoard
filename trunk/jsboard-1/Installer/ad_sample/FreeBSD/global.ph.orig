@@ -206,6 +206,6 @@ if(file_exists("data/$table/config.ph") && $board[uconf] == "yes")
 if(file_exists("data/$table/default.themes") && $color[theme])
   { include("data/$table/default.themes"); }
 
-$version = "1.2.1";
+$version = "1.2.2";
 
 ?>
