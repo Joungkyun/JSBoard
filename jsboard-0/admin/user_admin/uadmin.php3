@@ -238,6 +238,7 @@ echo ("
 }
 
 echo ("
+</td>
 <td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=menuallow')></td>
 </tr>
 
@@ -289,6 +290,7 @@ echo ("
 }
 
 echo ("
+</td>
 <td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=replywriter')></td>
 </tr>
 
