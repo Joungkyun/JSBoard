@@ -144,7 +144,7 @@ if ($indb[check]) {
 
   # spam 변수 설정
   mt_srand((double) microtime() * 1000000);
-  $cerate[spam1] = mt_rand(10001,99999);
+  $create[spam1] = mt_rand(10001,99999);
   $create[spam2] = mt_rand(11,99);
   $create[spam3] = mt_rand(11,99);
   $create[str] = str_replace("@SPAM1@",$create[spam1],$create[str]);
