@@ -25,6 +25,7 @@ Thu, May 30 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 
 Thu, May 30 2002 by JoungKyun Kim <http://www.oops.org>
 	- fixed delete error when don't exists comment table
+	- added document type declaration in theme
 
 Tue, May 28 2002 by JoungKyun Kim <http://www.oops.org>
 	- fixed bug of check of email of board admin
