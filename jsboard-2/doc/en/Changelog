@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.0
 
+Sun, Jun 30 2002 by JoungKyun Kim <http://www.oops.org>
+	- fixed form size of mozilla v1.0.0 (Linux/Windows)
+
 Thu, Jun 27 2002 by JoungKyun Kim <http://www.oops.org>
 	- added total number of comment in article list
 	- enable to use font tag in comment

@@ -52,12 +52,12 @@ function form_size($size, $print = 0) {
   # 네스케이프 6 or Mozilla
   if($agent[br] == "MOZL" || ($agent[br] == "NS" && $agent[vr] == "6")) {
     if($agent[os] == "NT") {
-      if($agent[ln] == "KO") $size *= 1.1; # 한글판
+      if($agent[ln] == "KO") $size *= 2.2; # 한글판
       else {
         if ($langs[code] == "ko") $size *= 2.4;
         else $size *= 1.8;
       }
-    } else $size *= 1.3;
+    } else $size *= 2.6;
   }
 
   # 인터넷 익스플로러

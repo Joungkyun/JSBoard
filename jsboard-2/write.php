@@ -1,5 +1,14 @@
 <?
 include "include/header.ph";
+echo $_SERVER["HTTP_USER_AGENT"];
+
+echo "<xmp>
+$agent[br]
+$agent[vr]
+$agent[os]
+$agent[co]
+$agent[ln]
+</xmp>";
 
 $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
 $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
