@@ -15,6 +15,10 @@ file.
 
 Version   : jsboard-2.0.7
 
+Tue, Feb 24 2004
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed typo on delete.template on DEFAULT-EN theme
+
 Sat, Feb 18 2004
   by JoungKyun Kim <http://www.oops.org>
 	- fixed parsing bug of search word include slash
