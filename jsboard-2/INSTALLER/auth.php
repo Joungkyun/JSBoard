@@ -94,7 +94,8 @@ if (!$mode) {
        "<font style=\"color:#555555;font: 20px tahoma; font-weight:bold\">JSBoard Environment Check</font>\n" .
        "</td></tr>\n<tr><td align=center>\n";
 
-  $mcon = @mysql_connect($mysql_sock, "root", "$passwd");
+  if($mysqlroot) $mcon = @mysql_connect($mysql_sock,"root","$passwd");
+  else $mcon = @mysql_connect($mysql_sock,"$mysqlusername","$passwd");
 
   # mysql login 가능 여부
   if ($mcon) $mcheck = 1;

@@ -9,8 +9,9 @@ JSBoard main table
 | idx    | int(6)       |      | MUL | 0       |                |  Number of index(listing)
 | date   | int(11)      |      | MUL | 0       |                |  Date
 | host   | tinytext     | YES  |     | NULL    |                |  Address of writer
-| name   | tinytext     | YES  |     | NULL    |                |  Name of writer
-| passwd | varchar(13)  | YES  |     | NULL    |                |  Password of writer
+| name   | tinytext     | YES  |     | NULL    |                |  NICK Name of writer
+| rname  | tinytext     | YES  |     | NULL    |                |  REAL Name of writer
+| passwd | varchar(56)  | YES  |     | NULL    |                |  Password of writer
 | email  | tinytext     | YES  |     | NULL    |                |  Email of writer
 | url    | tinytext     | YES  |     | NULL    |                |  Homepage of writer
 | title  | tinytext     | YES  |     | NULL    |                |  Subject of article
@@ -21,7 +22,6 @@ JSBoard main table
 | rede   | int(6)       |      |     | 0       |                |  Depth of reply article
 | reto   | int(6)       |      | MUL | 0       |                |  Number of founder reply article
 | html   | int(1)       |      |     | 1       |                |  If use HTML tag
-| moder  | int(1)       |      |     | 0       |                |  ?
 | bofile | varchar(100) | YES  |     | NULL    |                |  Name of upload file
 | bcfile | varchar(100) | YES  |     | NULL    |                |  Name of upload directory
 | bfsize | int(4)       | YES  |     | NULL    |                |  Size of upload file

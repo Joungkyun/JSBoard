@@ -22,21 +22,33 @@ require "./include/check.ph";
 # Password Check
 inst_pwcheck($passwd,$mysqlpass,$langs[act_pw]);
 
-$dbname = "JSBoard-$version";
-$dbname = eregi_replace("(\-|\.|[ ]*)","",$dbname);
+$disable = $mysqlroot ? "" : " disabled";
+
+if($mysqlroot) {
+  $dbname = "JSBoard-$version";
+  $dbname = eregi_replace("(\-|\.|[ ]*)","",$dbname);
+} else {
+  $dbname = $mysqldatabasename;
+  $dbuser = $mysqlusername;
+  $dbpass = $passwd;
+
+  $noroothidden = "<INPUT TYPE=hidden NAME=dbinst[name] VALUE=\"$dbname\">\n".
+                  "<INPUT TYPE=hidden NAME=dbinst[user] VALUE=\"$dbuser\">\n".
+                  "<INPUT TYPE=hidden NAME=dbinst[pass] VALUE=\"$dbpass\">\n";
+}
 ?>
 
 <HTML>
 <HEAD>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<? echo $charset ?>">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$charset?>">
 <TITLE>Jsboard 2.0pre1 Installation</TITLE>
 <STYLE TYPE=text/css>
 <!--
-BODY, TD {FONT: 12px <? echo $charfont ?>; COLOR:red; }
+BODY, TD {FONT: 12px <?=$charfont?>; COLOR:red; }
 A:LINK, A:VISITED, A:ACTIVE { TEXT-DECORATION: NONE; COLOR:#555555; }
 A:HOVER { TEXT-DECORATION:UNDERLINE; COLOR:#555555; }
-INPUT { border:1x solid #555555;background-Color:silver;font:11px <? echo $charfont ?>;color:#333333 }
-TEXTAREA { border:1x solid #555555;background-Color:silver;font:13px <? echo $charfont ?>;color:#333333 }
+INPUT { border:1x solid #555555;background-Color:silver;font:11px <?=$charfont?>;color:#333333 }
+TEXTAREA { border:1x solid #555555;background-Color:silver;font:13px <?=$charfont?>;color:#333333 }
 #default { color:#555555; font-size:12px }
 -->
 </STYLE>
@@ -59,21 +71,21 @@ TEXTAREA { border:1x solid #555555;background-Color:silver;font:13px <? echo $ch
 </tr>
 <tr>
 <td><font style="color:#555555;font: 12px tahoma; font-weight:bold">&nbsp; DB name &nbsp;</FONT></td>
-<td align=left><input type='text' name='dbinst[name]' size=20 value="<? echo $dbname ?>"></td>
+<td align=left><input type='text' name='dbinst[name]' size=20 value="<?=$dbname?>"<?=$disable?>></td>
 <td><font style="color:#555555;font: 12px tahoma; font-weight:bold">&nbsp; ID &nbsp;</FONT></td>
 <td align=left><input type='text' name='dbinst[aid]' size=20 value="admin"></td>
 </tr>
 
 <tr>
 <td><font style="color:#555555;font: 12px tahoma; font-weight:bold">&nbsp; DB user &nbsp;</FONT></td>
-<td align=left><input type='text' name='dbinst[user]' size=20></td>
+<td align=left><input type='text' name='dbinst[user]' size=20 value="<?=$dbuser?>"<?=$disable?>></td>
 <td><font style="color:#555555;font: 12px tahoma; font-weight:bold">&nbsp; NAME &nbsp;</FONT></td>
 <td align=left><input type='text' name='dbinst[aname]' size=20></td>
 </tr>
 
 <tr>
 <td><font style="color:#555555;font: 12px tahoma; font-weight:bold">&nbsp; DB pass &nbsp;</FONT></td>
-<td align=left><input type='password' name='dbinst[pass]' size=20></td>
+<td align=left><input type='password' name='dbinst[pass]' size=20 value="<?=$dbpass?>"<?=$disable?>></td>
 <td><font style="color:#555555;font: 12px tahoma; font-weight:bold">&nbsp; Email &nbsp;</FONT></td>
 <td align=left><input type='text' name='dbinst[aemail]' size=20></td>
 </tr>
@@ -81,18 +93,19 @@ TEXTAREA { border:1x solid #555555;background-Color:silver;font:13px <? echo $ch
 <tr>
 <td align=center colspan=4>&nbsp;</td>
 </tr>
+<?=$noroothidden?>
 <tr><td colspan=4 align=center><input type='submit' value='E N T E R'></td></tr>
-<input type=hidden name=langss value=<? echo $langs[code] ?>>
+<input type=hidden name=langss value=<?=$langs[code]?>>
 </form>
 </table>
 
 <hr size=1 width='500' noshade>
-<font style="color:#555555;font-size:12px;"><? echo $langs[regi_ment] ?></FONT>
+<font style="color:#555555;font-size:12px;"><?=$langs[regi_ment]?></FONT>
 <hr size=1 width='500' noshade>
 
 <P>
 <CENTER><font style="color:#555555;font-size:12px;">
-Copyleft 1999-<? echo date("Y") ?> by
+Copyleft 1999-<?date("Y") ?> by
 <A HREF=http://jsboard.kldp.org TARGET=_blank><FONT STYLE=\"color:#555555\">JSBoard Open Project</FONT></A>
 </FONT></CENTER>
 </td></tr>

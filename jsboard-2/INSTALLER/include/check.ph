@@ -31,20 +31,24 @@ function inst_chk_dbname($name,$msg) {
 function inst_chk_dbuser($name,$msg) {
   global $connect, $langs;
   $check = "select user from user where user = '$name'";
-  $result = mysql_query($check, $connect );
+  $result = mysql_db_query("mysql",$check, $connect );
   $row = mysql_fetch_array($result);
   if ($row) print_error($msg,250,150,1);
 }
 
-function inst_check() {
+function inst_check($chk='') {
   global $dbinst, $langs;
   inst_chk_var($dbinst[name],$langs[inst_chk_varn]);
   inst_chk_var($dbinst[user],$langs[inst_chk_varu]);
   inst_chk_var($dbinst[pass],$langs[inst_chk_varp]);
-  inst_chk_numberic($dbinst[name],$langs[inst_ndb]);
-  inst_chk_numberic($dbinst[user],$langs[inst_udb]);
-  inst_chk_dbname($dbinst[name],$langs[inst_adb]);
-  inst_chk_dbuser($dbinst[user],$langs[inst_cudb]);
+
+  if($chk) {
+    inst_chk_numberic($dbinst[name],$langs[inst_ndb]);
+    inst_chk_numberic($dbinst[user],$langs[inst_udb]);
+    inst_chk_dbname($dbinst[name],$langs[inst_adb]);
+    inst_chk_dbuser($dbinst[user],$langs[inst_cudb]);
+  }
+
   return 1;
 }
 ?>

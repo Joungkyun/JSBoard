@@ -17,34 +17,39 @@ include "./include/check.ph";
 inst_pwcheck($passwd,$mysqlpass,$langs[act_pw]);
 
 # MySQL login
-$connect = mysql_connect($mysql_sock,"root",$passwd) or die("$langs[inst_sql_err]");
-$indb[lists] = mysql_list_dbs($connect);
-$indb[num] = mysql_num_rows($indb[lists]);
-mysql_select_db("mysql",$connect);
+if($mysqlroot) {
+  $connect = mysql_connect($mysql_sock,"root",$passwd) or die("$langs[inst_sql_err]");
+  $indb[lists] = mysql_list_dbs($connect);
+  $indb[num] = mysql_num_rows($indb[lists]);
+} else {
+  $connect = mysql_connect($mysql_sock,$mysqlusername,$passwd) or die("$langs[inst_sql_err]");
+}
 
 # install.php 에서 넘어온 변수값들 체크
-$indb[check] = inst_check();
+$indb[check] = inst_check($mysqlroot);
 
 # DB 정보 유무 chek에 통과시 MySQL에 셋팅
 if ($indb[check]) {
-  # MySQL에 DB 생성
-  $create[dbname] = "CREATE DATABASE $dbinst[name]";
-  $result[dbname] = mysql_query($create[dbname],$connect);
+  if($mysqlroot) {
+    # MySQL에 DB 생성
+    $create[dbname] = "CREATE DATABASE $dbinst[name]";
+    $result[dbname] = mysql_db_query("mysql",$create[dbname],$connect);
+  }
 
   # 외부 DB 일 경우에는 접근 권한을 외부로 지정한다.
   if($mysql_sock != "127.0.0.1" && $mysql_sock != "localhost" && !eregi("mysql.sock",$mysql_sock))
     $access_permit = $mysql_sock;
   else $access_permit = "localhost";
 
-  # user 및 db 등록(grant 문 이용)
-  $create[regis] = "GRANT all privileges ON $dbinst[name].*
-                       TO $dbinst[user]@$access_permit
-                       IDENTIFIED BY '$dbinst[pass]'";
-  $result[regis] = mysql_query($create[regis],$connect);
+  if($mysqlroot) {
+    # user 및 db 등록(grant 문 이용)
+    $create[regis] = "GRANT all privileges ON $dbinst[name].*
+                         TO $dbinst[user]@$access_permit
+                         IDENTIFIED BY '$dbinst[pass]'";
+    $result[regis] = mysql_db_query("mysql",$create[regis],$connect);
+  }
 
   # test 게시판을 생성
-  mysql_select_db($dbinst[name],$connect);
-
   $create[table] = "CREATE TABLE test ( 
 		  no int(6) DEFAULT '0' NOT NULL auto_increment,
 		  num int(6) DEFAULT '0' NOT NULL,
@@ -100,12 +105,12 @@ if ($indb[check]) {
                                   0,0,0,0,'','','')";
   $create[udata] = "INSERT INTO userdb (no,nid,name,email,url,passwd,position)
                            VALUES ('','$dbinst[aid]','$dbinst[aname]','$dbinst[aemail]',
-                                   '','$ostype[dpass]',1)";
+                                   '','$ostypes[dpass]',1)";
 
-  $result[table] = mysql_query($create[table], $connect );
-  $result[utable] = mysql_query($create[utable], $connect );
-  #$result[data] = mysql_query($create[data], $connect );
-  $result[udata] = mysql_query($create[udata], $connect );
+  $result[table] = mysql_db_query($dbinst[name],$create[table], $connect );
+  $result[utable] = mysql_db_query($dbinst[name],$create[utable], $connect );
+  #$result[data] = mysql_db_query($dbinst[name],$create[data], $connect );
+  $result[udata] = mysql_db_query($dbinst[name],$create[udata], $connect );
 
   # 설정 파일 위치
   mkdir("../data/test",0775);
@@ -152,5 +157,4 @@ mysql_close();
 echo "<script>\n" .
      "  document.location='session.php?mode=first&langss=$langss'\n" .
      "</script>";
-
 ?>
