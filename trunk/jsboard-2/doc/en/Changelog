@@ -23,6 +23,7 @@ Version   : jsboard-2.0.5
 Mon, Mar 31 2003
   by JoungKyun Kim <http://www.oops.org>
 	- fixed bug of edit mode
+	- when edit attach file, fixed enable without modified article
 
 Wed, Mar 26 2003
   by JoungKyun Kim <http://www.oops.org>
