@@ -6,9 +6,9 @@
 #
 function meta_char_check($name,$i=0,$t=0) {
   if (!$i && !trim($name))  print_error(" $name Value Name Missing! You must specify a value",250,150,1);
-  if ($t && !eregi("^[a-zA-Z]",$name)) print_error("$name Value must start with an alphabet",250,150,1);
-  if (eregi("[^a-z0-9_\-]",$name)) print_error("Can't use special characters except alphabat, numberlic , _, - charcters",250,150,1);
-  if ($t && eregi("^as$",$name)) print_error("Cat't use table name as &quot;as&quot;",250,150,1);
+  if ($t && !preg_match("/^[a-z]/i",$name)) print_error("$name Value must start with an alphabet",250,150,1);
+  if (preg_match("/[^a-z0-9_-]/i",$name)) print_error("Can't use special characters except alphabat, numberlic , _, - charcters",250,150,1);
+  if ($t && preg_match("/^as$/i",$name)) print_error("Cat't use table name as &quot;as&quot;",250,150,1);
 }
 
 # 로그인에 사용되는 Password 비교 함수
