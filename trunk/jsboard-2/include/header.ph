@@ -32,7 +32,7 @@ if(trim($table)) {
   if(@file_exists("data/$table/stylesheet.ph")) {
     @include_once"data/$table/stylesheet.ph";
     if($user_stylesheet) {
-       $user_stylesheet = eregi_replace("<[/]*STYLE[^>]*>","",$user_stylesheet);
+       $user_stylesheet = preg_replace("/<[\/]*STYLE[^>]*>/i","",$user_stylesheet);
        $user_stylesheet = "<!-- ======================= User define stylesheet ======================= -->\n".
                           "$user_stylesheet\n".
                           "<!-- ======================= User define stylesheet ======================= -->\n";
