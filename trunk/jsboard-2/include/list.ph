@@ -233,7 +233,7 @@ function print_comment_art($table,$list,$print=0) {
   global $board;
 
   $list[name] = htmlspecialchars(trim($list[name]));
-  $list[date] = date("y.m.d",$list[date]);
+  $list[date] = date("m/d H:i:s",$list[date]);
   $list[text] = htmlspecialchars(trim($list[text]));
 
   if($board[rnname] && preg_match("/^(2|3|5|7)$/",$board[mode]))
@@ -241,9 +241,9 @@ function print_comment_art($table,$list,$print=0) {
   else $names = $list[name];
 
   $ret = "<TR>\n".
-         "<TD WIDTH=60 VALIGN=top><FONT Style=\"font-weight:bold\">$names</FONT></TD>\n".
+         "<TD WIDTH=60 VALIGN=top NOWRAP><FONT Style=\"font-weight:bold\">$names</FONT></TD>\n".
          "<TD>\n<PRE>\n$list[text]\n<PRE>\n</TD>\n".
-         "<TD WIDTH=20 VALIGN=top>$list[date]</TD>\n".
+         "<TD WIDTH=20 VALIGN=top NOWRAP><NOBR><FONT STYLE=\"font: 11px tahoma\">$list[date]</FONT></NOBR></TD>\n".
          "</TR>\n";
 
   if($print) echo $ret;

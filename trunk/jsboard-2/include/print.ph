@@ -857,7 +857,7 @@ function detail_searchform($p='') {
 function print_comment($table,$no,$print=0) {
   global $board, $color, $size, $rname, $page, $langs;
   global $pre_regist;
-  $textareasize = $size[text]-form_size(8);
+  $textareasize = $size[text]-form_size(9);
 
   if (preg_match("/^(2|3|5|7)$/",$board[mode])) {
     if($board[super] != 1) $disable = " disabled";
@@ -871,8 +871,8 @@ function print_comment($table,$no,$print=0) {
        "</TR>\n".
        "<TR>\n".
        "<TD ALIGN=right>\n".
-       "$langs[c_na] <INPUT TYPE=text$disable NAME=atc[name] SIZE=$size[pass] VALUE=\"$pre_regist[name]\"><BR>\n".
-       "$langs[c_ps] <INPUT TYPE=password NAME=atc[passwd] SIZE=$size[pass]>\n".
+       "$langs[c_na] <INPUT TYPE=text$disable NAME=atc[name] SIZE=$size[pass] VALUE=\"$pre_regist[name]\" STYLE=\"font: 11px tahoma;\"><BR>\n".
+       "$langs[c_ps] <INPUT TYPE=password$disable NAME=atc[passwd] SIZE=$size[pass] STYLE=\"font: 11px tahoma;\">\n".
        "</TD>\n".
        "<TD ROWSPAN=2 ALIGN=center>\n".
        "<TEXTAREA NAME=atc[text] COLS=$textareasize ROWS=3 WRAP=hard></TEXTAREA>\n".
