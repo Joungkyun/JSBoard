@@ -20,6 +20,11 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.1
 
+2002.07.24
+  by JoungKyun Kim
+	- global.ph 파일 업그레이드 스크립트에서 user config 파일 정보를 고정
+	- $rmail[mta] 값을 서버 주소로 지정할 경우 더블 쿼우트 문제 수정
+
 2002.07.23
   by JoungKyun Kim
 	- 원본글 포함 옵션 오작동 수정

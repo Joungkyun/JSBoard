@@ -204,7 +204,7 @@ echo "<?
 # no value            -> send mail with self method of JSBoard
 # mail server address -> send mail with selected mail server
 # WARN : windows version can't select self method of JSBoard
-\$rmail[mta]      = "${ASMTP}";
+\$rmail[mta]      = \"${ASMTP}\";
 # charactor of converted mail address
 \$rmail[chars]    = \"__at__\";
 
