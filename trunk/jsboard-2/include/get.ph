@@ -95,9 +95,13 @@ function get_agent() {
     else if(ereg("Win", $agent_env)) $agent[os] = "WIN";
     else if(ereg("Linux", $agent_env)) $agent[os] = "LINUX";
     else $agent[os] = "OTHER";
+    # 언어팩
+    if(eregi("en-US",$agent_env)) $agent[ln] = "EN";
+    elseif(eregi("ko-KR",$agent_env)) $agent[ln] = "KO";
+    else $agent[ln] = "OTHER";
     # version 정보
     $agent[vr] = eregi_replace("Mozi[^(]+\([^;]+;[^;]+;[^;]+;[^;]+;([^)]+)\).*","\\1",$agent_env);
-    $agent[vr] = str_replace("rv:","",$agent[vr]);
+    $agent[vr] = trim(str_replace("rv:","",$agent[vr]));
     # NS 와의 공통 정보
     $agent[co] = "mozilla";
   } else if(ereg("Konqueror",$agent_env)) {
