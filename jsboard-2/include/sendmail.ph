@@ -176,12 +176,12 @@ function sendmail($rmail,$fm=0) {
              "\r\n".
              "JSBoard Form mail service - http://jsboard.kldp.org\r\n";
 
-  if ($rmail[user] && $rmail[reply_orig_email]) {
+  if ($rmail[user] && $rmail[reply_orig_email] && $rmail[email] != $rmail[toadmin]) {
     if($rmail[mta]) socketmail($rmail[smtp],$rmail[reply_orig_email],$rmail[email],$rmail[title],$message);
     else phpmail($rmail[reply_orig_email],$rmail[email],$rmail[title],$message);
   }
 
-  if ($rmail[admin] && $rmail[toadmin] != "") {
+  if ($rmail[admin] && $rmail[toadmin] != "" && $rmail[email] != $rmail[toadmin]) {
     if($rmail[mta]) socketmail($rmail[smtp],$rmail[toadmin],$rmail[email],$rmail[title],$message);
     else phpmail($rmail[toadmin],$rmail[email],$rmail[title],$message);
   }

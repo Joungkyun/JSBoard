@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  1월  4일
+작성일 : 2002년  1월  5일
 버전   : jsboard-2.0pre4
 
 
@@ -30,6 +30,9 @@ If you wnat to see windog's change log, see also
 5. auto_link() 함수에서 URL 에 email 형태의 주소가 포함될 때 링크가 깨지는
    것 수정
 6. html 사용시에 table 태그 잘못 입력할 경우 디자인이 깨지는 것 방지
+7. 답장시 자신의 글에 답장을 할 경우 메일 발송 안되게 수정
+8. 검색단어 하이라이팅시 버그 수정
+9. 상세 검색에서 3 자 미만의 검색어가 필터링 되지 않던것 수정
 
 
 -----------------------------------------------------------------------------

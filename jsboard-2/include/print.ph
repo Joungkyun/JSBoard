@@ -741,6 +741,8 @@ function detail_searchform($p='') {
   $ACHK = ($o[sc] == "a") ? " CHECKED" : "";
   if(!$o[sc]) $TCHK = " CHECKED";
 
+  $o[ss] = preg_replace("/\\\\+/i","\\",$o[ss]);
+
   $form = "<!-------- Detail Search Table ------------>\n".
           "<TABLE WIDTH=$board[width] BORDER=0 CELLPADDING=0 CELLSPACING=0>\n<TR><TD>\n".
           "<FORM METHOD=post ACTION=locate.php?table=$table>\n".
