@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
+2002.4.29 by 김정균 <http://www.oops.org>
+	- php.ini 의 precision 값을 15 로 고정.
+	- get_spam_value 함수 수정 (for php 4.2.0)
+
 2002.4.25 by 임은재 <http://kldp.org/~eunjea/>
 	- php.ini 에서 allow_call_time_pass_reference 의 값이 off 일 경우
 	  경고 메세지 출력되는 것 수정

@@ -6,6 +6,7 @@ if(preg_match("/(write|edit|reply)\.php/i",$_SERVER[PHP_SELF]))
 set_magic_quotes_runtime(0); 
 ini_set(magic_quotes_gpc,1);
 ini_set(magic_quotes_sybase,0);
+ini_set(precision,15);
 
 include_once "include/error.ph";
 include_once "include/print.ph";
