@@ -2,7 +2,8 @@
 if(eregi("(write|edit|reply)\.php",$_SERVER[PHP_SELF]))
   session_cache_limiter('nocache, must-revalidate');
 session_start();
-if(!session_is_registered("$jsboard")) session_destroy();
+if(!session_is_registered("$jsboard") && eregi("session\.php",$_SERVER[PHP_SELF]))
+  session_destroy();
 
 include_once "include/print.ph";
 # GET/POST 변수를 제어
@@ -12,6 +13,10 @@ if (!@file_exists("config/global.ph")) {
   echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
        "history.back();\nexit;\n</script>\n";
 } else { include_once "config/global.ph"; }
+
+session_start();
+if(!session_is_registered("$jsboard") && eregi("session\.php",$_SERVER[PHP_SELF]))
+  session_destroy();
 
 ##############################################################################
 #  이 정보들은 건들지 말도록 한다!!!!!

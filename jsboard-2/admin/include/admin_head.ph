@@ -1,9 +1,5 @@
 <?
-# session을 시작
-session_start();
-if(!session_is_registered("$jsboard")) session_destroy();
 $sadmin[pern]   = 10;
-
 if($path[type] == "user_admin") {
   $dpath = "..";
   $ipath = "../..";
@@ -35,6 +31,10 @@ if(!@file_exists("$ipath/config/global.ph")) {
       "history.back()</script>";
   die;
 } else { include_once "$ipath/config/global.ph"; }
+
+# session을 시작
+session_start();
+if(!session_is_registered("$jsboard")) session_destroy();
 
 if($path[type] == "user_admin" && $table) {
   if(file_exists("$ipath/data/$table/config.ph"))
