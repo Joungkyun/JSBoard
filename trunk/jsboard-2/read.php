@@ -111,7 +111,7 @@ if ($enable[pre] && $enable[re_list] && ($list[reto] || $list[reyn])) $print[pre
 $b_time[] = microtime(); # 속도 체크
 
 # 글읽기에서 관련글 리스트 출력
-if($enable[re_list] && ($list[reto] || $list[reyn])) $print[rlists] = "\n".article_reply_list($table,$pages,1);
+if($enable[re_list] && ($list[reto] || $list[reyn])) $print[rlists] = "\n".article_reply_list($table,$pages,0);
 
 # 커멘트 리스트
 $print[comment] = $enable[comment] ? print_comment($table,$no,0) : "";
