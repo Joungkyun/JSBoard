@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.0
 
+2002.07.18 by 김정균 <http://www.oops.org>
+	- IE 에서 메일 링크를 클릭했을 때, 다른 페이지로 넘어가는 것 수정
+
 2002.07.16 by 김정균 <http://www.oops.org>
 	- root script 버그 수정
 
