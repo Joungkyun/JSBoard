@@ -21,7 +21,7 @@ If you wnat to see windog's change log, see also
 Version   : jsboard-2.0pre4
 
 Sat, Apr 13 2002 by JoungKyun Kim  <http://www.oops.org>
-        - modified to devide several line if subject is longer than table width
+	- modified to devide several line if subject is longer than table width
 
 Fri, Apr 12 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- fixed problem of Message-Id on sendmail.ph
