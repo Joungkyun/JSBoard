@@ -1,15 +1,131 @@
 <?php
 # mail 보내기 함수 2001.11.30 김정균
 
-function get_send_info($table,$no) {
-  global $db;
-  $c = sql_connect($db[server],$db[user],$db[pass]);
-  sql_select_db($db[name]);
-  $r = sql_query("SELECT name,email FROM $table WHERE no = $no");
-  $row = sql_fetch_array($r);
-  mysql_close($c);
+# 서버상의 smtp daemon 에 의존하지 않고 직접 발송하는 smtp class
+#
+# 특정 배열로 class 에 전달을 하여 메일을 발송한다. 배열은 아래을 참조한다.
+#
+# debug -> debug 를 할지 안할지를 결정한다.
+# ofhtml -> 웹상에서 사용할지 쉘상에서 사용할지를 결정한다.
+# from -> 메일을 발송하는 사람의 메일주소
+# to -> 메일을 받을 사람의 메일 주소
+# text -> 헤더 내용을 포함한 메일 본문
+#
+class maildaemon {
+  var $failed = 0;
 
-  return $row;
+  function maildaemon($v) {
+    $this->debug = $v[debug];
+    $this->ofhtml = $v[ofhtml];
+    if($_SERVER[SERVER_NAME]) $this->helo = $_SERVER[SERVER_NAME];
+    if(!$this->helo || eregi("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$",$this->helo))
+      $this->helo = "JSBoardMessage";
+
+    $this->from = $v[from];
+    $this->to   = $v[to];
+    $this->body = $v[text]."\r\n.";
+    $this->newline = $this->ofhtml ? "<br>\n" : "\n";
+
+    $this->mx = $this->getMX($this->to);
+
+    if($this->debug) {
+      echo "DEBUG: ".$this->mx." start".$this->newline;
+      echo "################################################################".$this->newline;
+    }
+    $this->sockets("open");
+    $this->send("HELO ".$this->helo);
+    $this->send("MAIL FROM: <".$this->from.">");
+    $this->send("RCPT TO: <".$this->to.">");
+    $this->send("data");
+    $this->send($this->body);
+    $this->send("quit");
+    $this->sockets("close");
+  }
+
+  function getMX($email) {
+    $dev = explode("@",$email);
+    $account = $dev[0];
+    $host = $dev[1];
+
+    if(checkdnsrr($host,"MX")) {
+      if(getmxrr($host,$mx,$weight)) {
+        $idx = 0;
+        for($i=0;$i<sizeof($mx);$i++) {
+          $dest = $dest ? $dest : $weight[$i];
+          if($dest > $weight[$i]) {
+            $dest = $weight[$i];
+            $idx = $i;
+          }
+        }
+      } else return $host;
+    } else return $host;
+    return $mx[$idx];
+  }
+
+  # 디버그 함수
+  #  $t -> 1 (debug of socket open,close)
+  #        0 (regular smtp message)
+  #  $p -> 1 (print detail debug)
+  # 
+  # return 1 -> success
+  # return 0 -> failed
+  #
+  function debug($str,$t=0,$p=0) {
+    if($t) {
+      if(!$str) $this->failed = 1;
+      if($this->sock) $returnmsg = trim(fgets($this->sock,1024));
+    } else {
+      if(!eregi("^(220|221|250|251|354)$",substr(trim($str),0,3)))
+        $this->failed = 1;
+    }
+
+    # DEBUG mode -> 모든 메세지 출력
+    if($p) {
+      if($t) {
+        $str = "Conncet ".$this->mx;
+        $str .= $this->failed ? " Failed" : " Success";
+        $str .= $this->newline."DEBUG: $returnmsg";
+      }
+      echo "DEBUG: $str".$this->newline;
+    }
+
+    # DEBUG 모드가 아닐때, 에러 메세지 출력
+    if(!$p && $this->failed) {
+      if($this->ofhtml) echo "<SCRIPT>\nalert('$str')\n</SCRIPT>\n";
+      else "ERROR: $str\n";
+    }
+  }
+
+  function sockets($option=0) {
+    switch($option) {
+      case "open" :
+        $this->sock = @fsockopen($this->mx,25,&$this->errno,&$this->errstr,30);
+        $this->debug($this->sock,1,$this->debug);
+        break;
+      default :
+        if($this->sock) fclose($this->sock);
+        break;
+    }
+  }
+
+  function send($str,$chk=0) {
+    if(!$this->failed) {
+      if($this->debug) {
+        if(eregi("\r\n",trim($str)))
+          $str_debug = trim(str_replace("\r\n","\r\n       ",$str));
+        else $str_debug = $str;
+      }
+      fputs($this->sock,"$str\r\n");
+      $recv = trim(fgets($this->sock,1024));
+      $recvchk = $recv;
+      $this->debug($recv,0,$this->debug);
+
+      if(eregi("Mail From:",$str) && eregi("exist|require|error",$recvchk) && !$chk) {
+        $this->failed = 0;
+        $this->send("MAIL FROM: <".$this->to.">",1);
+      }
+    }
+  }
 }
 
 function mailcheck($to,$from,$title,$body) {
@@ -63,11 +179,15 @@ function get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm) {
   global $langs,$color;
 
   if($nofm) $nofm = auto_link(&$nofm);
-  if($rmail[url]) $homeurl = "HomeURL           : ".auto_link($rmail[url]);
+  if($rmail[url]) $homeurl = "HomeURL           : ".auto_link($rmail[url])."\r\n";
   if($rmail[email]) {
     $rmail[pemail] = (eregi("^nobody@",$rmail[email])) ? "" : $rmail[email];
-    $rmail[pemail] = preg_replace("/$rmail[pemail]/i","mailto:<A HREF=mailto:\\0>\\0</A>",$rmail[pemail]);
+    if($rmail[pemail]) {
+      $rmail[pemail] = preg_replace("/$rmail[pemail]/i","mailto:<A HREF=mailto:\\0>\\0</A>",$rmail[pemail]);
+      $mailurl = "Email             : $rmail[pemail]\r\n";
+    }
   }
+  $addressinfo = $mailurl.$homeurl;
   $rmail[text] = !$rmail[html] ? html_to_plain_lib($rmail[text]) : $rmail[text];
   $servername = strtoupper($_SERVER[SERVER_NAME]);
 
@@ -78,53 +198,24 @@ function get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm) {
   return $htmltext;
 }
 
-function mail_header($to,$from,$title,$type=0) {
+function mail_header($to,$from,$title) {
   global $langs,$boundary;
 
   # mail header 를 작성 
+  $boundary = get_boundary_msg();
   $header = "From: JSBoard Message <$from>\r\n".
             "MIME-Version: 1.0\r\n".
-            "X-Accept-Language: ko,en\r\n";
-
-  if(!$type) {
-    $header .= "To: $to\r\n".
-               "Subject: $title\n";
-  }
-
-  $boundary = get_boundary_msg();
-  $header .= "Content-Type: multipart/alternative; boundary=\"$boundary\"\r\n\r\n".
-             "This is a multi-part message in MIME format.\r\n";
+            "To: $to\r\n".
+            "Subject: $title\n".
+            "Content-Type: multipart/alternative;\r\n".
+            "              boundary=\"$boundary\"\r\n\r\n".
+            "This is a multi-part message in MIME format.\r\n\r\n";
 
   return $header;
 }
 
-function phpmail($to,$from,$title,$pbody,$hbody) {
+function socketmail($to,$from,$title,$pbody,$hbody) {
   global $langs,$boundary;
-
-  # 빈 문자열 체크
-  mailcheck($to,$from,$title,$pbody);
-
-  $title = "=?$langs[charset]?B?".trim(base64_encode($title))."?=";
-  $title = eregi_replace("\n[ |\t]*"," ",str_replace("\r\n","\n",$title));
-
-  $header = mail_header($to,$from,$title,1);
-
-  $body = "--$boundary\r\n".
-          "Content-Type: text/plain; charset=$langs[charset]\r\n".
-          "Content-Transfer-Encoding: base64\r\n\r\n".
-          body_encode_lib(&$pbody).
-          "\r\n\r\n--$boundary\r\n".
-          "Content-Type: text/html; charset=$langs[charset]\r\n".
-          "Content-Transfer-Encoding: base64\r\n\r\n".
-          body_encode_lib(&$hbody).
-          "\r\n\r\n--$boundary--\r\n\r\n";
-
-  mail($to,$title,$body,$header,"-f$from") or print_notice($langs[mail_send_err]);
-}
-
-function socketmail($smtp,$to,$from,$title,$pbody,$hbody) {
-  global $langs,$boundary;
-  $smtp = !trim($smtp) ? "127.0.0.1" : $smtp;
 
   # 빈 문자열 체크
   mailcheck($to,$from,$title,$pbody);
@@ -138,35 +229,24 @@ function socketmail($smtp,$to,$from,$title,$pbody,$hbody) {
   # body 를 구성
   $body = str_replace("\n","\r\n",str_replace("\r","",$pbody));
   $body = "--$boundary\r\n".
-          "Content-Type: text/plain; charset=$langs[charset]\r\n".
+          "Content-Type: text/plain;\r\n".
+          "              charset=$langs[charset]\r\n".
           "Content-Transfer-Encoding: base64\r\n\r\n".
           body_encode_lib(&$pbody).
           "\r\n\r\n--$boundary\r\n".
-          "Content-Type: html/text; charset=$langs[charset]\r\n".
+          "Content-Type: text/html;\r\n".
+          "              charset=$langs[charset]\r\n".
           "Content-Transfer-Encoding: base64\r\n\r\n".
           body_encode_lib(&$hbody).
           "\r\n\r\n--$boundary--\r\n\r\n";
 
-  $body = $mail_header.$body;
-  
-  # smtp port 에 socket 을 연결
-  $p = fsockopen($smtp,25,&$errno,&$errstr);
+  $mails[debug] = 0;
+  $mails[ofhtml] = 0;
+  $mails[to] = $to;
+  $mails[from] = $from;
+  $mails[text] = $mail_header.$body;
 
-  if ($p) {
-    fputs($p,"HELO $smtp\r\n");
-    fgets($p,512); 
-    fputs($p,"MAIL From: $from\r\n");
-    fgets($p,512); 
-    fputs($p,"RCPT To: $to\r\n");
-    fgets($p,512);
-    fputs($p,"data\r\n");
-    fgets($p,512);
-    fputs($p,"$body\r\n.\r\n");
-    fgets($p,512);
-    fputs($p,"quit\r\n");
-    fgets($p,512);
-    fclose($p);
-  } else print_notice($langs[mail_send_err]);
+  new maildaemon($mails);
 }
 
 function sendmail($rmail) {
@@ -189,6 +269,9 @@ function sendmail($rmail) {
   $rmail[name] = stripslashes($rmail[name]);
   $rmail[title] = stripslashes($rmail[title]);
   $rmail[email] = !trim($rmail[email]) ? "nobody@$_SERVER[SERVER_NAME]" : $rmail[email];
+  if(eregi("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$",$_SERVER[SERVER_NAME]))
+    $rmail[email] = "nobody@[".$_SERVER[SERVER_NAME]."]";
+
   $rmail[pemail] = (eregi("^nobody@",$rmail[email])) ? "" : "mailto:$rmail[email]";
 
   if ($langs[code] == "ko") {
@@ -216,7 +299,8 @@ function sendmail($rmail) {
   $dbloca  = "DB Location       : $webboard_address";
   $repart  = "Reply Article     : $reply_article";
   $nofm    = "\n$dbname\n$dbloca\n$repart";
-  $homeurl = "HomeURL           : $rmail[url]";
+  $mailurl = "Email             : $rmail[pemail]\r\n";
+  $homeurl = "HomeURL           : $rmail[url]\r\n";
 
   $message = "\r\n".
              "\r\n".
@@ -231,12 +315,12 @@ function sendmail($rmail) {
              "\r\n".
              "[ Article Infomation ]-----------------------------------------------------\r\n".
              "$langs[u_name]              : $rmail[name]\r\n".
-             "Email             : $rmail[pemail]\r\n".
-             "$homeurl\r\n".
+             "$mailurl".
+             "$homeurl".
              "$langs[a_t13]              : $year $day $ampm $hms\r\n".
              "---------------------------------------------------------------------------\r\n".
              "\r\n".
-             html_to_plain_lib($plainbody)."\r\n".
+             html_to_plain_lib($rmail[text])."\r\n".
              "\r\n".
              "\r\n".
              "\r\n".
@@ -249,18 +333,13 @@ function sendmail($rmail) {
              "JSBoard Form mail service - http://jsboard.kldp.org\r\n";
 
   $htmltext = get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm);
-  #echo $htmltext;
-  #exit;
 
   if ($rmail[user] && $rmail[reply_orig_email] && $rmail[email] != $rmail[toadmin]) {
-    if($rmail[mta]) socketmail($rmail[smtp],$rmail[reply_orig_email],$rmail[email],$rmail[title],&$message,&$htmltext);
-    else phpmail($rmail[reply_orig_email],$rmail[email],$rmail[title],&$message,&$htmltext);
+    socketmail($rmail[reply_orig_email],$rmail[email],$rmail[title],&$message,&$htmltext);
   }
 
   if ($rmail[admin] && $rmail[toadmin] != "" && $rmail[email] != $rmail[toadmin]) {
-    if($rmail[mta]) socketmail($rmail[smtp],$rmail[toadmin],$rmail[email],$rmail[title],&$message,&$htmltext);
-    else phpmail($rmail[toadmin],$rmail[email],$rmail[title],&$message,&$htmltext);
+    socketmail($rmail[toadmin],$rmail[email],$rmail[title],&$message,&$htmltext);
   }
-
 }
 ?>

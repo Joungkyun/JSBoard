@@ -127,7 +127,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     }
 
     # 답장글에 대한 정보를 가져옴
-    #sql_query("LOCK TABLES $table WRITE");
+    sql_query("LOCK TABLES $table WRITE");
     $reply = get_article($table, $atc[reno]);
     $atc[rede] = $reply[rede] + 1; # 답장글의 깊이
     $atc[idx]  = $reply[idx]; # 부모글의 인덱스 번호 상속
