@@ -1,132 +1,4 @@
 <?
-
-/* mail 보내기 함수 2000.1.16 수정 by 김정균 */
-
-function send_mail($no, $bbshome, $mailtoadmin, $mailtowriter, $table, $reno, $name,
-                    $email, $reply_writer_email, $url, $webboard_version, $text, $title) {
-
-  global $REMOTE_ADDR, $HTTP_USER_AGENT, $HTTP_ACCEPT_LANGUAGE, $SERVER_NAME, $HOST_NAME ;
-
-  $mail_msg_header = "이 메일은 $table 게시판에서 온 메일입니다. Reply 하지 마십시오." ;
-
-  $time = date("Y/m/d (D) a h시i분");
-  $time=explode(" ",$time);
-
-  $year=$time[0] ;
-  $day=$time[1] ;
-  $ampm=$time[2] ;
-  $hms=$time[3] ;
-
-  if ($day == "(Mon)") { $asdf="(월)" ; }
-  else if ($day == "(Tue)") { $day="(화)" ; }
-  else if ($day == "(Wed)") { $day="(수)" ; }
-  else if ($day == "(Thu)") { $day="(목)" ; }
-  else if ($day == "(Fri)") { $day="(금)" ; }
-  else if ($day == "(Sat)") { $day="(토)" ; }
-  else if ($day == "(Sun)") { $day="(일)" ; }
-
-    $webboard_address =  sprintf("%s%s", $bbshome, "read.php3?table=$table&no=$no");
-    $reply_article    =  sprintf("%s%s", $bbshome, "reply.php3?table=$table&no=$no");
-
-    $message ="
-
-$mail_msg_header
-
-■ Dimanche Board Service(JSBoard),  $tabel message
-
-[ Server Infomation ]------------------------------------------------------
-ServerWare	: JSBOARD-D $webboard_version
-Server Name	: $SERVER_NAME
-DB Name		: $table
-DB Location	: $webboard_address
-Reply Article	: $reply_article
-
-
-[ Article Infomation ]-----------------------------------------------------
-이 름		: $name
-Email		: mailto:$email
-HomeURL		: $url
-일 시		: $year $day $ampm $hms
----------------------------------------------------------------------------
-
-$text
-
-
-
----------------------------------------------------------------------------
-REMOTE_ADDR : $REMOTE_ADDR
-HTTP_USER_AGENT : $HTTP_USER_AGENT
-HTTP_ACCEPT_LANGUAGE : $HTTP_ACCEPT_LANGUAGE
----------------------------------------------------------------------------
-
-";
-
-  if ($mailtowriter=="yes" && $reply_writer_email != "") {
-    $to = $reply_writer_email;
-    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: BoardMessage <$email>")
-    or die("mail을 보내지 못했습니다");
-  }
-
-  if ($mailtoadmin!="") {
-    $to = "Board Admin<$mailtoadmin>";
-    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: BoardMessage <$email>")
-    or die("mail을 보내지 못했습니다");
-  }
-}
-
-function get_hostname()
-{
-    $host  = getenv('REMOTE_ADDR');
-    return $host;
-}
-
-/* 패스워드 비교 함수 */
-function check_passwd($passwd, $no)
-{
-    global $table;
-
-    $result  = mysql_query("SELECT passwd FROM $table WHERE no = $no");
-    $cpasswd = mysql_result($result, 0, "passwd");
-    
-    if (crypt($passwd, $cpasswd) == $cpasswd) {
-	return 1;
-    }
-}
-
-/* URL 체크 함수 */
-function check_url($url)
-{
-    if (!eregi("[a-zA-Z0-9\-\.]+\.[a-zA-Z0-9\-\.]+.*", $url)) {
-	return;
-    }
-    /* 한글이 포함되었는지 체크 */
-    for($i = 1; $i <= strlen($url); $i++) {
-	if ((Ord(substr("$url", $i - 1, $i)) & 0x80)) {
-	    return;
-	}
-    }
-    $url = eregi_replace("^http.*://", "", $url);
-    $url = eregi_replace("^", "http://", $url);
-
-    return $url;
-}
-
-/* 이메일 주소 체크 함수 */
-function check_email($email)
-{
-    if (!eregi("^[^@ ]+@[a-zA-Z0-9\-\.]+\.+[a-zA-Z0-9\-\.]", $email)) {
-	return;
-    }
-    /* 한글이 포함되었는지 체크 */
-    for($i = 1; $i <= strlen($email); $i++) {
-	if ((Ord(substr("$email", $i - 1, $i)) & 0x80)) {
-	    return;
-	}
-    }
-
-    return $email;
-}
-
 /* 다음글 가져오기 */
 function get_next($no)
 {
@@ -256,117 +128,50 @@ function get_page($no)
     return $page;
 }
 
-function sform($size) {
+function sform($size)
+{
     $agent = g_agent();
-    if($agent != "moz") { $size *= 2; }
+    if($agent != "moz") {
+	$size *= 2;
+    }
     echo $size;
 }
 
-function sform_echo($size) {
-    $agent = g_agent();
-    if($agent != "moz") { $size *= 2; }
-}
-
-function g_agent($test = "0") {
-
-  $agent = getenv("HTTP_USER_AGENT");
-
-  if (ereg("^Lynx", $agent)) {
-      $agent = "lynx";
-  } else if (ereg("MS", $agent)) {
-      $agent = "msie";
-  } else if (ereg("^Moz", $agent)) {
-      if (ereg("Linux", $agent)) {
-	$agent = "moz";
-      } else if (ereg("WinNT", $agent)) {
-	if (ereg("\[ko\]", $agent)) {
-	  $agent = "moz_nt_ko";
-	} else if (ereg("\[en\]", $agent)) {
-	  $agent = "moz_nt_en";
-	} else { $agent = "moz"; }
-      } else if (ereg("Win", $agent)) {
-	if (ereg("\[ko\]", $agent)) {
-	  $agent = "moz_w_ko";
-	} else if (ereg("\[en\]", $agent)) {
-	  $agent = "moz_w_en";
-	} else { $agent = "moz"; }
-      } else { $agent = "moz"; }
-  } else { $agent = "unknown"; }
-  
-  if ($test) {
-    if ($test == $agent) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-
-  return $agent;
-}
 
 function sepa($bg)
 {
     echo("<td width=\"1%\" bgcolor=\"$bg\"><img src=\"images/n.gif\" width=\"2\" height=\"1\" alt=\"\"></td>\n");
 }
 
-
 function auto_link($text) {
 
   $regex[http] = "(http|https|ftp|telnet|news):\/\/([a-z0-9\-_]+\.[][a-zA-Z0-9:;&#@=_~%\?\/\.\+\-]+)";
   $regex[mail] = "([a-z0-9_\-]+)@([a-z0-9_\-]+\.[a-z0-9\-\._]+)";
 
-  /* 특수 문자와 링크시 target 삭제 */
+  // 특수 문자와 링크시 target 삭제
   $text = eregi_replace("&(quot|gt|lt)","!\\1",$text);
   $text = eregi_replace(" target=[\"'_a-z,A-Z]+","", $text);
 
-  /* html사용시 link 보호 */
+  // html사용시 link 보호
   $text = eregi_replace("<a href=([\"']*)($regex[http])([\"']*)>","<a href=\"\\3_orig://\\4\" target=_blank>", $text);
   $text = eregi_replace("<a href=([\"']*)mailto:($regex[mail])([\"']*)>","<a href=\"mailto:\\3#-#\\4\">", $text);
   $text = eregi_replace("<img src=([\"']*)($regex[http])([\"']*)","<img src=\"\\3_orig://\\4\"",$text);
 
-  /* 링크가 안된 url및 email address 자동링크 */
+  // 링크가 안된 url및 email address 자동링크
   $text = eregi_replace("($regex[http])","<a href=\"\\1\" target=\"_blank\">\\1</a>", $text);
   $text = eregi_replace("($regex[mail])","<a href=\"mailto:\\1\">\\1</a>", $text);
 
-  /* 보호를 위해 치환한 것들을 복구 */
+  // 보호를 위해 치환한 것들을 복구 
   $text = eregi_replace("!(quot|gt|lt)","&\\1",$text);
   $text = eregi_replace("http_orig","http", $text);
   $text = eregi_replace("#-#","@",$text) ;
 
-  /* link가 2개 겹쳤을때 이를 하나로 줄여줌 */
+  // link가 2개 겹쳤을때 이를 하나로 줄여줌 
   $text = eregi_replace("(<a href=([\"']*)($regex[http])([\"']*)+([^>]*)>)+<a href=([\"']*)($regex[http])([\"']*)+([^>]*)>","\\1", $text);
   $text = eregi_replace("(<a href=([\"']*)mailto:($regex[mail])([\"']*)>)+<a href=([\"']*)mailto:($regex[mail])([\"']*)>","\\1", $text);
   $text = eregi_replace("</a></a>","</a>",$text) ;
 
   return $text;
-}
-
-// 문자열에 한글이 포함되어 있는지 검사하는 함수
-//
-// ord    - 문자의 ASCII 값을 가져옴
-//          http://www.php.net/manual/function.ord.php3
-function is_hangul($char)
-{
-    // 특정 문자가 한글의 범위내(0xA1A1 - 0xFEFE)에 있는지 검사
-    $char = ord($char);
-
-    if($char >= 0xa1 && $char <= 0xfe)
-	return 1;
-}
-
-// 알파벳인지 그리고 대문자(0x41 - 0x5a)인지 소문자(0x61 - 0x7a)인지
-// 검사하는 함수
-//
-// ord - 문자의 ASCII 값을 가져옴
-//       http://www.php.net/manual/function.ord.php3
-function is_alpha($char)
-{
-    $char = ord($char);
-
-    if($char >= 0x61 && $char <= 0x7a)
-	return 1;
-    if($char >= 0x41 && $char <= 0x5a)
-	return 2;
 }
 
 // 문자열을 일정한 길이로 자르는 함수
@@ -417,93 +222,4 @@ function cut_string($str, $length)
 
     return $str;
 }
-
-function list_cmd_bar ($page, $l0_bg, $table, $sc_column) {
-
-  global $prev, $next, $apage, $SCRIPT_NAME, $act, $search ;
-
-  echo("<table width=\"1%\" border=\"0\" cellspacing=\"4\" cellpadding=\"0\"><tr>\n");
-  if($act == "search") {
-      sepa($l0_bg);
-      echo("<td width=\"1%\" align=\"center\"><a href=\"$SCRIPT_NAME?table=$table\"><nobr>전체목록보기</nobr></a></td>\n");
-  }
-  sepa($l0_bg);
-  if($page > 1) {
-      echo("<td width=\"1%\" align=\"center\"><a href=\"$SCRIPT_NAME?table=$table&page=$prev$search\"><nobr>이전페이지</nobr></a></td>\n");
-  } else {
-      echo("<td width=\"1%\" align=\"center\"><font color=\"#acacac\"><nobr>이전페이지</nobr></font></td>\n");
-  }
-  sepa($l0_bg);
-  echo("<td width=\"1%\" align=\"center\"><a href=\"write.php3?table=$table\"><nobr>글쓰기</nobr></a></td>\n");
-  sepa($l0_bg);
-  if($page < $apage) {
-      echo("<td width=\"1%\" align=\"center\"><a href=\"$SCRIPT_NAME?table=$table&page=$next$search\"><nobr>다음페이지</nobr></a></td>");
-  } else {
-      echo("<td width=\"1%\" align=\"center\"><font color=\"#acacac\"><nobr>다음페이지</nobr></font></td>\n");
-  }
-  sepa($l0_bg);
-  if($sc_column != "today") {
-      echo("<td width=\"1%\" align=\"center\"><a href=\"$SCRIPT_NAME?table=$table&act=search&sc_column=today\"><nobr>오늘올라온글</nobr></a></td>\n");
-      sepa($l0_bg);
-  }
-  echo("</tr>\n</table>\n");
-}
-
-function read_cmd_bar ($no, $page, $prev, $next, $r0_bg, $act, $table, $passwd, $email) {
-
-  global $search, $SCRIPT_NAME, $reyn ;
-
-    echo("\n<table width=\"1%\" border=\"0\" cellspacing=\"4\" cellpadding=\"0\">\n<tr>");
-    sepa($r0_bg);
-    // 목록
-    if($act == "search") {
-	echo("<td align=\"center\" width=\"1%\"><a href=\"list.php3?table=$table$search\"><nobr>목록보기</nobr></a></td>\n");
-    } else {
-	echo("<td align=\"center\" width=\"1%\"><a href=\"list.php3?table=$table&page=$page\"><nobr>목록보기</nobr></a></td>\n");
-    }
-    sepa($r0_bg);
-    if($prev) { // 이전글
-	$result  = dquery("SELECT title FROM $table WHERE no = $prev");
-	$p_title = mysql_result($result, 0, "title");
-	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$prev$search\"><nobr>이전글</nobr></a></td>\n");
-    } else {
-	echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>이전글</nobr></font></td>\n");
-    }
-    sepa($r0_bg);
-    if($next) { // 다음글
-	$result  = dquery("SELECT title FROM $table WHERE no = $next");
-	$n_title = mysql_result($result, 0, "title");
-	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$next$search\"><nobr>다음글</nobr></a></td>\n");
-    } else {
-	echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>다음글</nobr></font></td>\n");
-    }
-    sepa($r0_bg);
-    echo("<td align=\"center\" width=\"1%\"><a href=\"write.php3?table=$table\"><nobr>글쓰기</nobr></a></td>\n");
-    sepa($r0_bg);
-
-    if($email) {
-    echo("<td align=\"center\" width=\"1%\"><a href=\"reply.php3?table=$table&no=$no&page=$page&origmail=$email\"><nobr>답장쓰기</nobr></a></td>\n");
-    } else {
-    echo("<td align=\"center\" width=\"1%\"><a href=\"reply.php3?table=$table&no=$no&page=$page\"><nobr>답장쓰기</nobr></a></td>\n");
-    }
-    sepa($r0_bg);
-
-    if($passwd) { // 암호가 있는 경우
-	echo("<td align=\"center\" width=\"1%\"><a href=\"edit.php3?table=$table&no=$no&page=$page\"><nobr>수정</nobr></a></td>\n");
-        sepa($r0_bg);
- 	  if(!$reyn) {
-	      echo("<td align=\"center\" width=\"1%\"><a href=\"delete.php3?table=$table&no=$no&page=$page\"><nobr>삭제</nobr></a></td>\n");
-              sepa($r0_bg);
-	  }
-    }
-    else {
-	echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>수정</nobr></font></td>\n");
-	echo("<td width=\"1%\" bgcolor=\"$r0_bg\"><a href=\"edit.php3?table=$table&no=$no&page=$page\"><img src=\"images/n.gif\" alt=\"\" width=\"2\" height=\"10\" border=\"0\"></a></td>");
-        echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>삭제</nobr></font></td>\n");
-	echo("<td width=\"1%\" bgcolor=\"$r0_bg\"><a href=\"delete.php3?table=$table&no=$no&page=$page\"><img src=\"images/n.gif\" alt=\"\" width=\"2\" height=\"10\" border=\"0\"></a></td>");
-    }
-
-    echo("</tr>\n</table>\n");
-}
-
 ?>

@@ -1,39 +1,50 @@
-<table width="<? echo $width ?>" border="0" cellpadding="1" bgcolor="<? echo $sch_bg ?>" align="center">
-<tr>
-  <td rowspan=2>
-    <font size="2" color="<? echo $l0_fg ?>">
-    <form method="post" action="list.php3?table=<? echo $table ?>">
-    <input type="hidden" name="act" value="search">
-    <img src="images/n.gif" width="10" height="5" alt="" border="0"><br>
-    <select name="sc_column">
-    <option value="title" selected>제목
-    <option value="text">내용
-    <option value="name">글쓴이
-    <option value="no">글번호
-    <option value="all">모두
-    </select>
-    <input type="text" name="sc_string" size="<? sform(10) ?>" maxlength="50">
-    <input type="submit" value="검색">
-    <br><img src="images/n.gif" width="10" height="5" alt="" border="0"><br>
-    </font>
-  </td>
-
-  <td valign="top" align="right">
-    <font size="2">
 <?
-if($act != "reply" && $act != "relate" && $act != "search") {
-  echo "<font size=-1 color=$l0_fg>총 ${acount} 개의 글(오늘 ${tcount} 개) [ $page / $apage ]</font>" ;
-} else if($act == "search") {
-  echo "<font size=-1 color=$l0_fg>${acount}개의 글이 검색 [ $page / $apage ]</font>" ;
+if( eregi("list.php3",$page_value)) {
+  $span = " rowspan=2" ;
+} else if ( eregi("read.php3",$page_value)) {
+  $span = "" ;
 }
 ?>
-    </font>
-  </td>
-</tr>
-
+<table width="<? echo $width ?>" border="0" cellpadding="1" align="center">
 <tr>
-   <td align=right>
-    <? nlist($page) ?><br>
-   </td>
-</tr>
-</table>
+<td<? echo $span ?>>
+<font size="2" color="<? echo $l0_fg ?>">
+<form method="post" action="list.php3?table=<? echo $table ?>">
+<input type="hidden" name="act" value="search">
+<img src="images/n.gif" width="10" height="5" alt="" border="0"><br>
+<select name="sc_column">
+<option value="title" selected><? echo $select_subj ?>
+<option value="text"><? echo $select_text ?>
+<option value="name"><? echo $select_writer ?>
+<option value="all"><? echo $select_all ?>
+</select>
+<input type="text" name="sc_string" size="<? sform(10) ?>" maxlength="50">
+<input type="submit" value="<? echo $serach_act ?>">
+<br><img src="images/n.gif" width="10" height="5" alt="" border="0"><br>
+</font>
+</td>
+<?
+if( eregi("list.php3",$page_value)) {
+  echo("<td valign=\"top\" align=\"right\">\n" .
+       "<font size=\"2\">\n");
+
+  $article = article_message($acount,$tcount,$lang,$act) ;
+  if($act != "reply" && $act != "relate" && $act != "search") {
+    echo "<font size=-1 color=$l0_fg>$article&nbsp;</font>" ;
+  } else if($act == "search") {
+    echo "<font size=-1 color=$l0_fg>$article&nbsp;</font>" ;
+  }
+  echo("</font>\n" .
+       "</td>\n" .
+       "</tr><tr>\n" .
+       "<td align=right><font size=-1>" ) ;
+  nlist($page) ;
+  echo("&nbsp;</font></td>\n</tr></table>");
+
+} else if ( eregi("read.php3",$page_value)) {
+  echo("<td valign=\"top\" align=\"right\">\n" .
+       "<font size=\"2\" color=\"$r1_fg\"><b>Writer's IP</b>: $host<br><b>SQL Time</b>: [ $sqltime sec ]</font>" .
+       "</td>\n" .
+       "</tr></table>");
+}
+?>
