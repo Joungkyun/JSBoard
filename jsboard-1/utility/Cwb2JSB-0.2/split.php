@@ -77,6 +77,7 @@ if($trans[type] == "gdbm") {
       if(preg_match("/Text/i",$handle[$i])) {
         $context = chop(dba_fetch($handle[$i],$dbm));
         $context = str_replace("\r\n","%0a",$context);
+        $context = str_replace("\n","%0a",$context);
       } else {
         $context = trim(dba_fetch($handle[$i],$dbm));
       }
