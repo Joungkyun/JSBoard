@@ -1,7 +1,9 @@
 <?php
 session_start(); // session을 시작한다.
-$path[type] = "Install";
+include_once "../include/print.ph";
+parse_query_str();
 
+$path[type] = "Install";
 if ($langss == "ko") $langs[code] = "ko";
 else $langs[code] = "en";
 
@@ -93,9 +95,10 @@ if ($indb[check]) {
   $create[gfile] = "../config/global.ph";
   $create[str] = file_operate($create[gfile],"r","Can't open $create[gfile]");
 
-  $create[str] = ereg_replace("DBname",$dbinst[name],$create[str]);
-  $create[str] = ereg_replace("DBpass",$dbinst[pass],$create[str]);
-  $create[str] = ereg_replace("DBuser",$dbinst[user],$create[str]);
+  $create[str] = str_replace("DBserver",$mysql_sock,$create[str]);
+  $create[str] = str_replace("DBname",$dbinst[name],$create[str]);
+  $create[str] = str_replace("DBpass",$dbinst[pass],$create[str]);
+  $create[str] = str_replace("DBuser",$dbinst[user],$create[str]);
 
   file_operate($create[gfile],"w","Can't update $create[gfile]",$create[str]);
 

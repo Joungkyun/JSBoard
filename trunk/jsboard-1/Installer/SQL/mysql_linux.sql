@@ -8,7 +8,7 @@ CREATE TABLE test (
   date int(11) DEFAULT '0' NOT NULL,
   host tinytext,
   name tinytext,
-  passwd varchar(13),
+  passwd varchar(56),
   email tinytext,
   url tinytext,
   title tinytext,

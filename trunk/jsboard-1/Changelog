@@ -18,6 +18,38 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin@oops.org)
+작성일 : 2002년   2월  8일
+버전   : jsboard-1.3.7
+
+* 변경된점
+1. 답장 등록시 no 의 최대값 불러오는 SQL 문 버그 수정
+2. 가장 최근글이 삭제 되었고 새로 글등록이 될때 메일 링크가 잘못 지정되는
+   것 수정
+3. 메일기능 사용할 때 자신의 글에 답장을 쓸 경우 메일 발송 안되도록 수정
+4. prelist.ph 의 쓸모없는 코드 삭제
+5. 패스워드 길이 조정 (PHP 4.1)
+6. 전체관리자는 html head,tail 에서 php 사용 가능하도록 수정
+7. 이미지 사이즈가 화면 해상도와 동일하거나 거의 비슷할 경우 이미지 창이 화면
+   을 덮어 모두 볼 수 없는 현상 수정
+8. oops admincenter 타이틀및 하단 copyright 삭제
+9. regist_globals = off 를 위해 track_var 사용
+10. register_globals = off 를 위해 upload file 처리 변경
+11. XP 용 IE 6 에서 패스워드 필드가 이상하게 나오는 것 수정
+12. Installer 에서 trackvar 작동하지 않던것 수정
+13. spam check 루틴 일부 변경
+14. mail() 함수에서 -f 의 쌍따옴표 제거
+15. 스팸 체크에 글제목 추가
+16. form_size() 함수의 syntax error 수정
+17. text_nl2br() 함수의 속도 향상
+18. delete_tag() 함수의 속도 향상
+19. Install 시 외부 DB 지정시 global.ph 에 DB 경로가 적용되지 않던것 수정
+20. 게시판 관리자에서 필요없는 폼메일 선택 옵션 제거
+21. 리스트 게시판에서 접근자의 whois 정보를 보는 기능 안되던것 수정
+22. $board[moder] 변수 삭제
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
 작성일 : 2001년  12월 31일
 버전   : jsboard-1.3.6
 

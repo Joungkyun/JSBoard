@@ -1,6 +1,10 @@
 <?php
 session_start();
 $path[type] = "user_admin";
+include "../../include/print.ph";
+# register_globals 옵션의 영향을 받지 않기 위한 함수
+if(!$parse_query_str_check) parse_query_str();
+
 include "../../include/error.ph";
 include "../../include/get.ph";
 include "../include/check.ph";
@@ -371,11 +375,6 @@ $chg_conf = "<?
 \$board[cookie] = $chg[cookie];
 
 ###############################################################################
-#  메일 링크 옵션
-###############################################################################
-\$board[mchk] = $ua[mchk];      # Mail link 를 Form Mail(1) 또는 mailto(0)
-
-###############################################################################
 #  호스트 정보 출력 설정 0 - Failed, 1 - True 
 ###############################################################################
 \$enable[dhost] = $ua[dhost];	# IP address 출력 여부(상단 메뉴 출력 안할시)
@@ -526,8 +525,13 @@ file_operate("$wfile","w","Can't update $wfile",$chg_conf);
 # quot 변환된 문자를 un quot 한다
 $head = $ua[header];
 $tail = $ua[tail];
-$head = check_invalid(stripslashes("$head"));
-$tail = check_invalid(stripslashes("$tail"));
+if($login[pass] != $sadmin[passwd] && $sloginpass != $sadmin[passwd]) {
+  $head = check_invalid(stripslashes("$head"));
+  $tail = check_invalid(stripslashes("$tail"));
+} else {
+  $head = stripslashes("$head");
+  $tail = stripslashes("$tail");
+}
 
 $wfile = "../../data/$table/html_head.ph";
 file_operate("$wfile","w","Can't update $wfile",$head);

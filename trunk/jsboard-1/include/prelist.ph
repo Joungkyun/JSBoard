@@ -24,15 +24,8 @@ $prlist[wpath] = "http://www.domain.com/jsboard";
 # 잘 연계해야함
 #
 function print_prlist($p) {
-  global $prlist;
   $p[date] = $p[date] ? "[$p[date]]" : "";
-  if($prlist[type] == "main") {
-    echo "<Li type=disc>$p[link] $p[name] $p[date] $p[count]<br>\n";
-  } elseif ($prlist[type] == "proftpd") {
-    echo "$p[link] $p[name] $p[date] $p[count]<br>\n";
-  } else {
-    echo "$p[link] $p[name] - $p[date] $p[count]<br>\n";
-  }
+  echo "$p[link] $p[name] - $p[date] $p[count]<br>\n";
 }
 
 

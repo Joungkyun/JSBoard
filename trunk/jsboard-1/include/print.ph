@@ -1,4 +1,46 @@
 <?
+# 서버의 REQUEST_METHOD 형태에 따라 변수를 체크하는 함수
+# register_globals 값이 off 일 경우 편리하게 사용
+#
+function parse_query_str() {
+  global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+  global $HTTP_SESSION_VARS, $HTTP_SERVER_VARS;
+
+  if(is_array($HTTP_GET_VARS)) {
+    foreach($HTTP_GET_VARS as $key => $value) {
+      global ${$key};
+      ${$key} = $value;
+    }
+  }
+
+  if(is_array($HTTP_POST_VARS)) {
+    foreach($HTTP_POST_VARS as $key => $value) {
+      global ${$key};
+      ${$key} = $value;
+    }
+  }
+
+  if(is_array($HTTP_COOKIE_VARS)) {
+    foreach($HTTP_COOKIE_VARS as $key => $value) {
+      global ${$key};
+      ${$key} = $value;
+    }
+  }
+
+  if(is_array($HTTP_SESSION_VARS)) {
+    foreach($HTTP_SESSION_VARS as $key => $value) {
+      global ${$key};
+      ${$key} = $value;
+    }
+  }
+
+  if(is_array($HTTP_SERVER_VARS)) {
+    foreach($HTTP_SERVER_VARS as $key => $value) {
+      global ${$key};
+      ${$key} = $value;
+    }
+  }
+}
 
 # 원하는 페이지로 이동시키는 함수
 function move_page($path,$time = 0) {
@@ -36,7 +78,7 @@ function form_size($size, $print = 0) {
       else $size *= 1.3;
     } elseif($agent[os] == "LINUX") {
       if($agent[ln] == "KO") $size *= 2.8; # 한글판
-      $size *= 1.0;
+      else $size *= 1.0;
     }
   }
 

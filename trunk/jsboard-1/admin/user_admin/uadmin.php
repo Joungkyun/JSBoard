@@ -2,6 +2,10 @@
 session_start();
 $path[type] = "user_admin";
 
+include "../../include/print.ph";
+# register_globals 옵션의 영향을 받지 않기 위한 함수
+parse_query_str();
+
 include "../../include/error.ph";
 include "../../include/get.ph";
 include "../include/check.ph";
@@ -85,9 +89,6 @@ else $bar_no = "checked";
 
 if($board[img] == "yes") $img_ok = "checked";
 else $img_no = "checked";
-
-if($board[mchk]) $mchk_ok = "checked";
-else $mchk_no = "checked";
 
 if($enable[dhost]) $dhost_ok = "checked";
 else $dhost_no = "checked";
@@ -417,29 +418,6 @@ echo "] $langs[lang_m2]
 <td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_b13]</font></td>
 <td><input type=text name=ua[cookie] size=$size value=\"$board[cookie]\"></td>
 <td bgcolor=$color[r2_bg] align=center>$langs[ua_b14]</td>
-</tr>
-
-<tr><td colspan=6><font id=bg>&nbsp;</font>
-</td></tr>
-
-<tr><td bgcolor=$color[l0_bg] align=center colspan=6><font id=l0fg>Mail Link Option</font>
-</td></tr>
-
-<tr>
-<td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_m1]</font></td>
-<td colspan=4> [ ";
-
-if($rmail[uses] == "yes") {
-  echo "<input type=radio name=ua[mchk] $mchk_ok value=1 id=radio> $langs[ua_m2]\n".
-       "<input type=radio name=ua[mchk] $mchk_no value=0 id=radio> $langs[ua_m3]";
-} else {
-  echo "( ) $langs[ua_m2]\n".
-       "<input type=radio name=ua[mchk] checked value=0 id=radio> $langs[ua_m3]";
-}
-
-echo " ]
-</td>
-<td bgcolor=$color[r2_bg]>&nbsp;</td>
 </tr>
 
 <tr><td colspan=6><font id=bg>&nbsp;</font>
@@ -805,7 +783,7 @@ echo "</td>
 </td></tr>
 
 <tr><td bgcolor=$color[l0_bg] align=center colspan=6>
-<font id=l0fg>Scripted by <a href=$copy[url]>$copy[name]</a><br>
+<font id=l0fg>Scripted by <a href=http://jsboard.kldp.org>JSBoard Open Project</a><br>
 and all right reserved</font>
 </td></tr>
 

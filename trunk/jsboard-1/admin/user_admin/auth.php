@@ -2,6 +2,10 @@
 session_start();
 $path[type] = "user_admin";
 
+include "../../include/print.ph";
+# register_globals 옵션의 영향을 받지 않기 위한 함수
+if(!$parse_query_str_check) parse_query_str();
+
 include "../../include/error.ph";
 include "../include/check.ph";
 include "../../include/get.ph";
@@ -69,7 +73,7 @@ function InputFocus() {
 <tr align=center><td><p><br><br>
 <form name=auth method=POST action=uadmin.php>
 $langs[ua_ment]<br>
-<input type=password name=passwd size=$size>
+<input type=password name=passwd size=$size style=\"font:12px tahoma;\">
 <input type=hidden name=table value=$table>
 </form>
 <br>
@@ -77,7 +81,7 @@ $langs[ua_ment]<br>
 
 <tr align=center><td bgcolor=$color[l1_bg]>
 <font color=$color[l1_fg]>
-Scripted by <A HREF=http://www.oops.org TARGET=_blank>JoungKyun Kim</a><br>
+Scripted by <A HREF=http://jsboard.kldp.org TARGET=_blank>JSBoard Open Project</a><br>
 and all right reserved
 </font>
 </td></tr>

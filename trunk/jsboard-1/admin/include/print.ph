@@ -134,11 +134,6 @@ function err_msg($str = "Ocourrenct unknown error",$mode = 0) {
   if (!$mode) die;
 }
 
-# 원하는 페이지로 이동시키는 함수
-function move_page($path,$time = 0) {
-  echo "<META http-equiv=\"refresh\" content=\"$time;URL=$path\">";
-}
-
 # 언어 파일의 리스트를 구하는 함수
 function get_lang_list($code) {
   $p = opendir("../../include/LANG");

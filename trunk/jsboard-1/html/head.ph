@@ -33,7 +33,17 @@ echo "
       height = scrsize.height;
     }
 
-    if (width < wid) { wid = width - 5
+    var chkwid = width - 10
+    var chkhei = height - 20
+
+    if (chkwid < wid) {
+      wid = width - 5
+      if(chkhei < hei) { hei = height - 60 }
+      scroll = 'yes'
+    } 
+
+    if (chkhei < hei) {
+      if(chkwid < wid) { wid = width - 5 }
       hei = height - 60
       scroll = 'yes'
     }

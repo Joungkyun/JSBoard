@@ -2,6 +2,7 @@
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
   if (!$html) $text = eregi_replace("&amp;(#|amp)","&\\1",$text);
+  $text = str_replace("&amp;","&",$text);
   return $text;
 }
 
@@ -144,16 +145,16 @@ function search_hl($list) {
 function text_nl2br($text, $html) {
   global $langs;
   if($html) {
-    $text = eregi_replace("<(\\?|%)(.*)(\\?|%)>", "&lt;\\1\\2\\3?&gt;", $text);
-    $text = eregi_replace("<([/]*)(pre|xmp|base)[^>]*>","",$text);
-    $text = eregi_replace("([a-z0-9]*script:)","deny_\\1",$text);
-    $text = ereg_replace("\r\n", "\n", $text);
-
+    $source = array("/<(\?|%)/i","/(\?|%)>/i","/([a-z0-9]*script:)/i","/\r\n/",
+                    "/<(\/*(script|style|pre|xmp|base|span|html)[^>]*)>/i");
+    $target = array("&lt;\\1","\\1&gt;","deny_\\1","\n","&lt;\\1&gt;");
+    $text = preg_replace($source,$target,$text);
     if(!eregi("<--no-autolink>",$text)) $text = auto_link($text);
     else $text = chop(str_replace("<--no-autolink>","",$text));
 
     $text = eregi_replace("(\n)?<table","</PRE><TABLE",$text);
     $text = eregi_replace("</table>(\n)?","</TABLE><PRE>",$text);
+    $text = !$text ? "No Contents" : $text;
     $text = "<PRE>$text</PRE>";
   } else {
     $text = htmlspecialchars($text);
@@ -166,15 +167,14 @@ function text_nl2br($text, $html) {
 }
 
 function delete_tag($text) {
-  $text = eregi_replace("<html(.*)<body([^>]*)>","",$text);
-  $text = eregi_replace("</body(.*)</html>(.*)","",$text);
-  $text = eregi_replace("<[/]*(div|layer|body|html|head|meta|form|input|select|textarea|base)[^>]*>","",$text);
-  $text = eregi_replace("<(style|script|title)(.*)</(style|script|title)>","",$text);
-  $text = eregi_replace("<[/]*(script|style|title|xmp)>","",$text);
-  $text = eregi_replace("([a-z0-9]*script:)","deny_\\1",$text);
-  $text = eregi_replace("<(\\?|%)","&lt;\\1",$text);
-  $text = eregi_replace("(\\?|%)>","\\1&gt;",$text);
-  $text = chop($text);
+  $src = array("/\n/i","/<html.*<body[^>]*>/i","/<\/body.*<\/html>.*/i",
+               "/<\/*(div|span|layer|body|html|head|meta|input|select|option|form)[^>]*>/i",
+               "/<(style|script|title).*<\/(style|script|title)>/i",
+               "/<\/*(script|style|title|xmp)>/i","/<(\\?|%)/i","/(\\?|%)>/i",
+               "/#\^--ENTER--\^#/i");
+  $tar = array("#^--ENTER--^#","","","","","","&lt;\\1","\\1&gt;","\n");
+
+  $text = chop(preg_replace($src,$tar,$text));
 
   return $text;
 }
@@ -229,8 +229,6 @@ function cut_string($s, $l) {
 
 # 문서 내용에 있는 URL들을 찾아내어 자동으로 링크를 구성해주는 함수
 #
-# eregi_replace - 정규 표현식을 이용한 치환 (대소문자 무시)
-#                 http://www.php.net/manual/function.eregi-replace.php
 # preg_replace  - 펄 형식의 정규표현식을 이용한 치환
 #                 http://www.php.net/manual/function.preg-replace.php
 function auto_link($str) {
@@ -238,19 +236,22 @@ function auto_link($str) {
 
   $regex[file] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
   $regex[file] = "(\.($regex[file])\") TARGET=\"_blank\"";
-  $regex[http] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9_\-]+\.[\xA1-\xFEa-z0-9:;&#@=_~%\[\]\?\/\.\,\+\-]+)(\/|[\.]*[\xA1-\xFEa-z0-9\[\]]))";
+  $regex[http] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9:_\-]+\.[\xA1-\xFEa-z0-9:;&#=_~%\[\]\?\/\.\,\+\-]+)([\.]*[\/a-z0-9\[\]]|=[\xA1-\xFE]+))";
   $regex[mail] = "([\xA1-\xFEa-z0-9_\.\-]+)@([\xA1-\xFEa-z0-9_\-]+\.[\xA1-\xFEa-z0-9\-\._\-]+[\.]*[a-z0-9]\??[\xA1-\xFEa-z0-9=]*)";
 
   # &lt; 로 시작해서 3줄뒤에 &gt; 가 나올 경우와
   # IMG tag 와 A tag 의 경우 링크가 여러줄에 걸쳐 이루어져 있을 경우
   # 이를 한줄로 합침 (합치면서 부가 옵션들은 모두 삭제함)
-  $psrc[] = "/<([^<>\n]*)\n([^<>\n]+)\n([^<>\n]*)>/i";
-  $ptar[] = "<\\1\\2\\3>";
-  $psrc[] = "/<([^<>\n]*)\n([^\n<>]*)>/i";
-  $ptar[] = "<\\1\\2>";
-  $psrc[] = "/<(A|IMG)[^>]*(HREF|SRC)[^=]*=[ '\"\n]*($regex[http]|mailto:$regex[mail])[^>]*>/i";
-  $ptar[] = "<\\1 \\2=\"\\3\">";
-  $str = preg_replace($psrc,$ptar,$str);
+  $src[] = "/<([^<>\n]*)\n([^<>\n]+)\n([^<>\n]*)>/i";
+  $tar[] = "<\\1\\2\\3>";
+  $src[] = "/<([^<>\n]*)\n([^\n<>]*)>/i";
+  $tar[] = "<\\1\\2>";
+  $src[] = "/<(A|IMG)[^>]*(HREF|SRC)[^=]*=[ '\"\n]*($regex[http]|mailto:$regex[mail])[^>]*>/i";
+  $tar[] = "<\\1 \\2=\"\\3\">";
+
+  # email 형식이나 URL 에 포함될 경우 URL 보호를 위해 @ 을 치환
+  $src[] = "/(http|https|ftp|telnet|news|mms):\/\/([^ \n@]+)@/i";
+  $tar[] = "\\1://\\2_HTTPAT_\\3";
 
   # 특수 문자를 치환 및 html사용시 link 보호
   $src[] = "/&(quot|gt|lt)/i";
@@ -263,8 +264,8 @@ function auto_link($str) {
   $tar[] = "<\\1\\2=\"\\4_orig://\\5\"";
 
   # 링크가 안된 url및 email address 자동링크
-  $src[] = "/(SRC=|HREF=|[^=]|^)($regex[http])/i";
-  $tar[] = "\\1<A HREF=\"\\2\" TARGET=\"_blank\">\\2</a>";
+  $src[] = "/((SRC|HREF|BASE|GROUND)[ ]*=[ ]*|[^=]|^)($regex[http])/i";
+  $tar[] = "\\1<A HREF=\"\\3\" TARGET=\"_blank\">\\3</a>";
   $src[] = "/($regex[mail])/i";
   $tar[] = "<A HREF=\"mailto:\\1\">\\1</a>";
   $src[] = "/<A HREF=[^>]+>(<A HREF=[^>]+>)/i";
@@ -279,8 +280,8 @@ function auto_link($str) {
   $tar[] = "\\1";
   $src[] = "'#-#'";
   $tar[] = "@";
-  $src[] = "/$regex[file]/i";
-  $tar[] = "\\1";
+  #$src[] = "/$regex[file]/i";
+  #$tar[] = "\\1";
 
   # email 주소를 변형시킴
   $src[] = "/$regex[mail]/i";
@@ -288,14 +289,18 @@ function auto_link($str) {
   $src[] = "/<A HREF=\"mailto:([^ ]+) at ([^\">]+)/i";
   $tar[] = "<A HREF=\"act.php?o[at]=ma&target=\\1__at__\\2";
 
+  # email 주소를 변형한 뒤 URL 속의 @ 을 복구
+  $src[] = "/_HTTPAT_/";
+  $tar[] = "@";
+
   # 이미지에 보더값 0 을 삽입
   $src[] = "/<(IMG SRC=\"[^\"]+\")>/i";
   $tar[] = "<\\1 BORDER=0>";
 
   # IE 가 아닌 경우 embed tag 를 삭제함
   if($agent[br] != "MSIE") {
-    $src[15] = "/<embed/i";
-    $tar[15] = "&lt;embed";
+    $src[] = "/<embed/i";
+    $tar[] = "&lt;embed";
   }
 
   $str = preg_replace($src,$tar,$str);
@@ -326,41 +331,46 @@ function url_link($url, $str, $color, $no = 0) {
 # move_upload_file -> tmp로 upload되어 있는 파일을 원하는 디레토리에 위치
 # chmod            -> file, direcoty의 권한 변경
 #
-function file_upload($updir) {
-  global $userfile_size, $userfile, $userfile_name;
-  global $upload, $langs, $table;
+function file_upload($fn,$updir) {
+  global $HTTP_POST_FILES, $upload, $langs, $table;
 
-  if(is_uploaded_file($userfile)) {
-    if ($userfile_size > $upload[maxsize]) {
+  $ufile[name] = $HTTP_POST_FILES[$fn][name];
+  $ufile[size] = $HTTP_POST_FILES[$fn][size];
+  $ufile[type] = $HTTP_POST_FILES[$fn][type];
+  $ufile[tmp_name] = $HTTP_POST_FILES[$fn][tmp_name];
+
+  if(is_uploaded_file($ufile[tmp_name])) {
+    if ($ufile[size] > $upload[maxsize]) {
       print_error($langs[act_md]);
       exit;
     }
 
     # file name에 공백이 있을 경우 공백 삭제
-    $userfile_name = eregi_replace(" ","",$userfile_name);
+    $ufile[name] = eregi_replace(" ","",$ufile[name]);
 
     # file name에 특수 문자가 있을 경우 등록 거부
-    upload_name_chk($userfile_name);
+    upload_name_chk($ufile[name]);
 
     # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
-    $userfile_name = eregi_replace("[\.]*$","",$userfile_name);
-    $userfile_name = eregi_replace(".(ph|inc|php[0-9a-z]*|phtml)$",".phps", $userfile_name);
-    $userfile_name = eregi_replace("(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $userfile_name);
+    $f[name] = eregi_replace("[\.]*$","",$f[name]);
+    $f[name] = eregi_replace(".(ph|inc|php[0-9a-z]*|phtml)$",".phps", $f[name]);
+    $f[name] = eregi_replace("(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $f[name]);
 
     mkdir("data/$table/$upload[dir]/$updir",0755);
-    move_uploaded_file($userfile,"data/$table/$upload[dir]/$updir/$userfile_name");
-    chmod("data/$table/$upload[dir]/$updir/$userfile_name",0644);
+    move_uploaded_file($ufile[tmp_name],"data/$table/$upload[dir]/$updir/$ufile[name]");
+    chmod("data/$table/$upload[dir]/$updir/$ufile[name]",0644);
 
     $up = 1;
-  } elseif($userfile_name) {
-    if($userfile_size == '0') {
+  } elseif($ufile[name]) {
+    if($ufile[size] == '0') {
       print_error($langs[act_ud]);
     } else {
       print_error($langs[act_ed]);
     }
     exit;
   }
-  return $up;
+
+  if($up) return $ufile;
 }
 
 # HTML entry를 특수 특수 문자로 변환

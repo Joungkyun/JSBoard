@@ -230,10 +230,6 @@ $langs[ua_b20]  = "Protect long text in Read";
 $langs[ua_b21]  = "Word Wrap";
 $langs[ua_b22]  = "If Board Wrap can't apply, byte number of compulsory performance";
 
-$langs[ua_m1] = "MailLink";
-$langs[ua_m2] = "Use FormMail";
-$langs[ua_m3] = "Use mailto";
-
 $langs[ua_ha1] = "Display";
 $langs[ua_ha2] = "IP Address";
 $langs[ua_ha3] = "display";

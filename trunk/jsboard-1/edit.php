@@ -21,7 +21,7 @@ if(!$list[passwd] || !$enable[edit] || !$cenable[edit]) {
 }
 
 if(!$adminsession || $cenable[edit])
-  $passment = "$passment: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size[pass]\" MAXLENGTH=\"8\">&nbsp;";
+  $passment = "$passment: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size[pass]\" MAXLENGTH=\"8\" STYLE=\"font: 10px tahoma\">&nbsp;";
 else $passment = "";
 
 if($board[notice]) print_notice($board[notice]);

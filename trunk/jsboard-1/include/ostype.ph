@@ -9,7 +9,7 @@ if(eregi("linux",$OSTYPE)) {
   $ostypes[pfield] = "56";
   $ostypes[name] = "FreeBSD";
 } else {
-  $ostypes[pfield] = "13";
+  $ostypes[pfield] = "56";
   $ostypes[name] = "Others";
 }
 ?>

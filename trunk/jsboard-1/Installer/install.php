@@ -1,5 +1,7 @@
 <?php
 session_start(); // session을 시작한다.
+include_once "../include/print.ph";
+parse_query_str();
 $path[type] = "Install";
 
 if ($langss == "ko") $langs[code] = "ko";
