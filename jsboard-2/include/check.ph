@@ -249,8 +249,80 @@ function check_iis() {
   else return 0;
 }
 
+# 윈도우용 php 인지 아닌지를 판단.
+# 윈도우용 php 일 경우 turn 를 반환
 function check_windows() {
-  if(eregi("Windows",php_uname()) return 1;
+  if(eregi("Windows",php_uname())) return 1;
   else return 0;
+}
+
+# TABLE 을 정확하게 사용했는지 체크하는 함수
+# str  -> 체크할 문자열
+# rep  -> 1 일 경우 에러메시지 대신 결과를 echo 함
+#
+function check_htmltable($str,$rep='') {
+  global $langs;
+
+  # table tag 들만 나두고 모두 삭제
+  $s[] = "/>[^<]*</i";
+  $s[] = "/#|@/i";
+  $s[] = "/<(\/?(TABLE|TR|TD|TH))[^>]*>/i";
+  $s[] = "/^[^#]*/i";
+  $s[] = "/(TABLEEMARK@)[^#]*(#TABLESMARK)/i";
+  $s[] = "/<[^>]*>/i";
+  $s[] = "/#TABLESMARK#/i";
+  $s[] = "/@TABLEEMARK@/i";
+  $s[] = "/(\r?\n)+/i";
+
+  $d[] = ">\n<";
+  $d[] = "";
+  $d[] = "\n#TABLESMARK#\\1@TABLEEMARK@\n";
+  $d[] = "";
+  $d[] = "\\1\\2";
+  $d[] = "";
+  $d[] = "\n<";
+  $d[] = ">\n";
+  $d[] = "\n";
+
+  $str = trim(preg_replace($s,$d,$str));
+
+  # table tag 들만 남은 것을 \n 을 기준으로 배열로 받음
+  $ary = explode("\n",$str);
+
+  for($i=0;$i<sizeof($ary);$i++) {
+    if(strtoupper($ary[$i]) == "<TABLE>") $opentable++;
+    elseif(strtoupper($ary[$i]) == "</TABLE>") $clstable++;
+    elseif(strtoupper($ary[$i]) == "<TH>") $openth++;
+    elseif(strtoupper($ary[$i]) == "</TH>") $clsth++;
+    elseif(strtoupper($ary[$i]) == "<TR>") $opentr++;
+    elseif(strtoupper($ary[$i]) == "</TR>") $clstr++;
+    elseif(strtoupper($ary[$i]) == "<TD>") $opentd++;
+    elseif(strtoupper($ary[$i]) == "</TD>") $clstd++;
+  }
+
+  if(!$rep) {
+    if($opentable != $clstable) $msg = $langs[chk_tb]."\n";
+    if($openth != $clsth) $msg .= $langs[chk_th]."\n";
+    if($opentr != $clstr) $msg .= $langs[chk_tr]."\n";
+    if($opentd != $clstd) $msg .= $langs[chk_td]."\n";
+
+    $msg = $msg ? $langs[chk_ta]."\n\nError Check:\n".trim($msg)."\n" : "";
+
+    if($msg) print_error($msg,"","",1);
+  } else {
+    echo "\n##  TABLE CHECK RESULT\n".
+         "##  ----------------------------------------------------------------------\n".
+         "##  OPEN  <TABLE>  TAG : $opentable\n".
+         "##  CLOSE </TABLE> TAG : $clstable\n##  \n".
+
+         "##  OPEN  <TH>     TAG : $openth\n".
+         "##  CLOSE </TH>    TAG : $clsth\n##  \n".
+
+         "##  OPEN  <TR>     TAG : $opentr\n".
+         "##  CLOSE </TR>    TAG : $clstr\n##  \n".
+
+         "##  OPEN  <TD>     TAG : $opentd\n".
+         "##  CLOSE </TD>    TAG : $clstd\n\n";
+  }
 }
 ?>

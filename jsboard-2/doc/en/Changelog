@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Jan  3 2002
+Date      : Wed, Jan  4 2002
 Version   : jsboard-2.0pre4
 
 
@@ -27,6 +27,8 @@ Version   : jsboard-2.0pre4
 2. fixed sql that get max no field value, When retist reply article
 3. changed file_operate() function
 4. added environment various in get_hostname() function
+5. fixed auto_link() function
+6. added table check function when regist article to use html tag
 
 
 -----------------------------------------------------------------------------

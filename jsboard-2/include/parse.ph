@@ -332,19 +332,22 @@ function auto_link($str) {
 
   $regex[file] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
   $regex[file] = "(\.($regex[file])\") TARGET=\"_blank\"";
-  $regex[http] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9_\-]+\.[\xA1-\xFEa-z0-9:;&#@=_~%\[\]\?\/\.\,\+\-]+)(\/|[\.]*[\xA1-\xFEa-z0-9\[\]]))";
+  $regex[http] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9:_\-]+\.[\xA1-\xFEa-z0-9:;&#=_~%\[\]\?\/\.\,\+\-]+)(\/|[\.]*[\xA1-\xFEa-z0-9\[\]]))";
   $regex[mail] = "([\xA1-\xFEa-z0-9_\.\-]+)@([\xA1-\xFEa-z0-9_\-]+\.[\xA1-\xFEa-z0-9\-\._\-]+[\.]*[a-z0-9]\??[\xA1-\xFEa-z0-9=]*)";
 
   # &lt; 로 시작해서 3줄뒤에 &gt; 가 나올 경우와
   # IMG tag 와 A tag 의 경우 링크가 여러줄에 걸쳐 이루어져 있을 경우
   # 이를 한줄로 합침 (합치면서 부가 옵션들은 모두 삭제함)
-  $psrc[] = "/<([^<>\n]*)\n([^<>\n]+)\n([^<>\n]*)>/i";
-  $ptar[] = "<\\1\\2\\3>";
-  $psrc[] = "/<([^<>\n]*)\n([^\n<>]*)>/i";
-  $ptar[] = "<\\1\\2>";
-  $psrc[] = "/<(A|IMG)[^>]*(HREF|SRC)[^=]*=[ '\"\n]*($regex[http]|mailto:$regex[mail])[^>]*>/i";
-  $ptar[] = "<\\1 \\2=\"\\3\">";
-  $str = preg_replace($psrc,$ptar,$str);
+  $src[] = "/<([^<>\n]*)\n([^<>\n]+)\n([^<>\n]*)>/i";
+  $tar[] = "<\\1\\2\\3>";
+  $src[] = "/<([^<>\n]*)\n([^\n<>]*)>/i";
+  $tar[] = "<\\1\\2>";
+  $src[] = "/<(A|IMG)[^>]*(HREF|SRC)[^=]*=[ '\"\n]*($regex[http]|mailto:$regex[mail])[^>]*>/i";
+  $tar[] = "<\\1 \\2=\"\\3\">";
+
+  # email 형식이나 URL 에 포함될 경우 URL 보호를 위해 @ 을 치환
+  $src[] = "/(http|https|ftp|telnet|news|mms):\/\/([^ \n@]+)@/i";
+  $tar[] = "\\1://\\2_HTTPAT_\\3";
 
   # 특수 문자를 치환 및 html사용시 link 보호
   $src[] = "/&(quot|gt|lt)/i";
@@ -381,6 +384,10 @@ function auto_link($str) {
   $tar[] = "\\1 at \\2";
   $src[] = "/<A HREF=\"mailto:([^ ]+) at ([^\">]+)/i";
   $tar[] = "<A HREF=\"act.php?o[at]=ma&target=\\1$rmail[chars]\\2";
+
+  # email 주소를 변형한 뒤 URL 속의 @ 을 복구
+  $src[] = "/_HTTPAT_/";
+  $tar[] = "@";
 
   # 이미지에 보더값 0 을 삽입
   $src[] = "/<(IMG SRC=\"[^\"]+\")>/i";

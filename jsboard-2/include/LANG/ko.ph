@@ -91,9 +91,13 @@ $langs[sh_ment] = "+ 검색 기간은 기본적으로 최초 등록글 부터 최후 등록글의 날짜�
                   "+ 검색어에서 +,- 문자를 검색시 \+,\- 로 표현해 주셔야 합니다.\n";
 
 # check.ph
-$lant[chk_a] = "전체";
 $langs[chk_wa] = "MM 관리자가 KK 기능을 허락하지 않습니다.\nMM 관리자 패스워드를 확인해 주십시오";
 $langs[chk_lo] = "비정상적인 접근을 허락하지 않습니다. 만약 정상적인 사용이라고 생각을 한다면 global.ph의 \$board[path] 값을 정확하게 지정해 주십시오";
+$langs[chk_ta] = "TABLE 태그를 잘못 사용하였습니다.";
+$langs[chk_tb] = "TABLE 태그가 열리지 않았거나 닫히지 않았습니다.";
+$langs[chk_th] = "TH 태그가 열리지 않았거나 닫히지 않았습니다.";
+$langs[chk_tr] = "TR 태그가 열리지 않았거나 닫히지 않았습니다.";
+$langs[chk_td] = "TD 태그가 열리지 않았거나 닫히지 않았습니다.";
 
 # get.ph
 $langs[get_v] = " [ 게시판 보기 ]";
