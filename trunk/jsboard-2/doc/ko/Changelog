@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.4
 
+2002.12.22
+  by 김정균 <http://www.oops.org>
+	- README 파일 오타 수정
+
 2002.12.01
   by 김정균 <http://www.oops.org>
 	- check_iframe 함수 추가
