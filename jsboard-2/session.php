@@ -39,7 +39,7 @@ if ($m == "login") {
     session_register("$jsboard");
 
     if($type == "admin" && ${$jsboard}[pos] == 1) {
-      header("Location: admin/admin_info.php?mode=global");
+      header("Location: admin/admin.php");
     } elseif(!$table) header("Location: $print[dpage]");
     else header("Location: list.php?table=$table");
   } else {
