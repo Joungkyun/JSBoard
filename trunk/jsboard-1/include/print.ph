@@ -705,20 +705,9 @@ function print_preview_src() {
        "</SCRIPT>\n";
 }
 
-function form_size_button($l) {
-  # charset 이 euc_kr 이 아닐 경우 특수 문자가 깨지기 때문에
-  # image 로 form size 조정 버튼을 대체
-  if($l != "ko") {
-    echo "<A HREF=javascript:fresize(1) TITLE=\"Left Righ\">".
-         "<IMG SRC=images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
-         "<A HREF=javascript:fresize(0) TITLE=\"RESET\">".
-	 "<IMG SRC=images/form_back.gif ALT=\"RESET\" ALIGN=absmiddle BORDER=0></A>\n".
-         "<A HREF=javascript:fresize(2) TITLE=\"Up Down\">".
-	 "<IMG SRC=images/form_height.gif ALT=\"Up Down\" ALIGN=absmiddle BORDER=0></A>\n";
-  } else {
-    echo "<INPUT TYPE=BUTTON VALUE=\"▷\" onClick=\"fresize(1);\" TITLE=\"Left Right\">".
-         "<INPUT TYPE=BUTTON VALUE=\"▣\" onClick=\"fresize(0);\" TITLE=\"RESET\">".
-	 "<INPUT TYPE=BUTTON VALUE=\"▽\" onClick=\"fresize(2);\" TITLE=\"Up Down\">\n";
-  }
+function form_size_button() {
+  echo "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1);\" TITLE=\"Left Right\">".
+       "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0);\" TITLE=\"RESET\">".
+       "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2);\" TITLE=\"Up Down\">\n";
 }
 ?>

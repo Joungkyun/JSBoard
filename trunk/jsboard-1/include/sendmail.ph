@@ -135,7 +135,7 @@ function mailcheck($to,$from,$title,$body) {
   if(!trim($body)) print_error($langs[mail_body_chk_drr],250,150,1);
 }
 
-function mail_header($to,$from,$title) {
+function mail_header($to,$from,$title,$mta='') {
   global $langs;
 
   # language type 을 결정
@@ -143,12 +143,12 @@ function mail_header($to,$from,$title) {
   else  $charbit = "7bit";
 
   # mail header 를 작성 
-  $header = "From: JSBoard Message <$from>\r\n".
-            "MIME-Version: 1.0\r\n".
-            "Content-Type: text/plain; charset=$langs[charset]\r\n".
-            "Content-Transfer-Encoding: $charbit\r\n".
-            "To: $to\r\n".
-            "Subject: $title\r\n\r\n";
+  $header = "From: JSBoard Message <$from>\n".
+            "MIME-Version: 1.0\n".
+            "Content-Type: text/plain; charset=$langs[charset]\n".
+            "Content-Transfer-Encoding: $charbit\n";
+  if(!$mta) $header .= "To: $to\n".
+                       "Subject: $title\n\n";
 
   return $header;
 }
@@ -160,11 +160,11 @@ function socketmail($to,$from,$title,$body,$smtp='') {
   mailcheck($to,$from,$title,$body);
   
   # mail header 를 작성 
-  $mail_header = mail_header($to,$from,$title);
+  $mail_header = mail_header($to,$from,$title,"$smtp");
 
   # body 를 구성
   $bodies = $mail_header.$body;
-  $bodies = str_replace("\n","\r\n",str_replace("\r","",$bodies));
+  $bodies = str_replace("\r","",$bodies);
 
   $mails[debug] = 0;
   $mails[ofhtml] = 0;

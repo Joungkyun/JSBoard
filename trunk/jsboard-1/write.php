@@ -93,27 +93,23 @@ echo "
 
 if (preg_match("/MSIE/i",$agent[br]) || $agent[br] == "MOZL6") {
   $orig_option = " onClick=fresize(0)";
-  echo "
-</TR><TR>
-  <TD COLSPAN=\"2\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>Textarea Size Operation</FONT></TD>
-  <TD ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">
+  echo "\n</TR><TR>\n".
+       "  <TD COLSPAN=\"2\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>Textarea Size Operation</FONT></TD>\n".
+       "  <TD ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">\n\n".
 
-<SCRIPT LANGUAGE=JavaScript>
-<!--
-function fresize(value) {
-if (value == 0) {
-  document.writep.wpost.cols  = $size[text];
-  document.writep.wpost.rows  = 10;
-}
-if (value == 1) document.writep.wpost.cols += 5;
-if (value == 2) document.writep.wpost.rows += 5;
-}
-// -->
-</SCRIPT>\n";
-
-  # 언어 코드에 따라 버튼을 text 로 처리 할것인지 이미지로 처리할 것인지를 결정
-  form_size_button($langs[code]);
-
+       "<SCRIPT LANGUAGE=JavaScript>\n".
+       "<!--\n".
+       "function fresize(value) {\n".
+       "  if (value == 0) {\n".
+       "    document.writep.wpost.cols  = $size[text];\n".
+       "    document.writep.wpost.rows  = 10;\n".
+       "  }\n".
+       "  if (value == 1) document.writep.wpost.cols += 5;\n".
+       "  if (value == 2) document.writep.wpost.rows += 5;\n".
+       "}\n".
+       "// -->\n".
+       "</SCRIPT>\n";
+  form_size_button();
   echo "  </TD>";
 }
 
