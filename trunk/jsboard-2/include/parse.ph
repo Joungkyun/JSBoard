@@ -64,9 +64,9 @@ function search2sql($o, $wh = 1, $join = 0) {
     }
     $str = addslashes($str);
 
-    if (preg_match("/\"/",$str)) print_error($langs['nochar'],250,150,1);
+    if (preg_match("/[\"']/",$str)) print_error($langs['nochar'],250,150,1);
   } else {
-		# 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
+    # 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
     $chk = preg_replace("/\\\([\]\[()])/i","",$str);
     $chk = preg_replace("/[^\[\]()]/i","",$chk);
 
@@ -167,8 +167,8 @@ function search2sql($o, $wh = 1, $join = 0) {
         break;
     }
 
-    $sql = preg_replace("/((title|name|text) (LIKE|REGEXP) \"%?)!p!/i"," AND \\1",$sql);
-    $sql = preg_replace("/((title|name|text) (LIKE|REGEXP) \"%?)!m!/i"," OR \\1",$sql);
+    $sql = preg_replace("/((tb\.)?(title|name|text) (LIKE|REGEXP) \"%?)!p![ ]*/i"," AND \\1",$sql);
+    $sql = preg_replace("/((tb\.)?(title|name|text) (LIKE|REGEXP) \"%?)!m![ ]*/i"," OR \\1",$sql);
   }
 
   return $sql;

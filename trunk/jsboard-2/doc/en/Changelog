@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.5
 
+Thu, Mar 20 2003
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed conditional sentence of detail search on used comment
+
 Tue, Mar 18 2003
   by JoungKyun Kim <http://www.oops.org>
 	- prevented xml tag
