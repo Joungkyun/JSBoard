@@ -238,21 +238,21 @@ function get_page($no)
 {
     global $table, $pern;
 
-    $result    = mysql_query("SELECT COUNT(no) FROM $table");
-    $all_count = mysql_result($result, 0, "COUNT(no)");
-    $result    = mysql_query("SELECT COUNT(no) FROM $table WHERE reno > 0");
-    $re_count  = mysql_result($result, 0, "COUNT(no)");
+    $result    = mysql_query("SELECT COUNT(*) FROM $table");
+    $all_count = mysql_result($result, 0, "COUNT(*)");
+    $result    = mysql_query("SELECT COUNT(*) FROM $table WHERE reno > 0");
+    $re_count  = mysql_result($result, 0, "COUNT(*)");
     $count     = $all_count - $re_count;
 
     $result = mysql_query("SELECT reto, reyn FROM $table WHERE no = $no");
     $reto   = mysql_result($result, 0, "reto");
 
     if (!$reto) {
-	$result = mysql_query("SELECT COUNT(no) FROM $table WHERE no <= $no AND reno < 1");
+	$result = mysql_query("SELECT COUNT(*) FROM $table WHERE no <= $no AND reno < 1");
     } else {
-	$result = mysql_query("SELECT COUNT(no) FROM $table WHERE no <= $reto AND reno < 1");
+	$result = mysql_query("SELECT COUNT(*) FROM $table WHERE no <= $reto AND reno < 1");
     }
-    $count_no = mysql_result($result, 0, "COUNT(no)");
+    $count_no = mysql_result($result, 0, "COUNT(*)");
     $page     = intval(($count - $count_no) / $pern) + 1;
 
     return $page;
