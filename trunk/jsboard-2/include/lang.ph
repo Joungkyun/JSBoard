@@ -5,13 +5,13 @@
 # 메세지가 있는 파일들을 "$locate/파일이름" 으로 추가해 주시면 됩니다.
 ######################################################################
 
-if ($path[type] == "user_admin") $locate = "../../include/LANG";
-else if ($path[type] == "admin" || $path[type] == "Install") $locate = "../include/LANG";
+if ($path['type'] == "user_admin") $locate = "../../include/LANG";
+else if ($path['type'] == "admin" || $path['type'] == "Install") $locate = "../include/LANG";
 else $locate = "include/LANG";
 
-if ($langs[code]) {
-  if (file_exists("$locate/{$langs[code]}.ph")) {
-    include "$locate/{$langs[code]}.ph";
+if ($langs['code']) {
+  if (file_exists("$locate/{$langs['code']}.ph")) {
+    include "$locate/{$langs['code']}.ph";
   } else { include "$locate/en.ph"; }
 } else { include "$locate/en.ph"; }
 ?>

@@ -98,7 +98,7 @@ function sql_free_result($result) {
 function sql_error($errno,$error) {
   global $langs;
   if($errno) {
-    $error = sprintf("$langs[sql_m]\n\n%s\n",$error);
+    $error = sprintf("{$langs['sql_m']}\n\n%s\n",$error);
     print_error($error,280,150,1);
   }
 }

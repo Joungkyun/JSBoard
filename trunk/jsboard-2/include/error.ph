@@ -7,7 +7,7 @@ function print_error($str,$width=250,$height=150,$back='') {
   if(!is_array($agent))
     $agent = @get_agent();
 
-  if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
+  if(preg_match("/^(WIN|NT)$/i",$agent['os'])) {
     $str = wordwrap($str,40);
     $str = preg_replace("/\n/","\\n",$str);
     $str = preg_replace("/('|#|\))/","\\\\1",$str);
@@ -16,9 +16,9 @@ function print_error($str,$width=250,$height=150,$back='') {
     $str = str_replace("\n","<BR>",$str);
     $str = urlencode($str);
 
-    if ($path[type] == "admin") $err_fn = "../error.php";
-    elseif ($path[type] == "user_admin") $err_fn = "../../error.php";
-    elseif ($path[type] == "prelist") $err_fn = "$prlist[wpath]/error.php";
+    if ($path['type'] == "admin") $err_fn = "../error.php";
+    elseif ($path['type'] == "user_admin") $err_fn = "../../error.php";
+    elseif ($path['type'] == "prelist") $err_fn = "{$prlist['wpath']}/error.php";
     else $err_fn = "error.php";
 
     echo "var farwindow = null;\n".
@@ -34,8 +34,8 @@ function print_error($str,$width=250,$height=150,$back='') {
   echo "//-->\n</SCRIPT>\n".
        "<NOSCRIPT>".urldecode($str)."</NOSCRIPT>\n";
 
-  if(preg_match("/\/user_admin/i",$_SERVER[PHP_SELF])) $gopage = "../..";
-  elseif(preg_match("/\/admin/i",$_SERVER[PHP_SELF])) {
+  if(preg_match("/\/user_admin/i",$_SERVER['PHP_SELF'])) $gopage = "../..";
+  elseif(preg_match("/\/admin/i",$_SERVER['PHP_SELF'])) {
     $gopage = "..";
     $var = "&type=admin&logins=fail";
   } else $gopage = ".";
@@ -54,7 +54,7 @@ function print_notice($str,$width = 330, $height = 210) {
     $agent = @get_agent();
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
-  if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
+  if(preg_match("/^(WIN|NT)$/i",$agent['os'])) {
     $str = wordwrap($str,40);
     $str = preg_replace("/\n/","\\n",$str);
     $str = preg_replace("/('|#|\))/i","\\\\1",$str);
@@ -63,7 +63,7 @@ function print_notice($str,$width = 330, $height = 210) {
     $str = str_replace("\n","<BR>",$str);
     $str = urlencode($str);
 
-    if ($path[type] == "admin") $err_fn = "../error.php";
+    if ($path['type'] == "admin") $err_fn = "../error.php";
     else $err_fn = "error.php";
 
     echo "var farwindow = null;\n".
@@ -84,13 +84,13 @@ function print_pwerror($str, $width = 250, $height = 130) {
   if(!is_array($agent)) 
     $agent = @get_agent();
 
-  if ($path[type] == "user_admin") $err_fn = "../..";
-  elseif ($path[type] == "admin") $err_fn = "..";
+  if ($path['type'] == "user_admin") $err_fn = "../..";
+  elseif ($path['type'] == "admin") $err_fn = "..";
   else $err_fn = ".";
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
-  if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
+  if(preg_match("/^(WIN|NT)$/i",$agent['os'])) {
     $str = wordwrap($str,40);
     $str = preg_replace("/\n/i","\\n",$str);
     $str = preg_replace("/('|#|\))/i","\\\\1",$str);
