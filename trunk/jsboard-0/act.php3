@@ -24,7 +24,7 @@ if(mysql_num_rows($result)) {
 $date = time();
 
 if ($act == "post" || $act == "edit") {
-    if (!$name || !$title || !$text)
+    if (!chop($name) || !chop($title) || !chop($text))
 	error("이름, 제목, 내용을 모두 입력하셔야 합니다.");
     if ($url)
 	$url = check_url($url);
@@ -42,7 +42,7 @@ if ($act == "post" || $act == "edit") {
     if ($html_enable) {
 	$text = eregi_replace("<\\?", "&lt;?", $text);
 	$text = eregi_replace("\\?>", "?&gt;", $text);
-	$text = eregi_replace("<script(.*)>", "&lt;script\\1&gt;", $text);
+	$text = eregi_replace("<script([^>]*)>", "&lt;script\\1&gt;", $text);
 	$text = eregi_replace("</script>", "&lt;/script&gt;", $text);
 	$text = chop($text);
     } else {
@@ -144,14 +144,14 @@ if ($act == "post" || $act == "edit") {
 		$no   = mysql_result($result, 0, "no");
 		$num   = mysql_result($result, 0, "num");
 		$reno   = mysql_result($result, 0, "reno");
-		$reply_writer_email = $email ;
+		$reply_writer_email = $origmail ;
 		$email_tmp = "";
 		if ($num == 0) {
 			$result = dquery("SELECT email FROM $table where no = $reno");
 			$email_tmp   = mysql_result($result, 0, "email");
 		}
-		send_mail($no, $bbshome, $mailtoadmin, $mailtowriter, $table, $reno, $name,
-                          $email_tmp, $reply_writer_email, $url, $webboard_version, $text, $title);
+        send_mail($no, $bbshome, $mailtoadmin, $mailtowriter, $table, $reno, $name,
+                        $email, $reply_writer_email, $url, $webboard_version, $text, $title);
 
 	}
 } else if ($act == "del") {

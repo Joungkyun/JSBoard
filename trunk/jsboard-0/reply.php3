@@ -94,7 +94,7 @@ if ($file_upload == "yes")
 
 </tr><tr>
   <td align="center" colspan="3" bgcolor="<? echo $r2_bg ?>">
-    <textarea name="text" rows="15" cols="<? sform(30) ?>"><? echo ("\n\n\n$name wrote.. \n$text"); ?></textarea>
+    <textarea name="text" rows="15" cols="<? sform(34) ?>"><? echo ("\n\n\n$name wrote.. \n$text"); ?></textarea>
   </td>
 </tr>
 </table>
@@ -104,6 +104,7 @@ if ($file_upload == "yes")
 <input type="hidden" name="act" value="post">
 <input type="hidden" name="table" value="<? echo $table ?>">
 <input type="hidden" name="reno" value="<? echo $no ?>">
+<input type="hidden" name="origmail" value="<? echo $origmail ?>">
 <input type="hidden" name="page" value="<? echo $page ?>">
 <img src="images/n.gif" width="10" height="5" alt="" border="0"><br>
 <input type="submit" value="º¸³»±â">

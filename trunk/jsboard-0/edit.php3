@@ -109,7 +109,7 @@ while($list = dfetch_row($result)) {
 
 </tr><tr>
   <td align="center" colspan="3" bgcolor="<? echo $r2_bg ?>">
-    <textarea name="text" rows="15" cols="<? sform(30) ?>"><? echo $text ?></textarea>
+    <textarea name="text" rows="15" cols="<? sform(34) ?>"><? echo $text ?></textarea>
   </td>
 </tr>
 </table>

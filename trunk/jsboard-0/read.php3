@@ -170,7 +170,12 @@ while($list = dfetch_row($result)) {
     sepa($r0_bg);
     echo("<td align=\"center\" width=\"1%\"><a href=\"write.php3?table=$table\"><nobr>글쓰기</nobr></a></td>\n");
     sepa($r0_bg);
-    echo("<td align=\"center\" width=\"1%\"><a href=\"reply.php3?table=$table&no=$no&page=$page\"><nobr>답장쓰기</nobr></a></td>\n");
+
+    if($email) {
+    echo("<td align=\"center\" width=\"1%\"><a href=\"reply.php3?table=$table&no=$no&page=$page&origmail=$email\"><nobr>답장쓰기</nobr></a></td>\n");
+    } else {
+    echo("<td align=\"center\" width=\"1%\"><a href=\"reply.php3?table=$table&no=$no&page=$page><nobr>답장쓰기</nobr></a></td>\n");
+    }
     sepa($r0_bg);
 
     if($passwd) { // 암호가 있는 경우
