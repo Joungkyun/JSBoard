@@ -1,3 +1,6 @@
+Version: A8
+- rss <link> tag 추가 (list.template)
+
 Version: A7
 - .ph 불러오기를 .php 파일로 변경
 

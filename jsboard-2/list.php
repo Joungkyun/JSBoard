@@ -48,6 +48,9 @@ if($count['all']) {
 
 # RSS 출력 루틴
 if ( $rss['use'] ) {
+  $rss['title'] = $_SERVER['SERVER_NAME'] . " {$board['title']}";
+  $rss['link'] = "<link rel=\"Alternate\" type=\"application/rss+xml\" " .
+                 "title=\"{$rss['title']}\" href=\"{$board['path']}rss.php?table={$table}\">\n";
 
   $rss['color'] = trim($rss['color']) ? " color: {$rss['color']};" : "";
 
