@@ -268,20 +268,20 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
         if(!$adm) print_error("$langs[act_pw]");
         else {
           if($adm == "sadmin") {
-					  if($sadmin[passwd] != $spasswd) print_error("$langs[act_pww]");
-					} elseif($adm == "admin") {
-					  if($admin[passwd] != $upasswd) print_error("$langs[act_pwa]");
-					} else print_error("$langs[act_pw]");
-				}
+            if($sadmin[passwd] != $spasswd) print_error("$langs[act_pww]");
+          } elseif($adm == "admin") {
+            if($admin[passwd] != $upasswd) print_error("$langs[act_pwa]");
+          } else print_error("$langs[act_pw]");
+        }
       } else {
-			  if($adm) {
+        if($adm) {
           if ($adm == "admin") {
             if($sadmin[passwd] != $spasswd && $admin[passwd] != $upasswd) print_error("$langs[act_pwa]");
           } elseif ($adm == "sadmin") {
             if($sadmin[passwd] != $spasswd) print_error("$langs[act_pww]");
           } else print_error("$langs[act_pw]");
         }
-			}
+      }
     }
 
     if($atc[reyn] && !$adm) # 관리자 모드일 경우 관련글을 함께 삭제함
