@@ -221,7 +221,7 @@ windows.
     Once the database was created successfully, run install script in 
     jsboard-version/INSTALLER/script.
 
-    1) if you have root account ( if you are account user, see next chart. )
+    1) if you run install script as root ( if you are account user, see next chart. )
 
         $ ./root
         ########################################################
@@ -231,7 +231,7 @@ windows.
 
         STEP 1 Language Check
         ---------------------
-        Can you enable to use KOREAN in this console? [Y/N](default Y) : n <--Enter
+        Do you want to use Korean during the installation? [Y/N](default Y) : n <--Enter
 
         ########################################################
         ## System INFORMATION
@@ -245,14 +245,12 @@ windows.
         ########################################################
 
 
-        If isn't right upper informations, you types N and appoint new value.
-        Is right upper information? [Y/N](default Y) :
+        Please ensure that the above informations are correct.
+        Are these informations correct? [Y/N](default Y) :
 
-
-      You must comfirm the Apache User and Apache Group from the System INFORMATION 
-      section. These values must match to the ones in User and Group directive value 
-      in httpd.conf.
-      If the given information are not correct then press N and change the valuse.
+      Apache User and Apache Group values can be found from System Information section
+      in httpd.conf. These values represent the process owner of your web server.
+      If the given information are not correct then press N and change the values.
 
         1. Webserver user configuration
         Input value of User directive in httpd.conf : apache
@@ -267,7 +265,7 @@ windows.
       and Redhat 7 uses apache.
 
 
-    2) if you don't have root access execute shell script called account.
+    2) if you don't have root access then execute the shell script called account.
 
         $ ./account
         ########################################################
@@ -277,7 +275,7 @@ windows.
 
         STEP 1 Language Check
         ---------------------
-        Can you enable to use KOREAN in this console? [Y/N](default Y) : Y
+        Do you want to use Korean during the installation? [Y/N](default Y) : Y
 
         Group Owner of "config/global.ph config/allow_browser.txt" must set GROUP
         value in httpd.conf that is operation group of Web Server. If can't set as
@@ -285,10 +283,10 @@ windows.
 
       Above message explains to protect global configuration file including db login
       information, the files' group owner must be the nobody or apache depending on 
-      the server configuration. If you cannot change the group owner then the files 
-      should have 606 as its file permission.
+      the server configuration. If you cannot change the group owner then you should
+      set its file permission to 606.
     
-      if you have root account,
+      if you have a root access to the system,
 
       $ chgrp nobody jsboard/config/global.ph
       $ chgrp nobody jsboard/config/spam_list.txt
