@@ -41,6 +41,7 @@ If you wnat to see windog's change log, see also
 16. php 4.2.0 에서 spam 등록기 등록 오류 수정
     4.2.0 에서의 큰 수의 숫자 연산값 표현방식 변경
 17. 임의의 변수로 임의의 글을 삭제할 수 있던 보안버그 수정
+18. php.ini 에서 allow_call_time_pass_reference = off 의 경우 처리
 
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin AT oops.org)
