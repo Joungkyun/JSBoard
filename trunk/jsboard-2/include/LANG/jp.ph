@@ -280,6 +280,7 @@ $langs[a_t17] = "統計";
 $langs[a_t18] = "全体表示";
 $langs[a_t19] = "アルファベット別";
 $langs[a_t20] = "ユーザー官吏";
+$langs[a_t21] = "Sync";
 
 $langs[a_del_cm] = "削除しますか?";
 $langs[a_act_fm] = "初ページに移動";

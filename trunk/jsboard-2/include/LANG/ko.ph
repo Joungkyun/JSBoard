@@ -280,6 +280,7 @@ $langs[a_t17] = "통계";
 $langs[a_t18] = "전체보기";
 $langs[a_t19] = "알파벳별";
 $langs[a_t20] = "유저 관리";
+$langs[a_t21] = "동기화";
 
 $langs[a_del_cm] = "삭제 하시겠습니까?";
 $langs[a_act_fm] = "첫 페이지로 이동";
