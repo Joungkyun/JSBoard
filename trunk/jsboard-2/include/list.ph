@@ -64,10 +64,8 @@ function print_list($table, $list, $r=0)
   # 글 내용 미리 보기 설정
   if($enable[pre]) {
     $list[ptext] = cut_string($list[text],$enable[preren]);
-    $psrc = array("/#|'|\\\\/i","/<\/*(img|embed)[^>]*>/i","/<\/*script[^>]*>/i");
-    $ptar = array("\\\\\\0","","");
-    $list[ptext] = preg_replace($psrc,$ptar,$list[ptext]);
-    $list[ptext] = htmlspecialchars($list[ptext]);
+    $list[ptext] = preg_replace("/#|'|\\\\/i","\\\\\\0",$list[ptext]);
+    $list[ptext] = htmlspecialchars(htmlspecialchars($list[ptext]));
     $list[ptext] = preg_replace("/\r*\n/i","<BR>",$list[ptext]);
     $list[preview] = " onMouseOver=\"drs('$list[ptext]'); return true;\" onMouseOut=\"nd(); return true;\"";
   }

@@ -43,8 +43,9 @@ $list = search_hl($list);
 
 if($board[rnname] && eregi("^(2|3|5|7)",$board[mode]))
   $list[cname] = $list[rname] ? $list[rname] : $list[name];
+else $list[cname] = $list[name];
 
-if($list[email]) $list[uname] = url_link($list[email], $list[ename], $no);
+if($list[email]) $list[uname] = url_link($list[email], $list[cname], $no);
 else $list[uname] = $list[ename];
 if($list[url]) {
   if(eregi("^http://", $list[url])) $list[uname] .= " [" . url_link($list[url], "$langs[ln_url]", $color[r2_fg]) . "]";

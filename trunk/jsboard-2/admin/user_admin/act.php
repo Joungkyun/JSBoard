@@ -238,8 +238,14 @@ file_operate("$wfile","w","Can't update $wfile",$chg_conf);
 # quot 변환된 문자를 un quot 한다
 $head = $ua[header];
 $tail = $ua[tail];
-$head = check_invalid(stripslashes("$head"));
-$tail = check_invalid(stripslashes("$tail"));
+
+if(${$jsboard}[pos] != 1) {
+  $head = check_invalid(stripslashes("$head"));
+  $tail = check_invalid(stripslashes("$tail"));
+} else {
+  $head = stripslashes("$head");
+  $tail = stripslashes("$tail");
+}
 
 $wfile = "../../data/$table/html_head.ph";
 file_operate("$wfile","w","Can't update $wfile",$head);
