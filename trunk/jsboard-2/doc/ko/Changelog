@@ -68,6 +68,7 @@ If you wnat to see windog's change log, see also
 39. 상세 검색폼에서 오타 수정
 40. 글등록시 table 체크외에 iframe 체크 추가
 41. error.php 에서 $table 변수 체크 하던것 수정
+42. prelist 사용시 에러 출력에서 agent 정보가 전달되지 못하던것 수정
 
 
 -----------------------------------------------------------------------------

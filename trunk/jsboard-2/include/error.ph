@@ -4,6 +4,9 @@ function print_error($str,$width=250,$height=150,$back='') {
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
+  if(!is_array($agent))
+    $agent = @get_agent();
+
   if(eregi("^(WIN|NT)$",$agent[os])) {
     $str = wordwrap($str,40);
     $str = eregi_replace("\n","\\n",$str);
@@ -46,6 +49,9 @@ function print_error($str,$width=250,$height=150,$back='') {
 function print_notice($str,$width = 330, $height = 210) {
   global $table, $path, $agent;
 
+  if(!is_array($agent)) 
+    $agent = @get_agent();
+
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
   if(eregi("^(WIN|NT)$",$agent[os])) {
     $str = wordwrap($str,40);
@@ -73,6 +79,9 @@ function print_notice($str,$width = 330, $height = 210) {
 
 function print_pwerror($str, $width = 250, $height = 130) {
   global $table, $path, $agent, $table;
+
+  if(!is_array($agent)) 
+    $agent = @get_agent();
 
   if ($path[type] == "user_admin") $err_fn = "../..";
   elseif ($path[type] == "admin") $err_fn = "..";
