@@ -138,19 +138,22 @@ java_scr();
 echo "<TABLE BORDER=0 WIDTH=100% HEIGHT=100% CELLPADDING=0 CELLSPACING=0>
 <TR><TD ALIGN=center VALIGN=center>
 
-<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 BORDER=0>\n<TR>
-<TD ROWSPAN=2 VALIGN=center>
-<FONT STYLE=\"font:30px Tahoma;color:$color[m_bg];font-weight:bold\"><B>OOPS&nbsp;</B></FONT>
-</TD>
-<TD VALIGN=bottom> for JS Board</TD>
+<TABLE WIDTH=$board[width] BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD ROWSPAN=2 VALIGN=center><FONT STYLE=\"font:40px Tahoma;color:$color[m_bg];font-weight:bold\">J</FONT></TD>
+<TD VALIGN=bottom><FONT STYLE=\"font: 12px tahoma; font-weight:bold\">SBoard User</FONT></TD>
 </TR>
 <TR>
-<TD VALIGN=top><FONT STYLE=\"font-family:tahoma\">Administration Center V$copy[version]</FONT></TD>
+<TD VALIGN=top><FONT STYLE=\"font: 12px tahoma; font-weight:bold\">Administration Center</FONT></TD>
 </TR>
 </TABLE>
+</TD></TR>
+</TABLE>
 
-<FORM>
 <TABLE WIDTH=$board[width] BORDER=0 CELLPADDING=0 CELLSPACING=0 ALIGN=$board[align]>
+<FORM>
 <TR><TD ALIGN=center>
 
 $sec_status
@@ -185,11 +188,9 @@ $ulist
 <TR><TD ALIGN=right>
 $pagelink
 </TD></TR>
-</TABLE>\n";
+</TABLE>\n
 
-copyright($copy);
-
-echo "</TD></TR>
+</TD></TR>
 </FORM>
 </TABLE>
 \n";

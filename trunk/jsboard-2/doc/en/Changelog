@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Jan 21 2002
+Date      : Wed, Jan 23 2002
 Version   : jsboard-2.0pre4
 
 
@@ -44,6 +44,9 @@ Version   : jsboard-2.0pre4
 20. fixed wrong print of name in delete page of article that include valid
     value of email address field
 21. supported regist_globals = Off in php.ini
+22. fixed problem too big window size in case of image size equal screen size
+23. fixed include exec.ph of header file if windows version.
+24. remove copyright in oops administration page
 
 
 -----------------------------------------------------------------------------

@@ -151,7 +151,7 @@ if($langs[code] == "ko") {
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs[charset]?>">
-<TITLE>OOPS administration center v.<?=$copy[version]?> [ User ADMIN page ]</TITLE>
+<TITLE>JSBoard Administration Center [ User ADMIN page ]</TITLE>
 
 <style type='text/css'>
 A:link, A:visited, A:active { text-decoration:none; color:<?=$color[text]?>; }
@@ -612,8 +612,8 @@ else echo "<CENTER><FONT COLOR=RED><B>$langs[ua_while_wn]</B></FONT></CENTER>";
 </TD></TR>
 
 <TR><TD BGCOLOR=<?=$color[t_bg]?> ALIGN=center COLSPAN=6>
-<font id=TCOLOR>Scripted by <a href=<?=$copy[url]?>><?=$copy[name]?></a><BR>
-and all right reserved</font>
+<font id=TCOLOR>Scripted by <a href=http://jsboard.kldp.org TARGET=_blank>JSBoard Open Project</a><BR>
+and all rights follow GPL2 License</font>
 </TD></TR>
 
 </TABLE>

@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<? echo $langs[charset] ?>">
-<TITLE>OOPS Administration Center <? echo $copy[version] ?> [ 
+<TITLE>JSBoard Administration Center [ 
 <?
  if (!eregi("admin",$file_lo)) echo get_title();
  else    echo "$sub_title";

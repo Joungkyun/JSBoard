@@ -611,11 +611,18 @@ function print_newwindow_src($upload,$cupload,$dwho) {
          "        var def = java.awt.Toolkit.getDefaultToolkit();\n".
          "        var scrsize = def.getScreenSize();\n".
          "        width = scrsize.width;\n".
-         "        height = scrsize.height;\n".
+         "        height = scrsize.width;\n".
          "      }\n\n".
 
-         "      if (width < wid) { wid = width - 5\n".
+         "      var chkwid = width - 10\n".
+         "      var chkhei = height - 20\n\n".
+
+         "      if (chkwid < wid) {\n".
+         "        wid = width - 5\n".
          "        hei = height - 60\n".
+         "        scroll = 'yes'\n".
+         "      } else if (chkhei < height) {\n".
+         "        hei = height - 40\n".       
          "        scroll = 'yes'\n".
          "      }\n\n".
 

@@ -1,7 +1,7 @@
 <?
 # html head 읽어오기
 function htmlhead() {
-  global $version,$color,$langs,$board,$copy;
+  global $version,$color,$langs,$board;
 
   $file_lo = $_SERVER[PHP_SELF];
   $fileself = explode("admin/",$file_lo);
@@ -41,15 +41,6 @@ function java_scr() {
        "  document.location='../session.php?m=logout';\n" .
        "}\n\n// -->\n</script>";
 }
-
-# Copyright 정보
-#
-function copyright($copy) {
-  global $langs,$color;
-  echo "Scripted by <a href=$copy[url] title='$langs[maker]'><font style=\"color:$color[text]\">$copy[name]</FONT></a><br>\n" .
-       "and all right reserved\n";
-}
-
 
 # Admin Center 변경 완료 메세지
 #
