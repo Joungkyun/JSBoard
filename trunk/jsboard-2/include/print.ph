@@ -3,7 +3,7 @@
 # register_globals 값이 off 일 경우 편리하게 사용
 #
 function parse_query_str() {
-  if(!ini_get("register_globals")) return;
+  if(ini_get("register_globals")) return;
 
   if(count($_GET)) {
     foreach($_GET as $key => $value) {
