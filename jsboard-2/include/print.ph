@@ -399,41 +399,23 @@ function article_reply_list($table,$pages,$print=0) {
 
   $CPADDING = $lines[design] ? 0 : 1;
   
-  if($print) {
-    $t = "<p>\n<TABLE WIDTH=100% border=0 CELLSPACING=1 CELLPADDING=$CPADDING>\n".
-         "<TR>\n".
-         "  <TD WIDTH=$td_width[1] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=4 ALT=''></TD>\n".
-         "  <TD WIDTH=$td_width[2] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-         "  <TD WIDTH=$td_width[3] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
+  $t = "<TABLE WIDTH=100% BORDER=1 CELLSPACING=1 CELLPADDING=$CPADDING>\n".
+       "<TR>\n".
+       "  <TD WIDTH=$td_width[1] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=4 ALT=''></TD>\n".
+       "  <TD WIDTH=$td_width[2] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+       "  <TD WIDTH=$td_width[3] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
 
-    if ($upload[yesno] && $cupload[yesno])
-      $t .= "  <TD WIDTH=$td_width[4] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
+  if ($upload[yesno] && $cupload[yesno])
+    $t .= "  <TD WIDTH=$td_width[4] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
 
-    $t .= "<TD WIDTH=$td_width[5] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-          "  <TD COLSPAN=2 WIDTH=$td_width[6] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-          "</TR>\n";
-    $t .= get_list($table,$pages,$o);
-    $t .= "</TABLE>\n";
-    return $t;
-  } else {
-    echo "<p>[ $langs[conj] ]<HR width=40% size=1 noshade align=left>\n".
-         "<TABLE WIDTH=100% border=0 CELLSPACING=1 CELLPADDING=1>\n".
-         "<TR>\n".
-         "  <TD WIDTH=$td_width[1] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=4 ALT=''></TD>\n".
-         "  <TD WIDTH=$td_width[2] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-         "  <TD WIDTH=$td_width[3] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
+  $t .= "<TD WIDTH=$td_width[5] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+        "  <TD COLSPAN=2 WIDTH=$td_width[6] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+        "</TR>\n";
+  $t .= get_list($table,$pages,$o);
+  $t .= "</TABLE>\n";
 
-    if ($upload[yesno] && $cupload[yesno])
-      echo "  <TD WIDTH=$td_width[4] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
-  
-    echo "<TD WIDTH=$td_width[5] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-         "  <TD COLSPAN=2 WIDTH=$td_width[6] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
-         "</TR>\n";
-
-    get_list($table,$pages,$o,1);
-
-    echo "</TABLE>\n";
-  }
+  if($print) echo $t;
+  else return $t;
 }
 
 

@@ -225,6 +225,8 @@ function get_comment($table,$no,$print=0) {
     }
   }
 
+  if($lines[comment_design]) $lists .= $lines[comment_design];
+
   if($print) echo $lists;
   else return $lists;
 }
