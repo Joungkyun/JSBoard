@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  2월  5일
+작성일 : 2002년  2월  6일
 버전   : jsboard-2.0pre4
 
 
@@ -59,6 +59,7 @@ If you wnat to see windog's change log, see also
 31. 게시판 관리자 실행시 html header 와 html tail 이 사라지는 것 수정
 32. 스팸체크 수정
 33. 인증 실패시 게시판을 table 변수가 제거 되는것 수정
+34. mail() 함수의 -f 옵션에서 쌍따옴표 제거
 
 
 -----------------------------------------------------------------------------
