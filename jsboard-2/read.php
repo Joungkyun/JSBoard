@@ -19,7 +19,7 @@ if($num && !$no) {
 }
 
 $list = get_article($table, $no);
-$page = get_current_page($table, $list[idx]); # 글이 위치한 페이지를 가져옴
+$page = !$page ? get_current_page($table, $list[idx]) : $page; # 글이 위치한 페이지를 가져옴
 $pos  = get_pos($table, $list[idx]); # 다음, 이전 글 번호를 가져옴
 
 $a_time[] = microtime(); # 속도 체크

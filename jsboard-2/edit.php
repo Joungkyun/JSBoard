@@ -73,6 +73,8 @@ if($disable) {
                       "\n<INPUT TYPE=hidden NAME=atc[url] VALUE=\"$list[url]\">\n";
 }
 
+mysql_close();
+
 # Template file À» È£Ãâ
 include "theme/$print[theme]/edit.template";
 ?>

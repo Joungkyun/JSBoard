@@ -87,8 +87,8 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
   # 게시물 답장 함수
   function article_reply($table, $atc) {
-    global $board, $upload, $cupload, $rmail, $langs, $agent, $jsboard;
-    global $userfile, $userfile_name, $userfile_size, $max_file_size;
+    global $board,$upload,$cupload,$rmail,$langs,$agent,$jsboard,$page;
+    global $userfile,$userfile_name,$userfile_size,$max_file_size;
 
     $atc[date] = time(); # 현재 시각
     $atc[host] = get_hostname(0); # 글쓴이 주소
@@ -154,14 +154,14 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
         $rmail[table] = $table;
         $rmail[reply_orig_email] = $rmail[origmail];
 
-        if(sendmail($rmail)) $page[m_err] = 0;
-        else $page[m_err] = 1;
+        if(sendmail($rmail)) $gopage[m_err] = 0;
+        else $gopage[m_err] = 1;
       }
     }
 
     set_cookie($atc);
-    $page[no] = get_current_page($table, $atc[idx]);
-    return $page;
+    $gopage[no] = !$page ? get_current_page($table, $atc[idx]) : $page;
+    return $gopage;
   }
 
   # 게시물 수정 함수
@@ -225,7 +225,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
   # 게시물 삭제 함수
   function article_delete($table, $no, $passwd) {
-    global $jsboard, $o, $langs, ${$jsboard}, $board;
+    global $jsboard, $o, $langs, ${$jsboard}, $board, $page;
     global $delete_filename, $delete_dir, $upload, $agent;
     $atc = get_article($table, $no);
 
@@ -273,7 +273,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       }
     }
 
-    $page = get_current_page($table, $atc[idx]);
+    $page = !$page ? get_current_page($table, $atc[idx]) : $page;
     sql_query("UNLOCK TABLES");
 
     return $page;
@@ -393,9 +393,9 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       break;
     case 'reply':
       $atc[text] = $rpost;
-      $page = article_reply($table, $atc);
-      if(!$page[m_err]) Header("Location: list.php?table=$table&page=$page[no]");
-      else move_page("list.php?table=$table&page=$page[no]");
+      $gopage = article_reply($table, $atc);
+      if(!$gopage[m_err]) Header("Location: list.php?table=$table&page=$gopage[no]");
+      else move_page("list.php?table=$table&page=$gopage[no]");
       break;
     case 'edit':
       $atc[text] = $epost;
@@ -403,8 +403,8 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       Header("Location: read.php?table=$table&no=$no");
       break;
     case 'del':
-      $page = article_delete($table, $no, $passwd, $o[am]);
-      Header("Location: list.php?table=$table&page=$page");
+      $gopage = article_delete($table, $no, $passwd, $o[am]);
+      Header("Location: list.php?table=$table&page=$gopage");
       break;
   }
 } elseif ($o[at] == "dn") {

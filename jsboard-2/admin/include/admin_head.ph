@@ -42,6 +42,9 @@ if($path[type] == "user_admin" && $table) {
     { include "$ipath/data/$table/config.ph"; }
 }
 
+# 외부 회원 DB 를 사용할 경우 설정 파일 include
+if(file_exists("$ipath/config/external.ph")) { include "$ipath/config/external.ph"; }
+
 # 이메일 주소 변형 체크
 $rmail[chars] = !$rmail[chars] ? "__at__" : $rmail[chars];
 

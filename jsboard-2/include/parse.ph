@@ -242,11 +242,10 @@ function search_hl($list) {
 function text_nl2br($text, $html) {
   global $langs;
   if($html) {
-    $source = array("/<(\?|%)/i","/(\?|%)>/i","/([a-z0-9]*script:)/i","/\r\n/");
-    $target = array("&lt;\\1","\\1&gt;","deny_\\1","\n");
+    $source = array("/<(\?|%)/i","/(\?|%)>/i","/([a-z0-9]*script:)/i","/\r\n/",
+                    "/<(\/*(script|style|pre|xmp|base|span|html)[^>]*)>/i");
+    $target = array("&lt;\\1","\\1&gt;","deny_\\1","\n","&lt;\\1&gt;");
     $text = preg_replace($source,$target,$text);
-
-    $text = eregi_replace("<([/]*)(pre|xmp|base|span|html)[^>]*>","",$text);
     if(!eregi("<--no-autolink>",$text)) $text = auto_link($text);
     else $text = chop(str_replace("<--no-autolink>","",$text));
 
@@ -265,14 +264,14 @@ function text_nl2br($text, $html) {
 }
 
 function delete_tag($text) {
-  $text = eregi_replace("<html(.*)<body([^>]*)>","",$text);
-  $text = eregi_replace("</body(.*)</html>(.*)","",$text);
-  $text = eregi_replace("<(\/)*(div|span|layer|body|html|head|meta)[^>]*>","",$text);
-  $text = eregi_replace("<(style|script|title)(.*)</(style|script|title)>","",$text);
-  $text = eregi_replace("<[/]*(script|style|title|xmp)>","",$text);
-  $text = eregi_replace("<(\\?|%)","&lt;\\1",$text);
-  $text = eregi_replace("(\\?|%)>","\\1&gt;",$text);
-  $text = chop($text);
+  $src = array("/\n/i","/<html.*<body[^>]*>/i","/<\/body.*<\/html>.*/i",
+               "/<\/*(div|span|layer|body|html|head|meta|input|select|option|form)[^>]*>/i",
+               "/<(style|script|title).*<\/(style|script|title)>/i",
+               "/<\/*(script|style|title|xmp)>/i","/<(\\?|%)/i","/(\\?|%)>/i",
+               "/#\^--ENTER--\^#/i");
+  $tar = array("#^--ENTER--^#","","","","","","&lt;\\1","\\1&gt;","\n");
+
+  $text = chop(preg_replace($src,$tar,$text));
 
   return $text;
 }
@@ -325,8 +324,6 @@ function cut_string($s, $l) {
 
 # 문서 내용에 있는 URL들을 찾아내어 자동으로 링크를 구성해주는 함수
 #
-# eregi_replace - 정규 표현식을 이용한 치환 (대소문자 무시)
-#                 http://www.php.net/manual/function.eregi-replace.php
 # preg_replace  - 펄 형식의 정규표현식을 이용한 치환
 #                 http://www.php.net/manual/function.preg-replace.php
 function auto_link($str) {

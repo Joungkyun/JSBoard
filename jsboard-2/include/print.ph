@@ -359,6 +359,8 @@ function article_reply_list($table,$pages,$print=0) {
   $o[no]=$reto;
   $o[ss]="";
   $o[ln]=4; # read에서 리스트 출력시 cellpadding값만큼 제목을 줄여야 함
+  $o[idx] = !$list[reto] ? $list[idx] : 0;
+  $o[reto] = !$o[idx] ? $list[reto] : 0;
 
   $CPADDING = $lines[design] ? 0 : 1;
   

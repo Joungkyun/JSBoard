@@ -238,8 +238,8 @@ file_operate("$wfile","w","Can't update $wfile",$chg_conf);
 # quot 변환된 문자를 un quot 한다
 $head = $ua[header];
 $tail = $ua[tail];
-$head = stripslashes("$head");
-$tail = stripslashes("$tail");
+$head = check_invalid(stripslashes("$head"));
+$tail = check_invalid(stripslashes("$tail"));
 
 $wfile = "../../data/$table/html_head.ph";
 file_operate("$wfile","w","Can't update $wfile",$head);
@@ -249,6 +249,7 @@ file_operate("$wfile","w","Can't update $wfile",$tail);
 
 # style sheet file 생성
 $ua[style] = eregi_replace("\\\\\"|\"","",$ua[style]);
+$ua[style] = check_invalid($ua[style]);
 $wstyle = "<?
 \$user_stylesheet = \"$ua[style]\";
 ?>";
