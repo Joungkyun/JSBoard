@@ -135,10 +135,20 @@ while($list = dfetch_row($result)) {
 
       $tail = substr( strrchr($bofile, "."), 1 );
 
-      if ($tail == "txt") {
+      if ($tail == "txt" | $tail == "phps" | $tail == "shs") {
         echo ("<p><br>\n" .
               "---- $subj_attach -------------------------- \n<p>\n<pre>");
-        include("$filesavedir/$bcfile/$bofile");
+
+        if ($tail != "txt") {
+          $fp = fopen("$filesavedir/$bcfile/$bofile", "r");
+          while(!feof($fp)) { $view .= fgets($fp, 100); }
+          fclose($fp);
+          $view = htmlspecialchars($view) ;
+          echo ("$view") ;
+        } else {
+          include("$filesavedir/$bcfile/$bofile");
+        }
+
         echo("\n</pre>\n<br><br>");
 
       }

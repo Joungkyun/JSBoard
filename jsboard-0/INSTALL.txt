@@ -486,7 +486,7 @@ mysql> alter table BoardInformation add lang varchar(5);
                               ^^^^^^^^^^^^^^^^
 
 5. jsboard-0.7.0/Install/SQL/manager.sql을 convert.sql로 copy를 한다.
-   convert.sql을 열어서 제일 아래에 있는
+   convert.sql을 열어서 하단에 있는
 
    ***********************************************************************************
 
