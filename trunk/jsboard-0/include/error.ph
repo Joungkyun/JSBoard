@@ -1,14 +1,13 @@
 <?
-function error($str = "서버에 문제가 있습니다.")
+function error($str = "Problem in SERVER !!")
 {
-    global $debug;
-    
-    $admin = getenv("SERVER_ADMIN");
+    global $debug,  $admin, $err_str ;
 
+   
     if(!$debug) {
 	echo("<script language=\"javascript\">\n" .
 	     "<!--\n" .
-	     "alert(\"$str\\n이전 페이지로 돌아갑니다.\\n\\n문의 사항은 $admin 으로 메일을...\");\n" .
+	     "alert(\"$str\\n$err_str\");\n" .
 	     "history.back();\n" .
 	     "//-->\n" .
 	     "</script>\n");
@@ -23,5 +22,6 @@ function back()
 	 "history.back();\n" .
 	 "//-->\n" .
 	 "</script>\n");
+    exit ;
 }
 ?>

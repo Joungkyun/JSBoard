@@ -3,7 +3,7 @@ function qsql($n, $act)
 {
     global $table, $pern, $today;
     global $sc_column, $sc_string;
-    global $acount, $apage;
+    global $acount, $apage, $lang, $sc_error;
 
     if ($act == "normal") {
 	$result = dquery("SELECT no FROM $table WHERE reno = 0 ORDER BY no DESC LIMIT $n, $pern");
@@ -12,15 +12,13 @@ function qsql($n, $act)
 	$result = dquery("SELECT no FROM $table WHERE reno = $n ORDER BY no DESC");
     }
     if ($act == "search") {
-	if (strlen($sc_string) >= 1 || $sc_column == "today") {
+	if (strlen($sc_string) >= 2 || $sc_column == "today") {
 	    $sc_string = addslashes(chop($sc_string));
 
 	    if ($sc_column == "all") {
 		$sc_sql = "title LIKE \"%$sc_string%\" OR text LIKE \"%$sc_string%\" OR name LIKE \"%$sc_string%\"";
 	    } else if ($sc_column == "today") {
 		$sc_sql = "date > $today";
-	    } else if ($sc_column == "no") {
-		$sc_sql = "num = \"$sc_string\"";
 	    } else {
 		$sc_sql = "$sc_column LIKE \"%$sc_string%\"";
 	    }
@@ -35,7 +33,7 @@ function qsql($n, $act)
 		$apage  = intval($acount / $pern);
 	    }
 	} else {
-	    error("검색은 한글 한자, 영문 두자 이상만 됩니다.");
+	    error("$sc_error");
 	}
     }
     
@@ -48,11 +46,14 @@ function plist($n, $act = "normal")
 
     // jinoos -- global 에 변수등록으로 중복 include 제거 
 
-    global $table, $file_upload, $prev , $next ;
+    global $table, $file_upload, $lang;
     global $acount, $tcount, $apage, $pern;
     global $scount, $page, $user_del;
-    global $sc_column, $sc_string, $search;
-    global $width, $l0_bg, $l0_fg, $l1_bg, $l1_fg, $l2_bg, $l2_fg, $sch_bg;
+    global $sc_column, $sc_string, $search, $remotes;
+    global $width, $l0_bg, $l0_fg, $l1_bg, $l1_fg, $l2_bg, $l2_fg;
+    global $select_subj, $select_text, $select_writer, $select_all, $serach_act ;
+    global $subj_no_list, $subj_title, $subj_name, $subj_file, $subj_date, $subj_read ;
+    global $no_article, $start_sql_time, $page_value, $menuallow, $remote_ip_ment ;
 
     if ($file_upload == "yes") { $colspan_num = "7" ; }
     else { $colspan_num = "6" ; }
@@ -63,29 +64,34 @@ function plist($n, $act = "normal")
 	$page = 0;
     }
 
-    if($act != "reply" && $act != "relate" ) {
+    if($act != "reply" && $act != "relate") {
       echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\">\n" .
               "<tr><td align=\"left\">\n" .
               "<a href=./admin/user_admin/auth.php3?db=$table>[admin]</a>\n" .
               "</td>\n" .
               "<td align=\"right\">\n" ) ;
-      list_cmd_bar ($page, $l0_bg, $table, $sc_column);
+
+      if ($menuallow == "yes") { list_cmd_bar ($page, $l0_bg, $table, $sc_column); }
+      else { echo "<font color=\"$l2_fg\">$remote_ip_ment [ $remotes ]</font>&nbsp;" ; }
+
       echo("</td></tr></table>\n\n");
-    }    
+    }
+
     if($act != "reply") {
+
 	echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"$l0_bg\"><tr><td>\n" .
 	     "<table width=\"100%\" border=\"0\" cellspacing=\"2\" cellpadding=\"3\">\n<tr>\n" .
-	     "<td width=\"4%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\"><nobr>번호<nobr></font></td>\n" .
-	     "<td width=\"59%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">제목</font></td>\n" .
-	     "<td width=\"14%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">글쓴이</font></td>\n" );
+	     "<td width=\"5%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\"><nobr>$subj_no_list<nobr></font></td>\n" .
+	     "<td width=\"63%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">$subj_title</font></td>\n" .
+	     "<td width=\"10%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">$subj_name</font></td>\n" );
 
         if($file_upload == "yes"){
-		echo("<td width=\"5%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">파일</font></td>\n");
+		echo("<td width=\"5%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">$subj_file</font></td>\n");
         }   	// file upload 시만 나옴(taejun. 99.11.17)
 
 
-	echo("<td width=\"10%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">날짜</font></td>\n" .
-	     "<td colspan=\"2\" width=\"8%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\"><nobr>읽은수</nobr></font></td>\n" .
+	echo("<td width=\"10%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">$subj_date</font></td>\n" .
+	     "<td colspan=\"2\" width=\"8%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\"><nobr>$subj_read</nobr></font></td>\n" .
 	     "</tr>\n");
 
     }
@@ -99,7 +105,7 @@ function plist($n, $act = "normal")
 
 	echo("<tr><td colspan=\"$colspan_num\" align=\"center\" bgcolor=\"$l2_bg\">\n" .
 	     "<br>" .
-	     "<font color=\"$l2_fg\" size=\"4\"><b>글이 없습니다.</b></font>" .
+	     "<font color=\"$l2_fg\" size=\"4\"><b>$no_article</b></font>" .
 	     "<br><br>\n" .
 	     "</td></tr>\n");
     }
@@ -110,7 +116,18 @@ function plist($n, $act = "normal")
     }
 
     if($act != "reply") {
-	echo("</table>\n");
+
+        $end_sql_time = microtime(); //속도 체크
+        $sqltime = get_microtime($start_sql_time, $end_sql_time);
+
+        $page_msg = page_message($apage,$page,$lang);
+        echo ("<tr>\n" .
+              "<td colspan=$colspan_num bgcolor=\"$l1_bg\" align=right><font color=\"$l1_fg\">\n" .
+              " $page_msg [ $sqltime sec ]</font>\n" .
+              "</td>\n" .
+              "</tr>\n" .
+              "</table>\n");
+
 	include("include/search.ph");
         echo("</td></tr></table>\n");
     }
@@ -122,8 +139,8 @@ function vlist($no) {
 
     global $table, $file_upload, $filesavedir;
     global $sc_string, $search, $page, $today;
-    global $namel, $titll;
-    global $l2_bg, $l2_fg, $l3_bg, $l3_fg, $t0_bg, $mo_bg;
+    global $namel, $titll, $lang;
+    global $l2_bg, $l2_fg, $l3_bg, $l3_fg, $t0_bg;
 
     $lists = dquery("SELECT * FROM $table WHERE no = $no");
 
@@ -141,24 +158,31 @@ function vlist($no) {
 	$bofile = $list[15]; // 파일이름 . file upload용.
 	$bcfile = $list[16]; // 파일경로 . file upload용.taejun.
 
-	$name  = cut_string($name,$namel) ; 
+	$name  = cut_string($name,$namel) ;
 	$titl   = $titll - $rede;
-	$title  = cut_string($title,$titl) ; 
+	$title  = cut_string($title,$titl) ;
 	$date2  = $date;
-	$date   = date("Y-m-d", $date);
-	// Y2K east egg - JoungKyun Kim :-)
-	// $date	= eregi_replace("00","Y2K",$date);
+
+	if ($lang == "ko") {
+	  $date   = date("y.m.d", $date);
+	  // Y2K event - JoungKyun Kim :-)
+	  $date	= eregi_replace("00","Y2K",$date) ;
+	} else {
+	  $date   = date("M.d.y", $date);
+	  // Y2K event - JoungKyun Kim :-)
+	  $date	= eregi_replace("00","Y2K",$date) ;
+	}
 
 	if($sc_string) {
-	    // $no    = eregi_replace(($sc_string), "<font color=\"darkred\"><b>\\0</b></font>", $no);
 	    $name  = eregi_replace(($sc_string), "<font color=\"darkred\"><b>\\0</b></font>", $name);
 	    $title = eregi_replace(($sc_string), "<font color=\"darkred\"><b>\\0</b></font>", $title);
 	}
 	$rede *= 8;
 
 	if($reno) {
-	    $title = "<img src=\"images/n.gif\" border=\"0\" alt=\"\" width=\"$rede\" height=\"1\">$title";
-	    $num   = "<img src=\"images/rep.gif\" width=\"12\" height=\"12\" alt=\"[답장]\">";
+	    $title = "<img src=\"images/n.gif\" border=\"0\" alt=\"\" width=\"$rede\" height=\"1\">" .
+                     "<img src=\"images/rep.gif\" width=\"12\" height=\"12\" border=\"0\" alt=\"[답장]\"> $title";
+	    $num   = "&nbsp;";
 	}
 
 	$bg = "$l2_bg";
@@ -175,10 +199,10 @@ function vlist($no) {
 	if($email)
 	    $name = "<a href=\"mailto:$email\"><font color=\"$fg\">$name </font> </a>";
 
-	echo("<tr onMouseOver=\"this.style.backgroundColor='$mo_bg'\"  onMouseOut=\"this.style.backgroundColor=''\";>\n" .
-	     "<td align=\"right\"><font color=\"$fg\">$num</font></td>\n" .
-	     "<td align=\"left\" bgcolor=\"$bg\"><a href=\"read.php3?table=$table&no=$no&$search\"><font color=\"$fg\">$title </font></a></td>\n" .
-	     "<td align=\"right\" bgcolor=\"$bg\"><font color=\"$fg\">$name </font></td>\n" );
+	echo("<tr>\n" .
+	     "<td align=\"right\" bgcolor=\"$bg\"><font color=\"$fg\">$num</font></td>\n" .
+	     "<td align=\"left\" bgcolor=\"$bg\"><a href=\"read.php3?table=$table&no=$no&page=$page$search\"><font color=\"$fg\">$title </font></a></td>\n" .
+	     "<td align=\"right\" bgcolor=\"$bg\"><nobr><font color=\"$fg\">$name </font><nobr></td>\n" );
 	
 
 	// jinoos -- 화일에 확장자를 검사해서 알맞은 아이콘으로 변화 시킨다. 
@@ -190,9 +214,9 @@ function vlist($no) {
 			$tail = substr( strrchr($bofile, "."), 1 );
 			if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram || $tail==hwp || $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj || $tail==tar || $tail==avi || $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp))
 			{
-			    echo"<td align=\"center\" bgcolor=\"$bg\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" width=16 height=16 border=0 alt=\"$bofile\"></a></td>\n";
+			    echo"<td align=\"center\" bgcolor=\"$bg\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" width=16 height=16 border=0 \"alt=$bofile\"></a></td>\n";
 			}else {
-			    echo"<td align=\"center\" bgcolor=\"$bg\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/$tail.gif\" width=16 height=16 border=0 alt=\"$bofile\"></a></td>\n";
+			    echo"<td align=\"center\" bgcolor=\"$bg\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/$tail.gif\" width=16 height=16 border=0 \"alt=$bofile\"></a></td>\n";
 			}
 		}else
 		{
@@ -214,6 +238,7 @@ function vlist($no) {
 	if($reyn) {
 	    plist($no, "reply");
 	}
+
     }
 }
 
@@ -234,7 +259,5 @@ function nlist($page) {
     }
     echo("<a href=\"$SCRIPT_NAME?table=$table&page=$apage$search\"><font color=\"$l0_fg\">▷</font></a>\n");
 }
-
-
 
 ?>

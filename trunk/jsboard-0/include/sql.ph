@@ -1,12 +1,16 @@
 <?
 function derror()
 {
-    global $debug;
+    global $debug, $lang, $sql_alert ;
+
+    if (!$sql_alert) {
+      $sql_alert = "Problem in SQL.\\n\\nBack to the previous page.";
+    }
 
     if(mysql_error() && !$debug) {
 	echo("<script language=\"javascript\">\n" .
 	     "<!--\n" .
-	     "alert(\"SQL에 문제가 있습니다.\\n\\n이전 페이지로 돌아갑니다.\");\n" .
+	     "alert(\"$sql_alert\");\n" .
 	     "history.back();\n" .
 	     "//-->\n" .
 	     "</script>\n");
@@ -44,8 +48,11 @@ function dfetch_row($result)
 
 function drow_check($result)
 {
-    if(!mysql_num_rows($result)) {
-	error("게시물이 없습니다.");
+   global $no_article ;
+
+   if(!mysql_num_rows($result)) {
+	error("$no_article");
+
     }
 }
 ?>
