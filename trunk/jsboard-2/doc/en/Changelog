@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Thu, Feb  7 2002
+Date      : Fri, Feb  8 2002
 Version   : jsboard-2.0pre4
 
 
@@ -60,6 +60,7 @@ Version   : jsboard-2.0pre4
 34. removed double quote in -f option of mail() function
 35. fixed miss search during same day
 36. added spam check with article subject
+37. fixed miss db path in global.ph when used Installer
 
 
 -----------------------------------------------------------------------------
