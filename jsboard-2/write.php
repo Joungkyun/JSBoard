@@ -17,6 +17,7 @@ if($board[mode] && $HTTP_COOKIE_VARS[$cjsboard][id]) {
 
 if((eregi("^(2|3|5|7)$",$board[mode]) && $HTTP_COOKIE_VARS[$cjsboard][id]) || $board[super]) {
   $pre_regist[name] = $HTTP_COOKIE_VARS[$cjsboard][id];
+  $pre_regist[rname] = $HTTP_COOKIE_VARS[$cjsboard][name];
   $pre_regist[email] = $HTTP_COOKIE_VARS[$cjsboard][email];
   $pre_regist[url] = $HTTP_COOKIE_VARS[$cjsboard][url];
 } else {
@@ -45,12 +46,17 @@ if ($agent[br] == "MSIE" || $agent[br] == "MOZL" || ($agent[br] == "NS" && $agen
 $print[passform] = "<INPUT TYPE=hidden NAME=o[at] VALUE=write>\n".
                    "<INPUT TYPE=hidden NAME=table VALUE=$table>";
 if(!$nodisable) {
+  $pre_regist[rname] = !$pre_regist[rname] ? "" : "\n<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"$pre_regist[rname]\">";
   $print[passform] .= "\n<INPUT TYPE=hidden NAME=atc[name] VALUE=\"$pre_regist[name]\">".
+                      "$pre_regist[rname]".
                       "\n<INPUT TYPE=hidden NAME=atc[email] VALUE=\"$pre_regist[email]\">".
                       "\n<INPUT TYPE=hidden NAME=atc[url] VALUE=\"$pre_regist[url]\">\n";
 }
 
 $pages = $page ? "&page=$page" : "";
+
+if($board[rnname] && eregi("^(2|3|5|7)",$board[mode])) 
+  $pre_regist[name] = $HTTP_COOKIE_VARS[$cjsboard][name] ? $HTTP_COOKIE_VARS[$cjsboard][name] : $pre_regist[name];
 
 include "theme/$print[theme]/write.template";
 ?>

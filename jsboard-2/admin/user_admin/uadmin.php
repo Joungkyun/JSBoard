@@ -70,6 +70,9 @@ if($board[align] == "left") $align_l = "checked";
 elseif($board[align] == "right") $align_r = "checked";
 else $align_c = "checked";
 
+if($board[rnname]) $nameck_r = "checked";
+else $nameck_n = "checked";
+
 
 $board[hls] = eregi_replace("<FONT COLOR=","",$board[hl]);
 $board[hls] = eregi_replace("><B><U>STR</U></B></FONT>","",$board[hls]);
@@ -233,6 +236,17 @@ function fresize(value,name) {
 </SELECT>
 </TD>
 <TD width=8% BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR><?=$langs[ua_pname]?></font></TD>
+<TD COLSPAN=4>
+<?=$langs[ua_namemt1]?>
+<INPUT TYPE=radio name=ua[rnname] <?=$nameck_r?> value="1" id=RADIO><?=$langs[ua_realname]?>
+<INPUT TYPE=radio name=ua[rnname] <?=$nameck_n?> value="0" id=RADIO><?=$langs[ua_nickname]?>
+<?=$langs[ua_namemt2]?>
+</TD>
+<TD BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
 </TR>
 
 <TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>

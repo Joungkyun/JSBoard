@@ -6,6 +6,8 @@ function print_list($table, $list, $r=0)
 
   $search = search2url($o);
 
+  if($board[rnname] && eregi("^(2|3|5|7)",$board[mode])) 
+    $list[name] = $list[rname] ? $list[rname] : $list[name];
   $list[name] = unhtmlspecialchars($list[name]);
   $list[name]  = htmlspecialchars(cut_string($list[name],$board[nam_l]));
   $list[name] = trim(ugly_han($list[name]));

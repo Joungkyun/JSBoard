@@ -1,6 +1,6 @@
 JSBoard v2.0 Upgrade document
 
-2001.09.05 김정균 <http://www.oops.org>
+2001.12.17 김정균 <http://www.oops.org>
 
 이 문서는 JSBoard  v1.3.3 에서 2.0 으로 업그레이드를 하는 방법을 다루도록한다.
 개인적인 예상으로는 최소한 1.3 버젼에서는 모두 적용이 되리라 생각이 된다.
@@ -18,6 +18,13 @@ shell> mysql -u USER -p DB_NAME < userdb-OSTYPE.sql
 다. 현재로서 freebsd와 linux가 지원이 되며, openbsd,netbsd 의 경우에는 freebsd
 를 선택하면 되고, solaris 의 경우에는 linux를 선택해서 하면 된다. 그 이외의 OS
 에서는 알수가 없다.
+
+그리고 Linux 에서 PHP 4.1.0 이상 버젼을 사용할 경우에는 JSBoard database 의 패
+스워드 레코드의 길이를 변경해 줘야한다. PHP 4.0.x 까지는 crypt 암호화의 길이가
+13 자리 정도면 무난했으나 4.1.x 부터는 30 자리 이상으로 변경이 되었다. MySQL에
+로그인을 하여 JSBoard database 를 선택한 후에 다음의 명령을 실행하도록 한다.
+
+mysql> ALTER TABLE $table_name MODIFY passwd carchar(56);
 
 다음 jsboard 2.0 의 소스를 풀도록 한다.
 

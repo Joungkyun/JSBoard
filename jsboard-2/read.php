@@ -41,8 +41,11 @@ $list[title] = eregi_replace("<font[^>]*color=([a-z0-9#]+)[^>]*>","<font color=\
 # 검색 문자열 색상 변경
 $list = search_hl($list);
 
-if($list[email]) $list[uname] = url_link($list[email], $list[name], $no);
-else $list[uname] = $list[name];
+if($board[rnname] && eregi("^(2|3|5|7)",$board[mode]))
+  $list[cname] = $list[rname] ? $list[rname] : $list[name];
+
+if($list[email]) $list[uname] = url_link($list[email], $list[ename], $no);
+else $list[uname] = $list[ename];
 if($list[url]) {
   if(eregi("^http://", $list[url])) $list[uname] .= " [" . url_link($list[url], "$langs[ln_url]", $color[r2_fg]) . "]";
   else $list[uname] .= " [" . url_link("http://$list[url]", "$langs[ln_url]") . "]";

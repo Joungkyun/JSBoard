@@ -21,7 +21,7 @@ Attention : OOPS administration Center is not GPL.
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2001년 12월 11일
+작성일 : 2001년 12월 17일
 버전   : jsboard-2.0pre3
 
 * 변경된점
@@ -72,6 +72,12 @@ Attention : OOPS administration Center is not GPL.
 44. 원본 이미지 보기에서 IE 의 UTF-8(한글 파일 이름) 문제 해결
 45. 게시판 관리자의 include 파일 출력 순서 수정
 46. session_destory() 함수를 session_unregister() 함수로 변경
+47. 오탈자 수정
+48. PHP 4.1.0 에서 패스워드 길이가 변경된것 적용
+49. INSERT query 에서 file 명을 지정
+50. moder 필드 삭제
+51. login mode 시에 이름 출력을 닉네임 또는 리얼네임을 출력하도록 선택을
+    할 수 있게 수정 (rname field 추가)
 
 
 -----------------------------------------------------------------------------

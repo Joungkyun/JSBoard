@@ -20,6 +20,7 @@ $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_
 
 if((eregi("^(2|3|5)$",$board[mode]) && $HTTP_COOKIE_VARS[$cjsboard][id]) || $board[super] == 1) {
   $pre_regist[name] = $HTTP_COOKIE_VARS[$cjsboard][id];
+  $pre_regist[rname] = $HTTP_COOKIE_VARS[$cjsboard][name];
   $pre_regist[email] = $HTTP_COOKIE_VARS[$cjsboard][email];
   $pre_regist[url] = $HTTP_COOKIE_VARS[$cjsboard][url];
 } else {
@@ -81,7 +82,9 @@ $print[passform] = "<INPUT TYPE=hidden NAME=o[at] VALUE=reply>\n".
                    "<INPUT TYPE=hidden NAME=atc[reno] VALUE=\"$list[no]\">";
 
 if(!$nodisable) {
+  $pre_regist[rname] = !$pre_regist[rname] ? "" : "\n<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"$pre_regist[rname]\">";
   $print[passform] .= "\n<INPUT TYPE=hidden NAME=atc[name] VALUE=\"$pre_regist[name]\">".
+                      "$pre_regist[rname]".
                       "\n<INPUT TYPE=hidden NAME=atc[email] VALUE=\"$pre_regist[email]\">".
                       "\n<INPUT TYPE=hidden NAME=atc[url] VALUE=\"$pre_regist[url]\">\n";
 }

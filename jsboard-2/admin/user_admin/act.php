@@ -16,16 +16,9 @@ sql_select_db($db[name]);
 compare_pass($$jsboard);
 mysql_close();
 
-# password 변경 루틴
-if($ua[passwd] && $ua[passwd] == $ua[repasswd]) {
-  $passwd = crypt($ua[passwd],$admin[passwd]);
-  $passwd = str_replace("\$","\\\$",$passwd);
-  if($passwd != $admin[passwd]) $chg[passwd] = "$passwd";
-  else $chg[passwd] = "$admin[passwd]";
-} else {
-  $chg[passwd] = "$admin[passwd]";
-  if($ua[passwd]) err_msg("$pang[ua_pw_comp]",1);
-}
+# auth value check
+$ua[ad] = !trim($ua[ad]) ? "admin" : $ua[ad];
+$ua[rnname] = !trim($ua[rnname]) ? 0 : $ua[rnname];
 
 # Permission Check
 if($ua[pre]) $chg[pre] = 1;
@@ -135,6 +128,9 @@ $chg_conf = "<?
 \$board[ad] = \"$ua[ad]\";
 \$board[mode] = $ua[mode];
 
+# 로그인 모드시에 이름 출력을 실명으로 할지 Nickname 으로 할지 결정
+# 이 변수값이 설정이 안되어 있으면 Nickname 으로 출력
+\$board[rnname] = $ua[rnname];
 
 ###############################################################################
 #  게시판 허가 설정
