@@ -472,7 +472,7 @@ function file_upload($fn,$updir) {
     # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
     $fcname[0] = "/\.*$/";
     $fvname[0] = "";
-    $fcname[1] = "/\.(ph|inc|php[0-9a-z]*|phtml)$/i"
+    $fcname[1] = "/\.(ph|inc|php[0-9a-z]*|phtml)$/i";
     $fvname[1] = ".phps";
     $fcname[2] = "/(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$/i";
     $fvname[2] = "\\1_\\2.phps";
