@@ -64,11 +64,13 @@ if($list[url]) {
   else $list[uname] .= " [" . url_link("http://$list[url]", "$langs[ln_url]", $color[r3_fg]) . "]";
 }
 
-if((!$board[super] && ${$jsboard}[id] != $list[name]) || !$board[mode]) {
-  $warning = "$langs[d_wa]";
-  # 패스워드가 없는 게시물일  경우 관리자 인증을 거침
-  if(!$list[passwd] || $list[reyn]) $warning = "$langs[d_waa]";
-  $print[passform] = "$langs[w_pass]: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" MAXLENGTH=\"8\">&nbsp;\n";
+if(!$board[super] && ${$jsboard}[id] != $list[name]) { 
+  if(!$board[mode]) {
+    $warning = "$langs[d_wa]";
+    # 패스워드가 없는 게시물일  경우 관리자 인증을 거침
+    if(!$list[passwd] || $list[reyn]) $warning = "$langs[d_waa]";
+    $print[passform] = "$langs[w_pass]: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" MAXLENGTH=\"8\">&nbsp;\n";
+  } else $warning = "&nbsp;";
 } else $warning = "&nbsp;";
 
 # Page 가 존재할 경우 목록으로 갈때 해당 페이지로 이동

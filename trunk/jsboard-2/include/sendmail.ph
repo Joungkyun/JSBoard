@@ -30,8 +30,6 @@ function mail_header($to,$from,$title,$type=0) {
   # mail header ∏¶ ¿€º∫ 
   if(!$type) {
     $header = "From: JSBoard Message <$from>\r\n".
-              "Organization: JSBoard Open Project\r\n".
-              "User-Agent: JSBoard Mail System\r\n".
               "X-Accept-Language: ko,en\r\n".
               "MIME-Version: 1.0\r\n".
               "Content-Type: text/plain; charset=$langs[charset]\r\n".
@@ -40,8 +38,6 @@ function mail_header($to,$from,$title,$type=0) {
               "Subject: $title\n";
   } else {
     $header = "From: JSBoard Message <$from>\r\n".
-              "Organization: JSBoard Open Project\r\n".
-              "User-Agent: JSBoard Mail System\r\n".
               "X-Accept-Language: ko,en\r\n".
               "MIME-Version: 1.0\r\n".
               "Content-Type: text/plain; charset=$langs[charset]\r\n".
@@ -178,8 +174,7 @@ function sendmail($rmail,$fm=0) {
              "HTTP_ACCEPT_LANGUAGE : $HTTP_ACCEPT_LANGUAGE\r\n".
              "---------------------------------------------------------------------------\r\n".
              "\r\n".
-             "OOPS Form mail service - http://www.oops.org\r\n".
-             "Scripted by JoungKyun Kim\r\n";
+             "JSBoard Form mail service - http://jsboard.kldp.org\r\n";
 
   if ($rmail[user] && $rmail[reply_orig_email]) {
     if($rmail[mta]) socketmail($rmail[smtp],$rmail[reply_orig_email],$rmail[email],$rmail[title],$message);

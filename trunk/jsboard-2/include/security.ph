@@ -11,10 +11,13 @@ function get_security_info() {
 
   if($chk_time > $chk_rtime) {
     $p = @get_html_src("jsboard.kldp.org",500,"SecurityMSG/serial.txt",1);
-    if(!eregi("none",$p)) $p = trim(eregi_replace(".+ ([0-9]{11})","\\1",$p));
-    else $p = "none";
+    if(!eregi("none",$p)) {
+      $src = array("/.+ ([0-9]{11})/i","/^0*/i");
+      $tar = array("\\1","");
+      $p = trim(preg_replace($src,$tar,$p));
+    } else $p = "none";
 
-    if($p == "none" && $security[prints]) $chk_print = 0;
+    if($p == "none" || $security[prints]) $chk_print = 0;
     elseif(!$security[serial]) $chk_print = 2;
 
     if($security[serial] < $p) {
@@ -29,7 +32,7 @@ function get_security_info() {
 
     $security[content] = "<?\n".
                          "\$security[stamp] = $chk_date;\n".
-                         "\$security[serial] = $security[serial];\n".
+                         "\$security[serial] = \"$security[serial]\";\n".
                          "\$security[prints] = $chk_print;\n?>";
 
     $f = @fopen("./config/security_data.ph","wb");

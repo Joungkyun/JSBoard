@@ -9,6 +9,11 @@ JSBoard v2.0 Upgrade document
 점이다. 그러므로 JSBoard 의 main table 외에 인증에 필요한 table 이 추가가 되어
 야 한다.
 
+일단 각 게시판 테이블 마다 인증에 필요한 컬럼 1개와 사용하지 않는 moder 칼럼을
+삭제하도록 한다. INSTALLER/script 로 이동을 하여 dbconv_to_20 파일을 열은 다음 필
+요한 변수값을 지정 해 준 다음 해당 파일의 퍼미션을 755 로 수정한 후에 실행하면
+변환을 해 준다.
+
 INSTALLER/SQL 로 이동을 하여 userdb table 을 생성하도록 한다.
 
 shell> mysql -u USER -p DB_NAME < userdb-OSTYPE.sql
@@ -18,13 +23,6 @@ shell> mysql -u USER -p DB_NAME < userdb-OSTYPE.sql
 다. 현재로서 freebsd와 linux가 지원이 되며, openbsd,netbsd 의 경우에는 freebsd
 를 선택하면 되고, solaris 의 경우에는 linux를 선택해서 하면 된다. 그 이외의 OS
 에서는 알수가 없다.
-
-그리고 Linux 에서 PHP 4.1.0 이상 버젼을 사용할 경우에는 JSBoard database 의 패
-스워드 레코드의 길이를 변경해 줘야한다. PHP 4.0.x 까지는 crypt 암호화의 길이가
-13 자리 정도면 무난했으나 4.1.x 부터는 30 자리 이상으로 변경이 되었다. MySQL에
-로그인을 하여 JSBoard database 를 선택한 후에 다음의 명령을 실행하도록 한다.
-
-mysql> ALTER TABLE $table_name MODIFY passwd carchar(56);
 
 다음 jsboard 2.0 의 소스를 풀도록 한다.
 

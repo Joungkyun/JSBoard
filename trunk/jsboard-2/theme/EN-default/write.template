@@ -151,7 +151,7 @@ if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
 <!-  if IE and NS6 case, print textarea size operation button             -->
 <!-#######################################################################-->
 <?
-if(!$board[mode] || $board[mode] == 6) {
+if((!$board[mode] || $board[mode] == 6) && $board[super] != 1) {
   echo "<TD><B>Password</B></TD>\n".
        "<TD>\n".
        "<INPUT TYPE=password NAME=atc[passwd] SIZE=$size[pass] MAXLENGTH=8>\n".

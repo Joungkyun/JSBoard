@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Dec 20 2001
+Date      : Mon, Dec 27 2001
 Version   : jsboard-2.0pre3
 
 
@@ -80,6 +80,13 @@ Version   : jsboard-2.0pre3
 54. fixed local security hole
 55. re-cording delete_tag(), nl2br() function in parse.ph
 56. changed SQL query for over 1000,000 records
+57. changed License oops admin center to GPL2 from OOPS License
+58. changed header of form mail
+59. fixed print '&amp;' to '&' in url link
+60. fixed wrong security date
+61. fixed ask password when login admin mode
+62. removed embed, img tag in article preview of listing for security problem
+63. added db convert script
 
 
 -----------------------------------------------------------------------------
