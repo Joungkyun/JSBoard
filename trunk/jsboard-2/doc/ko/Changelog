@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2001년 12월 28일
+작성일 : 2001년 12월 29일
 버전   : jsboard-2.0pre3
 
 
@@ -90,6 +90,8 @@ If you wnat to see windog's change log, see also
 63. auto_link() 함수 수정
 64. 미리보기시 html 방식 작성글의 경우 html parsing 을 하던 것을 하지
     않고 소스를 보여주게 변경
+65. INSTALLER 수정
+66. DOCUMENT 업데이트
 
 
 -----------------------------------------------------------------------------

@@ -76,7 +76,7 @@ fi
 if [ "${me}" = "root" ]; then
   AUSER=$(ps aux | grep -E "apache|httpd" | grep -v ^root | grep -v grep | awk '{print $1}' | uniq)
 
-  if [ "${LANG}" = "ko" ]; then
+  if [ "${langs}" = "ko" ]; then
     echo
     echo "아파치가 ${AUSER} 의 권한으로 작동하고 있는듯 싶습니다."
     echo "맞습니까? (이 값은 httpd.conf 의 Group 지시자에 설정되어"
@@ -125,7 +125,7 @@ if [ "${me}" = "root" ]; then
   [ "$?" = "1" ] && EXE=1
 
   if [ "${EXE}" = "1" ]; then
-    if [ "${LANG}" = "ko" ]; then
+    if [ "${langs}" = "ko" ]; then
       echo
       echo "${AUSER} 는 잘못된 값입니다. httpd.conf 에서 Group 지시자의"
       echo "값을 확인하시고 다시 시도하십시오"
@@ -142,7 +142,7 @@ else
   chmod 707 ../../data
 fi
 
-if [ "${LANG}" = "ko" ]; then
+if [ "${langs}" = "ko" ]; then
   echo
   echo "작업이 완료 되었습니다. 브라우져로 jsboard/INSTALLER/ 로 접속하여"
   echo "설치를 계속 하시기 바랍니다."

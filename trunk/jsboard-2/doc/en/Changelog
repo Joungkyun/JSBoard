@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Mon, Dec 27 2001
+Date      : Mon, Dec 29 2001
 Version   : jsboard-2.0pre3
 
 
@@ -88,6 +88,8 @@ Version   : jsboard-2.0pre3
 62. removed embed, img tag in article preview of listing for security problem
 63. added db convert script
 64. changed mothod of preview in list page to don't parse html from parse html
+65. fixed INSTALLER
+66. updated DOCUMENT
 
 
 -----------------------------------------------------------------------------

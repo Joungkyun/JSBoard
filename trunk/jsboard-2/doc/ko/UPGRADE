@@ -14,6 +14,8 @@ JSBoard v2.0 Upgrade document
 필요한 변수값을 지정 해 준 다음 해당 파일의 퍼미션을 755 로 수정한 후에 실행하
 면 변환을 해 준다.
 
+shell> ./dbconv_to_20
+
 INSTALLER/SQL 로 이동을 하여 userdb table 을 생성하도록 한다.
 
 만약 다른 회원 table 을 사용할 경우에는 userdb table 을 생성할 필요가 없다. 이
