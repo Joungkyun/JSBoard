@@ -1,19 +1,79 @@
 <?
-function send_mail($no, $bbshome, $mailtoadmin, $mailtowriter, 
-		$table, $reno, $email)
-{
-	$content =  sprintf("%s%s", $bbshome, "read.php3?table=$table&no=$no");
-    if ($mailtowriter=="yes" && $email != "") {
-     	$title = "$table 게시판에서 답장이 왔습니다";
-		$to = $email;
-   		mail($to, $title, $content) or die("mail을 보내지 못했습니다");
-    }
 
-    if ($mailtoadmin!="") {
-		$title = "$table 게시판에 글이 올라왔습니다.";
-		$to = $mailtoadmin;
-   		mail($to, $title, $content) or die("mail을 보내지 못했습니다");
-    }
+/* mail 보내기 함수 */
+
+function send_mail($no, $bbshome, $mailtoadmin, $mailtowriter, $table, $reno, $name,
+                    $email, $reply_writer_email, $url, $webboard_version, $text, $title) {
+
+  global $REMOTE_ADDR, $HTTP_USER_AGENT, $HTTP_ACCEPT_LANGUAGE, $SERVER_NAME, $HOST_NAME ;
+
+  $mail_msg_header = "이 메일은 $table 게시판에서 온 메일입니다. Reply 하지 마십시오." ;
+
+  $time = date("Y/m/d (D) a h시i분");
+  $time=explode(" ",$time);
+
+  $year=$time[0] ;
+  $day=$time[1] ;
+  $ampm=$time[2] ;
+  $hms=$time[3] ;
+
+  if ($day == "(Mon)") { $asdf="(월)" ; }
+  else if ($day == "(Tue)") { $day="(화)" ; }
+  else if ($day == "(Wed)") { $day="(수)" ; }
+  else if ($day == "(Thu)") { $day="(목)" ; }
+  else if ($day == "(Fri)") { $day="(금)" ; }
+  else if ($day == "(Sat)") { $day="(토)" ; }
+  else if ($day == "(Sun)") { $day="(일)" ; }
+
+    $webboard_address =  sprintf("%s%s", $bbshome, "read.php3?table=$table&no=$no");
+    $reply_article    =  sprintf("%s%s", $bbshome, "reply.php3?table=$table&no=$no");
+
+    $message ="
+
+$mail_msg_header
+
+■ JSBOARD $tabel message
+
+[ Server Infomation ]------------------------------------------------------
+ServerWare	: JSBoard-$webboard_version
+Server Name	: $SERVER_NAME
+DB Name		: $table
+DB Location	: $webboard_address
+Reply Article	: $reply_article
+
+
+[ Article Infomation ]-----------------------------------------------------
+이 름		: $name
+Email		: mailto:$reply_writer_email
+HomeURL		: $url
+일 시		: $year $day $ampm $hms
+---------------------------------------------------------------------------
+
+$text
+
+
+
+---------------------------------------------------------------------------
+REMOTE_ADDR : $REMOTE_ADDR
+HTTP_USER_AGENT : $HTTP_USER_AGENT
+HTTP_ACCEPT_LANGUAGE : $HTTP_ACCEPT_LANGUAGE
+---------------------------------------------------------------------------
+
+OOPS Form mail service - http://www.oops.org
+Scripted by JoungKyun Kim <admin@oops.org>
+";
+
+  if ($mailtowriter=="yes" && $email != "") {
+    $to = $email;
+    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSboard@$HOST_NAME")
+    or die("mail을 보내지 못했습니다");
+  }
+
+  if ($mailtoadmin!="") {
+    $to = $mailtoadmin;
+    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSboard@$HOST_NAME")
+    or die("mail을 보내지 못했습니다");
+  }
 }
 
 function get_hostname()
@@ -207,6 +267,15 @@ function sform($size)
     echo $size;
 }
 
+function sform_echo($size)
+{
+    $agent = g_agent();
+    if($agent != "moz") {
+	$size *= 2;
+    }
+//    echo $size;
+}
+
 function g_agent($test = "0")
 {
   $agent = getenv("HTTP_USER_AGENT");
@@ -221,6 +290,8 @@ function g_agent($test = "0")
       } else if (ereg("Win", $agent)) {
 	if (ereg("\[ko\]", $agent)) {
 	  $agent = "moz_w_ko";
+	} else if (ereg("\[en\]", $agent)) {
+	  $agent = "moz_w_en";
 	} else {
 	  $agent = "moz";
 	}
