@@ -22,6 +22,7 @@ Version   : jsboard-2.0.6
 Mon, Jul 28 2003
   by JoungKyun Kim <http://www.oops.org>
 	- changed comment algorithm (needed convert db)
+	- remove security warnning function
 
 Wed, Jul 23 2003
   by JoungKyun Kim <http://www.oops.org>

@@ -23,6 +23,7 @@ If you wnat to see windog's change log, see also
 2003.07.28
   by 김정균 <http://www.oops.org>
 	- comment 알고리즘 변경 (DB 변환 필요)
+	- security warning 기능 제거
 
 2003.07.23
   by 김정균 <http://www.oops.org>
