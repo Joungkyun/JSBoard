@@ -23,9 +23,9 @@ if((preg_match("/^(2|3|5)$/",$board[mode]) && $_SESSION[$jsboard][id]) || $board
   $pre_regist[email] = $_SESSION[$jsboard][email];
   $pre_regist[url] = $_SESSION[$jsboard][url];
 } else {
-  $pre_regist[name] = preg_replace("/[\]/","",$_COOKIE[board_cookie][name]);
-  $pre_regist[email] = preg_replace("/[\]/","",$_COOKIE[board_cookie][email]);
-  $pre_regist[url] = preg_replace("/[\]/","",$_COOKIE[board_cookie][url]);
+  $pre_regist[name] = str_replace("\\","",$_COOKIE[board_cookie][name]);
+  $pre_regist[email] = str_replace("\\","",$_COOKIE[board_cookie][email]);
+  $pre_regist[url] = str_replace("\\","",$_COOKIE[board_cookie][url]);
 }
 
 if($board[notice]) print_notice($board[notice]);

@@ -20,9 +20,9 @@ if((preg_match("/^(2|3|5|7)$/",$board[mode]) && $_SESSION[$jsboard][id]) || $boa
   $pre_regist[email] = $_SESSION[$jsboard][email];
   $pre_regist[url] = $_SESSION[$jsboard][url];
 } else {
-  $pre_regist[name] = preg_replace("/[\]/","",$_COOKIE[board_cookie][name]);
-  $pre_regist[email] = preg_replace("/[\]/","",$_COOKIE[board_cookie][email]);
-  $pre_regist[url] = preg_replace("/[\]/","",$_COOKIE[board_cookie][url]);
+  $pre_regist[name] = str_replace("\\","",$_COOKIE[board_cookie][name]);
+  $pre_regist[email] = str_replace("\\","",$_COOKIE[board_cookie][email]);
+  $pre_regist[url] = str_replace("\\","",$_COOKIE[board_cookie][url]);
 }
 
 # 쓰기 권한을 관리자에게만 주었을 경우 패스워드 체크
