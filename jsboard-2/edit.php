@@ -1,14 +1,14 @@
 <?
 include "include/header.ph";
 
-if($HTTP_COOKIE_VARS[$cjsboard][id] == $board[ad] || $HTTP_COOKIE_VARS[$cjsboard][super] == 1)
+if($_COOKIE[$cjsboard][id] == $board[ad] || $_COOKIE[$cjsboard][super] == 1)
   $board[super] = 1;
 
 if(eregi("^(1|3)$",$board[mode])) { if(!$board[super]) print_error($langs[perm_err],250,150,1); }
-if(eregi("^(1|3|5)$",$board[mode]) && !$HTTP_COOKIE_VARS[$cjsboard][id]) print_error($langs[perm_err],250,150,1);
+if(eregi("^(1|3|5)$",$board[mode]) && !$_COOKIE[$cjsboard][id]) print_error($langs[perm_err],250,150,1);
 
 # 로그인이 되어 있고 전체어드민 로그인시에는 모든것을 수정할수 있게.
-if(eregi("^(2|5)$",$board[mode]) && $HTTP_COOKIE_VARS[$cjsboard][id] && !$board[super]) $disable = " disabled";
+if(eregi("^(2|5)$",$board[mode]) && $_COOKIE[$cjsboard][id] && !$board[super]) $disable = " disabled";
 
 # upload[dir] 에 mata character 포함 여부 체크
 meta_char_check($upload[dir]);
@@ -22,7 +22,7 @@ sql_select_db($db[name]);
 $list = get_article($table, $no);
 
 if(eregi("^(2|3|5|7)$",$board[mode]) && !$board[super])
-  if($list[name] != $HTTP_COOKIE_VARS[$cjsboard][id]) print_error($langs[perm_err],250,150,1);
+  if($list[name] != $_COOKIE[$cjsboard][id]) print_error($langs[perm_err],250,150,1);
 
 $list[text] = htmlspecialchars($list[text]);
 $list[email] = str_replace("@",$rmail[chars],$list[email]);

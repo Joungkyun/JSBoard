@@ -7,13 +7,13 @@ $ua[style]  = $uastyle;
 $path[type] = "user_admin";
 include "../include/admin_head.ph";
 
-if(!session_is_registered("$jsboard") || (${$jsboard}[id] != $board[ad] && ${$jsboard}[pos] != 1))
+if(!session_is_registered("$jsboard") || ($_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1))
   print_error($langs[login_err]);
 
 sql_connect($db[rhost], $db[user], $db[pass]);
 sql_select_db($db[name]);
 # password 비교함수 - admin/include/auth.ph
-compare_pass($$jsboard);
+compare_pass($_SESSION[$jsboard]);
 mysql_close();
 
 # auth value check
@@ -239,7 +239,7 @@ file_operate("$wfile","w","Can't update $wfile",$chg_conf);
 $head = $ua[header];
 $tail = $ua[tail];
 
-if(${$jsboard}[pos] != 1) {
+if($_SESSION[$jsboard][pos] != 1) {
   $head = check_invalid(stripslashes("$head"));
   $tail = check_invalid(stripslashes("$tail"));
 } else {

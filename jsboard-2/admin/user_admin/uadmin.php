@@ -2,7 +2,7 @@
 $path[type] = "user_admin";
 include "../include/admin_head.ph";
 
-if(!session_is_registered("$jsboard") || (${$jsboard}[id] != $board[ad] && ${$jsboard}[pos] != 1))
+if(!session_is_registered("$jsboard") || ($_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1))
   print_error($langs[login_err]);
 
 $dsize = form_size(7);
@@ -14,7 +14,7 @@ else $tsize = form_size(38);
 $ssize = form_size(3);
 $user = strtoupper($table);
 
-if(${$jsboard}[pos] == 1)
+if($_SESSION[$jsboard][pos] == 1)
   $board[adput] = "<INPUT TYPE=text name=ua[ad] size=$dsize VALUE=\"$board[ad]\">";
 else
   $board[adput] = "$board[ad]\n<INPUT TYPE=hidden name=ua[ad] VALUE=\"$board[ad]\">";

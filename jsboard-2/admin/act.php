@@ -3,7 +3,7 @@ $path[type] = "admin";
 include "./include/admin_head.ph";
 include "../include/ostype.ph";
 
-if(!session_is_registered("$jsboard") || ${$jsboard}[pos] != 1)
+if(!session_is_registered("$jsboard") || $_SESSION[$jsboard][pos] != 1)
 print_error($langs[login_err]);
 
 if($mode == "global_chg") {
@@ -20,7 +20,7 @@ sql_error(mysql_errno(), mysql_error());
 mysql_select_db($db[name],$connect);
 
 # password 비교함수 - admin/include/auth.ph
-compare_pass($$jsboard);
+compare_pass($_SESSION[$jsboard]);
 
 # db_name이 존재하지 않으면 아래를 출력합니다.
 exsit_dbname_check($db[name]);

@@ -1,20 +1,22 @@
 <?php
+include_once "../include/print.ph";
+parse_query_str();
 session_start(); // session을 시작한다.
 $path[type] = "Install";
 
 if ($langss == "ko") $langs[code] = "ko";
 else $langs[code] = "en";
 
-include "../include/ostype.ph";
-include "../include/lang.ph";
-include "../include/get.ph";
-include "../include/error.ph";
-include "../include/check.ph";
-include "./include/passwd.ph";
-include "./include/check.ph";
+include_once"../include/ostype.ph";
+include_once"../include/lang.ph";
+include_once"../include/get.ph";
+include_once"../include/error.ph";
+include_once"../include/check.ph";
+include_once"./include/passwd.ph";
+include_once"./include/check.ph";
 
 # Password Checkk
-inst_pwcheck($passwd,$mysqlpass,$langs[act_pw]);
+inst_pwcheck($passwd,$_SESSION[mysqlpass],$langs[act_pw]);
 
 # MySQL login
 if($mysqlroot) {

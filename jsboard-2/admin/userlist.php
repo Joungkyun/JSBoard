@@ -2,7 +2,7 @@
 $path[type] = "admin";
 include "include/admin_head.ph";
 
-if(!session_is_registered("$jsboard") || ${$jsboard}[pos] != 1)
+if(!session_is_registered("$jsboard") || $_SESSION[$jsboard][pos] != 1)
   print_error($langs[login_err]);
 
 if($t && $m == "delete") $do = "?t=$t";
@@ -18,7 +18,7 @@ sql_select_db($db[name]);
 
 if($m == "delete") {
   sql_query("DELETE FROM userdb WHERE no = $x");
-  if($do) move_page("$PHP_SELF$do");
+  if($do) move_page("$_SERVER[PHP_SELF]$do");
 }
 
 # SQL 질의 타입
@@ -41,7 +41,7 @@ if(sql_num_rows($result)) {
     }
 
     if($row[position] != 1) {
-      $del_link = "<A HREF=$PHP_SELF?m=delete&x=$row[no]$do>".
+      $del_link = "<A HREF=$_SERVER[PHP_SELF]?m=delete&x=$row[no]$do>".
                   "<IMG SRC=../images/delete.gif BORDER=0>".
                   "</A>";
     } else $del_link = "&nbsp;";
@@ -91,13 +91,13 @@ if(sql_num_rows($result)) {
   if($sno < 1) $sno = 1;
   if($eno > $last) $eno = $last;
 
-  if($page != 1) $pagelink = "<A HREF=$PHP_SELF?".$lin[links]."page=1><IMG SRC=./img/first.gif BORDER=0></A>\n";
+  if($page != 1) $pagelink = "<A HREF=$_SERVER[PHP_SELF]?".$lin[links]."page=1><IMG SRC=./img/first.gif BORDER=0></A>\n";
   for($i=$sno;$i<=$eno;$i++) {
     if($i == $page) $pagelink .= "<B>$i</B>\n";
-    else $pagelink .= "<A HREF=$PHP_SELF?".$lin[links]."page=$i>$i</A>\n";
+    else $pagelink .= "<A HREF=$_SERVER[PHP_SELF]?".$lin[links]."page=$i>$i</A>\n";
   }
 
-  if($page != $last) $pagelink .= "<A HREF=$PHP_SELF?".$lin[links]."page=$last><IMG SRC=./img/last.gif BORDER=0></A>\n";
+  if($page != $last) $pagelink .= "<A HREF=$_SERVER[PHP_SELF]?".$lin[links]."page=$last><IMG SRC=./img/last.gif BORDER=0></A>\n";
 
   $sec_status = "<TABLE WIDTH=100% BORDER=0 CELLPADDING=4 CELLSPACING=1>\n".
                 "<TR><TD COLSPAN=2 BGCOLOR=$color[t_bg]>\n".

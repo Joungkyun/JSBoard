@@ -8,11 +8,11 @@ if($ts) {
   $tslinks = "&ts=$ts";
 }
 
-if(!session_is_registered("$jsboard") || ${$jsboard}[pos] != 1)
+if(!session_is_registered("$jsboard") || $_SESSION[$jsboard][pos] != 1)
   print_error($langs[login_err]);
 
 # 패스워드가 기본값에서 변경이 되지 않았을 경우 계속 경고를 함 - admin/include/print.ph
-print_chgpass(${$jsboard}[pass]);
+print_chgpass($_SESSION[$jsboard][pass]);
 
 htmlhead();
 java_scr();
@@ -150,7 +150,7 @@ if($db[name] && !$table) {
   $to_today_t = !$to_today_t ? "0" : $to_today_t;
 
   # 외부 DB 를 사용할 경우 JSBoard 관리자에서 user 관리를 하지 않음
-  $userclick = ${$jsboard}[external] ? "window.alert('External user table Can\'t be Use')" : 
+  $userclick = $_SESSION[$jsboard][external] ? "window.alert('External user table Can\'t be Use')" : 
                             "document.location='./userlist.php?t=a'";
 
   echo "\n<tr align=center bgcolor=$color[d_bg]>\n".
@@ -229,16 +229,16 @@ if($db[name] && !$table) {
   if($total == 0) echo "&nbsp;";
   else {
     if($page < 2) echo "&nbsp;";
-    else echo "<a href=$PHP_SELF$tslink><img src=./img/first.gif border=0 alt=\"$langs[a_act_fm]\"></a>";
+    else echo "<a href=$_SERVER[PHP_SELF]$tslink><img src=./img/first.gif border=0 alt=\"$langs[a_act_fm]\"></a>";
 
     if($page >= $lastpage) echo "&nbsp;";
-    else echo "<a href=$PHP_SELF?page=$lastpage&page_num=$last_page_num&scale_lastpage=$last_scale_lastpage$tslinks><img src=./img/last.gif border=0 alt=\"$langs[a_act_lm]\"> </a>";
+    else echo "<a href=$_SERVER[PHP_SELF]?page=$lastpage&page_num=$last_page_num&scale_lastpage=$last_scale_lastpage$tslinks><img src=./img/last.gif border=0 alt=\"$langs[a_act_lm]\"> </a>";
 
     for($i=$page_num; $i<$scale_lastpage; $i++) {
       if($i <= $lastpage) { 
 	$page_view = $i;
 	if($i == $nowpage) echo "<font color=red>$page_view</font> ";
-	else echo "<a href=$PHP_SELF?page=$i&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks><font color=$color[l0_bg]>$page_view</font></a> ";
+	else echo "<a href=$_SERVER[PHP_SELF]?page=$i&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks><font color=$color[l0_bg]>$page_view</font></a> ";
       }
     }
 
@@ -250,21 +250,21 @@ if($db[name] && !$table) {
     if($page < 2) echo "&nbsp;";
     else {
       if($page > 5 && $pfoo == 2)
-        echo "<a href=$PHP_SELF?page=$priv&page_num=$p_page_num&scale_lastpage=$p_scale_lastpage$tslinks title=\"$langs[a_act_pm]\"><font color=$color[m_fg]><b>◁</b></font></a>";
+        echo "<a href=$_SERVER[PHP_SELF]?page=$priv&page_num=$p_page_num&scale_lastpage=$p_scale_lastpage$tslinks title=\"$langs[a_act_pm]\"><font color=$color[m_fg]><b>◁</b></font></a>";
       else
-        echo "<a href=$PHP_SELF?page=$priv&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks title=\"$langs[a_act_pm]\"><font color=$color[m_fg]><b>◁</b></font></a>";
+        echo "<a href=$_SERVER[PHP_SELF]?page=$priv&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks title=\"$langs[a_act_pm]\"><font color=$color[m_fg]><b>◁</b></font></a>";
     }
 
     if($lastpage-$page <= 0) echo "&nbsp;";
     else {
       if($page >= 5 && $pfoo == 0)
-        echo "<a href=$PHP_SELF?page=$next&page_num=$n_page_num&scale_lastpage=$n_scale_lastpage$tslinks title=\"$langs[a_act_nm]\"><font color=$color[m_fg]><b>▷</b></font></a>";
+        echo "<a href=$_SERVER[PHP_SELF]?page=$next&page_num=$n_page_num&scale_lastpage=$n_scale_lastpage$tslinks title=\"$langs[a_act_nm]\"><font color=$color[m_fg]><b>▷</b></font></a>";
       else
-        echo "<a href=$PHP_SELF?page=$next&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks title=\"$langs[a_act_nm]\"><font color=$color[m_fg]><b>▷</b></font></a>";
+        echo "<a href=$_SERVER[PHP_SELF]?page=$next&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks title=\"$langs[a_act_nm]\"><font color=$color[m_fg]><b>▷</b></font></a>";
     }
   }
 
-  if($ts) $langs[ts] = "<a href=$PHP_SELF><font color=$color[m_fg]>$langs[a_t18]</font></a>";
+  if($ts) $langs[ts] = "<a href=$_SERVER[PHP_SELF]><font color=$color[m_fg]>$langs[a_t18]</font></a>";
   else $langs[ts] = "<font color=$color[m_fg]>$langs[a_t19]</font>";
 
   echo "</td><form>\n".
@@ -274,32 +274,32 @@ if($db[name] && !$table) {
        "</tr>\n<tr>\n" .
        "<td bgcolor=$color[m_bg] align=center>$langs[ts]</td>\n" .
        "<td colspan=4 bgcolor=$color[d_bg] align=center>\n" .
-       "<a href=$PHP_SELF?ts=a><font color=$color[d_fg]>A</font></A>\n" .
-       "<a href=$PHP_SELF?ts=b><font color=$color[d_fg]>B</font></A>\n" .
-       "<a href=$PHP_SELF?ts=c><font color=$color[d_fg]>C</font></A>\n" .
-       "<a href=$PHP_SELF?ts=d><font color=$color[d_fg]>D</font></A>\n" .
-       "<a href=$PHP_SELF?ts=e><font color=$color[d_fg]>E</font></A>\n" .
-       "<a href=$PHP_SELF?ts=f><font color=$color[d_fg]>F</font></A>\n" .
-       "<a href=$PHP_SELF?ts=g><font color=$color[d_fg]>G</font></A>\n" .
-       "<a href=$PHP_SELF?ts=h><font color=$color[d_fg]>H</font></A>\n" .
-       "<a href=$PHP_SELF?ts=i><font color=$color[d_fg]>I</font></A>\n" .
-       "<a href=$PHP_SELF?ts=j><font color=$color[d_fg]>J</font></A>\n" .
-       "<a href=$PHP_SELF?ts=k><font color=$color[d_fg]>K</font></A>\n" .
-       "<a href=$PHP_SELF?ts=l><font color=$color[d_fg]>L</font></A>\n" .
-       "<a href=$PHP_SELF?ts=m><font color=$color[d_fg]>M</font></A>\n" .
-       "<a href=$PHP_SELF?ts=n><font color=$color[d_fg]>N</font></A>\n" .
-       "<a href=$PHP_SELF?ts=o><font color=$color[d_fg]>O</font></A>\n" .
-       "<a href=$PHP_SELF?ts=p><font color=$color[d_fg]>P</font></A>\n" .
-       "<a href=$PHP_SELF?ts=q><font color=$color[d_fg]>Q</font></A>\n" .
-       "<a href=$PHP_SELF?ts=r><font color=$color[d_fg]>R</font></A>\n" .
-       "<a href=$PHP_SELF?ts=s><font color=$color[d_fg]>S</font></A>\n" .
-       "<a href=$PHP_SELF?ts=t><font color=$color[d_fg]>T</font></A>\n" .
-       "<a href=$PHP_SELF?ts=u><font color=$color[d_fg]>U</font></A>\n" .
-       "<a href=$PHP_SELF?ts=v><font color=$color[d_fg]>V</font></A>\n" .
-       "<a href=$PHP_SELF?ts=w><font color=$color[d_fg]>W</font></A>\n" .
-       "<a href=$PHP_SELF?ts=x><font color=$color[d_fg]>X</font></A>\n" .
-       "<a href=$PHP_SELF?ts=y><font color=$color[d_fg]>Y</font></A>\n" .
-       "<a href=$PHP_SELF?ts=z><font color=$color[d_fg]>Z</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=a><font color=$color[d_fg]>A</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=b><font color=$color[d_fg]>B</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=c><font color=$color[d_fg]>C</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=d><font color=$color[d_fg]>D</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=e><font color=$color[d_fg]>E</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=f><font color=$color[d_fg]>F</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=g><font color=$color[d_fg]>G</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=h><font color=$color[d_fg]>H</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=i><font color=$color[d_fg]>I</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=j><font color=$color[d_fg]>J</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=k><font color=$color[d_fg]>K</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=l><font color=$color[d_fg]>L</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=m><font color=$color[d_fg]>M</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=n><font color=$color[d_fg]>N</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=o><font color=$color[d_fg]>O</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=p><font color=$color[d_fg]>P</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=q><font color=$color[d_fg]>Q</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=r><font color=$color[d_fg]>R</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=s><font color=$color[d_fg]>S</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=t><font color=$color[d_fg]>T</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=u><font color=$color[d_fg]>U</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=v><font color=$color[d_fg]>V</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=w><font color=$color[d_fg]>W</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=x><font color=$color[d_fg]>X</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=y><font color=$color[d_fg]>Y</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=z><font color=$color[d_fg]>Z</font></A>\n" .
        "<td></tr>\n</table>\n\n";
 }
 

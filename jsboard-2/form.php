@@ -1,6 +1,6 @@
 <?
 include "./include/header.ph";
-if($HTTP_COOKIE_VARS[$cjsboard][id]) { session_start(); }
+if($_COOKIE[$cjsboard][id]) { session_start(); }
 
 if($mode == "photo") {
   if(eregi("^(2|3|5)$",$board[mode]) && !session_is_registered("$jsboard"))

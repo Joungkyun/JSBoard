@@ -1,6 +1,6 @@
 <?
 function print_error($str,$width=250,$height=150,$back='') {
-  global $table, $path, $prlist, $agent, $PHP_SELF;
+  global $table, $path, $prlist, $agent;
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
@@ -30,8 +30,8 @@ function print_error($str,$width=250,$height=150,$back='') {
 
   echo "//-->\n</SCRIPT>\n";
 
-  if(eregi("/user_admin",$PHP_SELF)) $gopage = "../..";
-  elseif(eregi("/admin",$PHP_SELF)) {
+  if(eregi("/user_admin",$_SERVER[PHP_SELF])) $gopage = "../..";
+  elseif(eregi("/admin",$_SERVER[PHP_SELF])) {
     $gopage = "..";
     $var = "&type=admin";
   } else $gopage = ".";

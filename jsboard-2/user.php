@@ -35,7 +35,7 @@ if($m == "act") {
   sql_query($query);
 
   if(!$chg[check]) move_page($print[dpage],0);
-  if(${$jsboard}[pos] == 1 && $chg[check]) {
+  if($_SESSION[$jsboard][pos] == 1 && $chg[check]) {
     echo "<SCRIPT>window.close()</SCRIPT>";
     exit;
   }
@@ -44,8 +44,8 @@ if($m == "act") {
 $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
 $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
 
-$chjsboard = ${$jsboard}[id];
-$where = (${$jsboard}[pos] == 1 && $check) ? "no = $no" : "nid = '$chjsboard'";
+$chjsboard = $_SESSION[$jsboard][id];
+$where = ($_SESSION[$jsboard][pos] == 1 && $check) ? "no = $no" : "nid = '$chjsboard'";
 
 $result = sql_query("SELECT * FROM userdb WHERE $where");
 $row = sql_fetch_array($result);
@@ -74,7 +74,7 @@ $print[body] = "
 <FONT STYLE=\"font: 15pt Tahoma; font-weight: bold; COLOR:$color[t_bg]\">$print[id] User Administartion</FONT>
 
 <P>
-<FORM METHOD=post ACTION=$PHP_SELF>
+<FORM METHOD=post ACTION=$_SERVER[PHP_SELF]>
 <TABLE WIDTH=$board[width] BORDER=0 CELLPADDING=6 CELLSPACING=2>
 <TR>
 <TD WIDTH=15% BGCOLOR=$color[m_bg]><FONT STYLE=\"color:$color[m_fg];font-weight:bold;\">$langs[u_nid]</FONT></TD>

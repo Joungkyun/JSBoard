@@ -1,4 +1,19 @@
 <?
+# 서버의 REQUEST_METHOD 형태에 따라 변수를 체크하는 함수
+# register_globals 값이 off 일 경우 편리하게 사용
+#
+function parse_query_str() {
+  foreach($_GET as $key => $value) {
+    global ${$key};
+    ${$key} = $value;
+  }
+
+  foreach($_POST as $key => $value) {
+    global ${$key};
+    ${$key} = $value;
+  }
+}
+
 # 원하는 페이지로 이동시키는 함수
 function move_page($path,$time = 0) {
   $path = str_replace(" ","%20",$path);
@@ -187,7 +202,7 @@ function debug($color, $str = "") {
 # list page의 상,하단의 페이지 링크란 출력 함수
 function list_cmd($img=0,$prt=0) {
   global $jsboard, $o, $color, $table, $pages, $enable;
-  global $board, $langs, $page, $print, ${$jsboard};
+  global $board, $langs, $page, $print;
 
   if (!$page) $page = 1;
   $str[search] = search2url($o);
@@ -217,7 +232,7 @@ function list_cmd($img=0,$prt=0) {
 
   if($board[mode] != 0 && $board[mode] != 2 && $board[mode] != 6 && $board[mode] != 7) {
     # 어드민이 아니면 쓰기 링크를 제거
-    if(${$jsboard}[pos] != 1 && ${$jsboard}[id] != $board[ad]) $str[write] = "";
+    if($_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) $str[write] = "";
   }
 
   # 게시판 목록 상,하단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력함수
@@ -230,7 +245,7 @@ function list_cmd($img=0,$prt=0) {
 # read page의 상,하단의 페이지 링크란 출력 함수
 function read_cmd($img=0,$prt=0) {
   global $jsboard, $o, $color, $table, $pages, $enable, $board;
-  global ${$jsboard}, $pos, $list, $no, $page, $langs, $print;
+  global $pos, $list, $no, $page, $langs, $print;
 
   $str[search] = search2url($o);
   #if (!$o[ck]) $str[search] = "";
@@ -278,7 +293,7 @@ function read_cmd($img=0,$prt=0) {
     $str[edit] = "<A HREF=\"edit.php?table=$table&no=$no&page=$page\">$menu[edit]</A>";
     $str[dele] = "<A HREF=\"delete.php?table=$table&no=$no&page=$page\">$menu[del]</A>";
   }
-  if($list[reyn] && !${$jsboard}[pos]) {
+  if($list[reyn] && !$_SESSION[$jsboard][pos]) {
     if(!$img) $menu[del] = "<FONT style=\"font-face:$langs[vfont];color:$color[n1_fg]\">$langs[cmd_del]</FONT>";
     $str[dele] = "<A HREF=\"delete.php?table=$table&no=$no&page=$page\">$menu[del]</A>";
   }
@@ -289,14 +304,14 @@ function read_cmd($img=0,$prt=0) {
 
   # 로그인 mode 에서 관리자가 아니고 자신의 글이 아닐경우 수정과 삭제링크를 제거
   if(eregi("^(1|2|3|5|7)$",$board[mode]) && session_is_registered("$jsboard")) {
-    if(${$jsboard}[id] != $list[name] && ${$jsboard}[pos] != 1 && ${$jsboard}[id] != $board[ad]) {
+    if($_SESSION[$jsboard][id] != $list[name] && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) {
       $str[edit] = "";
       $str[dele] = "";
     }
   }
 
   # admin only mode 에서 anonymous 나 관리자가 아닐 경우 쓰기 수정 삭제 링크를 제거
-  if(!eregi("^(0|2|6|7)$",$board[mode]) && ${$jsboard}[pos] != 1 && ${$jsboard}[id] != $board[ad]) {
+  if(!eregi("^(0|2|6|7)$",$board[mode]) && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) {
     $str[write] = "";
     if($board[mode] != 4 && $board[mode] != 5) {
       $str[reply] = "";
@@ -306,7 +321,7 @@ function read_cmd($img=0,$prt=0) {
   }
 
   # reply 제한 모드일 경우 관리자가 아니면 reply 링크를 삭제
-  if(eregi("^(6|7)$",$board[mode]) && ${$jsboard}[pos] != 1 && ${$jsboard}[id] != $board[ad])
+  if(eregi("^(6|7)$",$board[mode]) && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad])
     $str[reply] = "";
 
   $t = "<A HREF=\"list.php?table=$table&page=$page$str[search]\">$menu[lists]</A>\n".

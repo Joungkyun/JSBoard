@@ -19,7 +19,7 @@ TEXTAREA {font: 10pt <? echo $langs[font] ?>; BACKGROUND-COLOR:<? echo $color[l4
 -->
 </STYLE>
 <?
-if(eregi("auth.php",$PHP_SELF)) {
+if(eregi("auth.php",$_SERVER[PHP_SELF])) {
   $onload = " onLoad=InputFocus()";
   echo "<SCRIPT language=JavaScript>\n".
        "<!--\n function InputFocus() {\n".

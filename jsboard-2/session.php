@@ -1,5 +1,8 @@
 <?
 session_start();
+include_once "include/print.ph";
+parse_query_str();
+
 $opt = $table ? "&table=$table" : "";
 $opts = $table ? "?table=$table" : "";
 
@@ -17,9 +20,9 @@ if ($m == "login") {
 
   if(check_auth($lp,$r[passwd])) {
     if($edb[super] == $r[nid]) $r[position] = 1;
-    $$jsboard = array("id"=>$r[nid],"pass"=>$r[passwd],
-                      "name"=>$r[name],"email"=>$r[email],
-                      "url"=>$r[url],"pos"=>$r[position],"external"=>$edb[uses]);
+    ${$jsboard} = array("id"=>$r[nid],"pass"=>$r[passwd],
+                        "name"=>$r[name],"email"=>$r[email],
+                        "url"=>$r[url],"pos"=>$r[position],"external"=>$edb[uses]);
 
     if(!$edb[uses]) {
       if(!${$jsboard}[pos]) {
@@ -47,6 +50,7 @@ if ($m == "login") {
     SetCookie("c{$jsboard}[email]",${$jsboard}[email],$CookieTime,"/");
     SetCookie("c{$jsboard}[url]",${$jsboard}[url],$CookieTime,"/");
     SetCookie("c{$jsboard}[super]",${$jsboard}[pos],$CookieTime,"/");
+
     if($type == "admin" && ${$jsboard}[pos] == 1) {
       header("Location: admin/admin.php");
     } elseif(!$table) header("Location: $print[dpage]");
@@ -61,7 +65,6 @@ if ($m == "login") {
     if($type == "admin") $var = "?type=admin";
     elseif($table) $var = "?table=$table";
   }
-
 
   # 세션을 삭제
   session_unregister("$jsboard");

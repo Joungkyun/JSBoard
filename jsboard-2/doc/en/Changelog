@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Jan 18 2002
+Date      : Wed, Jan 21 2002
 Version   : jsboard-2.0pre4
 
 
@@ -43,6 +43,7 @@ Version   : jsboard-2.0pre4
 19. changed password length to 16 charactors
 20. fixed wrong print of name in delete page of article that include valid
     value of email address field
+21. supported regist_globals = Off in php.ini
 
 
 -----------------------------------------------------------------------------

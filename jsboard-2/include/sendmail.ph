@@ -92,8 +92,7 @@ function socketmail($smtp,$to,$from,$title,$body) {
 }
 
 function sendmail($rmail,$fm=0) {
-  global $REMOTE_ADDR, $HTTP_USER_AGENT, $HTTP_ACCEPT_LANGUAGE;
-  global $SERVER_NAME, $langs;
+  global $langs;
 
   $mail_msg_head = "$langs[sm_dr]";
 
@@ -111,7 +110,7 @@ function sendmail($rmail,$fm=0) {
   $rmail[text] = stripslashes($rmail[text]);
   $rmail[name] = stripslashes($rmail[name]);
   $rmail[title] = stripslashes($rmail[title]);
-  $rmail[email] = !trim($rmail[email]) ? "nobody@$SERVER_NAME" : $rmail[email];
+  $rmail[email] = !trim($rmail[email]) ? "nobody@$_SERVER[SERVER_NAME]" : $rmail[email];
   $rmail[pemail] = (eregi("^nobody@",$rmail[email])) ? "" : "mailto:$rmail[email]";
 
   if ($langs[code] == "ko") {
@@ -154,7 +153,7 @@ function sendmail($rmail,$fm=0) {
              "\r\n".
              "[ Server Infomation ]------------------------------------------------------\r\n".
              "ServerWare        : JSBoard-$rmail[version]\r\n".
-             "Server Name       : $SERVER_NAME$nofm\r\n".
+             "Server Name       : $_SERVER[SERVER_NAME]$nofm\r\n".
              "\r\n".
              "\r\n".
              "[ Article Infomation ]-----------------------------------------------------\r\n".
@@ -169,9 +168,9 @@ function sendmail($rmail,$fm=0) {
              "\r\n".
              "\r\n".
              "---------------------------------------------------------------------------\r\n".
-             "REMOTE_ADDR : $REMOTE_ADDR\r\n".
-             "HTTP_USER_AGENT : $HTTP_USER_AGENT\r\n".
-             "HTTP_ACCEPT_LANGUAGE : $HTTP_ACCEPT_LANGUAGE\r\n".
+             "REMOTE_ADDR : $_SERVER[REMOTE_ADDR]\r\n".
+             "HTTP_USER_AGENT : $_SERVER[HTTP_USER_AGENT]\r\n".
+             "HTTP_ACCEPT_LANGUAGE : $_SERVER[HTTP_ACCEPT_LANGUAGE]\r\n".
              "---------------------------------------------------------------------------\r\n".
              "\r\n".
              "JSBoard Form mail service - http://jsboard.kldp.org\r\n";

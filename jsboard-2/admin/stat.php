@@ -1,10 +1,10 @@
 <?
 # This flie applied under GPL License
-if(eregi("user_admin",$HTTP_REFERER)) $path[type] = "user_admin";
+if(eregi("user_admin",$_SERVER[HTTP_REFERER])) $path[type] = "user_admin";
 else $path[type] = "admin";
 include "./include/admin_head.ph";
 
-if(!session_is_registered("$jsboard") && ${$jsboard}[pos] != 1)
+if(!session_is_registered("$jsboard") && $_SESSION[$jsboard][pos] != 1)
   print_error($langs[login_err]);
 
 # table 을 체크한다.

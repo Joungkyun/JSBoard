@@ -3,6 +3,7 @@ include "./include/version.ph";
 include "./include/print.ph";
 include "./include/get.ph";
 include "./include/check.ph";
+parse_query_str();
 
 $agent = get_agent();
 
