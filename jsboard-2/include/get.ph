@@ -21,7 +21,9 @@ function get_authinfo($id,$nocry='') {
     sql_free_result($result);
     mysql_close($connect);
 
-    if($edb[crypts] && !$nocry && $r[passwd]) $r[passwd] = crypt($r[passwd]);
+    if(is_array($r)) {
+      if($edb[crypts] && !$nocry && $r[passwd]) $r[passwd] = crypt($r[passwd]);
+    }
 
     sql_connect($db[server], $db[user], $db[pass]);
     sql_select_db($db[name]);
