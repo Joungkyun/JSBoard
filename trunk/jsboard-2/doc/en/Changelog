@@ -20,6 +20,14 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.4
 
+Sun, Dec  1 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- added check_iframe function
+
+Sun, Dec  1 2002
+  by Chilbong Kim <http://www.linuxchannel.net>
+	- rewrite check_htmltabel function
+
 Wed, Nov 27 2002
   by Chilbong Kim <http://www.linuxchannel.net>
 	- modified human_fsize, get_hostname function

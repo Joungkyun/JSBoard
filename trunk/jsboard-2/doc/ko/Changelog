@@ -22,11 +22,11 @@ If you wnat to see windog's change log, see also
 
 2002.12.01
   by ±èÁ¤±Õ <http://www.oops.org>
-	- added check_iframe function
+	- check_iframe ÇÔ¼ö Ãß°¡
 
 2002.12.01
   by ±èÄ¥ºÀ <http://www.linuxchannel.net>
-	- rewrite check_htmltabel function
+	- check_htmltabel ÇÔ¼ö ÀçÀÛ¼º
 
 2002.11.27
   by ±èÄ¥ºÀ <http://www.linuxchannel.net>

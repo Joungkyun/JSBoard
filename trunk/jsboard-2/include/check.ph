@@ -304,78 +304,56 @@ function check_windows() {
 }
 
 # TABLE 을 정확하게 사용했는지 체크하는 함수
-# str  -> 체크할 문자열
-# rep  -> 1 일 경우 에러메시지 대신 결과를 echo 함
 #
-function check_htmltable($str,$rep='') {
+function check_htmltable($str) {
   global $langs;
 
-  # table tag 들만 나두고 모두 삭제
-  $s[] = "/>[^<]*</i";
-  $s[] = "/#|@/i";
-  $s[] = "/<(\/?(TABLE|TR|TD|TH|IFRAME))[^>]*>/i";
-  $s[] = "/^[^#]*/i";
-  $s[] = "/(TABLEEMARK@)[^#]*(#TABLESMARK)/i";
-  $s[] = "/<[^>]*>/i";
-  $s[] = "/#TABLESMARK#/i";
-  $s[] = "/@TABLEEMARK@/i";
-  $s[] = "/(\r?\n)+/i";
+  if(!preg_match(';</?TABLE[^>]*>;i',$str)) return;
 
-  $d[] = ">\n<";
-  $d[] = "";
-  $d[] = "\n#TABLESMARK#\\1@TABLEEMARK@\n";
-  $d[] = "";
-  $d[] = "\\1\\2";
-  $d[] = "";
-  $d[] = "\n<";
-  $d[] = ">\n";
-  $d[] = "\n";
+  $from = array(';[\d]+;',     // [0-9]+ to ''
+                ';<(/?)(TABLE|TH|TR|TD)[^>]*>;i', // to '<\\1\\2>'
+                ';<TABLE>;i',  // to 1
+                ';<TR>;i',     // to 2
+                ';<TH>;i',     // to 3
+                ';<TD>;i',     // to 4
+                ';</TD>;i',    // to 94
+                ';</TH>;i',    // to 93
+                ';</TR>;i',    // to 92
+                ';</TABLE>;i', // to 91
+                ';[\D]+;'      // [^0-9]+ to ''
+                );
 
-  $str = trim(preg_replace($s,$d,$str));
+  $to = array('','<\\1\\2>',1,2,3,4,94,93,92,91,'');
+  $check = preg_replace($from,$to,$str);
 
-  # table tag 들만 남은 것을 \n 을 기준으로 배열로 받음
-  $ary = explode("\n",$str);
-
-  for($i=0;$i<sizeof($ary);$i++) {
-    if(strtoupper($ary[$i]) == "<TABLE>") $opentable++;
-    elseif(strtoupper($ary[$i]) == "</TABLE>") $clstable++;
-    elseif(strtoupper($ary[$i]) == "<TH>") $openth++;
-    elseif(strtoupper($ary[$i]) == "</TH>") $clsth++;
-    elseif(strtoupper($ary[$i]) == "<TR>") $opentr++;
-    elseif(strtoupper($ary[$i]) == "</TR>") $clstr++;
-    elseif(strtoupper($ary[$i]) == "<TD>") $opentd++;
-    elseif(strtoupper($ary[$i]) == "</TD>") $clstd++;
-    elseif(strtoupper($ary[$i]) == "<IFRAME>") $openif++;
-    elseif(strtoupper($ary[$i]) == "</IFRAME>") $clsif++;
+  if(strlen($check)%3) {
+    print_error($langs[chk_ta], 250, 150, 1);
+  }
+  if(!preg_match('/^12(3|4).+9291$/',$check)) {
+    print_error($langs[chk_tb], 250, 150, 1);
   }
 
-  if(!$rep) {
-    if($opentable != $clstable) $msg = $langs[chk_tb]."\n";
-    if($openth != $clsth) $msg .= $langs[chk_th]."\n";
-    if($opentr != $clstr) $msg .= $langs[chk_tr]."\n";
-    if($opentd != $clstd) $msg .= $langs[chk_td]."\n";
-    if($openif != $clsif) $msg .= $langs[chk_if]."\n";
+  while(preg_match('/([\d])9\1/',$check))
+  { $check = preg_replace('/([\d])9\1/','',$check); }
 
-    $msg = $msg ? $langs[chk_ta]."\n\nError Check:\n".trim($msg)."\n" : "";
+  if($check) {
+    print_error("TABLE, TH, TR, TD array(open/close) TAG error", 250, 150, 1);
+  }
+}
 
-    if($msg) print_error($msg,"","",1);
-  } else {
-    echo "\n##  TABLE CHECK RESULT\n".
-         "##  ----------------------------------------------------------------------\n".
-         "##  OPEN  TABLE  TAG : $opentable\n".
-         "##  CLOSE TABLE  TAG : $clstable\n##  \n".
+# IFRAME 을 정확하게 사용했는지 체크하는 함수
+#
+function check_iframe($str) {
+  global $langs;
 
-         "##  OPEN  TH     TAG : $openth\n".
-         "##  CLOSE TH     TAG : $clsth\n##  \n".
+  if (!preg_match(';</?iframe[^>]*>;', $str)) return 0;
 
-         "##  OPEN  TR     TAG : $opentr\n".
-         "##  CLOSE TR     TAG : $clstr\n##  \n".
+  $from = array(';@;',';#;',';<iframe[^>]*>;i',';</iframe[^>]*>;i',';[^@#];','@#');
+  $to   = array('','','@','#','','');
+  $check = preg_replace($from, $to, $str);
 
-         "##  OPEN  TD     TAG : $opentd\n".
-         "##  CLOSE TD     TAG : $clstd\n\n".
-
-         "##  OPEN  IFRAME TAG : $openif\n".
-         "##  CLOSE IFRAME TAG : $clsif\n\n";
+  if ($check) {
+    print_error($langs[chk_if], 250, 150, 1);
   }
 }
 
