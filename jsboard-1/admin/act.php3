@@ -1,5 +1,6 @@
 <?php
 include("./include/admin_head.ph");
+include("../include/ostype.ph");
 
 // password 비교함수 - admin/include/auth.ph
 compare_pass($sadmin,$login);
@@ -12,7 +13,7 @@ exsit_dbname_check($db[name]);
 
 mysql_select_db($db[name],$connect);
 
-if ( $mode != 'manager_config') {
+if ( $mode != "manager_config") {
 
   /******************************************
             DB에 접속을 합니다.
@@ -20,9 +21,7 @@ if ( $mode != 'manager_config') {
 
   if ($mode=='db_del') {
     if (!$table_name) {
-      echo "<script>\nalert('$table_name $langs[n_acc]')\n" .
-           "history.back() \n</script>";
-      exit;
+      print_error("$table_name $langs[n_acc]");
     }
 
     /* table delete */
@@ -41,7 +40,7 @@ if ( $mode != 'manager_config') {
     new_table_check($new_table);
     /* table list 존재 유무 체크 */
     table_list_check($db[name]);
-    /* 동일한 DB가 있는지 확인 */
+    /* 동일한 이름의 게시판이 있는지 확인 */
     same_db_check($tbl_list,$new_table);
 
     $create_table = "CREATE TABLE $new_table ( 
@@ -51,7 +50,7 @@ if ( $mode != 'manager_config') {
 			  date int(11) DEFAULT '0' NOT NULL,
 			  host tinytext,
 			  name tinytext,
-			  passwd varchar(13),
+			  passwd varchar($ostypes[pfield]),
 			  email tinytext,
 			  url tinytext,
 			  title tinytext,
@@ -87,11 +86,11 @@ if ( $mode != 'manager_config') {
     mkdir("../data/$new_table/files",0700);
     chmod("../data/$new_table",0755);
     chmod("../data/$new_table/files",0755);
-    copy("./include/sample/config.ph","../data/$new_table/config.ph");
+    copy("./include/sample/$ostypes[name]/config.ph","../data/$new_table/config.ph");
     chmod("../data/$new_table/config.ph",0644);
-    copy("./include/sample/html_head.ph","../data/$new_table/html_head.ph");
+    copy("./include/sample/$ostypes[name]/html_head.ph","../data/$new_table/html_head.ph");
     chmod("../data/$new_table/html_head.ph",0644);
-    copy("./include/sample/html_tail.ph","../data/$new_table/html_tail.ph");
+    copy("./include/sample/$ostypes[name]/html_tail.ph","../data/$new_table/html_tail.ph");
     chmod("../data/$new_table/html_tail.ph",0644);
 
     // 현재 디렉토리를 변경
@@ -105,10 +104,9 @@ if ( $mode != 'manager_config') {
   if ($mode == "global_chg") {
 
     // quot 변환된 문자를 un quot 한다
-    $vars = $glob[vars];
-    $spam = $glob[spam];
-    $vars = stripslashes($vars);
-    $spam = stripslashes($spam);
+    $vars = stripslashes($glob[vars]);
+    $spam = stripslashes($glob[spam]);
+    $br   = stripslashes($glob[brlist]);
 
     $fp = fopen("../config/global.ph","w"); 
     fwrite($fp,$vars); 
@@ -117,6 +115,10 @@ if ( $mode != 'manager_config') {
     $gp = fopen("../config/spam_list.txt", "w"); 
     fwrite($gp,$spam); 
     fclose($gp);
+
+    $bp = fopen("../config/allow_browser.txt", "w"); 
+    fwrite($bp,$br); 
+    fclose($bp);
 
     // 현재 디렉토리를 변경
     chdir("../config");
@@ -137,30 +139,22 @@ if ( $mode != 'manager_config') {
 
       // 입력 받은 패스워드를 crypt 암호화
       $ad_pass = crypt($admincenter_pass);
+      $ad_pass = str_replace("\$","\\\$",$ad_pass);
 
       $configfile = "./include/config.ph";
       $fp = fopen($configfile,"r");
       $admininfo = fread($fp,filesize($configfile));
       fclose($fp);
 
-      $admininfo = eregi_replace("sadmin\[passwd\] = (\"[a-z0-9\.\/]*\")","sadmin[passwd] = \"$ad_pass\"",$admininfo);
+      $admininfo = eregi_replace("sadmin\[passwd\] = (\"[a-z0-9\.\/\$]*\")","sadmin[passwd] = \"$ad_pass\"",$admininfo);
 
       $fp = fopen($configfile,"w"); 
       fwrite($fp, $admininfo); 
       fclose($fp);
 
       complete_adminpass();
-
-    } else {
-      admin_pass_error();
-    }
-  } else {
-    echo "<script>\n" .
-         "alert('$langs[a_act_cp]')\n" .
-         "history.back() \n" .
-         "</script>";
-    exit;
-  }
+    } else admin_pass_error();
+  } else print_error($langs[a_act_cp]);
 }
 
 ?>

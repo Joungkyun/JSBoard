@@ -4,23 +4,9 @@
 // crypt() - crypt 암호화를 한다.
 //
 function compare_pass($pass,$l) {
-
   global $langs;
-  if (!$l[pass]) {
-    echo "<script>\n" .
-         "alert('$langs[ua_pw_n]')\n" .
-         "document.location='./session.php3?mode=logout'\n" .
-         "</script>";
-    exit;
-  }
-
-  if (crypt($l[pass],$pass[passwd]) != $pass[passwd]) {
-    echo "<script>\n" .
-         "alert('$langs[ua_pw_c]')\n" .
-         "document.location='./session.php3?mode=logout'\n" .
-         "</script>";
-    exit;
-  }
+  if (!$l[pass]) print_pwerror($langs[ua_pw_n]);
+  if (crypt($l[pass],$pass[passwd]) != $pass[passwd]) print_pwerror($langs[ua_pw_c]);
 }
 
 // 게시판에 사용될 DB가 제대로 지정이 되었는지 검사 여부
@@ -39,23 +25,9 @@ function exsit_dbname_check($db) {
 //
 function new_table_check($table) {
   global $langs;
-  if (!$table) {
-    echo "<script>\nalert('$langs[n_t_n]')\n" .
-         "history.back() \n</script>";
-    exit;
-  }
-
-  if (!eregi("^[a-zA-Z]",$table)) {
-    echo "<script>\nalert('$langs[n_db]')\n" .
-         "history.back() \n</script>";
-    exit;
-  }
-
-  if (eregi("\-",$table)) {
-    echo "<script>\nalert('Can\\'t use dash in board name')\n" .
-         "history.back() \n</script>";
-    exit;
-  }
+  if (!$table)  print_error($langs[n_t_n]);
+  if (!eregi("^[a-zA-Z]",$table)) print_error($langs[n_db]);
+  if (eregi("\-",$table)) print_error($langs[n_dash]);
 }
 
 // table list 존재 유무 체크
@@ -78,12 +50,7 @@ function same_db_check($list, $table) {
   for($k=0;$k<$tbl_num;$k++) {
     // table list 를 불러 옵니다.
     $table_name = mysql_tablename($list,$k);
-    if ($table == $table_name) {
-      echo "<script>\nalert('$langs[a_acc]')\n" .
-           "document.location='./admin.php3'\n" .
-           "</script>";
-      exit;
-    }
+    if ($table == $table_name) print_error($langs[a_acc]);
   }
 }
 

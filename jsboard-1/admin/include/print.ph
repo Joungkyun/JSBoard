@@ -8,8 +8,8 @@ function htmlhead() {
   $fileself = $fileself[1];
 
   if ($fileself == "auth.php3") $sub_title = "$langs[p_wa]";
-  else if ($fileself == "admin.php3") $sub_title = "$langs[p_aa]";
-  else if ($fileself == "admin_info.php3") $sub_title = "$langs[p_wv]";
+  elseif ($fileself == "admin.php3") $sub_title = "$langs[p_aa]";
+  elseif ($fileself == "admin_info.php3") $sub_title = "$langs[p_wv]";
 
   include("./include/html_ahead.ph");
 }
@@ -54,9 +54,7 @@ function copyright($copy) {
 //
 function admin_pass_error() {
   global $langs;
-  echo "<script>\nalert('$langs[p_dp]')\n" .
-       "document.location='./admin_info.php3'\n</script>";
-  exit;
+  print_error($langs[p_dp]);
 }
 
 // Admin Center 변경 완료 메세지
@@ -78,9 +76,9 @@ function get_theme_list($name,$num, $path = "../config") {
 
   // link에서 원 파일의 정보를 가져온다.
   if (!eregi("uadmin.php3",$PHP_SELF)) {
-    if (file_exists("$path/default.themes")) $dtheme = readlink("$path/default.themes");
+    if (file_exists("$path/default.themes")) { $dtheme = readlink("$path/default.themes"); }
   } else {
-    if (file_exists("../../data/$table/default.themes")) $dtheme = readlink("../../data/$table/default.themes");
+    if (file_exists("../../data/$table/default.themes")) { $dtheme = readlink("../../data/$table/default.themes"); }
   }
 
   // Theme 이름을 얻어온다.
@@ -159,7 +157,7 @@ function get_lang_list($code) {
 // 패스워드 변경을 안하면 변경을 하게끔 귀찮게 메시지 뿌리기 :-)
 function print_chgpass($pass) {
   global $langs;
-  if ($pass == "0000") echo "<script>\nalert('$langs[p_chm]')\n</script>\n";
+  if ($pass == "0000") print_notice($langs[p_chm],250,35);
 }
 
 ?>

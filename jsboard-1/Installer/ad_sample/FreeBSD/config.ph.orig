@@ -1,0 +1,10 @@
+<?
+$sadmin[pern]   = 10;           // 전체 관리자 페이지 당 유저 table 수
+$sadmin[passwd] = "\$1\$Cx\$.2OyfWZCiPTc4sSw0vswc/"; // 전체 관리자 password
+
+// Copyright 정보
+$copy[name]     = "JoungKyun Kim";
+$copy[email]    = "admin@oops.org";
+$copy[url]      = "http://www.oops.org";
+$copy[version]  = "1.7";
+?>

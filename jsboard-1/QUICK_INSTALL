@@ -1,26 +1,25 @@
 ##### JSBOARD + OOPS administartion Center #################################
 #
-#  Original Developer	: 김병찬 < redhands@linux.sarang.net >
+#  Original Developer	: 김병찬 <redhands@linux.sarang.net>
+#  Source Disturibute	: 김정균 <admin@oops.org>
 #
-#  Maintainer		: 방창현 < winchild@kldp.org >
-#  개발 version corder	: 김정균 < admin@oops.org >
-#  안정 version corder	: 차경묵 < dimanche@dimanche.co.kr >
-#
-#  CVS Server 관리	: 김영민 < blhole@hotmail.com >
-#  Homepage 공간 제공	: http://www.kldp.org
-#  Special Thanks	: 임은재 < eunjea@kldp.org>
+#  CVS Server 관리	: 김영민 <blhole@hotmail.com>
+#  Homepage 공간 제공	: 권순선 <http://www.kldp.org>
+#  Special Thanks	: 임은재 <eunjea@kldp.org>
+#			: 차경묵 <dimanche@dimanche.co.kr>
+#			: 방창현 <winchild@kldp.org>
 #
 #############################################################################
 #
-#                              Quick Installation in JSBoard 1.0 v0.6
+#                              Quick Installation in JSBoard 1.1 v0.7
 #
 #############################################################################
 
 
 작성 : 김정균 <admin@oops.org>
-일시 : 2000.7.17
+일시 : 2000.7.16
 
-이 문서는 JSBoard 1.0 version의 수동 설치를 위해 제공을 한다.
+이 문서는 JSBoard 1.1 version의 수동 설치를 위해 제공을 한다.
 이 문서로 인한 피해나 JSBoard의 사용으로 인한 피해에 대해서는
 아무런 책임을 질수 없으니 신중하게 판단하고 설치를 시도하도록
 하기를 바란다.
@@ -30,7 +29,12 @@
 0.7 이하 버젼과 DB 구조체와 SQL query의 형식이 변경이
 되었으므로 무조건 덮어 씌우지 말기 바란다.
 
-========================================================
+!!!!!!!!!!!!!
+Linux, FreeBSD 이외의 OS에서 설치시에는 꼭
+jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
+해야 한다.
+
+==========================================================
 
 **** 목 차 ****
 
@@ -43,7 +47,7 @@
     2-2. 설정 파일 셋팅하기
   3. JSBoard 운영
   4. UPGRADE
-    4-1. 0.8 또는 1.0.x 에서의 upgrade
+    4-1. 0.8 또는 1.0.x version에서의 upgrade
     4-2. 0.7 이하 버젼에서의 upgrade
       4-2-1. 임은재의 소스를 이용하는 방법
   5. Bug report
@@ -62,8 +66,8 @@
   (3.23.x 인 alpha version에서 호환성 문제는 검증된바 없음)
   
   PHP-4.0.0 이상(RPM 설치 권장 - ftp://ftp.oops.org)에서 받을수 있음
-  JSBoard 1.0은 PHP4 기반하에서 정상작동을 하며, Session 기능을
-  compile 시에 꼭 넣도록 해야 한다.
+  JSBoard 1.1은 PHP4 기반하에서 정상작동을 하며, compile 시에 Session 기능을
+  빼면 절대 안된다.
 
   * 체크 사항 *
 
@@ -72,7 +76,7 @@
   1-1. exec() 함수 test
 
     일단 다음과 같은 파일을 하나 만든다. test.php3라고 칭하겠다.
-    다음의 예제는 linux상에서만 정확히 작동을 한다. 다른 flatform에서는
+    다음의 예제는 linux상에서만 정확히 작동을 한다. 다른 Platform에서는
     알아서 제대로 작동을 하는지 확인을 해 보기 바란다.
 
     <?php
@@ -127,7 +131,7 @@
     DirectoryIndex 지시자에 index.php3를 추가해 주도록 한다. 또한 ph file
     들의 보안을 위해서 httpd.conf 의
 
-    AddType application/x-httpd-php3 .php3
+    AddType application/x-httpd-php .php .php3
 
     설정에 .ph 를 추가해 주도록 한다.
 
@@ -239,19 +243,41 @@
 
     압축을 풀면 jsboard-version 이라는 디렉토리가 생성이 된다.
 
-    jsboard/Install/SQL 로 이동을 하여 다음의 명령을 실행을 하여
+    jsboard/Installer/SQL 로 이동을 하여 다음의 명령을 실행을 하여
     jsboard에서 사용을 할 table 구조체를 만들도록 한다. 위에서 등록한 MySQL
     정보들을 알아야 한다.
 
-    $ cd jsboard-version/Install/SQL
-    $ mysql -u 사용자 -p 디비 < mysql.sql
+    $ cd jsboard-version/Installer/SQL
+    $ mysql -u 사용자 -p 디비 < mysql_ostype.sql
     Enter password: 패스워드
 
+    Linux 사용자들은 mysql_linux.sql 을 이용하여 FreeBSD 사용자 들은
+    mysql_freebsd.sql을 이용하도록 한다.
+
     table 구조체를 만들었으면 다음 설정 파일들을 위치 시키고 그 파일들의
-    퍼미션을 조정하도록 한다. jsboard/Install/script 에서 root의 권한을
+    퍼미션을 조정하도록 한다. jsboard/Installer/script 에서 root의 권한을
     가지고 설치를 할수 있다면
 
     $ ./root.sh
+    ===================================================
+     Scripted By JoungKyun Kim <admin@oops.org>
+     JSBoard Permission Configurations v1.0
+    ===================================================
+
+    ## Operating System : Redhat
+    ## Httpd Group : nobody
+
+    Is right follow information? [Y/N](default Y) : y <--Enter
+
+    DONE!!!!
+    $
+
+    root.sh를 실행을 하면 같이 수행이 된다. 만약 위에서 HTTPD의 그룹이
+    nobody가 아니라면 (debian은 보통 www-data로 되어 있다) n 또는 N을
+    넣고 그룹 이름을 다시 지정하면 된다. 아래와 같은 문구가 나올것이다.
+
+    Input Ur httpd group :
+
 
     혹은 계정 사용자라면
 
@@ -266,17 +292,18 @@
     jsboard/config/spma_list.ph,
     jsboard/admin/include/config.ph
     
-    에 대한 group 소유권을 nobody로 지정해 달라고 해야 한다. 즉
+    에 대한 group 소유권을 nobody로 지정해 달라고 해야 한다(debian 사용자
+    라면 www-data로 해야 할것이고 다른 OS는 모르겠다). 즉 
 
     $ chgrp nobody jsboard/config/global.ph (root가 실행해야 하는 명령)
-    $ chgrp nobody jsboard/config/spam_list.ph (root가 실행해야 하는 명령)
+    $ chgrp nobody jsboard/config/spam_list.txt (root가 실행해야 하는 명령)
     $ chgrp nobody jsboard/admin/include/config.ph (root가 실행해야 하는 명령)
 
     명령을 실행해 달라고 해야 한다. 이를 시행하면 아래와 같이 소유권을 가지게
-    된다.
+    된다. (Debian의 경우에는 nobody가 아니라 www-data가 되어야 한다)
 
     -rx-rx----    accountname    nobody     config/global.ph
-    -rx-rx----    accountname    nobody     config/spam_list.ph
+    -rx-rx----    accountname    nobody     config/spam_list.txt
     -rx-rx-r--    accountname    nobody     admin/include/config.ph
 
     단 주의 할것은 account user의 권한으로 설치시에는 보안의 문제성이 대두
@@ -305,7 +332,7 @@
 
 3. JSBoard 운영
 
-  JSBoard에는 관리자 기증이 존재 한다. 이 기능은 JSBoard 와는 별도의 코드로서
+  JSBoard에는 관리자 기능이 존재 한다. 이 기능은 JSBoard 와는 별도의 코드로서
   admin/License 를 읽어 보고 동의할 경우에만 사용이 가능하다.
 
   설치가 완료 되었다면 이제 웹브라우져에서 접속을 해 보도록 한다. 우선 전체
@@ -316,22 +343,22 @@
   으로 접속을 하도록 한다. 그러면 login 창이 뜰것이다. JSBoard의 기본 패스워드는
   모두 초기값으로는 "0000" 으로 되어 있으니 이 패스워드로 접속을 하도록 한다.
 
-  OOPS Administration Center v1.6 에서 달라진 기능은 일단 예전에 페이지 별로
-  합계가 나오던 것을 모든 페이지의 토탈 합계 기능을 추가 하였다. 또한 좌측
-  하단에 전역 변수 설정 옵션이 추가 되었으며 각 게시판의 통계 기능이 추가
-  되었다. 그외에 검으죽죽한 화면을 게시판의 색상에 맞춰서 나오게끔 최적화를
-  하였으며, 그외의 달라진 점은 거의 없다. :-) 써 본 사람들은 잘 사용을 할
-  것이다. 좀 신경을 쓴 부분이 있다면 게시판 삭제시에 한번은 물어 보고
-  confirm을 받은 뒤에 삭제가 이루어 지게 해 놓은 것이다.
+  OOPS Administration Center v1.7 에서 달라진 기능은 일단 종전에 JSBoard에서
+  사용하는 DB에 JSboard 에서 사용하지 않는 table이 있을 경우 에러메세지가 출
+  력 되는 현상이 있었으나 1.7에서는 JSBoard에서 사용하지 않는 table이 존재할
+  경우 설정 버튼 대신 "Not JSBoard table" 이라는 메시지를 출력하게 끔 변경이
+  되어 있다.
 
 4. UPGRADE
 
-  4-1. 0.8 이상 1.0.x version에서의 upgrade
+  4-1. 0.8 이상 1.0.x 이하 version에서의 upgrade
 
-    0.8 이상 1.0..x version 에서의 upgrade 무척 단순하다. 즉, 1.0.2의
-    소스를 받아서 덮어 씌어 주기만 하면 된다. 소스를 덮어 씌운후에
-    jsbaord/Installer/script 에서 root사용자의 경우에는 root_p.sh 를 실행해
-    주면 되며, 계정 유저의 경우에는 account_p.sh를 실행해 주기만 하면 된다.
+    0.8 이상 1.0.x 이하 version 에서의 upgrade 무척 단순하다. 즉, 1.1의
+    소스를 받아서 덮어 씌어 주기만 하면 된다. 그리고 Installer/ad_script에
+    보면 allow_browser.txt.orig 라는 파일이 있다 이걸 jsbaord/config 에
+    allow_browser.txt 로 copy를 한다. 다음 jsbaord/Installer/script 에서
+    root사용자의 경우에는 root_p.sh 를 실행해 주면 되며, 계정 유저의 경우
+    에는 account_p.sh를 실행해 주기만 하면 된다.
 
     단 주의 할것은.... PHP3 사용자들은 PHP4로 update를 해 줘야만 한다.!!!!!!
 
@@ -373,12 +400,15 @@
       지정을 하는 것이 제일 무난할듯 하다. 그리고 $new_file 바로 상단에
       user, pass, name을 지정해 주도록 한다.
 
-      위의 내용을 예를 들어서 설명한다면 일단 web root를 /home/httpd/html이라
-      가정을 한다. 그리고 /home/httpd/html/convert 라는 디렉토리를 생성한다.
-      convert를 생성한후 nobody가 쓰기를 할수 있게 하기 위하여 chmod 777 convert
+      위의 내용을 예를 들어서 설명한다면 일단 web root를 /home/httpd/html
+      이라 가정을 한다. 그리고 /home/httpd/html/convert 라는 디렉토리를
+      생성한다. convert를 생성한후 nobody가 쓰기를 할수 있게 하기 위하여
+
+      chmod 777 convert
+
       명령을 실행한다. 다음 다운로드 받은 소스나 해당 소스를 convert에
-      convert.php3 라는 이름으로 파일을 만든다. 다음 convert.php3 에서 다음의
-      부분을 수정하도록 한다.
+      convert.php3 라는 이름으로 파일을 만든다. 다음 convert.php3 에서
+      다음의 부분을 수정하도록 한다.
 
       $db = array('server'  => 'localhost',
                   'user'    => 'db user name을 넣는다',

@@ -66,6 +66,7 @@ if($list[bofile]) {
   $tail = check_filetype($list[bofile]);
   $icon = icon_check($tail,$list[bofile]);
   $down_link = check_dnlink($table,$list);
+
   echo "</TR><TR>\n" .
        "   <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[file]</NOBR></FONT></TD>\n" .
        "   <TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\">\n" .

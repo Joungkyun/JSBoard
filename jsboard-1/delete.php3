@@ -21,9 +21,9 @@ if(!$list[passwd] || $list[reyn] || !$enable[delete] || !$cenable[delete]) {
 
 require("html/head.ph");
 
-$list[date] = date("Y-m-d H:i:s", $list[date]);
-$list[text] = text_nl2br($list[text], $list[html]);
-$list[num]  = print_reply($table, $list);
+$list[date]  = date("Y-m-d H:i:s", $list[date]);
+$list[text]  = text_nl2br($list[text], $list[html]);
+$list[num]   = print_reply($table, $list);
 
 $size = form_size(4);
 
