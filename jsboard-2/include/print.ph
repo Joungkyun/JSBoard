@@ -860,7 +860,7 @@ function print_comment($table,$no,$print=0) {
   $textareasize = $size[text]-form_size(9);
 
   if (preg_match("/^(2|3|5|7)$/",$board[mode])) {
-    if($board[super] != 1) $disable = " disabled";
+    if($board[super] != 1) $disable = " readonly";
     else $disable = "";
   } else $disable = "";
 
