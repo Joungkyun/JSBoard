@@ -36,6 +36,9 @@ else $ore_ok = "checked";
 if($enable[re_list]) $re_list_ok = "checked";
 else $re_list_no = "checked";
 
+if($enable[comment]) $comment_ok = "checked";
+else $comment_no = "checked";
+
 if($enable[pre]) $pview_ok = "checked";
 else $pview_no = "checked";
 
@@ -385,7 +388,7 @@ function fresize(value,name) {
 
 <TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>
 
-<TR><TD BGCOLOR=<?=$color[t_bg]?> ALIGN=center COLSPAN=6><font id=TCOLOR>Option whether include parent article text when reply</font></TD></TR>
+<TR><TD BGCOLOR=<?=$color[t_bg]?> ALIGN=center COLSPAN=6><font id=TCOLOR>Print Option</font></TD></TR>
 
 <TR>
 <TD BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR><?=$langs[ua_ore]?></font></TD>
@@ -396,15 +399,20 @@ function fresize(value,name) {
 <TD BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
 </TR>
 
-<TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>
-
-<TR><TD BGCOLOR=<?=$color[t_bg]?> ALIGN=center COLSPAN=6><font id=TCOLOR>Option whether print related list when reply</font></TD></TR>
-
 <TR>
 <TD BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR><?=$langs[ua_re_list]?></font></TD>
 <TD COLSPAN=4>
 <INPUT TYPE=radio name=ua[re_list] <?=$re_list_ok?> value="1" id=RADIO><?=$langs[ua_re_list_y]?>
 <INPUT TYPE=radio name=ua[re_list] <?=$re_list_no?> value="0" id=RADIO><?=$langs[ua_re_list_n]?>
+</TD>
+<TD BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR><?=$langs[ua_comment]?></font></TD>
+<TD COLSPAN=4>
+<INPUT TYPE=radio name=ua[comment] <?=$comment_ok?> value="1" id=RADIO><?=$langs[ua_comment_y]?>
+<INPUT TYPE=radio name=ua[comment] <?=$comment_no?> value="0" id=RADIO><?=$langs[ua_comment_n]?>
 </TD>
 <TD BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
 </TR>

@@ -287,6 +287,20 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     return $page;
   }
 
+  function comment_post($table,$atc) {
+    global $jsboard, $board;
+
+    $host = get_hostname(0);
+    $dates = time();
+    $atc[passwd] = crypt($atc[passwd]);
+    $atc[name] = htmlspecialchars($atc[name]);
+    $atc[text] = htmlspecialchars($atc[text]);
+
+    $sql = "INSERT INTO {$table}_comm (no,reno,rname,name,passwd,text,host,date) ".
+           "VALUES ('','$atc[no]','$atc[rname]','$atc[name]','$atc[passwd]','$atc[text]','$host','$dates')";
+    sql_query($sql);
+  }
+
   # 게시물 검사 함수
   #
   # trim - 문자열 양쪽의 공백 문자를 없앰
@@ -428,6 +442,9 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       $gopage = article_delete($table, $no, $passwd, $o[am]);
       Header("Location: list.php?table=$table&page=$gopage");
       break;
+    case 'c_write':
+      comment_post($table,$atc);
+      Header("Location: read.php?table=$table&no=$atc[no]&page=$page");
   }
 } elseif ($o[at] == "dn") {
   include "include/header.ph";

@@ -124,6 +124,7 @@ if(!$np) {
 <?=$preview[down]?>
 </FONT>
 <?=$print[rlists]?>
+<?=$print[comment]?>
 </TD></TR>
 </TABLE>
 

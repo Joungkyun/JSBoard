@@ -5,6 +5,20 @@ include "include/header.ph";
 if(eregi("^(2|3|5)$",$board[mode]) && !session_is_registered("$jsboard"))
   print_error("$langs[login_err]");
 
+if($_SESSION[$jsboard][id] == $board[ad] || $_SESSION[$jsboard][pos] == 1)
+  $board[super] = 1;
+
+if((eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id]) || $board[super]) {
+  $pre_regist[name] = $_SESSION[$jsboard][id];
+  $pre_regist[rname] = $_SESSION[$jsboard][name];
+  $pre_regist[email] = $_SESSION[$jsboard][email];
+  $pre_regist[url] = $_SESSION[$jsboard][url];
+} else {
+  $pre_regist[name] = eregi_replace("[\]","",$_COOKIE[board_cookie][name]);
+  $pre_regist[email] = eregi_replace("[\]","",$_COOKIE[board_cookie][email]);
+  $pre_regist[url] = eregi_replace("[\]","",$_COOKIE[board_cookie][url]);
+}
+
 $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
 $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
 
@@ -98,6 +112,9 @@ $b_time[] = microtime(); # 속도 체크
 
 # 글읽기에서 관련글 리스트 출력
 if($enable[re_list] && ($list[reto] || $list[reyn])) $print[rlists] = "\n".article_reply_list($table,$pages,1);
+
+# 커멘트 리스트
+$print[comment] = $enable[comment] ? print_comment($table,$no,0) : "";
 
 # 글 읽었을 경우 조회수 1 늘림
 #if (get_hostname(0) != $list[host]) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'");

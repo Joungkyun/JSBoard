@@ -12,6 +12,9 @@ $langs[perm_err] = "권한이 없습니다.";
 # read.php
 $langs[ln_url] = "홈페이지";
 $langs[conj] = "관련글";
+$langs[c_na] = "이름";
+$langs[c_ps] = "암호";
+$langs[c_en] = "입력";
 
 # write.php
 $langs[w_ment] = "띄어쓰기 없이 쓰거나 HTML 미사용 시 한줄을 너무 길게 쓰지 마십시오.";
@@ -158,6 +161,10 @@ $langs[ua_ore_n] = "선택";
 $langs[ua_re_list]   = "관련글";
 $langs[ua_re_list_y] = "보여주기";
 $langs[ua_re_list_n] = "보여주지 않기";
+
+$langs[ua_comment]   = "코멘트";
+$langs[ua_comment_y] = "사용하기";
+$langs[ua_comment_n] = "사용하지 않기";
 
 $langs[ua_align]   = "게시판 정렬";
 $langs[ua_align_c] = "가운데";
