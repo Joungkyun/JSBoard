@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.0
 
+2002.6 10 by 김정균 <http://www.oops.org>
+	- 커멘트에서 삭제, 소트 링크에 이미지 링크 사용가능 하도록 수정
+
 2002.6. 8 by 김정균 <http://www.oops.org>
 	- 게시판 관리자에서 첨부파일 링크 설정 에러 수정
 
