@@ -3,11 +3,12 @@
 $p_time[] = microtime();
 include "include/header.ph";
 
-if($HTTP_COOKIE_VARS[$cjsboard][id]) {
-  session_start();
-  if(!session_is_registered("$jsboard") && !eregi("^(1|4|6)$",$board[mode]))
-    print_error("$langs[login_err]");
-}
+$page = !$page ? 1 : $page;
+
+if($HTTP_COOKIE_VARS[$cjsboard][id]) { session_start(); }
+
+if(!session_is_registered("$jsboard") && eregi("^(2|3|5|7)$",$board[mode]))
+  print_error("$langs[login_err]");
 
 $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
 $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph"; 

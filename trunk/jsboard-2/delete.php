@@ -1,13 +1,11 @@
 <?
 include "./include/header.ph";
 
-if($HTTP_COOKIE_VARS[$cjsboard][id]) {
-  session_start();
-  if(${$jsboard}[id] == $board[ad] || ${$jsboard}[pos] == 1) $board[super] = 1;
+if($HTTP_COOKIE_VARS[$cjsboard][id]) { session_start(); }
+if(${$jsboard}[id] == $board[ad] || ${$jsboard}[pos] == 1) $board[super] = 1;
 
-  if(eregi("^(1|3)$",$board[mode])) { if(!$board[super]) print_error($langs[perm_err],250,150,1); }
-  if(eregi("^(2|5)$",$board[mode]) && !session_is_registered("$jsboard")) print_error($langs[perm_err],250,150,1);
-}
+if(eregi("^(1|3)$",$board[mode])) { if(!$board[super]) print_error($langs[perm_err],250,150,1); }
+if(eregi("^(2|5)$",$board[mode]) && !session_is_registered("$jsboard")) print_error($langs[perm_err],250,150,1);
 
 # upload[dir] 에 mata character 포함 여부 체크
 meta_char_check($upload[dir]);
@@ -73,8 +71,12 @@ if((!$board[super] && ${$jsboard}[id] != $list[name]) || !$board[mode]) {
   $print[passform] = "$langs[w_pass]: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" MAXLENGTH=\"8\">&nbsp;\n";
 } else $warning = "&nbsp;";
 
+# Page 가 존재할 경우 목록으로 갈때 해당 페이지로 이동
+$page = $page ? $page : 1;
+
 # 패스워드 폼 출력을 위한 변수
 $print[passform] = "<INPUT TYPE=hidden NAME=o[at] value=del>\n".
+                   "<INPUT TYPE=hidden NAME=page value=$page>\n".
                    "<INPUT TYPE=hidden NAME=no VALUE=\"$no\">\n".
                    "<INPUT TYPE=hidden NAME=table VALUE=\"$table\">\n".
                    "<INPUT TYPE=hidden NAME=delete_dir VALUE=\"$deldir\">\n".
@@ -82,7 +84,9 @@ $print[passform] = "<INPUT TYPE=hidden NAME=o[at] value=del>\n".
                    "$print[passform]";
 
 # Page 가 존재할 경우 목록으로 갈때 해당 페이지로 이동
-$page = $page ? "&page=$page" : "";
+$page = $page ? "&page=$page" : "1";
+
+mysql_close();
 
 # Template file 을 호출
 include "theme/$print[theme]/delete.template";

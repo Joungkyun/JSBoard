@@ -17,8 +17,7 @@ if ($m == "login") {
 
   if(check_auth($lp,$r[passwd])) {
     if($edb[super] == $r[nid]) $r[position] = 1;
-    $uppass = crypt($lp);
-    $$jsboard = array("id"=>$r[nid],"pass"=>$uppass,
+    $$jsboard = array("id"=>$r[nid],"pass"=>$r[passwd],
                       "name"=>$r[name],"email"=>$r[email],
                       "url"=>$r[url],"pos"=>$r[position],"external"=>$edb[uses]);
 

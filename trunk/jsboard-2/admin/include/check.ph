@@ -123,4 +123,13 @@ function check_admin($user) {
   }
   closedir($p);        
 }
+
+function check_invalid($str) {
+  $perment = "<BR>[ SECURITY WARNING!! ] - jsboard don't permit";
+  $target = array("/<\?/i","/\?>/i","/<(\/?embed[^>]*)>/i","/<(IMG[^>]*SRC=[^\.]+\.(ph|asp|htm|jsp|cgi|pl|sh)[^>]*)>/i");
+  $remove = array("<xmp>","</xmp>","$perment &lt;\\1&gt;<BR>","$perment &lt;\\1&gt;<BR>");
+  $str = preg_replace($target,$remove,$str);
+
+  return $str;
+}
 ?>

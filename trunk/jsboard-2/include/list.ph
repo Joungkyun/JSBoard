@@ -2,9 +2,10 @@
 function print_list($table, $list, $r=0)
 {
   global $color, $board, $langs, $enable, $print, $td_array;
-  global $o, $upload, $cupload, $agent, $no, $lines;
+  global $o, $upload, $cupload, $agent, $no, $lines, $page;
 
   $search = search2url($o);
+  $pages = $page ? "&page=$page" : "&page=1";
 
   if($board[rnname] && eregi("^(2|3|5|7)",$board[mode])) 
     $list[name] = $list[rname] ? $list[rname] : $list[name];
@@ -95,7 +96,7 @@ function print_list($table, $list, $r=0)
     $field[dates] = "<TD ALIGN=right NOWRAP><FONT STYLE=\"color:$color[td_co];\"><NOBR>$date&nbsp;</NOBR></FONT></TD>";
 
   $field[no] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">$list[num]</FONT><IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=$lines[height] BORDER=0 ALIGN=absmiddle></TD>";
-  $field[title] = "<TD><A HREF=read.php?table=$table&no=$list[no]$search$list[preview]><FONT STYLE=\"color:$fg;\">$list[title]&nbsp;</FONT></A></TD>";
+  $field[title] = "<TD><A HREF=read.php?table=$table&no=$list[no]$pages$search$list[preview]><FONT STYLE=\"color:$fg;\">$list[title]&nbsp;</FONT></A></TD>";
   $field[name] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">$list[name]&nbsp;</FONT></TD>";
   $field[refer] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">$list[refer]&nbsp;</FONT></TD>";
   $field[nulls] = "<TD><IMG SRC=./images/blank.gif WIDTH=1 HEIGHT=$lines[height] BORDER=0>";
@@ -139,14 +140,33 @@ function print_list($table, $list, $r=0)
 
 function get_list($table,$pages,$reply=0,$print=0)
 {
-  global $color, $board, $lines, $upload;
-  global $o, $enable, $agent, $PHP_SELF;
+  global $color,$board,$lines,$upload,$page;
+  global $o,$enable,$count,$agent,$PHP_SELF;
+
+  $readchk = (eregi("read\.php",$PHP_SELF) && $enable[re_list]) ? 1 : 0;
 
   if($reply[ck]) $sql = search2sql($reply);
   else $sql = search2sql($o);
 
-  if ($enable[re_list] && eregi("read.php",$PHP_SELF)) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
-  else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT $pages[no], $board[perno]";
+  # 50 만건 이상의 대용량 DB 를 위한 SQL 추가 패치
+  if(!$o[at] && !eregi("WHERE",$sql) && $page > 1) {
+    $startidx = $count[all] - $pages[no] - ($board[perno] * 2);
+    $endidx = $count[all] - $pages[no];
+    $sql = "WHERE idx BETWEEN $startidx AND $endidx"; 
+  } elseif ($readchk) {
+    if($reply[idx]) $idx = $reply[idx];
+    else {
+      $ridx = sql_query("SELECT idx FROM $table WHERE no = '$reply[reto]'");
+      $idx = sql_result($ridx,0,idx);
+    }
+    $startidx = ($idx - 1000 > 1) ? $idx - 1000 : 0;
+    $sql = "WHERE (idx BETWEEN $startidx AND $idx) AND".eregi_replace("WHERE","",$sql);
+  }
+
+  # 50 만건 이상의 대용량 DB 를 위한 SQL 추가 패치 (위와 이곳만 수정하면 복구가능)
+  if ($readchk) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
+  else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT 0, $board[perno]";
+  #else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT $pages[no], $board[perno]";
 
   $result = sql_query($query);
   if(sql_num_rows($result)) {

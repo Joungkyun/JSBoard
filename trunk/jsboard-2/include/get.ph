@@ -228,8 +228,14 @@ function get_pos($table, $idx) {
 
     $sql    = search2sql($o, 0);
     
+    $idxdp = $idx + 1;
+    $idxdm = $idx - 1;
+    $idxplus = $idx + 10;
+    $idxminus = $idx - 10;
+
     # 지정된 글의 idx보다 작은 번호를 가진 글 중에 idx가 가장 큰 글 (다음글)
-    $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < $idx $sql");
+    #$result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < $idx $sql");
+    $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE (idx BETWEEN $idxminus AND $idxdm) $sql");
     $pos[next] = sql_result($result, 0, "idx");
     sql_free_result($result);
     if($pos[next]) { 
@@ -251,7 +257,8 @@ function get_pos($table, $idx) {
     }
 
     # 지정된 글의 idx보다 큰 번호를 가진 글 중에 idx가 가장 작은 글 (이전글)
-    $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > $idx $sql");
+    #$result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > $idx $sql");
+    $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE (idx BETWEEN $idxdp AND $idxplus) $sql");
     $pos[prev] = sql_result($result, 0, "idx");
     sql_free_result($result);
     if($pos[prev]) { 

@@ -76,7 +76,9 @@ if ($enable[ore]) {
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=0>\n";
 }
 
+$page = $page ? $page : 1;
 $print[passform] = "<INPUT TYPE=hidden NAME=o[at] VALUE=reply>\n".
+                   "<INPUT TYPE=hidden NAME=page VALUE=$page>\n".
                    "<INPUT TYPE=hidden NAME=table VALUE=$table>\n".
                    "<INPUT TYPE=hidden NAME=rmail[origmail] VALUE=\"$list[email]\">\n".
                    "<INPUT TYPE=hidden NAME=atc[reno] VALUE=\"$list[no]\">";
@@ -89,7 +91,9 @@ if(!$nodisable) {
                       "\n<INPUT TYPE=hidden NAME=atc[url] VALUE=\"$pre_regist[url]\">\n";
 }
 
-$pages = $page ? "&page=$page" : "";
+$pages = "&page=$page";
+
+mysql_close();
 
 # Template file ¿ª »£√‚
 include "theme/$print[theme]/reply.template";
