@@ -1,8 +1,8 @@
 <?
 include("include/header.ph");
 
-include("admin/include/info.php3");
-include("include/$table/config.ph");
+$super_user = board_info($super_user);
+
 
 /* 게시판 관리자와 모든 게시판 관리자의 패스워드 비교를 위해
    변수를 생성 - 김정균 */
@@ -25,7 +25,7 @@ $date = time();
 
 if ($act == "post" || $act == "edit") {
     if (!chop($name) || !chop($title) || !chop($text))
-	error("이름, 제목, 내용을 모두 입력하셔야 합니다.");
+	error("$blank_error");
     if ($url)
 	$url = check_url($url);
     if ($email)
@@ -45,7 +45,7 @@ if ($act == "post" || $act == "edit") {
         $text = eregi_replace("<(style|script)([^>]*)>", "<!--", $text);
         $text = eregi_replace("</(style|script)>", "-->", $text);
         $text = eregi_replace("<(body|div|meta)([^>]*)>", "", $text);
-        $text = eregi_replace("<title>+([^<]*)+</title>", "", $text); 
+        $text = eregi_replace("<title>+([^<]*)+</title>", "", $text);  
         $text = eregi_replace("[<\/]+(html|head|div|body|layer)>","",$text) ;
         $text = eregi_replace("<!([^<]*)", "", $text);
 	$text = chop($text);
@@ -59,7 +59,7 @@ if ($act == "post" || $act == "edit") {
 	    dquery("UPDATE $table SET date  = $date, host  = '$host', name  = '$name', email = '$email',
 				url   = '$url', title = '$title', text  = '$text' WHERE no = $no");
 	} else {
-	    error("비밀번호가 틀립니다.");
+	    error("$pass_error");
 	}
     }
 
@@ -74,7 +74,7 @@ if ($act == "post" || $act == "edit") {
 	    $prev_name = mysql_result($result, 0, "name");
 	    $prev_text = mysql_result($result, 0, "text");
 	    if($title == $prev_title && $name == $prev_name && $text == $prev_text) {
-		error("똑같은 글을 두번 올리지 마세요.");
+		error("$duble_post_error");
 	    }
 	}
 	if ($passwd) {
@@ -91,26 +91,28 @@ if ($act == "post" || $act == "edit") {
 	    	if ( $userfile_name ) {
 		  if( $userfile_size == '0' ) {
 			echo("<script>\n" .
-			     "alert(\"file size가 0 byte인\\n file은 upload를 할수 없습니다.\")\n" .
+			     "alert(\"$blnk_upload_error\")\n" .
 			     "history.back()\n" .
 			     "</script>") ;
 			exit ;
 		  }
 		}
-		
+
 		/* file size 0byte upload 금지 끝 */
 
 		if($userfile_size !=0 || $userfile !="none" || $userfile_name !="")
 		{              
-			if($userfile_size > $maxfilesize)
-			{
-				echo "파일크기가 제한을 초과하였습니다.<p>$maxfilesize 이하로 내려 주세요";
-				exit;
+			if($userfile_size > $maxfilesize) {
+                           echo("<script>\n" .
+	                        "alert(\"$size_over_error\")\n" .
+	                        "history.back()\n" .
+	                        "</script>") ;
+	                   exit ;
 			}                                     
 			$bfilename=strstr("$userfile","php");
 			mkdir("$filesavedir/$bfilename",0755);
 			exec("mv \"$userfile\" \"$filesavedir/$bfilename/$userfile_name\"");
-			chmod("$filesavedir/$bfilename/$userfile_name",0755);
+			chmod("$filesavedir/$bfilename/$userfile_name",0644);
 		}                                      
 	}
         // winchild 99/11/26 fileupload = "no" 일 경우에는 초기화를 시켜주어야 한다.
@@ -123,9 +125,6 @@ if ($act == "post" || $act == "edit") {
 	
 	if (!$reno) {
 	// 글 쓰기
-	$headtit .= " ";
-	$headtit .= $title;
-	$title = $headtit;
 	    dquery("INSERT INTO $table VALUES ('', $last, $date, '$host', 
 		'$name', '$passwd', '$email', '$url', '$title', '$text', 0, 
 		0, 0, 0, 0,'$userfile_name','$bfilename',$userfile_size)");
@@ -164,7 +163,7 @@ if ($act == "post" || $act == "edit") {
 } else if ($act == "del") {
     if (check_passwd($passwd, $no) || $user_admin == $board_manager || $super_admin == $super_user) {
 	if ($reyn) {
-	    error("관련글이 있으므로 삭제할 수 없습니다.");
+	    error("$delete_error");
 	}
 
 	if (!$reno) {
@@ -183,7 +182,7 @@ if ($act == "post" || $act == "edit") {
 		rmdir("$delete_dir");
 	}
     } else {
-	error("비밀번호가 틀립니다.");
+	error("$pass_error");
     }
 }
 

@@ -2,28 +2,26 @@
 
 /************************************************************************
 *                                                                       *
-*                 OOPS Administration Center v1.2                       *
+*                 OOPS Administration Center v1.3                       *
 *                     Scripted by JoungKyun Kim                         *
 *               admin@oops.org http://www.oops.org                      *
 *                                                                       *
 ************************************************************************/
 
 
-function error($str = "서버에 문제가 있습니다.") {
+function error($str) {
 
-    global $debug;
-    
-    $admin = getenv("SERVER_ADMIN");
+  global $debug, $err_alert ;
 
-    if(!$debug) {
+  if(!$debug) {
 	echo("<script language=\"javascript\">\n" .
 	     "<!--\n" .
-	     "alert(\"$str\\n이전 페이지로 돌아갑니다.\\n\\n문의 사항은 $admin 으로 메일을...\");\n" .
+	     "alert(\"$str\\n$err_alert\");\n" .
 	     "history.back();\n" .
 	     "//-->\n" .
 	     "</script>\n");
 	exit;
-    }
+  }
 }
 
 function back() {
@@ -39,11 +37,11 @@ function back() {
 
 function notaccess() {
 
-  global $login_pass ;
+  global $login_pass, $nopasswd ;
 
   if ( !$login_pass ) {
     echo ("<script>\n" .
-          "alert('password가 없이 본 file에\\naccess 할수 없습니다')\n" .
+          "alert('$nopasswd')\n" .
           "history.back() \n" .
           "</script>" );
     exit ;
@@ -53,11 +51,11 @@ function notaccess() {
 
 function compare_pass() {
 
-  global $login_pass, $super_user ;
+  global $login_pass, $super_user, $pass_alert ;
 
   if ( $login_pass != $super_user ) {
     echo ("<script>\n" .
-          "alert('Password incollect\\n     Try Again')\n" .
+          "alert('$pass_alert')\n" .
           "document.location='./cookie.php3?mode=logout'\n" .
           "</script>" );
     exit ;
@@ -68,13 +66,13 @@ function compare_pass() {
 
 function exsit_dbname_check() {
 
-  global $db_name ;
+  global $db_name, $nodb ;
 
   if(!$db_name)  {
 
     echo("<table width=100% height=100%>\n" .
          "<tr>\n" .
-         "<td colspan=5 align=center><b><br><br>DB가 존재하지 않습니다<br><br><br></b></td>\n" .
+         "<td colspan=5 align=center><b><br><br>$nodb<br><br><br></b></td>\n" .
          "</tr></table> ");
     exit ;
   }
@@ -84,12 +82,12 @@ function exsit_dbname_check() {
 
 function new_table_check() {
 
-  global $new_table ;
+  global $new_table, $no_numberic_db_alert, $no_board ;
 
   if (!eregi("[a-zA-Z]", $new_table)) {
 
     echo ("<script>\n" .
-          "alert('숫자로 된 이름은\\n지정할수 없습니다.')\n" .
+          "alert('$no_numberic_db_alert')\n" .
           "history.back() \n" .
           "</script>" );
     exit ;
@@ -99,7 +97,7 @@ function new_table_check() {
   if(!$new_table)  {
 
     echo ("<script>\n" .
-          "alert('생성할 Board Name을\\n지정하지 않았습니다')\n" .
+          "alert('$no_board')\n" .
           "history.back() \n" .
           "</script>" );
     exit ;
@@ -110,13 +108,13 @@ function new_table_check() {
 
 function table_list_check() {
 
-  global $db_name ;
+  global $db_name, $nodb ;
 
   if(!mysql_list_tables($db_name)) {
 
     echo("<table width=100% height=100%>\n" .
          "<tr>\n" .
-         "<td colspan=5 align=center><b><br><br>DB가 존재하지 않습니다<br><br><br></b></td>\n" .
+         "<td colspan=5 align=center><b><br><br>&nodb<br><br><br></b></td>\n" .
          "</tr></table> ");
     exit ;
 
@@ -127,7 +125,7 @@ function table_list_check() {
 
 function same_db_check() {
 
-  global $tbl_list, $new_table ;
+  global $tbl_list, $new_table, $exist_db_alert ;
 
   $tbl_num=mysql_num_rows($tbl_list);
 
@@ -139,7 +137,7 @@ function same_db_check() {
     if ($new_table == $table_name) {
 
       echo ("<script>\n" .
-            "alert('이미 동일한 이름의\\ndb가 존재 합니다')\n" .
+            "alert('$exist_db_alert')\n" .
             "document.location='./admin.php3'\n" .
             "</script>" );
       exit ;
@@ -153,32 +151,44 @@ function same_db_check() {
 
 function admin_pass_change() {
 
-  global $admincenter_pass
+  global $admincenter_pass, $connect, $pass_chg, $fail_msg, $langs ;
 
-  $wadmincenter_pass = crypt("$admincenter_pass","oo") ;
-  $rsuper_user = '$super_user' ;
-  $admincenter_info = ("<?\n" .
-                       "$rsuper_user		= \"$wadmincenter_pass\" ;\n" .
-                       "?>") ;
+  $admincenter_pass = crypt("$admincenter_pass","oo") ;
 
-  $fp = fopen( "./include/info.php3", "w" ) ; 
-  fwrite($fp, $admincenter_info); 
-  fclose($fp);
+  $change_pass = "update BoardInformation set super_user = '$admincenter_pass', 
+                         lang = '$langs' where t_name = 'superuser'" ;
 
-  echo ("<script>\n" .
-        "alert('패스워드가 변경되었습니다 Admin Center를\\nlogout 하시고 다시 login 하십시오')\n" .
-        "window.close()\n" .
-        "</script> ") ;
+  $result = mysql_query($change_pass, $connect );
 
-  exit ;
+
+  if ($result) {
+    echo ("<script>\n" .
+          "alert('$pass_chg')\n" .
+          "window.close()\n" .
+          "</script> ") ;
+
+    exit ;
+  }
+  else {
+
+    echo ("<script>\n" .
+          "alert('$fail_msg')\n" .
+          "window.close()\n" .
+          "</script> ") ;
+
+    exit ;
+
+  }
 
 }
 
 
 function admin_pass_error() {
 
+  global $lang, $pass_compare ;
+
   echo ("<script>\n" .
-        "alert('두개의 Password가 서로 다릅니다')\n" .
+        "alert('$pass_compare')\n" .
         "document.location='./admin_info.php3'\n" .
         "</script> ") ;
 

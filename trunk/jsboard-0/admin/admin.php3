@@ -2,52 +2,56 @@
 
 /************************************************************************
 *                                                                       *
-*                 OOPS Administration Center v1.2                       *
+*                 OOPS Administration Center v1.3                       *
 *                     Scripted by JoungKyun Kim                         *
-*               admin@oops.org http://www.oops.org                      *
+*               admin@oops.org  http://www.oops.org                     *
 *                                                                       *
 ************************************************************************/
 
 
+include("./include/agent.ph");
+include("./include/html_head.ph") ;
+include("../include/db.ph") ;
+include("./include/query.ph") ;
+include("./include/boardinfo.ph");
+
+$super_user = board_info($super_user);
+$lang = superpass_info($lang) ;
+
+include("../include/multi_lang.ph");
+
+$login_pass = crypt("$login_pass","oo") ;
+
+
 if ( !$login_pass ) {
   echo ("<script>\n" .
-        "alert('password가 없이 본 file에\\naccess 할수 없습니다')\n" .
+        "alert('$nopasswd')\n" .
         "history.back() \n" .
         "</script>" );
   exit ;
 }
 
-include("./include/agent.ph");
-include("./include/info.php3") ;
-include("./include/html_head.ph") ;
-include("../include/db.ph") ;
-include("./include/query.ph") ;
-
-
-$login_pass = crypt("$login_pass","oo") ;
-
 if ( $login_pass != $super_user ) {
   echo ("<script>\n" .
-        "alert('Password incorrect\\n     Try Again')\n" .
+        "alert('$pass_alert')\n" .
         "document.location='./cookie.php3?mode=logout'\n" .
         "</script>" );
   exit ;
 }
 
-netscape_browser() ;
+if ($lang == "ko") { netscape_browser() ; }
 
 /* MySQL 서버에 연결한다 */
 
 $connect=mysql_connect( $db_server, "$db_user" , "$db_pass" )  or  
                    die( "Unable to connect to SQL server" ); 
 
-
 // db_name이 존재하지 않으면 아래를 출력합니다.
 if(!$db_name)  {
 
   echo("<table width=100% height=100%>\n" .
        "<tr>\n" .
-       "<td colspan=5 align=center><b><br><br>DB가 존재하지 않습니다<br><br><br></b></td>\n" .
+       "<td colspan=5 align=center><b><br><br>$nodb<br><br><br></b></td>\n" .
        "</tr></table> ");
 
 }
@@ -62,7 +66,7 @@ if($db_name && !$table) {
 
     echo("<table width=100% height=100%>\n" .
          "<tr>\n" .
-         "<td colspan=5 align=center><b><br><br>DB가 존재하지 않습니다<br><br><br></b></td>\n" .
+         "<td colspan=5 align=center><b><br><br>$nodb<br><br><br></b></td>\n" .
          "</tr></table> ");
 	
   }
@@ -91,7 +95,7 @@ if($db_name && !$table) {
   $priv = $page-1 ;   
   $next = $page+1 ;
 
-  if ($tbl_num > "0") {
+  if ($tbl_num > "1") {
 
     for($i=$start ; $i<$until ; $i++) {
 
@@ -100,46 +104,62 @@ if($db_name && !$table) {
         // table list 를 불러 옵니다.
         $table_name[$i] = mysql_tablename($tbl_list,$i) ;
 
-        // 각 table에 등록된 글 수를 check 합니다.
-        $total = "select count(*) from $table_name[$i]";
-        $result = mysql_query($total,$connect );
+        if ( $table_name[$i] != "BoardInformation" ) {
 
-        $total_count = mysql_result($result, 0, "COUNT(*)") ;
+          // 각 table에 등록된 글 수를 check 합니다.
+          $total = "select count(*) from $table_name[$i]";
+          $result = mysql_query($total,$connect );
 
-        // 각 table에 등록된 글들의 합을 구합니다.
-        $to = $to + $total_count ;
+          $total_count = mysql_result($result, 0, "COUNT(*)") ;
 
-        // 오늘 날자에 대한 data 값을 구해 오늘 날자에 등록된 값을 구합니다.
-        $current = "SELECT UNIX_TIMESTAMP(CURDATE()) as curdate";
-        $result = mysql_query($current,$connect );
-        $current_time = mysql_result($result, 0, "curdate") ;
+          // 각 table에 등록된 글들의 합을 구합니다.
+          $to = $to + $total_count ;
 
-        $total = "select count(*) from $table_name[$i] where date > '$current_time'";
+          // 오늘 날자에 대한 data 값을 구해 오늘 날자에 등록된 값을 구합니다.
+          $current = "SELECT UNIX_TIMESTAMP(CURDATE()) as curdate";
+          $result = mysql_query($current,$connect );
+          $current_time = mysql_result($result, 0, "curdate") ;
 
-        $result = mysql_query($total,$connect );
+          $total = "select count(*) from $table_name[$i] where date > '$current_time'";
 
-        $total_today = mysql_result($result, 0, "COUNT(*)") ;
+          $result = mysql_query($total,$connect );
 
-        // 오늘 등록된 글들의 합을 구합니다.
-        $to_today = $to_today + $total_today ;
+          $total_today = mysql_result($result, 0, "COUNT(*)") ;
 
-        echo("<tr align=center bgcolor=#333333>\n" .
-             "<td align=left width=30%><font id=subj>&nbsp;&nbsp;&nbsp;$table_name[$i]</font></td>\n" .
-             "<td align=right width=15%>$total_today &nbsp;&nbsp;</td>\n" .
-             "<td align=right width=15%>$total_count &nbsp;&nbsp;</td>\n" .
-             "<form method='POST'><td width=30%>\n" .
-             "<input type=button value=view onClick=fork('popup','../list.php3?table=$table_name[$i]') id=input>\n" .
-             "<input type=button value=conf onClick=fork('popup','./user_admin/uadmin.php3?db=$table_name[$i]') id=input>\n" .
-             "</td></form>\n" .
-             "<form name='delete_db' method='post' action='act.php3'>\n" .
-             "<td width=10%>\n" .
-             "<input type='hidden' name='table_name' value='$table_name[$i]'>\n" .
-             "<input type='hidden' name='mode' value='db_del'>\n" .
-             "<input type=submit value=del id=input>\n" .
-             "</td></form>\n" .
-             "</tr> ");
+          // 오늘 등록된 글들의 합을 구합니다.
+          $to_today = $to_today + $total_today ;
+        }
+
+        if ( $table_name[$i] != "BoardInformation" ) {
+
+          echo("<tr align=center bgcolor=#333333>\n" .
+               "<td align=left width=30%><font id=subj>&nbsp;&nbsp;&nbsp;$table_name[$i]</font></td>\n" .
+               "<td align=right width=15%>$total_today &nbsp;&nbsp;</td>\n" .
+               "<td align=right width=15%>$total_count &nbsp;&nbsp;</td>\n" .
+               "<form method='POST'><td width=30%>\n" .
+               "<input type=button value=view onClick=fork('popup','../list.php3?table=$table_name[$i]') id=input>\n" .
+               "<input type=button value=conf onClick=fork('popup','./user_admin/uadmin.php3?db=$table_name[$i]') id=input>\n" .
+               "</td></form>\n" .
+               "<form name='delete_db' method='post' action='act.php3'>\n" .
+               "<td width=10%>\n" .
+               "<input type='hidden' name='table_name' value='$table_name[$i]'>\n" .
+               "<input type='hidden' name='mode' value='db_del'>\n" .
+               "<input type=submit value=del id=input>\n" .
+               "</td></form>\n" .
+               "</tr> ");
 
         }
+	else {
+
+          echo("<tr align=center bgcolor=#333333>\n" .
+               "<td align=left width=30%><font id=subj>&nbsp;&nbsp;&nbsp;$table_name[$i]</font></td>\n" .
+               "<td align=center colspan=3>JSBoard Management Information Table</td>\n" .
+               "<td align=center><img src=./img/blank.gif width=1 height=20 border=0></td>\n" .
+               "</td></tr> ");
+
+        }
+
+      }
 
     }
 
@@ -147,7 +167,7 @@ if($db_name && !$table) {
   else {
 
     echo("<tr align=center bgcolor=#333333>\n" .
-         "<td colspan=5 align=center><br>DB가 없습니다<br>&nbsp;</td>\n" .
+         "<td colspan=5 align=center><br>$nodb<br>&nbsp;</td>\n" .
          "</tr>") ;
 
   }
@@ -165,9 +185,9 @@ if($db_name && !$table) {
   "</tr>\n" .
   "\n" .
   "<tr bgcolor=#333333><form name='create_db' method='post' action='act.php3'>\n" .
-  "<td colspan=3>&nbsp;&nbsp;<font color=white>Create DB :</font>\n" .
+  "<td colspan=3>&nbsp;&nbsp;<font color=white>$create_ment :</font>\n" .
   "<input type=text name='new_table' size=20 id=input>\n" .
-  "<input type='submit' name='submit' value='등록' id=input>\n" .
+  "<input type='submit' name='submit' value='$regi_bu' id=input>\n" .
   "<input type='hidden' name='mode' value='db_create'>\n" .
   "</td></form>\n" .
 
@@ -178,9 +198,9 @@ if($db_name && !$table) {
   "</tr>\n" .
 
   "<tr bgcolor=#333333><form name='del_db' method='post' action='act.php3'>\n" .
-  "<td colspan=3>&nbsp;&nbsp;<font color=white>Delete DB :</font>\n" .
+  "<td colspan=3>&nbsp;&nbsp;<font color=white>$delete_ment :</font>\n" .
   "<input type=text name='table_name' size=20 id=input>\n" .
-  "<input type='submit' name='submit' value='제거' id=input>\n" .
+  "<input type='submit' name='submit' value='$del_bu' id=input>\n" .
   "<input type='hidden' name='mode' value='db_del'>\n" .
   "</td></form>\n" .
   "</tr>\n" .
@@ -190,8 +210,6 @@ if($db_name && !$table) {
   "<td colspan=5 align=center bgcolor=#555555>
   ");
 
-
-/******************* test *******************************/
 
   $total  = $tbl_num ;
   $lastpage_check = $total%$scale ;
@@ -264,12 +282,12 @@ if($db_name && !$table) {
 
     if ($page < 2) { echo "&nbsp;" ; }
     else {
-      echo "<a href=$PHP_SELF><img src=./img/first.gif border=0 alt=\"첫 page로 이동합니다\"></a>" ;
+      echo "<a href=$PHP_SELF><img src=./img/first.gif border=0 alt=\"$mv_first_ment\"></a>" ;
     }
 
     if ($page >= $lastpage) { echo "&nbsp;" ; }
     else {
-      echo "<a href=$PHP_SELF?page=$lastpage&page_num=$last_page_num&scale_lastpage=$last_scale_lastpage><img src=./img/last.gif border=0 alt=\"마지막 page로 이동합니다\"> </a>" ;
+      echo "<a href=$PHP_SELF?page=$lastpage&page_num=$last_page_num&scale_lastpage=$last_scale_lastpage><img src=./img/last.gif border=0 alt=\"$mv_last_ment\"> </a>" ;
     }
 
     for($i=$page_num ; $i<$scale_lastpage ; $i++) {
@@ -294,20 +312,20 @@ if($db_name && !$table) {
     else {
 
       if ($page > 5 && $pfoo == 2) {
-        echo "<a href=$PHP_SELF?page=$priv&page_num=$p_page_num&scale_lastpage=$p_scale_lastpage alt=\"이전 page로 이동합니다\"><font id=am>◁</font></a>" ;
+        echo "<a href=$PHP_SELF?page=$priv&page_num=$p_page_num&scale_lastpage=$p_scale_lastpage alt=\"$mv_priv_ment\"><font id=am>◁</font></a>" ;
       }
       else {
-        echo "<a href=$PHP_SELF?page=$priv&page_num=$page_num&scale_lastpage=$scale_lastpage alt=\"이전 page로 이동합니다\"><font id=am>◁</font></a>" ;
+        echo "<a href=$PHP_SELF?page=$priv&page_num=$page_num&scale_lastpage=$scale_lastpage alt=\"$mv_priv_ment\"><font id=am>◁</font></a>" ;
       }
     }
 
     if ($lastpage-$page <= 0) { echo "&nbsp;" ; }
     else {
       if ($page >= 5 && $pfoo == 0) {
-        echo "<a href=$PHP_SELF?page=$next&page_num=$n_page_num&scale_lastpage=$n_scale_lastpage alt=\"다음 page로 이동합니다\"><font id=am>▷</font></a>" ;
+        echo "<a href=$PHP_SELF?page=$next&page_num=$n_page_num&scale_lastpage=$n_scale_lastpage alt=\"$mv_next_ment\"><font id=am>▷</font></a>" ;
       }
       else {
-        echo "<a href=$PHP_SELF?page=$next&page_num=$page_num&scale_lastpage=$scale_lastpage alt=\"다음 page로 이동합니다\"><font id=am>▷</font></a>" ;
+        echo "<a href=$PHP_SELF?page=$next&page_num=$page_num&scale_lastpage=$scale_lastpage alt=\"$mv_next_ment\"><font id=am>▷</font></a>" ;
       }
     }
   }
@@ -315,10 +333,6 @@ if($db_name && !$table) {
   echo ("</td>\n" .
         "</tr></table>
         ");
-
-/******************* test *******************************/
-
-
 
 }
 

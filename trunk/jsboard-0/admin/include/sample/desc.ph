@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>게시판입니다. <? echo $sub_title ?></title>
+<title>게시판입니다. <? echo $title ?></title>
 <style type="text/css">
 <!--
 a:link, a:visited, a:active { text-decoration: none; color: #6d7bc9; }

@@ -2,7 +2,7 @@
 
 /************************************************************************
 *                                                                       *
-*                 OOPS Administration Center v1.2                       *
+*                 OOPS Administration Center v1.3                       *
 *                     Scripted by JoungKyun Kim                         *
 *               admin@oops.org http://www.oops.org                      *
 *                                                                       *
@@ -16,9 +16,12 @@ $name_ext = "bbuwoo";
 $passwd_ext = "0000";
 $email_ext = "admin@oops.org";
 $url_ext = "http://www.oops.org";
-$title_ext = "이글을 보신후 꼭 삭제하십시오.";
-$text_ext = "게시판을 처음 사용하실때 유의하실 점입니다. 
-일단 기본적으로 Admin mode의 password는 0000으로 맞추어져 있습니다. 
-게시판 상단의 admin 을 클릭하여 이것들을 변경하여 주십시오.";
+
+/* jsboard/include/multi_lang.ph 를 참조 */
+
+$subj_msg = "$title_ext" ;
+$text_msg = "$text_ext" ;
+
+}
 
 ?>

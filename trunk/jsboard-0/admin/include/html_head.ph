@@ -1,12 +1,12 @@
 <?php
 
-$version = "OOPS administration center v.1.2";
+$version = "OOPS administration center v.1.3";
 
 echo ("
 <!----
 /************************************************************************
 *                                                                       *
-*                  OOPS Administration Center v1.2                      *
+*                  OOPS Administration Center v1.3                      *
 *                      Scripted by JoungKyun Kim                        *
 *                admin@oops.org http://www.oops.org                     *
 *                                                                       *
@@ -149,14 +149,14 @@ td { font-size:9pt; color:#999999 }
 
 if ( $admin_ownfile == "admin.php3") {
 
-  echo ("<table border=0>\n" .
+  echo ("<table border=0 cellpadding=0 cellspacing=0 border=0>\n" .
         "<tr>\n" .
-        "<td rowspan=2 valign=buttom><font id=title><b>OOPS</b></font></td>\n" .
-        "<td valign=bottom>JS Board</td>\n" .
+        "<td rowspan=2 valign=buttom><font id=title><b>OOPS&nbsp;</b></font></td>\n" .
+        "<td valign=bottom> for JS Board</td>\n" .
         "</tr>\n" .
         "\n" .
         "<tr>\n" .
-        "<td valign=top>Admin Center v1.2</td>\n" .
+        "<td valign=top>Administration Center v1.3</td>\n" .
         "</tr>\n" .
         "</table>") ;
 

@@ -2,7 +2,7 @@
 
 /************************************************************************
 *                                                                       *
-*                 OOPS Administration Center v1.2                       *
+*                 OOPS Administration Center v1.3                       *
 *                     Scripted by JoungKyun Kim                         *
 *               admin@oops.org http://www.oops.org                      *
 *                                                                       *
@@ -19,10 +19,17 @@ $passwd = crypt("$passwd","oo") ;
 
 /****************************************************/
 
+if ($lang == "ko") {
+  $no_pass_alert = "password가 없이 본 file에\\naccess 할수 없습니다" ;
+  $di_pass_alert = "패스워드가 틀립니다" ;
+} else {
+  $no_pass_alert = "Don\\'t access this file\\nwithout Password." ;
+  $di_pass_alert = "Invalid Password" ;
+}
 
 if (!$mysql_root) {
   echo ("<script>\n" .
-        "alert('password가 없이 본 file에\\naccess 할수 없습니다')\n" .
+        "alert('$no_pass_alert')\n" .
         "document.location='./index.php3'\n" .
         "</script>" );
   exit ;
@@ -31,7 +38,7 @@ if (!$mysql_root) {
 
 if ($mysql_root != $passwd) {
   echo ("<script>\n" .
-        "alert('패스워드가 틀립니다')\n" .
+        "alert('$di_pass_alert')\n" .
         "document.location='./cookie.php3?mode=logout'\n" .
         "</script>" );
   exit ;
@@ -41,7 +48,7 @@ if ($mysql_root != $passwd) {
 
 <html>
 <head>
-<title>Board Manager v1.2 [DB Create Page]</title>
+<title>Board Manager v1.3 [DB Create Page]</title>
 
 <style type=text/css>
 a:link { text-decoration:none; }
@@ -85,6 +92,7 @@ Mysql User Registration Page
 <td align=center colspan=2>&nbsp;</td>
 </tr>
 <tr><td colspan=2 align=center><input type='submit' value='E N T E R' id=submit></td></tr>
+<input type=hidden name=lang value=<? echo $lang ?>>
 </form>
 </table>
 

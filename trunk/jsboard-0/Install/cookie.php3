@@ -1,13 +1,11 @@
 <?
-
 /************************************************************************
 *                                                                       *
-*                 OOPS Administration Center v1.2                       *
+*                 OOPS Administration Center v1.3                       *
 *                     Scripted by JoungKyun Kim                         *
 *               admin@oops.kr.net http://oops.kr.net                    *
 *                                                                       *
 ************************************************************************/
-
 
 if ($mode == "login") {
 
@@ -18,7 +16,7 @@ if ($mode == "login") {
   $mysql_pass = crypt("$mysql_pass","oo") ;
 
   SetCookie("mysql_root","$mysql_pass","$Cookie_expire"); 
-  header("Location: mysql_user_regist.php3") ;
+  header("Location: mysql_user_regist.php3?lang=$lang") ;
 }
 
 else if ($mode == "logout") {
@@ -32,12 +30,13 @@ else if ($mode == "first") {
 
   SetCookie("mysql_root","","0"); 
 
+  include("../include/multi_lang.ph");
+
   echo("<script>\n" .
-       "  alert('등록이 완료 되었습니다.\\nAdmin Page로 이동을 합니다.\\nAdmin Page의 초기 Password는\\n0000 입니다.')\n" .
+       "  alert('$alert')\n" .
        "  document.location='../admin/index.php3'\n" .
        "</script> ") ;
   exit ;
-
 }
 
 ?>

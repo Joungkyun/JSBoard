@@ -2,7 +2,7 @@
 
 /************************************************************************
 *                                                                       *
-*                 OOPS Administration Center v1.2                       *
+*                 OOPS Administration Center v1.3                       *
 *                     Scripted by JoungKyun Kim                         *
 *               admin@oops.org http://www.oops.org                      *
 *                                                                       *
@@ -12,6 +12,17 @@
 $none = "white" ;
 $table = $db ;
 
+include("../../include/db.ph") ;
+include("../../include/$table/config.ph") ;
+
+/* DB에서 각 게시판의 설정값을 가져옴 */
+include("../include/boardinfo.ph");
+include("../include/user_config_var.ph");
+$super_user = board_info($super_user);
+
+include("../../include/multi_lang.ph");
+
+
 /******************************************
                인증 작업
  *****************************************/
@@ -19,7 +30,7 @@ $table = $db ;
 if(!$table) { 
   echo(" <html><body bgcolor=$bg_color>
 	 <script>
-         alert('허튼 수작 하지 마시옷!')
+         alert('$crack')
 	 history.back()
          </script>
          &nbsp;</body></html>
@@ -27,18 +38,18 @@ if(!$table) {
   exit ;
 }
 
-
-include("../include/info.php3") ;
-include("../../include/$table/config.ph");
-
+$connect=mysql_connect( $db_server, $db_user, $db_pass) or
+                   die( "$sql_error"); 
 
 $admin_auth = crypt("$admin_auth","oo");
 $login_pass = crypt("$login_pass","oo");
 
+mysql_close();
+
 if($admin_auth != $board_manager && $login_pass != $super_user && $admin_auth != $super_user) { 
   echo(" <html><body bgcolor=$bg_color>
 	 <script>
-         alert('Password 가 들립니다.')
+         alert('$pass_alert')
          </script>
 	 <meta http-equiv='Refresh' content='0; URL=../../list.php3?table=$table'>
          &nbsp;</body></html>
@@ -88,16 +99,69 @@ echo("
 </tr>
 
 <tr>
-<td colspan=6 align=center bgcolor=#555555><font id=ac>Table Informations</font></td>
+<td colspan=6 align=center bgcolor=#555555><font id=ac>Language Informations</font></td>
 </tr>
 
 <tr>
-<td bgcolor=#333333>BoardName</td>
-<td><input type=text name=brdname size=14 maxlength=200 id=input value=$boardname></td>
-<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=brdname')></td>
-<td bgcolor=#333333></td>
-<td bgcolor=#333333></td>
-<td bgcolor=#333333></td>
+<td bgcolor=#333333>Choice</td>
+<td colspan=4> $lang_text 
+");
+
+if ($lang == "ko") {
+echo ("
+<input type=radio name=langs value=en>$lang_ch_en
+<input type=radio name=langs value=ko checked>$lang_ch_ko
+");
+}
+else {
+echo ("
+<input type=radio name=langs value=en checked>$lang_ch_en
+<input type=radio name=langs value=ko>$lang_ch_ko
+");
+}
+
+echo ("
+</td>
+<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=language')></td>
+</tr>
+
+<tr>
+<td colspan=6 align=center>&nbsp;</td>
+</tr
+
+<tr>
+<td colspan=6 align=center bgcolor=#555555><font id=ac>Write Mode Informations</font></td>
+</tr>
+
+<tr>
+<td bgcolor=#333333>Choice</td>
+<td colspan=4> $write_text
+");
+
+if ($writemode == "admin") {
+echo ("
+<input type=radio name=writemodes value=user>$write_user
+<input type=radio name=writemodes value=admin checked>$write_admin
+");
+}
+else {
+echo ("
+<input type=radio name=writemodes value=user checked>$write_user
+<input type=radio name=writemodes value=admin>$write_admin
+");
+}
+
+echo ("
+</td>
+<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=writemode')></td>
+</tr>
+
+<tr>
+<td colspan=6 align=center>&nbsp;</td>
+</tr>
+
+<tr>
+<td colspan=6 align=center bgcolor=#555555><font id=ac>Table Informations</font></td>
 </tr>
 
 <tr>
@@ -116,13 +180,6 @@ echo("
 <td bgcolor=#333333>Size</td>
 <td><input type=text name=tablewidth size=14 id=input value=$width></td>
 <td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=tablewidth')></td>
-</tr>
-<tr>
-<td bgcolor=#333333>Board Notice</td>
-<td colspan=4 align=center><textarea name=brdnotice cols=55 rows=10 wrap=virtual id=input>");
-if ($boardnotice) echo $boardnotice;
-echo ("</textarea></td>
-<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=brdnotice')></td>
 </tr>
 
 <tr>
@@ -221,18 +278,9 @@ echo ("</textarea></td>
 <td bgcolor=#333333>TodayArticleBG</td>
 <td><input type=text name=todayarticlebg size=14 id=input value=$t0_bg></td>
 <td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=todayarticlebg')></td>
-<td bgcolor=#333333>MouseOverBG</td>
-<td><input type=text name=mouseoverbg size=14 id=input value=$mo_bg></td>
-<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=mouseoverbg')></td>
-</tr>
-
-<tr>
-<td bgcolor=#333333>SearchBG</td>
-<td><input type=text name=searchbg size=14 id=input value=$sch_bg></td>
-<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=searchbg')></td>
-<td bgcolor=#333333></td>
-<td bgcolor=#333333></td>
-<td bgcolor=#333333></td>
+<td bgcolor=#333333>&nbsp;</td>
+<td bgcolor=#333333>&nbsp;</td>
+<td bgcolor=#333333>&nbsp;</td>
 </tr>
 
 
@@ -241,24 +289,24 @@ echo ("</textarea></td>
 </tr>
 
 <tr>
-<td bgcolor=#555555 colspan=6 align=center><font id=ac>Menu Information</font></td>
+<td bgcolor=#555555 colspan=6 align=center><font id=ac>Menu BAR Configuration</font></td>
 </tr>
 
 <tr>
-<td bgcolor=#333333>ReplyWriter</td>
-<td colspan=4>메뉴를
+<td bgcolor=#333333>$usage</td>
+<td colspan=4>$menu_text
 ");
 
 if ($menuallow == "no") {
 echo ("
-<input type=radio name=menu_allow size=14 value=no checked>보여주지 않는다.
-<input type=radio name=menu_allow size=14 value=yes>보여준다
+<input type=radio name=menu_allow value=no checked>$menu_di
+<input type=radio name=menu_allow value=yes>$menu_en
 ");
 }
 else {
 echo ("
-<input type=radio name=menu_allow size=14 value=no>보여주지 않는다
-<input type=radio name=menu_allow size=14 value=yes checked>보여준다
+<input type=radio name=menu_allow value=no>$menu_di
+<input type=radio name=menu_allow value=yes checked>$menu_en
 ");
 }
 
@@ -266,21 +314,6 @@ echo ("
 </td>
 <td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=menuallow')></td>
 </tr>
-
-<tr>
-<td bgcolor=#333333>Home Link</td>
-<td colspan=4><input type=text name=home_link size=40 id=input value=\"$homelink\"></td>
-<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=homelink')></td>
-</tr>
-
-<tr>
-<td bgcolor=#333333>List Link</td>
-<td colspan=4>$backlink</td>
-<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=backlink')></td>
-</tr>
-
-
-
 
 <tr>
 <td colspan=6 align=center>&nbsp;</td>
@@ -298,19 +331,19 @@ echo ("
 
 <tr>
 <td bgcolor=#333333>ReplyWriter</td>
-<td colspan=4>답장 메일을 
+<td colspan=4>$replymail_text 
 ");
 
 if ($mailtowriter == "no") {
 echo ("
-<input type=radio name=replywriter size=14 value=no checked>보내지 않는다
-<input type=radio name=replywriter size=14 value=yes>보낸다
+<input type=radio name=replywriter value=no checked>$replymail_di
+<input type=radio name=replywriter value=yes>$replymail_en
 ");
 }
 else {
 echo ("
-<input type=radio name=replywriter size=14 value=no>보내지 않는다
-<input type=radio name=replywriter size=14 value=yes checked>보낸다
+<input type=radio name=replywriter value=no>$replymail_di
+<input type=radio name=replywriter value=yes checked>$replymail_en
 ");
 }
 
@@ -336,20 +369,20 @@ echo ("
 </tr>
 
 <tr>
-<td bgcolor=#333333>사용여부</td>
+<td bgcolor=#333333>$usage</td>
 <td colspan=4>
 ");
 
 if ($file_upload == "no") {
 echo ("
-<input type=radio name=fileupload size=14 value=yes>허용
-<input type=radio name=fileupload size=14 value=no checked>허용안함
+<input type=radio name=fileupload value=yes>$upload_en
+<input type=radio name=fileupload value=no checked>$upload_di
 ");
 }
 else {
 echo ("
-<input type=radio name=fileupload size=14 value=yes checked>허용
-<input type=radio name=fileupload size=14 value=no>허용안함
+<input type=radio name=fileupload value=yes checked>$upload_en
+<input type=radio name=fileupload value=no>$upload_di
 ");
 }
 
@@ -375,29 +408,26 @@ echo ("
 </tr>
 
 <tr>
-<td bgcolor=#555555 colspan=6 align=center><font id=ac>기타 Information</font></td>
+<td bgcolor=#555555 colspan=6 align=center><font id=ac>Etc Information</font></td>
 </tr>
 
 <tr>
 <td bgcolor=#333333>E-mail</td>
-<td colspan=4>E-mail 등록을
+<td colspan=4>$mail_text
 ");
 
 if ($use_email == "no") {
 echo ("
-<input type=radio name=useemail size=14 value=yes>사용한다
-<input type=radio name=useemail size=14 value=no checked>사용하지 않는다
+<input type=radio name=useemail value=yes>$mailhome_en
+<input type=radio name=useemail value=no checked>$mailhome_di
 ");
 }
 else {
 echo ("
-<input type=radio name=useemail size=14 value=yes checked>사용한다
-<input type=radio name=useemail size=14 value=no>사용하지 않는다
+<input type=radio name=useemail value=yes checked>$mailhome_en
+<input type=radio name=useemail value=no>$mailhome_di
 ");
 }
-
-if ($headname) { $checkingo = "checked"; $checkingx = ""; }
-else { $checkingo = ""; $checkingx = "checked"; }
 
 echo("
 </td>
@@ -405,46 +435,20 @@ echo("
 </tr>
 
 <tr>
-<td bgcolor=#333333>Shortname of Title (말머리)</td>
-<td colspan=4 valign=top>
-<font color=red>기존값 적용시 <input type='checkbox' name='oldheadsht' value='1'> 이 박스를 체크하십시오.</font><p>
-<table border=0 cellpadding=0 cellspacing=0 width=100%>
-<tr>
-<td width=50% valign=top>말머리 이용<br>
-<input type=radio name=shtname_allow size=14 value=1 $checkingo>이용한다.<p>
-<input type='checkbox' name='headsht1' value='잡담' checked> [잡담]<br>
-<input type='checkbox' name='headsht3' value='참고'> [참고]<br>
-<input type='checkbox' name='headsht5' value='공지'> [공지]<br>
-<input type='checkbox' name='headsht7' value='건의'> [건의]<br>
-<input type='checkbox' name='headsht9' value='추천'> [추천]<br>
-<input type='checkbox' name='headsht11' value='사용기'> [사용기]</td>
-
-<td width=50% valign=top>&nbsp;<br>
-<input type=radio name=shtname_allow size=14 value=0 $checkingx>이용하지 않는다.<p>
-<input type='checkbox' name='headsht2' value='질문'> [질문]<br>
-<input type='checkbox' name='headsht4' value='답변'> [답변]<br>
-<input type='checkbox' name='headsht6' value='정보'> [정보]<br>
-<input type='checkbox' name='headsht8' value='제보'> [제보]<br>
-<input type='checkbox' name='headsht10' value='소감'> [소감]<br>
-<input type='checkbox' name='headsht12' value='테스트'> [테스트]</td></tr></table></td>
-<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=headname')></td>
-</tr>
-
-<tr>
 <td bgcolor=#333333>Homepage</td>
-<td colspan=4>Homepage 등록을
+<td colspan=4>$home_text
 ");
 
 if ($use_url == "no") {
 echo ("
-<input type=radio name=useurl size=14 value=yes>사용한다
-<input type=radio name=useurl size=14 value=no checked>사용하지 않는다
+<input type=radio name=useurl value=yes>$mailhome_en
+<input type=radio name=useurl value=no checked>$mailhome_di
 ");
 }
 else {
 echo ("
-<input type=radio name=useurl size=14 value=yes checked>사용한다
-<input type=radio name=useurl size=14 value=no>사용하지 않는다
+<input type=radio name=useurl value=yes checked>$mailhome_en
+<input type=radio name=useurl value=no>$mailhome_di
 ");
 }
 
@@ -477,7 +481,7 @@ echo("
   }
 
   else {
-    $header = "desc.ph file이 존재하지 안습니다." ;
+    $header = "$header_exist_error" ;
   }
 
 
@@ -493,7 +497,7 @@ echo("
   }
 
   else {
-    $tail = "tail.ph file이 존재하지 안습니다." ;
+    $tail = "$header_exist_error" ;
   }
 
 
@@ -537,6 +541,7 @@ echo("
 <tr>
 <td bgcolor=#555555 colspan=6 align=center>
 <input type=hidden name=db value=$table>
+<input type=hidden name=lang value=$lang>
 <input type=hidden name=serial value=\"$admin_auth\">
 <input type=submit value=regist id=input>
 <input type=reset value=reset id=input>
