@@ -4,23 +4,23 @@ $path[type] = "admin";
 if (!file_exists("../config/global.ph")) {
   echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
        "history.back();\nexit;\n</script>\n";
-} else require("../config/global.ph");
-if ($color[theme]) require("../config/default.themes");
+} else { include("../config/global.ph"); }
+if ($color[theme]) { include("../config/default.themes"); }
 
-require("../include/lang.ph");
-require("../include/check.ph");
-require("../include/error.ph");
-require("../include/get.ph");
-require("../include/sql.ph");
-require("include/check.ph");
-require("include/config.ph");
+include("../include/lang.ph");
+include("../include/check.ph");
+include("../include/error.ph");
+include("../include/get.ph");
+include("../include/sql.ph");
+include("include/check.ph");
+include("include/config.ph");
 
 // password 비교함수 - admin/include/check.ph
 compare_pass($sadmin,$login);
 
 if(!$table) print_error($table_err);
-require("../data/$table/config.ph");
-if ($color[theme]) include("../data/$table/default.themes");
+include("../data/$table/config.ph");
+if ($color[theme]) { include("../data/$table/default.themes"); }
 
 require("include/html_ahead.ph");
 
@@ -189,6 +189,18 @@ for($i = 0; $i < 4; $i++) {
 </TD></TR></TABLE>\n",
     $count[nor], $per[nor], $count[rep], $per[rep], $per[per], $count[all]);
 
+    if (!$count[all]) {
+      $for[year] = 0;
+      $for[month] = 0;
+      $for[day] = 0;
+      $for[hour] = 0;
+    } else {
+      $for[year] = $count[all] / ($article[time] / ((60*60*24*30*12) + (60*60*24*5)));
+      $for[month] = $count[all] / ($article[time] / (60*60*24*30));
+      $for[day] = $count[all] / ($article[time] / (60*60*24));
+      $for[hour] = $count[all] / ($article[time] / (60*60));
+    }
+
     $str[avg] = sprintf("
 <TABLE WIDTH=\"150\" BGCOLOR=\"$color[l0_bg]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\"><TR><TD>
 <TABLE WIDTH=\"100%%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"4\">
@@ -209,10 +221,7 @@ for($i = 0; $i < 4; $i++) {
 </TR>
 </TABLE>
 </TD></TR></TABLE>\n", 
-    $count[all] / ($article[time] / ((60*60*24*30*12) + (60*60*24*5))),
-    $count[all] / ($article[time] / (60*60*24*30)),
-    $count[all] / ($article[time] / (60*60*24)),
-    $count[all] / ($article[time] / (60*60)));
+    $for[year],$for[month],$for[day],$for[hour]);
 
     $str[refer] = sprintf("
 <TABLE WIDTH=\"150\" BGCOLOR=\"$color[l0_bg]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\"><TR><TD>
@@ -234,10 +243,7 @@ for($i = 0; $i < 4; $i++) {
 </TR>
 </TABLE>
 </TD></TR></TABLE>\n", 
-    $refer[max],
-    $table, $refer[mno], $refer[mno],
-    $per[avg],
-    $refer[total]);
+    $refer[max],$table, $refer[mno], $refer[mno],$per[avg],$refer[total]);
 
     printf("
 <TABLE WIDTH=\"1%%\" BORDER=\"0\" CELLSPACING=\"3\" CELLPADDING=\"0\">

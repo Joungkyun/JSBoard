@@ -140,7 +140,7 @@ if ( $mode != 'manager_config') {
 
       $configfile = "./include/config.ph";
       $fp = fopen($configfile,"r");
-      while(!feof($fp)) { $admininfo .= fgets($fp, filesize($configfile)); } 
+      $admininfo = fread($fp,filesize($configfile));
       fclose($fp);
 
       $admininfo = eregi_replace("sadmin\[passwd\] = (\"[a-z0-9\.\/]*\")","sadmin[passwd] = \"$ad_pass\"",$admininfo);

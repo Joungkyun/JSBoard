@@ -10,7 +10,7 @@ function get_hostname($reverse = 0) {
   $host = getenv("REMOTE_ADDR");
 
   // httpd.conf에서 HostnameLookup On 으로 설정했을 경우만 해당됨
-  $check = gethostbyaddr($host);
+  $check = @gethostbyaddr($host);
   //$check = getenv("REMOTE_HOST");
 
   if($check) $host = $check;

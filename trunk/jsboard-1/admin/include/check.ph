@@ -45,8 +45,14 @@ function new_table_check($table) {
     exit;
   }
 
-  if (!eregi("[a-zA-Z]",$table)) {
+  if (!eregi("^[a-zA-Z]",$table)) {
     echo "<script>\nalert('$langs[n_db]')\n" .
+         "history.back() \n</script>";
+    exit;
+  }
+
+  if (eregi("\-",$table)) {
+    echo "<script>\nalert('Can\\'t use dash in board name')\n" .
          "history.back() \n</script>";
     exit;
   }

@@ -9,16 +9,16 @@
 #
 #  CVS Server 관리	: 김영민 < blhole@hotmail.com >
 #  Homepage 공간 제공	: http://www.kldp.org
-#  Special Thanks	: 임은재 < eunjae@kldp.org>
+#  Special Thanks	: 임은재 < eunjea@kldp.org>
 #
 #############################################################################
 #
-#                               Installation in JSBoard 1.0 v0.3
+#                               Installation in JSBoard 1.0 v0.4
 #
 #############################################################################
 
 작성 : 김정균 <admin@oops.org>
-일시 : 2000.7.2
+일시 : 2000.7.17
 
 이 문서는 JSBoard 1.0 version의 설치를 위해 제공을 한다.
 이 문서로 인한 피해나 JSBoard의 사용으로 인한 피해에 대해서는
@@ -57,7 +57,7 @@ compile 시에 빼면 절대 안된다.
   2. JSBoard 설치
   3. JSBoard 운영
   4. UPGRADE
-    4-1. 0.8 또는 1.0 prelease version에서의 upgrade
+    4-1. 0.8 또는 1.0.x 에서의 upgrade
     4-2. 0.7 이하 버젼에서의 upgrade
   5. Bug report
 
@@ -362,9 +362,9 @@ compile 시에 빼면 절대 안된다.
 
 4. UPGRADE
 
-  4-1. 0.8 또는 1.0 prelease version에서의 upgrade
+  4-1. 0.8 또는 1.0.x 에서의 upgrade
 
-    0.8 또는 1.0 prelease 에서의 upgrade 무척 단순하다. 즉, 1.0의 소스를 받
+    0.8 또는 1.0.x 에서의 upgrade 무척 단순하다. 즉, 1.0.2의 소스를 받
     아서 덮어 씌어 주기만 하면 된다. 소스를 덮어 씌운후에
     jsbaord/Installer/script 에서 root사용자의 경우에는 root_p.sh 를 실행해
     주면 되며, 계정 유저의 경우에는 account_p.sh를 실행해 주기만 하면 된다.

@@ -356,7 +356,7 @@ if ($o[at] != "dn") {
     if ($list && $atc[name] == $list[name] &&
       $atc[text] == $list[text] &&
       $atc[title] == $list[title] &&
-      $atc[html] == $atc[html]) {
+      $atc[html] == $list[html]) {
 
       switch ($o[at]) {
         case 'p':
