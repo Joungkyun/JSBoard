@@ -35,6 +35,7 @@ mysql_close();
 # auth value check
 $ua[ad] = !trim($ua[ad]) ? "admin" : $ua[ad];
 $ua[rnname] = !trim($ua[rnname]) ? 0 : $ua[rnname];
+$ua[dopage] = trim($ua[dopage]) ? $ua[dopage] : "http://$board[path]/list.php?table=$table";
 
 # Permission Check
 if($ua[pre]) $chg[pre] = 1;
@@ -150,6 +151,9 @@ $chg_conf = "<?
 # 로그인 모드시에 이름 출력을 실명으로 할지 Nickname 으로 할지 결정
 # 이 변수값이 설정이 안되어 있으면 Nickname 으로 출력
 \$board[rnname] = $ua[rnname];
+
+# 로그아웃 후에 이동할 페이지를 지정
+\$print[dopage] = \"$ua[dopage]\";
 
 ###############################################################################
 #  게시판 허가 설정

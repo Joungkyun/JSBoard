@@ -16,6 +16,12 @@
 $board[ad] = "@ADMIN@";
 $board[mode] = 0;
 
+# 로그인 모드시에 이름 출력을 실명으로 할지 Nickname 으로 할지 결정
+# 이 변수값이 설정이 안되어 있으면 Nickname 으로 출력
+$board[rnname] = 0;
+
+# 로그아웃 후에 이동할 페이지를 지정
+$print[dopage] = "http://domain.com/jsboard/list.php?table=test";
 
 ###############################################################################
 #  게시판 허가 설정

@@ -161,7 +161,10 @@ echo "<?
 \$jsboard         = \"jsboard\".\$jsboard;
 
 # location of default page after login
-\$print[dpage] = \"http://domain.com/jsboard/list.php?table=test\";
+\$print[dpage] = \"${ABBS}list.php?table=test\";
+
+# location of default page after logout
+\$print[dopage] = \"${ABBS}list.php?table=test\";
 
 # permition of user registration
 # 1 -> everyone
@@ -386,6 +389,13 @@ do
 #
 \$board[ad] = \"admin\";
 \$board[mode] = 0;
+
+# 로그인 모드시에 이름 출력을 실명으로 할지 Nickname 으로 할지 결정
+# 이 변수값이 설정이 안되어 있으면 Nickname 으로 출력
+\$board[rnname] = 0;
+
+# 로그아웃 후에 이동할 페이지를 지정
+\$print[dopage] = \"${ABBS}list.php?table=${i}\";
 
 
 ###############################################################################
