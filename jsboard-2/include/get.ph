@@ -514,17 +514,13 @@ function get_html_src($url,$size=5000,$file="",$type="") {
   } else return $f;
 }
 
-# 랜덤키를 얻는 함수
-function get_random_value() {
-  mt_srand ((double) microtime() * 1000000);
-  return mt_rand(1,1000);
-}
-
 # 스팸 등록기 체크를 위한 알고리즘
 #
-function get_spam_value($v,$no) {
+function get_spam_value($v) {
   $chk = explode(":",$v);
-  $ret = $chk[0] * $no - ($chk[1] * $chk[2]);
+  $ran = preg_replace("/[a-z]/i","",substr($_COOKIE[PHPSESSID],0,10));
+  $ran = $ran ? $ran : preg_replace("/[a-z]/i","",substr($_COOKIE[PHPSESSID],10));
+  $ret = $chk[0] * $ran - ($chk[1] * $chk[2]);
 
   return $ret;
 }

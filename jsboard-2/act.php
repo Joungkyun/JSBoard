@@ -299,7 +299,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     global $board, $passwd, $agent;
 
     # spam 등록기 체크
-    check_spamer($board[antispam],$atc[wkey],$atc[ran]);
+    check_spamer($board[antispam],$atc[wkey]);
 
     # location check
     check_location(1);
