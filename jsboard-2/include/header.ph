@@ -1,5 +1,5 @@
 <?
-if(eregi("(write|edit|reply)\.php",$_SERVER[PHP_SELF]))
+if(preg_match("/(write|edit|reply)\.php/i",$_SERVER[PHP_SELF]))
   session_cache_limiter('nocache, must-revalidate');
 
 include_once "include/error.ph";
@@ -13,7 +13,7 @@ if (!@file_exists("config/global.ph")) {
 } else { include_once "config/global.ph"; }
 
 session_start();
-if(!session_is_registered("$jsboard") && eregi("session\.php",$_SERVER[PHP_SELF]))
+if(!session_is_registered("$jsboard") && !preg_match("/session\.php/i",$_SERVER[PHP_SELF]))
   session_destroy();
 
 ##############################################################################
@@ -63,7 +63,7 @@ $agent = get_agent();
 $db = replication_mode($db);
 
 # 외부 hyper link 를 막기 위한 설정
-if(eregi("(list|read|form|write)\.php",$_SERVER[PHP_SELF]))
+if(preg_match("/(list|read|form|write)\.php/i",$_SERVER[PHP_SELF]))
   check_dhyper($enable[dhyper],$enable[plink]);
 
 # write, edit, reply page form size ========================
@@ -74,7 +74,7 @@ $size[text] = !$size[text] ? form_size(30) : form_size($size[text]);
 $size[uplo] = !$size[uplo] ? form_size(19) : form_size($size[uplo]);
 
 # table 이 없거나 meta character 존재 유무 체크
-if(!eregi("(user|session|regist|error|image)\.php",$_SERVER[PHP_SELF])) {
+if(!preg_match("/(user|session|regist|error|image)\.php/i",$_SERVER[PHP_SELF])) {
   if($dn[tb]) $table = $dn[tb];
   meta_char_check($table,0,1);
   meta_char_check($print[theme],0,1);
@@ -83,9 +83,9 @@ if(!eregi("(user|session|regist|error|image)\.php",$_SERVER[PHP_SELF])) {
 if ($upload[yesno] && $cupload[yesno]) $colspan = "7";
 else $colspan = "6";
 
-if(strtoupper($color[bgcol]) == strtoupper($color[l4_bg]) && eregi("list.php",$_SERVER[PHP_SELF])) {
+if(strtoupper($color[bgcol]) == strtoupper($color[l4_bg]) && preg_match("/list\.php/i",$_SERVER[PHP_SELF])) {
   $form_border = "1x";
-} elseif(strtoupper($color[bgcol]) == strtoupper($color[r5_bg]) && eregi("read.php",$_SERVER[PHP_SELF])) {
+} elseif(strtoupper($color[bgcol]) == strtoupper($color[r5_bg]) && preg_match("/read\.php/i",$_SERVER[PHP_SELF])) {
   $form_border = "1x";
 } else $form_border = "2x";
 
@@ -103,7 +103,7 @@ switch ($designer[license]) {
     break;
 }
 
-if(eregi("(read|list)\.php",$_SERVER[PHP_SELF])) {
+if(preg_match("/(read|list)\.php/i",$_SERVER[PHP_SELF])) {
   if($theme[ver] != $designer[ver]) print_error($langs[nomatch_theme],250,150,1);
 }
 ?>
