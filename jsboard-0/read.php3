@@ -39,7 +39,16 @@ while($list = dfetch_row($result)) {
 
     $num    = num_lang($num,$lang) ;
     $date   = date_format($date,$lang);
+    $title  = htmlspecialchars($title);
 
+    if ($act == "search") {
+      $sc[string] = eregi_replace("(\[|\])","\\\\0",$sc_string);
+      $sc[string] = eregi_replace("\\\\\\\"","&quot;",$sc[string]);
+      $title  = eregi_replace("($sc[string])","<font color=darkred><b>\\0</b></font>",$title);
+    }
+
+    if ($act == "search")
+      $text  = eregi_replace("($sc[string])","<font color=darkred><b>\\0</b></font>",$text);
     $text   = eregi_replace("\r\n", "\n", $text);
     $text   = eregi_replace("\n", "\r\n", $text);
     $text   = nl2br($text);
@@ -143,16 +152,11 @@ while($list = dfetch_row($result)) {
       if ($tail == "txt" || $tail == "phps" || $tail == "shs") {
         echo ("<p><br>\n" .
               "---- $subj_attach -------------------------- \n<p>\n<pre>");
-
-        if ($tail != "txt") {
-          $fp = fopen("$filesavedir/$bcfile/$bofile", "r");
-          while(!feof($fp)) { $view .= fgets($fp, 100); }
-          fclose($fp);
-          $view = htmlspecialchars($view) ;
-          echo ("$view") ;
-        } else {
-          include("$filesavedir/$bcfile/$bofile");
-        }
+        $fp = fopen("$filesavedir/$bcfile/$bofile", "r");
+        while(!feof($fp)) { $view .= fgets($fp, 100); }
+        fclose($fp);
+        $view = htmlspecialchars($view) ;
+        echo ("$view") ;
 
         echo("\n</pre>\n<br><br>");
 

@@ -11,7 +11,7 @@ $super_admin = crypt("$passwd","oo") ;
 
 if(!$table) { error(); }
 
-dconnect($db_sever, $db_user, $db_pass);
+dconnect($db_server, $db_user, $db_pass);
 dselect_db($db_name);
 
 $result = dquery("SELECT MAX(num) FROM $table");
@@ -83,8 +83,7 @@ if ($act == "post" || $act == "edit") {
 	
 	// 파일 올리는 펑션. 99.11.17. taejun
 
-	if($file_upload =='yes')
-	{
+	if($file_upload =='yes') {
 
 		/* file size 0byte upload 금지 - 1999.12.21 JoungKyun */
 
@@ -113,7 +112,10 @@ if ($act == "post" || $act == "edit") {
 
 			// php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
 			$userfile_name = eregi_replace(".(php[0-9a-z]*|phtml)$", ".phps", $userfile_name) ;
-			$userfile_name = eregi_replace("(.*).(cgi|pl|sh)$", "\\1.\\2s", $userfile_name) ;
+			$userfile_name = eregi_replace("(.*).(cgi|pl|sh|html|shtml|htm)$", "\\1_\\2.phps", $userfile_name) ;
+
+                        // file name에 blank가 있을 경우 blank 삭제
+                        $userfile_name = eregi_replace(" ","",$userfile_name);
 
 			mkdir("$filesavedir/$bfilename",0755);
 			exec("mv \"$userfile\" \"$filesavedir/$bfilename/$userfile_name\"");

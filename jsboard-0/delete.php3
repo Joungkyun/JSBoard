@@ -30,6 +30,7 @@ while($list = dfetch_row($result)) {
     $bfsize = $list[17]; // 파일크기
 
     $date = date_format($date,$lang) ;
+    $title  = htmlspecialchars($title);
 
     $text   = eregi_replace("\r\n", "\n", $text);
     $text   = eregi_replace("\n", "\r\n", $text);
