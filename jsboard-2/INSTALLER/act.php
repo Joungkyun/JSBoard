@@ -82,6 +82,19 @@ if ($indb[check]) {
 		  KEY reto (reto),
 		  PRIMARY KEY (no))";
 
+  # comment table »ý¼º
+  $create[comment] = "CREATE TABLE test_comm (
+                  no int(6) NOT NULL auto_increment,
+                  reno int(20) NOT NULL default '0',
+                  rname tinytext,
+                  name tinytext,
+                  passwd varchar(56) default NULL,
+                  text mediumtext,
+                  host tinytext,
+                  date int(11) NOT NULL default '0',
+                  PRIMARY KEY  (no),
+                  KEY parent (reno))";
+
   $create[utable] = "CREATE TABLE userdb (
                   no int(6) NOT NULL auto_increment,
                   nid varchar(100) NOT NULL default '',
@@ -111,6 +124,7 @@ if ($indb[check]) {
 
   $result[table] = mysql_db_query($dbinst[name],$create[table], $connect );
   $result[utable] = mysql_db_query($dbinst[name],$create[utable], $connect );
+  $result[utable] = mysql_db_query($dbinst[name],$create[comment], $connect );
   #$result[data] = mysql_db_query($dbinst[name],$create[data], $connect );
   $result[udata] = mysql_db_query($dbinst[name],$create[udata], $connect );
 
