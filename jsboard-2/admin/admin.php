@@ -77,7 +77,7 @@ if($db[name] && !$table) {
     for($i=$start; $i<$until; $i++) {
       if($i < $tbl_num && $table_name[$i] != "userdb") {
         # jsboard에서 사용하는 게시판인지를 판단
-        $chk = "select idx from $table_name[$i]";
+        $chk = "select idx from $table_name[$i] where idx = 1;";
         $chk_result = mysql_query($chk,$connect);
 
         # 각 table에 등록된 글 수를 check 합니다.
@@ -90,7 +90,7 @@ if($db[name] && !$table) {
         $to = $to + $total_count;
         $total = "select count(*) from $table_name[$i] where date > '$current_time'";
 
-        $result = mysql_query($total,$connect );
+        #$result = mysql_query($total,$connect );
         $total_today = @mysql_result($result,0,"COUNT(*)");
         $total_today = !$total_today ? 0 : $total_today;
 
