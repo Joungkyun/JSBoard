@@ -108,5 +108,6 @@ $pages = "&page=$page";
 mysql_close();
 
 # Template file À» È£Ãâ
+meta_char_check($print['theme'], 1, 1);
 include "theme/{$print['theme']}/reply.template";
 ?>

@@ -24,6 +24,8 @@ if($mode == "photo") {
 
 if($mode) {
   if(!$print['theme']) $print['theme'] = "EN-default";
+
+  meta_char_check($print['theme'], 1, 1);
   include "theme/{$print['theme']}/ext.template";
 }
 ?>

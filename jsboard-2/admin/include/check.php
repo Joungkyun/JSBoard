@@ -28,6 +28,9 @@ function table_name_check($table,$ck=0) {
   if (!preg_match("/^[a-z]/i",$table)) print_error($langs['n_db'],250,150,1);
   if (preg_match("/[^a-z0-9_\-]/i",$table)) print_error($langs['n_meta'],250,150,1);
   if (preg_match("/^as$/i",$table)) print_error($langs['n_promise'],250,150,1);
+
+  if ( preg_match ('!/.+|%00!', $table) )
+    print_error ("Ugly access with table variable \"{$table}\"", 250, 150, 1);
 }
 
 # table list 존재 유무 체크

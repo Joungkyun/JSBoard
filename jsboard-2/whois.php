@@ -3,6 +3,12 @@ include "include/print.php";
 # register_globals 옵션의 영향을 받지 않기 위한 함수
 parse_query_str();
 
+# table 변수 체크
+$table = trim ($table);
+if ( preg_match ('!/\.+|%00$!', $table) ) {
+  print_error ("Ugly access with table variable \"{$table}\"");
+}
+
 if($window) {
   echo "<SCRIPT LANGUAGE = \"Javascript\">\n" .
        "<!--\nvar farwindow = null;\n" .
@@ -28,7 +34,11 @@ if (!trim($table) || !trim($host)) {
   exit;
 }
 
-include "config/global.php";
+if ( ! @file_exists("config/global.php") ) {
+  echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
+       "history.back();\nexit;\n</script>\n";
+} else { include_once "config/global.php"; }
+
 if(file_exists("data/$table/config.php")) { include "data/$table/config.php"; }
 if(file_exists("theme/{$print['theme']}/config.php")) { include "theme/{$print['theme']}/config.php"; }
 else { include "theme/KO-default/config.php"; }

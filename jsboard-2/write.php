@@ -63,5 +63,6 @@ $pages = $page ? "&page=$page" : "";
 if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode']) && $_SESSION[$jsboard]['pos'] != 1) 
   $pre_regist['name'] = $_SESSION[$jsboard]['name'] ? $_SESSION[$jsboard]['name'] : $pre_regist['name'];
 
+meta_char_check($print['theme'], 1, 1);
 include "theme/{$print['theme']}/write.template";
 ?>

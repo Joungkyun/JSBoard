@@ -2,6 +2,12 @@
 include_once "include/print.php";
 parse_query_str();
 
+# table 변수 체크
+$table = trim ($table);
+if ( preg_match ('!/\.+|%00$!', $table) ) {
+  print_error ("Ugly access with table variable \"{$table}\"");
+}
+
 $opt = $table ? "&table=$table" : "";
 $opts = $table ? "?table=$table" : "";
 
@@ -67,6 +73,7 @@ if ($m == "login") {
     }
 
     if(!trim($urls)) {
+      meta_char_check($table,0,1);
       if($table) { include "./data/$table/config.php"; }
       $urls = trim($print['dopage']) ? $print['dopage'] : "./login.php$var";
     }
