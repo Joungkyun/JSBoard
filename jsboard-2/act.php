@@ -330,6 +330,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     }
 
     if(preg_replace("/\s/i","",$atc[passwd])) $atc[passwd] = crypt($atc[passwd]);
+    if($agent[co] == "mozilla") $atc[text] = wordwrap($atc[text],60,"\n",1);
 
     $sql = "INSERT INTO {$table}_comm (no,reno,rname,name,passwd,text,host,date) ".
            "VALUES ('','$atc[no]','$atc[rname]','$atc[name]','$atc[passwd]','$atc[text]','$host','$dates')";
