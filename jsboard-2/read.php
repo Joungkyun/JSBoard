@@ -10,7 +10,7 @@ $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_
 
 if($alert) {
   $list[title] = $notice[subject];
-  $list[text] = "<PRE>\n$notice[contents]\n</PRE>";
+  $list[text] = "<PRE>\n".auto_link($notice[contents])."\n</PRE>";
   $list[date] = filemtime("data/$table/config.ph");
   $list[date] = date("Y.m.d H:i:s",$list[date]);
   $list[uname] = "Board Admin";
