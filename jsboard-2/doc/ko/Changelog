@@ -57,6 +57,7 @@ If you wnat to see windog's change log, see also
 29. 등록 공지 메일을 plain 에서 base64 로 인코딩하여 발송하게 변경
 30. INSTALLER/script/dbconv_to_20 의 문법 에러 수정
 31. 게시판 관리자 실행시 html header 와 html tail 이 사라지는 것 수정
+32. 스팸체크 수정
 
 
 -----------------------------------------------------------------------------

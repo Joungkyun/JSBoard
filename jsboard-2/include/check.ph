@@ -145,7 +145,7 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
   # 문자열들과 일치하는 문자열이 $spam_str에 있는지 검사함, 있을 경우
   # 스팸으로 판단하고 정수형 1을 반환함, 없을 경우는 0을 반환함
   for($co = 0; $co < count($list); $co++) {
-    $list[$co] = eregi_replace("(\r|\n)","",$list[$co]);
+    $list[$co] = trim($list[$co];
     if($list[$co] && eregi($list[$co], $str)) {
       return 1;
     }
