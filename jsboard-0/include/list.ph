@@ -151,6 +151,8 @@ function vlist($no) {
 	$title  = substr($title, 0, $titl);
 	$date2  = $date;
 	$date   = date("y-m-d", $date);
+	// Y2K egg - JoungKyun Kim :-)
+        $date	= eregi_replace("00","Y2K",$date);
 
 	if($sc_string) {
 	    $name  = eregi_replace(($sc_string), "<font color=\"darkred\"><b>\\0</b></font>", $name);
