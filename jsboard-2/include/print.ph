@@ -897,7 +897,7 @@ function print_comment($table,$no,$print=0) {
 }
 
 function pirnt_keymenu($type=0) {
-  global $table, $pages, $pos, $page;
+  global $table, $pages, $pos, $page, $no, $nolenth;
 
   if(!$type) {
     $nextpage = $pages[nex] ? $pages[nex] : $pages[all];
@@ -905,14 +905,37 @@ function pirnt_keymenu($type=0) {
     $nlink = "./list.php?table=$table&page=$nextpage";
     $plink = "./list.php?table=$table&page=$prevpage";
     $ment = "Page";
+
+    $precmd = " if (cc == 13) {\n".
+              "    if(strs.length > 0) self.location = 'read.php?table=$table&num=' + strs + '&page=$page';\n".
+              "    else strs = \"\";\n".
+              "  } else";
+
+    $anycmd = "else if(ch == ':' || strs == ':') {\n".
+              "    strs = strs + ch;\n".
+              "    if(strs == ':q') { self.close(); }\n".
+              "  } else {\n".
+              "    strs = strs + ch;\n".
+              "    if(strs.length > $nolenth) strs = \"\";\n".
+              "    document.getElementById(\"num\").innerHTML=strs;\n".
+              "  }\n";
   } else {
     $nlink = "./read.php?table=$table&no={$pos['prev']}";
     $plink = "./read.php?table=$table&no={$pos['next']}";
     $ment = "Article";
 
-    $tolist = " else if(ch == 'l' || ch == 'L') {\n".
+    $anycmd = "else if(ch == 'l' || ch == '.' || ch == 'L') {\n".
               "    self.location = './list.php?table=$table&page=$page';\n".
-              "}\n";
+              "  } else if(ch == 'r' || ch == 'R' || ch == '/') {\n".
+              "    self.location = './reply.php?table=$table&no=$no&page=$page';\n".
+              "  } else if(ch == 'e' || ch == 'E') {\n".
+              "    self.location = './edit.php?table=$table&no=$no&page=$page';\n".
+              "  } else if(ch == 'd' || ch == 'D') {\n".
+              "    self.location = './delete.php?table=$table&no=$no&page=$page';\n".
+              "  } else if(ch == ':' || strs == ':') {\n".
+              "    strs = strs + ch;\n".
+              "    if(strs == ':q') { self.close(); }\n".
+              "  }\n";
   }
 
   echo " <SCRIPT LANGUAGE=\"javascript\">\n".
@@ -922,12 +945,12 @@ function pirnt_keymenu($type=0) {
        "function keypresshandler(e){\n".
        "  if(document.all) e=window.event; // for IE\n".
        "  if(_dom==3) var EventStatus = e.srcElement.tagName;\n".
-       "  else if(_dom==1) var EventStatus = e.target.nodeName; // for Mozilla\n".
+       "  else if(_dom==1) var EventStatus = e.target.nodeName; // for Mozilla\n\n".
 
-       "  if(EventStatus == 'INPUT' || EventStatus == 'TEXTAREA' || _dom == 2) return;\n".
+       "  if(EventStatus == 'INPUT' || EventStatus == 'TEXTAREA' || _dom == 2) return;\n\n".
 
        "  var cc = '';\n".
-       "  var ch = '';\n".
+       "  var ch = '';\n\n".
 
        "  if(_dom==3) {                   // for IE\n".
        "    if(e.keyCode>0) {\n".
@@ -939,22 +962,26 @@ function pirnt_keymenu($type=0) {
        "    if(e.charCode>0) {\n".
        "      ch=String.fromCharCode(e.charCode);\n".
        "    }\n".
-       "  }\n".
+       "  }\n\n".
 
-       "  if(e.altKey || e.ctrlKey) return;\n".
+       "  if(e.altKey || e.ctrlKey) return;\n\n".
        
-       "  if(ch == \"n\" || ch == \"+\") {				// Next $ment\n".
+       " ${precmd} if(ch == 'p' || ch == 'P') {\n".
+       "    self.location = './list.php?table=$table&page=1';\n".
+       "  } else if(ch == 'n' || ch == 'N' || ch == '+') {\n".
        "    self.location = '$nlink';\n".
-       "  } else if(ch == \"b\" || ch == \"-\") {			// Prev $ment\n".
+       "  } else if(ch == 'b' || ch == 'B' || ch == '-') {\n".
        "    self.location = '$plink';\n".
-       "  }$tolist\n".
+       "  } else if(ch == 'w' || ch == 'W' || ch == '*') {\n".
+       "    self.location = './write.php?table=$table&page=$page';\n".
+       "  } $anycmd\n".
        "  return;\n".
-       "}\n".
+       "}\n\n".
 
        "function input(){\n".
        "	_dom=document.all ? 3 : (document.getElementById ? 1 : (document.layers ? 2 : 0));\n".
        "	document.onkeypress = keypresshandler;\n".
-       "}\n".
+       "}\n\n".
 
        "input();\n".
        "//-->\n".

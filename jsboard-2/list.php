@@ -4,6 +4,7 @@ $p_time[] = microtime();
 include "include/header.ph";
 
 $page = !$page ? 1 : $page;
+$nolenth = 0;
 
 if(!session_is_registered("$jsboard") && preg_match("/^(2|3|5|7)$/",$board[mode]))
   print_error("$langs[login_err]");
@@ -48,9 +49,11 @@ if($count[all]) {
   if ($o[at] == 's') $count[search] = "searched";
   else $count[search] = "registered";
   $count[today] = !$count[today] ? "" : "[ In 12H : $count[today] ] ";
-  $print[count] = "Total $count[all] articles / $pages[all] Pages $count[search] $count[today]";
+  $print[count] = "<FONT STYLE='color:red; font-weight:bold;' ID=num></FONT>&nbsp;".
+                  "Total $count[all] articles / $pages[all] Pages $count[search] $count[today]";
 } else {
-  $print[count] = "no article ..";
+  $print[count] = "<FONT STYLE='color:red; font-weight:bold;' ID=num></FONT>&nbsp;".
+                  "no article ..";
 }
 
 # SQL 시작 시간 체크
