@@ -5,11 +5,11 @@ function inst_pwcheck($pass,$mypass,$msg) {
   if ($pass != $mypass) {
     echo "<script>\n" .
          "alert('$msg')\n" .
-         "document.location='./session.php?mode=logout&langss=$langs[code]'\n" .
+         "document.location='./session.php?mode=logout&langss={$langs['code']}'\n" .
          "</script>".
          "<NOSCRIPT>\n".
          "Error: $msg<BR>\n".
-         "If you want to go authentication page, <A HREF=./session.php?mode=logout&langss=$langs[code]>click here</A>!\n";
+         "If you want to go authentication page, <A HREF=./session.php?mode=logout&langss={$langs['code']}>click here</A>!\n";
          "</NOSCRIPT>\n";
     exit;
   }
@@ -26,8 +26,8 @@ function inst_chk_numberic($name,$msg) {
 
 function inst_chk_dbname($name,$msg) {
   global $indb;
-  for ($i=0; $i<$indb[num]; $i++) {
-    $dbname = mysql_dbname($indb[lists],$i);
+  for ($i=0; $i<$indb['num']; $i++) {
+    $dbname = mysql_dbname($indb['lists'],$i);
     if ($name == $dbname) print_error($msg,250,150,1);
   }
 }
@@ -42,15 +42,15 @@ function inst_chk_dbuser($name,$msg) {
 
 function inst_check($chk='') {
   global $dbinst, $langs;
-  inst_chk_var($dbinst[name],$langs[inst_chk_varn]);
-  inst_chk_var($dbinst[user],$langs[inst_chk_varu]);
-  inst_chk_var($dbinst[pass],$langs[inst_chk_varp]);
+  inst_chk_var($dbinst['name'],$langs['inst_chk_varn']);
+  inst_chk_var($dbinst['user'],$langs['inst_chk_varu']);
+  inst_chk_var($dbinst['pass'],$langs['inst_chk_varp']);
 
   if($chk) {
-    inst_chk_numberic($dbinst[name],$langs[inst_ndb]);
-    inst_chk_numberic($dbinst[user],$langs[inst_udb]);
-    inst_chk_dbname($dbinst[name],$langs[inst_adb]);
-    inst_chk_dbuser($dbinst[user],$langs[inst_cudb]);
+    inst_chk_numberic($dbinst['name'],$langs['inst_ndb']);
+    inst_chk_numberic($dbinst['user'],$langs['inst_udb']);
+    inst_chk_dbname($dbinst['name'],$langs['inst_adb']);
+    inst_chk_dbuser($dbinst['user'],$langs['inst_cudb']);
   }
 
   return 1;

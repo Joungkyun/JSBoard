@@ -10,11 +10,11 @@ if ($mode == "login") {
   header("Location: auth.php?mode=first&langss=$langss");
 } elseif ($mode == "first") {
   session_destroy(); // 세션을 삭제한다
-  $langs[code] = ($langss == "ko") ? "ko" : "en";
+  $langs['code'] = ($langss == "ko") ? "ko" : "en";
 
-  $path[type] = "Install";
+  $path['type'] = "Install";
   include "../include/lang.ph";
-  $str = str_replace("\n","\\n",$langs[first_acc]);
+  $str = str_replace("\n","\\n",$langs['first_acc']);
   $nostr = str_replace("\n","<BR>\n",$str);
   echo "<script>\n" .
        "  alert('$str')\n" .

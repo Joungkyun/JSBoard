@@ -2,12 +2,12 @@
 include_once "../include/print.ph";
 parse_query_str();
 
-$path[type] = "Install";
+$path['type'] = "Install";
 $copydate = time();
 $copydate = date("Y",$copydate);
 
 include_once "./include/passwd.ph";
-$langs[code] = ($langss == "ko") ? "ko" : "en";
+$langs['code'] = ($langss == "ko") ? "ko" : "en";
 
 include_once "../include/lang.ph";
 include_once "../include/error.ph";
@@ -16,11 +16,11 @@ include_once "../include/check.ph";
 include_once "../include/version.ph";
 
 $agent = get_agent();
-if(preg_match("/links|w3m|lynx/i",$agent[br]))
+if(preg_match("/links|w3m|lynx/i",$agent['br']))
   $submitButton = "<INPUT TYPE=submit VALUE='ENTER'>\n";
 
 
-if($langs[code] == "ko") {
+if($langs['code'] == "ko") {
   $charset = "EUC-KR";
   $charfont = "±¼¸²Ã¼";
 } else {
@@ -33,7 +33,7 @@ echo "<HTML>\n".
      "<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=$charset\">\n".
      "<META HTTP-EQUIV=Cache-Control CONTENT=No-Cache>\n".
      "<META HTTP-EQUIV=Pragma	CONTENT=No-Cache>\n".
-     "<TITLE>Jsboard $board[ver] Installation</TITLE>\n".
+     "<TITLE>Jsboard {$board['ver']} Installation</TITLE>\n".
      "<STYLE TYPE=text/css>\n".
      "<!--\n".
      "A:LINK, A:VISITED, A:ACTIVE { TEXT-DECORATION:NONE; COLOR:#555555; }\n".
@@ -49,7 +49,7 @@ echo "<HTML>\n".
      "<tr><td align=center valign=center>\n\n";
 
 if (!$mode) {
-  echo "<form method=POST action=$_SERVER[PHP_SELF]>\n\n" .
+  echo "<form method=POST action={$_SERVER['PHP_SELF']}>\n\n" .
        "<table width=400 border=0 cellpadding=5>\n" .
        "<tr><td bgcolor=#D3DAC3 align=center>\n" .
        "<font style=\"font: 20px tahoma; font-weight:bold\">JSBoard Installer</font>\n" .
@@ -63,7 +63,7 @@ if (!$mode) {
        "<input type=submit value=submit>\n" .
        "</td></tr>\n</table>\n</form>\n";
 } elseif ($mode == "license") {
-  if ($langs[code] == "ko") $agreefile = "../COPYING.ko";
+  if ($langs['code'] == "ko") $agreefile = "../COPYING.ko";
   else $agreefile = "../COPYING";
 
   $agree_ment = preg_replace("/(http:\/\/jsboard.kldp.org)/i","<a href=\\1 target=_blank>\\1</a>",$agree_ment);
@@ -74,13 +74,13 @@ if (!$mode) {
        "<font style=\"color:#555555;font: 20px tahoma; font-weight:bold\">JSBoard License</font>\n" .
        "</td></tr>\n<tr><td>\n";
 
-  if ($agent[br] == "MSIE" || $agent[br] == "MOZL" || ($agent[br] == "NS" && $agent[vr] == 6)) {
+  if ($agent['br'] == "MSIE" || $agent['br'] == "MOZL" || ($agent['br'] == "NS" && $agent['vr'] == 6)) {
     echo "<iframe src=$agreefile width=600 height=200 frameborder=1>\n" .
          "</iframe>\n";
   } else {
     $agree_ment = file_operate($agreefile,"r");
 
-    if ($langs[code] == "en") $colsize = form_size(40);
+    if ($langs['code'] == "en") $colsize = form_size(40);
     else $colsize = form_size(35);
 
     echo "<textarea cols=$colsize rows=15 wrap=hard>$agree_ment</textarea>\n";
@@ -89,7 +89,7 @@ if (!$mode) {
   echo "</td></tr>\n" .
        "<tr><td bgcolor=#D3DAC3 align=center>\n" .
        "<input type=hidden name=mode value=check_exec>\n" .
-       "<input type=hidden name=langss value=$langs[code]>\n" .
+       "<input type=hidden name=langss value={$langs['code']}>\n" .
        "<input type=submit value='AGREE'>\n" .
        "</td></tr>\n</table>\n" .
        "</form>\n";
@@ -136,11 +136,11 @@ if (!$mode) {
   if ($p1 && $p2) $pcheck = 1;
   else $pcheck = 0;
 
-  echo "\n<FONT STYLE=\"color:#555555;font-size:12px;\">$langs[waitm]</FONT>\n" .
-       "<meta http-equiv=\"refresh\" content=\"5;URL=$_SERVER[PHP_SELF]?mode=check_conform&mcheck=$mcheck&echeck=$echeck&cindex=$cindex&pcheck=$pcheck&langss=$langs[code]\">" .
+  echo "\n<FONT STYLE=\"color:#555555;font-size:12px;\">{$langs['waitm']}</FONT>\n" .
+       "<meta http-equiv=\"refresh\" content=\"5;URL={$_SERVER['PHP_SELF']}?mode=check_conform&mcheck=$mcheck&echeck=$echeck&cindex=$cindex&pcheck=$pcheck&langss={$langs['code']}\">" .
        "</td></tr>\n" .
        "<tr><td bgcolor=#D3DAC3 align=center>\n" .
-       "<font style=\"font: 12px $charfont; color:#555555\">$langs[wait]</font>\n" .
+       "<font style=\"font: 12px $charfont; color:#555555\">{$langs['wait']}</font>\n" .
        "</td></tr>\n</table>\n";
 
 } elseif ($mode == "check_conform") {
@@ -160,10 +160,10 @@ if (!$mode) {
   if (!$mcheck || !$echeck || !$cindex || !$pcheck) $actlink = "";
   else $actlink = "first";
 
-  if (preg_match("/linux/i",$_ENV[OSTYPE])) {
+  if (preg_match("/linux/i",$_ENV['OSTYPE'])) {
     if (file_exists("/etc/redhat-release")) $os_type = "Redhat";
     elseif (file_exists("/etc/debian_version")) $os_type = "Debian";
-  } else $os_type = $_ENV[OSTYPE];
+  } else $os_type = $_ENV['OSTYPE'];
 
   if(!$os_type) {
     $os_type = php_uname();
@@ -176,7 +176,7 @@ if (!$mode) {
     else $os_type = "Unknowns";
   }
 
-  echo "<form method=POST action=$_SERVER[PHP_SELF]>\n\n" .
+  echo "<form method=POST action={$_SERVER['PHP_SELF']}>\n\n" .
        "<table width=400 border=0 cellpadding=5>\n" .
        "<tr><td bgcolor=#D3DAC3 align=center>\n" .
        "<font style=\"color:#555555;font: 20px tahoma; font-weight:bold\">JSBoard Enviornment Check Reuslt</font>\n" .
@@ -185,43 +185,43 @@ if (!$mode) {
        "<table>\n<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">OS Type</FONT></td>\n".
        "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$os_type</FONT></td>\n</tr>\n\n";
 
-  if (!preg_match("/linux/i",$_ENV[OSTYPE]))
-    echo "<tr>\n<td colspan=3>\n<font color=red>$langs[os_check]</font>\n</td>\n</tr>\n\n";
+  if (!preg_match("/linux/i",$_ENV['OSTYPE']))
+    echo "<tr>\n<td colspan=3>\n<font color=red>{$langs['os_check']}</font>\n</td>\n</tr>\n\n";
 
   echo "<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">MySQL check</FONT></td>\n".
        "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$m</FONT></td>\n</tr>\n\n";
 
   if (!$mcheck)
-    echo "<tr>\n<td colspan=3>\n<font color=red>$langs[mcheck]</font>\n</td>\n</tr>\n\n";
+    echo "<tr>\n<td colspan=3>\n<font color=red>{$langs['mcheck']}</font>\n</td>\n</tr>\n\n";
 
   echo "<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">exec() function check</FONT></td>\n".
        "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$e</FONT></td>\n</tr>\n\n";
 
   if ($e == "Failed")
-    echo "<tr>\n<td colspan=3>\n<font color=red>$langs[echeck]</font>\n</td>\n</tr>\n\n";
+    echo "<tr>\n<td colspan=3>\n<font color=red>{$langs['echeck']}</font>\n</td>\n</tr>\n\n";
 
   if ($echeck) {
     echo "<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">index file check</FONT></td>\n".
          "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$ci</FONT></td>\n</tr>\n\n";
-    if ($ci == "Failed") echo "<tr>\n<td colspan=3>\n<font color=red>$langs[icheck]</font>\n</td>\n</tr>\n\n";
+    if ($ci == "Failed") echo "<tr>\n<td colspan=3>\n<font color=red>{$langs['icheck']}</font>\n</td>\n</tr>\n\n";
   }
 
   echo "<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">Permission check</FONT></td>\n".
        "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$p</FONT></td>\n</tr>\n\n";
 
   if ($p == "Error") {
-    echo "<tr>\n<td colspan=3>\n<font color=red>$langs[pcheck]</font>\n</td>\n</tr>\n\n";
+    echo "<tr>\n<td colspan=3>\n<font color=red>{$langs['pcheck']}</font>\n</td>\n</tr>\n\n";
   }
 
   echo "</table>" .
        "<br>&nbsp;\n</font>\n</td></tr>\n" .
        "<tr><td bgcolor=#D3DAC3 align=center>\n" .
        "<input type=hidden name=mode value=$actlink>\n" .
-       "<input type=hidden name=langss value=$langs[code]>\n" .
+       "<input type=hidden name=langss value={$langs['code']}>\n" .
        "<input type=submit value=submit>\n" .
        "</td></tr>\n</table>\n</form>\n";
 } elseif ($mode == "first") {
-  if ($agent[co] == "mozilla") $fsize = form_size(7);
+  if ($agent['co'] == "mozilla") $fsize = form_size(7);
   else $fsize = form_size(9);
 
   echo "<form name=auth method=POST action=session.php>\n" .
@@ -232,16 +232,16 @@ if (!$mode) {
        "<font style=\"font-size:12px;color:#555555\">\nMySQL password<br>\n" .
        "<input type=password name=mysqlpass size=$fsize>\n" .
        "<input type=hidden name=mode value=login>\n" .
-       "<input type=hidden name=langss value=$langs[code]>\n" .
+       "<input type=hidden name=langss value={$langs['code']}>\n" .
        $submitButton.
        "</form>\n\n" .
        "<form name=reset method=POST action=session.php>\n" .
        "<input type=hidden name=mode value=logout>\n" .
-       "<input type=hidden name=langss value=$langs[code]>\n" .
-       "Password $langs[inst_r] <input type=submit name=reset value=reset>\n" .
+       "<input type=hidden name=langss value={$langs['code']}>\n" .
+       "Password {$langs['inst_r']} <input type=submit name=reset value=reset>\n" .
        "</font>\n</td></tr>\n" .
        "<tr><td bgcolor=#D3DAC3 align=center>\n" .
-       "<font style=\"font-size:12px;color:#555555\">$langs[auser]</font>\n" .
+       "<font style=\"font-size:12px;color:#555555\">{$langs['auser']}</font>\n" .
        "</td></tr>\n</table>\n" .
        "</form>\n";
 } else echo "<font size=+4><b> ^0^ </b></font>\n\n";

@@ -2,14 +2,14 @@
 include_once "../include/print.ph";
 parse_query_str();
 session_start(); // session을 시작한다.
-$path[type] = "Install";
+$path['type'] = "Install";
 
 if ($langss == "ko") {
-  $langs[code] = "ko";
+  $langs['code'] = "ko";
   $charset = "EUC-KR";
   $charfont = "굴림체";
 } else {
-  $langs[code] = "en";
+  $langs['code'] = "en";
   $charset = "ISO-8859-1";
   $charfont = "tahoma,arial";
 }
@@ -23,7 +23,7 @@ include_once "./include/check.ph";
 include_once "../include/version.ph";
 
 # Password Check
-inst_pwcheck($passwd,$_SESSION[mysqlpass],$langs[act_pw]);
+inst_pwcheck($passwd,$_SESSION['mysqlpass'],$langs['act_pw']);
 
 $disable = $mysqlroot ? "" : " disabled";
 
@@ -44,7 +44,7 @@ if($mysqlroot) {
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$charset?>">
-<TITLE>Jsboard <?=$board[ver]?> Installation</TITLE>
+<TITLE>Jsboard <?=$board['ver']?> Installation</TITLE>
 <STYLE TYPE=text/css>
 <!--
 BODY, TD {FONT: 12px <?=$charfont?>; COLOR:red; }
@@ -98,12 +98,12 @@ TEXTAREA { border:1x solid #555555;background-Color:silver;font:13px <?=$charfon
 </tr>
 <?=$noroothidden?>
 <tr><td colspan=4 align=center><input type='submit' value='E N T E R'></td></tr>
-<input type=hidden name=langss value=<?=$langs[code]?>>
+<input type=hidden name=langss value=<?=$langs['code']?>>
 </form>
 </table>
 
 <hr size=1 width='500' noshade>
-<font style="color:#555555;font-size:12px;"><?=$langs[regi_ment]?></FONT>
+<font style="color:#555555;font-size:12px;"><?=$langs['regi_ment']?></FONT>
 <hr size=1 width='500' noshade>
 
 <P>
