@@ -347,9 +347,9 @@ function check_htmltable($str) {
 function check_iframe($str) {
   global $langs;
 
-  if (!preg_match(';</?iframe[^>]*>;', $str)) return 0;
+  if (!preg_match(';</?iframe[^>]*>;i', $str)) return 0;
 
-  $from = array(';@;',';#;',';<iframe[^>]*>;i',';</iframe[^>]*>;i',';[^@#];','@#');
+  $from = array(';@;',';#;',';<iframe[^>]*>;i',';</iframe[^>]*>;i',';[^@#];',';@#;');
   $to   = array('','','@','#','','');
   $check = preg_replace($from, $to, $str);
 

@@ -23,6 +23,9 @@ Sat, Feb  7 2004
   by GiHoon Ham <cloou at scscian.net>
 	- added rss function
 
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed check_iframe function
+
 Tue, Dec  3 2003
   by JoungKyun Kim <http://www.oops.org>
 	- removed exec function and added unlink_r function

@@ -24,6 +24,9 @@ If you wnat to see windog's change log, see also
   by 함기훈 <cloou at scscian.net>
 	- RSS 기능 추가
 
+  by 김정균 <http://www.oops.org>
+	- check_iframe 함수 버그 수정
+
 2003.12.03
   by 김정균 <http://www.oops.org>
 	- 타 OS 와의 호환성을 위하여 exec 함수 완전 제거
