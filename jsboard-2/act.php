@@ -289,7 +289,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   }
 
   function comment_post($table,$atc) {
-    global $jsboard, $board, $langs;
+    global $jsboard, $board, $langs, $ccompare, $compare;
 
     $host = get_hostname(0);
     $dates = time();
@@ -304,9 +304,32 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       }
     }
 
-    if(preg_replace("/\s/i","",$atc[passwd])) $atc[passwd] = crypt($atc[passwd]);
     $atc[name] = htmlspecialchars($atc[name]);
     $atc[text] = htmlspecialchars($atc[text]);
+
+    if (eregi($compare[name],$atc[name])) $cmp[name] = 1;
+    if (eregi($ccompare[name],$atc[name])) $ccmp[name] = 1;
+
+    # 관리자 사칭 체크
+    if((!$board[mode] || $board[mode] == 4) && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) {
+      # 게시판 관리자 패스워드
+      $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$board[ad]'");
+      $r[ad] = sql_result($result,0,"passwd");
+      sql_free_result($result);
+
+      # 전체 관리자 패스워드
+      $result = sql_query("SELECT passwd FROM userdb WHERE position = 1");
+      $r[su] = sql_result($result,0,"passwd");
+      sql_free_result($result);
+
+      if ($cmp[name]) {
+        if($r[su] != crypt($atc[passwd],$r[su])) print_error($langs[act_ad],250,150,1);
+      } else if ($ccmp[name]) {
+        if($r[ad] != crypt($atc[passwd],$r[ad]) && $r[su] != crypt($atc[passwd],$r[su])) print_error($langs[act_d],250,150,1);
+      }
+    }
+
+    if(preg_replace("/\s/i","",$atc[passwd])) $atc[passwd] = crypt($atc[passwd]);
 
     $sql = "INSERT INTO {$table}_comm (no,reno,rname,name,passwd,text,host,date) ".
            "VALUES ('','$atc[no]','$atc[rname]','$atc[name]','$atc[passwd]','$atc[text]','$host','$dates')";
@@ -394,7 +417,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       if ($cmp[name] || $cmp[email]) {
         if($r[su] != crypt($atc[passwd],$r[su])) print_error($langs[act_ad],250,150,1);
       } else if ($ccmp[name] || $ccmp[email]) {
-        if($r[ad] != crypt($atc[passwd],$r[ad])) print_error($langs[act_d],250,150,1);
+        if($r[ad] != crypt($atc[passwd],$r[ad]) && $r[su] != crypt($atc[passwd],$r[su])) print_error($langs[act_d],250,150,1);
       }
     }
 
