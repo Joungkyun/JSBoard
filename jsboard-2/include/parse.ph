@@ -524,7 +524,9 @@ function conv_emoticon($str, $opt=0) {
   $con[] = "<IMG SRC=./emoticon/icon4.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/:-?(\)|>)|n\.n/';
   $con[] = "<IMG SRC=./emoticon/icon5.gif BORDER=0 ALT='emoticon'>";
-  $src[] = '/0\.0|O\.O/i';
+  $src[] = '/([^0-9])0\.0([^0-9])/';
+  $con[] = "\\1<IMG SRC=./emoticon/icon6.gif BORDER=0 ALT='emoticon'>\\2";
+  $src[] = '/O\.O/i';
   $con[] = "<IMG SRC=./emoticon/icon6.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/-\.?-V/';
   $con[] = "<IMG SRC=./emoticon/icon7.gif BORDER=0 ALT='emoticon'>";
