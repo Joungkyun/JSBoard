@@ -1,18 +1,17 @@
 <?
 # 웹 서버 접속자의 IP 주소 혹은 도메인명을 가져오는 함수
 # HTTP_X_FORWARDED_FOR - proxy server가 설정하는 환경 변수
-# getenv        - 환경 변수값을 가져옴
-#                 http://www.php.net/manual/function.getenv.php
 # gethostbyaddr - IP 주소와 일치하는 호스트명을 가져옴
 #                 http://www.php.net/manual/function.gethostbyaddr.php
 function get_hostname($reverse = 0,$addr = 0) {
+  global $HTTP_SERVER_VARS;
   if(!$addr) {
     # proxy 를 통해서 들어올때 원 ip address 추적
-    $host = getenv("HTTP_X_FORWARDED_FOR");
+    $host = $HTTP_SERVER_VARS["HTTP_X_FORWARDED_FOR"];
 
     # proxy를 통하지 않고 접근 할때 아파치 환경 변수인
     # REMOTE_ADDR에서 접속자의 IP를 가져옴
-    $host  = $host ? $host : getenv("REMOTE_ADDR");
+    $host  = $host ? $host : $HTTP_SERVER_VARS["REMOTE_ADDR"];
   } else $host = $addr;
 
   $check = $reverse ? @gethostbyaddr($host) : "";
@@ -24,10 +23,9 @@ function get_hostname($reverse = 0,$addr = 0) {
 # 접속한 사람이 사용하는 브라우져를 알기 위해 사용되는 함수, 현재는 FORM
 # 입력창의 크기가 브라우져마다 틀리게 설정되는 것을 보정하기 위해 사용됨
 #
-# getenv - 환경 변수값을 가져옴
-#          http://www.php.net/manual/function.getenv.php
 function get_agent() {
-  $agent_env = getenv("HTTP_USER_AGENT");
+  global $HTTP_SERVER_VARS;
+  $agent_env = $HTTP_SERVER_VARS["HTTP_USER_AGENT"];
 
   # $agent 배열 정보 [br] 브라우져 종류
   #                  [os] 운영체제
@@ -241,17 +239,15 @@ function get_microtime($old, $new) {
     
 # 알맞은 제목을 가져오기 위해 사용됨 (html/head.ph)
 #
-# getenv   - 환경 변수값을 가져옴
-#            http://www.php.net/manual/function.getenv.php
 # basename - 파일 경로에서 파일명만을 가져옴
 #            http://www.php.net/manual/function.basename.php
 function get_title() {
-  global $board, $langs; # 게시판 기본 설정 (config/global.ph)
+  global $board, $langs, $HTTP_SERVER_VARS;
 
   $title  = $board[title];
 
   # SCRIPT_NAME이라는 아파치 환경 변수를 가져옴 (현재 PHP 파일)
-  $script = getenv("SCRIPT_NAME");
+  $script = $HTTP_SERVER_VARS["SCRIPT_NAME"];
   $script = basename($script);
 
   switch($script) {
