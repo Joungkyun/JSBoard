@@ -64,7 +64,7 @@ function form_size($size, $print = 0) {
   if($agent[br] == "MSIE") {
     if ($agent[os] == "NT")
       if ($langs[code] == "ko") $size *= 2.3;
-      else $size *= 2.6;
+      else $size *= 2.0;
     else $size *= 2.3;
   }
 
@@ -653,22 +653,6 @@ function print_newwindow_src($upload,$cupload,$dwho) {
 # FORM size 를 동적으로 조정하기 위한 스크립트 출력함수
 #
 function form_operate($fn,$in,$x=73,$y=10,$prt=0) {
-  global $langs;
-  # charset 이 euc_kr 이 아닐 경우 특수 문자가 깨지기 때문에
-  # image 로 form size 조정 버튼을 대체
-  if($langs[code] != "ko") {
-    $button = "<A HREF=javascript:fresize(1) TITLE=\"Left Righ\">".
-              "<IMG SRC=images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
-              "<A HREF=javascript:fresize(0) TITLE=\"RESET\">".
-              "<IMG SRC=images/form_back.gif ALT=\"RESET\" ALIGN=absmiddle BORDER=0></A>\n".
-              "<A HREF=javascript:fresize(2) TITLE=\"Up Down\">".
-              "<IMG SRC=images/form_height.gif ALT=\"Up Down\" ALIGN=absmiddle BORDER=0></A>\n";
-  } else {
-    $button = "<INPUT TYPE=BUTTON VALUE=\"▷\" onClick=\"fresize(1);\" TITLE=\"Left Right\">".
-              "<INPUT TYPE=BUTTON VALUE=\"▣\" onClick=\"fresize(0);\" TITLE=\"RESET\">".
-              "<INPUT TYPE=BUTTON VALUE=\"▽\" onClick=\"fresize(2);\" TITLE=\"Up Down\">\n";
-  }
-
   $var = "<SCRIPT LANGUAGE=JavaScript>\n".
          "<!--\n".
          "function fresize(value) {\n".
@@ -681,7 +665,9 @@ function form_operate($fn,$in,$x=73,$y=10,$prt=0) {
          "}\n".
          "// -->\n".
          "</SCRIPT>\n".
-         "  $button";
+         "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1);\" TITLE=\"Left Right\">".
+         "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0);\" TITLE=\"RESET\">".
+         "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2);\" TITLE=\"Up Down\">\n";
 
   if($prt) echo $var;
   else return $var;
