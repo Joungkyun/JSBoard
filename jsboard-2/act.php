@@ -479,13 +479,24 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       $atc['url'] == $list['url'] &&
       $atc['html'] == $list['html']) {
 
-      switch ($o['at']) {
-        case 'write':
-          print_error($langs['act_same'],250,150,1);
-          break;
-        case 'edit':
-          print_error($langs['act_dc'],250,150,1);
-          break;
+      # 수정 모드시, 수정된 사항은 없으나, 첨부파일의 변화가 있을 경우 수정 가능함.
+      if ($o['at'] == 'edit') {
+        if ($atc['fdel']) {
+          $chkpass = 1;
+        } elseif (is_uploaded_file($_FILES['userfile']['tmp_name']) && $_FILES['userfile']['size'] > 0) {
+          $chkpass = 1;
+        } else $chkpass = 0;
+      } else $chkpass = 0;
+
+      if (!$chkpass) {
+        switch ($o['at']) {
+          case 'write':
+            print_error($langs['act_same'],250,150,1);
+            break;
+          case 'edit':
+            print_error($langs['act_dc'],250,150,1);
+            break;
+        }
       }
     }
 
