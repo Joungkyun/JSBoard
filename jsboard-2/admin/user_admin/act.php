@@ -48,7 +48,7 @@ else {
 }
 
 # Option of include original message in reply
-$chg[ore] = $us[ore] ? 1 : 0;
+$chg[ore] = $ua[ore] ? 1 : 0;
 
 # Option of print conjunct list when reply
 $chg[re_list] = $ua[re_list] ? 1 : 0;
