@@ -57,7 +57,7 @@ if($viewtype || $_SESSION[$jsboard][pos] == 1) {
                     "</TD></TR>\n".
                     "<TR><TD ALIGN=right>\n".
                     "<FONT FACE=Tahoma SIZE=-1>PASSWORD : ".
-                    "<input type=password name=pcheck id=input size=$size><BR>\n".
+                    "<input type=password name=pcheck size=$size STYLE=\"font: 10px tahoma;\"><BR>\n".
                     "</TD></TR>\n<TR><TD ALIGN=right>\n".
                     "<input type=button value=\"VEIW LIST\" onClick=\"document.location='$_SERVER[PHP_SELF]?table=$table&m=golist'\">\n".
                     "<input type=submit value='ENTER'>\n".

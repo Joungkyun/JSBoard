@@ -1,5 +1,7 @@
 Version: A2
 - INPUT 문의 password 를 MAXLENGTH=8 에서 MAXLENGTH=16 으로 수정
+- INPUT 문의 password 에 style sheet  STYLE=\"font: 10px tahoma\" 추가
+  (IE 6.x -xp용- 의 패스워드 필드를 이상하게 출력하는 것 방지)
 
 Version: A1
 - theme 관리 시작
