@@ -18,6 +18,8 @@ function print_list($table, $list, $r=0)
     $list[title] = ugly_han($list[title]);
 
     $list[title] = eregi_replace("\"","&quot;",$list[title]);
+    $list = search_hl($list);
+
     if($enable[re_list])  {
       if($no == $list[no]) $list[title] = str_replace($list[title],"<b><u>$list[title]</u></b>",$list[title]);
     }
@@ -33,14 +35,6 @@ function print_list($table, $list, $r=0)
     } else {
 	$bg = $color[l2_bg];
 	$fg = $color[l2_fg];
-    }
-
-    if ( $o[er] == "y") {
-      $list[title] = eregi_replace("<img(.*)>", "¢À", $list[title]);
-      $list = search_hl($list);
-      $list[title] = eregi_replace("¢À", "<IMG SRC=\"images/n.gif\" BORDER=\"0\" ALT=\"\" WIDTH=\"10\" HEIGHT=\"1\"><IMG SRC=\"images/rep.gif\" WIDTH=\"12\" BORDER=\"0\" HEIGHT=\"12\" ALT=\"$langs[ln_re]\">", $list[title]);
-    } else {
-      $list = search_hl($list);
     }
 
     $date = date($board[date_fmt], $list[date]);

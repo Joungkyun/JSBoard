@@ -46,7 +46,7 @@ if (!$mode) {
        "<font color=$color[l0_fg]>JSBoard License</font>\n" .
        "</td></tr>\n<tr><td>\n";
 
-  if (eregi("MSIE",$agent[br])) {
+  if ($agent[br] == "MSIE") {
     echo "<iframe src=\"$agreefile\" width=600 height=200 frameborder=1>\n" .
          "</iframe>\n";
   } else {

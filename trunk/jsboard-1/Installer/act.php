@@ -16,7 +16,7 @@ include "./include/check.ph";
 inst_pwcheck($passwd,$mysqlpass,$langs[act_pw]);
 
 # MySQL login
-$connect = mysql_connect("localhost","root",$passwd) or die("$langs[inst_sql_err]");
+$connect = mysql_connect($mysql_sock,"root",$passwd) or die("$langs[inst_sql_err]");
 $indb[lists] = mysql_list_dbs($connect);
 $indb[num] = mysql_num_rows($indb[lists]);
 mysql_select_db("mysql", $connect);
@@ -30,8 +30,13 @@ if ($indb[check]) {
   $create[dbname] = "create database $dbinst[name]";
   $result[dbname] = mysql_query($create[dbname],$connect);
 
+    # 외부 DB 일 경우에는 접근 권한을 외부로 지정한다.
+  if($mysql_sock != "127.0.0.1" && $mysql_sock != "localhost" && !eregi("mysql.sock",$mysql_sock))
+    $access_permit = $mysql_sock;
+  else $access_permit = "localhost";
+
   # User를 user table에 등록
-  $create[dbuser] = "insert into user (Host,User,Password) values('localhost','$dbinst[user]',password('$dbinst[pass]')) ";
+  $create[dbuser] = "insert into user (Host,User,Password) values('$access_permit','$dbinst[user]',password('$dbinst[pass]')) ";
   $result[dbuser] = mysql_query($create[dbuser], $connect );
 
   # DB와 User를 db table에 등록

@@ -9,7 +9,7 @@ include "../include/check.ph";
 # table 이름을 체크한다.
 table_name_check($table);
 
-if(!@file_exists("../../config/global.ph")) {
+if(!file_exists("../../config/global.ph")) {
   echo"<script>alert('Don\'t exist Global configuration file')\n" .
       "history.back()</script>";
   die;
@@ -805,7 +805,7 @@ echo "</td>
 </td></tr>
 
 <tr><td bgcolor=$color[l0_bg] align=center colspan=6>
-<font id=l0fg>Scripted by <a href=http://www.oops.org>JoungKyun Kim</a><br>
+<font id=l0fg>Scripted by <a href=$copy[url]>$copy[name]</a><br>
 and all right reserved</font>
 </td></tr>
 
@@ -817,6 +817,5 @@ and all right reserved</font>
 
 </td></tr>
 </table>
-</form>
-";
+</form>\n";
 ?>

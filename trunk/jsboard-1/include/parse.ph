@@ -231,38 +231,74 @@ function cut_string($s, $l) {
 #
 # eregi_replace - 정규 표현식을 이용한 치환 (대소문자 무시)
 #                 http://www.php.net/manual/function.eregi-replace.php
+# preg_replace  - 펄 형식의 정규표현식을 이용한 치환
+#                 http://www.php.net/manual/function.preg-replace.php
 function auto_link($str) {
   $agent = get_agent();
 
   $regex[file] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
-  $regex[http] = "(http|https|ftp|telnet|news):\/\/(([\xA1-\xFEa-z0-9_\-]+\.[][\xA1-\xFEa-z0-9:;&#@=_~%\?\/\.\,\+\-]+)(\/|[\.]*[a-z0-9]))";
-  $regex[mail] = "([\xA1-\xFEa-z0-9_\.\-]+)@([\xA1-\xFEa-z0-9_\-]+\.[a-z0-9\-\._\-]+[\.]*[\xA1-\xFEa-z0-9\?=]*)";
+  $regex[file] = "(\.($regex[file])\") TARGET=\"_blank\"";
+  $regex[http] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9_\-]+\.[\xA1-\xFEa-z0-9:;&#@=_~%\?\/\.\,\+\-]+)(\/|[\.]*[a-z0-9]))";
+  $regex[mail] = "([\xA1-\xFEa-z0-9_\.\-]+)@([\xA1-\xFEa-z0-9_\-]+\.[\xA1-\xFEa-z0-9\-\._\-]+[\.]*[a-z0-9]\??[\xA1-\xFEa-z0-9=]*)";
 
+  # &lt; 로 시작해서 3줄뒤에 &gt; 가 나올 경우와
   # IMG tag 와 A tag 의 경우 링크가 여러줄에 걸쳐 이루어져 있을 경우
   # 이를 한줄로 합침 (합치면서 부가 옵션들은 모두 삭제함)
-  $str = eregi_replace("<(A|IMG)[^>]*(HREF|SRC)[^>]*($regex[http]|mailto:$regex[mail])[^>]*>","<\\1 \\2=\"\\3\">",$str);
+  $psrc[0] = "/<([^<>\n]*)\n([^<>\n]+)\n([^<>\n]*)>/i";
+  $ptar[0] = "<\\1\\2\\3>";
+  $psrc[1] = "/<([^<>\n]*)\n([^\n<>]*)>/i";
+  $ptar[1] = "<\\1\\2>";
+  $psrc[2] = "/<(A|IMG)[^>]*(HREF|SRC)[^=]*=[ '\"\n]*($regex[http]|mailto:$regex[mail])[^>]*>/i";
+  $ptar[2] = "<\\1 \\2=\"\\3\">";
+  $str = preg_replace($psrc,$ptar,$str);
 
-  # 특수 문자를 치환
-  $str = eregi_replace("&(quot|gt|lt)","!\\1",$str);
-
-  # html사용시 link 보호
-  $str = eregi_replace("href=\"($regex[http])\"[^>]*>","HREF=\"\\2_orig://\\3\" TARGET=\"_blank\">", $str);
-  $str = eregi_replace("href=\"mailto:($regex[mail])\">","HREF=\"mailto:\\2#-#\\3\">", $str);
-  $str = eregi_replace("(background|codebase|src)[ \n]*=[\n\"' ]*($regex[http])[\"']*","\\1=\"\\3_orig://\\4\"",$str);
-  if(!eregi("MSIE",$agent[br])) $str = eregi_replace("<embed","&lt;embed",$str);
+  # 특수 문자를 치환 및 html사용시 link 보호
+  $src[0] = "/&(quot|gt|lt)/i";
+  $tar[0] = "!\\1";
+  $src[1] = "/href=[\"' ]*($regex[http])[\"']*[^>]*>/i";
+  $tar[1] = "HREF=\"\\2_orig://\\3\" TARGET=\"_blank\">";
+  $src[2] = "/href=[\"' ]*mailto:($regex[mail])[\"']*>/i";
+  $tar[2] = "HREF=\"mailto:\\2#-#\\3\">";
+  $src[3] = "/(background|codebase|src)[ \n]*=[\n\"' ]*($regex[http])[\"']*/i";
+  $tar[3] = "\\1=\"\\3_orig://\\4\"";
 
   # 링크가 안된 url및 email address 자동링크
-  $str = eregi_replace("($regex[http])","<A HREF=\"\\1\" TARGET=\"_blank\">\\1</a>", $str);
-  $str = eregi_replace("($regex[mail])","<A HREF=\"mailto:\\1\">\\1</a>", $str);
+  $src[4] = "/(HREF=|[^=]|^)($regex[http])/i";
+  $tar[4] = "\\1<A HREF=\"\\2\" TARGET=\"_blank\">\\2</a>";
+  $src[5] = "/($regex[mail])/i";
+  $tar[5] = "<A HREF=\"mailto:\\1\">\\1</a>";
+  $src[6] = "/<A HREF=[^>]+>(<A HREF=[^>]+>)/i";
+  $tar[6] = "\\1";
+  $src[7] = "/<\/A><\/A>/i";
+  $tar[7] = "</A>";
 
   # 보호를 위해 치환한 것들을 복구
-  $str = eregi_replace("!(quot|gt|lt)","&\\1",$str);
-  $str = eregi_replace("(http|https|ftp|telnet|news)_orig","\\1", $str);
-  $str = eregi_replace("#-#","@",$str);
+  $src[8] = "/!(quot|gt|lt)/i";
+  $tar[8] = "&\\1";
+  $src[9] = "/(http|https|ftp|telnet|news|mms)_orig/i";
+  $tar[9] = "\\1";
+  $src[10] = "'#-#'";
+  $tar[10] = "@";
+  $src[11] = "/$regex[file]/i";
+  $tar[11] = "\\1";
 
-  # file link시 target 을 삭제
-  $str = eregi_replace("(\.($regex[file])\") TARGET=\"_blank\"","\\1",$str);
+  # email 주소를 변형시킴
+  $src[12] = "/$regex[mail]/i";
+  $tar[12] = "\\1 at \\2";
+  $src[13] = "/<A HREF=\"mailto:([^ ]+) at ([^\">]+)/i";
+  $tar[13] = "<A HREF=\"act.php?o[at]=ma&target=\\1__at__\\2";
 
+  # 이미지에 보더값 0 을 삽입
+  $src[14] = "/<(IMG SRC=\"[^\"]+\")>/i";
+  $tar[14] = "<\\1 BORDER=0>";
+
+  # IE 가 아닌 경우 embed tag 를 삭제함
+  if($agent[br] != "MSIE") {
+    $src[15] = "/<embed/i";
+    $tar[15] = "&lt;embed";
+  }
+
+  $str = preg_replace($src,$tar,$str);
   return $str;
 }
 
@@ -270,14 +306,9 @@ function auto_link($str) {
 function url_link($url, $str, $color, $no = 0) {
   global $table, $board, $rmail;
 
-  if(check_email($url)) {
-    if($board[mchk] && $rmail[uses] == "yes") {
-      $board[fwidth] = eregi("%",$board[width]) ? "550" : $board[width];
-      $str = "<A HREF=javascript:new_windows('form.php?table=$table&no=$no','form',0,0,$board[fwidth],420)><FONT COLOR=\"$color\">$str</FONT></A>";
-    } else {
-      $url = str_replace(".","DENY.SPAM",$url);
-      $str = "<A HREF=mailto:$url><FONT COLOR=\"$color\">$str</FONT></A>";
-    }
+  if(check_email($url) && $rmail[uses] = "yes") {
+    $url = str_replace("@","__at__",$url);
+    $str = "<A HREF=./act.php?o[at]=ma&target=$url>$str</A>";
   } else if(check_url($url)) {
     $str = "<A HREF=\"$url\" target=\"_blank\"><FONT COLOR=\"$color\">$str</FONT></A>";
   } else {

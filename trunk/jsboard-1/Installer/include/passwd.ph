@@ -13,17 +13,16 @@ $passwd = "";
 #
 $apache_config_file = "/etc/httpd/conf/httpd.conf";
 
-# MySQL의 socket file 위치를 지정. socket file이 무엇
-# 인지 모르겠으면 localhost 나 127.0.0.1 을 적도록 한
-# 다. DB서버가 외부에 있을 경우에는 해당 DB서버의 ip
-# address나 domain name을 적어주도록 하며, 이 경우에는
-# DB서버의 mysql에서 설정한 접근 권한으로 설정을 하여야
-# 한다.
+# MySQL 의 db 위치를 적는다. 외부 DB 일경우에는 DB 서버
+# 의 ip address 를 지정한다. 로컬일 경우에는 localhost 나
+# 127.0.0.1 을 지정한다. 만약 localhost 나 127.0.0.1 이
+# 접근이 거부될 경우에는 MySQL 의 socket file 을 직접 지
+# 정하도록 한다.
 #
 # socket file의 위치를 알고 싶다면 
 # netstat -an | grep mysql 
 # 로 알수가 있다.
 #
-$mysql_sock = ":/var/lib/mysql/mysql.sock";
+$mysql_sock = "localhost";
 /****************************************************/
 ?>

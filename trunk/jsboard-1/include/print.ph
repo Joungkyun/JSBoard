@@ -34,7 +34,10 @@ function form_size($size, $print = 0) {
     } else if($agent[os] == "WIN") {
       if($agent[ln] == "KO") $size *= 1.1; # 한글판
       else $size *= 1.3;
-    } elseif($agent[os] == "LINUX") $size *= 1.8;
+    } elseif($agent[os] == "LINUX") {
+      if($agent[ln] == "KO") $size *= 2.8; # 한글판
+      $size *= 1.0;
+    }
   }
 
   # 네스케이프 6
@@ -42,14 +45,14 @@ function form_size($size, $print = 0) {
     if($agent[os] == "NT") {
       if($agent[ln] == "KO") $size *= 1.1; # 한글판
       else {
-        if ($langs[code] == "ko") $size *= 2.3;
-        else $size *= 1.4;
+        if ($langs[code] == "ko") $size *= 2.4;
+        else $size *= 1.8;
       }
     } else $size *= 1.3;
   }
 
   # 인터넷 익스플로러
-  if(eregi("MSIE",$agent[br])) {
+  if($agent[br] == "MSIE" || $agent[br] == "MSIE5.5") {
     if ($agent[os] == "NT")
       if ($langs[code] == "ko") $size *= 2.3;
       else $size *= 2.6;
@@ -176,6 +179,7 @@ function page_form($table, $pages, $color, $print = 0) {
     </SELECT>
     <INPUT TYPE=\"text\" NAME=\"o[no]\" SIZE=\"%d\" MAXLENGTH=\"6\" VALUE=\"$value\">
     <INPUT TYPE=\"submit\" VALUE=\"$langs[ln_mv]\">
+    </FONT>
   </TD>
 </TR></FORM>
 </TABLE>
@@ -487,7 +491,7 @@ function article_reply_list($table,$pages) {
 function print_preview_src() {
   global $color, $agent;
 
-  if(eregi("MSIE",$agent[br])) {
+  if($agent[br] == "MSIE" || $agent[br] == "MSIE5.5") {
     $script_for_browser = "  over = overDiv.style;\n".
                           "  document.onmousemove = mouseMove;\n\n".
 
@@ -666,13 +670,13 @@ function form_size_button($l) {
     echo "<A HREF=javascript:fresize(1) TITLE=\"Left Righ\">".
          "<IMG SRC=images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
          "<A HREF=javascript:fresize(0) TITLE=\"RESET\">".
-         "<IMG SRC=images/form_back.gif ALT=\"RESET\" ALIGN=absmiddle BORDER=0></A>\n".
+	 "<IMG SRC=images/form_back.gif ALT=\"RESET\" ALIGN=absmiddle BORDER=0></A>\n".
          "<A HREF=javascript:fresize(2) TITLE=\"Up Down\">".
-         "<IMG SRC=images/form_height.gif ALT=\"Up Down\" ALIGN=absmiddle BORDER=0></A>\n";
+	 "<IMG SRC=images/form_height.gif ALT=\"Up Down\" ALIGN=absmiddle BORDER=0></A>\n";
   } else {
     echo "<INPUT TYPE=BUTTON VALUE=\"▷\" onClick=\"fresize(1);\" TITLE=\"Left Right\">".
          "<INPUT TYPE=BUTTON VALUE=\"▣\" onClick=\"fresize(0);\" TITLE=\"RESET\">".
-         "<INPUT TYPE=BUTTON VALUE=\"▽\" onClick=\"fresize(2);\" TITLE=\"Up Down\">\n";
+	 "<INPUT TYPE=BUTTON VALUE=\"▽\" onClick=\"fresize(2);\" TITLE=\"Up Down\">\n";
   }
 }
 ?>

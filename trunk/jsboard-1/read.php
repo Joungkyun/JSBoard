@@ -29,7 +29,7 @@ $list[title] = eregi_replace("&amp;(amp|lt|gt)","&\\1",$list[title]);
 
 $list = search_hl($list);
 
-if ($o[sc]) $list[text] = eregi_replace("<a href=(.*)<font color=#000000><b><u>(.*)</u></b></font>(.*) target=(.*)>","<a href=\\1\\2\\3 target=\\4>",$list[text]);
+if ($o[sc]) $list[text] = eregi_replace("<a href=(.*)<font color=#[0-9a-z]+><b><u>(.*)</u></b></font>(.*) target=(.*)>","<a href=\\1\\2\\3 target=\\4>",$list[text]);
 
 if($list[email])
   $list[name] = url_link($list[email], $list[name], $color[r2_fg], $no);

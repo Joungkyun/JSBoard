@@ -18,7 +18,7 @@ sql_select_db($db[name]);
 
 $list = get_article($table, $no);
 
-$list[title] = eregi_replace("Re(\^[0-9])*: ", "", $list[title]);
+$list[title] = eregi_replace("Re(\^[0-9]{0,10})*: ", "", $list[title]);
 $reti = $list[rede];
 $reti = ++$reti;
 
@@ -140,7 +140,7 @@ if (value == 2) document.replyp.rpost.rows += 5;
 
   # 언어 코드에 따라 버튼을 text 로 처리 할것인지 이미지로 처리할 것인지를 결정
   form_size_button($langs[code]);
-  
+
   echo "  </TD>";
 }
 

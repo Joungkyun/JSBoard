@@ -1,5 +1,5 @@
 <?
-if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
+if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
   include "include/header.ph";
   include "./admin/include/config.ph";
 
@@ -35,7 +35,12 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
     # 전체 관리자가 허락하였을시에만 upload 기능을 사용할수 있음
     if ($upload[yesno] =='yes' && $cupload[yesno] == 'yes' && $agent[br] != "LYNX") {
       $bfilename = date("YmdHis",$atc[date]);
-      file_upload($bfilename);
+      $upchk = file_upload($bfilename);
+      if(!$upchk) {
+        $bfilename = "";
+        $userfile_size = 0;
+        $userfile_name = "";
+      }
     } else {
       # winchild 99/11/26 fileupload = "no" 일 경우에는 초기화를 시켜주어야 한다.
       $bfilename = "";
@@ -103,7 +108,12 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
     # 답변시 file upload 설정 부분, 전체 관리자가 허락시에만 가능
     if ($upload[yesno] =='yes' && $cupload[yesno] == 'yes' && $agent[br] != "LYNX") {
       $bfilename = date("YmdHis",$atc[date]);
-      file_upload($bfilename);
+      $upchk = file_upload($bfilename);
+      if(!$upchk) {
+        $bfilename = "";
+        $userfile_size = 0;
+        $userfile_name = "";
+      }
     } else {
       # winchild 99/11/26 fileupload = "no" 일 경우에는 초기화를 시켜주어야 한다.
       $bfilename = "";
@@ -269,7 +279,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
 
     if(!$atc[reyn]) {
       # upload file이 존재할 경우 삭제
-      if ($delete_filename) {
+      if ($delete_filename && file_exists("$delete_filename")) {
         unlink("$delete_filename");
         rmdir("$delete_dir");
       }
@@ -377,12 +387,16 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
 
   # 쿠키 설정 함수
   function set_cookie($atc) {
-    global $board; # 게시판 기본 설정 (config/global.ph)
+    global $board,$agent;
     $month = 60 * 60 * 24 * $board[cookie];
 
-    setcookie("board_cookie[name]", $atc[name], time() + $month);
-    setcookie("board_cookie[email]", $atc[email], time() + $month);
-    setcookie("board_cookie[url]", $atc[url], time() + $month);
+    if(eregi("MSIE",$agent[br]))
+      $cookietime = strftime("%A, %d-%b-%Y %H:%M:%S MST", time() + $month);
+    else $cookietime = time() + $month;
+
+    setcookie("board_cookie[name]", $atc[name], $cookitime);
+    setcookie("board_cookie[email]", $atc[email], $cookitime);
+    setcookie("board_cookie[url]", $atc[url], $cookitime);
   }
 
   switch($o[at]) {
@@ -415,6 +429,8 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
   include "include/error.ph";
   include "include/check.ph";
   include "include/get.ph";
+
+  $agent = get_agent();
 
   # 해당 변수에 meta character 가 존재하는지 체크
   meta_char_check($dn[tb],0,1);
@@ -462,8 +478,18 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
   }
 
   echo "<script>window.close()</script>";
+} elseif($o[at] == "ma") {
+  if(eregi("__at__",$target)) {
+    $target = str_replace("__at__","@",$target);
+    Header("Location: mailto:$target");
+  }
+  echo "<SCRIPT>history.back()</SCRIPT>";
+  exit;
 } elseif ($o[at] == "se") {
   if ($o[se] == "login") {
+    include "include/get.ph";
+    $agent = get_agent();
+
     if($pcheck != "") SetCookie("pcheck","","0");
     # Cookie 를 등록한다.
     if(eregi("MSIE",$agent[br])) $CookieTime = strftime("%A, %d-%b-%Y %H:%M:%S MST", time()+900);
