@@ -14,6 +14,11 @@ file.
 ******************************************************************************
 
 Version   : jsboard-2.0.8
+
+Tue, Aug 17 2004
+  by JoungKyun Kim <http://www.oops.org>
+	- changed NORWAP tag to CSS
+
 Thu, Jul 15 2004
   by JoungKyun Kim <http://www.oops.org>
 	- changed title tag order on html printing for search word

@@ -53,7 +53,7 @@ if($mode == "comment") {
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=100%>
 <? if($mode == "comment") { ?>
 <TR>
-<TD ALIGN=CENTER NOWRAP><NOBR>
+<TD ALIGN=CENTER STYLE="overflow: hidden; white-space: nowrap"><NOBR>
 Password
 <INPUT TYPE=password NAME=lp SIZE=<?=$size?>>
 <INPUT TYPE=SUBMIT VALUE=DELETE>

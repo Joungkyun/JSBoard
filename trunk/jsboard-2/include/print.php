@@ -685,7 +685,7 @@ function print_license() {
   if($designer['license'] != 2) {
     echo "<p>\n".
          "<TABLE WIDTH={$board['width']} BORDER=0 CELLPADDING=0 CELLSPACING=0>\n".
-         "<TR><TD ALIGN=right NOWRAP>\n".
+         "<TR><TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\">\n".
          "<FONT STYLE=\"font: 12px tahoma;color:{$color['text']}\">\n".
          "<A STYLE=\"color={$color['text']}\" HREF=$gpl_link TARGET=_blank>Copyleft</A> 1999-".date("Y")."\nby ".
          "<A STYLE=\"color={$color['text']};font-weight:bold\" HREF=http://jsboard.kldp.org TARGET=_blank>".
@@ -770,9 +770,9 @@ function detail_searchform($p='') {
           "<FORM METHOD=post ACTION=locate.php?table=$table>\n".
           "<TABLE WIDTH={$board['width']} BORDER=0 CELLPADDING=10 CELLSPACING=0 ALIGN=center BGCOLOR={$color['l5_bg']}>\n".
           "<TR>\n".
-          "<TD NOWRAP>{$langs['sh_str']}</TD>\n".
-          "<TD NOWRAP>:</TD>\n".
-          "<TD NOWRAP>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['sh_str']}</TD>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
           "<INPUT TYPE=text NAME=o[ss] SIZE=".form_size(26)." MAXLENGTH=255 VALUE=\"{$o['ss']}\">\n".
           "<INPUT TYPE=hidden NAME=o[at] VALUE=d>\n".
           "<INPUT TYPE=hidden NAME=o[go] VALUE=p>\n".
@@ -780,9 +780,9 @@ function detail_searchform($p='') {
           "</TR>\n\n".
 
           "<TR>\n".
-          "<TD NOWRAP>{$langs['sh_pat']}</TD>\n".
-          "<TD NOWRAP>:</TD>\n".
-          "<TD NOWRAP>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['sh_pat']}</TD>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
           "<INPUT TYPE=radio NAME=o[sc] VALUE=t$TCHK> <FONT STYLE=\"font-family: tahoma;\">TITLE</FONT>\n".
           "<INPUT TYPE=radio NAME=o[sc] VALUE=c$CCHK> <FONT STYLE=\"font-family: tahoma;\">Contents</FONT>\n".
           "<INPUT TYPE=radio NAME=o[sc] VALUE=n$NCHK> <FONT STYLE=\"font-family: tahoma;\">Writer</FONT>\n".
@@ -791,9 +791,9 @@ function detail_searchform($p='') {
           "</TR>\n\n".
 
           "<TR>\n".
-          "<TD NOWRAP>{$langs['sh_dat']}</TD>\n".
-          "<TD NOWRAP>:</TD>\n".
-          "<TD NOWRAP>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['sh_dat']}</TD>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
           "<SELECT NAME=o[y1]>\n".
           "{$print['peys']}\n".
           "</SELECT>\n\n".
@@ -821,9 +821,9 @@ function detail_searchform($p='') {
           "</TR>\n\n".
 
           "<TR>\n".
-          "<TD NOWRAP>{$langs['check_y']}</TD>\n".
-          "<TD NOWRAP>:</TD>\n".
-          "<TD NOWRAP>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['check_y']}</TD>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
+          "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
           "<INPUT TYPE=checkbox NAME=o[er] VALUE=y$ERCHK>\n".
           "<INPUT TYPE=submit VALUE=\"{$langs['sh_sbmit']}\">\n".
           "</TD>\n".

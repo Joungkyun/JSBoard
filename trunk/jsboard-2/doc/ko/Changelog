@@ -15,6 +15,11 @@ file.
 
 
 버전   : jsboard-2.0.8
+
+2004.08.17
+  by 김정균 <http://www.oops.org>
+	- NOWRAP 을 CSS 로 변경
+
 2004.07.15
   by 김정균 <http://www.oops.org>
 	- html title 위치 수정. (검색을 위하여)
