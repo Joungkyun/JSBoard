@@ -9,6 +9,9 @@ if ($path[type] == "user_admin") $locate = "../../include/LANG";
 else if ($path[type] == "admin" || $path[type] == "Install") $locate = "../include/LANG";
 else $locate = "include/LANG";
 
-if ($langs[code] == "ko") { include "$locate/ko.ph"; }
-else { include "$locate/en.ph"; }
+if ($langs[code]) {
+  if (file_exists("$locate/{$langs[code]}.ph")) {
+    include "$locate/{$langs[code]}.ph";
+  } else { include "$locate/en.ph"; }
+} else { include "$locate/en.ph"; }
 ?>

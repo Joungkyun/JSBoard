@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 ¹öÀü   : jsboard-2.0.2
 
+Tue, Oct  8 2002
+  by JoungKyun Kim <http://www.oops.org>
+    - modified dynamical add of language pack
+
 Wed, Oct  2 2002
   by JoungKyun Kim <http://www.oops.org>
 	- fixed problem that don't print error message when regist reply
