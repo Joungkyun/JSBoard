@@ -29,7 +29,7 @@ $disable = $mysqlroot ? "" : " disabled";
 
 if($mysqlroot) {
   $dbname = "JSBoard-$version";
-  $dbname = eregi_replace("(\-|\.|[ ]*)","",$dbname);
+  $dbname = preg_replace("/(\-|\.|[ ]*)/","",$dbname);
 } else {
   $dbname = $mysqldatabasename;
   $dbuser = $mysqlusername;

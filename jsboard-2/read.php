@@ -2,7 +2,7 @@
 $p_time[] = microtime(); # 속도 체크
 include "include/header.ph";
   
-if(eregi("^(2|3|5)$",$board[mode]) && !session_is_registered("$jsboard"))
+if(preg_match("/^(2|3|5)$/",$board[mode]) && !session_is_registered("$jsboard"))
   print_error("$langs[login_err]");
   
 $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
@@ -28,15 +28,15 @@ if($alert) {
   # PAGE DISPLAY
   include "theme/$print[theme]/read.template";
 } else{
-  if((eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id]) || $board[super]) {
+  if((preg_match("/^(2|3|5|7)$/",$board[mode]) && $_SESSION[$jsboard][id]) || $board[super]) {
     $pre_regist[name] = $_SESSION[$jsboard][id];
     $pre_regist[rname] = $_SESSION[$jsboard][name];
     $pre_regist[email] = $_SESSION[$jsboard][email];
     $pre_regist[url] = $_SESSION[$jsboard][url];
   } else {
-    $pre_regist[name] = eregi_replace("[\]","",$_COOKIE[board_cookie][name]);
-    $pre_regist[email] = eregi_replace("[\]","",$_COOKIE[board_cookie][email]);
-    $pre_regist[url] = eregi_replace("[\]","",$_COOKIE[board_cookie][url]);
+    $pre_regist[name] = preg_replace("/[\]/","",$_COOKIE[board_cookie][name]);
+    $pre_regist[email] = preg_replace("/[\]/","",$_COOKIE[board_cookie][email]);
+    $pre_regist[url] = preg_replace("/[\]/","",$_COOKIE[board_cookie][url]);
   }
   
   if ($corder && $_COOKIE[cookie_sort] != $corder) {
@@ -77,23 +77,23 @@ if($alert) {
   $title_width = $board[width] / 8;
   settype($title_width,"integer");
   $list[title] = wordwrap($list[title],$title_width,"<br>\n",1);
-  $list[title] = eregi_replace("&amp;(amp|lt|gt)","&\\1",$list[title]);
+  $list[title] = preg_replace("/&amp;(amp|lt|gt)/i","&\\1",$list[title]);
   
   # title 에서 폰트 색상 지정할수 있게 함
-  $list[title] = eregi_replace("&lt;((/)*font[^&]*)&gt;","<\\1>",$list[title]);
-  $list[title] = eregi_replace("<font[^>]*color=([a-z0-9#]+)[^>]*>","<font color=\\1>",$list[title]);
+  $list[title] = preg_replace("/&lt;((\/)*font[^&]*)&gt;/i","<\\1>",$list[title]);
+  $list[title] = preg_replace("/<font[^>]*color=([a-z0-9#]+)[^>]*>/i","<font color=\\1>",$list[title]);
   
   # 검색 문자열 색상 변경
   $list = search_hl($list);
   
-  if($board[rnname] && eregi("^(2|3|5|7)",$board[mode]))
+  if($board[rnname] && preg_match("/^(2|3|5|7)/",$board[mode]))
     $list[cname] = $list[rname] ? $list[rname] : $list[name];
   else $list[cname] = $list[name];
   
   if($list[email]) $list[uname] = url_link($list[email], $list[cname], $no);
   else $list[uname] = $list[cname];
   if($list[url]) {
-    if(eregi("^http://", $list[url])) $list[uname] .= " [" . url_link($list[url], "$langs[ln_url]", $color[r2_fg]) . "]";
+    if(preg_match("/^http:\/\//i", $list[url])) $list[uname] .= " [" . url_link($list[url], "$langs[ln_url]", $color[r2_fg]) . "]";
     else $list[uname] .= " [" . url_link("http://$list[url]", "$langs[ln_url]") . "]";
   }
   

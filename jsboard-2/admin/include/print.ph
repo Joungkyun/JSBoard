@@ -70,7 +70,7 @@ function get_theme_list($pt,$current="") {
   $p = opendir($path);
   while($i = readdir($p)) {
     if($i != "." && $i != ".." && is_dir("$path/$i")) {
-      if(ereg("^[A-Z]{2}-",$i)) $theme[] = $i;
+      if(preg_match("/^[A-Z]{2}-/",$i)) $theme[] = $i;
     }
   }
 

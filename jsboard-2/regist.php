@@ -26,7 +26,7 @@ if($m == "act") {
   $email = check_email($email);
   $url   = check_url($url);
 
-  if(eregi("[^\xA1-\xFEa-z\. ]",$name)) print_error($langs[reg_format_n],250,150,1);
+  if(preg_match("/[^\xA1-\xFEa-z\. ]/i",$name)) print_error($langs[reg_format_n],250,150,1);
   if(!$email) print_error($langs[reg_format_e],250,150,1);
   $url = str_replace("http://","",$url);
 
@@ -135,8 +135,8 @@ $backbutton
   include "theme/$print[theme]/ext.template";
 } else if($m == chkid) {
   if(!trim($id)) print_notice("INPUT UR ID",250,150,1);
-  if(eregi("[^\xA1-\xFEa-z0-9]",$id)) print_notice($langs[chk_id_s],250,150,1);
-  if(!trim($id) || eregi("[^\xA1-\xFEa-z0-9]",$id)) {
+  if(preg_match("/[^\xA1-\xFEa-z0-9]/i",$id)) print_notice($langs[chk_id_s],250,150,1);
+  if(!trim($id) || preg_match("/[^\xA1-\xFEa-z0-9]/i",$id)) {
     echo "<SCRIPT>window.close()</SCRIPT>";
     exit;
   }

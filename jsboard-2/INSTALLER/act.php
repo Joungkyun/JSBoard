@@ -167,7 +167,7 @@ if ($indb[check]) {
 
   # theme ¼³Á¤
   $themes = ($langs[code] == "ko") ? "KO-default" : "EN-default";
-  $create[str] = ereg_replace("@THEME@",$themes,$create[str]);
+  $create[str] = str_replace("@THEME@",$themes,$create[str]);
 
   file_operate($create[gfile],"w","Can't update $create[gfile]",$create[str]);
 

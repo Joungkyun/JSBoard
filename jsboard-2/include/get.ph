@@ -3,8 +3,8 @@
 #
 function get_authinfo($id,$nocry='') {
   global $edb, $db;
-  if(eregi("user_admin",$_SERVER[PHP_SELF])) { $path = "../.."; }
-  elseif(eregi("admin",$_SERVER[PHP_SELF])) { $path = ".."; }
+  if(preg_match("/user_admin/i",$_SERVER[PHP_SELF])) { $path = "../.."; }
+  elseif(preg_match("/admin/i",$_SERVER[PHP_SELF])) { $path = ".."; }
   else { $path = "."; }
 
   if($edb[uses] || $_SESSION[$jsboard][external]) {
@@ -75,54 +75,54 @@ function get_agent() {
   #                  [ln] 언어 (넷스케이프)
   #                  [vr] 브라우져 버젼
   #                  [co] 예외 정보
-  if(ereg("MSIE", $agent_env)) {
+  if(preg_match("/MSIE/", $agent_env)) {
     $agent[br] = "MSIE";
     # OS 별 구분
-    if(ereg("NT", $agent_env)) $agent[os] = "NT";
-    else if(ereg("Win", $agent_env)) $agent[os] = "WIN";
+    if(preg_match("/NT/", $agent_env)) $agent[os] = "NT";
+    else if(preg_match("/Win/", $agent_env)) $agent[os] = "WIN";
     else $agent[os] = "OTHER";
     # version 정보
-    $agent[vr] = trim(eregi_replace("Mo.+MSIE ([^;]+);.+","\\1",$agent_env));
-    $agent[vr] = eregi_replace("[a-z]","",$agent[vr]);
-  } else if(eregi("Gecko|Galeon",$agent_env) && !eregi("Netscape",$agent_env)) {
+    $agent[vr] = trim(preg_replace("/Mo.+MSIE ([^;]+);.+/i","\\1",$agent_env));
+    $agent[vr] = preg_replace("/[a-z]/i","",$agent[vr]);
+  } else if(preg_match("/Gecko|Galeon/i",$agent_env) && !preg_match("/Netscape/i",$agent_env)) {
     $agent[br] = "MOZL";
     # client OS 구분
-    if(ereg("NT", $agent_env)) $agent[os] = "NT";
-    else if(ereg("Win", $agent_env)) $agent[os] = "WIN";
-    else if(ereg("Linux", $agent_env)) $agent[os] = "LINUX";
+    if(preg_match("/NT/", $agent_env)) $agent[os] = "NT";
+    else if(preg_match("/Win/", $agent_env)) $agent[os] = "WIN";
+    else if(preg_match("/Linux/", $agent_env)) $agent[os] = "LINUX";
     else $agent[os] = "OTHER";
     # 언어팩
-    if(eregi("en-US",$agent_env)) $agent[ln] = "EN";
-    elseif(eregi("ko-KR",$agent_env)) $agent[ln] = "KO";
+    if(preg_match("/en-US/i",$agent_env)) $agent[ln] = "EN";
+    elseif(preg_match("/ko-KR/i",$agent_env)) $agent[ln] = "KO";
     else $agent[ln] = "OTHER";
     # version 정보
-    $agent[vr] = eregi_replace("Mozi[^(]+\([^;]+;[^;]+;[^;]+;[^;]+;([^)]+)\).*","\\1",$agent_env);
+    $agent[vr] = preg_replace("/Mozi[^(]+\([^;]+;[^;]+;[^;]+;[^;]+;([^)]+)\).*/i","\\1",$agent_env);
     $agent[vr] = trim(str_replace("rv:","",$agent[vr]));
     # NS 와의 공통 정보
     $agent[co] = "mozilla";
-  } else if(ereg("Konqueror",$agent_env)) {
+  } else if(preg_match("/Konqueror/",$agent_env)) {
     $agent[br] = "KONQ";
-  } else if(ereg("Lynx", $agent_env)) {
+  } else if(preg_match("/Lynx/", $agent_env)) {
     $agent[br] = "LYNX";
-  } else if(eregi("w3m", $agent_env)) {
+  } else if(preg_match("/w3m/i", $agent_env)) {
     $agent[br] = "W3M";
-  } else if(eregi("links", $agent_env)) {
+  } else if(preg_match("/links/i", $agent_env)) {
     $agent[br] = "LINKS";
-  } else if(ereg("^Mozilla", $agent_env)) {
+  } else if(preg_match("/^Mozilla/", $agent_env)) {
     $agent[br] = "NS";
     # client OS 구분
-    if(ereg("NT", $agent_env)) {
+    if(preg_match("/NT/", $agent_env)) {
       $agent[os] = "NT";
-      if(ereg("\[ko\]", $agent_env)) $agent[ln] = "KO";
-    } else if(ereg("Win", $agent_env)) {
+      if(preg_match("/\[ko\]/", $agent_env)) $agent[ln] = "KO";
+    } else if(preg_match("/Win/", $agent_env)) {
       $agent[os] = "WIN";
-      if(ereg("\[ko\]", $agent_env)) $agent[ln] = "KO";
-    } else if(ereg("Linux", $agent_env)) {
+      if(preg_match("/\[ko\]/", $agent_env)) $agent[ln] = "KO";
+    } else if(preg_match("/Linux/", $agent_env)) {
       $agent[os] = "LINUX";
-      if(ereg("\[ko\]", $agent_env)) $agent[ln] = "KO";
+      if(preg_match("/\[ko\]/", $agent_env)) $agent[ln] = "KO";
     } else $agent[os] = "OTHER";
     # version 정보
-    if(eregi("Gecko",$agent_env)) $agent[vr] = "6";
+    if(preg_match("/Gecko/i",$agent_env)) $agent[vr] = "6";
     else $agent[vr] = "4";
     # Mozilla 와의 공통 정보
     $agent[co] = "mozilla";
@@ -241,7 +241,7 @@ function get_pos($table, $idx) {
 	$next   = sql_fetch_array($result);
 	sql_free_result($result);
         $next[title] = str_replace("&amp;","&",$next[title]);
-	$next[title] = eregi_replace("(#|')","\\\\1",htmlspecialchars($next[title]));
+	$next[title] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($next[title]));
 
 	$pos[next] = $next[no];
 	if($next[reto]) {
@@ -264,7 +264,7 @@ function get_pos($table, $idx) {
 	$prev   = sql_fetch_array($result);
 	sql_free_result($result);
         $prev[title] = str_replace("&amp;","&",$prev[title]);
-	$prev[title] = eregi_replace("(#|')","\\\\1",htmlspecialchars($prev[title]));
+	$prev[title] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($prev[title]));
 
 	$pos[prev] = $prev[no];
 	if($prev[reto]) {
@@ -381,11 +381,11 @@ function viewfile($tail) {
   $source3 = "   <font color=red>$list[bofile]</font> file is broken link!!\n\n";
 
   if (@file_exists($upload_file)) {
-    if (eregi("^(gif|jpg|png)$",$tail)) {
+    if (preg_match("/^(gif|jpg|png)$/i",$tail)) {
       $imginfo = GetImageSize($upload_file);
       if($agent[co] == "mozilla") $list[bofile] = urlencode($list[bofile]);
       $uplink_file = "./form.php?mode=photo&table=$table&f[c]=$list[bcfile]&f[n]=$list[bofile]&f[w]=$imginfo[0]&f[h]=$imginfo[1]";
-      if($imginfo[0] > $board[width] - 6 && !eregi("%",$board[width])) {
+      if($imginfo[0] > $board[width] - 6 && !preg_match("/%/",$board[width])) {
         $p[vars] = $imginfo[0]/$board[width];
         $p[width] = $board[width] - 6;
         $p[height] = intval($imginfo[1]/$p[vars]);
@@ -401,20 +401,20 @@ function viewfile($tail) {
       } else {
         $p[up] = "<IMG SRC=\"$wupload_file\" $imginfo[3] BORDER=0>\n<p>\n";
       }
-    } else if (eregi("^(phps|txt|html?|shs)$",$tail)) {
+    } else if (preg_match("/^(phps|txt|html?|shs)$/i",$tail)) {
       $view = file_operate($upload_file,"r",0,1200);
       $view = htmlspecialchars(cut_string($view,1000));
       if (filesize($upload_file) > 1000) $view = $view . " <p>\n ......$langs[preview]\n\n";
 
       $p[down] = "$source1$view$source2";
-    } elseif (eregi("^(mid|wav|mp3)$",$tail)) {
+    } elseif (preg_match("/^(mid|wav|mp3)$/i",$tail)) {
       if($tail == "mp3" && $agent[co] == "mozilla")
         $p[up] = "[ MP3 file은 IE에서만 들으실수 있습니다. ]";
       elseif($agent[br] == "LYNX")
         $p[bo] = "";
       else
         $p[bo] = "<embed src=$upload_file autostart=true hidden=true mastersound>";
-    } elseif (eregi("^(mpeg|mpg|asf|dat|avi|wmv)$",$tail)) {
+    } elseif (preg_match("/^(mpeg|mpg|asf|dat|avi|wmv)$/i",$tail)) {
       if($agent[br] == "MSIE") $p[up] = "<embed src=$upload_file autostart=true>";
     } elseif ($tail == "mov" && $agent[br] == "MSIE") {
       $p[up] = "<embed src=$upload_file autostart=true width=300 height=300 align=center>";

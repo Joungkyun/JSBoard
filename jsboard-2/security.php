@@ -41,7 +41,7 @@ if($viewtype || $_SESSION[$jsboard][pos] == 1) {
   # print 변수가 있을 경우 print 변수를 0으로 초기화
   if($security[prints]) {
     $security[serial] = @get_html_src("jsboard.kldp.org",500,"SecurityMSG/serial.txt",1);
-    if(!eregi("none",$security[serial])) $security[serial] = trim(eregi_replace(".+ ([0-9]{11})","\\1",$security[serial]));
+    if(!preg_match("/none/i",$security[serial])) $security[serial] = trim(preg_replace("/.+ ([0-9]{11})/i","\\1",$security[serial]));
     $security[content] = "<?\n".
                          "\$security[stamp] = ".time().";\n".
                          "\$security[serial] = \"$security[serial]\";\n".

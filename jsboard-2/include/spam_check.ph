@@ -5,13 +5,13 @@ function get_spam($table, $no) {
     if($list[email]) $spam[] = "EM:$list[email]";
     if($list[url]) $spam[] = "HP:$list[url]";
 	
-    $urls = eregi_replace("(http:\/\/[a-z0-9:&#@=_\?\/~\.\+-]+)", "||\\1||", $list[text]);
+    $urls = preg_replace("/(http:\/\/[a-z0-9:&#@=_\?\/~\.\+-]+)", "||\\1||/i", $list[text]);
     $url  = explode("||", $urls);
     for($co = 0; $co < count($url); $co++) {
-      if(eregi("^http:\/\/[a-z0-9:&#@=_\?\/~\.\+-]+", $url[$co])) $spam[] = "HP:$url[$co]";
+      if(preg_match("/^http:\/\/[a-z0-9:&#@=_\?\/~\.\+-]+/i", $url[$co])) $spam[] = "HP:$url[$co]";
     }
     $spam[] = "IP:$list[host]";
-    $spam[] = eregi_replace("([0-9]+\.[0-9]+\.[0-9]+)\.[0-9]+$", "IP:\\1.0", $list[host]);
+    $spam[] = preg__replace("/([0-9]+\.[0-9]+\.[0-9]+)\.[0-9]+$/i", "IP:\\1.0", $list[host]);
   }
 
   for($i = 0; $i < count($spam); $i++) {

@@ -11,7 +11,7 @@ function get_security_info() {
 
   if($chk_time > $chk_rtime) {
     $p = @get_html_src("jsboard.kldp.org",500,"SecurityMSG/serial.txt",1);
-    if(!eregi("none",$p)) {
+    if(!preg_match("/none/i",$p)) {
       $src = array("/.+ ([0-9]{11})/i","/^0*/i");
       $tar = array("\\1","");
       $p = trim(preg_replace($src,$tar,$p));

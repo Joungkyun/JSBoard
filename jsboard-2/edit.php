@@ -3,11 +3,11 @@ include "include/header.ph";
 
 $board[super] = $board[adm] ? 1 : $board[super];
 
-if(eregi("^(1|3)$",$board[mode])) { if(!$board[super]) print_error($langs[perm_err],250,150,1); }
-if(eregi("^(1|3|5)$",$board[mode]) && !$_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);
+if(preg_match("/^(1|3)$/",$board[mode])) { if(!$board[super]) print_error($langs[perm_err],250,150,1); }
+if(preg_match("/^(1|3|5)$/",$board[mode]) && !$_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);
 
 # 로그인이 되어 있고 전체어드민 로그인시에는 모든것을 수정할수 있게.
-if(eregi("^(2|5)$",$board[mode]) && $_SESSION[$jsboard][id] && !$board[super]) $disable = " disabled";
+if(preg_match("/^(2|5)$/",$board[mode]) && $_SESSION[$jsboard][id] && !$board[super]) $disable = " disabled";
 
 # upload[dir] 에 mata character 포함 여부 체크
 meta_char_check($upload[dir]);
@@ -20,7 +20,7 @@ sql_select_db($db[name]);
 
 $list = get_article($table, $no);
 
-if(eregi("^(2|3|5|7)$",$board[mode]) && !$board[super])
+if(preg_match("/^(2|3|5|7)$/",$board[mode]) && !$board[super])
   if($list[name] != $_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);
 $list[email] = str_replace("@",$rmail[chars],$list[email]);
 
@@ -36,7 +36,7 @@ if($list[html]) $html_chk_ok = " CHECKED";
 else $html_chk_no = " CHECKED";
 
 # Browser가 Lynx일때 multim form 삭제
-if($agent[br] == "LYNX") $board[formtype] = "";
+if($noup == 1) $board[formtype] = "";
 else $board[formtype] = " ENCTYPE=\"multipart/form-data\"";
 
 # Form size 조정을 위한 설정

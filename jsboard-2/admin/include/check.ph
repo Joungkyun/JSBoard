@@ -25,9 +25,9 @@ function table_name_check($table,$ck=0) {
   }
 
   if (!$ck && !$table)  print_error($langs[n_t_n],250,150,1);
-  if (!eregi("^[a-zA-Z]",$table)) print_error($langs[n_db],250,150,1);
-  if (eregi("[^a-z0-9_\-]",$table)) print_error($langs[n_meta],250,150,1);
-  if (eregi("^as$",$table)) print_error($langs[n_promise],250,150,1);
+  if (!preg_match("/^[a-z]/i",$table)) print_error($langs[n_db],250,150,1);
+  if (preg_match("/[^a-z0-9_\-]/i",$table)) print_error($langs[n_meta],250,150,1);
+  if (preg_match("/^as$/i",$table)) print_error($langs[n_promise],250,150,1);
 }
 
 # table list 존재 유무 체크
@@ -73,7 +73,7 @@ function get_tblist($db,$t="",$chk='') {
       # 배열에 저장된 이름중 알파벳별 구분 변수가 있으면 소트된
       # 이름만 다시 배열에 저장
       if($t) {
-        if(eregi("^$t",$l[$i])) {
+        if(preg_match("/^$t/i",$l[$i])) {
           $ll[$j] = $l[$i];
           $j++;
         }
@@ -120,7 +120,7 @@ function check_admin($user) {
     if($i != "." && $i != ".." && is_dir("./data/$i")) {
       $c = fopen("./data/$i/config.ph","rb");
       $chk = fread($c,500);
-      $chk = eregi_replace(".+board\[ad\][ ]*=[ ]*\"([^\"]*)\".+","\\1",$chk);
+      $chk = preg_replace("/.+board\[ad\][ ]*=[ ]*\"([^\"]*)\".+/i","\\1",$chk);
       if(trim($chk) == trim($user)) {
         closedir($p);        
         return 1;
@@ -152,7 +152,7 @@ function parse_ipvalue($str,$r=0) {
   if(!trim($str)) return;
 
   if(!$r) {
-    $str = eregi_replace("[\r\n;]"," ",$str);
+    $str = preg_replace("/[\r\n;]/"," ",$str);
     $src[] = "/[^0-9]\./i";
     $dsc[] = "";
     $src[] = "/[^0-9. ]/i";
