@@ -446,34 +446,22 @@ function url_link($url, $str = "", $no = 0) {
 # move_upload_file -> tmp로 upload되어 있는 파일을 원하는 디레토리에 위치
 # chmod            -> file, direcoty의 권한 변경
 #
-function file_upload($updir) {
-  global $userfile_size, $userfile, $userfile_name;
+function file_upload($ufile,$updir) {
   global $upload, $langs, $table;
 
-  if(is_uploaded_file($userfile)) {
-    if ($userfile_size > $upload[maxsize]) {
+  if(is_uploaded_file($ufile[tmp_name])) {
+    if ($ufile[size] > $upload[maxsize]) {
       print_error($langs[act_md],250,150,1);
       exit;
     }
 
-    # file name에 공백이 있을 경우 공백 삭제
-    $userfile_name = eregi_replace(" ","",$userfile_name);
-
-    # file name에 특수 문자가 있을 경우 등록 거부
-    upload_name_chk($userfile_name);
-
-    # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
-    $userfile_name = eregi_replace("[\.]*$","",$userfile_name);
-    $userfile_name = eregi_replace(".(ph|inc|php[0-9a-z]*|phtml)$",".phps", $userfile_name);
-    $userfile_name = eregi_replace("(.*)\.(cgi|pl|sh|html|htm|shtml|vbs|jsp)$", "\\1_\\2.phps", $userfile_name);
-
     mkdir("data/$table/$upload[dir]/$updir",0755);
-    move_uploaded_file($userfile,"data/$table/$upload[dir]/$updir/$userfile_name");
-    chmod("data/$table/$upload[dir]/$updir/$userfile_name",0644);
+    move_uploaded_file($ufile[tmp_name],"data/$table/$upload[dir]/$updir/$ufile[name]");
+    chmod("data/$table/$upload[dir]/$updir/$ufile[name]",0644);
 
     $up = 1;
-  } elseif($userfile_name) {
-    if($userfile_size == '0') {
+  } elseif($ufile[name]) {
+    if($ufile[size] == '0') {
       print_error($langs[act_ud],250,150,1);
     } else {
       print_error($langs[act_ed],250,150,1);

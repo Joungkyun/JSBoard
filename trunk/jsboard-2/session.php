@@ -41,10 +41,6 @@ if ($m == "login") {
 
     # cookie ¼³Á¤
     $CookieTime = time()+900;
-
-    if(eregi("MSIE",$agent[br]) && $agent[vr] == 5.5)
-      $CookieTime = strftime("%A, %d-%b-%Y %H:%M:%S MST",$CookieTime);
-
     SetCookie("c{$jsboard}[id]",${$jsboard}[id],$CookieTime,"/");
     SetCookie("c{$jsboard}[name]",${$jsboard}[name],$CookieTime,"/");
     SetCookie("c{$jsboard}[email]",${$jsboard}[email],$CookieTime,"/");

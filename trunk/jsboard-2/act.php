@@ -24,7 +24,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   # 게시물 작성 함수
   function article_post($table, $atc) {
     global $jsboard, $board, $upload, $cupload, $rmail, $langs, $agent;
-    global $userfile, $userfile_name, $userfile_size, $max_file_size;
+    global $max_file_size;
 
     if($board[mode] == 4 && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) print_error($langs[login_err]);
 
@@ -39,18 +39,20 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
     # 전체 관리자가 허락하였을시에만 upload 기능을 사용할수 있음
     if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
+      $upfile = conv_upload_name("userfile");
       $bfilename = date("YmdHis",$atc[date]);
-      $upchk = file_upload($bfilename);
+      $upchk = file_upload($upfile,$bfilename);
+
       if(!$upchk) {
         $bfilename = "";
-        $userfile_size = 0;
-        $userfile_name = "";
+        $upfile[size] = 0;
+        $upfile[name] = "";
       }
     } else {
       # winchild 99/11/26 fileupload = "no" 일 경우에는 초기화를 시켜주어야 한다.
       $bfilename = "";
-      $userfile_size = 0;
-      $userfile_name = "";
+      $upfile[size] = 0;
+      $upfile[name] = "";
     }
 
     $result = sql_query("SELECT MAX(num) AS num, MAX(idx) AS idx FROM $table");
@@ -64,7 +66,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
                       VALUES ('', $atc[mxnum], $atc[mxidx],$atc[date],'$atc[host]',
                               '$atc[name]','$atc[rname]','$atc[passwd]','$atc[email]',
                               '$atc[url]','$atc[title]','$atc[text]',0,0,0,0,0,$atc[html],
-                              '$userfile_name','$bfilename','$userfile_size')");
+                              '$upfile[name]','$bfilename','$upfile[size]')");
 
     # mail 보내는 부분
     if ($rmail[uses]) {
@@ -92,7 +94,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   # 게시물 답장 함수
   function article_reply($table, $atc) {
     global $board,$upload,$cupload,$rmail,$langs,$agent,$jsboard,$page;
-    global $userfile,$userfile_name,$userfile_size,$max_file_size;
+    global $max_file_size;
 
     $atc[date] = time(); # 현재 시각
     $atc[host] = get_hostname(0); # 글쓴이 주소
@@ -108,18 +110,19 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
     # 답변시 file upload 설정 부분, 전체 관리자가 허락시에만 가능
     if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
+      $upfile = conv_upload_name("userfile");
       $bfilename = date("YmdHis",$atc[date]);
-      $upchk = file_upload($bfilename);
+      $upchk = file_upload($upfile,$bfilename);
       if(!$upchk) {
         $bfilename = "";
-        $userfile_size = 0;
-        $userfile_name = "";
+        $upfile[size] = 0;
+        $upfile[name] = "";
       }
     } else {
       # winchild 99/11/26 fileupload = "no" 일 경우에는 초기화를 시켜주어야 한다.
       $bfilename = "";
-      $userfile_size = 0;
-      $userfile_name = "";
+      $upfile[size] = 0;
+      $upfile[name] = "";
     }
 
     # 답장글에 대한 정보를 가져옴
@@ -139,8 +142,8 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
                                    bcfile,bfsize)
                       VALUES ('',0,$atc[idx],$atc[date],'$atc[host]','$atc[name]','$atc[rname]',
                               '$atc[passwd]','$atc[email]','$atc[url]','$atc[title]','$atc[text]',
-                              0,0,'$atc[reno]','$atc[rede]',$atc[reto],$atc[html],'$userfile_name',
-                              '$bfilename','$userfile_size')");
+                              0,0,'$atc[reno]','$atc[rede]',$atc[reto],$atc[html],'$upfile[name]',
+                              '$bfilename','$upfile[size]')");
     sql_query("UNLOCK TABLES");
 
     # mail 보내는 부분
@@ -170,8 +173,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
   # 게시물 수정 함수
   function article_edit($table, $atc, $passwd) {
-    global $userfile, $userfile_name, $userfile_size, $max_file_size;
-    global $jsboard, $board, $langs, $agent, $rmail;
+    global $max_file_size, $jsboard, $board, $langs, $agent, $rmail;
 
     # 어드민 모드가 아닐 경우 패스워드 인증
     if(!$_SESSION[$jsboard][pos] && $_SESSION[$jsboard][id] != $board[ad]) {
@@ -199,8 +201,9 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     }
 
     # file 수정 루틴
+    $upfile = conv_upload_name("userfile");
     $bfilename = date("YmdHis",$atc[date]);
-    $atc[fup] = file_upload($bfilename);
+    $atc[fup] = file_upload($upfile,$bfilename);
 
     if($atc[fup]) {
       if(file_exists("data/$table/files/$atc[fdeldir]/$atc[fdelname]") && $atc[fdelname]) {
@@ -212,7 +215,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
         UPDATE $table SET date = $atc[date], host = '$atc[host]',
         name = '$atc[name]', email = '$atc[email]', url = '$atc[url]',
         title = '$atc[title]', text = '$atc[text]', html = $atc[html],
-        bofile = '$userfile_name', bcfile = '$bfilename', bfsize = '$userfile_size'
+        bofile = '$upfile[name]', bcfile = '$bfilename', bfsize = '$upfile[size]'
         WHERE no = $atc[no]");
     } else {
       sql_query("
@@ -382,10 +385,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   function set_cookie($atc) {
     global $board,$agent;
     $month = 60 * 60 * 24 * $board[cookie];
-
-    if(eregi("MSIE",$agent[br]) && $agent[vr] == 5.5)
-      $cookietime = strftime("%A, %d-%b-%Y %H:%M:%S MST", time() + $month);
-    else $cookietime = time() + $month;
+    $cookietime = time() + $month;
 
     setcookie("board_cookie[name]", $atc[name], $cookietime);
     setcookie("board_cookie[email]", $atc[email], $cookietime);

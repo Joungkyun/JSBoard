@@ -3,14 +3,18 @@
 # register_globals 값이 off 일 경우 편리하게 사용
 #
 function parse_query_str() {
-  foreach($_GET as $key => $value) {
-    global ${$key};
-    ${$key} = $value;
+  if(is_array($_GET)) {
+    foreach($_GET as $key => $value) {
+      global ${$key};
+      ${$key} = $value;
+    }
   }
 
-  foreach($_POST as $key => $value) {
-    global ${$key};
-    ${$key} = $value;
+  if(is_array($_POST)) {
+    foreach($_POST as $key => $value) {
+      global ${$key};
+      ${$key} = $value;
+    }
   }
 }
 
