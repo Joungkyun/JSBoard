@@ -413,8 +413,13 @@ function auto_link($str) {
 
 # Email 링크를 만들기 위한 함수
 function url_link($url, $str = "", $no = 0) {
-  global $table, $board, $rmail, $o;
+  global $table, $board, $rmail, $o, $agent;
   $str = $str ? $str : $url;
+
+  if($agent[br] == "MSIE") {
+    $mailTarget = " Target=noPage";
+    $mailFrame = "<IFRAME NAME=\"noPage\" SRC=\"\" STYLE=\"display:none;\"></IFRAME>";
+  }
 
   if(check_email($url) && $rmail[uses]) {
     if(eregi("^s|d$",$o[at]) && ($o[sc] == "n" || $o[sc] == "a")) {
@@ -424,7 +429,7 @@ function url_link($url, $str = "", $no = 0) {
     $url = str_replace("@",$rmail[chars],$url);
     $str = "<A HREF=./act.php?o[at]=ma&target=$url ".
            "onMouseOut=\"window.status=''; return true;\" ".
-           "onMouseOver=\"window.status='Send mail to $strs'; return true;\">$str</A>";
+           "onMouseOver=\"window.status='Send mail to $strs'; return true;\"{$mailTarget}>$str</A>{$mailFrame}";
   } else if(check_url($url)) {
     $str = "<A HREF=\"$url\" target=\"_blank\">$str</A>";
   } else {
