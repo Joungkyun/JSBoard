@@ -5,7 +5,6 @@ Version: A2
 - mail 발송 방식 변경에 따른 mail html design 템플릿 파일 추가 (mail.template)
 - login.php 와 read.php 에서 커멘트 관련 수정
 - reply design 변경
-- 테마상단에 문서 타입 정의 추가
 
 Version: A1
 - theme 관리 시작
