@@ -1,6 +1,6 @@
 #!/bin/sh
 
 chgrp nobody ../../include
-chmod 775 ../../include
+chmod 771 ../../include
 
 exit 0

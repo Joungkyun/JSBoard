@@ -28,4 +28,8 @@ $backlink	= "javascript:history.back()" ;
 // Board version (건들지 마시오)
 $webboard_version = "0.7" ;
 
+// Preview
+$previewn	= "no" ;
+$previewsizen	= "100" ;
+
 ?>

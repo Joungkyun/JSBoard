@@ -167,7 +167,24 @@ echo ("
 
 <tr>
 <td bgcolor=#333333>Preview mode</td>
-<td><input type=text name=preview size=14 id=input value=$previewn></td>
+<td>
+");
+
+if ($previewn == "no") {
+echo ("
+<input type=radio name=preview value=yes>yes
+<input type=radio name=preview value=no checked>no
+");
+}
+else {
+echo ("
+<input type=radio name=preview value=yes checked>yes
+<input type=radio name=preview value=no>no
+");
+}
+
+echo("
+</td>
 <td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=preview')></td>
 <td bgcolor=#333333>Preview size</td>
 <td><input type=text name=previewsize size=14 id=input value=$previewsizen></td>

@@ -429,23 +429,21 @@ else if ($hintname == "writemode") {
 else if ($hintname == "preview") {
   echo ("
 
-<font id=ac><b>♤ Preview Mode</b></font>
+<font id=ac><b>♤ Priview Mode</b></font>
 
 <p>
-게시물 리스트의 게시물 제목에 마우스 커서를 놓으면
-본문의 내용 일부가 보이도록 해주는 기능
+게시판 리스트에서 글 제목에 마우스를 올려 놓았을때 글내용의
+미리 보기 기능 사용여부를 결정한다. 단 IE에서만 가능하다.
 ");
 }
 
 else if ($hintname == "previewsize") {
   echo ("
 
-<font id=ac><b>♤ Preview size</b></font>
+<font id=ac><b>♤ Priview Size</b></font>
 
 <p>
-Preview 기능을 사용할 경우 몇 bytes 까지 미리
-보기할 것인지 결정. no 를 넣으면 사용 안함. yes 를
-넣으면 사용.
+미리 보기 기능에서 글 내용을 어느 정도 보여줄지 결정한다.
 ");
 }
 
