@@ -8,6 +8,10 @@ if($path[type] == "user_admin") {
   $ipath = "..";
 }
 
+set_magic_quotes_runtime(0);
+ini_set(magic_quotes_gpc,1);
+ini_set(magic_quotes_sybase,0);
+
 include_once "$ipath/include/error.ph";
 include_once "$ipath/include/check.ph";
 include_once "$ipath/include/get.ph";
