@@ -13,15 +13,15 @@ if ($mode == "login") {
   session_register("login");
   # admn login 상태를 알리기 위한 cookie 설정
   SetCookie("adminsession",$login[pass],time()+900,"/");
-  header("Location: admin.php");
+  move_page("./admin.php",0);
 } else if ($mode == "logout") {
   # 세션을 삭제
   session_unregister("login");
   # admin login 상태를 삭제
   SetCookie("adminsession","",0,"/");
-  header("Location: auth.php");
+  move_page("./auth.php",0);
 } else if ($mode == "back") {
-  header("Location:admin.php");
+  move_page("./admin.php",0);
 }
 
 ?>
