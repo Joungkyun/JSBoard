@@ -9,7 +9,3 @@ Known Bug
 
    Case of any users, is not located in right path of php.ini.
 
-2. If failed auth when use valid id and password, set php.ini follow.
-
-   register_globals        =       On
-
