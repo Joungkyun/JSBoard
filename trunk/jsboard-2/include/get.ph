@@ -40,7 +40,6 @@ function get_authinfo($id) {
 
 
 # 웹 서버 접속자의 IP 주소 혹은 도메인명을 가져오는 함수
-# license : OOPS_License (http://www.oops.org/OOPS_License)
 # HTTP_X_FORWARDED_FOR - proxy server가 설정하는 환경 변수
 # getenv        - 환경 변수값을 가져옴
 #                 http://www.php.net/manual/function.getenv.php

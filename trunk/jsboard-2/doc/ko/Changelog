@@ -21,7 +21,7 @@ Attention : OOPS administration Center is not GPL.
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2001년 12월 20일
+작성일 : 2001년 12월 21일
 버전   : jsboard-2.0pre3
 
 * 변경된점
@@ -83,6 +83,7 @@ Attention : OOPS administration Center is not GPL.
 54. 내부 보안버그 패치
 55. parse.ph 의 delete_tag(), nl2br() 함수 수정
 56. 1000,000 건 이상의 레코드를 위해 SQL query 변경
+57. admin center 라이센스를 GPL 로 변경
 
 
 -----------------------------------------------------------------------------
