@@ -13,7 +13,11 @@ TD { FONT: 12px tahoma; COLOR:#555555; }
 <script language=JavaScript>
 <!--
 function InputFocus() {
+<? if($mode == "comment") { ?>
+   document.auth.lp.focus(); 
+<? } else { ?> 
   document.auth.lu.focus();
+<? } ?>
   return;
 }
 //-->
