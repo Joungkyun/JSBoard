@@ -18,6 +18,21 @@ must revise it as needed for himeself/herself.
 ******************************************************************************
 
 작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 5월 28일
+버전   : jsboard-0.7.8 (적수게시판 버전 0.7 정식 버젼)
+
+1. 검색시 [ 나 "가 들어갈 경우 에러나는 것 수정
+2. 글 제목에 "가 들어 있을 경우 수정및 답장쓸때 제목이 짤리는 것 수정
+3. "가 들어간 검색어로 내용검색시 찾지 못하는것 수정
+4. file name에 공백 문자 있을 경우 삭제.
+5. script를 사용할 만한 upload file들의 확장자를 filename_확장자.phps로 강제 변경
+6. reply시 11번째 댓글 부터 Re:^이전글 번호 로 나오는것 수정
+7. 글 제목에 "가 들어갈 경우 이전글 읽기 화면에서 메뉴 깨지는것 수정
+8. act.php3 오타 수정 < dconnect($db_sever....) -> dconnect($db_server...) >
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 4월 27일
 버전   : jsboard-0.7.7 (적수게시판 버전 0.7 정식 버젼)
 
@@ -26,6 +41,7 @@ must revise it as needed for himeself/herself.
 2. preview 기능은 IE에서만 작동하도록 fix
 3. 게시판 admin에서 preview mode 설정란을 radio box로 수정
 4. 게시판 admin에서 preview에 관련된 hint 추가
+5. dos format을 가지고 있는 file들을 unix format으로 변환
 
 -----------------------------------------------------------------------------
 작성자 : 차경묵 (dimanche@dimanche.co.kr)

@@ -21,9 +21,9 @@ while($list = dfetch_row($result)) {
     $bofile = $list[15]; // 파일이름
     $bcfile = $list[16]; // 파일경로
     $bfsize = $list[17]; // 파일크기
-
 }
 
+$title  = htmlspecialchars($title);
 ?>
 <br>
 <form method="post" action="act.php3">

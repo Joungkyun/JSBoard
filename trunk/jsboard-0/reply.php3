@@ -31,8 +31,9 @@ while($list = dfetch_row($result)) {
     $text  = eregi_replace("\n", "\n: ", $text);
 }
 
+$title  = htmlspecialchars($title);
 $title  = eregi_replace("Re: ", "", $title);
-$title  = eregi_replace("Re(\^[0-9]): ", "", $title);
+$title  = eregi_replace("Re(\^[0-9]+): ", "", $title);
 $reti = $reno;
 $reti = ++$reti;
 

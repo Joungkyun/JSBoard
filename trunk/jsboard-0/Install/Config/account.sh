@@ -1,10 +1,10 @@
 #!/bin/sh
 
-cp -aRp ../admin_sample/db.ph.orig ../../include/db.ph
-cp -aRp ../sample ../../include/test
-chmod 707 ../../include
-chmod 644 ../../include/db.ph
-chmod 707 ../../include/test -R
+cp -Rp ../admin_sample/db.ph.orig ../../include/db.ph
+cp -Rp ../sample ../../include/test
+chmod 703 ../../include
+chmod 604 ../../include/db.ph
+chmod 707 -R ../../include/test
 chmod 644 ../../include/*.*
 
 exit 0
