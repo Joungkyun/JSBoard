@@ -21,13 +21,13 @@ TARGET=""
 # find /usr -name mysql 로 찾도록 한다.
 MPATH=/usr/bin/mysql
 
-if [ ${TARGET} = "" ]; then
+if [ "${TARGET}" = "" ]; then
   TARGET=$(mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME} -e "show tables" | grep  -v "Tables_in_\|userdb")
 fi
 
 for i in ${TARGET}
 do
-  if [ ${TARGET} != "userdb" ]; then
+  if [ "${TARGET}" != "userdb" ]; then
     echo "Converting ${i} table ......."
     ${MPATH} -u${DB_USER} -p${DB_PASS} ${DB_NAME} -e "ALTER TABLE ${i} ADD rname tinytext"
     ${MPATH} -u${DB_USER} -p${DB_PASS} ${DB_NAME} -e "ALTER TABLE ${i} DROP moder"
