@@ -18,6 +18,13 @@ If you wnat to see windog's change log, see also
 ******************************************************************************
 
 
+¹öÀü   : jsboard-2.0.4
+
+2002.11.20
+  by ±èÁ¤±Õ <http://www.oops.org>
+	- fixed miss url of user config page on admin page
+
+
 -----------------------------------------------------------------------------
 ¹öÀü   : jsboard-2.0.3
 
@@ -25,6 +32,7 @@ If you wnat to see windog's change log, see also
   by ±èÁ¤±Õ <http://www.oops.org>
 	- 2.0.3 release
 	- fixed security bug of file upload
+
 
 -----------------------------------------------------------------------------
 ¹öÀü   : jsboard-2.0.2
