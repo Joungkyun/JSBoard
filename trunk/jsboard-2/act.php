@@ -288,17 +288,29 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   }
 
   function comment_post($table,$atc) {
-    global $jsboard, $board;
+    global $jsboard, $board, $langs;
 
     $host = get_hostname(0);
     $dates = time();
-    $atc[passwd] = crypt($atc[passwd]);
+
+    # blank check
+    $blankChk = "(\xA1A1|\s|&nbsp;)+";
+    $nameChk = array("name","text");
+    for($bc=0;$bc<2;$bc++) {
+      if(!$atc[$nameChk[$bc]] || preg_match("/^$blankChk$/i",trim($atc[$nameChk[$bc]]))) {
+        $langs[act_in] = preg_replace("/제목,/i","",$langs[act_in]);
+        print_error($langs[act_in],250,150,1);
+      }
+    }
+
+    if(preg_replace("/\s/i","",$atc[passwd])) $atc[passwd] = crypt($atc[passwd]);
     $atc[name] = htmlspecialchars($atc[name]);
     $atc[text] = htmlspecialchars($atc[text]);
 
     $sql = "INSERT INTO {$table}_comm (no,reno,rname,name,passwd,text,host,date) ".
            "VALUES ('','$atc[no]','$atc[rname]','$atc[name]','$atc[passwd]','$atc[text]','$host','$dates')";
     sql_query($sql);
+    set_cookie($atc,1);
   }
 
   # 게시물 검사 함수
@@ -410,14 +422,16 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   }
 
   # 쿠키 설정 함수
-  function set_cookie($atc) {
+  function set_cookie($atc,$comment=0) {
     global $board,$agent;
     $month = 60 * 60 * 24 * $board[cookie];
     $cookietime = time() + $month;
 
     setcookie("board_cookie[name]", $atc[name], $cookietime);
-    setcookie("board_cookie[email]", $atc[email], $cookietime);
-    setcookie("board_cookie[url]", $atc[url], $cookietime);
+    if(!$comment) {
+      setcookie("board_cookie[email]", $atc[email], $cookietime);
+      setcookie("board_cookie[url]", $atc[url], $cookietime);
+    }
   }
 
   switch($o[at]) {

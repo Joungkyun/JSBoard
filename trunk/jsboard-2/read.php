@@ -5,7 +5,7 @@ include "include/header.ph";
 if(eregi("^(2|3|5)$",$board[mode]) && !session_is_registered("$jsboard"))
   print_error("$langs[login_err]");
 
-if($_SESSION[$jsboard][id] == $board[ad] || $_SESSION[$jsboard][pos] == 1)
+if($_SESSION[$jsboard][pos] == 1)
   $board[super] = 1;
 
 if((eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id]) || $board[super]) {
