@@ -1,8 +1,8 @@
 ***** JSBOARD + OOPS administartion Center *********************************
 
-Original Developer		: Byung Chan Kim <redhands at linux.sarang.net>
-Source Disturibute		: Joung Kyun Kim <admin at oops.org>
-Windog Version			: Ki Soo Choi <choiks at nuri.net>
+Original Developer              : Byung Chan Kim <redhands at linux.sarang.net>
+Source Disturibute              : Joung Kyun Kim <admin at oops.org>
+Windog Version                  : Ki Soo Choi <choiks at nuri.net>
 
 ## Warning ##
 
@@ -21,7 +21,7 @@ Attention : OOPS administration Center is not GPL.
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2001년 12월 17일
+작성일 : 2001년 12월 19일
 버전   : jsboard-2.0pre3
 
 * 변경된점
@@ -78,6 +78,8 @@ Attention : OOPS administration Center is not GPL.
 50. moder 필드 삭제
 51. login mode 시에 이름 출력을 닉네임 또는 리얼네임을 출력하도록 선택을
     할 수 있게 수정 (rname field 추가)
+52. IE 6.0 에서 cookie 적용되지 않던것 수정
+53. 외부 회원 DB 연동 가능하게 수정 (README.OPERATE 참고)
 
 
 -----------------------------------------------------------------------------

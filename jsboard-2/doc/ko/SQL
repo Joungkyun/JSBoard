@@ -27,8 +27,6 @@ JSBoard main table
 | bfsize | int(4)       | YES  |     | NULL    |                |  파일 사이즈
 +--------+--------------+------+-----+---------+----------------+
 
-moder record 의 의미는 적수<redhand@linux.sarang.net> 님에게 문의해
-보십시오 ^^;
 
 
 JSBoard userdb table

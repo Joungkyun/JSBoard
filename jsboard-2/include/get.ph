@@ -2,13 +2,39 @@
 # login 정보를 얻어오는 함수
 #
 function get_authinfo($id) {
-  $sql = "SELECT no,nid,name,email,url,passwd,position
-            FROM userdb WHERE nid = '$id'";
+  global $PHP_SELF, $edb, $db;
+  if(eregi("user_admin",$PHP_SELF)) { $path = "../.."; }
+  elseif(eregi("admin",$PHP_SELF)) { $path = ".."; }
+  else { $path = "."; }
 
-  $result = sql_query($sql);
-  $r = sql_fetch_array($result);
+  if($edb[uses] || ${jsboard}[external]) {
+    $connect = sql_connect($edb[server],$edb[user],$edb[pass]);    
 
-  sql_free_result($result);
+    if($edb[sql]) $sql = $edb[sql];
+    else
+      $sql = "SELECT $edb[userid] AS nid,$edb[username] AS name,$edb[useremail] AS email,
+                   $edb[userurl] AS url,$edb[userpasswd] AS passwd
+              FROM $edb[table] WHERE $edb[userid] = '$id'";
+
+    $result = sql_db_query($edb[name],$sql,$connect);
+    $r = sql_fetch_array($result);
+    sql_free_result($result);
+    mysql_close($connect);
+
+    if($edb[crypts]) $r[passwd] = crypt($r[passwd]);
+
+    sql_connect($db[server], $db[user], $db[pass]);
+    sql_select_db($db[name]);
+  } else {
+    $sql = "SELECT no,nid,name,email,url,passwd,position
+              FROM userdb WHERE nid = '$id'";
+
+    $result = sql_query($sql);
+    $r = sql_fetch_array($result);
+
+    sql_free_result($result);
+  }
+
   return $r;
 }
 

@@ -16,6 +16,7 @@ function meta_char_check($name,$i=0,$t=0) {
 function compare_pass($l) {
   global $langs;
   $r = get_authinfo($l[id]);
+
   if ($r[passwd] != $l[pass]) print_pwerror($langs[ua_pw_c]);
 }
 

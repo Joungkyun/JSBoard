@@ -30,6 +30,8 @@ if(trim($table)) {
   }
 } else include "theme/$print[theme]/config.ph";
 
+if(file_exists("./config/external.ph")) { include "./config/external.ph"; }
+
 include "include/version.ph";
 include "include/lang.ph";
 include "include/check.ph";

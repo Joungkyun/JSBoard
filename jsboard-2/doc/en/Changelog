@@ -21,7 +21,7 @@ Attention : OOPS administration Center is not GPL.
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Dec 17 2001
+Date      : Wed, Dec 19 2001
 Version   : jsboard-2.0pre3
 
 
@@ -78,6 +78,8 @@ Version   : jsboard-2.0pre3
 50. removed moder field
 51. In login mode, enable to select print name whether nickname or realname
     (added rname field)
+52. fixed cookie problem of IE 6.0
+53. enable to use external user table (See also README.OPERATE)
 
 
 -----------------------------------------------------------------------------

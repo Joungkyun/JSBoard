@@ -169,7 +169,7 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
   jsboard/INSTALLER/script 에서 아래의 명령을 실행 한다. 실행이 되지 않으면
   퍼미션 을 755로 수정하기 바란다.
 
-  다시 한번 주의를 주는데, 계정 유저들은 QUICK_INSTALL 를 따라서 해야 한다!
+  다시 한번 주의를 주는데, 계정 유저들은 INSTALL.MANUALY 를 따라서 해야 한다!
 
     $ ./preinstall
     ########################################################
@@ -292,7 +292,7 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
 
           만약 Linux용 Browser를 사용하신다면 다음 페이지로
           자동으로 넘어가지 않을수도 있습니다.
-          이때에는 QUICK_INSTALL문서를 참조하셔서 설치를 하십시오 
+          이때에는 INATALL.MANUALY 문서를 참조하셔서 설치를 하십시오 
 
   -------------------------------------------------------------------------
                           [ 5초간 기다려 주세요 ]
