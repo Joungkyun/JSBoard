@@ -71,6 +71,7 @@ if ($indb['check']) {
 		  rede int(6) DEFAULT '0' NOT NULL,
 		  reto int(6) DEFAULT '0' NOT NULL,
 		  html int(1) DEFAULT '1' NOT NULL,
+		  comm int(6) DEFAULT '0' NOT NULL,
 		  bofile varchar(100),
 		  bcfile varchar(100),
 		  bfsize int(4),
@@ -80,6 +81,7 @@ if ($indb['check']) {
 		  KEY reno (reno),
 		  KEY date (date),
 		  KEY reto (reto),
+		  KEY comm (comm),
 		  PRIMARY KEY (no))";
 
   # comment table »ý¼º
@@ -113,11 +115,11 @@ if ($indb['check']) {
   $passwd_ext = crypt($passwd_ext);
 
   $create['data'] = "INSERT INTO test (no,num,idx,date,host,name,passwd,email,url,title,
-                                      text,refer,reyn,reno,rede,reto,html,bofile,
+                                      text,refer,reyn,reno,rede,reto,html,comm,bofile,
                                       bcfile,bfsize)
                           VALUES ('',1,1,$date,'$host_ext','$name_ext','$passwd_ext',
                                   '$email_ext','$url_ext','$subj_msg','$text_msg',0,0,
-                                  0,0,0,0,'','','')";
+                                  0,0,0,0,0,'','','')";
   $create['udata'] = "INSERT INTO userdb (no,nid,name,email,url,passwd,position)
                            VALUES ('','{$dbinst['aid']}','{$dbinst['aname']}','{$dbinst['aemail']}',
                                    '','{$ostypes['dpass']}',1)";

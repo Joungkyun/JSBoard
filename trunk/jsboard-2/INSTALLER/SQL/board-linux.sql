@@ -20,6 +20,7 @@ CREATE TABLE test (
   rede int(6) DEFAULT '0' NOT NULL,
   reto int(6) DEFAULT '0' NOT NULL,
   html int(1) DEFAULT '1' NOT NULL,
+  comm int(6) DEFAULT '0' NOT NULL,
   bofile varchar(100),
   bcfile varchar(100),
   bfsize int(4),
@@ -29,5 +30,6 @@ CREATE TABLE test (
   KEY reno (reno),
   KEY date (date),
   KEY reto (reto),
+  KEY comm (comm),
   PRIMARY KEY (no)
 );

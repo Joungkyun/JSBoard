@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.6
 
+2003.07.28
+  by 김정균 <http://www.oops.org>
+	- comment 알고리즘 변경 (DB 변환 필요)
+
 2003.07.23
   by 김정균 <http://www.oops.org>
 	- login.php 의 php injection 보안버그 수정
