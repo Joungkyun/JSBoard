@@ -5,6 +5,7 @@ parse_query_str();
 $path[type] = "Install";
 $copydate = time();
 $copydate = date("Y",$copydate);
+$form_border = "1x";
 
 require_once "../config/themes/basic.themes";
 require_once "./include/passwd.ph";
@@ -39,7 +40,7 @@ if (!$mode) {
   if ($langs[code] == "ko") $agreefile = "../COPYING";
   else $agreefile = "../COPYING.en";
 
-  $agree_ment = eregi_replace("(http://jsboard.kldp.org)","<a href=\\1 target=_blank>\\1</a>",$agree_ment);
+  $agree_ment = preg_replace("/(http:\/\/jsboard\.kldp\.org)/i","<a href=\\1 target=_blank>\\1</a>",$agree_ment);
 
   echo "<form name=auth method=POST action=auth.php>\n" .
        "<table width=500 border=0 cellpadding=5>\n" .
@@ -75,15 +76,9 @@ if (!$mode) {
   $mcheck = @mysql_connect($mysql_sock, "root", "$passwd");
 
   if ($mcheck) {
-    mysql_select_db("mysql");
-    $query = "select * from db";
-    $result = mysql_query($query,$mcheck);
-    $column = mysql_fetch_array($result);
-    $cnum = sizeof($column)/2;
     $mcheck = 1;
   } else {
     $mcheck = 0;
-    $cnum = 0;
   }
 
   if (exec("echo hello")) {
@@ -92,7 +87,7 @@ if (!$mode) {
 
     for($i=0;$i<sizeof($array);$i++) {
       $array[$i] = trim($array[$i]);
-      if(eregi("^Directory",$array[$i]) && eregi("index.(php |php$)",$array[$i])) $cindex = 1;
+      if(preg_match("/^Directory/i",$array[$i]) && preg_match("/index.(php |php$)/i",$array[$i])) $cindex = 1;
     }
   } else {
     $echeck = 0;
@@ -114,7 +109,7 @@ if (!$mode) {
   else $pcheck = 0;
 
   echo "</font>\n$langs[waitm]\n" .
-       "<meta http-equiv=\"refresh\" content=\"5;URL=$PHP_SELF?mode=check_conform&mcheck=$mcheck&cnum=$cnum&echeck=$echeck&cindex=$cindex&cconf=$cconf&pcheck=$pcheck&langss=$langs[code]\">" .
+       "<meta http-equiv=\"refresh\" content=\"5;URL=$PHP_SELF?mode=check_conform&mcheck=$mcheck&echeck=$echeck&cindex=$cindex&cconf=$cconf&pcheck=$pcheck&langss=$langs[code]\">" .
        "</td></tr>\n" .
        "<tr><td bgcolor=$color[l0_bg] align=center>\n" .
        "<font color=$color[l0_fg]>$langs[wait]</font>\n" .
@@ -123,8 +118,6 @@ if (!$mode) {
 
   if ($mcheck) {
     $m = "OK";
-    if ($cnum == "13") $mc = "OK";
-    else $mc = "Error";
   } else $m = "Failed";
 
   if ($echeck) {
@@ -136,10 +129,10 @@ if (!$mode) {
   if ($pcheck) $p = "OK";
   else $p = "Error";
 
-  if (!$mcheck || $cnum != "13" || !$echeck || !$cindex || $cconf || !$pcheck) $actlink = "";
+  if (!$mcheck || !$echeck || !$cindex || $cconf || !$pcheck) $actlink = "";
   else $actlink = "choise";
 
-  if (eregi("linux",$OSTYPE)) {
+  if (preg_match("/linux/i",$OSTYPE)) {
     if (file_exists("/etc/redhat-release")) $os_type = "Redhat";
     elseif (file_exists("/etc/debian_version")) $os_type = "Debian";
   } else $os_type = $OSTYPE;
@@ -152,17 +145,13 @@ if (!$mode) {
        "<font color=$color[text]>\n&nbsp;<br>\n\n" .
        "<table>\n<tr>\n<td>OS Type</td>\n<td>:</td>\n<td>$os_type</td>\n</tr>\n\n";
 
-  if (!eregi("linux",$OSTYPE))
+  if (!preg_match("/linux/i",$OSTYPE))
     echo "<tr>\n<td colspan=3>\n<font color=red>$langs[os_check]</font>\n</td>\n</tr>\n\n";
 
   echo "<tr>\n<td>MySQL check</td>\n<td>:</td>\n<td>$m</td>\n</tr>\n\n";
 
   if (!$mcheck)
     echo "<tr>\n<td colspan=3>\n<font color=red>$langs[mcheck]</font>\n</td>\n</tr>\n\n";
-  if ($mcheck)   
-    echo "<tr>\n<td>DB table column check</td>\n<td>:</td>\n<td>$mc</td>\n</tr>\n\n";
-  if ($mc == "Error")
-    echo "<tr>\n<td colspan=3>\n<font color=red>$langs[ccheck]</font>\n</td>\n</tr>\n\n";
 
   echo "<tr>\n<td>exec() function check</td>\n<td>:</td>\n<td>$e</td>\n</tr>\n\n";
 
@@ -211,7 +200,7 @@ if (!$mode) {
        "<font color=$color[l0_fg]>JSBoard Installer</font>\n" .
        "</td></tr>\n<tr><td align=center>\n" .
        "<font color=$color[text]>\nMySQL password<br>\n" .
-       "<input type=password name=mysqlpass size=$fsize>\n" .
+       "<input type=password name=mysqlpass size=$fsize style=\"font:12px tahoma;\">\n" .
        "<input type=hidden name=mode value=login>\n" .
        "<input type=hidden name=langss value=$langs[code]>\n" .
        "</form>\n\n" .
@@ -225,7 +214,7 @@ if (!$mode) {
        "</td></tr>\n</table>\n" .
        "</form>\n";
 } elseif ($mode == "upgrade")
-  echo "<font size=+4><b> Comming Soon </b></font>\n\n";
+  echo "<font size=+4><b> Can't Support </b></font>\n\n";
 else
   echo "<font size=+4><b> ^0^ </b></font>\n\n";
 

@@ -61,8 +61,8 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
     sql_query("
       INSERT INTO $table (no,num,idx,date,host,name,passwd,email,url,title,text,refer,
                           reyn,reno,rede,reto,html,bofile,bcfile,bfsize)
-           VALUES ('',$atc[mxnum],$atc[mxidx],$atc[date],'$atc[host]','$atc[name]','$atc[passwd]',
-                   '$atc[email]','$atc[url]','$atc[title]','$atc[text]',0,0,0,0,0,$atc[html],
+           VALUES ('','$atc[mxnum]','$atc[mxidx]','$atc[date]','$atc[host]','$atc[name]','$atc[passwd]',
+                   '$atc[email]','$atc[url]','$atc[title]','$atc[text]',0,0,0,0,0,'$atc[html]',
                    '$upfile[name]','$bfilename','$upfile[size]')");
 
     # mail 보내는 부분
@@ -109,6 +109,9 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
     # 글 등록시에 html header tag를 사용하는 것을 방지한다.
     if($atc[html]) $atc[text] = delete_tag($atc[text]);
 
+    # 댓글에서 : 때문에 글이 밀리는 것을 복구한다.
+    $atc[text] = preg_replace("/(^[:]+ [^\r\n]+)\r?\n([^:\r\n]+\r?\n)/mi","\\1 \\2",$atc[text]);
+
     $atc = article_check($table, $atc);
 
     # 답변시 file upload 설정 부분, 전체 관리자가 허락시에만 가능
@@ -137,15 +140,13 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
     else $atc[reto] = $reply[no]; # 부모글 번호
 
     # 부모글 이상의 인덱스 번호를 가진 글들의 인덱스를 1씩 더함
-    sql_query("UPDATE $table SET idx = idx + 1 WHERE (idx + 0) >= $atc[idx]");
-    sql_query("UPDATE $table SET reyn = 1 WHERE no = $atc[reno]");
-    sql_query("
-      INSERT INTO $table (no,num,idx,date,host,name,passwd,email,url,title,text,refer,
-                          reyn,reno,rede,reto,html,bofile,bcfile,bfsize)
-           VALUES ('',0,$atc[idx],$atc[date],
-      '$atc[host]','$atc[name]','$atc[passwd]','$atc[email]','$atc[url]','$atc[title]',
-      '$atc[text]',0,0,$atc[reno],$atc[rede],$atc[reto],$atc[html],'$upfile[name]',
-      '$bfilename','$upfile[size]')");
+    sql_query("UPDATE $table SET idx = idx + 1 WHERE (idx + 0) >= '$atc[idx]'");
+    sql_query("UPDATE $table SET reyn = 1 WHERE no = '$atc[reno]'");
+    sql_query("INSERT INTO $table (no,num,idx,date,host,name,passwd,email,url,title,text,refer,".
+              "                    reyn,reno,rede,reto,html,bofile,bcfile,bfsize)".
+              "     VALUES ('',0,'$atc[idx]','$atc[date]','$atc[host]','$atc[name]','$atc[passwd]',".
+              "             '$atc[email]','$atc[url]','$atc[title]','$atc[text]',0,0,'$atc[reno]',".
+              "             '$atc[rede]','$atc[reto]','$atc[html]','$upfile[name]','$bfilename','$upfile[size]')");
     sql_query("UNLOCK TABLES");
 
     # mail 보내는 부분
@@ -212,7 +213,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
 
     # file 삭제 루틴
     if($atc[fdel]) {
-      sql_query("UPDATE $table SET bcfile='', bofile='', bfsize='' WHERE no = $atc[no]");
+      sql_query("UPDATE $table SET bcfile='', bofile='', bfsize='' WHERE no = '$atc[no]'");
       unlink("data/$table/files/$atc[fdeldir]/$atc[fdelname]");
       rmdir("data/$table/files/$atc[fdeldir]");
     }
@@ -228,18 +229,18 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
       }
 
       sql_query("
-        UPDATE $table SET date = $atc[date], host = '$atc[host]',
+        UPDATE $table SET date = '$atc[date]', host = '$atc[host]',
         name = '$atc[name]', email = '$atc[email]', url = '$atc[url]',
-        title = '$atc[title]', text = '$atc[text]', html = $atc[html],
+        title = '$atc[title]', text = '$atc[text]', html = '$atc[html]',
         bofile = '$upfile[name]', bcfile = '$bfilename',
         bfsize = '$upfile[size]'
-        WHERE no = $atc[no]");
+        WHERE no = '$atc[no]'");
     } else {
       sql_query("
-        UPDATE $table SET date = $atc[date], host = '$atc[host]',
+        UPDATE $table SET date = '$atc[date]', host = '$atc[host]',
         name = '$atc[name]', email = '$atc[email]', url = '$atc[url]',
-        title = '$atc[title]', text = '$atc[text]', html = $atc[html]
-        WHERE no = $atc[no]");
+        title = '$atc[title]', text = '$atc[text]', html = '$atc[html]'
+        WHERE no = '$atc[no]'");
     }
 
     set_cookie($atc);
@@ -276,15 +277,15 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
 
     # 부모글의 답장글이 자신 밖에 없을 때 부모글의 reyn을 초기화 (답장글 여부)
     if($atc[reno]) {
-      $result = sql_query("SELECT COUNT(*) FROM $table WHERE reno = $atc[reno]");
+      $result = sql_query("SELECT COUNT(*) FROM $table WHERE reno = '$atc[reno]'");
       if(sql_result($result, 0, "COUNT(*)") == 1)
-        sql_query("UPDATE $table SET reyn = 0 WHERE no = $atc[reno]");
+        sql_query("UPDATE $table SET reyn = 0 WHERE no = '$atc[reno]'");
       sql_free_result($result);
     }
 
     sql_query("LOCK TABLES $table WRITE");
-    sql_query("DELETE FROM $table WHERE no = $atc[no]");
-    sql_query("UPDATE $table SET idx = idx - 1 WHERE (idx + 0) > $atc[idx]");
+    sql_query("DELETE FROM $table WHERE no = '$atc[no]'");
+    sql_query("UPDATE $table SET idx = idx - 1 WHERE (idx + 0) > '$atc[idx]'");
 
     if(!$atc[reyn]) {
       # upload file이 존재할 경우 삭제
@@ -296,7 +297,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
 
     # 관련글이 있을 경우 관련글을 모두 삭제함 (관리자 모드)
     if($atc[reyn] && $adm) {
-      $result = sql_query("SELECT no,bofile,bcfile FROM $table WHERE reno = $atc[no]");
+      $result = sql_query("SELECT no,bofile,bcfile FROM $table WHERE reno = '$atc[no]'");
       while($list = sql_fetch_array($result)) {
         article_delete($table, $list[no], $passwd, $adm);
         # upload file이 존재할 경우 삭제
@@ -321,7 +322,11 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
   #        http://www.php.net/manual/function.chop.php
   function article_check($table, $atc) {
     # 검색 등 관련 변수 (CGI 값)
-    global $sadmin, $admin, $compare, $o, $ccompare, $langs, $adminsession, $ramil;
+    global $board, $sadmin, $admin, $compare, $o;
+    global $ccompare, $langs, $adminsession, $ramil;
+
+    # spam 등록기 체크
+    check_spamer($board[antispam],$atc[wkey]);
 
     # location check
     if($rmail[uses] == "yes") check_location(1);
@@ -345,10 +350,10 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
       $spasswd = $atc[repasswd];
     }
 
-    if (eregi($compare[name],$atc[name])) $cmp[name] = 1;
-    if (eregi($compare[email],$atc[email])) $cmp[email] = 1;
-    if (eregi($ccompare[name],$atc[name])) $ccmp[name] = 1;
-    if (eregi($ccompare[email],$atc[email])) $ccmp[email] = 1;
+    if (preg_match("/$compare[name]/i",$atc[name])) $cmp[name] = 1;
+    if (preg_match("/$compare[email]/i",$atc[email])) $cmp[email] = 1;
+    if (preg_match("/$ccompare[name]/i",$atc[name])) $ccmp[name] = 1;
+    if (preg_match("/$ccompare[email]/i",$atc[email])) $ccmp[email] = 1;
 
     if ($cmp[name] || $cmp[email]) {
       if($sadmin[passwd] != $spasswd) print_error($langs[act_ad]);
@@ -362,6 +367,10 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
 
     # 등록 가능한 browser check
     if(!chk_spam_browser()) print_error($langs[act_sb]);
+
+    # 쓰기,답장 모드에서 html 사용시 table tag 검사
+    if($o[at] == "w" || $o[at] == "r" || $o[at] == "e")
+      if($atc[html]) check_htmltable($atc[text]);
 
     # 메일로 보낼 변수 받음
     $atc[rname] = $atc[name];
@@ -400,13 +409,13 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
     global $board,$agent;
     $month = 60 * 60 * 24 * $board[cookie];
 
-    if(eregi("MSIE",$agent[br]))
+    if($agent[br] == "MSIE5.5")
       $cookietime = strftime("%A, %d-%b-%Y %H:%M:%S MST", time() + $month);
     else $cookietime = time() + $month;
 
-    setcookie("board_cookie[name]", $atc[name], $cookitime);
-    setcookie("board_cookie[email]", $atc[email], $cookitime);
-    setcookie("board_cookie[url]", $atc[url], $cookitime);
+    setcookie("board_cookie[name]", $atc[name], $cookietime);
+    setcookie("board_cookie[email]", $atc[email], $cookietime);
+    setcookie("board_cookie[url]", $atc[url], $cookietime);
   }
 
   switch($o[at]) {
@@ -453,13 +462,18 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
   if($dn[dl] = file_operate($dn[path],"r","Don't open $dn[name]")) {
     if($agent[br] == "MSIE5.5") {
       header("Content-Type: doesn/matter");
+      header("Content-Length: ".filesize("$dn[path]"));
       header("Content-Disposition: filename=".$dn[name]);
-      header("Content-Transfer-Encoding: binary");
+      header("Content-Transfer-Encoding: binary\r\n");
     } else {
       Header("Content-type: file/unknown");
+      header("Content-Length: ".filesize("$dn[path]"));
       Header("Content-Disposition: attachment; filename=".$dn[name]);
       Header("Content-Description: PHP Generated Data");
     }
+    Header("Pragma: no-cache");
+    Header("Expires: 0");
+
     echo $dn[dl];
   }
 } elseif ($o[at] == "sm") {
@@ -489,7 +503,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
 
   echo "<script>window.close()</script>";
 } elseif($o[at] == "ma") {
-  if(eregi("__at__",$target)) {
+  if(preg_match("/__at__/i",$target)) {
     $target = str_replace("__at__","@",$target);
     Header("Location: mailto:$target");
   }
@@ -502,8 +516,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
 
     if($pcheck != "") SetCookie("pcheck","","0");
     # Cookie 를 등록한다.
-    if(eregi("MSIE",$agent[br])) $CookieTime = strftime("%A, %d-%b-%Y %H:%M:%S MST", time()+900);
-    else $CookieTime = "time()+900";
+    $CookieTime = time()+900;
     SetCookie("pcheck",$pcheck,$CookieTime);
     if(!$page) $page = 1;
     header("Location: $kind.php?table=$table&no=$no&page=$page");

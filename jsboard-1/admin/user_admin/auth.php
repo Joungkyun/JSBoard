@@ -1,5 +1,6 @@
 <?php
 session_start();
+if(!session_is_registered("login")) session_destroy();
 $path[type] = "user_admin";
 
 include "../../include/print.ph";
@@ -27,6 +28,8 @@ include "../include/config.ph";
 include "../../include/lang.ph";
 include "../include/get.ph";
 
+$agent = get_agent();
+
 # 전체 관리자 로그인 상태에서는 바로 설정 화면으로 넘어간다
 if($login[pass] == $sadmin[passwd] && session_is_registered("login")) {
   header("Location: uadmin.php?table=$table");
@@ -34,6 +37,9 @@ if($login[pass] == $sadmin[passwd] && session_is_registered("login")) {
 
 # input 문의 size를 browser별로 맞추기 위한 설정
 $size = form_size(9);
+
+if(preg_match("/links|w3m|lynx/i",$agent[br]))
+  $textBR = "<input type=submit value=\"Enter\">\n";
 
 echo "
 <html>
@@ -74,6 +80,7 @@ function InputFocus() {
 <form name=auth method=POST action=uadmin.php>
 $langs[ua_ment]<br>
 <input type=password name=passwd size=$size style=\"font:12px tahoma;\">
+$textBR
 <input type=hidden name=table value=$table>
 </form>
 <br>

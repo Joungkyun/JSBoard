@@ -5,7 +5,7 @@ function print_error($str, $width = 250, $height = 100) {
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
-  if(eregi("^(WIN|NT)$",$agent[os])) {
+  if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
     $str = wordwrap($str,40);
     $str = eregi_replace("\n","\\n",$str);
     $str = eregi_replace("('|#|\))","\\\\1",$str);
@@ -39,7 +39,7 @@ function print_notice($str, $width = 330, $height = 210) {
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
-  if(eregi("^(WIN|NT)$",$agent[os])) {
+  if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
     $str = wordwrap($str,40);
     $str = eregi_replace("\n","\\n",$str);
     $str = eregi_replace("('|#|\))","\\\\1",$str);
@@ -66,33 +66,38 @@ function print_notice($str, $width = 330, $height = 210) {
 function print_pwerror($str, $width = 250, $height = 100) {
   global $table, $path;
   $agent = get_agent();
+  $textBR = preg_match("/links|w3m|lynx/i",$agent[br]) ? 1 : "";
 
-  echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
+  if(!$textBR) {
+    echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
-  if(eregi("^(WIN|NT)$",$agent[os])) {
-    $str = wordwrap($str,40);
-    $str = eregi_replace("\n","\\n",$str);
-    $str = eregi_replace("('|#|\))","\\\\1",$str);
-    echo "alert('$str');\n";
+    if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
+      $str = wordwrap($str,40);
+      $str = eregi_replace("\n","\\n",$str);
+      $str = eregi_replace("('|#|\))","\\\\1",$str);
+      echo "alert('$str');\n";
+    } else {
+      $str = str_replace("\n","<BR>",$str);
+      $str = urlencode($str);
+
+      if ($path[type] == "admin") $err_fn = "../error.php";
+      else $err_fn = "error.php";
+
+      echo "var farwindow = null;\n".
+           "function remoteWindow() {\n".
+           "  farwindow = window.open(\"\",\"LinksRemote\",\"width=$width,height=$height,scrollbars=1,resizable=0\");\n".
+           "  if (farwindow != null) {\n".
+           "    if (farwindow.opener == null) { farwindow.opener = self; }\n".
+           "    farwindow.location.href = \"$err_fn?table=$table&str=$str\";\n".
+           "  }\n}\n".
+           "remoteWindow();\n";
+    }
+
+    echo "document.location='./session.php?mode=logout'\n".
+         "//-->\n</SCRIPT>\n";
   } else {
-    $str = str_replace("\n","<BR>",$str);
-    $str = urlencode($str);
-
-    if ($path[type] == "admin") $err_fn = "../error.php";
-    else $err_fn = "error.php";
-
-    echo "var farwindow = null;\n".
-         "function remoteWindow() {\n".
-         "  farwindow = window.open(\"\",\"LinksRemote\",\"width=$width,height=$height,scrollbars=1,resizable=0\");\n".
-         "  if (farwindow != null) {\n".
-         "    if (farwindow.opener == null) { farwindow.opener = self; }\n".
-         "    farwindow.location.href = \"$err_fn?table=$table&str=$str\";\n".
-         "  }\n}\n".
-         "remoteWindow();\n";
+    Header("Location: ./session.php?mode=logout");
   }
-
-  echo "document.location='./session.php?mode=logout'\n".
-       "//-->\n</SCRIPT>\n";
   exit;
 }
 

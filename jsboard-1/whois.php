@@ -61,9 +61,9 @@ if ($fp) {
   while(!feof($fp)) {
       $list = fgets($fp, 1024);
       if($count > 11) {
-        $list = eregi_replace("((Phone|전화 번호).*:)(.*)", "\\1<FONT COLOR=\"orange\" $board[css]>\\3</FONT>", $list);
-        $list = eregi_replace("((IP Address|IP 주소).*:)(.*)", "\\1<FONT COLOR=\"$color[r0_bg]\" $board[css]><b>\\3</b></FONT>", $list);
-        $list = eregi_replace("((Network Name|네트워크 이름).*:)(.*)", "\\1<FONT COLOR=\"red\" $board[css]><b>\\3</b></FONT>", $list);
+        $list = preg_replace("/((Phone|전화 번호)[^:]*:)(.*)/i", "\\1<FONT COLOR=\"orange\" $board[css]>\\3</FONT>", $list);
+        $list = preg_replace("/((IP Address|IP 주소)[^:]*:)(.*)/i", "\\1<FONT COLOR=\"$color[r0_bg]\" $board[css]><b>\\3</b></FONT>", $list);
+        $list = preg_replace("/((Network Name|네트워크 이름).*:)(.*)/i", "\\1<FONT COLOR=\"red\" $board[css]><b>\\3</b></FONT>", $list);
         echo "$list";
       }
       $count++;

@@ -44,7 +44,7 @@ $str[p_form] = page_form($table, $pages, $color[l0_fg]);
 
 if ($board[img] == "yes") {
   $icons[add] = "<img src=./images/blank.gif width=$icons[size] border=0>";
-  if (eregi("%",$board[width])) $icons[td]  = "1%";
+  if (preg_match("/%/",$board[width])) $icons[td]  = "1%";
   else $icons[td] = $icons[size];
 }
 

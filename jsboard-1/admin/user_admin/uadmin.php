@@ -1,5 +1,6 @@
 <?php
 session_start();
+if(!session_is_registered("login")) session_destroy();
 $path[type] = "user_admin";
 
 include "../../include/print.ph";
@@ -121,14 +122,34 @@ if($board[align] == "left") $align_l = "checked";
 elseif($board[align] == "right") $align_r = "checked";
 else $align_c = "checked";
 
+if($enable[dhyper]) $dhyper_no = "checked"; 
+else $dhyper_ok = "checked"; 
+
+$denylink = trim($enable[plink]) ? parse_ipvalue($enable[plink],1) : $langs[ua_dhyper3];
+if(!$board[usedhyper]) { 
+  $denylink = "Prevent this function by super user!\n". 
+              "If you want to this function, config \"\$board[usedhyer]\" = 1;\n".
+              "in global.ph"; 
+  $denylinkro = " disabled"; 
+} 
+
+
+$ipbl = trim($enable[ipbl]) ? parse_ipvalue($enable[ipbl],1) : $langs[ua_dhyper3]; 
+if(!$board[useipbl]) { 
+  $ipbl = "Prevent this function by super user!\n". 
+          "If you want to this function, config \"\$board[useipbl]\" = 1;\n".
+          "in global.ph"; 
+  $ipbllinkro = " disabled"; 
+} 
+
 if(!$color[l4_bg]) $color[l4_bg] = "$color[l0_bg]";
 if(!$color[l4_fg]) $color[l4_fg] = "$color[l0_fg]";
 if(!$color[r5_bg]) $color[r5_bg] = "$color[r0_bg]";
 if(!$color[r5_fg]) $color[r5_fg] = "$color[r0_fg]";
 
 
-$board[hls] = eregi_replace("<FONT COLOR=","",$board[hl]);
-$board[hls] = eregi_replace("><B><U>STR</U></B></FONT>","",$board[hls]);
+$board[hls] = preg_replace("/<FONT COLOR=/i","",$board[hl]);
+$board[hls] = preg_replace("/><B><U>STR<\/U><\/B><\/FONT>/i","",$board[hls]);
 
 # html header의 정보를 가져 온다
 $top_head = file_operate("../../html/head.ph","r");
@@ -204,10 +225,10 @@ input, textarea {font: 10pt $langs[font]; BACKGROUND-COLOR:$color[bgcol]; COLOR:
 
 <tr>
 <td width=17% bgcolor=$color[l1_bg]><font id=l1fg>New</font></td>
-<td width=25%><input type=password name=ua[passwd] size=$size></td>
+<td width=25%><input type=password name=ua[passwd] size=$size style='font: 12px tahoma'></td>
 <td width=8% bgcolor=$color[r2_bg]>&nbsp;</td>
 <td width=17% bgcolor=$color[l1_bg]><font id=l1fg>Re pass</font></td>
-<td width=25%><input type=password name=ua[repasswd] size=$size></td>
+<td width=25%><input type=password name=ua[repasswd] size=$size style='font: 12px tahoma'></td>
 <td width=8% bgcolor=$color[r2_bg]>&nbsp;</td>
 </tr>
 
@@ -750,11 +771,32 @@ echo "</td>
 <td bgcolor=$color[r2_bg] align=center>&nbsp;</td>
 </tr>
 
-<tr><td colspan=6><font id=bg>&nbsp;</font>
-</td></tr>
+<tr><td colspan=6><font id=bg>&nbsp;</font></td></tr>
 
-<tr><td bgcolor=$color[l0_bg] align=center colspan=6><font id=l0fg>HTML Header/Tail</font>
-</td></tr>
+<TR><TD BGCOLOR=$color[l0_bg] ALIGN=center COLSPAN=6><font id=l0fg>Blocking IP Address</font></TD></TR> 
+    
+<TR><TD ALIGN=center COLSPAN=6> 
+<textarea name=ua[ipbl] cols=$tsize.$ipbllinkro rows=5 wrap=off>$ipbl</textarea> 
+</TD></TR> 
+    
+<TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR> 
+
+<TR><TD BGCOLOR=$color[l0_bg] ALIGN=center COLSPAN=6><font id=l0fg>Deny Invalid Hyper Link</font></TD></TR>
+
+<TR>
+<TD COLSPAN=6>
+$langs[ua_dhyper]
+<INPUT TYPE=radio name=ua[dhyper] $dhyper_ok value=\"0\" id=RADIO>$langs[ua_dhyper1]
+<INPUT TYPE=radio name=ua[dhyper] $dhyper_no value=\"1\" id=RADIO>$langs[ua_dhyper2]
+</TD></TR>
+
+<TR><TD ALIGN=center COLSPAN=6>
+<textarea name=ua[denylink] cols=$tsize.$denylinkro rows=5 wrap=off>$denylink</textarea>
+</TD></TR>
+
+<TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>
+
+<tr><td bgcolor=$color[l0_bg] align=center colspan=6><font id=l0fg>HTML Header/Tail</font></td></tr>
 
 <tr><td colspan=6  bgcolor=$color[l1_bg]><font id=l1fg>$top_head</font></td></tr>
 

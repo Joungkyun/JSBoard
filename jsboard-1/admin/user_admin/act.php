@@ -1,5 +1,6 @@
 <?php
 session_start();
+if(!session_is_registered("login")) session_destroy();
 $path[type] = "user_admin";
 include "../../include/print.ph";
 # register_globals 옵션의 영향을 받지 않기 위한 함수
@@ -80,12 +81,10 @@ if($ua[amark]) $chg[amark] = 1;
 else $chg[amark] = 0;
 
 # Option of include original message in reply
-if($ua[ore]) $chg[ore] = 1;
-else $chg[ore] = 0;
+$chg[ore] = $chg[ore] ? 1 : 0;
 
 # Option of print conjunct list when reply
-if($ua[re_list]) $chg[re_list] = 1;
-else $chg[re_list] = 0;
+$chg[re_list] = $chg[re_list] ? 1 : 0;
 
 # Board Basic Configuration
 if($ua[title] && $ua[title] != $board[title])
@@ -173,13 +172,14 @@ if($ua[n2_fg] && $ua[n2_fg] != $color[n2_fg] && !$ua[theme])
   $chg[n2_fg] = "$ua[n2_fg]";
 else $chg[n2_fg] = "$color[n2_fg]";
 
-$board[hls] = eregi_replace("<FONT COLOR=","",$board[hl]);
-$board[hls] = eregi_replace("><B><U>STR</U></B></FONT>","",$board[hls]);
+$board[hls] = preg_replace("/<FONT COLOR=/i","",$board[hl]);
+$board[hls] = preg_replace("/><B><U>STR<\/U><\/B><\/FONT>/i","",$board[hls]);
 
 if($ua[hls] && $ua[hls] != $board[hls] && !$ua[theme])
   $chg[hls] = "$ua[hls]";
 else $chg[hls] = "$board[hls]";
 
+$ua[theme_c] = !$ua[theme_c] ? "basic" : $ua[theme_c];
 
 # List Page Color Configuration
 if($ua[l0_bg] && $ua[l0_bg] != $color[l0_bg] && !$ua[theme])
@@ -312,6 +312,13 @@ else $chg[d_name] = "$ccompare[name]";
 if($ua[d_email] && $ua[d_email] != $ccompare[email])
   $chg[d_email] = "$ua[d_email]";
 else $chg[d_email] = "$ccompare[email]";
+
+# check hyper link
+$chg[dhyper] = $ua[dhyper] ? 1 : 0; 
+$chg[plink] = parse_ipvalue($ua[denylink]); 
+    
+# ip blocking
+$chg[ipbl] = parse_ipvalue($ua[ipbl]);
 
 
 $chg_conf = "<?
@@ -515,6 +522,27 @@ $chg_conf = "<?
 ###############################################################################
 \$ccompare[name]  = \"$chg[d_name]\";
 \$ccompare[email] = \"$chg[d_email]\";
+
+
+############################################################################### 
+#  원격의 하이퍼링크를 통해 들어오는 접속제어
+#  dhyper : 0 -> 등록된 값만 허락 
+#           1 -> 등록된 값만 막음 
+#           plink 가 없을 경우에는 작동 안함 
+#  plink  : dhyper 가 작동할 ip 주소. ';' 를 구분자로 사용 
+#  설정 예) 1.1.1.1;2.2.2.2;3.3.3.3 
+############################################################################### 
+# 
+\$enable[dhyper] = $chg[dhyper]; 
+\$enable[plink]  = \"$chg[plink]\"; 
+
+
+############################################################################### 
+#  IP Blocking 기능 
+#  설정값의 구분자는 ';' 로 한다. 
+#  설정 예) 1.1.1.1;2.2.2.2;3.3.3.3 
+############################################################################### 
+\$enable[ipbl] = \"$chg[ipbl]\"; 
 
 ?>";
 

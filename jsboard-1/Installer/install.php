@@ -3,6 +3,7 @@ session_start(); // session을 시작한다.
 include_once "../include/print.ph";
 parse_query_str();
 $path[type] = "Install";
+$form_border = "1x";
 
 if ($langss == "ko") $langs[code] = "ko";
 else $langs[code] = "en";
@@ -34,17 +35,17 @@ Mysql User Registration Page
 <tr><td colspan=2><br></td></tr>
 <tr>
 <td><B>&nbsp; DB name &nbsp;</B></td>
-<td align=left><input type='text' name='dbinst[name]' size=20 value="<? echo $dbname ?>"></td>
+<td align=left><input type='text' name='dbinst[name]' size=20 value="<? echo $dbname ?>" style='font: 12px tahoma'></td>
 </tr>
 
 <tr>
 <td><B>&nbsp; DB user &nbsp;</B></td>
-<td align=left><input type='text' name='dbinst[user]' size=20></td>
+<td align=left><input type='text' name='dbinst[user]' size=20 style='font: 12px tahoma'></td>
 </tr>
 
 <tr>
 <td><B>&nbsp; DB pass &nbsp;</B></td>
-<td align=left><input type='password' name='dbinst[pass]' size=20></td>
+<td align=left><input type='password' name='dbinst[pass]' size=20 style='font: 12px tahoma'></td>
 </tr>
 
 <tr>

@@ -1,9 +1,13 @@
 <?
+session_cache_limiter('nocache, must-revalidate');
+session_start();
+if(!session_is_registered("login")) session_destroy();
+
 include "include/header.ph";
 include "./admin/include/config.ph";
 
 if ($board_cookie[name])
-  $board_cookie[name] = eregi_replace("[\]","",$board_cookie[name]);
+  $board_cookie[name] = str_replace("\\","",$board_cookie[name]);
 
 # 쓰기 권한을 관리자에게만 주었을 경우 패스워드 체크
 $kind = "write";
@@ -24,7 +28,7 @@ else $board[formtype] = " ENCTYPE=\"multipart/form-data\"";
 $wrap = form_wrap();
 
 # image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
-if ($board[img] == "yes" && !eregi("%",$board[width])) 
+if ($board[img] == "yes" && !preg_match("/%/i",$board[width])) 
   $board[width] = $board[width]-$icons[size]*2;
 else $size[text] += 4;
 
@@ -87,7 +91,7 @@ echo "
   <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[titl]</FONT></TD>
   <TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[title]\" SIZE=\"$size[titl]\" MAXLENGTH=\"100\"></TD>";
 
-if (eregi("MSIE",$agent[br]) || $agent[br] == "MOZL6") {
+if (preg_match("/MSIE/i",$agent[br]) || $agent[br] == "MOZL6") {
   $orig_option = " onClick=fresize(0)";
   echo "
 </TR><TR>
@@ -113,6 +117,8 @@ if (value == 2) document.writep.wpost.rows += 5;
   echo "  </TD>";
 }
 
+$wkey = get_spam_value($board[antispam]);
+
 echo "
 </TR><TR>
   <TD COLSPAN=\"3\" ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">
@@ -136,6 +142,7 @@ echo "
     <FONT SIZE=\"-1\" COLOR=\"$color[l0_fg]\" $board[css]>
     <INPUT TYPE=\"hidden\" NAME=\"o[at]\" VALUE=\"p\">
     <INPUT TYPE=\"hidden\" NAME=\"table\" VALUE=\"$table\">
+    <INPUT TYPE=hidden NAME=atc[wkey] VALUE=$wkey>
     <INPUT TYPE=\"submit\" VALUE=\"$langs[b_send]\">&nbsp;
     <INPUT TYPE=\"reset\" VALUE=\"$langs[b_reset]\"$orig_option>&nbsp;
     <INPUT TYPE=\"button\" onClick=\"history.back()\" VALUE=\"$langs[b_can]\">

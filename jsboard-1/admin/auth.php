@@ -14,6 +14,10 @@ $size = form_size(9);
 <form name=auth method=POST action=session.php>
 <?=$langs[ua_ment]?><br>
 <input type=password name=logins size="<?=$size?>" style="font:12px tahoma">
+<?
+if(preg_match("/links|w3m|lynx/i",$agent[br]))
+  echo "<input type=submit value=\"Enter\">\n";
+?>
 <input type=hidden name=mode value=login>
 </form>
 

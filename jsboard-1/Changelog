@@ -1,8 +1,8 @@
 ***** JSBOARD + OOPS administartion Center *********************************
 
-Original Developer		: Byung Chan Kim <redhands@linux.sarang.net>
-Source Disturibute		: Joung Kyun Kim <admin@oops.org>
-Windog Version			: Ki Soo Choi <choiks@nuri.net>
+Original Developer              : Byung Chan Kim <redhands@linux.sarang.net>
+Source Disturibute              : Joung Kyun Kim <admin@oops.org>
+Windog Version                  : Ki Soo Choi <choiks@nuri.net>
 
 ## Warning ##
 
@@ -17,6 +17,53 @@ If you wnat to see windog's change log, see also
 ******************************************************************************
 
 
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2002년   4월  6일
+버전   : jsboard-1.3.8
+
+* 변경된점
+1. 글등록시 table tag 및 iframe tag 체크
+2. prelist.ph 의 include 함수를 include_once 로 교체
+3. 댓글에서 : 때문에 글이 다음줄로 밀리는 것 복구
+4. Download Header 변경
+5. php version 체크 함수 추가
+6. register_globals = ON 상태에서 parse_query() 함수 작동안하게 수정
+7. IE 6.0 에서 쿠키가 사라지는 것 수정
+8. 정규 표현식 버그 수정
+9. 메일 발송을 JSBoard 자체에서 처리하도록 수정
+10. form.php 의 폼메일 html 코드 삭제
+11. 빈 세션 파일 생성되는 문제 수정
+12. 전체 어드민에서 jsboard 에서 사용하는 table 체크시 idx 필드를 전체 스캔하는
+    것 수정
+13. magic quotes 강제 설정 도입
+14. search_hl() 함수 수정
+15. sql 쿼리에 악의적인 공격을 막기위해 쿼리에 사용되는 모든 변수를 '' 처리
+16. 수정/답장시 원본글의 tag 를 변형하여 DB 에 넣는것 수정
+17. 외부 메일 서버 사용가능하도록 수정
+18. php version 체크함수 추가
+19. ip blocking 기능 추가
+20. 외부에서의 hyper link 막는 기능 추가
+21. text 브라우져 기반에서 제대로 작동하지 못하는 것 수정
+22. php.ini 의 upload_max_filesize 의 값을 자동으로 post_max_size 보다 1M 보다
+    작게 지정하도록 수정. (post_max_size 는 시스템 관리자만 수정이 가능)
+23. 업로드 최대용량이 post_max_size 보다 클 경우 자동으로 post_max_size 로
+    변경되게 수정.
+24. 대용량 업로드시를 위해 php excution time 을 지정할 수 있도록 수정
+25. CookieTime 변수 처리 변경
+26. spam check 기능 추가
+27. 리스트에서 글 본문 미리보기시 KSX 1001 범위외의 글자가 NCR 코드 그대로
+    보이는 것을 수정
+28. URL 에 쉼표가 있을때, 이를 URL 로 인식하지 못하는 것 수정
+29. meta_char_check() 함수 수정
+30. Install script 수정
+31. Install 시 mysql 유저 등록을 insert 문에서 grant 문으로 수정
+40. eregi 함수를 preg_match 함수로 수정
+41. auto_link() 함수 수정
+42. 검색루틴 수정
+43. Installer 버그 수정
+
+
+-----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2002년   2월  8일
 버전   : jsboard-1.3.7

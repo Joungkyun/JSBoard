@@ -45,11 +45,11 @@ function prelist($t,$inc,$limit=3,$cut=30,$cn=0,$cd=0,$ce=0,$cc=0,$l=0) {
 
   include "$prlist[path]/config/global.ph";
   if($inc) {
-    include "$prlist[path]/include/error.ph";
-    include "$prlist[path]/include/parse.ph";
-    include "$prlist[path]/include/check.ph";
-    include "$prlist[path]/include/sql.ph";
-    include "$prlist[path]/include/get.ph";
+    include_once "$prlist[path]/include/error.ph";
+    include_once "$prlist[path]/include/parse.ph";
+    include_once "$prlist[path]/include/check.ph";
+    include_once "$prlist[path]/include/sql.ph";
+    include_once "$prlist[path]/include/get.ph";
   }
 
   sql_connect($db[server], $db[user], $db[pass]);

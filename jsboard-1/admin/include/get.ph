@@ -17,7 +17,7 @@ function get_tblist($db,$t="") {
     # 배열에 저장된 이름중 알파벳별 구분 변수가 있으면 소트된
     # 이름만 다시 배열에 저장
     if($t) {
-      if(eregi("^$t",$l[$i])) {
+      if(preg_match("/^$t/i",$l[$i])) {
         $ll[$j] = $l[$i];
         $j++;
       }

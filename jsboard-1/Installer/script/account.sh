@@ -45,6 +45,10 @@ if [ ! -f ../../config/default.themes ]; then
   ln -s ./themes/basic.themes ../../config/default.themes
 fi
 
+if [ ! -f "../../data/test/default.themes" ] ; then
+  ln -sf ../../config/themes/basic.themes ../../data/test/default.themes
+fi
+
 # permission configuration
 chmod 707 ../../config
 chmod 707 ../../data

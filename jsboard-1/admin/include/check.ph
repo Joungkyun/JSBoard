@@ -41,9 +41,9 @@ function table_name_check($table,$ck=0) {
   }
 
   if (!$ck && !$table)  print_error($langs[n_t_n]);
-  if (!eregi("^[a-zA-Z]",$table)) print_error($langs[n_db]);
-  if (eregi("[^a-z0-9_\-]",$table)) print_error($langs[n_meta]);
-  if (eregi("^as$",$table)) print_error($langs[n_promise]);
+  if (!preg_match("/^[a-z]/i",$table)) print_error($langs[n_db]);
+  if (preg_match("/[^a-z0-9_-]/i",$table)) print_error($langs[n_meta]);
+  if (preg_match("/^as$/i",$table)) print_error($langs[n_promise]);
 }
 
 # table list 존재 유무 체크
@@ -76,6 +76,32 @@ function check_invalid($str) {
   $remove = array("<xmp>","</xmp>","$perment &lt;\\1&gt;<BR>","$perment &lt;\\1&gt;<BR>");
   $str = preg_replace($target,$remove,$str);
 
+  return $str;
+}
+
+function parse_ipvalue($str,$r=0) {
+  if(!trim($str)) return;
+
+  if(!$r) {
+    $str = eregi_replace("[\r\n;]"," ",$str);
+    $src[] = "/[^0-9]\./i";
+    $dsc[] = "";
+    $src[] = "/[^0-9. ]/i";
+    $dsc[] = "";
+    $src[] = "/\.\.+/i";
+    $dsc[] = "";
+    $src[] = "/ +/i";
+    $dsc[] = ";";
+    $src[] = "/^;+$/i";
+    $dsc[] = "";
+  } else {
+    $src[] = "/ /i";
+    $dsc[] = "";
+    $src[] = "/;/i";
+    $dsc[] = "\n";
+  }
+
+  $str = trim(preg_replace($src,$dsc,trim($str)));
   return $str;
 }
 ?>

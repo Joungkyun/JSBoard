@@ -43,7 +43,7 @@ if($list[bofile]) {
 }
 
 # image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
-if ($board[img] == "yes" && !eregi("%",$board[width])) 
+if ($board[img] == "yes" && !preg_match("/%/",$board[width])) 
   $board[width] = $board[width]-$icons[size]*2;
 
 if($enable[dhost]) {

@@ -1,9 +1,13 @@
 <?
+session_cache_limiter('nocache, must-revalidate');
+session_start();
+if(!session_is_registered("login")) session_destroy();
+
 include "include/header.ph";
 include "./admin/include/config.ph";
 
 if ($board_cookie[name])
-  $board_cookie[name] = eregi_replace("[\]","",$board_cookie[name]);
+  $board_cookie[name] = str_replace("\\","",$board_cookie[name]);
 
 # 관련글 쓰기 권한을 관리자에게만 주었을 경우 패스워드 체크
 $kind = "reply";
@@ -18,17 +22,16 @@ sql_select_db($db[name]);
 
 $list = get_article($table, $no);
 
-$list[title] = eregi_replace("Re(\^[0-9]{0,10})*: ", "", $list[title]);
+$list[title] = preg_replace("/Re(\^[0-9]{0,10})*: /i", "", $list[title]);
 $reti = $list[rede];
 $reti = ++$reti;
 
 if ($reti == "1") $reti = "";
 else $reti = "^$reti";
 
-$list[text] = eregi_replace("<([^<>\n]+)\n([^\n<>]+)>", "<\\1 \\2>", $list[text]);
-$list[text] = ereg_replace("^", ": ", $list[text]);
-$list[text] = ereg_replace("\n", "\n: ", $list[text]);
-$list[text] = htmlspecialchars($list[text]);
+$list[text] = preg_replace("/<([^<>\n]+)\n([^\n<>]+)>/i", "<\\1 \\2>", $list[text]);
+$list[text] = preg_replace("/^/", ": ", $list[text]);
+$list[text] = preg_replace("/\n/", "\n: ", $list[text]);
 
 if($list[html]) $html_chk_ok = " checked";
 else $html_chk_no = " checked";
@@ -42,13 +45,12 @@ else $board[formtype] = " ENCTYPE=\"multipart/form-data\"";
 $wrap = form_wrap();
 
 # image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
-if ($board[img] == "yes" && !eregi("%",$board[width])) 
+if ($board[img] == "yes" && !preg_match("/%/",$board[width])) 
   $board[width] = $board[width]-$icons[size]*2;
 else $size[text] += 4;
 
 # 원본글 포함 선택 여부
 if ($enable[ore]) {
-  $list[text] = htmlspecialchars($list[text]);
   $text_area = "<TEXTAREA NAME=\"rpost\" $wrap[op] ROWS=\"10\" COLS=\"$size[text]\"></TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"hide\" VALUE=\"\n\n$list[name] wrote..\n$list[text]\">\n" .
                  "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=1>\n" .
@@ -117,7 +119,7 @@ echo "
   <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[titl]</FONT></TD>
   <TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[title]\" SIZE=\"$size[titl]\" MAXLENGTH=\"100\" VALUE=\"Re$reti: $list[title]\"></TD>";
 
-if (eregi("MSIE",$agent[br]) || $agent[br] == "MOZL6") {
+if (preg_match("/MSIE/i",$agent[br]) || $agent[br] == "MOZL6") {
   $orig_option = " onClick=fresize(0)";
 
   echo "
@@ -144,6 +146,7 @@ if (value == 2) document.replyp.rpost.rows += 5;
   echo "  </TD>";
 }
 
+$wkey = get_spam_value($board[antispam]);
 echo "
 </TR><TR>
   <TD COLSPAN=\"3\" ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">
@@ -171,6 +174,7 @@ echo "
     <INPUT TYPE=\"hidden\" NAME=\"table\" VALUE=\"$table\">
     <INPUT TYPE=\"hidden\" NAME=\"rmail[origmail]\" VALUE=\"$list[email]\">
     <INPUT TYPE=\"hidden\" NAME=\"atc[reno]\" VALUE=\"$list[no]\">
+    <INPUT TYPE=hidden NAME=atc[wkey] VALUE=$wkey>
     <INPUT TYPE=\"submit\" VALUE=\"$langs[b_re]\">&nbsp;
     <INPUT TYPE=\"reset\" VALUE=\"$langs[b_reset]\"$orig_option>&nbsp;
     <INPUT TYPE=\"button\" onClick=\"history.back()\" VALUE=\"$langs[b_can]\">
