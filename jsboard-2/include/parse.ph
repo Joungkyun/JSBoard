@@ -548,6 +548,7 @@ function conv_emoticon($str, $opt=0) {
   $ret = preg_replace($src, $con, $str);
   $ret = str_replace("ぬ.ぬ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
   $ret = str_replace("ば.ば", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
+  $ret = str_replace("ば_ば", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
   $ret = str_replace("ぬぬ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
   $ret = str_replace("ばば", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
   return $ret;
