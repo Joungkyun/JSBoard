@@ -18,7 +18,7 @@ TEXTAREA {font: 10pt <? echo $langs['font'] ?>; BACKGROUND-COLOR:<? echo $color[
  #title {font:20pt <? echo $langs['font'] ?>; color:<? echo $color['n0_bg'] ?>}
 -->
 </STYLE>
-<?
+<?php
 if(preg_match("/auth.php/i",$_SERVER['PHP_SELF'])) {
   $onload = " onLoad=InputFocus()";
   echo "<SCRIPT language=JavaScript>\n".
@@ -31,11 +31,11 @@ if(preg_match("/auth.php/i",$_SERVER['PHP_SELF'])) {
 ?>
 </HEAD>
 
-<?
+<?php
 echo "<BODY BGCOLOR=\"{$color['b_bg']}\"$onload>";
 ?>
 
-<?
+<?php
 if($table) {
   table_name_check($table);
   if(file_exists("data/$table/html_head.ph")) { include "data/$table/html_head.ph"; }

@@ -1,4 +1,4 @@
-<?
+<?php
 function print_error($str,$width=250,$height=150,$back='') {
   global $table, $path, $prlist, $agent, ${$jsboard};
 

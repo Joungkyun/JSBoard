@@ -1,4 +1,4 @@
-<?
+<?php
 include_once "include/print.ph";
 parse_query_str();
 

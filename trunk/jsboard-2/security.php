@@ -1,4 +1,4 @@
-<?
+<?php
 $form_border = "1x";
 include "include/header.ph";
 

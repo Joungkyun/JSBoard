@@ -1,4 +1,4 @@
-<?
+<?php
 include "include/header.ph";
 
 $board['headpath'] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";

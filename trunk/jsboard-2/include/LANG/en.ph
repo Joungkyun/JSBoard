@@ -1,4 +1,4 @@
-<?
+<?php
 # Language Charactor Set
 $langs[charset] = "iso-8859-1";
 

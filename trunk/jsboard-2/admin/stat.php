@@ -1,4 +1,4 @@
-<?
+<?php
 # This flie applied under GPL License
 if(preg_match("/user_admin/",$_SERVER['HTTP_REFERER'])) $path['type'] = "user_admin";
 else $path['type'] = "admin";

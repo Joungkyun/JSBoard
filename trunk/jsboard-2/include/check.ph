@@ -1,4 +1,4 @@
-<?
+<?php
 # table 이름에 meta character 가 포함되어 있는지 검사하는 함수
 # $name -> 변수값
 # $i    -> null 이라도 상관없을 경우 1

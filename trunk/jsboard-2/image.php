@@ -1,4 +1,4 @@
-<?
+<?php
 include "include/print.ph";
 include "include/check.ph";
 include "include/error.ph";

@@ -1,4 +1,4 @@
-<?
+<?php
 $p_time[] = microtime(); # 속도 체크
 include "include/header.ph";
 include "admin/include/check.ph";

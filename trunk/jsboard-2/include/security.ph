@@ -1,4 +1,4 @@
-<?
+<?php
 function get_security_info() {
   @include "./config/security_data.ph";
 
