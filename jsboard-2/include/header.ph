@@ -2,6 +2,11 @@
 if(preg_match("/(write|edit|reply)\.php/i",$_SERVER[PHP_SELF]))
   session_cache_limiter('nocache, must-revalidate');
 
+# config of magic quotes
+set_magic_quotes_runtime(0); 
+ini_set(magic_quotes_gpc,1);
+ini_set(magic_quotes_sybase,0);
+
 include_once "include/error.ph";
 include_once "include/print.ph";
 # GET/POST 변수를 제어
