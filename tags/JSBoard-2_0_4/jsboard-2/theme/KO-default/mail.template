@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=$langs[charset]">
+<TITLE>JSBoard Reply Notice</TITLE>
+<STYLE TYPE=text/css>
+<!--
+BODY,TD {font:12px ±¼¸²Ã¼;color:#555555;}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+TD { FONT:12px ±¼¸²Ã¼; COLOR: #555555;}
+-->
+</STYLE>
+
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0>
+&nbsp;<BR>
+<DIV ALIGN=center>
+<TABLE WIDTH=95% BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR><TD BGCOLOR=#FFAE00>
+
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD>
+<FONT STYLE="font: 20px tahoma; font-weight: bold; color:#FFFFFF;">
+<FONT STYLE="font: 30px tahoma; font-weight: bold;">J</FONT>SBoard Reply Notice</FONT>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD BGCOLOR=$color[l3_bg]>
+<PRE><FONT STYLE="color:$color[l3_fg]">
+
+$langs[html_msg]
+
+Server Name       : $servername$nofm
+</FONT></PRE>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC=$board[path]/images/blank.gif WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD BGCOLOR=$color[l2_bg]>
+<PRE><FONT STYLE="color:$color[l2_fg]">
+
+$langs[u_name]              : $rmail[name]
+$addressinfo
+$langs[a_t13]              : $year $day $ampm $hms
+</FONT></PRE>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC=$board[path]/images/blank.gif WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD BGCOLOR=#FFFFFF>
+<PRE><FONT STYLE="$color[text]">
+$rmail[text]
+</FONT></PRE>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD ALIGN=right>
+<A HREF=http://jsboard.kldp.org TARGET=_blnak>
+<FONT STYLE="font: 12px tahoma; font-weight: bold; color: #FFFFFF">Scripted by JSBoard Open Project</FONT>
+</A>
+</TD></TR>
+</TABLE>
+
+</TD></TR>
+</TABLE>
+</DIV>
+
+<BR>
+<BR>
+<BR>
+</BODY>
+</HTML>
