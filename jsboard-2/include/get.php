@@ -52,7 +52,7 @@ function get_hostname($reverse=0, $host=0)
       $tmp = array('HTTP_CLIENT_IP','HTTP_X_FORWARDED_FOR','HTTP_X_COMING_FROM',
                    'HTTP_X_FORWARDED','HTTP_FORWARDED_FOR','HTTP_FORWARDED',
                    'HTTP_COMING_FROM','HTTP_PROXY','HTTP_SP_HOST');
-      foreach($tmp AS $v) if($_SERVER[$v] != $_SERVER['REMOTE_ADDR']) break;
+      foreach($tmp AS $v) if($_SERVER[$v] && $_SERVER[$v] != $_SERVER['REMOTE_ADDR']) break;
       if($_SERVER[$v]) $host = preg_replace(array('/unknown,/i','/,.*/'),'',$_SERVER[$v]);
       $host = ($host = trim($host)) ? $host : $_SERVER['REMOTE_ADDR'];
     }
