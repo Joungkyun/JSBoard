@@ -318,38 +318,38 @@ function sepa($bg)
     echo("<td width=\"1%\" bgcolor=\"$bg\"><img src=\"images/n.gif\" width=\"2\" height=\"1\" alt=\"\"></td>\n");
 }
 
+
 function auto_link($text) {
 
   global $r3_fg;
 
-  $regex[http] = "(https|http|https|ftp|telnet|news):\/\/([a-z0-9-]+\.[][a-zA-Z0-9:&#@;=_~%\?\/\.\+\-]+)";
-  $regex[mail] = "[a-z0-9-]+@[a-z0-9-]+\.[a-z0-9-\.]+";
+  $regex[http] = "(http|https|ftp|telnet|news):\/\/([a-z0-9\-]+\.[][a-zA-Z0-9:\;&#@=_~%\?\/\.\+\-]+)";
+  $regex[mail] = "[a-z0-9\-]+@[a-z0-9\-]+\.[a-z0-9\-\.]+";
 
-
-  $text = eregi_replace("&(quot|gt|lt|);","!\\1;",$text);
+  $text = eregi_replace("&(quot|gt|lt)","!\\1",$text);
   $text = eregi_replace(" target=[\"'_a-z,A-Z]+","", $text);
-  $text = eregi_replace("</(A|a)>","</a>",$text) ;
-  $text = eregi_replace("<(A|a) (H|h)(R|r)(E|e)(F|f)=[\"']($regex[http])[\"']>","<a href=\\6>", $text);
-  $text = eregi_replace("<(A|a) (H|h)(R|r)(E|e)(F|f)=[\"']mailto:($regex[mail])[\"']>","<a href=mailto:\\6>", $text);
-  $text = eregi_replace("<(I|i)(M|m)(G|g) (S|s)(R|r)(C|c)=[\"']($regex[http])[\"']","<img src=\\7",$text);
-
 
   /* Image file을 링크시킬때를 위해 보호 */
   $text = eregi_replace("<img src=($regex[http])","<img src=\"\\2_img://\\3\"",$text);
+  $text = eregi_replace("<img src=[\"']($regex[http])[\"']","<img src=\"\\2_img://\\3\"",$text);
 
   $text = eregi_replace(
         "<a href=($regex[http])><img src=\"http","<a href=\"\\2_img://\\3\" target=\"_blank\"><img src=\"http",$text) ;
+  $text = eregi_replace(
+        "<a href=[\"']($regex[http])[\"']><img src=\"http","<a href=\"\\2_img://\\3\" target=\"_blank\"><img src=\"http",$text) ;
 
   $text = eregi_replace("<a href=($regex[http])>$regex[http]</a>","\\1", $text);
+  $text = eregi_replace("<a href=[\"']($regex[http])[\"']>$regex[http]</a>","\\1", $text);
   $text = eregi_replace("<a href=mailto:($regex[mail])>$regex[mail]</a>","\\1", $text);
+  $text = eregi_replace("<a href=[\"']mailto:($regex[mail])[\"']>$regex[mail]</a>","\\1", $text);
 
   $text = eregi_replace("($regex[http])","<a href=\"\\1\" target=\"_blank\"><font color=\"$r3_fg\">\\1</font></a>", $text);
   $text = eregi_replace("($regex[mail])","<a href=\"mailto:\\1\"><font color=\"$r3_fg\">\\1</font></a>", $text);
 
-  $text = eregi_replace("!(quot|gt|lt|);","&\\1;",$text);
+  $text = eregi_replace("!(quot|gt|lt)","&\\1",$text);
   $text   = eregi_replace("http_img","http", $text);
 
   return $text;
-}
 
+}
 ?>
