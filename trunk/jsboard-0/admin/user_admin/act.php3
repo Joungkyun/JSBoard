@@ -71,7 +71,7 @@ else { $wpasswd = $board_manager ; }
 
 
 if (!$uscale || $uscale == $pern) {
-  $wscale = $pern;
+  $uscale = $pern;
 }
 
 if (!$namelenth || $namelenth == $namel) {
@@ -259,7 +259,7 @@ $rboard_manager  = \"$wpasswd\" ;
          Table 기본 informations            
  *****************************************/
 
-$rpern      = \"$wscale\" ;	// 페이지당 게시물
+$rpern      = \"$uscale\" ;	// 페이지당 게시물
 $rnamel     = \"$namelenth\" ;	// 이름 필드의 최대 길이
 $rtitll     = \"$titlelenth\" ;	// 제목 필드의 최대 길이
 $rwidth     = \"$tablewidth\" ;	// 게시판 너비

@@ -116,7 +116,7 @@ while($list = dfetch_row($result)) {
     if ($bofile) {
       $tail = substr( strrchr($bofile, "."), 1 );
       if ($tail == "gif" || $tail == "jpg") {
-        echo ("<img src=$filesavedir/$bcfile/$bofile><p>");
+        echo ("<img src=\"$filesavedir/$bcfile/$bofile\"><p>");
       }
     }
 
