@@ -41,7 +41,7 @@ function print_prlist($p) {
 function prelist($t,$inc,$limit=3,$cut=30,$cn=0,$cd=0,$ce=0,$cc=0,$l=0) {
   global $prlist;
 
-  include_once "$prlist[path]/config/global.ph";
+  include "$prlist[path]/config/global.ph";
   if($inc) {
     include_once "$prlist[path]/include/error.ph";
     include_once "$prlist[path]/include/parse.ph";
