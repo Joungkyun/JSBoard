@@ -1,0 +1,211 @@
+<HTML>
+<HEAD>
+<!-#######################################################################-->
+<!-  $langs[charset] : 게시판의 언어 타입에 따라 charset 을 가져온다.     -->
+<!-  $board[ver]     : 게시판의 버젼 정보를 가지고 온다.                  -->
+<!-  get_title()     : 게시판의 헤더 타이틀을 가지고 온다.                -->
+<!-  $user_stylesheet : 사용자 정의 스타일 시트                           -->
+<!-#######################################################################-->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs[charset]?>">
+<TITLE>Jsboard <?=$board[ver]?> - <?=get_title()?></TITLE>
+
+<STYLE TYPE=text/css>
+<!--
+BODY,TD {font-size:12px;font-family:굴림체;color:#555555;line-height:15pt}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+INPUT {border:1x solid #555555;background-Color:silver;font-size:11px;font-family:굴림체;color:#333333}
+SELECT {border:1x solid #555555;background-Color:silver;font:11px tahoma;color:#555555}
+
+<?=$user_stylesheet?>
+-->
+</style>
+
+<!-#######################################################################-->
+<!-  print_newwindow_src()  : jsboard 의 기능에서 필요한 새창을 띄우는    -->
+<!-                           java script 를 출력하게 해 준다.            -->
+<!-  $print[preview_script] : list 에서 미리보기를 위한 java script를     -->
+<!-                           출력한다.                                   -->
+<!-#######################################################################-->
+<? print_newwindow_src($upload[yesno],$cupload[yesno],$enable[dwho]) ?>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<?=$print[preview_script]?>
+
+<!-------------------- 헤더 디자인 시작 -------------------->
+<?
+if(!$np) {
+  # 각 유저별 Design
+  include "$board[headpath]";
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.ph";
+ }
+?>
+<!-------------------- 헤더 디자인 끝   -------------------->
+
+<!-#######################################################################-->
+<!-  $board[align] : 게시판의 align 을 정의한다. 이는 게시판 관리자에서   -->
+<!-                  설정을 할수 있다.                                    -->
+<!-  $print[dsearch] : 상세 검색 테이블 출력                              -->
+<!-  $board[width] : 게시판의 넓이를 지정한다. 게시판 관리자에서 조정     --> 
+<!-  $print[count] : 게시판의 좌측 상단 카운터를 출력한다.                -->
+<!-  $print[admin] : 게시판 우측의 admin 링크를 출력 이는 admin link 이   -->
+<!-                  미지를 불러 오는 것으로 꼭 admin.gif가 존재해야 한   -->
+<!-                  다. 게시판 관리자에서 안보이도록 설정을 할수가있다   -->
+<!-#######################################################################-->
+<DIV ALIGN=<?=$board[align]?>>
+<?=$print[dsearch]?>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN=bottom>
+<IMG SRC=./theme/KO-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
+<FONT style="font-size:11px;font-family:tahoma;color:#55555;"> &gt;&gt; <?=$print[count]?></FONT></TD>
+<TD ALIGN=right VALIGN=bottom><?=$print[admin]?></TD>
+</TR>
+
+<TR><TD COLSPAN=3>
+
+<!-#######################################################################-->
+<!-  $td_width[ ] : 테이블 필드의 넓이 비율을 지정한다. 이는              -->
+<!-                 theme/theme_name/config.ph 에서 정의를 한다.          -->
+<!-#######################################################################-->
+<!---- 게시판 메인 테이블 시작 ----->
+<TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0>
+<TR>
+  <TD WIDTH=<?=$td_width[no]?> ALIGN=left BGCOLOR=#FFAE00><IMG SRC=./theme/KO-default/img/board_no.gif ALT='No.'></TD>
+  <TD WIDTH=<?=$td_width[title]?> ALIGN=center BGCOLOR=#FFAE00><FONT STYLE="color:#FFFFFF;font-weight:bold">제목</FONT></TD>
+  <TD WIDTH=<?=$td_width[name]?> ALIGN=center BGCOLOR=#FFAE00><FONT STYLE="color:#FFFFFF;font-weight:bold">이름</FONT></TD>
+
+<!-#######################################################################-->
+<!-  if($upload[yesno] && $cupload[yesno]) : 파일                         -->
+<!-               업로드 기능을 사용할 경우 해당 필드를 출력을 한다.      -->
+<!-#######################################################################-->
+<?
+  if($upload[yesno] && $cupload[yesno])
+    echo "<TD WIDTH=$td_width[upload] ALIGN=center BGCOLOR=#FFAE00><FONT STYLE=\"color:#FFFFFF;font-weight:bold\">파일</FONT></TD>\n";
+?>
+  <TD WIDTH=<?=$td_width[dates]?> ALIGN=center BGCOLOR=#FFAE00><FONT STYLE="color:#FFFFFF;font-weight:bold">날짜</FONT></TD>
+  <TD WIDTH=<?=$td_width[refer]?> ALIGN=center BGCOLOR=#FFAE00><FONT STYLE="color:#FFFFFF;font-weight:bold">조회</FONT></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $print[lists] : 게시판 리스트를 출력을 한다.                         -->
+<!-#######################################################################-->
+<?=$print[lists]?>
+</TABLE>
+
+<!---- 게시판 메인 테이블 끝 ----->
+
+</TD></TR>
+</TABLE>
+
+<!-#######################################################################-->
+<!-  $print[p_list] : 좌측 하단의 페이지 링크를 출력한다.                 -->
+<!-  list_cmd(0,1)  : 우측 하단의 메뉴 링크를 출력한다. 디폴트로는 text   -->
+<!-                   메뉴로 구성된다. 만약 이미지메뉴를 사용하고 싶다면  -->
+<!-                                                                       -->
+<!-                   prev.gif        - 이전글 또는 이전 페이지           -->
+<!-                   next.gif        - 다음글 또는 다음 페이지           -->
+<!-                   list.gif        - 글 목록                           -->
+<!-                   write.gif       - 글 쓰기                           -->
+<!-                   today.gif        - 최근 12시간내 올라온글           -->
+<!-                   delete.gif      - 삭제                              -->
+<!-                   edit.gif        - 수정                              -->
+<!-                   reply.gif       - 답장                              -->
+<!-                   conj.gif        - 관련글                            -->
+<!-                                                                       -->
+<!-                   를 theme/theme_name/img 에 위의 이미지를 만들고     -->
+<!-                   나서 list_cmd(1,1) 로 지정을 한다.                  -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD><FONT style="font-size:10px;font-family:tahoma;color:#555555">&gt;&gt; Fast Page Link : <?=$print[p_list]?></FONT>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=25 BORDER=0 ALIGN=absmiddle ALT=''></TD>
+<TD ALIGN=right><? list_cmd(0,1) ?></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  검색폼과 페이지 폼은 doc/ko/README.THEME 참조                        -->
+<!-  $print[dserlink] : 상세 검색 링크 출력                               -->
+<!-  $print[times]  : 우측 하단의 처리시간 출력                           -->
+<!-#######################################################################-->
+<TR>
+<TD>
+<!-- =============================== 검색폼 =============================== -->
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
+<TR>
+<TD>
+<SELECT NAME=o[sc] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<OPTION VALUE=t<?=$sform[sc][t]?>>Title
+<OPTION VALUE=c<?=$sform[sc][c]?>>Contents
+<OPTION VALUE=n<?=$sform[sc][n]?>>Writer
+<OPTION VALUE=a<?=$sform[sc][a]?>>All
+</SELECT>
+<INPUT TYPE=text NAME=o[ss] SIZE=<?=form_size(8)?> MAXLENGTH=255 style="border:1x solid #555555;background-Color:#ffffff;font:12px;color:#555555;" VALUE="<?=$sform[ss]?>"
+>
+<INPUT TYPE=submit VALUE=Search style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555;">
+</TD>
+</TR><TR>
+<TD>
+<SELECT NAME=o[st] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<OPTION VALUE=m<?=$sform[st][m]?>>A Month
+<OPTION VALUE=w<?=$sform[st][w]?>>A Week
+<OPTION VALUE=a<?=$sform[st][a]?>>All
+</SELECT>
+<INPUT TYPE=checkbox NAME=o[er] VALUE=y<?=$sform[er][y]?> style="border:1x solid #555555;background-Color:#ffffff">
+<FONT STYLE="font-face:굴림;color:#555555">정규표현식</FONT> <?=$print[dserlink]?>
+</TD>
+</TR>
+<INPUT TYPE=hidden NAME=o[at] VALUE=s>
+<INPUT TYPE=hidden NAME=o[go] VALUE=p>
+<INPUT TYPE=hidden NAME=o[sct] VALUE=s>
+<INPUT TYPE=hidden NAME=o[stt] VALUE=s>
+</FORM>
+</TABLE>
+<!-- =============================== 검색폼 =============================== -->
+</TD>
+<TD ALIGN=right>
+<FONT style="font-size:11px;font-family:tahoma;color:#555555;"><?=$print[times]?></FONT><BR>
+<!-- ============================== 페이지폼 ============================== -->
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
+<TR>
+<TD ALIGN=right>
+<FONT STYLE="font-size:10px;font-family:tahoma;">
+<?=$pform[post]?>
+<SELECT NAME=o[go] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<OPTION VALUE=p SELECTED>Page No.
+<OPTION VALUE=n>Article No.
+</SELECT>
+<INPUT TYPE=text NAME=o[no] SIZE=<?=form_size(2)?> MAXLENGTH=6 style="border:1x solid #555555;background-Color:#ffffff;font:12px;color:#555555" VALUE='<?=$pform[value]?>'
+>
+<INPUT TYPE=submit VALUE=Go! style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+</FONT>
+</TD>
+</TR></FORM>
+</TABLE>
+<!-- ============================== 페이지폼 ============================== -->
+</TD>
+</TR>
+</TABLE>
+
+<!-#######################################################################-->
+<!-  print_license()  : 라이센스 출력                                     -->
+<!-#######################################################################-->
+<?=print_license()?>
+
+</DIV>
+
+<!-------------------- 꼬리 디자인 시작 -------------------->
+<?
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.ph";
+  # 각 유저별 Design
+  include "$board[tailpath]";
+}
+?>
+<!-------------------- 꼬리 디자인 끝   -------------------->
+</BODY>
+</HTML>
