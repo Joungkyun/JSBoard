@@ -221,9 +221,9 @@ function get_comment($table,$no,$print=0) {
   $r = sql_query($sql);
 
   if($corder) {
-    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=1&page=$page>&#9651;</A>";
+    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=0&page=$page>&#9651;</A>";
   } else {
-    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=0&page=$page>&#9661;</A>";
+    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=1&page=$page>&#9661;</A>";
   }
   
   if(sql_num_rows($r) > 0) {
