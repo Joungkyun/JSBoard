@@ -367,7 +367,7 @@ function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
 
   # $c 설정이 있고, list read from write page 에서만 체크
   if($c && preg_match("/(list|read|form|write)\.php/i",$_SERVER['PHP_SELF'])) {
-    # global.ph 에 $board['dhyper'] 가 정의 되어 있으면 체크 목록을 합침
+    # global.php 에 $board['dhyper'] 가 정의 되어 있으면 체크 목록을 합침
     $ips = trim($wips) ? "$wips;$ips" : $ips;
 
     # $i = 0 -> 전체 어드민에서의 설정 체크
@@ -412,7 +412,7 @@ function check_access($c=0,$wips='',$ips='') {
   global $langs;
 
   if($c) {
-    # global.ph 에 $board['ipbl'] 이 존재하면 함침
+    # global.php 에 $board['ipbl'] 이 존재하면 함침
     $ips = trim($wips) ? "$wips;$ips" : $ips;
 
     # 원격 접속지가 존재하지 않거나 ips 변수가 없거나, 접속지가 자신이라면 체크 중지

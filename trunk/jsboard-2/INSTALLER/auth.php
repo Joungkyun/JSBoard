@@ -1,19 +1,19 @@
 <?php
-include_once "../include/print.ph";
+include_once "../include/print.php";
 parse_query_str();
 
 $path['type'] = "Install";
 $copydate = time();
 $copydate = date("Y",$copydate);
 
-include_once "./include/passwd.ph";
+include_once "./include/passwd.php";
 $langs['code'] = ($langss == "ko") ? "ko" : "en";
 
-include_once "../include/lang.ph";
-include_once "../include/error.ph";
-include_once "../include/get.ph";
-include_once "../include/check.ph";
-include_once "../include/version.ph";
+include_once "../include/lang.php";
+include_once "../include/error.php";
+include_once "../include/get.php";
+include_once "../include/check.php";
+include_once "../include/version.php";
 
 $agent = get_agent();
 if(preg_match("/links|w3m|lynx/i",$agent['br']))

@@ -168,11 +168,11 @@ windows.
 
   1-2. Web server configuration
 
-    The index file of jsboard is index.php. and files have .ph as their extensions 
+    The index file of jsboard is index.php. and config have index.php as their filename
     so you may want to add following in your httpd.conf file. 
 
-    AddType application/x-httpd-php .php .php3 .ph
-                                               ----
+    DirectoryIndex index.php index.html index.htm ...
+                   ---------
 
   1-3. php.ini configuration
 
@@ -282,7 +282,7 @@ windows.
         ---------------------
         Do you want to use Korean during the installation? [Y/N](default Y) : Y
 
-        Group Owner of "config/global.ph config/allow_browser.txt" must set GROUP
+        Group Owner of "config/global.php config/allow_browser.txt" must set GROUP
         value in httpd.conf that is operation group of Web Server. If can't set as
         value of GROUP directive in httpd.conf, you will set the permission 606.
 
@@ -293,29 +293,29 @@ windows.
     
       if you have a root access to the system,
 
-      $ chgrp nobody jsboard/config/global.ph
+      $ chgrp nobody jsboard/config/global.php
       $ chgrp nobody jsboard/config/spam_list.txt
 
       and the result,
 
-      -rw-rw----    accountname    nobody     config/global.ph
+      -rw-rw----    accountname    nobody     config/global.php
       -rw-rw----    accountname    nobody     config/spam_list.txt
 
       if you couldn't give proper ownership,
 
-      $ chmod 606 config/global.ph
+      $ chmod 606 config/global.php
       $ chmod 606 config/spam_list.txt
       $ chmod 711 ~/accountname
 
       and the result,
 
-      -rw----rw-    accountname    accountname    config/global.ph
+      -rw----rw-    accountname    accountname    config/global.php
       -rw----rw-    accountname    accountname    config/spam_list.txt
 
       You will probably be able to run the JSBoard with that, but there will be 
       security issues.
 
-    Next, move to jsboard/config and configure global.ph.
+    Next, move to jsboard/config and configure global.php.
 
     ############################################################################
     #  DATABASE Configuration

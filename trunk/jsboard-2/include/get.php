@@ -163,7 +163,7 @@ function get_board_info($table) {
 
 # 게시판의 전체 페이지 수를 구하는 함수
 function get_page_info($count, $page = 0) {
-    global $board; # 게시판 기본 설정 (config/global.ph)
+    global $board; # 게시판 기본 설정 (config/global.php)
 
     # 보통 글 수를 페이지 당 글 수로 나누어 전체 페이지를 구함
     # 나눈 값은 정수형으로 변환하며 정확히 나누어 떨어지지 않으면 1을 더함
@@ -202,7 +202,7 @@ function get_page_info($count, $page = 0) {
 # intval - 변수를 정수형으로 변환함
 #          http://www.php.net/manual/function.intval.php
 function get_current_page($table, $idx) {
-  global $board; # 게시판 기본 설정 (config/global.ph)
+  global $board; # 게시판 기본 설정 (config/global.php)
   global $o;
 
   $sql = search2sql($o, 0);
@@ -291,12 +291,12 @@ function get_microtime($old, $new) {
   return sprintf("%.2f", ($end[1] + $end[0]) - ($start[1] + $start[0]));
 }
     
-# 알맞은 제목을 가져오기 위해 사용됨 (html/head.ph)
+# 알맞은 제목을 가져오기 위해 사용됨 (html/head.php)
 #
 # basename - 파일 경로에서 파일명만을 가져옴
 #            http://www.php.net/manual/function.basename.php
 function get_title() {
-  global $board, $langs; # 게시판 기본 설정 (config/global.ph)
+  global $board, $langs; # 게시판 기본 설정 (config/global.php)
 
   $title  = $board['title'];
 

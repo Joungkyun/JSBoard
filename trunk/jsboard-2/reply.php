@@ -1,5 +1,5 @@
 <?php
-include "include/header.ph";
+include "include/header.php";
 
 $board['super'] = $board['adm'] ? 1 : $board['super'];
 
@@ -14,8 +14,8 @@ if(preg_match("/^(2|5)$/",$board['mode']) && $_SESSION[$jsboard]['id'] &&
 else $nodisable = 1;
 
 $kind = "reply";
-$board['headpath'] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
-$board['tailpath'] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
+$board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
+$board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php";
 
 if((preg_match("/^(2|3|5)$/",$board['mode']) && $_SESSION[$jsboard]['id']) || $board['super'] == 1) {
   $pre_regist['name'] = $_SESSION[$jsboard]['id'];

@@ -1,5 +1,5 @@
 <?php
-include_once "../include/print.ph";
+include_once "../include/print.php";
 parse_query_str();
 session_start(); // session을 시작한다.
 $path['type'] = "Install";
@@ -7,13 +7,13 @@ $path['type'] = "Install";
 if ($langss == "ko") $langs['code'] = "ko";
 else $langs['code'] = "en";
 
-include_once"../include/ostype.ph";
-include_once"../include/lang.ph";
-include_once"../include/get.ph";
-include_once"../include/error.ph";
-include_once"../include/check.ph";
-include_once"./include/passwd.ph";
-include_once"./include/check.ph";
+include_once"../include/ostype.php";
+include_once"../include/lang.php";
+include_once"../include/get.php";
+include_once"../include/error.php";
+include_once"../include/check.php";
+include_once"./include/passwd.php";
+include_once"./include/check.php";
 
 # Password Checkk
 inst_pwcheck($passwd,$_SESSION['mysqlpass'],$langs['act_pw']);
@@ -111,7 +111,7 @@ if ($indb['check']) {
                   KEY name (name),
                   KEY position (position))";
 
-  #require("../admin/include/first_reg.ph");
+  #require("../admin/include/first_reg.php");
   $passwd_ext = crypt($passwd_ext);
 
   $create['data'] = "INSERT INTO test (no,num,idx,date,host,name,passwd,email,url,title,
@@ -133,22 +133,22 @@ if ($indb['check']) {
   # 설정 파일 위치
   mkdir("../data/test",0775);
   mkdir("../data/test/files",0770);
-  copy("sample/data/config.ph","../data/test/config.ph");
-  copy("sample/data/html_head.ph","../data/test/html_head.ph");
-  copy("sample/data/html_tail.ph","../data/test/html_tail.ph");
-  copy("sample/data/stylesheet.ph","../data/test/stylesheet.ph");
-  copy("sample/admin/global.ph.orig","../config/global.ph");
+  copy("sample/data/config.php","../data/test/config.php");
+  copy("sample/data/html_head.php","../data/test/html_head.php");
+  copy("sample/data/html_tail.php","../data/test/html_tail.php");
+  copy("sample/data/stylesheet.php","../data/test/stylesheet.php");
+  copy("sample/admin/global.php.orig","../config/global.php");
   copy("sample/admin/spam_list.txt.orig","../config/spam_list.txt");
 
-  chmod("../data/test/config.ph",0664);
-  chmod("../data/test/html_head.ph",0664);
-  chmod("../data/test/html_tail.ph",0664);
-  chmod("../data/test/stylesheet.ph",0664);
-  chmod("../config/global.ph",0660);
+  chmod("../data/test/config.php",0664);
+  chmod("../data/test/html_head.php",0664);
+  chmod("../data/test/html_tail.php",0664);
+  chmod("../data/test/stylesheet.php",0664);
+  chmod("../config/global.php",0660);
   chmod("../config/spam_list.txt",0664);
 
   # 설정 파일에 DB 정보를 입력
-  $create['gfile'] = "../config/global.ph";
+  $create['gfile'] = "../config/global.php";
   $create['str'] = file_operate($create['gfile'],"r","Can't open {$create['gfile']}");
 
   $create['str'] = str_replace("@DBSERVER@",$mysql_sock,$create['str']);

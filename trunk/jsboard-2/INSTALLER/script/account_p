@@ -29,7 +29,7 @@ chmod 707 ../../config
 chmod 707 -R ../../data
 chmod 606 ../../data/*/files/*/*
 chmod 606 ../../data/*/*.*
-chmod 660 ../../config/global.ph
+chmod 660 ../../config/global.php
 chmod 660 ../../config/spam_list.txt
 
 echo

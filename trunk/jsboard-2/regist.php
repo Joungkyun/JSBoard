@@ -1,7 +1,7 @@
 <?php
 $p_time[] = microtime(); # 속도 체크
-include "include/header.ph";
-include "admin/include/check.ph";
+include "include/header.php";
+include "admin/include/check.php";
 
 if(!$board['regist']) {
   if($_SESSION[$jsboard]['pos'] != 1) print_error("ADMIN {$langs['login_err']}");

@@ -1,6 +1,6 @@
 <?php
 $path['type'] = "admin";
-include "./include/admin_head.ph";
+include "./include/admin_head.php";
 
 # 알파벳별 분류에 대한 링크
 if($ts) {
@@ -11,7 +11,7 @@ if($ts) {
 if(!session_is_registered("$jsboard") || $_SESSION[$jsboard]['pos'] != 1)
   print_error($langs['login_err']);
 
-# 패스워드가 기본값에서 변경이 되지 않았을 경우 계속 경고를 함 - admin/include/print.ph
+# 패스워드가 기본값에서 변경이 되지 않았을 경우 계속 경고를 함 - admin/include/print.php
 print_chgpass($_SESSION[$jsboard]['pass']);
 
 htmlhead();

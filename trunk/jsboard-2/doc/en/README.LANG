@@ -1,11 +1,11 @@
 Multi Language Support
 
-1. copy include/LANG/en.ph to include/LANG/NATION_CODE.ph.
+1. copy include/LANG/en.php to include/LANG/NATION_CODE.php.
    For example Japanese
 
-   cp en.ph jp.ph
+   cp en.php jp.php
 
-2. translate to japanese from english in jp.ph
+2. translate to japanese from english in jp.php
 
 3. Added japanese theme.
    See also README.THEME

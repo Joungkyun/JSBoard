@@ -10,8 +10,8 @@ else if ($path['type'] == "admin" || $path['type'] == "Install") $locate = "../i
 else $locate = "include/LANG";
 
 if ($langs['code']) {
-  if (file_exists("$locate/{$langs['code']}.ph")) {
-    include "$locate/{$langs['code']}.ph";
-  } else { include "$locate/en.ph"; }
-} else { include "$locate/en.ph"; }
+  if (file_exists("$locate/{$langs['code']}.php")) {
+    include "$locate/{$langs['code']}.php";
+  } else { include "$locate/en.php"; }
+} else { include "$locate/en.php"; }
 ?>

@@ -1,6 +1,6 @@
 <?php
 $path['type'] = "admin";
-include "./include/admin_head.ph";
+include "./include/admin_head.php";
 
 htmlhead();
 # session 이 등록되어 있지 않으면 로그인 화면으로.
@@ -44,7 +44,7 @@ if(!$mode) {
        "<!----------------- Follow is HTML_TAIL ---------------------->\n";
 } elseif($mode == "global") {
 
-  $configfile = "../config/global.ph";
+  $configfile = "../config/global.php";
   $spamlistfile = "../config/spam_list.txt";
 
   # global 설정 가져오기

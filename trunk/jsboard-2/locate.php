@@ -1,5 +1,5 @@
 <?php
-include "include/header.ph";
+include "include/header.php";
 
 $go = $o['go'];
 $url = search2url($o);

@@ -2,7 +2,7 @@
 # This flie applied under GPL License
 if(preg_match("/user_admin/",$_SERVER['HTTP_REFERER'])) $path['type'] = "user_admin";
 else $path['type'] = "admin";
-include "./include/admin_head.ph";
+include "./include/admin_head.php";
 
 if(!session_is_registered("$jsboard") && $_SESSION[$jsboard]['pos'] != 1)
   print_error($langs['login_err']);
@@ -11,12 +11,12 @@ if(!session_is_registered("$jsboard") && $_SESSION[$jsboard]['pos'] != 1)
 table_name_check($table);
 
 if($path['type'] != "admin") {
-  include "../data/$table/config.ph";
+  include "../data/$table/config.php";
 }
-include "../theme/{$print['theme']}/config.ph";
-include "../include/lang.ph";
+include "../theme/{$print['theme']}/config.php";
+include "../include/lang.php";
 
-require "include/html_ahead.ph";
+require "include/html_ahead.php";
 
 echo "<table width=100% border=0 align=center>\n".
      "<tr align=center><td bgcolor={$color['t_bg']}>\n".
@@ -233,5 +233,5 @@ echo "\n<br>\n</td></tr>\n\n".
      "Copyright by <a href=http://jsboard.kldp.org><font color={$color['t_fg']}>JSBoard Open Project</font></a><br>\n".
      "and all right reserved\n</font>\n</td></tr>\n</table>\n";
 
-require("include/html_atail.ph");
+require("include/html_atail.php");
 ?>

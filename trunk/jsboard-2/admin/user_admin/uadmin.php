@@ -1,6 +1,6 @@
 <?php
 $path['type'] = "user_admin";
-include "../include/admin_head.ph";
+include "../include/admin_head.php";
 
 if(!session_is_registered("$jsboard") || (!$board['adm'] && $board['super'] != 1))
   print_error($langs['login_err']);
@@ -102,14 +102,14 @@ else $nameck_n = "checked";
 $ipbl = trim($enable['ipbl']) ? parse_ipvalue($enable['ipbl'],1) : $langs['ua_dhyper3'];
 if(!$board['useipbl']) {
   $ipbl = "Prevent this function by super user!\n".
-          "If you want to this function, config \"\$board['useipbl'] = 1;\" in global.ph";
+          "If you want to this function, config \"\$board['useipbl'] = 1;\" in global.php";
   $ipbllinkro = " disabled";
 }
 
 $denylink = trim($enable['plink']) ? parse_ipvalue($enable['plink'],1) : $langs['ua_dhyper3'];
 if(!$board['usedhyper']) {
   $denylink = "Prevent this function by super user!\n".
-              "If you want to this function, config \"\$board['usedhyer'] = 1;\" in global.ph";
+              "If you want to this function, config \"\$board['usedhyer'] = 1;\" in global.php";
   $denylinkro = " disabled";
 }
 
@@ -117,7 +117,7 @@ $board['hls'] = preg_replace("/<FONT COLOR=/i","",$board['hl']);
 $board['hls'] = preg_replace("/><B><U>STR<\/U><\/B><\/FONT>/i","",$board['hls']);
 
 # html header의 정보를 가져 온다
-$top_head = file_operate("../../html/head.ph","r");
+$top_head = file_operate("../../html/head.php","r");
 
 $top_head = htmlspecialchars($top_head);
 $top_head = str_replace("&lt;? echo ","",$top_head);
@@ -140,10 +140,10 @@ $top_head = str_replace("  ","&nbsp;&nbsp;",$top_head);
 $top_head = nl2br($top_head);
 $top_head = trim($top_head);
 
-$html_head = file_operate("../../data/$table/html_head.ph","r");
+$html_head = file_operate("../../data/$table/html_head.php","r");
 
 # html tail의 정보를 가져온다
-$html_tail = file_operate("../../data/$table/html_tail.ph","r");
+$html_tail = file_operate("../../data/$table/html_tail.php","r");
 
 if($textBrowser) {
   $html_head = str_replace("<","&lt;",$html_head);
@@ -152,15 +152,15 @@ if($textBrowser) {
   $html_tail = str_replace(">","&gt;",$html_tail);
 }
 
-$bottom_tail = file_operate("../../html/tail.ph","r");
+$bottom_tail = file_operate("../../html/tail.php","r");
 $bottom_tail = preg_replace("/<\?(.*)\?>/i","",$bottom_tail);
 $bottom_tail = trim($bottom_tail);
 $bottom_tail = htmlspecialchars($bottom_tail);
 $bottom_tail = nl2br($bottom_tail);
 
 # 사용자 정의 styel sheet
-if(file_exists("../../data/$table/stylesheet.ph")) {
-  include "../../data/$table/stylesheet.ph";
+if(file_exists("../../data/$table/stylesheet.php")) {
+  include "../../data/$table/stylesheet.php";
 }
 
 if($textBrowser) {
@@ -265,7 +265,7 @@ function fresize(value,name) {
 
 <BODY BGCOLOR=<?=$color['b_bg']?>>
 
-<? include "../../data/$table/html_head.ph"; ?>
+<? include "../../data/$table/html_head.php"; ?>
 
 <TABLE width=600 border=0 cellpadding=0 cellspacing=1 ALIGN=<?=$board['align']?>>
 <TR><TD BGCOLOR=<?=$color['b_bg']?>>
@@ -818,7 +818,7 @@ and all rights follow GPL2 License</font>
 </TABLE>
 </form>
 
-<? include "../../data/$table/html_tail.ph"; ?>
+<? include "../../data/$table/html_tail.php"; ?>
 
 </BODY>
 </HTML>

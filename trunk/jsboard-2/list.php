@@ -1,7 +1,7 @@
 <?php
 # 페이지 로딩 시간 시작
 $p_time[] = microtime();
-include "include/header.ph";
+include "include/header.php";
 
 $page = !$page ? 1 : $page;
 $nolenth = 0;
@@ -9,8 +9,8 @@ $nolenth = 0;
 if(!session_is_registered("$jsboard") && preg_match("/^(2|3|5|7)$/",$board['mode']))
   print_error($langs['login_err']);
 
-$board['headpath'] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
-$board['tailpath'] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph"; 
+$board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
+$board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php"; 
 
 if($board['super'] == 1 || $board['adm']) {
   if(@file_exists("./theme/{$print['theme']}/img/admin.gif"))

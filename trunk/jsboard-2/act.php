@@ -1,10 +1,10 @@
 <?php
-include_once "include/print.ph";
+include_once "include/print.php";
 # GET/POST 변수를 제어
 parse_query_str();
 
 if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
-  include "include/header.ph";
+  include "include/header.php";
 
   sql_connect($db['rhost'],$db['user'],$db['pass'],$db['rmode']);
   sql_select_db($db['name']);
@@ -550,7 +550,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       Header("Location: read.php?table=$table&no={$atc['no']}&page=$page");
   }
 } elseif ($o['at'] == "dn") {
-  include "include/header.ph";
+  include "include/header.php";
 
   # 해당 변수에 meta character 가 존재하는지 체크
   meta_char_check($dn['tb'],0,1);
@@ -578,7 +578,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     echo $dn['dl'];
   }
 } elseif($o['at'] == "ma") {
-  include "config/global.ph";
+  include "config/global.php";
   if(preg_match("/{$rmail['chars']}/",$target)) {
     $target = str_replace($rmail['chars'],"@",$target);
     Header("Location: mailto:$target");

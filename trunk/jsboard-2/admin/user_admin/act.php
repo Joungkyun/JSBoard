@@ -1,6 +1,6 @@
 <?php
 $path['type'] = "user_admin";
-include "../include/admin_head.ph";
+include "../include/admin_head.php";
 
 # header tail 변수를 치환해줌
 $ua['header'] = $uaheader;
@@ -12,7 +12,7 @@ if(!session_is_registered("$jsboard") || (!$board['adm'] && $board['super'] != 1
 
 sql_connect($db['rhost'], $db['user'], $db['pass']);
 sql_select_db($db['name']);
-# password 비교함수 - admin/include/auth.ph
+# password 비교함수 - admin/include/auth.php
 compare_pass($_SESSION[$jsboard]);
 
 if($ua['comment']) {
@@ -351,8 +351,8 @@ $chg_conf = "<?
 \$rss['channel'] = '{$chg['rss_channel']}';
 ?>";
 
-# 변경된 설정 값을 config.ph 에 쓴다.
-$wfile = "../../data/$table/config.ph";
+# 변경된 설정 값을 config.php 에 쓴다.
+$wfile = "../../data/$table/config.php";
 file_operate("$wfile","w","Can't update $wfile",$chg_conf);
 
 # quot 변환된 문자를 un quot 한다
@@ -367,10 +367,10 @@ if($_SESSION[$jsboard]['pos'] != 1) {
   $tail = stripslashes("$tail");
 }
 
-$wfile = "../../data/$table/html_head.ph";
+$wfile = "../../data/$table/html_head.php";
 file_operate("$wfile","w","Can't update $wfile",$head);
 
-$wfile = "../../data/$table/html_tail.ph";
+$wfile = "../../data/$table/html_tail.php";
 file_operate("$wfile","w","Can't update $wfile",$tail);
 
 # style sheet file 생성
@@ -380,7 +380,7 @@ $wstyle = "<?
 \$user_stylesheet = \"{$ua['style']}\";
 ?>";
 
-$wfile = "../../data/$table/stylesheet.ph";
+$wfile = "../../data/$table/stylesheet.php";
 file_operate("$wfile","w","Can't update $wfile",$wstyle);
 
 $langs['act_complete'] = str_replace("\n","\\n",$langs['act_complete']);

@@ -1,5 +1,5 @@
 <?php
-include "./include/header.ph";
+include "./include/header.php";
 
 if($mode == "photo") {
   if(preg_match("/^(2|3|5)$/",$board['mode']) && !session_is_registered("$jsboard"))

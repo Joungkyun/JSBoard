@@ -1,5 +1,5 @@
 <?php
-include_once "../include/print.ph";
+include_once "../include/print.php";
 parse_query_str();
 session_start(); // session을 시작한다.
 $path['type'] = "Install";
@@ -14,13 +14,13 @@ if ($langss == "ko") {
   $charfont = "tahoma,arial";
 }
 
-#require("./ad_sample/global.ph.orig");
-include_once "../include/lang.ph";
-include_once "../include/get.ph";
-include_once "../html/head.ph";
-include_once "./include/passwd.ph";
-include_once "./include/check.ph";
-include_once "../include/version.ph";
+#require("./ad_sample/global.php.orig");
+include_once "../include/lang.php";
+include_once "../include/get.php";
+include_once "../html/head.php";
+include_once "./include/passwd.php";
+include_once "./include/check.php";
+include_once "../include/version.php";
 
 # Password Check
 inst_pwcheck($passwd,$_SESSION['mysqlpass'],$langs['act_pw']);

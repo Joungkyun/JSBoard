@@ -4,12 +4,12 @@
 
 # header file 삽입
 #
-if ( ! @file_exists ("include/header.ph") ) {
+if ( ! @file_exists ("include/header.php") ) {
   echo "<script>\nalert('Don\'t exist header file');\n" .
        "history.back();\nexit;\n</script>\n";
   exit();
 } else {
-  include 'include/header.ph';
+  include 'include/header.php';
 }
 
 # RSS 사용 여부 체크 (user config file 로 부터)
