@@ -108,7 +108,7 @@ TEXTAREA { border:1x solid #555555;background-Color:silver;font:13px <?=$charfon
 
 <P>
 <CENTER><font style="color:#555555;font-size:12px;">
-Copyleft 1999-<?date("Y") ?> by
+Copyleft 1999-<?=date("Y")?> by
 <A HREF=http://jsboard.kldp.org TARGET=_blank><FONT STYLE=\"color:#555555\">JSBoard Open Project</FONT></A>
 </FONT></CENTER>
 </td></tr>
