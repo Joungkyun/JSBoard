@@ -21,7 +21,7 @@ Attention : OOPS administration Center is not GPL.
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Dec 6 2001
+Date      : Wed, Dec 10 2001
 Version   : jsboard-2.0pre3
 
 
@@ -64,6 +64,7 @@ Version   : jsboard-2.0pre3
 36. updated INSTALLER/script/conv_update file
 37. fixed problem of add new board
 38. fixed name search problem
+39. When registed user, removed http:// string in url
 
 
 -----------------------------------------------------------------------------

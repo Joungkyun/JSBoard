@@ -29,6 +29,7 @@ if($m == "act") {
 
   if(eregi("[^\xA1-\xFEa-z\. ]",$name)) print_error($langs[reg_format_n],250,150,1);
   if(!$email) print_error($langs[reg_format_e],250,150,1);
+  $url = str_replace("http://","",$url);
 
   # 유저가 이미 등록되어 있는지 확인
   $query = "SELECT nid FROM userdb WHERE nid = '$id'";
