@@ -382,7 +382,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     $atc[title] = trim($atc[title]);
     $atc[text]  = chop($atc[text]);
 
-    if($o[at] == "write" && eregi("^(0|4|6)$",$board[mode]) && !$board[adm] && $board[super] != 1) {
+    if(($o[at] == "write" || $o[at] == "reply") && eregi("^(0|4|6)$",$board[mode]) && !$board[adm] && $board[super] != 1) {
       if(!trim($atc[passwd]) && !trim($passwd)) print_error($langs[act_pwm],250,150,1);
     }
 
