@@ -23,6 +23,7 @@ If you wnat to see windog's change log, see also
 2003.01.22
   by 김정균 <http://www.oops.org>
 	- print_keymenu 함수 이름을 print_keymenu 로 보정
+	- 게시판 폭이 % 로 지정이 되었을 경우 글 제목 길이 보정 하지 않게 수정
 
 2003.01.16
   by 김정균 <http://www.oops.org>

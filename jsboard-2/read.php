@@ -75,9 +75,11 @@ if($alert) {
   $list[text] = conv_emoticon($list[text], $enable[emoticon]);
   
   # 제목 길이를 테이블 크기에 맞춰 다음줄로 넘김
-  $title_width = $board[width] / 8;
-  settype($title_width,"integer");
-  $list[title] = wordwrap($list[title],$title_width,"<br>\n",1);
+  if (!preg_match("/%$/", $board[width])) {
+    $title_width = $board[width] / 8;
+    settype($title_width,"integer");
+    $list[title] = wordwrap($list[title],$title_width,"<br>\n",1);
+  }
   $list[title] = preg_replace("/&amp;(amp|lt|gt)/i","&\\1",$list[title]);
   
   # title 에서 폰트 색상 지정할수 있게 함
