@@ -2,7 +2,6 @@
 
 Original Developer		: Byung Chan Kim <redhands at linux.sarang.net>
 Maintainer                      : Joung Kyun Kim <admin at oops.org>
-Source Disturibute              : Young Duk Hong <cyberowl at bofh.info>
 Windog Version			: Ki Soo Choi <choiks at nuri.net>
 
 ## Warning ##
@@ -11,9 +10,6 @@ This package turned out to work in Redhat Debian FreeBSD Windows systems.
 Any one who wants install this package on any other platform must revise
 it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
-
-If you wnat to see windog's change log, see also
- http://jsboard.kldp.org/download/Changelogwin.txt
 
 ******************************************************************************
 
