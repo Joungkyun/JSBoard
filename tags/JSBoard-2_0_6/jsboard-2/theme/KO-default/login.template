@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV=Cache-Control CONTENT=No-Cache>
+<META HTTP-EQUIV=Pragma	CONTENT=No-Cache>
+<TITLE>JSBoard <?=$board['ver']?> Login page</TITLE>
+<STYLE TYPE="text/css">
+A:LINK, A:VISITED, A:ACTIVE { TEXT-DECORATION: NONE; COLOR:<?=$color['text']?>; }
+A:HOVER { TEXT-DECORATION:UNDERLINE; COLOR:<?=$color['text']?>; }
+TD { FONT: 12px tahoma; COLOR:#555555; }
+INPUT {font: 11px tahoma; color:<?=$color['m_fg']?>; border-width:1; border-style:solid; border-color:<?=$color['d_bg']?>; padding-left:1px; padding-right:1px; background-color:<?=$color['m_bg']?>; }
+</STYLE>
+<script language=JavaScript>
+<!--
+function InputFocus() {
+<? if($mode == "comment") { ?>
+  document.auth.lp.focus();
+<? } else { ?>
+  document.auth.lu.focus();
+<? } ?>
+  return;
+}
+//-->
+</script>
+</HEAD>
+<BODY BGCOLOR=<?=$color['b_bg']?> onLoad=InputFocus()>
+
+<?
+include "html/head.ph";
+if($table) { include "data/$table/html_head.ph"; }
+
+if($mode == "comment") {
+  $actpage = "./act.php";
+  $ment = "Comment Delete";
+} else {
+  $actpage = "./session.php";
+  $ment = "JSBoard Login";
+}
+?>
+
+<TABLE WIDTH=100% HEIGHT=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD ALIGN=center VALIGN=center>
+
+<FORM NAME=auth METHOD=POST ACTION=<?=$actpage?>>
+<TABLE WIDTH=200 BORDER=0 CELLPADDING=3 CELLSPACING=0>
+<TR>
+<TD BGCOLOR=<?=$color['t_bg']?> ALIGN=CENTER><FONT STYLE="FONT: 14px Tahoma; COLOR:<?=$color['t_fg']?>; FONT-WEIGHT:bold"><?=$ment?></FONT></TD>
+</TR>
+
+<TR>
+<TD BGCOLOR=<?=$color['m_bg']?> ALIGN=CENTER>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=4 ALT=''><BR>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=100%>
+<? if($mode == "comment") { ?>
+<TR>
+<TD ALIGN=CENTER NOWRAP><NOBR>
+Password
+<INPUT TYPE=password NAME=lp SIZE=<?=$size?>>
+<INPUT TYPE=SUBMIT VALUE=DELETE>
+</NOBR>
+<BR>
+</TD>
+</TR>
+<? } else { ?>
+<TR>
+<TD ALIGN=CENTER>User</TD>
+<TD ALIGN=CENTER><INPUT TYPE=text NAME=lu SIZE=<?=$size?>></TD>
+</TR>
+
+<TR>
+<TD ALIGN=CENTER>Password</TD>
+<TD ALIGN=CENTER><INPUT TYPE=password NAME=lp SIZE=<?=$size?>></TD>
+</TR>
+
+<TR>
+<TD ALIGN=CENTER COLSPAN=2>
+Session Reset <INPUT TYPE=BUTTON VALUE=RESET onClick="document.location='./session.php?m=logout<?=$opt?>'">
+<INPUT TYPE=SUBMIT VALUE=LogIn>
+<BR>
+</TD>
+</TR>
+<? } ?>
+</TABLE>
+
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=4><BR>
+<INPUT TYPE=HIDDEN NAME=m VALUE=login>
+<? if ($mode == "comment") { ?>
+<INPUT TYPE=HIDDEN NAME=table VALUE=<?=$table?>>
+<INPUT TYPE=HIDDEN NAME=atc[no] VALUE=<?=$no?>>
+<INPUT TYPE=HIDDEN NAME=atc[cid] VALUE=<?=$cid?>>
+<INPUT TYPE=HIDDEN NAME=o[at] VALUE=c_del>
+<INPUT TYPE=HIDDEN NAME=page VALUE=<?=$page?>>
+<? } ?>
+
+</TD>
+</TR>
+</TABLE>
+<?=$hin?>
+<?=$tin?>
+</FORM>
+
+<?
+if($table) { include "data/$table/html_tail.ph"; }
+include "html/tail.ph";
+?>
+
+</TD></TR>
+</TABLE>
+</BODY></HTML>
