@@ -237,7 +237,7 @@ $langs[maker] = "만든이";
 $langs[p_dp] = "두개의 패스워드가 서로 다릅니다";
 $langs[p_cp] = "패스워드가 변경되었습니다 Admin Center에서\n로그아웃하시고 다시 로그인 하십시오.";
 $langs[p_chm] = "패스워드를 0000에서 변경하지 않으시면 이 메세지는 계속 출력됩니다 :-)";
-$lnags[p_nd] = "등록된 테마가 없습니다";
+$langs[p_nd] = "등록된 테마가 없습니다";
 
 # admin check.ph
 $langs[nodb] = "SQL server에 DB가 존재하지 않습니다.";

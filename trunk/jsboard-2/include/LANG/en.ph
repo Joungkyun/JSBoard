@@ -234,7 +234,7 @@ $langs[maker] = "scripter";
 $langs[p_dp] = "Two passwords do not match";
 $langs[p_cp] = "Password changed.\nLogout Admin Center and re-login please!";
 $langs[p_chm] = "If you don't change password to other than \"0000\", You'll see this message continuously";
-$lnags[p_nd] = "No theme";
+$langs[p_nd] = "No theme";
 
 # admin check.ph
 $langs[nodb] = "No such database in SQL server";
