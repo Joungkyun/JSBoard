@@ -1,0 +1,214 @@
+<HTML>
+<HEAD>
+<!-#######################################################################-->
+<!-  $langs['charset'] : print charset code                               -->
+<!-  $board['ver']     : version information in webboard                  -->
+<!-  get_title()     : print header title in webbared                     -->
+<!-  $user_stylesheet : User Defined StyleSheet                           -->
+<!-#######################################################################-->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
+
+<STYLE TYPE=text/css>
+<!--
+BODY,TD {font-size:12px;font-family:tahoma,arial;color:#555555;}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+INPUT {font: 11px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; padding-right:1px; background-color:#FFFFFF; }
+TEXTAREA {font: 13px comic; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; background-Color:#ffffff;}
+
+<?=$user_stylesheet?>
+-->
+</style>
+
+<!-#######################################################################-->
+<!-  print_newwindow_src()  : print java script for open new window to    -->
+<!-                           use in jsboard                              -->
+<!-  $print['preview_script'] : print jsva script for preview function in -->
+<!-                           list page                                   -->
+<!-#######################################################################-->
+<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<?=$print['preview_script']?>
+
+<!-------------------- Start Header Design -------------------->
+<?
+if(!$np) {
+  # Design per user
+  include "{$board['headpath']}";
+  # Input by whole admin
+  include "html/head.php";
+}
+?>
+<!-------------------- End Header Design   -------------------->
+
+<!-#######################################################################-->
+<!-  print_keymenu() : controled board with keyboard                      -->
+<!-                    'n or +' = next page                               -->
+<!-                    'b or -' = previous page                           -->
+<!-#######################################################################-->
+<?=print_keymenu(0)?>
+
+<!-#######################################################################-->
+<!-  $board['align'] : print align of webboard. It's config in board admin-->
+<!-  $print['dsearch'] : print detail search table                        -->
+<!-  $board['width'] : print width of webboard. It's config in board admin-->
+<!-  $print['admin'] : print admin link.                                  -->
+<!-  $print['count'] : registed article & page count                      -->
+<!-  $print['lout']  : print logout link.                                 -->
+<!-#######################################################################-->
+<DIV ALIGN=<?=$board['align']?>>
+<?=$print['dsearch']?>
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN=bottom>
+<IMG SRC=./theme/EN-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
+<FONT style="font-size:11px;font-family:tahoma;color:#55555;"> &gt;&gt; <?=$print['count']?></FONT></TD>
+<TD ALIGN=right VALIGN=bottom><?=$print['lout']?><?=$print['admin']?></TD>
+</TR>
+
+<TR><TD COLSPAN=3>
+
+<!-#######################################################################-->
+<!-  $td_width[ ] : print width ratio on table                            -->
+<!-                 config in theme/theme_name/config.php                 -->
+<!-#######################################################################-->
+<!---- Start main table ----->
+<TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0>
+<TR>
+  <TD WIDTH=<?=$td_width['no']?> ALIGN=left BGCOLOR=#FFAE00><IMG SRC=./theme/EN-default/img/board_no.gif ALT='No.'></TD>
+  <TD WIDTH=<?=$td_width['title']?> ALIGN=center BGCOLOR=#FFAE00><FONT STYLE="color:#FFFFFF;font-weight:bold">Subject</FONT></TD>
+  <TD WIDTH=<?=$td_width['name']?> ALIGN=center BGCOLOR=#FFAE00><FONT STYLE="color:#FFFFFF;font-weight:bold">Name</FONT></TD>
+
+<!-#######################################################################-->
+<!-  if($upload['yesno'] && $cupload['yesno']) : If use                   -->
+<!-              file upload function, this printed                       -->
+<!-#######################################################################-->
+<?
+  if($upload['yesno'] && $cupload['yesno'])
+    echo "<TD WIDTH={$td_width['upload']} ALIGN=center BGCOLOR=#FFAE00><FONT STYLE=\"color:#FFFFFF;font-weight:bold\">File</FONT></TD>\n";
+?>
+  <TD WIDTH=<?=$td_width['dates']?> ALIGN=center BGCOLOR=#FFAE00><FONT STYLE="color:#FFFFFF;font-weight:bold">Date</FONT></TD>
+  <TD WIDTH=<?=$td_width['refer']?> ALIGN=center BGCOLOR=#FFAE00><FONT STYLE="color:#FFFFFF;font-weight:bold">Read</FONT></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $print['lists'] : print article list                                 -->
+<!-#######################################################################-->
+<?=$print['lists']?>
+</TABLE>
+
+<!---- End main tale ----->
+
+</TD></TR>
+</TABLE>
+
+<!-#######################################################################-->
+<!-  $print['p_list'] : print page link                                   -->
+<!-  list_cmd(0,1)  : print menu link. default type is used text menu     -->
+<!-                   if U use image menu,                                -->
+<!-                                                                       -->
+<!-                   prev.gif        - previous article or page          -->
+<!-                   next.gif        - next article or page              -->
+<!-                   list.gif        - articles list                     -->
+<!-                   write.gif       - write article                     -->
+<!-                   today.gif       - articles before last 12 hour      -->
+<!-                   delete.gif      - delete article                    -->
+<!-                   edit.gif        - modify article                    -->
+<!-                   reply.gif       - reply article                     -->
+<!-                   conj.gif        - conjunction article               -->
+<!-                                                                       -->
+<!-                   upper image is located in theme/theme_name/img      -->
+<!-                   and use list_cmd option with list_cmd(1,1)          -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD><FONT style="font-size:10px;font-family:tahoma;color:#555555">&gt;&gt; Fast Page Link : <?=$print['p_list']?></FONT>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=25 BORDER=0 ALIGN=absmiddle ALT=''></TD>
+<TD ALIGN=right><? list_cmd(0,1) ?></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  See also doc/en/README.THEME for Search and Page form                -->
+<!-  $print['dserlink']  : print detail search link                       -->
+<!-  $print['times']  : Webboard Loading time                             -->
+<!-#######################################################################-->
+<TR>
+<TD>
+<!-- =============================== SEARCH FORM =============================== -->
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
+<TR>
+<TD>
+<SELECT NAME=o[sc] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<OPTION VALUE=t<?=$sform['sc']['t']?>>Title
+<OPTION VALUE=c<?=$sform['sc']['c']?>>Contents
+<OPTION VALUE=n<?=$sform['sc']['n']?>>Writer
+<OPTION VALUE=a<?=$sform['sc']['a']?>>All
+</SELECT>
+<INPUT TYPE=text NAME=o[ss] SIZE=<?=form_size(8)?> MAXLENGTH=255 style="border:1x solid #555555;background-Color:#ffffff;font:12px;color:#555555;" VALUE="<?=$sform['ss']?>">
+<INPUT TYPE=submit VALUE=Search style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555;">
+</TD>
+</TR><TR>
+<TD>
+<SELECT NAME=o[st] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<OPTION VALUE=m<?=$sform['st']['m']?>>A Month
+<OPTION VALUE=w<?=$sform['st']['w']?>>A Week
+<OPTION VALUE=a<?=$sform['st']['a']?>>All
+</SELECT>
+<INPUT TYPE=checkbox NAME=o[er] VALUE=y<?=$sform['er']['y']?> style="border:1x solid #555555;background-Color:#ffffff">
+<FONT STYLE="font-face:tahoma;color:#555555;font-weight:bold">REGEX</FONT> <?=$print['dserlink']?>
+</TD>
+</TR>
+<INPUT TYPE=hidden NAME=o[at] VALUE=s>
+<INPUT TYPE=hidden NAME=o[go] VALUE=p>
+<INPUT TYPE=hidden NAME=o[sct] VALUE=s>
+<INPUT TYPE=hidden NAME=o[stt] VALUE=s>
+</FORM>
+</TABLE>
+<!-- =============================== SEARCH FORM=============================== -->
+</TD>
+<TD ALIGN=right>
+<FONT style="font-size:11px;font-family:tahoma;color:#555555;"><?=$print['times']?></FONT><BR>
+<!-- ============================== PAGE FORM ============================== -->
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
+<TR>
+<TD ALIGN=right>
+<FONT STYLE="font-size:10px;font-family:tahoma;">
+<?=$pform['post']?>
+<SELECT NAME=o[go] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<OPTION VALUE=p SELECTED>Page No.
+<OPTION VALUE=n>Article No.
+</SELECT>
+<INPUT TYPE=text NAME=o[no] SIZE=<?=form_size(2)?> MAXLENGTH=6 style="border:1x solid #555555;background-Color:#ffffff;font:12px;color:#555555" VALUE='<?=$pform['value']?>'>
+<INPUT TYPE=submit VALUE=Go! style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+</FONT>
+</TD>
+</TR></FORM>
+</TABLE>
+<!-- ============================== PAGE FORM ============================== -->
+</TD>
+</TR>
+</TABLE>
+
+<!-#######################################################################-->
+<!-  print_license()  : Printed Licese table                              -->
+<!-#######################################################################-->
+<?=print_license()?>
+
+</DIV>
+
+<!-------------------- Start Tail Design ------------------->
+<?
+if(!$np) {
+  # Input by whole admin
+  include "html/tail.php";
+  # Design per user
+  include "{$board['tailpath']}";
+}
+?>
+<!-------------------- End   Tail Design ------------------->
+</BODY>
+</HTML>
