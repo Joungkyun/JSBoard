@@ -37,11 +37,19 @@ while($list = dfetch_row($result)) {
     $bcfile = $list[16]; // 파일경로
     $bfsize = $list[17]; // 파일크기
 
-    $date   = date("Y년 m월 d일 H시 i분", $date);
+    $date   = date("Y.m.d H시 i분", $date);
     $text   = eregi_replace("\r\n", "\n", $text);
     $text   = eregi_replace("\n", "\r\n", $text);
     $text   = nl2br($text);
+    $text   = auto_link($text);
     $text   = eregi_replace("<br>\n", "<br>", $text);
+
+    /* 들여쓰기 기능을 지원. pre tag처럼 완벽하게 지원하지는 못함 */
+    $text   = eregi_replace("  ", "&nbsp;&nbsp;", $text);
+    /* html 사용시에 table이 있으면 nl2br() 함수를 적용시키지 않음 */
+    $text = eregi_replace("<br([>a-z&\;])+([<\/]+(ta|tr|td))","\\2",$text) ;
+
+
     
     if(!$num)
 	$num = "$reno 번 글의 답장글";
