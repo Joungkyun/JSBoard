@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  2월 26일
+작성일 : 2002년  3월  1일
 버전   : jsboard-2.0pre4
 
 
@@ -80,6 +80,8 @@ If you wnat to see windog's change log, see also
 51. 인증에서 사용하는 쿠키 삭제.
 52. 빈 세션 파일 생성하는 것 수정
 53. image.php 추가
+54. 전체 어드민에서 jsboard 에서 사용하는 table 체크시 idx 필드를 전체 스캔하는
+    것 수정
 
 
 -----------------------------------------------------------------------------

@@ -308,10 +308,10 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
     다.
 
     $ cd jsboard-version/INSTALLER/SQL
-    $ mysql -u 사용자 -p 디비 < $ostype-board.sql
+    $ mysql -u 사용자 -p 디비 < board-$ostype.sql
     Enter password: 패스워드
 
-    $ mysql -u 사용자 -p 디비 < $ostype-userdb.sql
+    $ mysql -u 사용자 -p 디비 < userdb-$ostype.sql
     Enter password: 패스워드
 
     table 구조체를 만들었으면, 다음 설정 file 들을 위치 시키고 그 file 들의 퍼미
