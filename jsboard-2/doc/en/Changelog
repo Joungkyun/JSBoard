@@ -23,6 +23,7 @@ Version   : jsboard-2.0.5
 Sun, Mar 23 2003
   by JoungKyun Kim <http://www.oops.org>
 	- fixed delete file of web server's ownership with invalid method
+	- modified emoticon function
 
 Thu, Mar 20 2003
   by JoungKyun Kim <http://www.oops.org>
