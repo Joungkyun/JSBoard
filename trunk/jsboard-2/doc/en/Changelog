@@ -55,6 +55,7 @@ Version   : jsboard-2.0pre4
 29. changed encode method of send notice mail to base64 from plain
 30. fixed syntax error of INSTALLER/script/dbconv_to_20
 31. fixed trackvar bug of user admin
+32. modified spam check
 
 
 -----------------------------------------------------------------------------
