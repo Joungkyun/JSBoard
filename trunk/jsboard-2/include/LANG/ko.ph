@@ -121,6 +121,8 @@ $langs[mail_from_chk_err] = "보내는 이의 주소가 지정되어 있지 않습니다.";
 $langs[mail_title_chk_err] = "메일 제목이 없습니다.";
 $langs[mail_body_chk_drr] = "메일 내용이 없습니다.";
 $langs[mail_send_err] = "메일 서버와의 접속에 실패했습니다";
+$langs[html_msg] = "이 메일은 http://$_SERVER[SERVER_NAME] 의 $table 게시판에 남겨주신 글에 대한 댓글을\n".
+                   "메일로 보내드리는 서비스 입니다.\n";
 
 # User_admin
 

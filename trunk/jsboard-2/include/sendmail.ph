@@ -20,56 +20,134 @@ function mailcheck($to,$from,$title,$body) {
   if(!trim($body)) print_error($langs[mail_body_chk_drr],250,150,1);
 }
 
-function mail_header($to,$from,$title,$type=0) {
-  global $langs;
+function get_boundary_msg() {
+  $uniqchr = uniqid("");
+  $one = strtoupper($uniqchr[0]);
+  $two = strtoupper(substr($uniqchr,0,8));
+  $three = strtoupper(substr(strrev($uniqchr),0,8));
+  return "---=_NextPart_000_000${one}_${two}.${three}";
+}
 
-  # language type 을 결정
-  if($langs[code] == "ko") $charbit = "8bit";
-  else  $charbit = "7bit";
+function body_encode_lib($str) {
+  $return = base64_encode($str);
+  $len = strlen($return);
+  $chk = intval($len/60);
+
+  for($i=1;$i<$chk+1;$i++) {
+    if($i < 2) $no = $i*60-1;
+    else {
+      $pl = $pl + 2;
+      $no = $i*60-1+$pl;
+    }
+    $return = substr_replace($return,"$return[$no]\r\n",$no,1);
+  }
+
+  return $return;
+}
+
+function html_to_plain_lib($str) {
+  $src[] = "/\n|\r\n/i";
+  $des[] = "||ENTER||";
+  $src[] = "/^.*<BODY[^>]*>/i";
+  $des[] = "";
+  $src[] = "/<\/BODY>.*$/i";
+  $des[] = "";
+  $src[] = "/\|\|ENTER\|\|/i";
+  $des[] = "\r\n";
+  $str = preg_replace($src,$des,$str);
+
+  return $str;
+}
+
+function get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm) {
+  global $langs,$color;
+
+  if($nofm) $nofm = auto_link(&$nofm);
+  if($rmail[url]) $homeurl = "HomeURL           : ".auto_link($rmail[url]);
+  if($rmail[email]) {
+    $rmail[pemail] = (eregi("^nobody@",$rmail[email])) ? "" : $rmail[email];
+    $rmail[pemail] = preg_replace("/$rmail[pemail]/i","mailto:<A HREF=mailto:\\0>\\0</A>",$rmail[pemail]);
+  }
+  $rmail[text] = !$rmail[html] ? html_to_plain_lib($rmail[text]) : $rmail[text];
+  $servername = strtoupper($_SERVER[SERVER_NAME]);
+
+  $themepath = "theme/$rmail[theme]/mail.template";
+  $htmltext = addslashes(file_operate("$themepath","r","can't open $themepath",sizeof($themepath)));
+  eval("\$htmltext = \"$htmltext\";");
+  $htmltext = stripslashes($htmltext);
+  return $htmltext;
+}
+
+function mail_header($to,$from,$title,$type=0) {
+  global $langs,$boundary;
 
   # mail header 를 작성 
+  $header = "From: JSBoard Message <$from>\r\n".
+            "MIME-Version: 1.0\r\n".
+            "X-Accept-Language: ko,en\r\n";
+
   if(!$type) {
-    $header = "From: JSBoard Message <$from>\r\n".
-              "X-Accept-Language: ko,en\r\n".
-              "MIME-Version: 1.0\r\n".
-              "Content-Type: text/plain; charset=$langs[charset]\r\n".
-              "Content-Transfer-Encoding: $charbit\r\n".
-              "To: $to\r\n".
-              "Subject: $title\n";
-  } else {
-    $header = "From: JSBoard Message <$from>\r\n".
-              "X-Accept-Language: ko,en\r\n".
-              "MIME-Version: 1.0\r\n".
-              "Content-Type: text/plain; charset=$langs[charset]\r\n".
-              "Content-Transfer-Encoding: $charbit\r\n";
+    $header .= "To: $to\r\n".
+               "Subject: $title\n";
   }
+
+  $boundary = get_boundary_msg();
+  $header .= "Content-Type: multipart/alternative; boundary=\"$boundary\"\r\n\r\n".
+             "This is a multi-part message in MIME format.\r\n";
 
   return $header;
 }
 
-function phpmail($to,$from,$title,$body) {
-  global $langs;
+function phpmail($to,$from,$title,$pbody,$hbody) {
+  global $langs,$boundary;
 
   # 빈 문자열 체크
-  mailcheck($to,$from,$title,$body);
+  mailcheck($to,$from,$title,$pbody);
+
+  $title = "=?$langs[charset]?B?".trim(base64_encode($title))."?=";
+  $title = eregi_replace("\n[ |\t]*"," ",str_replace("\r\n","\n",$title));
 
   $header = mail_header($to,$from,$title,1);
+
+  $body = "--$boundary\r\n".
+          "Content-Type: text/plain; charset=$langs[charset]\r\n".
+          "Content-Transfer-Encoding: base64\r\n\r\n".
+          body_encode_lib(&$pbody).
+          "\r\n\r\n--$boundary\r\n".
+          "Content-Type: text/html; charset=$langs[charset]\r\n".
+          "Content-Transfer-Encoding: base64\r\n\r\n".
+          body_encode_lib(&$hbody).
+          "\r\n\r\n--$boundary--\r\n\r\n";
+
   mail($to,$title,$body,$header,"-f\"$from\"") or print_notice($langs[mail_send_err]);
 }
 
-function socketmail($smtp,$to,$from,$title,$body) {
-  global $langs;
+function socketmail($smtp,$to,$from,$title,$pbody,$hbody) {
+  global $langs,$boundary;
   $smtp = !trim($smtp) ? "127.0.0.1" : $smtp;
 
   # 빈 문자열 체크
-  mailcheck($to,$from,$title,$body);
+  mailcheck($to,$from,$title,$pbody);
+
+  $title = "=?$langs[charset]?B?".trim(base64_encode($title))."?=";
+  $title = eregi_replace("\n[ |\t]*"," ",str_replace("\r\n","\n",$title));
   
   # mail header 를 작성 
   $mail_header = mail_header($to,$from,$title);
 
   # body 를 구성
+  $body = str_replace("\n","\r\n",str_replace("\r","",$pbody));
+  $body = "--$boundary\r\n".
+          "Content-Type: text/plain; charset=$langs[charset]\r\n".
+          "Content-Transfer-Encoding: base64\r\n\r\n".
+          body_encode_lib(&$pbody).
+          "\r\n\r\n--$boundary\r\n".
+          "Content-Type: html/text; charset=$langs[charset]\r\n".
+          "Content-Transfer-Encoding: base64\r\n\r\n".
+          body_encode_lib(&$hbody).
+          "\r\n\r\n--$boundary--\r\n\r\n";
+
   $body = $mail_header.$body;
-  $body = str_replace("\n","\r\n",str_replace("\r","",$body));
   
   # smtp port 에 socket 을 연결
   $p = fsockopen($smtp,25,&$errno,&$errstr);
@@ -91,7 +169,7 @@ function socketmail($smtp,$to,$from,$title,$body) {
   } else print_notice($langs[mail_send_err]);
 }
 
-function sendmail($rmail,$fm=0) {
+function sendmail($rmail) {
   global $langs;
 
   $mail_msg_head = "$langs[sm_dr]";
@@ -134,16 +212,11 @@ function sendmail($rmail,$fm=0) {
   $webboard_address =  sprintf("%s%s",$rmail[path],"read.php?table=$rmail[table]&no=$rmail[no]");
   $reply_article    =  sprintf("%s%s",$rmail[path],"reply.php?table=$rmail[table]&no=$rmail[no]");
 
-  if (!$fm) {
-    $dbname  = "DB Name           : $rmail[table]";
-    $dbloca  = "DB Location       : $webboard_address";
-    $repart  = "Reply Article     : $reply_article";
-    $nofm    = "\n$dbname\n$dbloca\n$repart";
-    $homeurl = "HomeURL           : $rmail[url]";
-  } else {
-    $rmail[user] = 1;
-    $homeurl = "To                : mailto:$rmail[reply_orig_email]";
-  }
+  $dbname  = "DB Name           : $rmail[table]";
+  $dbloca  = "DB Location       : $webboard_address";
+  $repart  = "Reply Article     : $reply_article";
+  $nofm    = "\n$dbname\n$dbloca\n$repart";
+  $homeurl = "HomeURL           : $rmail[url]";
 
   $message = "\r\n".
              "\r\n".
@@ -163,7 +236,7 @@ function sendmail($rmail,$fm=0) {
              "$langs[a_t13]              : $year $day $ampm $hms\r\n".
              "---------------------------------------------------------------------------\r\n".
              "\r\n".
-             "$rmail[text]\r\n".
+             html_to_plain_lib($plainbody)."\r\n".
              "\r\n".
              "\r\n".
              "\r\n".
@@ -175,14 +248,18 @@ function sendmail($rmail,$fm=0) {
              "\r\n".
              "JSBoard Form mail service - http://jsboard.kldp.org\r\n";
 
+  $htmltext = get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm);
+  #echo $htmltext;
+  #exit;
+
   if ($rmail[user] && $rmail[reply_orig_email] && $rmail[email] != $rmail[toadmin]) {
-    if($rmail[mta]) socketmail($rmail[smtp],$rmail[reply_orig_email],$rmail[email],$rmail[title],$message);
-    else phpmail($rmail[reply_orig_email],$rmail[email],$rmail[title],$message);
+    if($rmail[mta]) socketmail($rmail[smtp],$rmail[reply_orig_email],$rmail[email],$rmail[title],&$message,&$htmltext);
+    else phpmail($rmail[reply_orig_email],$rmail[email],$rmail[title],&$message,&$htmltext);
   }
 
   if ($rmail[admin] && $rmail[toadmin] != "" && $rmail[email] != $rmail[toadmin]) {
-    if($rmail[mta]) socketmail($rmail[smtp],$rmail[toadmin],$rmail[email],$rmail[title],$message);
-    else phpmail($rmail[toadmin],$rmail[email],$rmail[title],$message);
+    if($rmail[mta]) socketmail($rmail[smtp],$rmail[toadmin],$rmail[email],$rmail[title],&$message,&$htmltext);
+    else phpmail($rmail[toadmin],$rmail[email],$rmail[title],&$message,&$htmltext);
   }
 
 }

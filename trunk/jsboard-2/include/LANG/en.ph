@@ -119,6 +119,8 @@ $langs[mail_from_chk_err] = "You didn't specify sender's email address.";
 $langs[mail_title_chk_err] = "Input email title";
 $langs[mail_body_chk_drr] = "Input email content";
 $langs[mail_send_err] = "Access to SMTP server failed";
+$langs[html_msg] = "This mail is service of send reply for your article in $table webboard\n".
+                   "of http://$_SERVER[SERVER_NAME]\n";
 
 # User_admin
 $langs[ua_ment]	= "Input Password";

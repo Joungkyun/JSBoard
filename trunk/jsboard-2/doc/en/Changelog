@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Fri, Feb  1 2002
+Date      : Fri, Feb  2 2002
 Version   : jsboard-2.0pre4
 
 
@@ -51,6 +51,7 @@ Version   : jsboard-2.0pre4
 26. changed method of upload file for register_globals = off
 27. fixed bug of auto_link() function
 28. modified theme
+29. changed encode method of send notice mail to base64 from plain
 
 
 -----------------------------------------------------------------------------
