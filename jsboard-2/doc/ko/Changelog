@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  3월 11일
+작성일 : 2002년  3월 26일
 버전   : jsboard-2.0pre4
 
 
@@ -92,6 +92,11 @@ If you wnat to see windog's change log, see also
 62. 수정/답장시 원본글을 변형해서 DB 에 넣는것 수정
 63. 외부 메일 서버 지정할 수 있도록 수정
 64. 스팸 등록기 체크 기능 추가
+65. php.ini 의 upload_max_filesize 의 값을 자동으로 post_max_size 보다 1M 보다 작게
+    지정하도록 수정. (post_max_size 는 시스템 관리자만 수정이 가능)
+66. 업로드 최대용량이 post_max_size 보다 클 경우 자동으로 post_max_size 로 변경되게
+    수정
+67. 대용량 업로드시를 위해 php excution time 을 지정할 수 있도록 수정
 
 
 -----------------------------------------------------------------------------

@@ -67,9 +67,10 @@ $print[theme]    = "@THEME@";
 #  UPLOAD Configuration
 #  if value of $upload[yesno] is 0, then all board disable upload
 ##############################################################################
-$upload[yesno]   = 1;			# enable upload
-$upload[dir]     = "files";		# directory name of upload file
-$upload[maxsize] = "2000000";		# upload max size
+$upload[yesno]   = 1;                   # enable upload
+$upload[dir]     = "files";             # directory name of upload file
+$upload[maxsize] = "2000000";           # upload max size
+$upload[maxtime] = "60";                # max excutiom time of php script
 
 
 ##############################################################################
