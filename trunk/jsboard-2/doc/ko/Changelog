@@ -22,6 +22,7 @@ If you wnat to see windog's change log, see also
 
 2002.06.17 by 김정균 <http://www.oops.org>
 	- logout 후의 이동 페이지를 여러곳으로 지정 가능하게 수정
+	- logout 링크 추가
 
 2002.06.15 by 김정균 <http://www.oops.org>
 	- 최신글 미리보기 기능의 디자인 분리

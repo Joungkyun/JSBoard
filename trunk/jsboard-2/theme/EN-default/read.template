@@ -50,6 +50,7 @@ if(!$np) {
 <!-  $board[width] : print width of webboard. It's config in board admin  -->
 <!-  $print[admin] : print admin link.                                    -->
 <!-  $list[num]    : Number of article                                    -->
+<!-  $print[lout]  : print logout link.                                   -->
 <!-#######################################################################-->
 <DIV ALIGN=<?=$board[align]?>>
 <?=$print[dsearch]?>
@@ -59,7 +60,7 @@ if(!$np) {
 <IMG SRC=./theme/EN-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Read <?=$list[num]?> article</FONT>
 </TD>
-<TD ALIGN=right VALIGN=bottom><?=$print[admin]?></TD>
+<TD ALIGN=right VALIGN=bottom><?=$print[lout]?><?=$print[admin]?></TD>
 </TR>
 
 <!-#######################################################################-->

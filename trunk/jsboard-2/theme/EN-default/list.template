@@ -49,6 +49,7 @@ if(!$np) {
 <!-  $board[width] : print width of webboard. It's config in board admin  -->
 <!-  $print[admin] : print admin link.                                    -->
 <!-  $print[count] : registed article & page count                        -->
+<!-  $print[lout]  : print logout link.                                   -->
 <!-#######################################################################-->
 <DIV ALIGN=<?=$board[align]?>>
 <?=$print[dsearch]?>
@@ -57,7 +58,7 @@ if(!$np) {
 <TD VALIGN=bottom>
 <IMG SRC=./theme/EN-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;color:#55555;"> &gt;&gt; <?=$print[count]?></FONT></TD>
-<TD ALIGN=right VALIGN=bottom><?=$print[admin]?></TD>
+<TD ALIGN=right VALIGN=bottom><?=$print[lout]?><?=$print[admin]?></TD>
 </TR>
 
 <TR><TD COLSPAN=3>
