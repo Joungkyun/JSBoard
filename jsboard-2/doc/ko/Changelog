@@ -22,6 +22,7 @@ If you wnat to see windog's change log, see also
 
 2002.5.25 by 김정균 <http://www.oops.org>
 	- comment 기능 추가
+	- act.php 의 check_article 함수의 오타 수정
 
 2002.5.14 by 김정균 <http://www.oops.org>
 	- license link 수정

@@ -22,6 +22,7 @@ Version   : jsboard-2.0pre4
 
 Sat, May 25 2002 by JoungKyun Kim <http://www.oops.org>
 	- added comment function
+	- fixed typo of check_article function in act.php
 
 Tue, May 14 2002 by JoungKyun Kim <http://www.oops.org>
 	- modified license link
