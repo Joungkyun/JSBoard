@@ -315,16 +315,16 @@ function sepa($bg)
 function auto_link($text) {
 
   $regex[http] = "(http|https|ftp|telnet|news):\/\/([a-z0-9\-_]+\.[][a-zA-Z0-9:;&#@=_~%\?\/\.\+\-]+)";
-  $regex[mail] = "([a-z0-9_\-]+)+@([a-z0-9_\-]+\.[a-z0-9\-\._]+)";
+  $regex[mail] = "([a-z0-9_\-]+)@([a-z0-9_\-]+\.[a-z0-9\-\._]+)";
 
   /* 특수 문자와 링크시 target 삭제 */
   $text = eregi_replace("&(quot|gt|lt)","!\\1",$text);
   $text = eregi_replace(" target=[\"'_a-z,A-Z]+","", $text);
 
   /* html사용시 link 보호 */
-  $text = eregi_replace("<a href=(*|[\"'])($regex[http])(*|[\"'])>","<a href=\"\\3_orig://\\4\" target=_blank>", $text);
-  $text = eregi_replace("<a href=(*|[\"'])mailto:($regex[mail])(*|[\"'])>","<a href=\"mailto:\\3#-#\\4\">", $text);
-  $text = eregi_replace("<img src=(*|[\"'])($regex[http])(*|[\"'])","<img src=\"\\3_orig://\\4\"",$text);
+  $text = eregi_replace("<a href=([\"']*)($regex[http])([\"']*)>","<a href=\"\\3_orig://\\4\" target=_blank>", $text);
+  $text = eregi_replace("<a href=([\"']*)mailto:($regex[mail])([\"']*)>","<a href=\"mailto:\\3#-#\\4\">", $text);
+  $text = eregi_replace("<img src=([\"']*)($regex[http])([\"']*)","<img src=\"\\3_orig://\\4\"",$text);
 
   /* 링크가 안된 url및 email address 자동링크 */
   $text = eregi_replace("($regex[http])","<a href=\"\\1\" target=\"_blank\">\\1</a>", $text);
@@ -336,8 +336,8 @@ function auto_link($text) {
   $text = eregi_replace("#-#","@",$text) ;
 
   /* link가 2개 겹쳤을때 이를 하나로 줄여줌 */
-  $text = eregi_replace("(<a href=(*|[\"'])($regex[http])(*|[\"'])+([^>]*)>)+<a href=(*|[\"'])($regex[http])(*|[\"'])+([^>]*)>","\\1", $text);
-  $text = eregi_replace("(<a href=(*|[\"'])mailto:($regex[mail])(*|[\"'])>)+<a href=(*|[\"'])mailto:($regex[mail])(*|[\"'])>","\\1", $text);
+  $text = eregi_replace("(<a href=([\"']*)($regex[http])([\"']*)+([^>]*)>)+<a href=([\"']*)($regex[http])([\"']*)+([^>]*)>","\\1", $text);
+  $text = eregi_replace("(<a href=([\"']*)mailto:($regex[mail])([\"']*)>)+<a href=([\"']*)mailto:($regex[mail])([\"']*)>","\\1", $text);
   $text = eregi_replace("</a></a>","</a>",$text) ;
 
   return $text;
