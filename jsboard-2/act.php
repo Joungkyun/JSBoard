@@ -307,8 +307,8 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     $atc[name] = htmlspecialchars($atc[name]);
     $atc[text] = htmlspecialchars($atc[text]);
 
-    if (eregi($compare[name],$atc[name])) $cmp[name] = 1;
-    if (eregi($ccompare[name],$atc[name])) $ccmp[name] = 1;
+    if (!empty($compare[name]) && eregi($compare[name],$atc[name])) $cmp[name] = 1;
+    if (!empty($ccompare[name]) && eregi($ccompare[name],$atc[name])) $ccmp[name] = 1;
 
     # 관리자 사칭 체크
     if((!$board[mode] || $board[mode] == 4) && $board[super] != 1 && !$board[adm]) {
