@@ -24,6 +24,8 @@ If you wnat to see windog's change log, see also
 
 * 변경된점
 1. number_formant 함수와 get_microtime 함수 재작성. by 산이 <http://linuxchannel.net>
+2. 정수 연산을 16 자리부터 지수로 표현되게 수정 (php 4.2.0 에서의 스팸 등록기
+   체크 알고리즘 값 산출 문제 재 수정
 
 
 -----------------------------------------------------------------------------

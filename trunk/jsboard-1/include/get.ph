@@ -429,6 +429,7 @@ function get_spam_value($v) {
   $chk = explode(":",$v);
   $ran = preg_replace("/[a-z]/i","",substr($HTTP_COOKIE_VARS[PHPSESSID],0,5));
   $ran = $ran ? $ran : preg_replace("/[a-z]/i","",substr($HTTP_COOKIE_VARS[PHPSESSID],5));
+  $ran = ($ran > 99999) ? substr($ran,0,5) : $ran;
   $ret = $chk[0] * $ran - ($chk[1] * $chk[2]);
 
   return $ret;

@@ -3,6 +3,7 @@
 set_magic_quotes_runtime(0);
 ini_set(magic_quotes_gpc,1);
 ini_set(magic_quotes_sybase,0);
+ini_set(precision,15);
 
 if(preg_match("/(write|reply)\.php/i",$_SERVER[PHP_SELF]))
   session_cache_limiter('nocache, must-revalidate');
