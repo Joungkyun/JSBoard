@@ -329,9 +329,6 @@ function get_title() {
     case "regist.php":
       $title .= " {$langs['get_rg']}";
       break;
-    case "security.php":
-      $title .= " SECURITY WARNING";
-      break;
   }
 
   return $title;
