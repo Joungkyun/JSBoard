@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0pre4
 
+Mon, Apr 22 2002 by JoungKyun Kim  <http://www.oops.org>
+	- add regex search rutine if doesn't close [,( pattern
+
 Mon, Apr 22 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- changed 2 sql query to 1 query when get number of registed article
 
