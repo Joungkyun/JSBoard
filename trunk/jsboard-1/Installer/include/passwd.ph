@@ -10,6 +10,7 @@ $passwd = "";
 # debian package의 경우 /etc/apache/httpd.conf
 # 수동으로 설치했을 경우 /usr/local/apache/conf/httpd.conf
 # 에 위치하는 경우가 많음.
+# freebsd 의 port 를 사용할 경우 /usr/local/etc/apache/httpd.conf 임
 #
 $apache_config_file = "/etc/httpd/conf/httpd.conf";
 
