@@ -1,4 +1,26 @@
 작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 7월 17일
+버전   : jsboard-1.0.2 (적수게시판 안정버전 1.0.2)
+
+* 변경된점
+
+1. admin 통계 기능에서 글이 없을 경우 에러 메세지 출력 되던것 수정
+2. auto_link() 함수에서 comma도 체크되게 수정
+3. 일부 system에서 -가 link 되지 않는 문제 수정
+4. include/get.ph 에서 gethostbyaddr() 함수의 에러 메세지 출력시 이를
+   막기 위해 @문자 사용
+5. fget() 함수를 fread() 함수로 변경
+6. 새로운 게시판 생성시 게시판 이름에 -를 사용하지 못하게 제한
+   (MySQL table에서 dash를 지원하지 않음)
+7. 몇몇 browser에서 열리는 파일들만 header를 통해 download 하게끔 변경.
+   지정된 확장자 외에도 50K 미만의 파일들은 header를 통해 download되며
+   50K 이상의 file들은 direct로 link 시킴
+8. act.php3에서 article_check() 함수 버그 수정
+9. CREDIT file의 임은재님 email 정정
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 7월 3일
 버전   : jsboard-1.0.1 (적수게시판 안정버전 1.0.1)
 

@@ -89,13 +89,14 @@ echo "<TD valign=top>
   <TD WIDTH=\"$readp[read]\" BGCOLOR=\"$color[r2_bg]\"><FONT COLOR=\"$color[r2_fg]\">$langs[hit]: $list[refer]</FONT></TD>\n";
 
 if($list[bofile]) {
-  $bofile = "$list[bofile]";
   $hfsize = human_fsize($list[bfsize]);
-  $tail = check_filetype($bofile);
-  $fileicon = icon_check($tail,$bofile);
+  $tail = check_filetype($list[bofile]);
+  $fileicon = icon_check($tail,$list[bofile]);
+  $down_link = check_dnlink($table,$list);
+
   echo "</TR><TR>\n" .
        "   <TD COLSPAN=\"3\" BGCOLOR=\"$color[r4_bg]\">\n" .
-       "   <A HREF=\"act.php3?o[at]=dn&dn[tb]=$table&dn[udir]=$upload[dir]&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]\">\n" .
+       "   <A HREF=\"$down_link\">\n" .
        "   <IMG SRC=\"images/$fileicon\" width=16 height=16 border=0 alt=\"$list[bofile]\" align=texttop>\n" .
        "   <FONT COLOR=\"$color[r4_fg]\">$list[bofile]</FONT>\n" .
        "   </A>\n" .
