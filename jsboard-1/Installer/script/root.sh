@@ -40,6 +40,10 @@ elif [ -f "/etc/www/httpd.conf" ]; then
   break
 elif [ -f "/usr/local/apache/conf/httpd.conf" ]; then
   CONF="/usr/local/apache/conf/httpd.conf"
+  break
+elif [ -f "/usr/local/etc/apache/httpd.conf" ]; then
+  CONF="/usr/local/apache/conf/httpd.conf"
+  break
 else
   while [ true ];
   do
