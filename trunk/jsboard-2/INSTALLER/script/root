@@ -29,6 +29,8 @@ elif [ -f "/usr/local/apache/conf/httpd.conf" ]; then
   CONF="/usr/local/apache/conf/httpd.conf"
 elif [ -f "/usr/local/etc/apache/httpd.conf" ]; then
   CONF="/usr/local/etc/apache/httpd.conf"
+elif [ -f "/etc/apache/conf/commonapache.conf" ]; then
+  CONF="/etc/apache/conf/commonapache.conf"
 else
   while [ true ];
   do
