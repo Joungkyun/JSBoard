@@ -61,6 +61,18 @@ function search2sql($o, $wh = 1) {
 
     if (preg_match("/\"/",$str))
       print_error("<b>[<font color=darkred>\"'</font>]</b>가 포함된 검색어는 검색하실수 없습니다.");
+  } else {
+    # 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크 
+    $chk = preg_replace("/\\\([\]\[()])/i","",$str); 
+    $chk = preg_replace("/[^\[\]()]/i","",$chk); 
+    
+    $chkAOpen = strlen(preg_replace("/\]/i","",$chk)); 
+    $chkAClos = strlen(preg_replace("/\[/i","",$chk)); 
+    $chkBOpen = strlen(preg_replace("/\)/i","",$chk)); 
+    $chkBClos = strlen(preg_replace("/\(/i","",$chk)); 
+    
+    if($chkAOpen !== $chkAClos) $str .= "]"; 
+    elseif($chkBOpen !== $chkBClos) $str .= ")"; 
   }
 
   $sql = $wh ? "WHERE " : "AND ";
@@ -120,7 +132,30 @@ function search_hl($list) {
   $str = trim($str);
   $str = stripslashes($str);
 
-  if(!$o[er]) $str = quotemeta($str);
+  # 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
+  if ($o[er]) {
+    $chk = preg_replace("/\\\([\]\[()])/i","",$str);
+    $chk = preg_replace("/[^\[\]()]/i","",$chk);
+  
+    $chkAOpen = strlen(preg_replace("/\]/i","",$chk));
+    $chkAClos = strlen(preg_replace("/\[/i","",$chk));
+    $chkBOpen = strlen(preg_replace("/\)/i","",$chk));
+    $chkBClos = strlen(preg_replace("/\(/i","",$chk));
+
+    if($chkAOpen !== $chkAClos) {
+       $str .= "]";
+       $o[ss] .= "]";
+    } elseif($chkBOpen !== $chkBClos) {
+       $str .= ")";
+       $o[ss] .= ")";
+    }
+
+    # regex 에서 충돌되는 문자 escape 처리
+    $dead = array("/\?|\)|\(|\*|\.|\^|\+|\%/i");
+    $live = array("\\\\\\0");
+    $str = preg_replace($dead,$live,$str);
+  } else $str = quotemeta($str);
+
   $str = str_replace("/","\/",$str);
 
   $hlreg[0] = $hl[0];

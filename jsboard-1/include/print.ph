@@ -231,7 +231,6 @@ function page_form($table, $pages, $color, $print = 0) {
   return $str;
 }
 
-
 function search_form($table, $pages, $print = 0) {
   global $board, $color; # 게시판 기본 설정 (config/global.ph)
   global $o, $langs, $PHP_SELF;
@@ -242,6 +241,20 @@ function search_form($table, $pages, $print = 0) {
   $ss = str_replace("%", "%%", $o[ss]);
   $ss = stripslashes($ss);
   $ss = htmlspecialchars($ss);
+
+  if($o[er]) {
+    # 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크 
+    $chk = preg_replace("/\\\([\]\[()])/i","",$ss); 
+    $chk = preg_replace("/[^\[\]()]/i","",$chk); 
+    
+    $chkAOpen = strlen(preg_replace("/\]/i","",$chk)); 
+    $chkAClos = strlen(preg_replace("/\[/i","",$chk)); 
+    $chkBOpen = strlen(preg_replace("/\)/i","",$chk)); 
+    $chkBClos = strlen(preg_replace("/\(/i","",$chk)); 
+    
+    if($chkAOpen !== $chkAClos) $ss .= "]"; 
+    elseif($chkBOpen !== $chkBClos) $ss .= ")"; 
+  }
 
   $sc[$o[sc]] = " SELECTED";
   $st[$o[st]] = " SELECTED";
