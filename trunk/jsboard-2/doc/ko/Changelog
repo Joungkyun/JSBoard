@@ -20,6 +20,11 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.2
 
+2002.11.17
+  by 김정균 <http://www.oops.org>
+	- 글 본문에 textarea 관련 태그가 존재할 경우 수정/답변 화면이 깨지는
+	  버그 수정
+
 2002.11.16
   by 김정균 <http://www.oops.org>
 	- php.ini 의 file_uploads 의 값이 Off 일 경우 글쓰기에서 POST 변수

@@ -70,6 +70,9 @@ if($disable) {
                       "\n<INPUT TYPE=hidden NAME=atc[url] VALUE=\"$list[url]\">\n";
 }
 
+# 본문에 html tag 가 존재할 경우를 대비
+$list[text] = htmlspecialchars($list[text]);
+
 mysql_close();
 
 # Template file 을 호출
