@@ -182,6 +182,7 @@ function get_pos($table, $idx) {
 	$next   = sql_fetch_array($result);
 	sql_free_result($result);
         $next[title] = str_replace("&amp;","&",$next[title]);
+	$next[title] = eregi_replace("(#|')","\\\\1",htmlspecialchars($next[title]));
 
 	$pos[next] = $next[no];
 	if($next[reto]) {
@@ -203,6 +204,7 @@ function get_pos($table, $idx) {
 	$prev   = sql_fetch_array($result);
 	sql_free_result($result);
         $prev[title] = str_replace("&amp;","&",$prev[title]);
+	$prev[title] = eregi_replace("(#|')","\\\\1",htmlspecialchars($prev[title]));
 
 	$pos[prev] = $prev[no];
 	if($prev[reto]) {

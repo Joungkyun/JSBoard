@@ -28,45 +28,13 @@ if ($o[at] != "dn" && $o[at] != "sm") {
 
     # 전체 관리자가 허락하였을시에만 upload 기능을 사용할수 있음
     if ($upload[yesno] =='yes' && $cupload[yesno] == 'yes' && $agent[br] != "LYNX") {
-      # file size 0byte upload 금지 - 1999.12.21 JoungKyun
-      if ($userfile_name) { 
-        if ($userfile_size == '0') {
-          echo "<script>\nalert(\"$langs[act_ud]\")\n" .
-               "history.back()\n</script>";
-          exit;
-        }
-      }
-      # file size 0byte upload 금지 끝
-
-      if ($userfile_size !=0 || $userfile !="none" || $userfile_name !="") {              
-        if ($userfile_size > $upload[maxsize]) {
-           echo "<script>\nalert(\"$langs[act_md]\")\n" .
-                "history.back()\n</script>";
-           exit;
-         }                                     
-         $bfilename=date("YmdHis",$atc[date]);
-
-         # file name에 특수 문자가 있을 경우 등록 거부
-         if (eregi("(#|\\$|%)",$userfile_name)) {
-           echo"<script>\nalert(\"$langs[act_de]\")\n" .
-               "history.back()\n</script>";
-           exit;
-         }
-
-         # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
-         $userfile_name = eregi_replace(".(php[0-9a-z]*|phtml)$", ".phps", $userfile_name);
-         $userfile_name = eregi_replace("(.*).(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $userfile_name);
-         # file name에 공백이 있을 경우 공백 삭제
-         $userfile_name = eregi_replace(" ","",$userfile_name);
-
-         mkdir("data/$table/$upload[dir]/$bfilename",0755);
-         exec("$exec[mv]  \"$userfile\" \"data/$table/$upload[dir]/$bfilename/$userfile_name\"");
-         chmod("data/$table/$upload[dir]/$bfilename/$userfile_name",0644);
-      }
+      $bfilename = date("YmdHis",$atc[date]);
+      file_upload($bfilename);
     } else {
-        # winchild 99/11/26 fileupload = "no" 일 경우에는 초기화를 시켜주어야 한다.
-        $userfile_size = 0;
-        $userfile_name = "";
+      # winchild 99/11/26 fileupload = "no" 일 경우에는 초기화를 시켜주어야 한다.
+      $bfilename = "";
+      $userfile_size = 0;
+      $userfile_name = "";
     }
 
     $result = sql_query("SELECT MAX(num) AS num, MAX(idx) AS idx, MAX(no) AS no FROM $table");
@@ -120,49 +88,13 @@ if ($o[at] != "dn" && $o[at] != "sm") {
 
     # 답변시 file upload 설정 부분, 전체 관리자가 허락시에만 가능
     if ($upload[yesno] =='yes' && $cupload[yesno] == 'yes' && $agent[br] != "LYNX") {
-      # file size 0byte upload 금지 - 1999.12.21 JoungKyun
-      if ($userfile_name) { 
-        if ($userfile_size == '0') {
-          echo "<script>\nalert(\"$langs[act_ud]\")\n" .
-               "history.back()\n</script>";
-          exit;
-        }
-      }
-      # file size 0byte upload 금지 끝
-
-      if ($userfile_size !="0" || $userfile !="none" || $userfile_name !="") {              
-        if ($userfile_size > $upload[maxsize]) {
-           echo "<script>\n" .
-                "alert(\"$langs[act_md]\")\n" .
-                "history.back()\n" .
-                "</script>";
-           exit;
-         }                                     
-         $bfilename=date("YmdHis",$atc[date]);
-
-         # file name에 특수 문자가 있을 경우 등록 거부
-         if (eregi("(#|\\$|%)",$userfile_name)) {
-           echo"<script>\n" .
-               "alert(\"$langs[act_de]\")\n" .
-               "history.back()\n" .
-               "</script>";
-           exit;
-         }
-
-         # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
-         $userfile_name = eregi_replace(".(php[0-9a-z]*|phtml)$", ".phps", $userfile_name);
-         $userfile_name = eregi_replace("(.*).(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $userfile_name);
-         # file name에 공백이 있을 경우 공백 삭제
-         $userfile_name = eregi_replace(" ","",$userfile_name);
-
-         mkdir("data/$table/$upload[dir]/$bfilename",0755);
-         exec("$exec[mv]  \"$userfile\" \"data/$table/$upload[dir]/$bfilename/$userfile_name\"");
-         chmod("data/$table/$upload[dir]/$bfilename/$userfile_name",0644);
-      }
+      $bfilename = date("YmdHis",$atc[date]);
+      file_upload($bfilename);
     } else {
-       # winchild 99/11/26 fileupload = "no" 일 경우에는 초기화를 시켜주어야 한다.
-       $userfile_size = 0;
-       $userfile_name = "";
+      # winchild 99/11/26 fileupload = "no" 일 경우에는 초기화를 시켜주어야 한다.
+      $bfilename = "";
+      $userfile_size = 0;
+      $userfile_name = "";
     }
 
     # 답장글에 대한 정보를 가져옴
@@ -245,7 +177,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
 
   # 게시물 삭제 함수
   function article_delete($table, $no, $passwd, $adm = 0) {
-    global $sadmin, $admin, $o, $langs, $upload;
+    global $sadmin, $admin, $o, $langs;
     global $delete_filename, $delete_dir, $sadm;
 
     $adm = $o[am];
