@@ -1,0 +1,155 @@
+#!/bin/sh
+clear
+echo "########################################################"
+echo "# JSBoard Pre Installer v2.0                           #"
+echo "# Scripted By JoungKyun Kim < http://www.oops.org >    #"
+echo "########################################################"
+echo 
+
+EXE=
+
+echo "STEP 1 Language Check"
+echo "---------------------"
+echo -n "Can you enable to use KOREAN in this console? [Y/N](default Y) : "
+read langs
+
+case "${langs}" in
+  N*|n*)
+    langs=en ;;
+  *)
+    langs=ko ;;
+esac
+
+me=$(whoami)
+
+if [ "${me}" != "root" ]; then
+  if [ "${langs}" = "ko" ]; then
+    echo
+    echo "주의 !!!"
+    echo "현재 당신은 ${me} 유저로 이 파일을 실행하고 있습니다."
+    echo "만약 루트의 권한이 있으면 이 파일을 루트의 권한으로 실행하십시오"
+    echo
+  else
+    echo
+    echo "Attention !!!"
+    echo "Now, U are running this file as ${me} user."
+    echo "If u have root privilege, U must excute this file as root user."
+    echo
+  fi
+
+  if [ "${langs}" = "ko" ]; then
+    echo "Root 유저로 다시 작업 하시겠습니까?"
+    echo -n "Root 권한을 얻을수 없다면 N 을 선택하십시오. [Y/N](default N) : "
+  else
+    echo "Do you continue as root user?"
+    echo -n "If you can't login as root, type N. [Y/N](default N) : "
+  fi
+  read priv
+
+  case "${priv}" in
+    Y*|y*)
+      priv=y ;;
+    *)
+      priv=n ;;
+  esac
+
+  if [ "${priv}" = "y" ]; then
+    if [ "${langs}" = "ko" ]; then
+      echo
+      echo "root 로 로그인을 하신 후에 다시 실행해 주십시오"
+    else
+      echo
+      echo "Excute this file after login as root user"
+    fi
+    exit 0
+  fi
+fi
+
+if [ ! -d "../../data" ]; then
+  mkdir ../../data
+fi
+
+if [ ! -d "../../config" ]; then
+  mkdir ../../config
+fi
+
+if [ "${me}" = "root" ]; then
+  #AUSER=$(ps aux | grep -E "apache|httpd" | grep -v ^root | grep -v grep | awk '{print $1}' | uniq)
+  AUSER=$(ps aux|awk '{print $1,$2}'|grep "$(ps ax|grep -E 'apache|httpd'|grep -v grep|awk '{print $1}')"|grep -v ^root|awk '{print $1}'|uniq)
+
+  if [ "${langs}" = "ko" ]; then
+    echo
+    echo "아파치가 ${AUSER} 의 권한으로 작동하고 있는듯 싶습니다."
+    echo "맞습니까? (이 값은 httpd.conf 의 Group 지시자에 설정되어"
+    echo -n "있는 값과 일치해야 합니다. [Y/N](default Y) : "
+  else
+    echo
+    echo "Maybe apache is running as ${AUSER} privilege. is Right? This value"
+    echo -n "is confirmed value of Group directive in httpd.conf [Y/N](default Y) : "
+  fi
+
+  read achk
+
+  case "${achk}" in
+    N*|n*)
+      achk=n ;;
+    *)
+      achk=y ;;
+  esac
+
+  if [ "${achk}" = "n" ]; then
+    AUSER=
+    while [ true ]
+    do
+      if [ "${AUSER}" != "" ]; then
+        break
+      else
+        if [ "${langs}" = "ko" ]; then
+          echo
+          echo -n "httpd.conf 의 Group 지시자의 값을 넣어 주십시오 : "
+        else
+          echo
+          echo -n "Input value of Group directive in httpd.conf : "
+        fi
+        read AUSER
+      fi
+    done  
+  fi
+
+  chgrp ${AUSER} ../../config > /dev/null 2>&1
+  [ "$?" != "0" ] && EXE=1
+  chgrp ${AUSER} ../../data > /dev/null 2>&1
+  [ "$?" != "0" ] && EXE=1
+  chmod 731 ../../config > /dev/null 2>&1
+  [ "$?" != "0" ] && EXE=1
+  chmod 775 ../../data > /dev/null 2>&1
+  [ "$?" != "0" ] && EXE=1
+
+  if [ "${EXE}" = "1" ]; then
+    if [ "${langs}" = "ko" ]; then
+      echo
+      echo "${AUSER} 는 잘못된 값입니다. httpd.conf 에서 Group 지시자의"
+      echo "값을 확인하시고 다시 시도하십시오"
+    else
+      echo
+      echo "Value ${AUSER} is incollect. Retry after confirms value of"
+      echo "Group directive in httpd.conf"
+    fi
+    exit 1
+  fi
+
+else
+  chmod 707 ../../config
+  chmod 707 ../../data
+fi
+
+if [ "${langs}" = "ko" ]; then
+  echo
+  echo "작업이 완료 되었습니다. 브라우져로 jsboard/INSTALLER/ 로 접속하여"
+  echo "설치를 계속 하시기 바랍니다."
+else
+  echo
+  echo "Complete this working. And access jsboard/INSTALLER with web browser,"
+  echo "continue install jop"
+fi
+exit 0
