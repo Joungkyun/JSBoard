@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.2
 
+2002.10.02
+  by 김정균 <http://www.oops.org>
+	- 답글 등록시 패스워드 지정안할 경우 에러 메세지 출력 되지 않던것 수정
+
 2002.10.01
   by 김정균 <http://www.oops.org>
 	- html tag 의 마지막이 % 로 끝날경우 파싱 에러 수정
