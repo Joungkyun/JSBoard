@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0pre4
 
+Sun, Jun  2 2002 by JoungKyun Kim <http://www.oops.org>
+	- added path of httpd.conf of FreeBSD in port system
+
 Thu, May 30 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- added check of email, url field if modify mode
 
