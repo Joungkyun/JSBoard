@@ -104,11 +104,11 @@ function print_list($table, $list, $r=0)
   } else $field['upload'] = "";
 
   if(get_date() >= $list['date'])
-    $field['dates'] = "<TD ALIGN=right NOWRAP><FONT STYLE=\"color:$fg;\"><NOBR>$date&nbsp;</NOBR></FONT></TD>";
+    $field['dates'] = "<TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"color:$fg;\"><NOBR>$date&nbsp;</NOBR></FONT></TD>";
   else
-    $field['dates'] = "<TD ALIGN=right NOWRAP><FONT STYLE=\"color:{$color['td_co']};\"><NOBR>$date&nbsp;</NOBR></FONT></TD>";
+    $field['dates'] = "<TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"color:{$color['td_co']};\"><NOBR>$date&nbsp;</NOBR></FONT></TD>";
 
-  $field['no'] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">{$list['num']}</FONT><IMG SRC=./images/blank.gif WIDTH=5 HEIGHT={$lines['height']} BORDER=0 ALIGN=absmiddle ALT=''></TD>";
+  $field['no'] = "<TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"color:$fg;\">{$list['num']}</FONT><IMG SRC=./images/blank.gif WIDTH=5 HEIGHT={$lines['height']} BORDER=0 ALIGN=absmiddle ALT=''></TD>";
   $field['title'] = "<TD><A HREF=read.php?table=$table&no={$list['no']}$pages$search{$list['preview']}><FONT STYLE=\"color:$fg;\">{$list['title']}&nbsp;$comment_size</FONT></A></TD>";
   $field['name'] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">{$list['name']}&nbsp;</FONT></TD>";
   $field['refer'] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">{$list['refer']}&nbsp;</FONT></TD>";
@@ -286,11 +286,11 @@ function print_comment_art($table,$list,$prints=0,$delimg) {
   else $names = $list['name'];
 
   $ret = "<TR>\n".
-         "<TD VALIGN=top NOWRAP><NOBR>$del_mark</NOBR></TD>\n".
-         "<TD VALIGN=top NOWRAP><NOBR>".
+         "<TD VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\"><NOBR>$del_mark</NOBR></TD>\n".
+         "<TD VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\"><NOBR>".
          "<FONT Style=\"font-weight:bold\">$names</FONT></NOBR></TD>\n".
          "<TD><PRE>{$list['text']}</TD></PRE>\n".
-         "<TD ALIGN=right VALIGN=top NOWRAP><NOBR><FONT STYLE=\"font: 11px tahoma\">{$list['date']} </FONT></NOBR></TD>\n".
+         "<TD ALIGN=right VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\"><NOBR><FONT STYLE=\"font: 11px tahoma\">{$list['date']} </FONT></NOBR></TD>\n".
          "</TR>\n";
 
   if($prints) echo $ret;

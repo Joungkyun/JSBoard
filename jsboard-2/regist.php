@@ -97,7 +97,7 @@ function id_check() {
 <TABLE WIDTH={$board['width']} BORDER=0 CELLPADDING=6 CELLSPACING=2>
 <TR>
 <TD WIDTH=15% BGCOLOR={$color['m_bg']}><FONT STYLE=\"color:{$color['m_fg']};font-weight:bold;\">{$langs['u_nid']}</FONT></TD>
-<TD WIDTH=35% BGCOLOR={$color['d_bg']} NOWRAP>
+<TD WIDTH=35% BGCOLOR={$color['d_bg']} STYLE=\"overflow: hidden; white-space: nowrap\">
 <INPUT TYPE=text SIZE=$ssform NAME=id>
 <INPUT TYPE=button VALUE=\"{$langs['reg_dup']}\" onClick=\"id_check()\">
 </TD>
