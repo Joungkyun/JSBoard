@@ -18,7 +18,8 @@ Version   : jsboard-2.0.7
 Fri, Feb 27 2004
   by JoungKyun Kim <http://www.oops.org>
 	- fixed comm field error when update previous version and
-          don't use comment table
+	  don't use comment table
+	- fixed rdf align
 
 Tue, Feb 24 2004
   by JoungKyun Kim <http://www.oops.org>
