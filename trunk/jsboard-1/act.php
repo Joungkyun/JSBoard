@@ -8,8 +8,6 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
   include_once "include/header.ph";
   include_once "./admin/include/config.ph";
 
-  $agent = get_agent();
-
   sql_connect($db[server], $db[user], $db[pass]);
   sql_select_db($db[name]);
 

@@ -24,7 +24,7 @@ $icons[size] = "20";
 $size[name] = form_size(14);
 $size[pass] = form_size(4);
 $size[titl] = form_size(25);
-$size[text] = form_size(30);
+if ($agent[br] == "MOZL6" && $agent[os] == "LINUX") $size[text] = form_size(41);
+else $size[text] = form_size(28);
 $size[uplo] = form_size(19);
-
 ?>

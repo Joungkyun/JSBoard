@@ -13,6 +13,7 @@ if ($board_cookie[name])
 $kind = "reply";
 enable_write($sadmin[passwd],$admin[passwd],$pcheck,$enable[$kind],$cenable[$kind]);
 
+include_once "include/tableratio.ph";
 include "html/head.ph";
 
 if($board[notice]) print_notice($board[notice]);
@@ -37,7 +38,6 @@ if($list[html]) $html_chk_ok = " checked";
 else $html_chk_no = " checked";
 
 # Browser가 Lynx일때 multim form 삭제
-$agent = get_agent();
 if($agent[br] == "LYNX") $board[formtype] = "";
 else $board[formtype] = " ENCTYPE=\"multipart/form-data\"";
 

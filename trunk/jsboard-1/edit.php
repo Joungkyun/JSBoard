@@ -2,6 +2,7 @@
 include "include/header.ph";
 include "./admin/include/config.ph";
 include "html/head.ph";
+include_once "include/tableratio.ph";
 
 # upload[dir] 에 mata character 포함 여부 체크
 meta_char_check($upload[dir]);
@@ -33,7 +34,6 @@ if($list[html]) $html[1] = " CHECKED";
 else $html[0] = " CHECKED";
 
 # Browser가 Lynx일때 multim form 삭제
-$agent = get_agent();
 if($agent[br] == "LYNX") $board[formtype] = "";
 else $board[formtype] = " ENCTYPE=\"multipart/form-data\"";
 

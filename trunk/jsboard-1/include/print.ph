@@ -75,10 +75,10 @@ function separator($bg, $print = 0) {
 # intval - 변수를 정수형으로 변환함
 #          http://www.php.net/manual/function.intval.php
 function form_size($size, $print = 0) {
-  global $langs;
+  global $langs,$agent;
 
   # 클라이언트 브라우져 종류를 가져오는 함수 (include/get_info.ph)
-  $agent = get_agent();
+  if(!$agent[br]) $agent = get_agent();
 
   # 윈도우용 네스케이프
   if($agent[br] == "MOZL") {
@@ -105,7 +105,7 @@ function form_size($size, $print = 0) {
         if ($langs[code] == "ko") $size *= 2.4;
         else $size *= 1.8;
       }
-    } else $size *= 1.3;
+    } else $size *= 2.4;
   }
 
   # 인터넷 익스플로러
@@ -128,10 +128,10 @@ function form_size($size, $print = 0) {
 # 넷스케이프와 익스간의 TEXTAREA WRAP 설정 여부를 결정하는 함수
 #
 function form_wrap($print = 0) {
-  global $board, $langs, $list; 
+  global $board, $langs, $list, $agent;
 
   # 클라이언트 브라우져 종류를 가져오는 함수 (include/get_info.ph)
-  $agent = get_agent();
+  if(!$agent[br]) $agent = get_agent();
 
   if ($board[wrap] && $agent[os] != "LINUX" && !$list[html]) {
     $wrap[op] = "WRAP=hard";

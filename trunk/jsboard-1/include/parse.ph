@@ -289,7 +289,8 @@ function cut_string($s, $l) {
 # preg_replace  - 펄 형식의 정규표현식을 이용한 치환
 #                 http://www.php.net/manual/function.preg-replace.php
 function auto_link($str) {
-  $agent = get_agent();
+  global $agent;
+  if(!$agent[br]) $agent = get_agent();
 
   $regex[file] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
   $regex[file] = "(\.($regex[file])\") TARGET=\"_blank\"";

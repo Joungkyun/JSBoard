@@ -30,6 +30,7 @@ include_once "include/list.ph";
 include_once "include/parse.ph";
 include_once "include/sql.ph";
 include_once "include/sendmail.ph";
+$agent = get_agent();
 include_once "include/tableratio.ph";
 
 if(preg_match("/(act|write|edit|reply)\.php/i",$HTTP_SERVER_VARS[PHP_SELF]))
