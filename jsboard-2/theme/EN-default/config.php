@@ -14,7 +14,7 @@ $designer['ver'] = "A7";
 # Language configuration
 ##############################################################
 $langs['code'] = "en";		# webboard language
-$langs['font'] = "arial";		# Fixed width font
+$langs['font'] = "monospace";	# Fixed width font
 $langs['vfont'] = "tahoma";	# Variable width font
 
 ##############################################################
