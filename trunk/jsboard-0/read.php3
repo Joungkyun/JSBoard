@@ -49,28 +49,69 @@ while($list = dfetch_row($result)) {
     $text   = eregi_replace("\n", "\r\n", $text);
     $text   = nl2br($text);
     
-    
 
-    $text   = eregi_replace("([^(\"|')]|^)((http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+)",
-                            "\\1<a href=\"\\2\"><font color=\"$r3_fg\">\\2</font></a>", $text);
+    /* Auto URL link 변환 */
+    if (!eregi("a href=",$text)) {
 
-    $text = eregi_replace("([A-Za-z0-9]+@[A-Za-z0-9\-\.]+\.+[A-Za-z0-9\-\.]+)", 
-	    "<a href=\"mailto:\\1\"><font color=\"$r3_fg\">\\1</font></a>", $text); 
+      /* 외부 이미지 링크 보호 */
+      $text   = eregi_replace("src=http","src=http_image", $text);
 
-    // jinoos  -- 정규표현식 때문에 한단부분이 에러가 발생하는 경우가 있다. 
-    //            이것은 문법이 틀려서 생기는 현상이 아니고 김병찬(적수)님이
-    //            사용하는 정규표식현 라이브러리가 PHP에서 제공되는 것이 아닌 
-    //            시스템의 정규표현식 라이브러리를 사용함으로서 생기는 현상이다.
-    //            PHP 컴파일시 --with-system-regex 를 켜고 컴파일해야 사용할수 
-    //            있다. 참고로 수정된 부분은 바로 아래줄 맨뒤 "9"자 바로 뒤에 
-    //            "-" 가 제거된것이다. 
+      $text   = eregi_replace("&amp;","&",$text);
+      $text   = eregi_replace("([^(\"|')]|^)((http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+)",
+                              "\\1<a href=\"\\2\" target=\"_blank\"><font color=\"$r3_fg\">\\2</font></a>", $text);
 
-    $text   = eregi_replace("([A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+)", 
-	                    "<a href=\"mailto:\\1\"><font color=\"$r3_fg\">\\1</font></a>", $text);  
+      /* 외부 이미지 링크 복원 */
+      $text   = eregi_replace("src=http_image","src=http", $text);
+
+    } else {
+      $text   = eregi_replace("&amp;","&",$text);
+      $text   = eregi_replace(" target=_+[a-z,A-Z]+","", $text);
+
+      /* URL link에 따옴표를 쓰지 않을 경우 */
+      $text   = eregi_replace("(&lt;|<)+a+ +href=+(http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+(&gt;|>)+((http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+)(&lt;|<)+/a+(&gt;|>)",
+                              "\\4", $text);
+
+      /* URL link에 따옴표를 쓸 경우 */
+      $text   = eregi_replace("(&lt;|<)+a+ +href=+(\"|&quot;)+(http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+(\"|&quot;)+(&gt;|>)+((http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+)(&lt;|<)+/a+(&gt;|>)",
+                              "\\6", $text);
+
+      /* 외부 이미지 링크 보호 */
+      $text   = eregi_replace("src=http","src=http_image", $text);
+
+      $text   = eregi_replace("([^(\"|')]|^)((http|ftp|telnet|news):\/\/[A-Za-z0-9:&#=_\?\/~\.\+-]+)",
+                              "\\1<a href=\"\\2\" target=\"_blank\"><font color=\"$r3_fg\">\\2</font></a>", $text);
+
+      /* 외부 이미지 링크 복원 */
+      $text   = eregi_replace("src=http_image","src=http", $text);
+    }
+
+
+    /* Auto Email link 변환 */
+
+    /* 적수님 원본 */
+    //  $text   = eregi_replace("([A-Za-z0-9]+@[A-Za-z0-9\-\.]+\.+[A-Za-z0-9\-\.]+)", 
+    //                          "<a href=\"mailto:\\1\"><font color=\"$r3_fg\">\\1</font></a>", $text); 
+
+    if (!eregi("mailto:", $text)) {
+      $text   = eregi_replace("([A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+)",
+                              "<a href=\"mailto:\\1\"><font color=\"$r3_fg\">\\1</font></a>", $text);
+    } else {
+
+      $text   = eregi_replace("(<|&lt;)+a+ +href=mailto:+[A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+(>|&gt;)+([A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+)</a>",
+                              "\\3", $text);
+
+      $text   = eregi_replace("(<|&lt;)+a+ +href=+(\"|&quot;)+mailto:+[A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+(\"|&quot;)+(>|gt;)+([A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+)</a>",
+                              "\\5", $text);
+
+      $text   = eregi_replace("([A-Za-z0-9]+@[A-Za-z0-9-]+\.[A-Za-z0-9\.]+)",
+                              "<a href=\"mailto:\\1\"><font color=\"$r3_fg\">\\1</font></a>", $text);
+
+    }
+
 
     $text   = eregi_replace("<br>\n", "<br>", $text);
 
-    // 빈칸을 입력하여 포맷팅을 시켰을 경우에 제대로 나오게 하기위해 삽입
+    /* 빈칸을 입력하여 포맷팅을 시켰을 경우에 제대로 나오게 하기위해 삽입 */
     $text   = eregi_replace("  ", "&nbsp;&nbsp;", $text);
 
     if ($reto) {
