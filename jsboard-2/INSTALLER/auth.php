@@ -107,12 +107,18 @@ if (!$mode) {
   else $mcheck = 0;
 
   # httpd.conf 의 DirectoryIndex 에 index.php 가 등록되어 있는지 여부
-  $array = file ($apache_config_file);
-
   $cindex = 0;
-  for($i=0;$i<sizeof($array);$i++) {
-    $array[$i] = trim($array[$i]);
-    if(preg_match("/^[ \t]*DirectoryIndex/i",$array[$i]) && preg_match("/index.(php |php$)/i",$array[$i])) $cindex = 1;
+
+  $arr = explode(" ",$apache_config_file);
+  for($c=0;$c<sizeof($arr);$c++) {
+    if(file_exists($arr[$c])) {
+      $array = file ($arr[$c]);
+
+      for($i=0;$i<sizeof($array);$i++) {
+        $array[$i] = trim($array[$i]);
+        if(preg_match("/^[ \t]*DirectoryIndex/i",$array[$i]) && preg_match("/index.(php |php$)/i",$array[$i])) $cindex = 1;
+      }
+    } else continue;
   }
 
   # jsboard/data 에 쓰기 권한이 있는지 여부
