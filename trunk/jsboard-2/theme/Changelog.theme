@@ -1,3 +1,6 @@
+Version: A7
+- .ph 불러오기를 .php 파일로 변경
+
 Version: A6
 - 함수이름 보정 (pirnt_keymenu -> print_keymenu)
 - SYTLE SHEET 보정

@@ -39,7 +39,7 @@ if(!$np) {
   # Design per user
   include "{$board['headpath']}";
   # Input by whole admin
-  include "html/head.ph";
+  include "html/head.php";
 }
 ?>
 <!-------------------- End   Header design -------------------->
@@ -261,7 +261,7 @@ SQL Time [ <?=$print['sqltime']?> Sec ]<BR>
 <?
 if(!$np) {
   # Input by whole admin
-  include "html/tail.ph";
+  include "html/tail.php";
   # Design per user
   include "{$board['tailpath']}";
 }

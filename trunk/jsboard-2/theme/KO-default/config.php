@@ -8,7 +8,7 @@ $designer['name'] = "IDOO";
 # 1 - 라이센스 보존
 # 0 - GPL
 $designer['license'] = "1";
-$designer['ver'] = "A6";
+$designer['ver'] = "A7";
 
 ##############################################################
 # Language configuration
@@ -66,7 +66,7 @@ $lines[height] = "25";
 
 # 글 리스트들 사이에 디자인을 넣기위한 코드 이설정은 <TD></TD>
 # 설정으로 이루어 짐. <TD> 에는 꼭 COLSPAN=AA 가 들어가야 함. 
-# 이설정은 리스트의 colspan 을 맞추기 위해 list.ph 에서 변환을
+# 이설정은 리스트의 colspan 을 맞추기 위해 list.php 에서 변환을
 # 하게 되어 있음 다음의 예제를 이용하여 테스트 해 보기 바람
 #$line_design = "<TD COLSPAN=AA><hr></TD>";
 $lines['design'] = "";
