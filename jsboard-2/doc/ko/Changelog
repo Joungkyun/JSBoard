@@ -28,7 +28,7 @@ If you wnat to see windog's change log, see also
   by 김정균 <http://www.oops.org>
 	- 첨부파일 이름이 urlencode 되었을 경우 문제 해결
 	- gd 1.6 이상 버젼과 연동이 되었을 경우 gif image 를 첨부파일로 올렸을
-          경우 preview 이미지 깨지는 현상 수정
+	  경우 preview 이미지 깨지는 현상 수정
 
 2002.08.17
   by 김정균 <http://www.oops.org>
