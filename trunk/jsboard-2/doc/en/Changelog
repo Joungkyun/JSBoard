@@ -22,6 +22,7 @@ Version   : jsboard-2.0pre4
 
 Wed, Apr 10 2002 by JoungKyun Kim  <http://www.oops.org>
 	- removed reply link of mail of posted article in sendmail.ph
+	- changed function and design for text browser
 
 Mon, Apr 8 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- changed print of error message

@@ -22,6 +22,7 @@ include_once "$dpath/include/first_reg.ph";
 parse_query_str();
 
 $agent = get_agent();
+if(preg_match("/links|w3m|lynx/i",$agent[br])) $textBrowser = 1;
 
 # table 이름을 체크한다.
 if($path[type] == "user_admin") table_name_check($table);

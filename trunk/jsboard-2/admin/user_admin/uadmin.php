@@ -121,6 +121,14 @@ $html_head = file_operate("../../data/$table/html_head.ph","r");
 
 # html tail의 정보를 가져온다
 $html_tail = file_operate("../../data/$table/html_tail.ph","r");
+
+if($textBrowser) {
+  $html_head = str_replace("<","&lt;",$html_head);
+  $html_head = str_replace(">","&gt;",$html_head);
+  $html_tail = str_replace("<","&lt;",$html_tail);
+  $html_tail = str_replace(">","&gt;",$html_tail);
+}
+
 $bottom_tail = file_operate("../../html/tail.ph","r");
 $bottom_tail = eregi_replace("<\?(.*)\?>","",$bottom_tail);
 $bottom_tail = trim($bottom_tail);
@@ -132,21 +140,25 @@ if(file_exists("../../data/$table/stylesheet.ph")) {
   include "../../data/$table/stylesheet.ph";
 }
 
-$ipbl_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'i');\" TITLE=\"Left Right\">".
-               "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'i');\" TITLE=\"RESET\">".
-               "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'i');\" TITLE=\"Up Down\">";
-$dlin_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'d');\" TITLE=\"Left Right\">".
-               "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'d');\" TITLE=\"RESET\">".
-               "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'d');\" TITLE=\"Up Down\">";
-$styl_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'s');\" TITLE=\"Left Right\">".
-               "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'s');\" TITLE=\"RESET\">".
-               "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'s');\" TITLE=\"Up Down\">";
-$head_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'h');\" TITLE=\"Left Right\">".
-               "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'h');\" TITLE=\"RESET\">".
-               "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'h');\" TITLE=\"Up Down\">";
-$tail_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'t');\" TITLE=\"Left Right\">".
-               "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'t');\" TITLE=\"RESET\">".
-               "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'t');\" TITLE=\"Up Down\">";
+if($textBrowser) {
+  $ipbl_button = $dlin_button = $styl_button = $head_button = $tail_button = "&nbsp;";
+} else {
+  $ipbl_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'i');\" TITLE=\"Left Right\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'i');\" TITLE=\"RESET\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'i');\" TITLE=\"Up Down\">";
+  $dlin_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'d');\" TITLE=\"Left Right\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'d');\" TITLE=\"RESET\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'d');\" TITLE=\"Up Down\">";
+  $styl_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'s');\" TITLE=\"Left Right\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'s');\" TITLE=\"RESET\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'s');\" TITLE=\"Up Down\">";
+  $head_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'h');\" TITLE=\"Left Right\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'h');\" TITLE=\"RESET\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'h');\" TITLE=\"Up Down\">";
+  $tail_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'t');\" TITLE=\"Left Right\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'t');\" TITLE=\"RESET\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'t');\" TITLE=\"Up Down\">";
+}
 ?>
 
 <HTML>

@@ -42,12 +42,16 @@ if(sql_num_rows($result)) {
 
     if($row[position] != 1) {
       $del_link = "<A HREF=$_SERVER[PHP_SELF]?m=delete&x=$row[no]$do>".
-                  "<IMG SRC=../images/delete.gif BORDER=0>".
+                  "<IMG SRC=../images/delete.gif BORDER=0 ALT='[ DELETE ]'>".
                   "</A>";
     } else $del_link = "&nbsp;";
+
+    if($textBrowser) $editLink = "../user.php?no=$row[no]";
+    else $editLink = "javascript:fork('popup','../user.php?no=$row[no]&check=1')";
+
     $ulist .= "<TR>\n".
-              "<TD BGCOLOR=$bgcol ALIGN=center><A HREF=javascript:fork('popup','../user.php?no=$row[no]&check=1')>".
-              "<IMG SRC=../images/edit.gif BORDER=0>".
+              "<TD BGCOLOR=$bgcol ALIGN=center><A HREF=$editLink>".
+              "<IMG SRC=../images/edit.gif BORDER=0 ALT='[ EDIT ]'>".
               "</A></TD>\n".
               "<TD BGCOLOR=$bgcol ALIGN=right><FONT STYLE=\"color:$fontc\">$row[nid]</FONT> </TD>\n".
               "<TD BGCOLOR=$bgcol ALIGN=right><FONT STYLE=\"color:$fontc\">$row[name]</FONT> </TD>\n".
@@ -132,68 +136,74 @@ $al_index = userlist_sortlink($t);
 if($langs[code] == ko) $han_index = userlist_sortlink($t,1);
 else $han_index = "<IMG SRC=../images/blank.gif WIDTH=1 HEIGHT=1 BORDER=0>";
 
+if($textBrowser) $registLink = "../regist.php?check=1";
+else $registLink = "javascript:fork('popup','../regist.php?check=1')";
+
 htmlhead();
 java_scr();
 
-echo "<TABLE BORDER=0 WIDTH=100% HEIGHT=100% CELLPADDING=0 CELLSPACING=0>
+?>
+<TABLE BORDER=0 WIDTH=100% HEIGHT=100% CELLPADDING=0 CELLSPACING=0>
 <TR><TD ALIGN=center VALIGN=center>
 
-<TABLE WIDTH=$board[width] BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR><TD>
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD ROWSPAN=2 VALIGN=center><FONT STYLE=\"font:40px Tahoma;color:$color[m_bg];font-weight:bold\">J</FONT></TD>
-<TD VALIGN=bottom><FONT STYLE=\"font: 12px tahoma; font-weight:bold\">SBoard User</FONT></TD>
+<TD ROWSPAN=2 VALIGN=center><FONT STYLE="font:40px Tahoma;color:<?=$color[m_bg]?>;font-weight:bold">J</FONT></TD>
+<TD VALIGN=bottom><FONT STYLE="font: 12px tahoma; font-weight:bold">SBoard User</FONT></TD>
 </TR>
 <TR>
-<TD VALIGN=top><FONT STYLE=\"font: 12px tahoma; font-weight:bold\">Administration Center</FONT></TD>
+<TD VALIGN=top><FONT STYLE="font: 12px tahoma; font-weight:bold">Administration Center</FONT></TD>
 </TR>
 </TABLE>
 </TD></TR>
 </TABLE>
 
-<TABLE WIDTH=$board[width] BORDER=0 CELLPADDING=0 CELLSPACING=0 ALIGN=$board[align]>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0 ALIGN=<?=$board[align]?>>
 <FORM>
 <TR><TD ALIGN=center>
 
-$sec_status
+<?=$sec_status?>
 
 <P>
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=2>
 <TR>
-<TD>$han_index</TD>
-<TD ROWSPAN=2 VALIGN=bottom ALIGN=right>
-[ <A HREF=./><FONT STYLE=\"font-weight:bold\">MAIN</FONT></A> ]&nbsp;<BR>
-[ <A HREF=javascript:fork('popup','../regist.php?check=1')><FONT STYLE=\"font-weight:bold\">REGIST</FONT></A> ]&nbsp;
+<TD><?=$han_index?></TD>
+<TD VALIGN=bottom ALIGN=right>
+[ <A HREF=./><FONT STYLE="font-weight:bold">MAIN</FONT></A> ]&nbsp;
 </TD>
 </TR>
-<TR><TD> $al_index</TD></TR>
+<TR>
+<TD> <?=$al_index?></TD>
+<TD ALIGN=right>
+[ <A HREF=<?=$registLink?>><FONT STYLE="font-weight:bold">REGIST</FONT></A> ]&nbsp;
+</TD>
+</TR>
 </TABLE>
 
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=4 CELLSPACING=1>
 <TR ALIGN=center>
-<TD BGCOLOR=$color[t_bg]><FONT STYLE=\"color:$color[t_fg];font-weight:bold\">$langs[cmd_edit]</FONT></TD>
-<TD BGCOLOR=$color[t_bg]><FONT STYLE=\"color:$color[t_fg];font-weight:bold\">$langs[u_nid]</FONT></TD>
-<TD BGCOLOR=$color[t_bg]><FONT STYLE=\"color:$color[t_fg];font-weight:bold\">$langs[u_name]</FONT></TD>
-<TD BGCOLOR=$color[t_bg]><FONT STYLE=\"color:$color[t_fg];font-weight:bold\">$langs[u_email]</FONT></TD>
-<TD BGCOLOR=$color[t_bg]><FONT STYLE=\"color:$color[t_fg];font-weight:bold\">$langs[u_url]</FONT></TD>
-<TD BGCOLOR=$color[t_bg]><FONT STYLE=\"color:$color[t_fg];font-weight:bold\">$langs[cmd_del]</FONT></TD>
+<TD BGCOLOR=<?=$color[t_bg]?>><FONT STYLE="color:<?=$color[t_fg]?>;font-weight:bold"><?=$langs[cmd_edit]?></FONT></TD>
+<TD BGCOLOR=<?=$color[t_bg]?>><FONT STYLE="color:<?=$color[t_fg]?>;font-weight:bold"><?=$langs[u_nid]?></FONT></TD>
+<TD BGCOLOR=<?=$color[t_bg]?>><FONT STYLE="color:<?=$color[t_fg]?>;font-weight:bold"><?=$langs[u_name]?></FONT></TD>
+<TD BGCOLOR=<?=$color[t_bg]?>><FONT STYLE="color:<?=$color[t_fg]?>;font-weight:bold"><?=$langs[u_email]?></FONT></TD>
+<TD BGCOLOR=<?=$color[t_bg]?>><FONT STYLE="color:<?=$color[t_fg]?>;font-weight:bold"><?=$langs[u_url]?></FONT></TD>
+<TD BGCOLOR=<?=$color[t_bg]?>><FONT STYLE="color:<?=$color[t_fg]?>;font-weight:bold"><?=$langs[cmd_del]?></FONT></TD>
 </TR>
 
-$ulist
+<?=$ulist?>
 
 </TABLE>
 
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD ALIGN=right>
-$pagelink
+<?=$pagelink?>
 </TD></TR>
-</TABLE>\n
+</TABLE>
 
 </TD></TR>
 </FORM>
 </TABLE>
-\n";
 
-htmltail();
-?>
+<? htmltail(); ?>

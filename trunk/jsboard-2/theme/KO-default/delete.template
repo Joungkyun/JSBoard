@@ -49,7 +49,7 @@ if(!$np) {
 <TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN=bottom COLSPAN=2>
-<IMG SRC=./theme/KO-default/img/icon_over.gif ALIGN=absmiddle>
+<IMG SRC=./theme/KO-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Delete <?=$list[num]?> article</FONT>
 </TD>
 </TR>
@@ -59,13 +59,13 @@ if(!$np) {
 <!-#######################################################################-->
 <TR BGCOLOR=#FFAE00>
 <TD COLSPAN=2>
-<IMG SRC=./theme/KO-default/img/board_no.gif ALIGN=absmiddle>
+<IMG SRC=./theme/KO-default/img/board_no.gif ALIGN=absmiddle ALT='No.'>
 <FONT STYLE="color:#FFFFFF"><?=$list[title]?></FONT>
 </TD>
 </TR>
 
 <TR>
-<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0></TD>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
 </TR>
 </TABLE>
 
@@ -80,23 +80,23 @@ if(!$np) {
 <? if($enable[dhost]) $list[dhost] = "By ".$list[dhost]; ?>
 <TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0></TD>
-<TD WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0></TD>
-<TD WIDTH=5><IMG SRC=images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0></TD>
+<TD WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=5><IMG SRC=images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD>
-<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0><BR>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
 <FONT Style="font-weight:bold">등록</FONT> <?=$list[date]?> <?=$list[dhost]?> &nbsp; &nbsp; 
 <FONT Style="font-weight:bold">조회</FONT> <?=$list[refer]?><BR>
 <FONT Style="font-weight:bold">이름</FONT> <?=$list[uname]?> &nbsp; &nbsp;
 <? if($list[attach]) echo "<FONT Style=\"font-weight:bold\">파일</FONT> $list[attach]" ?><BR>
-<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0><BR>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
 </TD>
-<TD WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0></TD>
+<TD WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0></TD></TR>
+<TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
 </TABLE>
 
 <!-#######################################################################-->

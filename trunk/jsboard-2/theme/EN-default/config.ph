@@ -59,7 +59,7 @@ $color[d_fg] = "#555555";	# Option filed Text
 
 # height configuration of tr tag in list page
 # It's height configured with image height. For example,
-# <IMG SRC=img/blank.gif WIDTH=0 HEIGHT=$line_height BORDER=0>
+# <IMG SRC=img/blank.gif WIDTH=0 HEIGHT=$line_height BORDER=0 ALT=''>
 $lines[height] = "25";
 
 # 글 리스트들 사이에 디자인을 넣기위한 코드 이설정은 <TD></TD>

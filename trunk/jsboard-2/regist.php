@@ -58,6 +58,9 @@ $langs[reg_attention] = str_replace("__"," ",$langs[reg_attention]);
 
 $print[head] = get_title();
 
+if($textBrowser) $backbutton = "";
+else $backbutton = "<INPUT TYPE=button VALUE=\"BACK\" onClick=\"history.back()\">\n";
+
 if(!$m) {
   $print[body] = "
 <SCRIPT LANGUAGE=JavaScript>
@@ -116,7 +119,7 @@ $langs[reg_attention]
 
 <TR>
 <TD COLSPAN=4 ALIGN=right>
-<INPUT TYPE=button VALUE=\"BACK\" onClick=\"history.back()\">
+$backbutton
 <INPUT TYPE=submit VALUE=\"$langs[a_t13]\">
 <INPUT TYPE=hidden NAME=m VALUE=act>
 <INPUT TYPE=hidden NAME=check VALUE=$check>

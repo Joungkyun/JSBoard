@@ -37,7 +37,7 @@ if($table) { include "data/$table/html_head.ph"; }
 
 <TR>
 <TD BGCOLOR=<?=$color[m_bg]?> ALIGN=CENTER>
-<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=4><BR>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=4 ALT=''><BR>
 
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=100%>
 <TR>
@@ -52,14 +52,19 @@ if($table) { include "data/$table/html_head.ph"; }
 
 <TR>
 <TD ALIGN=CENTER COLSPAN=2>
-Session Reset <INPUT TYPE=BUTTON VALUE=RESET onClick="document.location='./session.php?m=logout<?=$opt?>'" ID=IN>
+<?
+if($textBrowser)
+  echo "<A HREF=./session.php?m=logout$opt>Session Reset</A>";
+else
+  echo "Session Reset <INPUT TYPE=BUTTON VALUE=RESET onClick=\"document.location='./session.php?m=logout$opt'\" ID=IN>";
+?>
 <INPUT TYPE=SUBMIT VALUE=LogIn ID=IN>
 <BR>
 </TD>
 </TR>
 </TABLE>
 
-<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=4><BR>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=4 ALT=''><BR>
 <INPUT TYPE=HIDDEN NAME=m VALUE=login>
 
 </TD>

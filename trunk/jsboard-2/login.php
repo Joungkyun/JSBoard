@@ -6,6 +6,7 @@ include "./include/check.ph";
 parse_query_str();
 
 $agent = get_agent();
+if(preg_match("/links|w3m|lynx/i",$agent[br])) $textBrowser = 1;
 
 if($table && file_exists("data/$table/config.ph"))
   { include "data/$table/config.ph"; }

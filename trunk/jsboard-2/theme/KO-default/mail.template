@@ -38,7 +38,7 @@ Server Name       : $servername$nofm
 </TABLE>
 
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<TR><TD><IMG SRC=$board[path]/images/blank.gif WIDTH=1 HEIGHT=1 BORDER=0></TD></TR>
+<TR><TD><IMG SRC=$board[path]/images/blank.gif WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
 </TABLE>
 
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
@@ -53,7 +53,7 @@ $langs[a_t13]              : $year $day $ampm $hms
 </TABLE>
 
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<TR><TD><IMG SRC=$board[path]/images/blank.gif WIDTH=1 HEIGHT=1 BORDER=0></TD></TR>
+<TR><TD><IMG SRC=$board[path]/images/blank.gif WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
 </TABLE>
 
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
