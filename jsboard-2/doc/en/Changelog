@@ -23,6 +23,7 @@ If you wnat to see windog's change log, see also
 Thu, Oct 10 2002
   by JoungKyun Kim <http://www.oops.org>
 	- fixed parse bug when end % charactor in html tag
+	- prevented iframe html tag on use html condition
 
 Sat, Sep 7 2002
   by Chilbong Kim <http://www.linuxchannel.net>
