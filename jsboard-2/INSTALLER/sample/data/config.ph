@@ -21,7 +21,7 @@ $board[mode] = 0;
 $board[rnname] = 0;
 
 # 로그아웃 후에 이동할 페이지를 지정
-$print[dopage] = "http://domain.com/jsboard/list.php?table=test";
+$print[dopage] = "http://domain.com/jsboard/login.php?table=test";
 
 ###############################################################################
 #  게시판 허가 설정
