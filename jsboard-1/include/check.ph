@@ -224,6 +224,12 @@ function upload_name_chk($f) {
     print_error($langs[act_de]);
     exit;
   }
+
+  # hidden file 이나 multiple dot 허락하지 않음
+  if ( preg_match ("/^\.|\.\.+/", urldecode ($f)) {
+    print_error($langs[act_de]);
+    exit;
+  }
 }
 
 # 비정상적인 접근을 막기 위한 체크 함수.
