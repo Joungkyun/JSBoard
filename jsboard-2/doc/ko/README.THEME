@@ -29,6 +29,8 @@ edit.gif	- 수정
 reply.gif	- 답장
 conj.gif	- 관련글
 rep.gif		- 댓글의 화살표 이미지
+logout.gif	- login 시 logout 을 위한 이미지 링크
+admin.gif	- admin page 를 위한 이미지 링크
 
 이 존재해야 한다. 그리고 list.ph 와 read.ph 에서
 list_cmd(0,1) 과 read_cmd(0,1) 을 list_cmd(1,1), read_cmd(1,1) 로 만들
@@ -44,8 +46,8 @@ list_cmd(0,1) 과 read_cmd(0,1) 을 list_cmd(1,1), read_cmd(1,1) 로 만들
 
 # 참고
 default theme 의 각 파일에 필요한 변수에 대한 주석이 있으니 참조를 하면
-된다. 기본 이미지는 theme/theme_name/img/admin.gif만 꼭 필요하며 나머지
-는 옵션이라고 생각을 하면 되겠다.
+된다. 기본 이미지는 theme/theme_name/img/ 에서 admin.gif, logout.gif 만
+꼭 필요하며 나머지는 옵션이라고 생각을 하면 되겠다.
 
 또한 theme 디렉토리에 위치한 테마들은 자동으로 각 게시판의 관리자에 등
 록이 되니, 게시판 관리자에서 새로 등록된 테마를 선택해서 사용하면 된다.
