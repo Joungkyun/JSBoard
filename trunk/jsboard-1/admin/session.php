@@ -12,7 +12,7 @@ if ($mode == "login") {
   header("Location: admin.php");
 } else if ($mode == "logout") {
   # 세션을 삭제
-  session_destroy("login");
+  session_unregister("login");
   # admin login 상태를 삭제
   SetCookie("adminsession","",0,"/");
   header("Location: auth.php");

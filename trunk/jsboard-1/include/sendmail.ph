@@ -1,11 +1,11 @@
 <?php
-/* mail 보내기 함수 2000.11.5 김정균 */
+# mail 보내기 함수 2001.11.30 김정균
 
 function get_send_info($table,$no) {
   global $db;
   $c = sql_connect($db[server],$db[user],$db[pass]);
   sql_select_db($db[name]);
-  $r = sql_query("SELECT email FROM $table WHERE no = $no");
+  $r = sql_query("SELECT name,email FROM $table WHERE no = $no");
   $row = sql_fetch_array($r);
   mysql_close($c);
 
@@ -14,10 +14,10 @@ function get_send_info($table,$no) {
 
 function mailcheck($to,$from,$title,$body) {
   global $langs;
-  if(!trim($to)) print_error($langs[mail_to_chk_err]);
-  if(!trim($from)) print_error($langs[mail_from_chk_err]);
-  if(!trim($title)) print_error($langs[mail_title_chk_err]);
-  if(!trim($body)) print_error($langs[mail_body_chk_drr]);
+  if(!trim($to)) print_error($langs[mail_to_chk_err],250,150,1);
+  if(!trim($from)) print_error($langs[mail_from_chk_err],250,150,1);
+  if(!trim($title)) print_error($langs[mail_title_chk_err],250,150,1);
+  if(!trim($body)) print_error($langs[mail_body_chk_drr],250,150,1);
 }
 
 function mail_header($to,$from,$title,$type=0) {
@@ -29,7 +29,7 @@ function mail_header($to,$from,$title,$type=0) {
 
   # mail header 를 작성 
   if(!$type) {
-    $header = "From: JSBoard Message <>\r\n".
+    $header = "From: JSBoard Message <$from>\r\n".
               "Organization: JSBoard Open Project\r\n".
               "User-Agent: JSBoard Mail System\r\n".
               "X-Accept-Language: ko,en\r\n".
@@ -37,19 +37,15 @@ function mail_header($to,$from,$title,$type=0) {
               "Content-Type: text/plain; charset=$langs[charset]\r\n".
               "Content-Transfer-Encoding: $charbit\r\n".
               "To: $to\r\n".
-              "Reply-To: $from\r\n".
-              "Return-Path: $from\r\n".
               "Subject: $title\n";
   } else {
-    $header = "From: JSBoard Message <>\r\n".
+    $header = "From: JSBoard Message <$from>\r\n".
               "Organization: JSBoard Open Project\r\n".
               "User-Agent: JSBoard Mail System\r\n".
               "X-Accept-Language: ko,en\r\n".
               "MIME-Version: 1.0\r\n".
               "Content-Type: text/plain; charset=$langs[charset]\r\n".
-              "Content-Transfer-Encoding: $charbit\r\n".
-              "Reply-To: $from\r\n".
-              "Return-Path: $from\r\n";
+              "Content-Transfer-Encoding: $charbit\r\n";
   }
 
   return $header;
@@ -62,7 +58,7 @@ function phpmail($to,$from,$title,$body) {
   mailcheck($to,$from,$title,$body);
 
   $header = mail_header($to,$from,$title,1);
-  mail($to,$title,$body,$header) or print_notice($langs[mail_send_err]);
+  mail($to,$title,$body,$header,"-f\"$from\"") or print_notice($langs[mail_send_err]);
 }
 
 function socketmail($smtp,$to,$from,$title,$body) {
@@ -100,7 +96,8 @@ function socketmail($smtp,$to,$from,$title,$body) {
 }
 
 function sendmail($rmail,$fm=0) {
-  global $REMOTE_ADDR, $HTTP_USER_AGENT, $HTTP_ACCEPT_LANGUAGE, $SERVER_NAME, $langs;
+  global $REMOTE_ADDR, $HTTP_USER_AGENT, $HTTP_ACCEPT_LANGUAGE;
+  global $SERVER_NAME, $langs;
 
   $mail_msg_head = "$langs[sm_dr]";
 
@@ -118,6 +115,8 @@ function sendmail($rmail,$fm=0) {
   $rmail[text] = stripslashes($rmail[text]);
   $rmail[name] = stripslashes($rmail[name]);
   $rmail[title] = stripslashes($rmail[title]);
+  $rmail[email] = !trim($rmail[email]) ? "nobody@$SERVER_NAME" : $rmail[email];
+  $rmail[pemail] = (eregi("^nobody@",$rmail[email])) ? "" : "mailto:$rmail[email]";
 
   if ($langs[code] == "ko") {
     if ($day == "(Mon)") $day="(월)";
@@ -141,14 +140,14 @@ function sendmail($rmail,$fm=0) {
   $reply_article    =  sprintf("%s%s",$rmail[bbshome],"reply.php?table=$rmail[table]&no=$rmail[no]");
 
   if (!$fm) {
-    $dbname  = "DB Name         : $rmail[table]";
-    $dbloca  = "DB Location     : $webboard_address";
-    $repart  = "Reply Article   : $reply_article";
+    $dbname  = "DB Name           : $rmail[table]";
+    $dbloca  = "DB Location       : $webboard_address";
+    $repart  = "Reply Article     : $reply_article";
     $nofm    = "\n$dbname\n$dbloca\n$repart";
-    $homeurl = "HomeURL		: $rmail[url]";
+    $homeurl = "HomeURL           : $rmail[url]";
   } else {
-    $rmail[user] = "yes";
-    $homeurl = "To		: mailto:$rmail[reply_orig_email]";
+    $rmail[user] = 1;
+    $homeurl = "To                : mailto:$rmail[reply_orig_email]";
   }
 
   $message = "\r\n".
@@ -158,15 +157,15 @@ function sendmail($rmail,$fm=0) {
              "■ JSBOARD $rmail[table] message\r\n".
              "\r\n".
              "[ Server Infomation ]------------------------------------------------------\r\n".
-             "ServerWare	: JSBoard-$rmail[version]\r\n".
-             "Server Name	: $SERVER_NAME$nofm\r\n".
+             "ServerWare        : JSBoard-$rmail[version]\r\n".
+             "Server Name       : $SERVER_NAME$nofm\r\n".
              "\r\n".
              "\r\n".
              "[ Article Infomation ]-----------------------------------------------------\r\n".
-             "이 름		: $rmail[name]\r\n".
-             "Email		: mailto:$rmail[email]\r\n".
+             "이 름             : $rmail[name]\r\n".
+             "Email             : $rmail[pemail]\r\n".
              "$homeurl\r\n".
-             "일 시		: $year $day $ampm $hms\r\n".
+             "일 시             : $year $day $ampm $hms\r\n".
              "---------------------------------------------------------------------------\r\n".
              "\r\n".
              "$rmail[text]\r\n".
@@ -183,18 +182,14 @@ function sendmail($rmail,$fm=0) {
              "Scripted by JoungKyun Kim\r\n";
 
   if ($rmail[user] == "yes" && $rmail[reply_orig_email]) {
-    if(!$rmail[email]) $rmail[email] = "<>"; 
     if($rmail[mta]) socketmail($rmail[smtp],$rmail[reply_orig_email],$rmail[email],$rmail[title],$message);
     else phpmail($rmail[reply_orig_email],$rmail[email],$rmail[title],$message);
   }
 
   if ($rmail[admin] == "yes" && $rmail[toadmin] != "") {
-    $to = $rmail[toadmin];
-    if(!$rmail[email]) $rmail[email] = "<>";
     if($rmail[mta]) socketmail($rmail[smtp],$rmail[toadmin],$rmail[email],$rmail[title],$message);
     else phpmail($rmail[toadmin],$rmail[email],$rmail[title],$message);
   }
 
 }
-
 ?>

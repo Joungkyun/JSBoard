@@ -1,6 +1,5 @@
 <?
 # 웹 서버 접속자의 IP 주소 혹은 도메인명을 가져오는 함수
-# license : OOPS_License (http://www.oops.org/OOPS_License)
 # HTTP_X_FORWARDED_FOR - proxy server가 설정하는 환경 변수
 # getenv        - 환경 변수값을 가져옴
 #                 http://www.php.net/manual/function.getenv.php
@@ -341,6 +340,7 @@ function viewfile($tail) {
 
   $agent = get_agent();
   $upload_file = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
+  $wupload_file = "./data/$table/$upload[dir]/$list[bcfile]/".urlencode($list[bofile]);
 
   $source1 = "<p><br>\n---- $list[bofile] $langs[inc_file] -------------------------- \n<p>\n<pre>\n";
   $source2 = "\n</pre>\n<br><br>";
@@ -349,17 +349,19 @@ function viewfile($tail) {
   if (@file_exists($upload_file)) {
     if (eregi("^(gif|jpg|png)$",$tail)) {
       $imginfo = GetImageSize($upload_file);
-      if($agent[br] == "MOZL") $list[bofile] = urlencode($list[bofile]);
+      if(eregi("MOZL",$agent[br])) $list[bofile] = urlencode($list[bofile]);
       $uplink_file = "./form.php?mode=photo&table=$table&f[c]=$list[bcfile]&f[n]=$list[bofile]&f[w]=$imginfo[0]&f[h]=$imginfo[1]";
+
       if($imginfo[0] > $board[width] - 6 && !eregi("%",$board[width])) {
         $p[vars] = $imginfo[0]/$board[width];
         if($board[img] != "yes") $p[width] = $board[width] - 6;
         else $p[width] = $board[width] - $icons[size] * 2 - 6;
         $p[height] = intval($imginfo[1]/$p[vars]);
         $p[up]  = "[ <b>Original Size</b> $imginfo[0] * $imginfo[1] ]<br>\n";
-        $p[up] .= "<a href=javascript:new_windows(\"$uplink_file\",\"photo\",0,0,$imginfo[0],$imginfo[1])><img src=\"$upload_file\" width=$p[width] height=$p[height] border=0></a>\n<p>\n";
+        $p[up] .= "<a href=javascript:new_windows(\"$uplink_file\",\"photo\",0,0,$imginfo[0],$imginfo[1])>".
+                  "<img src=\"$wupload_file\" width=$p[width] height=$p[height] border=0></a>\n<p>\n";
       } else {
-        $p[up] = "<img src=\"$upload_file\" $imginfo[2]>\n<p>\n";
+        $p[up] = "<img src=\"$wupload_file\" $imginfo[2]>\n<p>\n";
       }
     } else if (eregi("^(phps|txt|htm|shs)$",$tail)) {
       $view = file_operate($upload_file,"r",0,1200);

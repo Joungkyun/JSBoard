@@ -21,6 +21,23 @@ Attention : OOPS administration Center is not GPL.
 
 
 작성자 : 김정균 (admin@oops.org)
+작성일 : 2001년  12월 20일
+버전   : jsboard-1.3.5
+
+* 변경된점
+1. png file 업로드시 icon 이 잘못 나오는 것 수정
+2. Mozilla 에서 큰 한글 이미지 업로드시 원본 이미지 보지 못하는 에러 수정
+3. sendmail.ph 재작성
+4. fixed include bug in prelist.ph
+5. auto_link() 함수 수정
+6. 한글 업로드 파일 처리 수정
+7. session_destroy() 함수를 session_unregister() 함수로 변경
+8. PHP 4.1.0 의 crypt() 길이 변화에 따른 password filed 길이 변경
+9. local security hole 수정
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
 작성일 : 2001년  11월  7일
 버전   : jsboard-1.3.4
 

@@ -106,6 +106,7 @@ TEXTAREA {font: 10pt $langs[font]; BACKGROUND-COLOR: $color[bgcol]; COLOR: $colo
     meta_char_check($upload[dir]);
     upload_name_chk($f[n]);
 
+    $f[n] = urlencode($f[n]);
     $pr[head] = "VIEW ORIGINAL IMAGE";
     $pr[body] = "<a href=javascript:window.close()>".
              "<img src=./data/$table/$upload[dir]/$f[c]/$f[n] width=$f[w] height=$f[h] border=0>".

@@ -193,7 +193,7 @@ function icon_check($t,$fn) {
     if (eregi("(_htm|_cgi|_pl|_shtm|_sh)",$fn)) $icon = "html.gif";
     else $icon = "php.gif";
   } else if (eregi("^(avi|mpg|mpeg|asf|swf)$",$t)) $icon = "mpeg.gif";
-  else if (eregi("^(jpg|gif|bmp|psd)$",$t)) $icon = "pic.gif";
+  else if (eregi("^(jpg|gif|bmp|psd|png)$",$t)) $icon = "pic.gif";
   else if (eregi("^(ppt|xls|doc)$",$t)) $icon = "doc.gif";
   else if (eregi("^(ra|ram|rm)$",$t)) $icon = "ra.gif";
   else if (eregi("^(mp3|mp2|wav|mid)$",$t)) $icon = "mp3.gif";
