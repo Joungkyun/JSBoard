@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.4
 
+2002.11.27
+  by 김칠봉 <http://www.linuxchannel.net>
+	- human_fsize, get_hostname 함수 수정
+
 2002.11.20
   by 김정균 <http://www.oops.org>
 	- 어드민 페이지에서 user 설정 페이지의 링크가 잘못된 것 수정
