@@ -849,18 +849,27 @@ function print_comment($table,$no,$print=0) {
   $t = "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=5 BGCOLOR=$color[l5_bg]>\n".
        get_comment($table,$no,0).
        "</TABLE>\n".
-       "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=1 BGCOLOR=$color[l5_bg]>\n".
+       "<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=1 BGCOLOR=$color[l3_bg] ALIGN=right>\n".
        "<FORM METHOD=POST ACTION=act.php>\n".
        "<TR>\n".
-       "<TD ALIGN=right>\n".
-       "$langs[c_na] <INPUT TYPE=text$disable NAME=atc[name] SIZE=$size[pass] VALUE=\"$pre_regist[name]\" STYLE=\"font: 11px tahoma;\"><BR>\n".
-       "$langs[c_ps] <INPUT TYPE=password$disable NAME=atc[passwd] SIZE=$size[pass] STYLE=\"font: 11px tahoma;\">\n".
+       "<TD ROWSPAN=2 ALIGN=center>".
+       "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
+       "</TD>\n".
+       "<TD ALIGN=right NOWRAP><nobr>\n".
+       "$langs[c_na] <INPUT TYPE=text$disable NAME=atc[name] SIZE=$size[pass] VALUE=\"$pre_regist[name]\" STYLE=\"font: 11px tahoma;\"></nobr><BR>\n".
+       "<nobr>$langs[c_ps] <INPUT TYPE=password$disable NAME=atc[passwd] SIZE=$size[pass] STYLE=\"font: 11px tahoma;\"></nobr>\n".
+       "</TD>\n".
+       "<TD ROWSPAN=2 ALIGN=center>".
+       "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
        "</TD>\n".
        "<TD ROWSPAN=2 ALIGN=center>\n".
        "<TEXTAREA NAME=atc[text] COLS=$textareasize ROWS=3 WRAP=hard></TEXTAREA>\n".
        "</TD>\n".
+       "<TD ROWSPAN=2 ALIGN=center>".
+       "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
+       "</TD>\n".
        "</TR>\n".
-       "<TR BGCOLOR=$color[l5_bg]>\n".
+       "<TR>\n".
        "<TD ALIGN=right><INPUT TYPE=submit VALUE=\"$langs[c_en]\"></TD>\n".
        "</TR>\n".
        "<INPUT TYPE=hidden NAME=atc[no] VALUE=$no>\n".
