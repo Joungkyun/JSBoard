@@ -131,7 +131,7 @@ if(!$np) {
 <FONT STYLE="color:#FFFFFF;font-weight:bold">
 <?=$print[passform]?>
 <INPUT TYPE=submit VALUE=Delete>&nbsp;
-<INPUT TYPE=button onClick=history.back() VALUE=Cancle>
+<INPUT TYPE=button onClick=history.back() VALUE=Cancel>
 </FONT>
 </TD></TR>
 </TABLE>
