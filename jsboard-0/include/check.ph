@@ -2,10 +2,13 @@
 // 원격 유저의 IP address를 얻어옴
 $remotes = getenv("REMOTE_ADDR") ;
 
-function get_hostname()
-{
+function get_hostname() {
+
+    // 아파치 환경 변수인 REMOTE_ADDR에서 접속자의 IP를 가져옴
     $host  = getenv('REMOTE_ADDR');
-    $hostname = gethostbyaddr($host);
+//    $hostname = gethostbyaddr($host);
+    // httpd.conf에서 HostnameLookup On 으로 설정했을 경우만 해당됨
+    $hostname = getenv('REMOTE_HOST');
 
     if ($hostname)
       $host = $hostname ;
