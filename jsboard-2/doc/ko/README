@@ -35,7 +35,7 @@ JSBoard 는 원칙적으로 다국어 지원을 기본으로 설계가 되어 있다. 현재 지원하는 언
 JSBoard v2.x는 PHP 4.0.x 이하의 버젼에서는 사용 할수가 없다. 이는 PHP 4.1.0 부터
 지원하는 함수가 사용되고 있기 때문이다.
 
-또한 Win32 version은 따로 배포가 된다. http://jsboard.kdlp.org/download.php 에서
+또한 Win32 version은 따로 배포가 된다. http://jsboard.kldp.org/download.php 에서
 win32용 버젼을 다운 받아야 한다.
 
 
