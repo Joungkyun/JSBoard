@@ -5,23 +5,25 @@ $path[type] = "admin";
 if (!file_exists("../config/global.ph")) {
   echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
        "history.back();\nexit;\n</script>\n";
-} else { include("../config/global.ph"); }
-if ($color[theme]) { include("../config/default.themes"); }
+} else { @include("../config/global.ph"); }
+if ($color[theme]) { @include("../config/default.themes"); }
 
-include("../include/lang.ph");
-include("../include/check.ph");
-include("../include/error.ph");
-include("../include/get.ph");
-include("../include/sql.ph");
-include("include/check.ph");
-include("include/config.ph");
+@include("../include/lang.ph");
+@include("../include/check.ph");
+@include("../include/error.ph");
+@include("../include/get.ph");
+@include("../include/sql.ph");
+@include("include/check.ph");
+@include("include/config.ph");
 
 // password ºñ±³ÇÔ¼ö - admin/include/check.ph
 compare_pass($sadmin,$login);
 
-if(!$table) print_error($table_err);
-include("../data/$table/config.ph");
-if ($color[theme]) { include("../data/$table/default.themes"); }
+# table À» Ã¼Å©ÇÑ´Ù.
+table_name_check($table);
+
+@include("../data/$table/config.ph");
+if ($color[theme]) { @include("../data/$table/default.themes"); }
 
 require("include/html_ahead.ph");
 
@@ -217,7 +219,7 @@ for($i = 0; $i < 4; $i++) {
   <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"$color[l3_bg]\"><FONT COLOR=\"$color[l3_fg]\">ìí</FONT></TD>
   <TD ALIGN=\"right\" BGCOLOR=\"$color[l2_bg]\"><FONT COLOR=\"$color[l2_fg]\">%0.2f °³</FONT></TD>
 </TR><TR>
-  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"$color[l3_bg]\"><FONT COLOR=\"$color[l3_fg]\">ã´</FONT></TD>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"$color[l3_bg]\"><FONT COLOR=\"$color[l3_fg]\">ãÁ</FONT></TD>
   <TD ALIGN=\"right\" BGCOLOR=\"$color[l2_bg]\"><FONT COLOR=\"$color[l2_fg]\">%0.2f °³</FONT></TD>
 </TR>
 </TABLE>

@@ -336,7 +336,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
       break;
   }
 } elseif ($o[at] == "dn") {
-  include("config/global.ph");
+  @include("config/global.ph");
   $dn[path] = "data/$dn[tb]/$upload[dir]/$dn[cd]/$dn[name]";
 
   if(eregi("/",$dn[name]) || eregi("\.\./",$dn[path]) || !$dn[cd] || !$dn[name]) {
@@ -347,24 +347,24 @@ if ($o[at] != "dn" && $o[at] != "sm") {
     exit;
   }
 
-  if($fp=@fopen($dn[path],"r")) { 
-    Header("Content-type: file/unknown"); 
+  if($fp=@fopen($dn[path],"r")) {
+    Header("Content-type: file/unknown");
     Header("Content-Disposition: attachment; filename=".$dn[name]);
-    Header("Content-Description: PHP Generated Data"); 
-    while($data=fread( $fp,filesize($dn[path]))) { print($data); } 
+    Header("Content-Description: PHP Generated Data");
+    while($data=fread( $fp,filesize($dn[path]))) { print($data); }
   } else {
     echo "<script>\n".
          "alert('Don\'t open $dn[name]');\n".
          "history.back();\n".
          "</script>\n";
-    exit; 
+    exit;
   }
 } elseif ($o[at] == "sm") {
-  include "config/global.ph";
-  include "include/error.ph";
-  include "include/check.ph";
-  include "include/sendmail.ph";
-  include "include/lang.ph";
+  @include "config/global.ph";
+  @include "include/error.ph";
+  @include "include/check.ph";
+  @include "include/sendmail.ph";
+  @include "include/lang.ph";
 
   # 등록 가능한 browser check
   if(!chk_spam_browser()) print_error($langs[act_sb]);

@@ -11,12 +11,12 @@ function htmlhead() {
   elseif ($fileself == "admin.php") $sub_title = "$langs[p_aa]";
   elseif ($fileself == "admin_info.php") $sub_title = "$langs[p_wv]";
 
-  include("./include/html_ahead.ph");
+  @include("./include/html_ahead.ph");
 }
 
 // html tail 읽어오기
 function htmltail() {
-  include("./include/html_atail.ph");
+  @include("./include/html_atail.ph");
 }
 
 function java_scr() {
@@ -45,7 +45,7 @@ function java_scr() {
 //
 function copyright($copy) {
   global $langs;
-  echo "Scripted by <a href=mailto:$copy[email] title='$langs[maker]'>$copy[name]</a><br>\n" .
+  echo "Scripted by <a href=$copy[url] title='$langs[maker]'>$copy[name]</a><br>\n" .
        "and all right reserved\n";
 }
 
@@ -140,9 +140,12 @@ function move_page($path,$time = 0) {
 }
 
 function get_lang_list($code) {
-  global $exec;
+  $p = opendir("../../include/LANG");
+  while($i = readdir($p)) {
+    if(eregi("[a-z]{2}\.ph$",$i)) $langslist[] = $i;
+  }
+  closedir($p);
 
-  exec("$exec[ls] ../../include/LANG | $exec[grep] .ph", $langslist);
   $until = sizeof($langslist);
 
   for($i=0; $i < $until; $i++) {

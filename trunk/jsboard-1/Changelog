@@ -2,6 +2,7 @@
 
 Original Developer              : Byung Chan Kim <redhands@linux.sarang.net>
 Source Disturibute              : Joung Kyun Kim <admin@oops.org>
+Windog Version                  : Ki Soo Choi <choiks@nuri.net>
 
 ## Warning ##
 
@@ -14,6 +15,20 @@ Attention : OOPS administration Center is not GPL.
             See also admin/License !
 
 ******************************************************************************
+
+
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2001년  3월  4일
+버전   : jsboard-1.2.3
+
+* 변경된점
+1. &가 &amp;로 변환이 되어 잘못 표기되는것 수정.
+2. user admin security hole fix.
+3. Installer에서 환경 체크시 DirectoryIndex 앞에 공백문자가 있을 경우
+   체크 안되던 현상 수정
+4. 경로에 들어가는 변수에서 meta character 존재 유무 체크
+5. 설치 문서에 보안관련 글 추가
+6. NS6 지원
 
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)

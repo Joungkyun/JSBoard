@@ -8,6 +8,7 @@ function print_list($table, $list, $r=0)
 
     $list[name] = unhtmlspecialchars($list[name]);
     $list[name]  = htmlspecialchars(cut_string($list[name],$board[nam_l]));
+    $list[name]  = ugly_han($list[name]);
     $list[title] = unhtmlspecialchars($list[title]);
 
     # read시의 관련글 출력시 제목길이 조정

@@ -23,11 +23,20 @@ function exsit_dbname_check($db) {
 
 // 생성할 게시판 이름에 대한 존재및 적격 여부 검사 루틴
 //
-function new_table_check($table) {
+function table_name_check($table) {
   global $langs;
-  if (!$table)  print_error($langs[n_t_n]);
+  $table = trim($table);
+
+  if(!$langs[n_t_n]) {
+    $langs[n_t_n] = "Table Name Missing! You must select a table";
+    $langs[n_db] = "Board name must start with an alphabet";
+    $langs[n_meta] = "Can't use special characters except alphabat, numberlic, _, - charcters";
+    $langs[n_promise] = "Cat't use table name as &quot;as&quot;";
+  }
+
+  if (!$ck && !$table)  print_error($langs[n_t_n]);
   if (!eregi("^[a-zA-Z]",$table)) print_error($langs[n_db]);
-  if (eregi("\-",$table)) print_error($langs[n_dash]);
+  if (eregi("[^a-z0-9_\-]",$table)) print_error($langs[n_meta]);
   if (eregi("^as$",$table)) print_error($langs[n_promise]);
 }
 

@@ -23,7 +23,7 @@ $list[date] = date("Y-m-d H:i:s", $list[date]);
 $list[text] = text_nl2br($list[text], $list[html]);
 $list[title] = eregi_replace("&amp;(amp|lt|gt)","&\\1",$list[title]);
 
-$list       = search_hl($list);
+$list = search_hl($list);
 
 if ($o[sc]) $list[text] = eregi_replace("<a href=(.*)<font color=#000000><b><u>(.*)</u></b></font>(.*) target=(.*)>","<a href=\\1\\2\\3 target=\\4>",$list[text]);
 
@@ -196,6 +196,6 @@ echo "</TD></TR>\n".
 
 if ($remote != $list[host]) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = $no");
 
-require("html/tail.ph");
+@include("html/tail.ph");
 echo $preview[bo];
 ?>

@@ -1,6 +1,10 @@
 <?
-require("include/header.ph");
-require("./admin/include/config.ph");
+@include("include/header.ph");
+@include("./admin/include/config.ph");
+@include("html/head.ph");
+
+# upload[dir] 에 mata character 포함 여부 체크
+meta_char_check($upload[dir]);
 
 sql_connect($db[server], $db[user], $db[pass]);
 sql_select_db($db[name]);
@@ -16,8 +20,6 @@ if(!$list[passwd] || !$enable[edit] || !$cenable[edit]) {
   if (!$enable[edit]) $passment = "$langs[e_wpw]";
   else $passment = "$langs[b_apw]";
 }
-
-require("html/head.ph");
 
 if($board[notice]) print_notice($board[notice]);
 
@@ -145,5 +147,5 @@ if ($board[img] == "yes") {
 
 echo("</TR>\n</TABLE>\n</TD></TR>\n</TABLE>\n</DIV>");
 
-require("html/tail.ph");
+@include("html/tail.ph");
 ?>

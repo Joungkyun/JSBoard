@@ -17,7 +17,7 @@
 
 
 작성 : 김정균 <admin@oops.org>
-일시 : 2000.11.1
+일시 : 2001.03.03
 
 이 문서는 JSBoard 1.2 version의 수동 설치를 위해 제공을 한다.
 이 문서로 인한 피해나 JSBoard의 사용으로 인한 피해에 대해서는
@@ -48,14 +48,15 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
     2-1. MySQL setting
     2-2. 설정 파일 셋팅하기
   3. JSBoard 운영
-  4. UPGRADE
-    4-1. 0.8 이상 version에서의 upgrade
-    4-2. 0.7 이하 version에서의 upgrade
-      4-2-1. 임은재의 소스를 이용하는 방법
-  5. 최신글 출력하기
-    5-1. 최신글 보기 구성
-    5-2. 최신글 보기 설정
-  6. Bug report
+  4. JSBoard 보안
+  5. UPGRADE
+    5-1. 0.8 이상 version에서의 upgrade
+    5-2. 0.7 이하 version에서의 upgrade
+      5-2-1. 임은재의 source를 이용하는 방법
+  6. 최신글 출력하기
+    6-1. 최신글 보기 구성
+    6-2. 최신글 보기 설정
+  7. Bug report
 
 ***************
 
@@ -67,10 +68,10 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
   
   apache 1.3.x 이상
   
-  MySQL 3.22.30 이상 (RPM 설치 권장 - ftp://ftp.oops.org)에서 받을수 있음
+  MySQL 3.22.30 이상 (RPM 설치 권장 - ftp://mirror.oops.org/에서 받을수 있음
   (3.23.x 인 alpha version에서 호환성 문제는 검증된바 없음)
   
-  PHP-4.0.0 이상(RPM 설치 권장 - ftp://ftp.oops.org)에서 받을수 있음
+  PHP-4.0.0 이상(RPM 설치 권장 - ftp://mirror.oops.org)에서 받을수 있음
   JSBoard 1.1은 PHP4 기반하에서 정상작동을 하며, compile 시에 Session 기능을
   빼면 절대 안된다.
 
@@ -129,7 +130,7 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
     $mcheck = mysql_connect(":/var/lib/mysql/mysql.sock", "root", "$passwd");
 
     if ($mcheck) echo "MySQL 접속에 성공했습니다.";
-    else echo "MySQL 접속에 실패를 했습니다.
+    else echo "MySQL 접속에 실패를 했습니다.";
     ?>
 
     라는 code를 만들어서 웹상에서 mysql에 접속을 하여 위의 에러 메세지중
@@ -163,7 +164,7 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
 
     . 일단 MySQL을 설치를 하도록 한다. MySQL은 RPM 패키지로도 구할수 있다.
 
-      ftp://ftp.opos.org/pub/Linux/Redhat/RPMS
+      ftp://mirror.opos.org/pub/Linux/Redhat/RPMS
       ftp://linux.sarang.net/pub/MySQL
 
       linux 배포본에서 제공하는 php rpm을 사용하는 사람들의 경우에는 php를 rpm
@@ -180,9 +181,10 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
       You can turn off this feature to get a quicker startup with -A 
 
       Welcome to the MySQL monitor. Commands end with; or \g. 
-      Your MySQL connection id is 1961 to server version: 3.22.20a-log 
+      Your MySQL connection id is 1961 to server version: 3.22.32-log 
 
       Type 'help' for help. 
+      mysql> use mysql;
       mysql> update user set password = password('루트패스워드')
            > where user = 'root';
       Query OK, 1 row affected (0.00 sec) 
@@ -317,7 +319,15 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
     -rx-rx----    accountname    nobody     config/spam_list.txt
     -rx-rx----    accountname    nobody     admin/include/config.ph
 
-    단 주의 할것은 account user의 권한으로 설치시에는 보안의 문제성이 대두
+    만약 root 가 이를 응하지 않거나 또는 불성실한 root 라면 다음과 같이
+
+    chmod 606 config/global.ph
+    chmod 606 config/spam_list.txt
+    chmod 606 admin/include/config.ph
+
+    로 대신하여 운영은 가능하나 보안상 좋지는 않다.
+
+    그리고 주의 할것은 account user의 권한으로 설치시에는 보안의 문제성이 대두
     될수 있으니 home directory의 권한을 꼭 711로 해야한다.
 
     위의 두 script file은 간단하게 mv, chown, chmod 등의 shell 명령어로
@@ -362,9 +372,49 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
   경우 설정 버튼 대신 "Not JSBoard table" 이라는 메시지를 출력하게 끔 변경이
   되어 있다.
 
-4. UPGRADE
+4. JSBoard 보안
 
-  4-1. 0.8 이상 version에서의 upgrade
+  보통 CGI방식을 통한 upload에 관련하여 보안문제가 많이 발생을 하고 있다. 하지만
+  단순히 CGI 의 코드만 의존 하여 보안 문제를 방지 한다는 것은 무리라고 생각이 되
+  어 apache의 설정 file 에서 원천적으로 업로드 file 에 대해서 실행이 되지 않도록
+  하는 설정을 적용시켜 보았다. 현재 필자의 개인 서버와 kldp server에서 적용이 되
+  어 있으며 특히 호스팅서버와 같이 여러 계정들이 사용을 하는 경우에 JSBoard를 사
+  용할수도 있기 때문에 이 셋팅을 해 놓는 것을 권장 한다.
+
+  설정은 다음과 같이 할수 있다.
+
+  <DirectoryMatch "^/.*/jsboard/data">
+    AddType application/x-httpd-php3-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
+    AddType application/x-httpd-php-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
+
+    ErrorDocument 403 http://jsboard.kldp.org/ErrorMSG/error_msg.php?l=ko&c=403
+
+    <Files ~ ".*\.ph$">
+      Order allow,deny
+      Deny from all
+    </Files>
+  </DirectoryMatch>
+
+  이 설정의 의미는 jsboard/data 라는 디렉토리 아래에 있는 어떠한 경로의 data라는
+  이름의 디렉토리에서는 .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs
+  .ins 의 확장자를 가지고 있으면 source를 출력하라는 의미이며 주의 할것은 여기에
+  패스워드 같은 것이 들어가 있는 source를 올려 놓으면 안된다는 주의해야 한다. 위
+  의 경로는 게시판 디렉토리 이름을 어떻게 하느냐에 따라 수정을 해 줘야 한다.
+
+  또한 data 라는 이름의 디렉토리 아래로 .ph로 직접 접근할 경우에는
+  http://jsboard.kldp.org/ErrorMSG/error_msg.php?l=ko&c=403 페이지를 출력 하라는
+  의미이다.
+
+  이 설정은 root 의 권한만 가지고 있으면 누구나 다 설정을 해 주는 것이 좋으며 만
+  약 계정 유저들이라고 해도 서버 관리자에게 이 설정을 해 달라고 하는것이 좋다. 이
+  설정을 안해서 좋을것이 하나도 없을테니 아마 다 해줄 것이다. :-)
+
+  새해에는 좀더 안전한 서버 운영이 되기를 바라면서.. 그럼..
+
+
+5. UPGRADE
+
+  5-1. 0.8 이상 version에서의 upgrade
 
     jsboard-1.2 버젼의 가장큰 변화는 확장자의 변화이다. 즉 1.1.x까지는
     .php3 라는 확장자를 사용했지만 jsbaord-1.2에서 부터는 .php 라는 이름
@@ -383,7 +433,7 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
     접속 부분만 같게 하고 나머지는 모두 재설정을 하도록 한다. 그리고 각
     게시판의 관리자로 접속을 하여 한번씩을 재설정을 해 주도록 한다.
 
-  4-2. 0.7 이하 버젼에서의 upgrade
+  5-2. 0.7 이하 버젼에서의 upgrade
 
     현재로서는 0.6 안정 버젼과 0.7 버젼에서만 upgrade가 지원이 된다. 그 이전
     버젼을 사용하는 user들은 최소한 0.6 안정 버젼으로 upgrade를 한후에
@@ -406,7 +456,7 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
     * 바란다. 에러가 난다고 겁먹지 말고 어떠한 에러인지를 잘보고 해당
     * 에러면 수행하기 바란다.
 
-    4-2-1. 임은재님의 스크립트를 이용한 upgrade
+    5-2-1. 임은재님의 스크립트를 이용한 upgrade
 
       코드 작성 : 김병찬
       코드 수정 : 임은재
@@ -489,14 +539,14 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
       된다.
 
 
-5. 최신글 출력하기
+6. 최신글 출력하기
 
-  5-1. 최신글 보기 구성
+  6-1. 최신글 보기 구성
 
    JSBoard의 최신글 목록을 출력하는 기능이다. 이 기능은 include/prelist.ph 에
    의해 구동이 되며 어느 파일에나 삽입을 하여 사용을 할수가 있다.
 
-  5-2. 최신글 보기 설정
+  6-2. 최신글 보기 설정
 
    일단 먼저 jsboard/include/prelist.ph에서 $prlist[path] 와 $prlist[wpath]
    변수값을 설정을 해야 한다. $prlist[path] 는 JSBoard가 설치 되어 있는 절대
@@ -583,7 +633,7 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
    져야 하는 것이다. 나머지는 알아서 응용하기 바란다.
 
 
-6. Bug report
+7. Bug report
 
   버그를 발견할 경우에는 http://jsboard.kldp.org/bbs/list.php?table=bbs_upgrade 에
   리포팅을 해 주면 감사하겠다
