@@ -133,13 +133,17 @@ if($db[name] && !$table) {
                  "</td></form>\n</tr>";
           }
         } else {
-            echo "<form name='delete_db' method='post' action='act.php'><td width=40%>\n".
-                 "<font color=$color[m_fg]>Not JSBoard table</font>&nbsp;&nbsp;\n".
-                 "<input type=submit value=$langs[a_t9] onClick=\"return confirm('$langs[a_del_cm]')\">\n".
-                 "<input type='hidden' name='table_name' value='$table_name[$i]'>\n".
-                 "<input type='hidden' name='mode' value='db_del'>\n".
-                 "<input type='hidden' name='ts' value='$ts'>\n".
-                 "</td></form>\n</tr>";
+          if(preg_match("/_comm/",$table_name[$i])) {
+            $table_explain = preg_replace("/_comm/","",$table_name[$i]);
+            $table_explain = "$table_explain Comment table";
+          } else $table_explain = "Not JSBoard table";  
+          echo "<form name='delete_db' method='post' action='act.php'><td width=40%>\n".
+               "<font color=$color[m_fg]>$table_explain</font>&nbsp;&nbsp;\n".
+               "<input type=submit value=$langs[a_t9] onClick=\"return confirm('$langs[a_del_cm]')\">\n".
+               "<input type='hidden' name='table_name' value='$table_name[$i]'>\n".
+               "<input type='hidden' name='mode' value='db_del'>\n".
+               "<input type='hidden' name='ts' value='$ts'>\n".
+               "</td></form>\n</tr>";
         }
       }
     }
