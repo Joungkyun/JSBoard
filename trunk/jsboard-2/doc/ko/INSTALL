@@ -720,6 +720,13 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
    또는
    $prlistOpt = "onClick(...)";
 
+   간혹, prlist 함수 호출시 <ul> 등의 list tag 로 감쌀 경우 include 되는 javascript
+   때문에 html validation 에러 에러가 발생할 수 있다. 이 경우에는
+
+   $prlist['starttag'] = "<li style=\"list-style: none;\">\n";
+   $prlist['endtag']   = "</li>";
+
+   를 지정하여 처리를 할 수 있다.
 
 6. Bug report
 
