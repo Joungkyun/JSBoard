@@ -101,7 +101,7 @@ if($db[name] && !$table) {
         $to = $to + $total_count;
         $total = "select count(*) from $table_name[$i] where date > '$current_time'";
 
-        #$result = mysql_query($total,$connect );
+        $result = mysql_query($total,$connect );
         $total_today = @mysql_result($result,0,"COUNT(*)");
         $total_today = !$total_today ? 0 : $total_today;
 

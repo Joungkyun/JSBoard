@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.0
 
+Wed, Jul 10 2002 by JoungKyun Kim <http://www.oops.org>
+	- fixed total articles number of today's registration
+
 Sat, Jul 06 2002 by JoungKyun Kim <http://www.oops.org>
 	- fixed configuration of crypt with external db auth
 
