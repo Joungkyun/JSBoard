@@ -82,6 +82,7 @@ Version   : jsboard-2.0pre4
 55. added function of ip blocking
 56. forced configuration of magic quotes
 57. fixed highlight bug of multiple keyword on url link
+58. supported mbrstring in check_spam() function
 
 
 -----------------------------------------------------------------------------

@@ -147,17 +147,39 @@ function check_auth($user,$chk) {
 }
 
 # 스팸 검사 함수
+#
 function check_spam($str, $spam_list = "config/spam_list.txt") {
   $open_fail = "Don't open spam list file";
   $list = file_operate($spam_list,"r",$open_fail,0,1);
+
+  # PHP 4.1 에서 제공하는 mbstring 함수 지원 여부를 체크한다.
+  if(extension_loaded("mbstring")) $mbt = 1;
+
+  # mbstring 함수를 지원하면 문자열을 UTF-8 로 변환한다.
+  $str = $mbt ? mb_convert_encoding($str,"UTF-8") : $str;
 
   # $list 배열의 갯수 만큼 for문을 돌려 $spam_list 파일에 지정되어 있던
   # 문자열들과 일치하는 문자열이 $spam_str에 있는지 검사함, 있을 경우
   # 스팸으로 판단하고 정수형 1을 반환함, 없을 경우는 0을 반환함
   for($co = 0; $co < count($list); $co++) {
-    $list[$co] = trim($list[$co]);
-    if($list[$co] && eregi($list[$co], $str)) {
+    # 2byte 가 안되는 키워드는 무조건 무시
+    if(strlen($list[$co]) < 2) continue;
+
+    # mbstirng 함수가 지원하지 않을 경우에는 한글 2자 이상 영문 3자 이상부터 지원
+    if(!$mbt && strlen($list[$co]) < 3) continue;
+
+    # 공백라인 이거나 처음이 # 로 시작하는 라인은 무시
+    if(preg_match("/^#|^$/i",trim($list[$co]))) continue;
+
+    # preg 함수를 사용하기 위해 / 문자를 \/ 로 치환
+    $list[$co] = str_replace("/","\/",$list[$co]);
+
+    # mbstring 을 지원하면 필터링 키워드를 UTF-8 로 변환
+    $list[$co] = $mbt ? mb_convert_encoding(trim($list[$co]),"UTF-8") : $list[$co];
+
+    if(preg_match("/$list[$co]/i", $str)) {
       return 1;
+      break;
     }
   }
 
