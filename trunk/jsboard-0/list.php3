@@ -45,36 +45,14 @@ if ($apage && $page > $apage) { $page = $apage; }
 if (!$act) { $act = "normal"; }
 if (!$no) { $no = ($page - 1) * $pern; }
 
-plist($no, $act); // 목록 출력
-
 $prev = $page - 1;
 $next = $page + 1;
 
-echo("<table align=\"center\" width=\"1%\" border=\"0\" cellspacing=\"4\" cellpadding=\"0\"><tr>\n");
-if($act == "search") {
-    sepa($l0_bg);
-    echo("<td width=\"1%\" align=\"center\"><a href=\"$SCRIPT_NAME?table=$table\"><nobr>전체목록보기</nobr></a></td>\n");
-}
-sepa($l0_bg);
-if($page > 1) {
-    echo("<td width=\"1%\" align=\"center\"><a href=\"$SCRIPT_NAME?table=$table&page=$prev$search\"><nobr>이전페이지</nobr></a></td>");
-} else {
-    echo("<td width=\"1%\" align=\"center\"><font color=\"#acacac\"><nobr>이전페이지</nobr></font></td>");
-}
-sepa($l0_bg);
-echo("<td width=\"1%\" align=\"center\"><a href=\"write.php3?table=$table\"><nobr>글쓰기</nobr></a></td>\n");
-sepa($l0_bg);
-if($page < $apage) {
-    echo("<td width=\"1%\" align=\"center\"><a href=\"$SCRIPT_NAME?table=$table&page=$next$search\"><nobr>다음페이지</nobr></a></td>");
-} else {
-    echo("<td width=\"1%\" align=\"center\"><font color=\"#acacac\"><nobr>다음페이지</nobr></font></td>");
-}
-sepa($l0_bg);
-if($sc_column != "today") {
-    echo("<td width=\"1%\" align=\"center\"><a href=\"$SCRIPT_NAME?table=$table&act=search&sc_column=today\"><nobr>오늘올라온글</nobr></a></td>");
-    sepa($l0_bg);
-}
-echo("</tr>\n</table>\n</form>\n");
+plist($no, $act); // 목록 출력
+
+echo ("<center>\n") ;
+list_cmd_bar ($page, $l0_bg, $table, $sc_column);
+echo("<center>\n</form>\n");
 
 include("include/$table/tail.ph");
 

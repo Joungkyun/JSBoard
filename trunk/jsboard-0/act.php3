@@ -42,8 +42,12 @@ if ($act == "post" || $act == "edit") {
     if ($html_enable) {
 	$text = eregi_replace("<\\?", "&lt;?", $text);
 	$text = eregi_replace("\\?>", "?&gt;", $text);
-	$text = eregi_replace("<script([^>]*)>", "&lt;script\\1&gt;", $text);
-	$text = eregi_replace("</script>", "&lt;/script&gt;", $text);
+        $text = eregi_replace("<(style|script)([^>]*)>", "<!--", $text);
+        $text = eregi_replace("</(style|script)>", "-->", $text);
+        $text = eregi_replace("<(body|div|meta)([^>]*)>", "", $text);
+        $text = eregi_replace("<title>+([^<]*)+</title>", "", $text); 
+        $text = eregi_replace("[<\/]+(html|head|div|body|layer)>","",$text) ;
+        $text = eregi_replace("<!([^<]*)", "", $text);
 	$text = chop($text);
     } else {
 	$text = chop($text);

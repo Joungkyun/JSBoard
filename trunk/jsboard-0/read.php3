@@ -42,19 +42,18 @@ while($list = dfetch_row($result)) {
     $bcfile = $list[16]; // 파일경로
     $bfsize = $list[17]; // 파일경로
 
-    
     $num    = "$num 번 글:";
     $date   = date("Y년 m월 d일 H시 i분 s초", $date);
     $text   = eregi_replace("\r\n", "\n", $text);
     $text   = eregi_replace("\n", "\r\n", $text);
     $text   = nl2br($text);
-    
     $text   = auto_link($text);
-
     $text   = eregi_replace("<br>\n", "<br>", $text);
 
-    /* 빈칸을 입력하여 포맷팅을 시켰을 경우에 제대로 나오게 하기위해 삽입 */
+    /* 들여쓰기 기능을 지원. pre tag처럼 완벽하게 지원하지는 못함 */
     $text   = eregi_replace("  ", "&nbsp;&nbsp;", $text);
+    /* html 사용시에 table이 있으면 nl2br() 함수를 적용시키지 않음 */
+    $text = eregi_replace("<br([>a-z&\;])+([<\/]+(ta|tr|td))","\\2",$text) ;
 
     if ($reto) {
 	$result = dquery("SELECT num FROM $table WHERE no = $reto");
@@ -67,7 +66,21 @@ while($list = dfetch_row($result)) {
     if($email)
 	$name = "<a href=\"mailto:$email\"><font color=\"black\">$name</font></a>";
 
-    echo("<p>\n<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"$r0_bg\"><tr><td>\n" .
+    $next = get_next($no);
+    $prev = get_prev($no);
+
+    echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\">\n" .
+            "<tr><td align=\"left\">\n" .
+            "<a href=./admin/user_admin/auth.php3?db=$table>[admin]</a>\n" .
+            "</td>\n" .
+            "<td align=\"right\">\n" ) ;
+    read_cmd_bar($no, $page, $prev, $next, $r0_bg, $act, $table, $passwd, $email);
+    echo("</td></tr></table>\n");
+
+
+
+
+    echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"$r0_bg\">\n<tr><td>\n" .
 	 "<table width=\"100%\" border=\"0\" cellspacing=\"2\" cellpadding=\"4\"><tr>\n" .
 	 "<td colspan=\"2\" bgcolor=\"$r1_bg\"><font color=\"$r1_fg\">$num $title</font></td>\n" .
 	 "<td colspan=\"1\" bgcolor=\"$r1_bg\" align=left><font color=\"$r1_fg\">IP: $host</font></td></tr>\n");
@@ -138,65 +151,11 @@ while($list = dfetch_row($result)) {
     }
 
     echo("</font>\n</td></tr>\n" .
-         "</table>\n</td></tr></table>\n");
+         "</table>\n</td></tr></table>\n\n<center>");
 
-    $next = get_next($no);
-    $prev = get_prev($no);
+    read_cmd_bar($no, $page, $prev, $next, $r0_bg, $act, $table, $passwd, $email);
 
-    echo("\n<table align=\"center\" width=\"1%\" border=\"0\" cellspacing=\"4\" cellpadding=\"0\"><tr>");
-    sepa($r0_bg);
-    // 목록
-    if($act == "search") {
-	echo("<td align=\"center\" width=\"1%\"><a href=\"list.php3?table=$table$search\"><nobr>목록보기</nobr></a></td>\n");
-    } else {
-	echo("<td align=\"center\" width=\"1%\"><a href=\"list.php3?table=$table&page=$page\"><nobr>목록보기</nobr></a></td>\n");
-    }
-    sepa($r0_bg);
-    if($prev) { // 이전글
-	$result  = dquery("SELECT title FROM $table WHERE no = $prev");
-	$p_title = mysql_result($result, 0, "title");
-	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$prev$search\"><nobr>이전글</nobr></a></td>\n");
-    } else {
-	echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>이전글</nobr></font></td>\n");
-    }
-    sepa($r0_bg);
-    if($next) { // 다음글
-	$result  = dquery("SELECT title FROM $table WHERE no = $next");
-	$n_title = mysql_result($result, 0, "title");
-	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$next$search\"><nobr>다음글</nobr></a></td>\n");
-    } else {
-	echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>다음글</nobr></font></td>\n");
-    }
-    sepa($r0_bg);
-    echo("<td align=\"center\" width=\"1%\"><a href=\"write.php3?table=$table\"><nobr>글쓰기</nobr></a></td>\n");
-    sepa($r0_bg);
-
-    if($email) {
-    echo("<td align=\"center\" width=\"1%\"><a href=\"reply.php3?table=$table&no=$no&page=$page&origmail=$email\"><nobr>답장쓰기</nobr></a></td>\n");
-    } else {
-    echo("<td align=\"center\" width=\"1%\"><a href=\"reply.php3?table=$table&no=$no&page=$page><nobr>답장쓰기</nobr></a></td>\n");
-    }
-    sepa($r0_bg);
-
-    if($passwd) { // 암호가 있는 경우
-	echo("<td align=\"center\" width=\"1%\"><a href=\"edit.php3?table=$table&no=$no&page=$page\"><nobr>수정</nobr></a></td>\n");
-        sepa($r0_bg);
- 	  if(!$reyn) {
-	      echo("<td align=\"center\" width=\"1%\"><a href=\"delete.php3?table=$table&no=$no&page=$page\"><nobr>삭제</nobr></a></td>\n");
-              sepa($r0_bg);
-	  }
-    }
-    else {
-	echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>수정</nobr></font></td>\n");
-
-	echo("<td width=\"1%\" bgcolor=\"$r0_bg\"><a href=\"edit.php3?table=$table&no=$no&page=$page\"><img src=\"images/n.gif\" alt=\"\" width=\"2\" height=\"10\" border=\"0\"></a></td>");
-
-        echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>삭제</nobr></font></td>\n");
-	
-	echo("<td width=\"1%\" bgcolor=\"$r0_bg\"><a href=\"delete.php3?table=$table&no=$no&page=$page\"><img src=\"images/n.gif\" alt=\"\" width=\"2\" height=\"10\" border=\"0\"></a></td>");
-    }
-
-    echo("</tr>\n</table>\n<br>\n");
+    echo("</center><br>\n");
 
     dquery("UPDATE $table SET refer = $refer WHERE no = $no");
 }
