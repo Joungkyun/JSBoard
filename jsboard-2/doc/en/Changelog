@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Mon, Feb 18 2002
+Date      : Tue, Feb 19 2002
 Version   : jsboard-2.0pre4
 
 
@@ -68,6 +68,7 @@ Version   : jsboard-2.0pre4
 42. fixed forward agent information when use prelist() function
 43. changed header of download
 44. fixed return problem in security.php on register_globals = Off
+45. changed parse_query() function that can't parse when register_globals = ON
 
 
 -----------------------------------------------------------------------------
