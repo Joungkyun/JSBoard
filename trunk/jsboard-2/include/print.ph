@@ -423,6 +423,11 @@ function article_reply_list($table,$pages,$print=0) {
 function print_preview_src($print=0) {
   global $color, $agent;
 
+  if(!$agent[br]) $agent = get_agent();
+  $color[p_gu] = $color[p_gu] ? $color[p_gu] : "#A0DC10";
+  $color[p_bg] = $color[p_bg] ? $color[p_bg] : "#FFFFFF";
+  $color[p_fg] = $color[p_fg] ? $color[p_fg] : "#555555";
+
   if($agent[br] == "MSIE") {
     $script_for_browser = "  over = overDiv.style;\n".
                           "  document.onmousemove = mouseMove;\n\n".

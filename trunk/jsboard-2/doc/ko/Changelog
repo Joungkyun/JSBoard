@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.0
 
+2002.6.15 by 김정균 <http://www.oops.org>
+	- 최신글 미리보기 기능의 디자인 분리
+
 2002.6.13 by 김정균 <http://www.oops.org>
 	- 커멘트에서 KSX 1001 범위외의 문자 처리
 	- 코멘트 정렬정보를 쿠키로 등록

@@ -1,7 +1,7 @@
 <?
 ########################################################################
-# JSBoard Pre List v0.2
-# Scripted By JoungKyun Kim 2000.12.10
+# JSBoard Pre List v0.3
+# Scripted By JoungKyun Kim 2002.06.15
 ########################################################################
 
 # JSBoard가 설치되어 있는 절대 경로
@@ -23,8 +23,34 @@ $prlist[wpath] = "http://domain.com/jsboard-version";
 # table tag를 사용하기 위해서는 아래의 prelist() 함수를
 # 잘 연계해야함
 #
+# $prlistTemplate 라는 변수가 정의 되어 있을 경우에는 이 변수의
+# 디자인을 이용하여 출력
+#
 function print_prlist($p) {
-  echo "$p[link] $p[name] $p[date] $p[count]<br>\n";
+  $temp = trim($GLOBALS[prlistTemplate]) ? $GLOBALS[prlistTemplate] : "";
+  if ($temp) {
+    $src[] = "/P_SUBJECT_/i";
+    $des[] = $p[link]; 
+    $src[] = "/P_NAME_/i";
+    $des[] = $p[name];
+    $src[] = "/P_DATE_/i";
+    $des[] = $p[date];
+    $src[] = "/P_EMAIL_/i";
+    $des[] = $p[email];
+    $src[] = "/P_REFER_/i";
+    $des[] = $p[count];
+    if ($p[email]) {
+      $src[] = "/P_LNAME_/i";
+      $des[] = "<A HREF=mailto:$p[email]>$p[name]</A>";
+    } else {
+      $src[] = "/P_LNAME_/i";
+      $des[] = "$p[name]";
+    }
+
+    echo preg_replace($src,$des,$temp)."<BR>\n";
+  } else {
+    echo "$p[link] $p[name] $p[date] $p[count]<BR>\n";
+  }
 }
 
 # PHP에 대해서 잘 모르신다고 생각하시는 분들은 건드리지 말것!!!
@@ -48,6 +74,9 @@ function prelist($t,$inc,$limit=3,$cut=30,$cn=0,$cd=0,$ce=0,$cc=0,$l=0) {
     include_once "$prlist[path]/include/check.ph";
     include_once "$prlist[path]/include/sql.ph";
     include_once "$prlist[path]/include/get.ph";
+    include_once "$prlist[path]/include/print.ph";
+
+    print_preview_src(1);
   }
 
   sql_connect($db[server], $db[user], $db[pass]);
@@ -64,22 +93,35 @@ function prelist($t,$inc,$limit=3,$cut=30,$cn=0,$cd=0,$ce=0,$cc=0,$l=0) {
     $p[l] = $l ? " $l" : "";
     $p[no] = $row[no];
     $p[title] = $row[title];
-    $p[name] = $cn ? $row[name] : "";
-    $p[date] = $cd ? date("y.m.d",$row[date]) : "";
-    $p[date] = $p[date] ? "- $p[date]" : "";
-    $p[email] = $ce ? $row[email] : "";
-    $p[count] = $cc ? $row[refer] : "";
-    $p[preview] = cut_string(htmlspecialchars($row[text]),100);
 
-    if($p[email] && $p[name]) 
-      $p[name] = "<a href=mailto:$p[email]>$p[name]</a>";
+
+    if(!$GLOBALS[prlistTemplate]) {
+      $p[name] = $cn ? $row[name] : "";
+      $p[date] = $cd ? date("y.m.d",$row[date]) : "";
+      $p[date] = $p[date] ? "- $p[date]" : "";
+      $p[email] = $ce ? $row[email] : "";
+      $p[count] = $cc ? $row[refer] : "";
+
+      if($p[email] && $p[name]) 
+        $p[name] = "<a href=mailto:$p[email]>$p[name]</a>";
+    } else {
+      $p[name] = $row[name];
+      $p[date] = date("y.m.d",$row[date]);
+      $p[email] = $row[email];
+      $p[count] = $row[refer];
+      $p[l] = " ".$GLOBALS[prlistOpt];
+    }
+
+    $p[preview] = cut_string(htmlspecialchars($row[text]),100);
 
     if($cut) {
       if(strlen($p[title]) > $cut)
         { $p[title] = cut_string($p[title],$cut).".."; }
     }
 
-    $p[link] = "<a href=$prlist[wpath]/read.php?table=$t&no=$p[no]$p[l] title=\"$p[preview]\">$p[title]</a>";
+    $p[link] = "<a href=$prlist[wpath]/read.php?table=$t&no=$p[no]$p[l]".
+               " onMouseOver=\"drs('$p[preview]'); return true;\"".
+               " onMouseOut=\"nd(); return true;\">$p[title]</a>";
 
     #리스트 출력
     print_prlist($p);
