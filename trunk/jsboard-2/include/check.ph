@@ -360,8 +360,17 @@ function check_dhyper($m,$ips) {
   if($chk == $_SERVER[SERVER_ADDR]) return;
 
   $addr = explode(";",$ips);
-  for($i=0;$i<sizeof($addr);$i++)
-    if(preg_match("/$addr[$i]/i",$chk)) $val = 1;
+  for($i=0;$i<sizeof($addr);$i++) {
+    # ip address 체크
+    $ipchk = explode(".",$addr[$i]);
+    for($j=1;$j<4;$j++) $ipchk[$j] = $ipchk[$j] ? $ipchk[$j] : 0;
+    # 각 자리수 마다 255 보다 크면 ip 주소를 벋어나므로 체크 안함
+    if($ipchk[0] > 255 || $ipchk[1] > 255 || $ipchk[2] > 255 || $ipchk[3] > 255) continue;
+    # 4 자리 이상일 경우 ipv4 방식이 아니므로 체크 안함 (ipv6 도입시 변경요)
+    if(preg_match("/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}.+/i",$addr[$i])) continue;
+    if(!preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|\.$/i",$addr[$i])) $addr[$i] .= ".";
+    if(preg_match("/^$addr[$i]/i",$chk)) $val = 1;
+  }
 
   switch($m) {
     case '1' :
