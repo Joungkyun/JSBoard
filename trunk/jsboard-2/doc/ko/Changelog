@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.2
 
+2002.11.13
+  by 김정균 <http://www.oops.org>
+	- 이름에 ' 문자가 들어갈 경우의 자바스크립트 에러 수정
+
 2002.10.30
   by SIGTERM <youngman at hanmail.net>
 	- 영문 문서 업데이트

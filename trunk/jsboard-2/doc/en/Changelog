@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 ¹öÀü   : jsboard-2.0.2
 
+Wed, Nov 13 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed java script error in case of name included ' charactor
+
 Wed, OCt 30 2002
   by SIGTERM <youngman at hanmail.net>
 	- update english manuals
