@@ -73,7 +73,7 @@ if (!$mode) {
        "<font color=$color[l0_fg]>JSBoard Environment Check</font>\n" .
        "</td></tr>\n<tr><td align=center>\n<font color=white>\n";
 
-  $mcheck = @mysql_connect("127.0.0.1", "root", "$passwd");
+  $mcheck = @mysql_connect($mysql_sock, "root", "$passwd");
 
   if ($mcheck) {
     mysql_select_db("mysql");

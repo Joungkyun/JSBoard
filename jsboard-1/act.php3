@@ -92,7 +92,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
         $rmail[no] = $atc[no];
         $rmail[reply_orig_email] = "$rmail[origmail]";
 
-        sendmail($rmail);
+        if(check_sendmail()) sendmail($rmail);
       }
     }
     set_cookie($atc);
@@ -194,7 +194,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
         $rmail[table] = "$table";
         $rmail[reply_orig_email] = "$rmail[origmail]";
 
-        sendmail($rmail);
+        if(check_sendmail()) sendmail($rmail);
       }
     }
 
@@ -430,7 +430,10 @@ if ($o[at] != "dn" && $o[at] != "sm") {
   }
 } elseif ($o[at] == "sm") {
   include "config/global.ph";
+  include "include/error.ph";
   include "include/sendmail.ph";
+
+  check_sendmail(1);
 
   $rmail[name] = "$atc[name]";
   $rmail[text] = "$atc[text]";
@@ -442,6 +445,5 @@ if ($o[at] != "dn" && $o[at] != "sm") {
   sendmail($rmail,1);
 
   echo "<script>window.close()</script>";
-
 }
 ?>
