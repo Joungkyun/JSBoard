@@ -16,6 +16,17 @@ Attention : OOPS administration Center is not GPL.
 ******************************************************************************
 
 작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 11월 30일
+버전   : jsboard-1.2.1
+
+* 변경된점
+1. menu에서 윗글이나 아랫글의 제목에 single quote(')가 있을 경우 java
+   script error 나는것 수정
+2. file upload 보안홀 수정 (이재길님(jglee@netisus.co.kr)님 report)
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 11월 25일
 버전   : jsboard-1.2.0
 

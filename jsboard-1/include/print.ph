@@ -290,11 +290,6 @@ function read_cmd($str) {
 
   $str[search] = search2url($o);
 
-  $pos[prev_t] = eregi_replace("#","\#",htmlspecialchars($pos[prev_t]));
-  $pos[prev_t] = str_replace("#","\#",$pos[prev_t]);
-  $pos[next_t] = eregi_replace("#","\#",htmlspecialchars($pos[next_t]));
-  $pos[next_t] = str_replace("#","\#",$pos[next_t]);
-
   if (!$o[ck]) $str[search] = "";
 
   $str[prev]  = "<A HREF=\"read.php?table=$table&no=$pos[prev]$str[search]\" onMouseOut=\"window.status=''; return true;\" onMouseOver=\"window.status='$pos[prev_t]'; return true;\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_upp]</NOBR></FONT></A>";
@@ -397,8 +392,6 @@ function img_rmenu($str,$icons = 20) {
   else $themes[img] = "images";
 
   $str[search] = search2url($o);
-  $pos[prev_t] = str_replace("#","\#",htmlspecialchars($pos[prev_t]));
-  $pos[next_t] = str_replace("#","\#",htmlspecialchars($pos[next_t])); 
 
   $str[prev]  = "<A HREF=\"read.php?table=$table&no=$pos[prev]$str[search]\" onMouseOut=\"window.status=''; return true;\" onMouseOver=\"window.status='$pos[prev_t]'; return true;\"><img src=./$themes[img]/up.gif width=$icons height=$icons border=0 alt=\"$langs[cmd_upp]\"></A><br>\n";
   $str[next]  = "<A HREF=\"read.php?table=$table&no=$pos[next]$str[search]\" onMouseOut=\"window.status=''; return true;\" onMouseOver=\"window.status='$pos[next_t]'; return true;\"><img src=./$themes[img]/down.gif width=$icons height=$icons border=0 alt=\"$langs[cmd_down]\"></A><br>\n";

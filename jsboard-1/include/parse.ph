@@ -1,7 +1,7 @@
 <?
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
-  if (!$html) $text = eregi_replace("&amp;(#|amp|lt|gt)","&\\1",$text);
+  if (!$html) $text = eregi_replace("&amp;#","&#",$text);
   return $text;
 }
 
@@ -287,6 +287,53 @@ function url_link($url, $str, $color, $no = 0) {
   }
 
   return $str;
+}
+
+# File upload를 위한 함수
+#
+# mkdir -> directory 생성
+# exec  -> shell 명령을 실행
+# chmod -> file, direcoty의 권한 변경
+#
+function file_upload($updir) {
+  global $userfile_size, $userfile, $userfile_name;
+  global $upload, $langs, $table, $exec;
+
+  # file size 0byte upload 금지 - 1999.12.21 JoungKyun
+  if ($userfile_name) {
+    if ($userfile_size == '0') {
+      echo "<script>\nalert(\"$langs[act_ud]\")\n" .
+           "history.back()\n</script>";
+      exit;
+    }
+  }
+  # file size 0byte upload 금지 끝
+
+  if ($userfile_size != 0 || $userfile != "none" || $userfile_name != "") {
+    if ($userfile_size > $upload[maxsize]) {
+       echo "<script>\nalert(\"$langs[act_md]\")\n" .
+            "history.back()\n</script>";
+       exit;
+    }
+
+    # file name에 공백이 있을 경우 공백 삭제
+    $userfile_name = eregi_replace(" ","",$userfile_name);
+
+    # file name에 특수 문자가 있을 경우 등록 거부
+    if (eregi("[^a-z0-9\._\-]",$userfile_name)) {
+      echo"<script>\nalert(\"$langs[act_de]\")\n" .
+          "history.back()\n</script>";
+      exit;
+    }
+
+    # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
+    $userfile_name = eregi_replace(".(php[0-9a-z]*|phtml)$", ".phps", $userfile_name);
+    $userfile_name = eregi_replace("(.*).(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $userfile_name);
+
+    mkdir("data/$table/$upload[dir]/$updir",0755);
+    exec("$exec[mv]  \"$userfile\" \"data/$table/$upload[dir]/$updir/$userfile_name\"");
+    chmod("data/$table/$upload[dir]/$updir/$userfile_name",0644);
+  }
 }
 
 # HTML entry를 특수 특수 문자로 변환
