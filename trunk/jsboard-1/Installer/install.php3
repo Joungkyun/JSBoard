@@ -6,7 +6,7 @@ if ($langss == "ko") $langs[code] = "ko";
 else $langs[code] = "en";
 
 //require("./ad_sample/global.ph.orig");
-require("../config/themes/white.themes");
+require("../config/themes/basic.themes");
 require("../include/lang.ph");
 require("../include/get.ph");
 require("../html/head.ph");

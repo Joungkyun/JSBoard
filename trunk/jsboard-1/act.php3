@@ -1,9 +1,7 @@
 <?
-
 if ($o[at] != "dn") {
-
-  include("include/header.ph");
-  include("./admin/include/config.ph");
+  @include("include/header.ph");
+  @include("./admin/include/config.ph");
 
   sql_connect($db[server], $db[user], $db[pass]);
   sql_select_db($db[name]);
@@ -400,13 +398,29 @@ if ($o[at] != "dn") {
       break;
   }
 } else {
-  $dn[path] = "data/$dn[tb]/$dn[udir]/$dn[cd]/$dn[name]";
-  if($fp=fopen($dn[path],"r")) { 
+  @include("config/global.ph");
+  $dn[path] = "data/$dn[tb]/$upload[dir]/$dn[cd]/$dn[name]";
+
+  if(eregi("/",$dn[name]) || eregi("\.\.",$dn[path]) || !$dn[cd] || !$dn[name]) {
+    echo "<script>\n".
+         "alert('U attempted invalid method in this program!');\n".
+         "history.back();\n".
+         "</script>\n";
+    exit;
+  }
+
+  if($fp=@fopen($dn[path],"r")) { 
     Header("Content-type: file/unknown"); 
     Header("Content-Disposition: attachment; filename=".$dn[name]);
     Header("Content-Description: PHP Generated Data"); 
     while($data=fread( $fp,filesize($dn[path]))) { print($data); } 
-    } 
+  } else {
+    echo "<script>\n".
+         "alert('Don\'t open $dn[name]');\n".
+         "history.back();\n".
+         "</script>\n";
+    exit; 
+  }
 }
 
 ?>

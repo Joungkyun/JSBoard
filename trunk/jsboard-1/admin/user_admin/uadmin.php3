@@ -7,13 +7,13 @@ if (!file_exists("../../config/global.ph")) {
 } else include("../../config/global.ph");
 include("../include/config.ph");
 
-if (file_exists("../../data/$table/config.ph"))
-  include("../../data/$table/config.ph");
+if (@file_exists("../../data/$table/config.ph"))
+  @include("../../data/$table/config.ph");
 
 if ($color[theme]) {
   include("../../config/default.themes");
-  if (file_exists("../../data/$table/default.themes"))
-    include("../../data/$table/default.themes");
+  if (@file_exists("../../data/$table/default.themes"))
+    @include("../../data/$table/default.themes");
 }
 
 $path[type] = "user_admin";

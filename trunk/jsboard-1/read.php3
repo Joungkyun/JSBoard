@@ -170,7 +170,7 @@ if ($board[img] != "yes") {
   read_cmd($str);
 }
 
-sql_query("UPDATE $table SET refer = refer + 1 WHERE no = $no");
+if ($remote != $list[host]) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = $no");
 
 require("html/tail.ph");
 ?>

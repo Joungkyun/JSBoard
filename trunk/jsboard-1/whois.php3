@@ -16,9 +16,17 @@ if($window) {
   exit;
 }
 
-include("config/global.ph");
-include("data/$table/config.ph");
-require("include/lang.ph");
+if (!$table || !$host) {
+  echo "<script>\n".
+       "alert('U attempted invalid method in this program!');\n".
+       "history.back();\n".
+       "</script>\n";
+  exit;
+}
+
+@include("config/global.ph");
+@include("data/$table/config.ph");
+@include("include/lang.ph");
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
                         "http://www.w3.org/TR/html4/loose.dtd">
