@@ -20,9 +20,11 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
+2002.4.12 by 임은재 <http://kldp.org/~eunjea/>
+	- sendmail.ph 에서 Message-Id 문제 수정
+
 2002.4.11 by 김정균 <http://www.oops.org>
 	- cut_string() 함수 재작성
-	- sendmail.ph 에서 Message-Id 문제 수정
 
 2002.4.10 by 김정균 <http://www.oops.org>
 	- 등록된 글의 메일에서 답장 링크 삭제 (스팸방지 기능과 충돌)

@@ -20,9 +20,11 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0pre4
 
+Mon, Apr 12 2002 by Eunjea Im <http://kldp.org/~eunjea/>
+	- fixed problem of Message-Id on sendmail.ph
+
 Thu, Apr 11 2002 by JoungKyun Kim  <http://www.oops.org>
 	- rewrited cut_string() function
-	- fixed problem of Message-Id on sendmail.ph
 
 Wed, Apr 10 2002 by JoungKyun Kim  <http://www.oops.org>
 	- removed reply link of mail of posted article in sendmail.ph
