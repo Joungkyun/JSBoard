@@ -411,8 +411,8 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if(($o['at'] == "write" || $o['at'] == "reply" || $o['at'] == "edit") && $atc['html']) {
       check_htmltable($atc['text']);
       check_iframe($atc['text']);
-      $denyiframe = array("/<(iframe['^>']*)>/i","/<(\/iframe)>/i");
-      $editiframe = array("&lt\\1&gt;","&lt\\1&gt;");
+      $denyiframe = array("!<(iframe[^>]*)>!i","!<(/iframe)>!i");
+      $editiframe = array("&lt;\\1&gt;","&lt;\\1&gt;");
       $atc['text'] = preg_replace($denyiframe,$editiframe,$atc['text']);
     }
 
