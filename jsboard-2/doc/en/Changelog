@@ -65,6 +65,7 @@ Version   : jsboard-2.0pre3
 37. fixed problem of add new board
 38. fixed name search problem
 39. When registed user, removed http:// string in url
+40. fixed typo in search_hl()
 
 
 -----------------------------------------------------------------------------
