@@ -119,7 +119,7 @@ function phpmail($to,$from,$title,$pbody,$hbody) {
           body_encode_lib(&$hbody).
           "\r\n\r\n--$boundary--\r\n\r\n";
 
-  mail($to,$title,$body,$header,"-f\"$from\"") or print_notice($langs[mail_send_err]);
+  mail($to,$title,$body,$header,"-f$from") or print_notice($langs[mail_send_err]);
 }
 
 function socketmail($smtp,$to,$from,$title,$pbody,$hbody) {
