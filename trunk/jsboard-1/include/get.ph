@@ -11,7 +11,7 @@ function get_hostname($reverse = 0,$addr = 0) {
       $tmp = array('HTTP_CLIENT_IP','HTTP_X_FORWARDED_FOR','HTTP_X_COMING_FROM',
                    'HTTP_X_FORWARDED','HTTP_FORWARDED_FOR','HTTP_FORWARDED',
                    'HTTP_COMING_FROM','HTTP_PROXY','HTTP_SP_HOST');
-      foreach($tmp AS $v) if($HTTP_SERVER_VARS[$v] != $HTTP_SERVER_VARS[REMOTE_ADDR]) break;
+      foreach($tmp AS $v) if($HTTP_SERVER_VARS[$v] && $HTTP_SERVER_VARS[$v] != $HTTP_SERVER_VARS[REMOTE_ADDR]) break;
       if($HTTP_SERVER_VARS[$v]) $host = preg_replace(array('/unknown,/i','/,.*/'),array('',''),$HTTP_SERVER_VARS[$v]);
       $host = ($host = trim($host)) ? $host : $HTTP_SERVER_VARS[REMOTE_ADDR];
     }
