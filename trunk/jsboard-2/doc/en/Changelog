@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Mon, Mar 11 2002
+Date      : Tue, Apr  2 2002
 Version   : jsboard-2.0pre4
 
 
@@ -88,6 +88,10 @@ Version   : jsboard-2.0pre4
 62. fixed problem of changed original text in edit/reply mode
 63. enabled to use external mail server
 64. added check of spam register
+65. auto resize upload_max_filesize lower than (post_max_size - 1) Mb in php.ini
+66. if upload_maxsize > post_max_size, auto resize upload_maxsize value to post_max_size
+67. enable reconfig php_excution_tim in global.ph
+68. enable to use "," character in URL
 
 
 -----------------------------------------------------------------------------

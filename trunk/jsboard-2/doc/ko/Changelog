@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  3월 26일
+작성일 : 2002년  4월  2일
 버전   : jsboard-2.0pre4
 
 
@@ -97,6 +97,7 @@ If you wnat to see windog's change log, see also
 66. 업로드 최대용량이 post_max_size 보다 클 경우 자동으로 post_max_size 로 변경되게
     수정
 67. 대용량 업로드시를 위해 php excution time 을 지정할 수 있도록 수정
+68. URL 에 쉼표가 있을때, 이를 URL 로 인식하지 못하는 것 수정
 
 
 -----------------------------------------------------------------------------
