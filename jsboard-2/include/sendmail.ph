@@ -255,6 +255,7 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
 function sendmail($rmail) {
   global $langs;
 
+  if($rmail[smtp]) $rmail[mta] = $rmail[smtp];
   $rmail[mta] = $rmail[mta] ? $rmail[mta] : 0;
   $mail_msg_head = "$langs[sm_dr]";
 
