@@ -47,7 +47,7 @@ function print_prlist($p) {
       $des[] = "$p[name]";
     }
 
-    echo preg_replace($src,$des,$temp)."<BR>\n";
+    echo preg_replace($src,$des,$temp)."\n";
   } else {
     echo "$p[link] $p[name] $p[date] $p[count]<BR>\n";
   }
@@ -113,15 +113,18 @@ function prelist($t,$inc,$limit=3,$cut=30,$cn=0,$cd=0,$ce=0,$cc=0,$l=0) {
     }
 
     $p[preview] = cut_string(htmlspecialchars($row[text]),100);
+    $p[preview] = preg_replace("/#|'|\\\\/i","\\\\\\0",$p[preview]);
+    $p[preview] = htmlspecialchars(htmlspecialchars($p[preview]));
+    $p[preview] = preg_replace("/\r*\n/i","<BR>",$p[preview]);
+    $p[preview] = trim(str_replace("&amp;amp;","&amp;",$p[preview]));
+    $p[preview] = " onMouseOver=\"drs('$p[preview]'); return true;\" onMouseOut=\"nd(); return true;\"";
 
     if($cut) {
       if(strlen($p[title]) > $cut)
         { $p[title] = cut_string($p[title],$cut).".."; }
     }
 
-    $p[link] = "<a href=$prlist[wpath]/read.php?table=$t&no=$p[no]$p[l]".
-               " onMouseOver=\"drs('$p[preview]'); return true;\"".
-               " onMouseOut=\"nd(); return true;\">$p[title]</a>";
+    $p[link] = "<a href=$prlist[wpath]/read.php?table=$t&no=$p[no]$p[l] $p[preview]>$p[title]</a>";
 
     #리스트 출력
     print_prlist($p);
