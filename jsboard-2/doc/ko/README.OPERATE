@@ -399,7 +399,7 @@ JSBoard 의 로그인 모드는 총 7가지 단계를 가진다. 각 단계의 설정은 다음과 같다. �
 
     라고 지정이 되어 있다면 세션이름은 jsboardummha 가 된다. 즉 세션 등록은
 
-    session_register("$jsboardummha");
+    session_register("jsboardummha");
 
     와 같이 되어야 한다.
 
