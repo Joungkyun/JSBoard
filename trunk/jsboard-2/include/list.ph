@@ -225,9 +225,10 @@ function get_comment($table,$no,$print=0) {
   } else {
     $orlink = "<A HREF=read.php?table=$table&no=$no&corder=1&page=$page>&#9651;</A>";
   }
-  $lists .= "<TR><TD COLSPAN=4 ALIGN=right>$langs[c_lu] $orlink</TD></TR>\n";
   
   if(sql_num_rows($r) > 0) {
+    $lists .= "<TR><TD COLSPAN=4 ALIGN=right>$langs[c_lu] $orlink</TD></TR>\n";
+
     while ($list = sql_fetch_array($r)) {
       if($lines[comment_design]) $lists .= $lines[comment_design];
       $lists .= print_comment_art($table,$list);
