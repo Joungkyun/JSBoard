@@ -1,7 +1,8 @@
 <?
-@include("config/global.ph");
-if (@file_exists("data/$table/config.ph")) { @include("data/$table/config.ph"); }
-@include("include/lang.ph");
+include "config/global.ph";
+
+if (@file_exists("data/$table/config.ph")) { include "data/$table/config.ph"; }
+include "include/lang.ph";
 $str = urldecode($str);
 $str = stripslashes($str);
 

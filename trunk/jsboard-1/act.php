@@ -1,7 +1,7 @@
 <?
-if ($o[at] != "dn" && $o[at] != "sm") {
-  include("include/header.ph");
-  include("./admin/include/config.ph");
+if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
+  include "include/header.ph";
+  include "./admin/include/config.ph";
 
   $agent = get_agent();
 
@@ -10,18 +10,24 @@ if ($o[at] != "dn" && $o[at] != "sm") {
 
   # 게시물 작성 함수
   function article_post($table, $atc) {
-    global $board, $upload, $cupload, $rmail, $version, $langs, $exec;
+    global $board, $upload, $cupload, $rmail, $langs, $adminsession, $pcheck;
     global $userfile, $userfile_name, $userfile_size, $max_file_size, $agent;
 
     $atc[date] = time(); # 현재 시각
-    $atc[host] = get_hostname(1); # 글쓴이 주소
+    $atc[host] = get_hostname(0); # 글쓴이 주소
 
     if($atc[passwd]) { # 패스워드 암호화
       $atc[repasswd] = $atc[passwd];
       $atc[passwd] = crypt($atc[passwd]);
+    } elseif($pcheck != "") {
+      $atc[repasswd] = $pcheck;
+      $atc[passwd] = crypt($pcheck);
+    } elseif($adminsession) {
+      $atc[repasswd] = $adminsession;
+      $atc[passwd] = $adminsession;
     }
 
-    /* 글 등록시에 html header tag를 사용하는 것을 방지한다. */
+    # 글 등록시에 html header tag를 사용하는 것을 방지한다.
     if($atc[html]) $atc[text] = delete_tag($atc[text]);
 
     $atc = article_check($table, $atc);
@@ -57,12 +63,12 @@ if ($o[at] != "dn" && $o[at] != "sm") {
         $rmail[title] = "$atc[rtitle]";
         $rmail[url] = "$atc[url]";
         $rmail[email] = "$atc[email]";
-        $rmail[version] = "$version";
+        $rmail[version] = "$board[ver]";
         $rmail[table] = "$table";
         $rmail[no] = $atc[no];
         $rmail[reply_orig_email] = "$rmail[origmail]";
 
-        if(check_sendmail()) sendmail($rmail);
+        sendmail($rmail);
       }
     }
     set_cookie($atc);
@@ -70,18 +76,24 @@ if ($o[at] != "dn" && $o[at] != "sm") {
 
   # 게시물 답장 함수
   function article_reply($table, $atc) {
-    global $board, $upload, $cupload, $rmail, $version, $langs, $exec;
+    global $board, $upload, $cupload, $rmail, $langs, $adminsession, $pcheck;
     global $userfile, $userfile_name, $userfile_size, $max_file_size, $agent;
 
     $atc[date] = time(); # 현재 시각
-    $atc[host] = get_hostname(1); # 글쓴이 주소
+    $atc[host] = get_hostname(0); # 글쓴이 주소
 
     if($atc[passwd]) { # 패스워드 암호화
       $atc[repasswd] = $atc[passwd];
       $atc[passwd] = crypt($atc[passwd]);
+    } elseif($pcheck != "") {
+      $atc[repasswd] = $pcheck;
+      $atc[passwd] = crypt($pcheck);
+    } elseif($adminsession) {
+      $atc[repasswd] = $adminsession;
+      $atc[passwd] = $adminsession;
     }
 
-    /* 글 등록시에 html header tag를 사용하는 것을 방지한다. */
+    # 글 등록시에 html header tag를 사용하는 것을 방지한다.
     if($atc[html]) $atc[text] = delete_tag($atc[text]);
 
     $atc = article_check($table, $atc);
@@ -98,6 +110,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
     }
 
     # 답장글에 대한 정보를 가져옴
+    sql_query("LOCK TABLES $table WRITE");
     $reply = get_article($table, $atc[reno]);
     $atc[rede] = $reply[rede] + 1; # 답장글의 깊이
     $atc[idx]  = $reply[idx]; # 부모글의 인덱스 번호 상속
@@ -113,6 +126,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
       '$atc[host]', '$atc[name]', '$atc[passwd]', '$atc[email]',
       '$atc[url]', '$atc[title]', '$atc[text]', 0, 0, $atc[reno],
       $atc[rede], $atc[reto], $atc[html], $board[moder],'$userfile_name','$bfilename','$userfile_size')");
+    sql_query("UNLOCK TABLES");
 
     # mail 보내는 부분
     if ($rmail[uses] == 'yes') {
@@ -124,11 +138,11 @@ if ($o[at] != "dn" && $o[at] != "sm") {
         $rmail[title] = "$atc[rtitle]";
         $rmail[url] = "$atc[url]";
         $rmail[email] = "$atc[email]";
-        $rmail[version] = "$version";
+        $rmail[version] = "$board[ver]";
         $rmail[table] = "$table";
         $rmail[reply_orig_email] = "$rmail[origmail]";
 
-        if(check_sendmail()) sendmail($rmail);
+        sendmail($rmail);
       }
     }
 
@@ -139,15 +153,26 @@ if ($o[at] != "dn" && $o[at] != "sm") {
 
   # 게시물 수정 함수
   function article_edit($table, $atc, $passwd) {
-    global $enable, $cenable, $board;
+    global $userfile, $userfile_name, $userfile_size, $max_file_size, $agent;
+    global $enable, $cenable, $board, $adminsession;
     global $sadmin, $admin, $langs;
 
-    $spasswd = crypt($passwd,$sadmin[passwd]);
-    $upasswd = crypt($passwd,$admin[passwd]);
+    if($adminsession) {
+      $passwd = $adminsession;
+      $spasswd = $adminsession;
+    } else {
+      $spasswd = crypt($passwd,$sadmin[passwd]);
+      $upasswd = crypt($passwd,$admin[passwd]);
+    }
 
     if ($enable[edit] && $cenable[edit]) {
-      if(!check_passwd($table, $atc[no], $passwd))
-        print_error("$langs[act_pw]");
+      if($adminsession) {
+        if($sadmin[passwd] != $spasswd)
+          print_error("$langs[act_pww]");
+      } else {
+        if(!check_passwd($table, $atc[no], $passwd))
+          print_error("$langs[act_pw]");
+      }
     } else if (!$enable[edit]) {
       if ($sadmin[passwd] != $spasswd)
         print_error("$langs[act_pww]");
@@ -157,18 +182,43 @@ if ($o[at] != "dn" && $o[at] != "sm") {
     }
 
     $atc[date] = time(); # 현재 시각
-    $atc[host] = get_hostname(1); # 글쓴이 주소
+    $atc[host] = get_hostname(0); # 글쓴이 주소
     $atc[repasswd] = $passwd;
     $atc = article_check($table, $atc);
 
-    /* 글 등록시에 html header tag를 사용하는 것을 방지한다. */
+    # 글 등록시에 html header tag를 사용하는 것을 방지한다.
     if($atc[html]) $atc[text] = delete_tag($atc[text]);
 
-    sql_query("
-      UPDATE $table SET date = $atc[date], host = '$atc[host]',
-      name = '$atc[name]', email = '$atc[email]', url = '$atc[url]',
-      title = '$atc[title]', text = '$atc[text]', html = $atc[html]
-      WHERE no = $atc[no]");
+    # file 삭제 루틴
+    if($atc[fdel]) {
+      sql_query("UPDATE $table SET bcfile='', bofile='', bfsize='' WHERE no = $atc[no]");
+      unlink("data/$table/files/$atc[fdeldir]/$atc[fdelname]");
+      rmdir("data/$table/files/$atc[fdeldir]");
+    }
+
+    # file 수정 루틴
+    $bfilename = date("YmdHis",$atc[date]);
+    $atc[fup] = file_upload($bfilename);
+
+    if($atc[fup]) {
+      if(file_exists("data/$table/files/$atc[fdeldir]/$atc[fdelname]") && $atc[fdelname]) {
+        unlink("data/$table/files/$atc[fdeldir]/$atc[fdelname]");
+        rmdir("data/$table/files/$atc[fdeldir]");
+      }
+
+      sql_query("
+        UPDATE $table SET date = $atc[date], host = '$atc[host]',
+        name = '$atc[name]', email = '$atc[email]', url = '$atc[url]',
+        title = '$atc[title]', text = '$atc[text]', html = $atc[html],
+        bofile = '$userfile_name', bcfile = '$bfilename', bfsize = '$userfile_size'
+        WHERE no = $atc[no]");
+    } else {
+      sql_query("
+        UPDATE $table SET date = $atc[date], host = '$atc[host]',
+        name = '$atc[name]', email = '$atc[email]', url = '$atc[url]',
+        title = '$atc[title]', text = '$atc[text]', html = $atc[html]
+        WHERE no = $atc[no]");
+    }
 
     set_cookie($atc);
 
@@ -177,7 +227,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
 
   # 게시물 삭제 함수
   function article_delete($table, $no, $passwd, $adm = 0) {
-    global $sadmin, $admin, $o, $langs;
+    global $sadmin, $admin, $o, $langs, $adminsession;
     global $delete_filename, $delete_dir, $sadm;
 
     $adm = $o[am];
@@ -186,12 +236,18 @@ if ($o[at] != "dn" && $o[at] != "sm") {
     $spasswd = crypt($passwd,$sadmin[passwd]);
     $upasswd = crypt($passwd,$admin[passwd]);
 
-    if(!check_passwd($table, $atc[no], $passwd) && !$adm)
-      print_error("$langs[act_pw]");
-    else if ($sadmin[passwd] != $spasswd && $adm == "sadmin")
-      print_error("$langs[act_pww]");
-    else if ($sadmin[passwd] != $spasswd && $admin[passwd] != $upasswd && $adm == "admin")
-      print_error("$langs[act_pwa]");
+    if($adminsession) {
+      if($sadmin[passwd] != $adminsession)
+        print_error("$langs[act_pww]");
+      else $adm = "sadmin";
+    } else {
+      if(!check_passwd($table, $atc[no], $passwd) && !$adm)
+        print_error("$langs[act_pw]");
+      else if ($sadmin[passwd] != $spasswd && $adm == "sadmin")
+        print_error("$langs[act_pww]");
+      else if ($sadmin[passwd] != $spasswd && $admin[passwd] != $upasswd && $adm == "admin")
+        print_error("$langs[act_pwa]");
+    }
 
     if($atc[reyn] && !$adm) # 관리자 모드일 경우 관련글을 함께 삭제함
       print_error("$langs[act_c]");
@@ -204,6 +260,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
       sql_free_result($result);
     }
 
+    sql_query("LOCK TABLES $table WRITE");
     sql_query("DELETE FROM $table WHERE no = $atc[no]");
     sql_query("UPDATE $table SET idx = idx - 1 WHERE (idx + 0) > $atc[idx]");
 
@@ -229,6 +286,8 @@ if ($o[at] != "dn" && $o[at] != "sm") {
     }
 
     $page = get_current_page($table, $atc[idx]);
+    sql_query("UNLOCK TABLES");
+
     return $page;
   }
 
@@ -240,7 +299,10 @@ if ($o[at] != "dn" && $o[at] != "sm") {
   #        http://www.php.net/manual/function.chop.php
   function article_check($table, $atc) {
     # 검색 등 관련 변수 (CGI 값)
-    global $sadmin, $admin, $compare, $o, $ccompare, $langs;
+    global $sadmin, $admin, $compare, $o, $ccompare, $langs, $adminsession;
+
+    # location check
+    check_location(1);
 
     # 이름, 제목, 내용의 공백을 없앰
     $atc[name]  = trim($atc[name]);
@@ -254,8 +316,12 @@ if ($o[at] != "dn" && $o[at] != "sm") {
     if (!$compare[email]) $compare[email] = "mail check";
     if (!$ccompare[email]) $ccompare[email] = "mail check";
 
-    $spasswd = crypt($atc[repasswd],$sadmin[passwd]);
-    $upasswd = crypt($atc[repasswd],$admin[passwd]);
+    if(!$adminsession) {
+      $spasswd = crypt($atc[repasswd],$sadmin[passwd]);
+      $upasswd = crypt($atc[repasswd],$admin[passwd]);
+    } else {
+      $spasswd = $atc[repasswd];
+    }
 
     if (eregi($compare[name],$atc[name])) $cmp[name] = 1;
     if (eregi($compare[email],$atc[email])) $cmp[email] = 1;
@@ -318,15 +384,19 @@ if ($o[at] != "dn" && $o[at] != "sm") {
 
   switch($o[at]) {
     case 'p':
+      $atc[text] = $wpost;
       article_post($table, $atc);
+      SetCookie("pcheck","",0);
       Header("Location: list.php?table=$table");
       break;
     case 'r':
-      if ($cenable[ore]) $atc[text] = $text;
+      $atc[text] = $rpost;
       $page = article_reply($table, $atc);
+      SetCookie("pcheck","",0);
       Header("Location: list.php?table=$table&page=$page");
       break;
     case 'e':
+      $atc[text] = $epost;
       $no = article_edit($table, $atc, $passwd);
       Header("Location: read.php?table=$table&no=$no");
       break;
@@ -336,50 +406,71 @@ if ($o[at] != "dn" && $o[at] != "sm") {
       break;
   }
 } elseif ($o[at] == "dn") {
-  @include("config/global.ph");
+  include "config/global.ph";
+  include "include/error.ph";
+  include "include/check.ph";
+  include "include/get.ph";
+
+  # 해당 변수에 meta character 가 존재하는지 체크
+  meta_char_check($dn[tb],0,1);
+  meta_char_check($dn[cd]);
+  meta_char_check($upload[dir]);
+  upload_name_chk($dn[name]);
+
   $dn[path] = "data/$dn[tb]/$upload[dir]/$dn[cd]/$dn[name]";
 
-  if(eregi("/",$dn[name]) || eregi("\.\./",$dn[path]) || !$dn[cd] || !$dn[name]) {
-    echo "<script>\n".
-         "alert('U attempted invalid method in this program!');\n".
-         "history.back();\n".
-         "</script>\n";
-    exit;
-  }
-
-  if($fp=@fopen($dn[path],"r")) {
-    Header("Content-type: file/unknown");
+  if($fp=@fopen($dn[path],"r")) { 
+    Header("Content-type: file/unknown"); 
     Header("Content-Disposition: attachment; filename=".$dn[name]);
-    Header("Content-Description: PHP Generated Data");
-    while($data=fread( $fp,filesize($dn[path]))) { print($data); }
+    Header("Content-Description: PHP Generated Data"); 
+    while($data=fread($fp,filesize($dn[path]))) { print($data); } 
+    fclose($fp);
   } else {
-    echo "<script>\n".
-         "alert('Don\'t open $dn[name]');\n".
-         "history.back();\n".
-         "</script>\n";
-    exit;
+    print_error("Don't open $dn[name]");
+    exit; 
   }
 } elseif ($o[at] == "sm") {
-  @include "config/global.ph";
-  @include "include/error.ph";
-  @include "include/check.ph";
-  @include "include/sendmail.ph";
-  @include "include/lang.ph";
+  include "include/version.ph";
+  include "config/global.ph";
+  include "config/get.ph";
+  include "include/error.ph";
+  include "include/check.ph";
+  include "include/sendmail.ph";
+  include "include/lang.ph";
 
   # 등록 가능한 browser check
   if(!chk_spam_browser()) print_error($langs[act_sb]);
 
-  check_sendmail(1);
+  check_location(1);
 
   $rmail[name] = "$atc[name]";
   $rmail[text] = "$atc[text]";
   $rmail[title] = "$atc[title]";
   $rmail[email] = "$atc[email]";
-  $rmail[version] = "$version";
+  $rmail[version] = "$board[ver]";
   $rmail[reply_orig_email] = "$atc[to]";
 
   sendmail($rmail,1);
 
   echo "<script>window.close()</script>";
+} elseif ($o[at] == "se") {
+  if ($o[se] == "login") {
+    if($pcheck != "") SetCookie("pcheck","","0");
+    # Cookie 를 등록한다.
+    SetCookie("pcheck",$pcheck,time()+900);
+    if(!$page) $page = 1;
+    header("Location: $kind.php?table=$table&no=$no&page=$page");
+  } else if ($o[se] == "logout") {
+    SetCookie("pcheck","","0");
+    header("Location: auth_ext.php?table=$table&kind=$kind&no=$no");
+  } else if ($o[se] == "back") {
+    header("Location:list.php?tabel=$table");
+  } else {
+    echo "<SCRIPT>alert('Problem in Session');history.back();</SCRIPT>";
+    exit;
+  }
+} else {
+  echo "<SCRIPT>alert('It\'s Bad Access');history.back();</SCRIPT>";
+  exit;
 }
 ?>

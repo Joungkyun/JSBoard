@@ -5,38 +5,40 @@ $path[type] = "Install";
 if ($langss == "ko") $langs[code] = "ko";
 else $langs[code] = "en";
 
-include("../include/ostype.ph");
-require("../include/lang.ph");
-require("./include/passwd.ph");
-require("./include/check.ph");
+include "../include/ostype.ph";
+include "../include/lang.ph";
+include "../include/get.ph";
+include "../include/error.ph";
+include "./include/passwd.ph";
+include "./include/check.ph";
 
-// Password Checkk
+# Password Checkk
 inst_pwcheck($passwd,$mysqlpass,$langs[act_pw]);
 
-// MySQL login
+# MySQL login
 $connect = mysql_connect("localhost","root",$passwd) or die("$langs[inst_sql_err]");
 $indb[lists] = mysql_list_dbs($connect);
 $indb[num] = mysql_num_rows($indb[lists]);
 mysql_select_db("mysql", $connect);
 
-// install.php 에서 넘어온 변수값들 체크
+# install.php 에서 넘어온 변수값들 체크
 $indb[check] = inst_check();
 
-// DB 정보 유무 chek에 통과시 MySQL에 셋팅
+# DB 정보 유무 chek에 통과시 MySQL에 셋팅
 if ($indb[check]) {
-  // MySQL에 DB 생성
+  # MySQL에 DB 생성
   $create[dbname] = "create database $dbinst[name]";
   $result[dbname] = mysql_query($create[dbname],$connect);
 
-  // User를 user table에 등록
+  # User를 user table에 등록
   $create[dbuser] = "insert into user (Host,User,Password) values('localhost','$dbinst[user]',password('$dbinst[pass]')) ";
   $result[dbuser] = mysql_query($create[dbuser], $connect );
 
-  // DB와 User를 db table에 등록
+  # DB와 User를 db table에 등록
   $create[dbreg] = "insert into db values('localhost','$dbinst[name]','$dbinst[user]','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y') ";
   $result[dbreg] = mysql_query($create[dbreg], $connect );
 
-  // test 게시판을 생성
+  # test 게시판을 생성
   mysql_select_db($dbinst[name],$connect);
 
   $create[table] = "CREATE TABLE test ( 
@@ -78,11 +80,11 @@ if ($indb[check]) {
   $result[table] = mysql_query($create[table], $connect );
   $result[data] = mysql_query($create[data], $connect );
 
-  // 새로 등록된 user정보를 위해 MySQL reload
+  # 새로 등록된 user정보를 위해 MySQL reload
   $create[reload] = "flush privileges";
   $result[reload] = mysql_query($create[reload], $connect );
 
-  // 설정 파일에 DB 정보를 입력
+  # 설정 파일에 DB 정보를 입력
   $create[gfile] = "../config/global.ph";
   $fp[glo] = fopen($create[gfile],"r");
   $create[str] = fread($fp[glo], filesize($create[gfile]));
@@ -96,7 +98,7 @@ if ($indb[check]) {
   fwrite($fp[glo],$create[str]);
   fclose($fp[glo]);
 
-  // 등록후 변수값들 초기화
+  # 등록후 변수값들 초기화
   $dbinst[name] = "";
   $dbinst[user] = "";
   $dbinst[pass] = "";

@@ -2,32 +2,33 @@
 session_start();
 $path[type] = "user_admin";
 
-@include "../../include/error.ph";
-@include "../include/check.ph";
+include "../../include/error.ph";
+include "../../include/get.ph";
+include "../include/check.ph";
 
 # table 이름을 체크한다.
 table_name_check($table);
 
-@include("../../config/global.ph");
-if (@file_exists("../../data/$table/config.ph"))
-  { @include("../../data/$table/config.ph"); }
+include "../../config/global.ph";
+if(@file_exists("../../data/$table/config.ph"))
+  { include "../../data/$table/config.ph"; }
 
-if ($color[theme]) {
-  @include("../../config/default.themes");
-  if (file_exists("../../data/$table/default.themes"))
-    { @include("../../data/$table/default.themes"); }
+if($color[theme]) {
+  include "../../config/default.themes";
+  if(@file_exists("../../data/$table/default.themes"))
+    { include "../../data/$table/default.themes"; }
 }
-@include("../include/config.ph");
+include "../include/config.ph";
 
-@include "../../include/lang.ph";
-@include "../../include/get.ph";
-@include "../include/get.ph";
+include "../../include/lang.ph";
+include "../include/get.ph";
 
-// 전체 관리자 로그인 상태에서는 바로 설정 화면으로 넘어간다
-if (crypt($login[pass],$sadmin[passwd]) == $sadmin[passwd])
+# 전체 관리자 로그인 상태에서는 바로 설정 화면으로 넘어간다
+if($login[pass] == $sadmin[passwd] && session_is_registered("login")) {
   header("Location: uadmin.php?table=$table");
+}
 
-// input 문의 size를 browser별로 맞추기 위한 설정
+# input 문의 size를 browser별로 맞추기 위한 설정
 $size = form_size(9);
 
 echo "
@@ -76,7 +77,7 @@ $langs[ua_ment]<br>
 
 <tr align=center><td bgcolor=$color[l1_bg]>
 <font color=$color[l1_fg]>
-Scripted by <a href=mailto:admin@oops.org>JoungKyun Kim</a><br>
+Scripted by <A HREF=http://www.oops.org TARGET=_blank>JoungKyun Kim</a><br>
 and all right reserved
 </font>
 </td></tr>

@@ -8,7 +8,7 @@ function print_list($table, $list, $r=0)
 
     $list[name] = unhtmlspecialchars($list[name]);
     $list[name]  = htmlspecialchars(cut_string($list[name],$board[nam_l]));
-    $list[name]  = ugly_han($list[name]);
+    $list[name] = trim(ugly_han($list[name]));
     $list[title] = unhtmlspecialchars($list[title]);
 
     # read시의 관련글 출력시 제목길이 조정
@@ -55,20 +55,20 @@ function print_list($table, $list, $r=0)
 	$list[name] = "<FONT COLOR=\"$fg\" $board[css]>$list[name]</FONT>";
     }
 
-    // 글 내용 미리 보기 설정
+    # 글 내용 미리 보기 설정
     if ($enable[pre]) {
       $list[ptext] = cut_string($list[text],$enable[preren]);
       $list[ptext] = htmlspecialchars($list[ptext]);
       $list[ptext] = eregi_replace("(\r*)\n","<BR>",$list[ptext]);
-      $list[ptext] = eregi_replace("#|'","\\\1",$list[ptext]);
+      $list[ptext] = eregi_replace("(#|'|\\\\)","\\\\1",$list[ptext]);
       $list[preview] = " onMouseOver=\"drs('$list[ptext]'); return true;\" onMouseOut=\"nd(); return true;\"";
     }
 
-    echo("
+    echo "
 <TR>
   <TD ALIGN=\"right\" BGCOLOR=\"$bg\"><FONT COLOR=\"$fg\" $board[css]>$list[num]</FONT></TD>
   <TD BGCOLOR=\"$bg\">\n<A HREF=\"read.php?table=$table&no=$list[no]$search\"$list[preview]><FONT COLOR=\"$fg\" $board[css]>$list[title]</FONT></A>\n</TD>
-  <TD ALIGN=\"right\" BGCOLOR=\"$bg\">$list[name]&nbsp;</TD>");
+  <TD ALIGN=\"right\" BGCOLOR=\"$bg\">$list[name]&nbsp;</TD>";
 
   if ($upload[yesno] == "yes") {
     if($cupload[yesno] == "yes") {
@@ -85,22 +85,22 @@ function print_list($table, $list, $r=0)
         $up_link    = "";
         $up_link_x  = "";
       }
-      echo("  <TD ALIGN=\"center\" BGCOLOR=\"$bg\">$up_link$list[icon]$up_link_x</TD>\n");
+      echo "  <TD ALIGN=\"center\" BGCOLOR=\"$bg\">$up_link$list[icon]$up_link_x</TD>\n";
     }
   }
 
-   echo("  <TD BGCOLOR=\"$bg\" align=right><FONT SIZE=\"-1\" COLOR=\"$fg\" $board[css]><NOBR>$date</NOBR></FONT></TD>");
+   echo "  <TD BGCOLOR=\"$bg\" align=right NOWRAP><FONT SIZE=\"-1\" COLOR=\"$fg\" $board[css]><NOBR>$date</NOBR></FONT></TD>";
 
     if(get_date() <= $list[date]) {
-	echo("
+	echo "
   <TD WIDTH=\"1\" BGCOLOR=\"$color[td_co]\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"*\" BORDER=\"0\"></TD>
-  <TD ALIGN=\"right\" BGCOLOR=\"$bg\"><FONT COLOR=\"$fg\" $board[css]>$list[refer]</FONT></TD>");
+  <TD ALIGN=\"right\" BGCOLOR=\"$bg\"><FONT COLOR=\"$fg\" $board[css]>$list[refer]</FONT></TD>";
     } else {
-	echo("
-  <TD ALIGN=\"right\" BGCOLOR=\"$bg\" COLSPAN=\"2\"><FONT COLOR=\"$fg\" $board[css]>$list[refer]</FONT></TD>");
+	echo "
+  <TD ALIGN=\"right\" BGCOLOR=\"$bg\" COLSPAN=\"2\"><FONT COLOR=\"$fg\" $board[css]>$list[refer]</FONT></TD>";
     }
-    echo("
-</TR>\n");
+    echo "
+</TR>\n";
 }
 
 function get_list($table, $pages, $reply = 0)

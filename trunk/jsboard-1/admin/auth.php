@@ -1,9 +1,9 @@
 <?php
-@include("./include/admin_head.ph");
+include "./include/admin_head.ph";
 
 htmlhead();
 
-// input 문의 size를 browser별로 맞추기 위한 설정
+# input 문의 size를 browser별로 맞추기 위한 설정
 $size = form_size(9);
 
 echo "
@@ -28,7 +28,7 @@ $langs[a_reset] <input type=submit name=reset value=reset>
 
 <tr align=center><td bgcolor=$color[l1_bg]>
 <font color=$color[l1_fg]>
-Scripted by <a href=mailto:admin@oops.org>JoungKyun Kim</a><br>
+Scripted by <a href=$copy[url] target=_blank>JoungKyun Kim</a><br>
 and all right reserved
 </font>
 </td></tr>
@@ -40,5 +40,4 @@ and all right reserved
 </form>\n";
 
 htmltail();
-
 ?>

@@ -1,6 +1,6 @@
 <?
 if($window) {
-  echo("<SCRIPT LANGUAGE = \"Javascript\">\n" .
+  echo "<SCRIPT LANGUAGE = \"Javascript\">\n" .
        "<!--\nvar farwindow = null;\n" .
        "function remoteWindow() {\n" .
        "  farwindow = window.open(\"\",\"Whois\",\"width=600,height=480,scrollbars=1,resizable=1\");\n" .
@@ -12,7 +12,7 @@ if($window) {
        "  }\n" .
        "}\n" .
        "//-->\nremoteWindow();\nhistory.back();\n" .
-       "</SCRIPT>\n");
+       "</SCRIPT>\n";
   exit;
 }
 
@@ -24,8 +24,8 @@ if (!trim($table) || !trim($host)) {
   exit;
 }
 
-@include("config/global.ph");
-@include("include/lang.ph");
+include "config/global.ph";
+include "include/lang.ph";
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
                         "http://www.w3.org/TR/html4/loose.dtd">
@@ -60,7 +60,7 @@ if ($fp) {
         $list = eregi_replace("((Phone|전화 번호).*:)(.*)", "\\1<FONT COLOR=\"orange\" $board[css]>\\3</FONT>", $list);
         $list = eregi_replace("((IP Address|IP 주소).*:)(.*)", "\\1<FONT COLOR=\"$color[r0_bg]\" $board[css]><b>\\3</b></FONT>", $list);
         $list = eregi_replace("((Network Name|네트워크 이름).*:)(.*)", "\\1<FONT COLOR=\"red\" $board[css]><b>\\3</b></FONT>", $list);
-        echo("$list");
+        echo "$list";
       }
       $count++;
   }

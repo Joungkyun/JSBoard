@@ -6,11 +6,11 @@
 
 # JSBoard가 설치되어 있는 절대 경로
 # 마지막에 /를 붙이면 안됨
-$prlist[path] = "/home/httpd/html/Devel/jsboard-1.2";
+$prlist[path] = "/webroot/jsboard-version";
 
 # JSBoard가 설치되어 있는 웹 경로
 # 마지막에 /를 붙이면 안됨
-$prlist[wpath] = "http://192.168.1.1/Devel/jsboard-1.2";
+$prlist[wpath] = "http://domain.com/jsboard-version";
 
 # 글리스트들을 출력하는 design
 #   echo 문의 "" 사이에서 디자인을 넣으면 됨

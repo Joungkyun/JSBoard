@@ -13,11 +13,12 @@ if ($mode == "login") {
   else $langs[code] = "en";
 
   $path[type] = "Install";
-  include("../include/lang.ph");
-  echo("<script>\n" .
-       "  alert('$langs[first_acc]')\n" .
+  include "../include/lang.ph";
+  $str = str_replace("\n","\\n",$langs[first_acc]);
+  echo "<script>\n" .
+       "  alert('$str')\n" .
        "  document.location='../admin/index.php'\n" .
-       "</script> ");
+       "</script> ";
   exit;
 }
 ?>

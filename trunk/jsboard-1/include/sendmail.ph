@@ -1,27 +1,69 @@
 <?php
 /* mail 보내기 함수 2000.11.5 김정균 */
 
-function check_sendmail($n=0) {
-  global $rmail;
-
-  $r = gethostbyname(eregi_replace("http://([^/]+)/(.*)","\\1",getenv("HTTP_REFERER")));
-  $l = gethostbyname(eregi_replace("http://([^/]+)/(.*)","\\1",$rmail[bbshome]));
-
-  if ($r != $l) {
-    if($n) print_error("confirmed \$rmail[bbshome] in global.ph");
-    return 0;
-  } else return 1;
-}
-
 function get_send_info($table,$no) {
   global $db;
-  $c = sql_connect($db[host],$db[user],$db[pass]);
+  $c = sql_connect($db[server],$db[user],$db[pass]);
   sql_select_db($db[name]);
   $r = sql_query("SELECT email FROM $table WHERE no = $no");
   $row = sql_fetch_array($r);
   mysql_close($c);
 
   return $row;
+}
+
+function mailcheck($to,$from,$title,$body) {
+  global $langs;
+  if(!trim($to)) print_error($langs[mail_to_chk_err]);
+  if(!trim($from)) print_error($langs[mail_from_chk_err]);
+  if(!trim($title)) print_error($langs[mail_title_chk_err]);
+  if(!trim($body)) print_error($langs[mail_body_chk_drr]);
+}
+
+function socketmail($smtp='',$to,$from,$title,$body,$lang) {
+  global $langs;
+  $smtp = !trim($smtp) ? "127.0.0.1" : $smtp;
+
+  # 빈 문자열 체크
+  mailcheck($to,$from,$title,$body);
+
+  # language type 을 결정
+  if($lang == "ko") { $charset = "EUC-KR"; $charbit = "8bit"; }
+  else  { $cahrset = "ISO-8859-1"; $charbit = "7bit"; }
+
+  # mail header 를 작성
+  $mail_header = "From: JSBoard Message<nouser@jsboard.kldp.org>\n".
+                 "Organization: JSBoard Open Project\n".
+                 "User-Agent: JSBoard Mail System\n".
+                 "X-Accept-Language: ko,en\n".
+                 "MIME-Version: 1.0\n".
+                 "Content-Type: text/plain; charset=$charset\n".
+                 "Content-Transfer-Encoding: $charbit\n".
+                 "To: $to\n".
+                 "Reply-To: $from\n".
+                 "Return-Path: $from\n".
+                 "Subject: $title";
+
+  $body = $mail_header.$body;
+  $body = str_replace("\n","\r\n",str_replace("\r","",$body));
+
+  # smtp port 에 socket 을 연결
+  $p = fsockopen($smtp,25,&$errno,&$errstr);
+  if ($p) {
+    fputs($p,"HELO $smtp\r\n");
+    fgets($p,512);
+    fputs($p,"MAIL From: $from\r\n");
+    fgets($p,512);
+    fputs($p,"RCPT To: $to\r\n");
+    fgets($p,512);
+    fputs($p,"data\r\n");
+    fgets($p,512);
+    fputs($p,"$body\n.\r\n");
+    fgets($p,512);
+    fputs($p,"quit\r\n");
+    fgets($p,512);
+    fclose($p);
+  } else print_notice($langs[mail_send_err]);
 }
 
 function sendmail($rmail,$fm=0) {
@@ -114,15 +156,13 @@ Scripted by JoungKyun Kim
   if ($rmail[user] == "yes" && $rmail[reply_orig_email]) {
     $to = $rmail[reply_orig_email];
     if(!$rmail[email]) $rmail[email] = "nomail@jsboard.agent"; 
-    mail($to, $rmail[title], $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSBoard Message\r\nReply-To: $rmail[email]")
-    or die("$mail_error");
+    socketmail($rmail[smtp],$rmail[reply_orig_email],$rmail[email],$rmail[title],$message,$langs[code]);
   }
 
   if ($rmail[admin] == "yes" && $rmail[toadmin] != "") {
     $to = $rmail[toadmin];
     if(!$rmail[email]) $rmail[email] = "nomail@jsboard.agent";
-    mail($to, $rmail[title], $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSBoard Message\r\nReply-To: $rmail[email]")
-    or die("$mail_error");
+    socketmail($rmail[smtp],$rmail[toadmin],$rmail[email],$rmail[title],$message,$langs[code]);
   }
 
 }

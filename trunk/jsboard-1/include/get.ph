@@ -6,13 +6,16 @@
 #                 http://www.php.net/manual/function.getenv.php
 # gethostbyaddr - IP 주소와 일치하는 호스트명을 가져옴
 #                 http://www.php.net/manual/function.gethostbyaddr.php
-function get_hostname($reverse = 0,$e = 0) {
-  # proxy 를 통해서 들어올때 원 ip address 추적
-  $host = getenv("HTTP_X_FORWARDED_FOR");
+function get_hostname($reverse = 0,$addr = 0) {
+  if(!$addr) {
+    # proxy 를 통해서 들어올때 원 ip address 추적
+    $host = getenv("HTTP_X_FORWARDED_FOR");
 
-  # proxy를 통하지 않고 접근 할때 아파치 환경 변수인
-  # REMOTE_ADDR에서 접속자의 IP를 가져옴
-  $host  = $host ? $host : getenv("REMOTE_ADDR");
+    # proxy를 통하지 않고 접근 할때 아파치 환경 변수인
+    # REMOTE_ADDR에서 접속자의 IP를 가져옴
+    $host  = $host ? $host : getenv("REMOTE_ADDR");
+  } else $host = $addr;
+
   $check = $reverse ? @gethostbyaddr($host) : "";
   $host = $check ? $check : $host;
 
@@ -38,7 +41,11 @@ function get_agent() {
       $agent[os] = "WIN";
     } else $agent[os] = "OTHER";
   } else if(ereg("^Mozilla", $agent_env)) {
-    $agent[br] = "MOZL";
+    # Netscape 6 을 위한 구분
+    if(eregi("Gecko",$agent_env)) $agent[br] = "MOZL6";
+    else $agent[br] = "MOZL";
+
+    # client OS 구분
     if(ereg("NT", $agent_env)) {
       $agent[os] = "NT";
       if(ereg("\[ko\]", $agent_env)) $agent[ln] = "KO";
@@ -102,8 +109,8 @@ function get_board_info($table) {
   $acount = sql_result($result, 0, "COUNT(*)");
   sql_free_result($result);
 
-  $count[all]    = $acount;	// 전체 글 수
-  $count[today]  = $tcount;	// 오늘 글 수
+  $count[all]    = $acount;	# 전체 글 수
+  $count[today]  = $tcount;	# 오늘 글 수
     
   return $count;
 }
@@ -301,7 +308,7 @@ function get_theme_img($t) {
     $theme = readlink("./data/$t/default.themes");
   else  
     $theme = readlink("./config/default.themes");
-  $theme = eregi_replace("(themes|config|\/|\.)","",$theme);
+  $theme = eregi_replace("themes|config|\/|\.","",$theme);
 
   if (is_dir("images/$theme"))
     $path = "images/$theme";
@@ -317,14 +324,14 @@ function get_theme_img($t) {
 function human_fsize($bfsize, $sub = "0") {
   $bfsize_Bytes = number_format($bfsize);
 
-  if ($bfsize >= 1024 && $bfsize < 1048576) { // KBytes 범위 
+  if ($bfsize >= 1024 && $bfsize < 1048576) { # KBytes 범위 
     $bfsize_KB = round($bfsize/1024); 
     $bfsize_KB = number_format($bfsize_KB); 
 
     if ($sub) $bfsize = "$bfsize_KB KB($bfsize_Bytes Bytes)"; 
     else $bfsize = "$bfsize_KB Kb";
 
-  } elseif ($bfsize >= 1048576) { // MB 범위 
+  } elseif ($bfsize >= 1048576) { # MB 범위 
     $bfsize_MB = round($bfsize/1048576); 
     $bfsize_MB = number_format($bfsize_MB); 
 
@@ -362,11 +369,12 @@ function viewfile($tail) {
       } else {
         $p[up] = "<img src=\"$upload_file\" $imginfo[2]>\n<p>\n";
       }
-    } else if (eregi("^(phps|txt|htmls|htm|shs)$",$tail)) {
+    } else if (eregi("^(phps|txt|htm|shs)$",$tail)) {
       $fsize = filesize($upload_file);
       $fsize_ex = 1000;
       if ($fsize == $fsize_ex) $check = 1;
-      if ($tail == "txt" && $fsize > $fsize_ex) $fsize = $fsize_ex;
+      if ($tail == "txt" || eregi("_html",$list[bofile]) && $fsize > $fsize_ex)
+        $fsize = $fsize_ex;
 
       $fp = fopen($upload_file, "r");
       $view = fread($fp,$fsize);
@@ -388,11 +396,41 @@ function viewfile($tail) {
       $p[up] = "<embed src=$upload_file autostart=true width=300 height=300 align=center>";
     } elseif ($tail == "swf") {
       $flash_size = $board[width] - 10;
-      if($agent[br] == "MSIE") $p[up] = "<embed src=$upload_file width=$flash_size height=$flash_size align=center>";
+      if(eregi("^(MSIE|MOZL6)$",$agent[br])) $p[up] = "<embed src=$upload_file width=$flash_size height=$flash_size align=center>";
     }
   } else $p[down] = "$source1$source3$source2";
 
   return $p;
 }
 
+# file 내용을 변수로 받는 함수
+#
+function get_file($filename) {
+  $fp = fopen($filename,"r");
+  $getfile = fread($fp, filesize($filename));
+  fclose($fp);
+
+  return $getfile;
+}
+
+# http socket 으로 연결을 하여 html source 를 가져오는 함수
+# 비고 : HTTP/1.1 지원 가능
+#
+# $url -> 해당 서버의 주소 (http:// 는 생략)
+# $size -> 해당 문서의 size
+# $file -> 행당 문서의 URI
+# $type -> socket(1) 방식 또는 fopen(null)
+function get_html_src($url,$size=5000,$file="",$type="") {
+  if(!$type) {
+    $p = @fsockopen($url,80,&$errno,&$errstr);
+    fputs($p,"GET /$file HTTP/1.1\r\nhost: $url\r\n\r\n");
+  } else $p = @fopen("http://$url/$file","r");
+  $f = fread($p,$size);
+  fclose($p);
+
+  if(!$type) {
+    $s = explode("\n",$f);
+    return $s;
+  } else return $f;
+}
 ?>

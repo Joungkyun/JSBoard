@@ -1,13 +1,5 @@
 <?php
-
-// error message 출력
-function print_error($msg) {
-  $msg = urlencode($msg);
-  echo "<script>\nalert('$msg')\nhistory.back() \n</script>";
-  exit;
-}
-
-// Password 체크 부분
+# Password 체크 부분
 function inst_pwcheck($pass,$mypass,$msg) {
   global $langs;
   if ($pass != $mypass) {
@@ -19,7 +11,7 @@ function inst_pwcheck($pass,$mypass,$msg) {
   }
 }
 
-// DB에서 사용할 변수값 지정 유무 체크
+# DB에서 사용할 변수값 지정 유무 체크
 function inst_chk_var($db,$msg) {
   if (!$db) print_error($msg);
 }

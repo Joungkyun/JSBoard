@@ -1,13 +1,13 @@
 <?
-require("include/header.ph");
-require("html/head.ph");
+include "include/header.ph";
+include "html/head.ph";
 
 $agent = get_agent();
 
 sql_connect($db[server], $db[user], $db[pass]);
 sql_select_db($db[name]);
 
-$c_time[] = microtime(); // 속도 체크
+$c_time[] = microtime(); # 속도 체크
 
 if($num && !$no) {
     $num = get_article($table, $num, "no", "num");
@@ -15,12 +15,16 @@ if($num && !$no) {
 }
 
 $list = get_article($table, $no);
-$page = get_current_page($table, $list[idx]); // 글이 위치한 페이지를 가져옴
-$pos  = get_pos($table, $list[idx]); // 다음, 이전 글 번호를 가져옴
+$page = get_current_page($table, $list[idx]); # 글이 위치한 페이지를 가져옴
+$pos  = get_pos($table, $list[idx]); # 다음, 이전 글 번호를 가져옴
+
+# 워드랩이 설정이 안되어 있을 경우 기본값을 지정
+$board[wwrap] = "" ? 120 : $board[wwrap];
 
 $list[num]  = print_reply($table, $list);
 $list[date] = date("Y-m-d H:i:s", $list[date]);
 $list[text] = text_nl2br($list[text], $list[html]);
+$list[text] = $list[html] ? $list[text] : wordwrap($list[text],$board[wwrap]);
 $list[title] = eregi_replace("&amp;(amp|lt|gt)","&\\1",$list[title]);
 
 $list = search_hl($list);
@@ -37,12 +41,11 @@ if($list[url]) {
     $list[name] .= " [" . url_link("http://$list[url]", "$langs[ln_url]", $color[r3_fg]) . "]";
 }
 
-
 $str[s_form] = search_form($table, $pages);
 $str[p_form] = page_form($table, $pages, $color[r0_fg]);
 $str[sepa]   = separator($color[n0_fg]);
 
-$c_time[] = microtime(); // 속도 체크
+$c_time[] = microtime(); # 속도 체크
 $time = get_microtime($c_time[0], $c_time[1]);
 
 if ($board[img] == "yes") {
@@ -51,21 +54,30 @@ if ($board[img] == "yes") {
   else $icons[td] = $icons[size];
 }
 
+if($enable[amark])
+  $admin_link = "[ <a href=./admin/user_admin/auth.php?table=$table title=\"$langs[ln_titl]\"><font color=$color[n0_fg]>admin</font></a> ]";
+
 echo "
 <DIV ALIGN=$board[align]>
 <!------ 상단 메뉴 시작 --------->
 <TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
 <TR>
-  <TD VALIGN=bottom><nobr>$icons[add][ <a href=./admin/user_admin/auth.php?table=$table title=\"$langs[ln_titl]\"><font color=$color[n0_fg]>admin</font></a> ]</nobr></TD>
+  <TD VALIGN=bottom><nobr>$icons[add]$admin_link</nobr></TD>
   <TD ALIGN=right VALIGN=bottom>";
 
-// 게시판 읽기 페이지 상단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
-$remote = get_hostname(1);
+# 게시판 읽기 페이지 상단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
+$remote = get_hostname($enable[dlook]);
 if ($board[cmd] == "yes" && $board[img] != "yes") {
   $str[align] = "";
   read_cmd($str);
-} else
-  echo("$langs[writerad] [ <a href=./whois.php?table=$table&host=$list[host]&window=1><font color=$color[text]>$list[host]</font></a> ]$icons[add]");
+} elseif($enable[dhost]) {
+  $list[dhost] = get_hostname($enable[dlook],$list[host]);
+  if($enable[dwho]) $langs[hlinked] = "<a href=javascript:new_windows('./whois.php?table=$table&host=$list[host]',0,1,0,600,480)><font color=$color[text]>$list[dhost]</font></a>";
+  else $langs[hlinked] = "<font color=$color[text]>$list[dhost]</font>";
+  echo "$langs[writerad] [ $langs[hlinked] ]$icons[add]";
+} else {
+  echo "&nbsp;";
+}
 
 echo "
 </TD>
@@ -76,7 +88,7 @@ echo "
 <TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
 <TR>";
 
-// image menu bar 출력
+# image menu bar 출력
 if ($board[img] == "yes") {
   echo "<TD rowspan=2 width=$icons[td] align=right valign=top>";
   img_rmenu($str,$icons[size]);
@@ -148,7 +160,7 @@ echo "  </TD>
 
 </TD>\n";
 
-// image menu bar 출력
+# image menu bar 출력
 if ($board[img] == "yes") {
   if($color[bgcol] != $color[r5_bg]) $srowspan = " rowspan=2";
   echo "<TD$srowspan width=$icons[td] valign=bottom>";
@@ -186,7 +198,7 @@ echo "</TR>\n</TABLE>\n" .
      "<TR><TD>\n";
 
 if ($board[img] != "yes") {
-  // 게시판 읽기 페이지 하단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
+  # 게시판 읽기 페이지 하단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
   $str[align] = "ALIGN=\"center\"";
   read_cmd($str);
 }
@@ -196,6 +208,6 @@ echo "</TD></TR>\n".
 
 if ($remote != $list[host]) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = $no");
 
-@include("html/tail.ph");
+include "html/tail.ph";
 echo $preview[bo];
 ?>

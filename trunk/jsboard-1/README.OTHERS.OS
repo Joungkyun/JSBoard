@@ -1,4 +1,4 @@
-$ Redhat, Debian, FreeBSD 이외의 OS에서의 설치
+$ Redhat, Debian, FreeBSD, Windog 2K or NT 이외의 OS에서의 설치
 
 Do It Yourself!!!!! ^.^
 

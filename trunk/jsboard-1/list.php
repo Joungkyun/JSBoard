@@ -1,19 +1,32 @@
 <?
-@include("include/header.ph");
-@include("html/head.ph");
+include "include/header.ph";
+include "html/head.ph";
+
+if($enable[amark])
+  $admin_link = "[ <a href=./admin/user_admin/auth.php?table=$table title=\"$langs[ln_titl]\"><font color=$color[n0_fg]>admin</font></a> ]";
+
+if($table == $enable[security]) {
+  include "include/security.ph";
+  $board[secwarn] = get_security_info();
+  if($board[secwarn] == "warning")
+    $admin_link = "[ <a href=security.php?table=$table><font color=$color[n0_fg]>warnning</font></a> ]";
+} elseif(!$enable[security]) {
+  $langs[sec_error] = str_replace("\n","\\n",$langs[sec_error]);
+  echo "<SCRIPT>alert('$langs[sec_error]')</SCRIPT>";
+}
 
 sql_connect($db[server], $db[user], $db[pass]);
 sql_select_db($db[name]);
 
 $agent = get_agent();
 
-// 게시판의 전체, 보통, 답장, 오늘 올라온 글 수 등을 가져옴
+# 게시판의 전체, 보통, 답장, 오늘 올라온 글 수 등을 가져옴
 $count = get_board_info($table);
-// 전체 페이지와 현재 페이지에 관련된 정보를 가져옴
+# 전체 페이지와 현재 페이지에 관련된 정보를 가져옴
 $pages = get_page_info($count, $page);
 
-// 오늘 올라온 글이 있는 경우 $str[today]에 문자열을 넣어 목록을 출력할 때
-// 출력되도록 함
+# 오늘 올라온 글이 있는 경우 $str[today]에 문자열을 넣어 목록을 출력할 때
+# 출력되도록 함
 $msg = count_msg();
 
 if($count[all]) {
@@ -38,20 +51,21 @@ if ($board[img] == "yes") {
 # 관련글 리스트 출력시 preview 기능 사용할때 필요한 JavaScript 출력
 if ($enable[pre]) print_preview_src();
 
-// 게시판 목록 제목줄 출력
+# 게시판 목록 제목줄 출력
 echo "
 <DIV ALIGN=\"$board[align]\">
 <!------ 상단 메뉴 시작 --------->
 <TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
 <TR>
-  <TD VALIGN=bottom><nobr>$icons[add][ <a href=./admin/user_admin/auth.php?table=$table title=\"$langs[ln_titl]\"><font color=$color[n0_fg]>admin</font></a> ]</nobr></TD>
+  <TD VALIGN=bottom><nobr>$icons[add]$admin_link</nobr></TD>
   <TD ALIGN=right VALIGN=bottom>";
 
-// 게시판 목록 상단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
+# 게시판 목록 상단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
 if ($board[cmd] == "yes" && $board[img] != "yes") {
   $str[align] = "";
   list_cmd($str);
-} else echo "$langs[remote] [ " . get_hostname(1) . " ]$icons[add]";
+} elseif($enable[dhost]) echo "$langs[remote] [ " . get_hostname($enable[dlook]) . " ]$icons[add]";
+  else echo "&nbsp;";
 
 echo "</TD>
 </TR>
@@ -60,7 +74,7 @@ echo "</TD>
 <TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
 <TR>";
 
-// image menu bar 출력
+# image menu bar 출력
 if ($board[img] == "yes") {
   echo "<TD rowspan=2 width=$icons[td] align=right valign=top>";
   img_lmenu($str,$icons[size]);
@@ -70,7 +84,7 @@ if ($board[img] == "yes") {
 echo "<TD valign=top BGCOLOR=\"$color[l0_bg]\">
 <TABLE WIDTH=\"100%\" border=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
 <TR>
-  <TD WIDTH=\"$td_width[1]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\"><FONT COLOR=\"$color[l1_fg]\" $board[css]><NOBR>$langs[no]</NOBR></FONT></TD>
+  <TD WIDTH=\"$td_width[1]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\" NOWRAP><FONT COLOR=\"$color[l1_fg]\" $board[css]><NOBR>$langs[no]</NOBR></FONT></TD>
   <TD WIDTH=\"$td_width[2]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\"><FONT COLOR=\"$color[l1_fg]\" $board[css]>$langs[titl]</FONT></TD>
   <TD WIDTH=\"$td_width[3]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\"><FONT COLOR=\"$color[l1_fg]\" $board[css]>$langs[name]</FONT></TD>\n";
   
@@ -81,14 +95,14 @@ if ($upload[yesno] == "yes") {
 
 echo "
   <TD WIDTH=\"$td_width[5]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\"><FONT COLOR=\"$color[l1_fg]\" $board[css]>$langs[date]</FONT></TD>
-  <TD COLSPAN=\"2\" WIDTH=\"$td_width[6]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\"><FONT COLOR=\"$color[l1_fg]\" $board[css]><NOBR>$langs[hit]</NOBR></FONT></TD>
+  <TD COLSPAN=\"2\" WIDTH=\"$td_width[6]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\" NOWRAP><FONT COLOR=\"$color[l1_fg]\" $board[css]><NOBR>$langs[hit]</NOBR></FONT></TD>
 </TR>\n";
 
-$c_time[] = microtime(); // 속도 체크
+$c_time[] = microtime(); # 속도 체크
 
 get_list($table, $pages);
 
-$c_time[] = microtime(); // 속도 체크
+$c_time[] = microtime(); # 속도 체크
 $time = get_microtime($c_time[0], $c_time[1]);
 
 echo "
@@ -101,7 +115,7 @@ echo "
 
 </TD>\n";
 
-// image menu bar 출력
+# image menu bar 출력
 if ($board[img] == "yes") {
   if($color[bgcol] != $color[l4_bg]) $srowspan = " rowspan=2";
   echo "<TD$srowspan width=$icons[td] valign=bottom>";
@@ -134,7 +148,7 @@ echo "</TR></TABLE>\n".
      "<TR><td>\n";
 
 if ($board[img] != "yes") {
-  // 게시판 목록 하단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
+  # 게시판 목록 하단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
   $str[align] = "ALIGN=\"center\"";
   list_cmd($str);
 }
@@ -142,5 +156,5 @@ if ($board[img] != "yes") {
 echo "</TD></TR>\n".
      "</TABLE>\n</DIV>\n";
 
-@include("html/tail.ph");
+include "html/tail.ph";
 ?>

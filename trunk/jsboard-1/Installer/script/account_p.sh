@@ -6,6 +6,7 @@ chmod 707 ../../data
 chmod 707 ../../data/test
 chmod 707 ../../data/test/files
 chmod 660 ../../config/global.ph
+chmod 606 ../../config/security_data.ph
 chmod 660 ../../config/spam_list.txt
 chmod 606 ../../config/allow_browser.txt
 chmod 660 ../../admin/include/config.ph

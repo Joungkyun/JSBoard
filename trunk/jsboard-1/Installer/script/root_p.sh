@@ -38,6 +38,7 @@ fi
 chgrp $UGROUPS ../../config
 chgrp -R $UGROUPS ../../data/
 chgrp $UGROUPS ../../config/global.ph
+chgrp $UGROUPS ../../config/security_data.ph
 chgrp $UGROUPS ../../config/spam_list.txt
 chgrp $UGROUPS ../../config/allow_browser.txt
 chgrp $UGROUPS ../../admin/include/config.ph
@@ -48,6 +49,7 @@ chmod 775 ../../data
 chmod 664 ../../config/spam_list.txt
 chmod 664 ../../config/allow_browser.txt
 chmod 660 ../../config/global.ph
+chmod 660 ../../config/security_data.ph
 chmod 664 ../../admin/include/config.ph
 if [ -d "../../data/test" ]; then
   chmod 775 ../../data/test
