@@ -324,7 +324,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
         if($notsuper) print_error($langs[act_ad],250,150,1);
       }
 
-      if($ccmp[name]) {
+      if($ccmp[name] && $notsuper) {
         $arrayadm = explode(";",$board[ad]);
 
         for($k=0;$k<sizeof($arrayadm);$k++) {
@@ -333,8 +333,12 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
           $r[ad] = sql_result($result,0,"passwd");
           sql_free_result($result);
 
-          if($r[ad] != crypt($atc[passwd],$r[ad]) && $notsuper) print_error($langs[act_d],250,150,1);
+          if($r[ad] == crypt($atc[passwd],$r[ad])) {
+            $notadm = 0;
+            break;
+          } else $notadm = 1;
         }
+        if ($notadm) print_error($langs[act_d],250,150,1);
       }
     }
 
@@ -426,7 +430,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
         if($notsuper) print_error($langs[act_ad],250,150,1);
       }
 
-      if ($ccmp[name] || $ccmp[email]) {
+      if (($ccmp[name] || $ccmp[email]) && $notsuper) {
         $arrayadm = explode(";",$board[ad]);
         for($k=0;$k<sizeof($arrayadm);$k++) {
           # 게시판 관리자 패스워드
@@ -439,7 +443,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
             break;
           } else $notadm = 1;
         }
-        if ($notsuper && $notadm) print_error($langs[act_d],250,150,1);
+        if ($notadm) print_error($langs[act_d],250,150,1);
       }
     }
 

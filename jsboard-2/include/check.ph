@@ -129,19 +129,21 @@ function check_passwd($table,$no,$passwd) {
 
     if($r[su] == crypt($passwd,$r[su])) $chk =2;
 
-    $arrayadm = explode(";",$board[ad]);
-    for($i=0;$i<sizeof($arrayadm);$i++) {
-      # 게시판 관리자 패스워드
-      $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$i]'");
-      $r[ad] = sql_result($result,0,"passwd");
-      sql_free_result($result);
+    if($chk != 2) {
+      $arrayadm = explode(";",$board[ad]);
+      for($i=0;$i<sizeof($arrayadm);$i++) {
+        # 게시판 관리자 패스워드
+        $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$i]'");
+        $r[ad] = sql_result($result,0,"passwd");
+        sql_free_result($result);
 
-      # 게시판 관리자가 존재하지 않을 경우를 대비
-      $r[ad] = !$r[ad] ? "null admin" : $r[ad];
+        # 게시판 관리자가 존재하지 않을 경우를 대비
+        $r[ad] = !$r[ad] ? "null admin" : $r[ad];
 
-      if($r[ad] == crypt($passwd,$r[ad])) {
-        $chk = 2;
-        break;
+        if($r[ad] == crypt($passwd,$r[ad])) {
+          $chk = 2;
+          break;
+        }
       }
     }
   }
