@@ -30,7 +30,7 @@ $board['hl'] = "<FONT STYLE=\"text-decoration:underline;color;#000000;font-weigh
 $board['align']    = "center";
 
 # board web path
-$board['path']     = "http://domain.com/jsboard/";
+$board['path']     = "http://localhost/jsboard/";
 
 
 ##############################################################################
@@ -49,10 +49,10 @@ $jsboard         = "login";
 $jsboard         = "jsboard".$jsboard;
 
 # location of default page after login
-$print['dpage'] = "http://domain.com/jsboard/list.php?table=test";
+$print['dpage'] = "http://localhost/jsboard/list.php?table=test";
 
 # location of default page after logout
-$print['dopage'] = "http://domain.com/jsboard/login.php?table=test";
+$print['dopage'] = "http://localhost/jsboard/login.php?table=test";
 
 # permition of user registration
 # 1 -> everyone
