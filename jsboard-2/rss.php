@@ -52,28 +52,30 @@ while( $rss_article[$i] = sql_fetch_array($result) ) {
   $rss_article[$i]['text'] = preg_replace ("!\n!", "<br />\n", $rss_article[$i]['text']);
   $rss_article[$i]['text'] = auto_link ($rss_article[$i]['text']);
 
-  $_body = "<table width=\"100%\" border=0 cellpadding=0 cellspacing=1>\n" .
-           "<tr><td bgcolor=#000000>\n" .
-           "<table width=\"100%\" border=0 cellpadding=3 cellspacing=1>\n" .
-           "<tr><td style=\"font: 12px ±¼¸²Ã¼; font-weight: bold; color: #ffffff\">\n" .
-           "REPLY : <a href={$board['path']}reply.php?table={$table}&no={$rss_article[$i]['no']} style=\"color: #ffffff; text-decoration: none;\">" .
-           "{$board['path']}reply.php?table={$table}&no={$rss_article[$i]['no']}</a><br />\n" .
-           "DELETE: <a href={$board['path']}delete.php?table={$table}&no={$rss_article[$i]['no']} style=\"color: #ffffff; text-decoration: none;\">" .
-           "{$board['path']}delete.php?table={$table}&no={$rss_article[$i]['no']}</a>\n" .
-           "</td></tr>\n" .
-           "</table>\n" .
-           "</td></tr>\n" .
-           "<tr><td bgcolor=#000000>\n" .
-           "<table width=\"100%\" border=0 cellpadding=3 cellspacing=1>\n" .
-           "<tr><td bgcolor=#ffffff style=\"font-size: 11px;\"><pre>\n" .
-           "{$rss_article[$i]['text']}\n" .
-           "</pre></td></tr>\n" .
-           "</table>\n" .
-           "</td></tr>\n" .
-           "</table>\n";
+  if ($rss['is_des']) {
+    $_body = "<table width=\"100%\" border=0 cellpadding=0 cellspacing=1>\n" .
+             "<tr><td bgcolor=#000000>\n" .
+             "<table width=\"100%\" border=0 cellpadding=3 cellspacing=1>\n" .
+             "<tr><td style=\"font: 12px ±¼¸²Ã¼; font-weight: bold; color: #ffffff\">\n" .
+             "REPLY : <a href={$board['path']}reply.php?table={$table}&no={$rss_article[$i]['no']} style=\"color: #ffffff; text-decoration: none;\">" .
+             "{$board['path']}reply.php?table={$table}&no={$rss_article[$i]['no']}</a><br />\n" .
+             "DELETE: <a href={$board['path']}delete.php?table={$table}&no={$rss_article[$i]['no']} style=\"color: #ffffff; text-decoration: none;\">" .
+             "{$board['path']}delete.php?table={$table}&no={$rss_article[$i]['no']}</a>\n" .
+             "</td></tr>\n" .
+             "</table>\n" .
+             "</td></tr>\n" .
+             "<tr><td bgcolor=#000000>\n" .
+             "<table width=\"100%\" border=0 cellpadding=3 cellspacing=1>\n" .
+             "<tr><td bgcolor=#ffffff style=\"font-size: 11px;\"><pre>\n" .
+             "{$rss_article[$i]['text']}\n" .
+             "</pre></td></tr>\n" .
+             "</table>\n" .
+             "</td></tr>\n" .
+             "</table>\n";
 
-  $_body = htmlspecialchars ($_body, ENT_QUOTES);
-  $rss_article[$i]['text'] = $_body;
+    $_body = htmlspecialchars ($_body, ENT_QUOTES);
+    $rss_article[$i]['text'] = $_body;
+  }
 
   if (!$rss_article[$i]['name'])
     $rss_article[$i]['name'] = $rss_article[$i]['rname'];
