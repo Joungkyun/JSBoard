@@ -20,7 +20,7 @@ OS : RedHat(6.2,7.x),Debian(Woody),FreeBSD 4.x,Windog NT,Windog 2000
      Other OS is not test. NetBSD and Solaris don't officialy support,
      but any site is operation with JSBoard as DIY.
 
-PHP: over 4.1.0
+PHP: over 4.1.0 and compiled with --with-regex=php
 
 Apache: 1.3.x
 
