@@ -230,18 +230,34 @@ function get_comment($table,$no,$print=0) {
 }
 
 function print_comment_art($table,$list,$print=0) {
-  global $board;
+  global $jsboard, $board, $page, $no;
 
   $list[name] = htmlspecialchars(trim($list[name]));
   $list[date] = date("m/d H:i:s",$list[date]);
   $list[text] = htmlspecialchars(trim($list[text]));
+
+  if(($_SESSION[$jsboard][id] == $board[ad] || $_SESSION[$jsboard][pos] == 1) ||
+     (eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id])) {
+    $delPath = "./act.php?table=$table&o[at]=c_del&atc[no]=$no&atc[cid]=$list[no]&page=$page";
+  } else {
+    $delPath = "./login.php?table=$table&mode=comment&no=$no&cid=$list[no]&page=$page";
+  }
+
+  if((eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id] != $list[name]) &&
+     ($_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1)) {
+     $del_mark = "&nbsp;";
+  } else {
+     $del_mark = "<A HREF=$delPath TITLE='Comment Delete'>&#9447;</A>";
+  } 
 
   if($board[rnname] && preg_match("/^(2|3|5|7)$/",$board[mode]))
     $names = $list[rname] ? $list[rname] : $list[name];
   else $names = $list[name];
 
   $ret = "<TR>\n".
-         "<TD WIDTH=60 VALIGN=top NOWRAP><FONT Style=\"font-weight:bold\">$names</FONT></TD>\n".
+         "<TD WIDTH=1 VALIGN=top NOWRAP>$del_mark</TD>\n".
+         "<TD WIDTH=60 VALIGN=top NOWRAP><NOBR>".
+         "<FONT Style=\"font-weight:bold\">$names</FONT></NOBR></TD>\n".
          "<TD>\n<PRE>\n$list[text]\n<PRE>\n</TD>\n".
          "<TD WIDTH=20 VALIGN=top NOWRAP><NOBR><FONT STYLE=\"font: 11px tahoma\">$list[date]</FONT></NOBR></TD>\n".
          "</TR>\n";

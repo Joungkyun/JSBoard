@@ -255,6 +255,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       sql_free_result($result);
     }
 
+    sql_query("DELETE FROM {$table}_comm WHERE reno = '$atc[no]'");
     sql_query("LOCK TABLES $table WRITE");
     sql_query("DELETE FROM $table WHERE no = '$atc[no]'");
     sql_query("UPDATE $table SET idx = idx - 1 WHERE (idx + 0) > '$atc[idx]'");
@@ -311,6 +312,18 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
            "VALUES ('','$atc[no]','$atc[rname]','$atc[name]','$atc[passwd]','$atc[text]','$host','$dates')";
     sql_query($sql);
     set_cookie($atc,1);
+  }
+
+  function comment_del($table,$no,$cid,$pass) {
+    global $jsboard, $langs, $board;
+
+    # 어드민 모드가 아닐 경우 패스워드 인증
+    if(!$_SESSION[$jsboard][pos] && $_SESSION[$jsboard][id] != $board[ad]) {
+      $admchk = check_passwd($table,$cid,trim($pass));
+      if(!$admchk) print_error($langs[act_pw],250,150,1);
+    }
+
+    sql_query("DELETE FROM {$table}_comm WHERE no = '$cid'");
   }
 
   # 게시물 검사 함수
@@ -458,6 +471,9 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       break;
     case 'c_write':
       comment_post($table,$atc);
+      Header("Location: read.php?table=$table&no=$atc[no]&page=$page");
+    case 'c_del':
+      comment_del($table,$atc[no],$atc[cid],$lp);
       Header("Location: read.php?table=$table&no=$atc[no]&page=$page");
   }
 } elseif ($o[at] == "dn") {
