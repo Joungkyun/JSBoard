@@ -46,6 +46,21 @@ if($count['all']) {
                   "no article ..";
 }
 
+# RSS 출력 루틴
+if ( $rss['use'] ) {
+
+  $rss['color'] = trim($rss['color']) ? " color: {$rss['color']};" : "";
+
+  if ( $rss['align'] ) {
+    $print['count'] .= " [<A HREF=\"{$board['path']}rss.php?table={$table}\">" .
+                       "<FONT STYLE=\"font-weight: bold;{$rss['color']}\">RSS</FONT></A>]";
+  } else {
+    $print['count'] = "[<A HREF=\"{$board['path']}rss.php?table={$table}\">" .
+                      "<FONT STYLE=\"font-weight: bold;{$rss['color']}\">RSS</FONT></A>] {$print['count']}";
+  }
+}
+
+
 # SQL 시작 시간 체크
 $b_time[] = microtime();
 

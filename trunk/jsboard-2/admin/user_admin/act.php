@@ -116,6 +116,12 @@ if($ua['toadmin'] && $ua['toadmin'] != $rmail['toadmin'])
   $chg['toadmin'] = "{$ua['toadmin']}";
 else $chg['toadmin'] = "{$rmail['toadmin']}";
 
+# RSS Configuration
+$chg['rss_use'] = !$ua['rss_use'] ? 0 : 1;
+$chg['rss_is_des'] = !$ua['rs_is_des'] ? 0 : 1;
+$chg['rss_align'] = !$ua['rss_align'] ? 0 : 1;
+$chg['rss_color'] = !trim($ua['rss_color']) ? "red" : $ua['rss_color'];
+$chg['rss_channel'] = !trim($ua['rss_channel']) ? "JSBoard {$table} Board" : $ua['rss_channel'];
 
 # ETC Configuration
 if($ua['url'] != $view['url']) $chg['url'] = "{$ua['url']}";
@@ -178,7 +184,7 @@ $chg_conf = "<?
 #           7 -> 회원 전용 게시판 (reply only admin)
 ###############################################################################
 #
-\$board['ad'] = \"{$ua['ad']}\";
+\$board['ad'] = '{$ua['ad']}';
 \$board['mode'] = {$ua['mode']};
 
 # 로그인 모드시에 이름 출력을 실명으로 할지 Nickname 으로 할지 결정
@@ -186,7 +192,7 @@ $chg_conf = "<?
 \$board['rnname'] = {$ua['rnname']};
 
 # 로그아웃 후에 이동할 페이지를 지정
-\$print['dopage'] = \"{$ua['dopage']}\";
+\$print['dopage'] = '{$ua['dopage']}';
 
 ###############################################################################
 #  게시판 허가 설정
@@ -216,17 +222,17 @@ $chg_conf = "<?
 #  게시판 정렬 상태를 설정
 ###############################################################################
 #
-\$board['align'] = \"{$ua['align']}\";	# <DIV align=\"\$board['align']\">
+\$board['align'] = '{$ua['align']}';	# <DIV align=\"\$board['align']\">
 
 
 ###############################################################################
 #  게시판 기본 설정
 ###############################################################################
 #
-\$board['title'] = \"{$chg['title']}\";	# 게시판 제목
+\$board['title'] = '{$chg['title']}';	# 게시판 제목
 \$board['wrap']  = {$ua['wrap']};		# 본문 길게 늘어지는것 방지
 \$board['wwrap'] = {$ua['wwrap']};		# \$board['wrap']이 적용안될시 강제 적용
-\$board['width'] = \"{$chg['width']}\";		# 게시판 너비
+\$board['width'] = '{$chg['width']}';		# 게시판 너비
 \$board['tit_l'] = {$chg['tit_l']};		# 제목 필드 최대 길이
 \$board['nam_l'] = {$chg['nam_l']};		# 글쓴이 필드 최대 길이
 \$board['perno'] = {$chg['perno']};		# 페이지 당 게시물 수
@@ -258,7 +264,7 @@ $chg_conf = "<?
 #  Theme Configuration
 ###############################################################################
 #
-\$print['theme'] = \"{$ua['theme_c']}\";	# Theme 이름 
+\$print['theme'] = '{$ua['theme_c']}';	# Theme 이름 
 
 
 ###############################################################################
@@ -285,15 +291,15 @@ $chg_conf = "<?
 #
 \$rmail['admin']   = {$chg['admin']};
 \$rmail['user']    = {$chg['user']};
-\$rmail['toadmin'] = \"{$chg['toadmin']}\";	# 메일을 받을 게시판 관리자의 메일 주소
+\$rmail['toadmin'] = '{$chg['toadmin']}';	# 메일을 받을 게시판 관리자의 메일 주소
 
 
 ###############################################################################
 #  아래의 정보를 사용하여 글 등록시 관리자의 password를 요구
 ###############################################################################
 #
-\$ccompare['name']  = \"{$chg['d_name']}\";
-\$ccompare['email'] = \"{$chg['d_email']}\";
+\$ccompare['name']  = '{$chg['d_name']}';
+\$ccompare['email'] = '{$chg['d_email']}';
 
 
 ###############################################################################
@@ -301,7 +307,7 @@ $chg_conf = "<?
 #  설정값의 구분자는 ';' 로 한다.
 #  설정 예) 1.1.1.1;2.2.2.2;3.3.3.3
 ###############################################################################
-\$enable['ipbl'] = \"{$chg['ipbl']}\";
+\$enable['ipbl'] = '{$chg['ipbl']}';
 
 
 ###############################################################################
@@ -314,7 +320,7 @@ $chg_conf = "<?
 ###############################################################################
 #
 \$enable['dhyper'] = {$chg['dhyper']};
-\$enable['plink']  = \"{$chg['plink']}\";
+\$enable['plink']  = '{$chg['plink']}';
 
 ###############################################################################
 # 게시판 공지사항
@@ -325,8 +331,24 @@ $chg_conf = "<?
 # 공지사항 내용이 없을 경우에는 제목 링크가 안되게 출력
 ###############################################################################
 #
-\$notice['subject'] = \"{$chg['notice_s']}\";
+\$notice['subject'] = '{$chg['notice_s']}';
 \$notice['contents'] = {$chg['notice_c']};
+
+###############################################################################
+# 게시판 RSS 설정
+#
+# \$rss['use']    -> rss 사용여부
+# \$rss['channel']    -> rss 리더의 채널목록 이름
+# \$rss['is_des'] -> 기사의 설명 출력 여부
+# \$rss['align']  -> rss link 의 위치 ( 0: left / 1: right )
+# \$rss['color']  -> rss link 의 color
+###############################################################################
+#
+\$rss['use']     = {$chg['rss_use']};
+\$rss['is_des']  = {$chg['rss_is_des']};
+\$rss['align']   = {$chg['rss_align']};
+\$rss['color']   = '{$chg['rss_color']}';
+\$rss['channel'] = '{$chg['rss_channel']}';
 ?>";
 
 # 변경된 설정 값을 config.ph 에 쓴다.

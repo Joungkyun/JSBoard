@@ -71,6 +71,15 @@ else $uplink_no = "checked";
 if($rmail['admin']) $amail_ok = "checked";
 else $amail_no = "checked";
 
+$rss_use_ok = $rss['use'] ? 'checked' : '';
+$rss_use_no = ! $rss['use'] ? 'checked' : '';
+
+$rss_des_ok = $rss['is_des'] ? 'checked' : '';
+$rss_des_no = ! $rss['is_des'] ? 'checked' : '';
+
+$rss_align_ok = $rss['align'] ? 'checked' : '';
+$rss_align_no = ! $rss['align'] ? 'checked' : '';
+
 if($rmail['user']) $umail_ok = "checked";
 else $umail_no = "checked";
 
@@ -576,6 +585,47 @@ if ($rmail['uses']) {
 if ($rmail['uses']) echo "<INPUT TYPE=text name=ua[toadmin] size=$lsize value=\"{$rmail['toadmin']}\">";
 else echo "<CENTER><FONT COLOR=RED><B>{$langs['ua_while_wn']}</B></FONT></CENTER>";
 ?>
+
+</TD>
+<TD BGCOLOR=<?=$color['d_bg']?>>&nbsp;</TD>
+</TR>
+
+<TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>
+
+<TR><TD BGCOLOR=<?=$color['t_bg']?> ALIGN=center COLSPAN=6><font id=TCOLOR>RSS Configuration</font></TD></TR>
+
+<TR>
+<TD BGCOLOR=<?=$color['m_bg']?>><font id=MCOLOR><?=$langs['ua_rs_u']?></font></TD>
+<TD ALIGN=center>
+<INPUT TYPE=radio name=ua[rss_use] <?=$rss_use_ok?> value=1 id=RADIO><?=$langs['ua_rs_ok']?>
+<INPUT TYPE=radio name=ua[rss_use] <?=$rss_use_no?> value=0 id=RADIO><?=$langs['ua_rs_no']?>
+</TD>
+<TD BGCOLOR=<?=$color['d_bg']?>>&nbsp;</TD>
+<TD BGCOLOR=<?=$color['m_bg']?>><font id=MCOLOR><?=$langs['ua_rs_de']?></font></TD>
+<TD ALIGN=center>
+<INPUT TYPE=radio name=ua[rs_is_des] <?=$rss_des_ok?> value=1 id=RADIO><?=$langs['ua_rs_ok']?>
+<INPUT TYPE=radio name=ua[rs_is_des] <?=$rss_des_no?> value=0 id=RADIO><?=$langs['ua_rs_no']?>
+</TD>
+<TD BGCOLOR=<?=$color['d_bg']?>>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR=<?=$color['m_bg']?>><font id=MCOLOR><?=$langs['ua_rs_ln']?></font></TD>
+<TD ALIGN=center>
+<INPUT TYPE=radio name=ua[rss_align] <?=$rss_align_ok?> value=1 id=RADIO><?=$langs['ua_rs_lf']?>
+<INPUT TYPE=radio name=ua[rss_align] <?=$rss_align_no?> value=0 id=RADIO><?=$langs['ua_rs_rg']?>
+</TD>
+<TD BGCOLOR=<?=$color['d_bg']?>>&nbsp;</TD>
+<TD BGCOLOR=<?=$color['m_bg']?>><font id=MCOLOR><?=$langs['ua_rs_co']?></font></TD>
+<TD><INPUT TYPE=text name=ua[rss_color] size=<?=$dsize?> value="<?=$rss['color']?>"></TD>
+<TD BGCOLOR=<?=$color['d_bg']?>>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR=<?=$color['m_bg']?>><font id=MCOLOR><?=$langs['ua_rs_na']?></font></TD>
+<TD COLSPAN=4>
+
+<INPUT TYPE=text name=ua[rss_channel] size=<?=$lsize?> value="<?=$rss['channel']?>">
 
 </TD>
 <TD BGCOLOR=<?=$color['d_bg']?>>&nbsp;</TD>
