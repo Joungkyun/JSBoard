@@ -12,7 +12,7 @@ function qsql($n, $act)
 	$result = dquery("SELECT no FROM $table WHERE reno = $n ORDER BY no DESC");
     }
     if ($act == "search") {
-	if (strlen($sc_string) >= 2 || $sc_column == "today") {
+	if (strlen($sc_string) >= 3 || $sc_column == "today") {
 	    $sc_string = addslashes(chop($sc_string));
 
 	    if ($sc_column == "all") {
@@ -162,6 +162,9 @@ function vlist($no) {
 	$name  = cut_string($name,$namel) ;
 	$titl   = $titll - $rede;
 	$title  = cut_string($title,$titl) ;
+	$title = htmlspecialchars($title);
+	$title = eregi_replace("&amp;#([0-9]?)","&#\\1",$title);
+	$title = eregi_replace("&amp;","&",$title);
 	$date2  = $date;
 
 	if ($lang == "ko") {
