@@ -41,8 +41,6 @@ function get_authinfo($id,$nocry='') {
 
 # 웹 서버 접속자의 IP 주소 혹은 도메인명을 가져오는 함수
 # HTTP_X_FORWARDED_FOR - proxy server가 설정하는 환경 변수
-# getenv        - 환경 변수값을 가져옴
-#                 http://www.php.net/manual/function.getenv.php
 # gethostbyaddr - IP 주소와 일치하는 호스트명을 가져옴
 #                 http://www.php.net/manual/function.gethostbyaddr.php
 function get_hostname($reverse = 0,$addr = 0) {
@@ -73,8 +71,6 @@ function get_hostname($reverse = 0,$addr = 0) {
 # 접속한 사람이 사용하는 브라우져를 알기 위해 사용되는 함수, 현재는 FORM
 # 입력창의 크기가 브라우져마다 틀리게 설정되는 것을 보정하기 위해 사용됨
 #
-# getenv - 환경 변수값을 가져옴
-#          http://www.php.net/manual/function.getenv.php
 function get_agent() {
   $agent_env = $_SERVER[HTTP_USER_AGENT];
 
@@ -314,8 +310,6 @@ function get_microtime($old, $new) {
     
 # 알맞은 제목을 가져오기 위해 사용됨 (html/head.ph)
 #
-# getenv   - 환경 변수값을 가져옴
-#            http://www.php.net/manual/function.getenv.php
 # basename - 파일 경로에서 파일명만을 가져옴
 #            http://www.php.net/manual/function.basename.php
 function get_title() {
