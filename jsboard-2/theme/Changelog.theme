@@ -1,3 +1,7 @@
+Version: A5
+- edit, replay, write template 의 textarea 에서 tab 을 누르면 등록으로
+  이동되게 수정
+
 Version: A4
 - 키보드 제어 코드 추가 : <?=pirnt_keymenu()?>
 - edit.template, reply.template, write.template 의

@@ -203,16 +203,13 @@ if(eregi("^(0|4)$",$board[mode]) && !$board[super]) {
 <!- $orig_button      : 원본글 포함 버튼 사용시 출력                      -->
 <!-#######################################################################-->
 <TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD ALIGN=right>
-<?=$wrap[ment]?>
-[ <A HREF=list.php?table=<?=$table.$pages?>><FONT STYLE="color=#555555">목록</FONT></A> | <A HREF=javascript:history.back()><FONT STYLE="color=#555555">이전</FONT></A> ]
-</TD></TR>
+<TR><TD ALIGN=right><?=$wrap[ment]?></TD></TR>
 <TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
 <?=$print[passform]?>
-<INPUT TYPE=submit VALUE=등록>&nbsp;
-<INPUT TYPE=reset VALUE="다시"<?=$orig_option?>>&nbsp;
-<INPUT TYPE=button onClick=history.back() VALUE=취소>
-<?=$orig_button?>
+<INPUT TYPE=submit VALUE=등록>
+<INPUT TYPE=reset VALUE="다시"<?=$orig_option?>><?=$orig_button?>
+<INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록">
+<INPUT TYPE=button onClick=history.back() VALUE="이전">
 </TD></TR>
 </TABLE>
 

@@ -208,15 +208,13 @@ if(eregi("^(0|4|6)$",$board[mode]) && !$board[super]) {
 <!- $orig_option      : back to original size of textarea                 -->
 <!-#######################################################################-->
 <TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD ALIGN=right>
-<?=$wrap[ment]?>
-[ <A HREF=list.php?table=<?=$table.$page?>><FONT STYLE="color=#555555">List</FONT></A> | <A HREF=javascript:history.back()><FONT STYLE="color=#555555">Back</FONT></A> ]
-</TD></TR>
+<TR><TD ALIGN=right><?=$wrap[ment]?></TD></TR>
 <TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
 <?=$print[passform]?>
-<INPUT TYPE=submit VALUE="Modify">&nbsp;
-<INPUT TYPE=reset VALUE="Reset"<?=$orig_option?>>&nbsp;
-<INPUT TYPE=button onClick=history.back() VALUE="Cancle">
+<INPUT TYPE=submit VALUE=Modify>
+<INPUT TYPE=reset VALUE="Reset"<?=$orig_option?>>
+<INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List">
+<INPUT TYPE=button onClick=history.back() VALUE="Back">
 </TD></TR>
 </TABLE>
 

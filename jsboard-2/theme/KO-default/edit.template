@@ -209,15 +209,13 @@ if(eregi("^(0|4|6)$",$board[mode]) && !$board[super]) {
 <!- $orig_option      : 글쓰기 창 조절시 원래 크기로 돌아가는 옵션        -->
 <!-#######################################################################-->
 <TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD ALIGN=right>
-<?=$wrap[ment]?>
-[ <A HREF=list.php?table=<?=$table.$page?>><FONT STYLE="color=#555555">목록</FONT></A> | <A HREF=javascript:history.back()><FONT STYLE="color=#555555">이전</FONT></A> ]
-</TD></TR>
+<TR><TD ALIGN=right><?=$wrap[ment]?></TD></TR>
 <TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
 <?=$print[passform]?>
-<INPUT TYPE=submit VALUE=등록>&nbsp;
-<INPUT TYPE=reset VALUE="다시"<?=$orig_option?>>&nbsp;
-<INPUT TYPE=button onClick=history.back() VALUE=취소>
+<INPUT TYPE=submit VALUE=등록>
+<INPUT TYPE=reset VALUE="다시"<?=$orig_option?>>
+<INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록">
+<INPUT TYPE=button onClick=history.back() VALUE="이전">
 </TD></TR>
 </TABLE>
 
