@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
+2002.6. 2 by 김정균 <http://www.oops.org>
+	- Install script 에 FreeBSD 의 httpd.conf 경로 추가 (PORT 사용시)
+
 2002.5.30 by 임은재 <http://kldp.org/~eunjea/>
 	- 수정시 변경사항 체크에 email 과 url 검사 추가
 
