@@ -7,9 +7,9 @@ function htmlhead() {
   $fileself = explode("admin/",$file_lo);
   $fileself = $fileself[1];
 
-  if ($fileself == "auth.php3") $sub_title = "$langs[p_wa]";
-  elseif ($fileself == "admin.php3") $sub_title = "$langs[p_aa]";
-  elseif ($fileself == "admin_info.php3") $sub_title = "$langs[p_wv]";
+  if ($fileself == "auth.php") $sub_title = "$langs[p_wa]";
+  elseif ($fileself == "admin.php") $sub_title = "$langs[p_aa]";
+  elseif ($fileself == "admin_info.php") $sub_title = "$langs[p_wv]";
 
   include("./include/html_ahead.ph");
 }
@@ -37,7 +37,7 @@ function java_scr() {
        "    return;\n" .
        "  }\n\n" .
        "function logout () {\n" .
-       "  document.location='./session.php3?mode=logout';\n" .
+       "  document.location='./session.php?mode=logout';\n" .
        "}\n\n// -->\n</script>";
 }
 
@@ -75,7 +75,7 @@ function get_theme_list($name,$num, $path = "../config") {
   global $table, $color, $PHP_SELF, $langs, $exec;
 
   // link에서 원 파일의 정보를 가져온다.
-  if (!eregi("uadmin.php3",$PHP_SELF)) {
+  if (!eregi("uadmin.php",$PHP_SELF)) {
     if (file_exists("$path/default.themes")) { $dtheme = readlink("$path/default.themes"); }
   } else {
     if (file_exists("../../data/$table/default.themes")) { $dtheme = readlink("../../data/$table/default.themes"); }
@@ -117,7 +117,7 @@ function get_theme_list($name,$num, $path = "../config") {
     if (!$bt[1]) $brtag = "<br>";
     else $brtag = "";
 
-    if (eregi("uadmin.php3",$PHP_SELF)) $radio_c = "radio1";
+    if (eregi("uadmin.php",$PHP_SELF)) $radio_c = "radio1";
     else $radio_c = "radio";
 
     if ($themeS && $themeS != "DEFAULT")

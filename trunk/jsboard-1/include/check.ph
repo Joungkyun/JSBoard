@@ -2,7 +2,7 @@
 // 문자열에 한글이 포함되어 있는지 검사하는 함수
 //
 // ord    - 문자의 ASCII 값을 가져옴
-//          http://www.php.net/manual/function.ord.php3
+//          http://www.php.net/manual/function.ord.php
 function is_hangul($char) {
   // 특정 문자가 한글의 범위내(0xA1A1 - 0xFEFE)에 있는지 검사
   $char = ord($char);
@@ -15,7 +15,7 @@ function is_hangul($char) {
 // 검사하는 함수
 //
 // ord - 문자의 ASCII 값을 가져옴
-//       http://www.php.net/manual/function.ord.php3
+//       http://www.php.net/manual/function.ord.php
 function is_alpha($char) {
   $char = ord($char);
 
@@ -28,9 +28,9 @@ function is_alpha($char) {
 // URL이 정확한 것인지 검사하는 함수
 //
 // eregi         - 정규 표현식을 이용한 검사 (대소문자 무시)
-//                 http://www.php.net/manual/function.eregi.php3
+//                 http://www.php.net/manual/function.eregi.php
 // eregi_replace - 정규 표현식을 이용한 치환 (대소문자 무시)
-//                 http://www.php.net/manual/function.eregi-replace.php3
+//                 http://www.php.net/manual/function.eregi-replace.php
 function check_url($url) {
   $url = trim($url);
 
@@ -50,7 +50,7 @@ function check_url($url) {
 // E-MAIL 주소가 정확한 것인지 검사하는 함수
 //
 // eregi - 정규 표현식을 이용한 검사 (대소문자 무시)
-//         http://www.php.net/manual/function.eregi.php3
+//         http://www.php.net/manual/function.eregi.php
 function check_email($email) {
   $url = trim($email);
 
@@ -65,7 +65,7 @@ function check_email($email) {
 // 패스워드 비교 함수
 //
 // crpyt - 문자열을 DES로 암호화함
-//         http://www.php.net/manual/function.crypt.php3
+//         http://www.php.net/manual/function.crypt.php
 function check_passwd($table, $no, $passwd) {
   global $sadmin, $admin;
 
@@ -152,14 +152,14 @@ function enable_write($super,$user,$check,$ena, $cena = 1) {
   $page = $page? "&page=$page" : "";
 
   if ($wcheck) {
-    header("Location: auth_ext.php3?table=$table&ena=$ena&cena=$cena&kind=$kind$page$nom");
+    header("Location: auth_ext.php?table=$table&ena=$ena&cena=$cena&kind=$kind$page$nom");
     die;
   }
 
   $pucheck = crypt($check,$user);
   $pscheck = crypt($check,$super);
 
-  $selffile ="auth_ext.php3?table=$table&kind=$kind$nom";
+  $selffile ="auth_ext.php?table=$table&kind=$kind$nom";
   if (!$ena) $user_m = "$langs[chk_a]";
   $ment = "$langs[chk_wa]";
 
@@ -180,16 +180,18 @@ function check_filetype($filetype) {
   return $tail;
 }
 
-function icon_check($tail,$fn) {
-  if ($tail == "rm" || $tail == "doc" || $tail == "exe" || $tail == "hwp" || $tail == "mp3" || $tail == "mov" || $tail == "txt") $icon = "$tail.gif";
-  else if ($tail == "zip" || $tail == "arj" || $tail == "gz" || $tail == "lha" || $tail == "rar" || $tail == "tar" || $tail == "tgz") $icon = "comp.gif";
-  else if ($tail == "php" || $tail == "php3" || $tail == "phps" || $tail == "vbs") {
+function icon_check($t,$fn) {
+  if (eregi("^(hwp|mov|txt)$",$t)) $icon = "$t.gif";
+  else if (eregi("^(exe|com)$",$t)) $icon = "exe.gif";
+  else if (eregi("^(zip|arj|gz|lha|rar|tar|tgz|ace)$",$t)) $icon = "comp.gif";
+  else if (eregi("^(php|php3|phps|vbs)$",$t)) {
     if (eregi("(_htm|_cgi|_pl|_shtm|_sh)",$fn)) $icon = "html.gif";
     else $icon = "php.gif";
-  } else if ($tail == "avi" || $tail == "mpg" || $tail == "mpeg") $icon = "mpeg.gif";
-  else if ($tail == "jpg" || $tail == "gif" || $tail == "bmp" || $tail == "psd") $icon = "pic.gif";
-  else if ($tail == "ppt" || $tail == "xls") $icon = "doc.gif";
-  else if ($tail == "ra" || $tail == "ram") $icon = "ra.gif";
+  } else if (eregi("^(avi|mpg|mpeg|asf|swf)$",$t)) $icon = "mpeg.gif";
+  else if (eregi("^(jpg|gif|bmp|psd)$",$t)) $icon = "pic.gif";
+  else if (eregi("^(ppt|xls|doc)$",$t)) $icon = "doc.gif";
+  else if (eregi("^(ra|ram|rm)$",$t)) $icon = "ra.gif";
+  else if (eregi("^(mp3|mp2|wav|mid)$",$t)) $icon = "mp3.gif";
   else $icon = "file.gif";
 
   return $icon;
@@ -198,9 +200,9 @@ function icon_check($tail,$fn) {
 function check_dnlink($table,$list) {
   global $upload;
   if (eregi("(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs)$",$list[bofile])) {
-    $dn = "act.php3?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
+    $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
   } else {
-    if ($list[bfsize] < 51200) $dn = "act.php3?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
+    if ($list[bfsize] < 51200) $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
     else $dn = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
   }
   return $dn;

@@ -6,9 +6,11 @@ $color[link]  = "#80320d";	// LINK
 $color[vlink] = "#80320d";	// VLINK
 $color[alink] = "#80320d";	// ALINK
 
-$color[n0_fg] = "#6d7bc9";	// 일반적 배경
+$color[n0_fg] = "#555555";	// 일반적 배경
 $color[n0_bg] = "#ffe4c4";	// 일반적 글자
 $color[n1_fg] = "#999999";	// 사용 불가능
+$color[n2_bg] = "#FFFFFF";	// 폼 배경
+$color[n2_fg] = "#555555";	// 폼 글자
 
 // 글 목록 색상 설정
 $color[l0_bg] = "#9a9a7e";	// 테두리 배경
@@ -19,6 +21,8 @@ $color[l2_bg] = "#ffffff";	// 보통글 배경
 $color[l2_fg] = "#555555";	// 보통글 글자
 $color[l3_bg] = "#ffebcd";	// 답장글 배경
 $color[l3_fg] = "#555555";	// 답장글 글자
+$color[l4_bg] = "#ffffff";      // 검색창 배경
+$color[l4_fg] = "#555555";      // 검색창 글자
 
 $color[td_co] = "#d2691e";	// 오늘 올라온 글 표시
 $color[cp_co] = "#ffd700";	// 현재 페이지 표시
@@ -34,6 +38,8 @@ $color[r3_bg] = "#ffffff";	// 글내용 배경
 $color[r3_fg] = "#555555";	// 글내용 글자
 $color[r4_bg] = "#ffebcd";	// 파일 배경
 $color[r4_fg] = "#000000";	// 파일 글자
+$color[r5_bg] = "#ffffff";      // 검색 배경
+$color[r5_fg] = "#555555";      // 검색 글자
 
 $color[rlink]  = "#80320d";	// 링크 색상
 ?>

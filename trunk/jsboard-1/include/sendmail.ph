@@ -1,16 +1,13 @@
 <?php
-/* mail 보내기 함수 2000.10.4 김정균 */
+/* mail 보내기 함수 2000.11.5 김정균 */
 
 function check_sendmail($n=0) {
   global $rmail;
-  $s = eregi_replace("(\.php)\?(.*)","\\1",getenv("HTTP_REFERER"));
-  $o[l] = "$rmail[bbshome]list.php3";
-  $o[r] = "$rmail[bbshome]read.php3";
-  $o[w] = "$rmail[bbshome]write.php3";
-  $o[re] = "$rmail[bbshome]reply.php3";
-  $o[f] = "$rmail[bbshome]form.php3";
 
-  if ($s != $o[l] && $s != $o[r] && $s != $o[f] && $s != $o[w] && $s != $o[re]) {
+  $r = gethostbyname(eregi_replace("http://([^/]+)/(.*)","\\1",getenv("HTTP_REFERER")));
+  $l = gethostbyname(eregi_replace("http://([^/]+)/(.*)","\\1",$rmail[bbshome]));
+
+  if ($r != $l) {
     if($n) print_error("confirmed \$rmail[bbshome] in global.ph");
     return 0;
   } else return 1;
@@ -45,8 +42,10 @@ function sendmail($rmail,$fm=0) {
   $ampm=$time[2];
   $hms=$time[3];
 
-  # 메일 본문의 ",' 처리
-  $rmail[text] = eregi_replace("\\\\(\"|')","\\1",$rmail[text]);
+  # 메일에서의 double quote와 single quote 처리
+  $rmail[text] = stripslashes($rmail[text]);
+  $rmail[name] = stripslashes($rmail[name]);
+  $rmail[title] = stripslashes($rmail[title]);
 
   if ($langs[code] == "ko") {
     if ($day == "(Mon)") $day="(월)";
@@ -66,8 +65,8 @@ function sendmail($rmail,$fm=0) {
     else if ($day == "(Sun)") $day="(日)";
   }
 
-  $webboard_address =  sprintf("%s%s",$rmail[bbshome],"read.php3?table=$rmail[table]&no=$rmail[no]");
-  $reply_article    =  sprintf("%s%s",$rmail[bbshome],"reply.php3?table=$rmail[table]&no=$rmail[no]");
+  $webboard_address =  sprintf("%s%s",$rmail[bbshome],"read.php?table=$rmail[table]&no=$rmail[no]");
+  $reply_article    =  sprintf("%s%s",$rmail[bbshome],"reply.php?table=$rmail[table]&no=$rmail[no]");
 
   if (!$fm) {
     $dbname  = "DB Name         : $rmail[table]";
