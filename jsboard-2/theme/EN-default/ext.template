@@ -1,9 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
 <!-#######################################################################-->
 <!-    Don't changed this file                                            -->
 <!-#######################################################################-->
-<HTML>
-<HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs[charset]?>">
 <TITLE>Jsboard <?=$board[ver]?> - [<?=$print[head]?>]</TITLE>
 <STYLE TYPE=text/css>
