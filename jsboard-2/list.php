@@ -61,7 +61,6 @@ $colspan_no = $upload[yesno] ? "6" : "5";
 
 if(trim($notice[subject])) {
   $notice_filno = $colspan_no - 1;
-  $notice[subject] = cut_string($notice[subject],$board[tit_l]);
 
   if($notice[contents]) {
     $notice[subject] = "<A HREF=read.php?table=$table&alert=1>".
