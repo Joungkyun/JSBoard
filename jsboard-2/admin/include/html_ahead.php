@@ -21,7 +21,7 @@ TEXTAREA {font: 10pt <? echo $langs['font'] ?>; BACKGROUND-COLOR:<? echo $color[
 <?php
 if(preg_match("/auth.php/i",$_SERVER['PHP_SELF'])) {
   $onload = " onLoad=InputFocus()";
-  echo "<SCRIPT language=JavaScript>\n".
+  echo "<SCRIPT TYPE=\"text/javascript\">\n".
        "<!--\n function InputFocus() {\n".
        "  document.auth.logins.focus();\n".
        "  return;\n".

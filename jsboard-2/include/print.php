@@ -776,9 +776,9 @@ function detail_searchform($p='') {
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['sh_str']}</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
-          "<INPUT TYPE=text NAME=o[ss] SIZE=".form_size(26)." MAXLENGTH=255 VALUE=\"{$o['ss']}\">\n".
-          "<INPUT TYPE=hidden NAME=o[at] VALUE=d>\n".
-          "<INPUT TYPE=hidden NAME=o[go] VALUE=p>\n".
+          "<INPUT TYPE=text NAME=\"o[ss]\" SIZE=".form_size(26)." MAXLENGTH=255 VALUE=\"{$o['ss']}\">\n".
+          "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=d>\n".
+          "<INPUT TYPE=hidden NAME=\"o[go]\" VALUE=p>\n".
           "</TD>\n".
           "</TR>\n\n".
 
@@ -786,10 +786,10 @@ function detail_searchform($p='') {
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['sh_pat']}</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
-          "<INPUT TYPE=radio NAME=o[sc] VALUE=t$TCHK> <FONT STYLE=\"font-family: tahoma;\">TITLE</FONT>\n".
-          "<INPUT TYPE=radio NAME=o[sc] VALUE=c$CCHK> <FONT STYLE=\"font-family: tahoma;\">Contents</FONT>\n".
-          "<INPUT TYPE=radio NAME=o[sc] VALUE=n$NCHK> <FONT STYLE=\"font-family: tahoma;\">Writer</FONT>\n".
-          "<INPUT TYPE=radio NAME=o[sc] VALUE=a$ACHK> <FONT STYLE=\"font-family: tahoma;\">ALL</FONT>\n".
+          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=t$TCHK> <FONT STYLE=\"font-family: tahoma;\">TITLE</FONT>\n".
+          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=c$CCHK> <FONT STYLE=\"font-family: tahoma;\">Contents</FONT>\n".
+          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=n$NCHK> <FONT STYLE=\"font-family: tahoma;\">Writer</FONT>\n".
+          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=a$ACHK> <FONT STYLE=\"font-family: tahoma;\">ALL</FONT>\n".
           "</TD>\n".
           "</TR>\n\n".
 
@@ -797,27 +797,27 @@ function detail_searchform($p='') {
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['sh_dat']}</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
-          "<SELECT NAME=o[y1]>\n".
+          "<SELECT NAME=\"o[y1]\">\n".
           "{$print['peys']}\n".
           "</SELECT>\n\n".
 
-          "<SELECT NAME=o[m1]>\n".
+          "<SELECT NAME=\"o[m1]\">\n".
           "{$print['pems']}\n".
           "</SELECT>\n\n".
 
-          "<SELECT NAME=o[d1]>\n".
+          "<SELECT NAME=\"o[d1]\">\n".
           "{$print['peds']}\n".
           "</SELECT>\n".
           "-\n".
-          "<SELECT NAME=o[y2]>\n".
+          "<SELECT NAME=\"o[y2]\">\n".
           "{$print['peye']}\n".
           "</SELECT>\n\n".
 
-          "<SELECT NAME=o[m2]>\n".
+          "<SELECT NAME=\"o[m2]\">\n".
           "{$print['peme']}\n".
           "</SELECT>\n\n".
 
-          "<SELECT NAME=o[d2]>\n".
+          "<SELECT NAME=\"o[d2]\">\n".
           "{$print['pede']}\n".
           "</SELECT>\n".
           "</TD>\n".
@@ -827,7 +827,7 @@ function detail_searchform($p='') {
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['check_y']}</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
-          "<INPUT TYPE=checkbox NAME=o[er] VALUE=y$ERCHK>\n".
+          "<INPUT TYPE=checkbox NAME=\"o[er]\" VALUE=y$ERCHK>\n".
           "<INPUT TYPE=submit VALUE=\"{$langs['sh_sbmit']}\">\n".
           "</TD>\n".
           "</TR>\n\n".
@@ -869,14 +869,14 @@ function print_comment($table,$no,$print=0) {
        "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
        "</TD>\n".
        "<TD ALIGN=right>\n".
-       "{$langs['c_na']} <INPUT TYPE=text$disable NAME=atc[name] MAXLENGTH=30 SIZE={$size['pass']} VALUE=\"{$pre_regist['name']}\"><BR>\n".
-       "{$langs['c_ps']} <INPUT TYPE=password$disable NAME=atc[passwd] SIZE={$size['pass']}>\n".
+       "{$langs['c_na']} <INPUT TYPE=text$disable NAME=\"atc[name]\" MAXLENGTH=30 SIZE={$size['pass']} VALUE=\"{$pre_regist['name']}\"><BR>\n".
+       "{$langs['c_ps']} <INPUT TYPE=password$disable NAME=\"atc[passwd]\" SIZE={$size['pass']}>\n".
        "</TD>\n".
        "<TD ROWSPAN=2 ALIGN=center>".
        "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
        "</TD>\n".
        "<TD ROWSPAN=2 ALIGN=center>\n".
-       "<TEXTAREA NAME=atc[text] COLS=$textareasize ROWS=3 WRAP=hard></TEXTAREA>\n".
+       "<TEXTAREA NAME=\"atc[text]\" COLS=$textareasize ROWS=3 WRAP=hard></TEXTAREA>\n".
        "</TD>\n".
        "<TD ROWSPAN=2 ALIGN=center>".
        "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
@@ -885,11 +885,11 @@ function print_comment($table,$no,$print=0) {
        "<TR>\n".
        "<TD ALIGN=right><INPUT TYPE=submit VALUE=\"{$langs['c_en']}\"></TD>\n".
        "</TR>\n".
-       "<INPUT TYPE=hidden NAME=atc[no] VALUE=$no>\n".
-       "<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"{$pre_regist['rname']}\">\n".
-       "<INPUT TYPE=hidden NAME=table VALUE=$table>\n".
-       "<INPUT TYPE=hidden NAME=page VALUE=$page>\n".
-       "<INPUT TYPE=hidden NAME=o[at] VALUE=\"c_write\">\n".
+       "<INPUT TYPE=hidden NAME=\"atc[no]\" VALUE=$no>\n".
+       "<INPUT TYPE=hidden NAME=\"atc[rname]\" VALUE=\"{$pre_regist['rname']}\">\n".
+       "<INPUT TYPE=hidden NAME=\"table\" VALUE=$table>\n".
+       "<INPUT TYPE=hidden NAME=\"page\" VALUE=$page>\n".
+       "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=\"c_write\">\n".
        "</FORM>\n".
        "</TABLE>\n".
        "</TD></TR>\n".
