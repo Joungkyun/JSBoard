@@ -29,7 +29,7 @@ function get_security_info() {
 
     $security[content] = "<?\n".
                          "\$security[stamp] = $chk_date;\n".
-                         "\$security[serial] = $security[serial];\n".
+                         "\$security[serial] = \"$security[serial]\";\n".
                          "\$security[prints] = $chk_print;\n?>";
 
     $err_msg = "Don't update security infomation";
