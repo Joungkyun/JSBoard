@@ -271,7 +271,7 @@ function check_htmltable($str,$rep='') {
   # table tag 들만 나두고 모두 삭제
   $s[] = "/>[^<]*</i";
   $s[] = "/#|@/i";
-  $s[] = "/<(\/?(TABLE|TR|TD|TH))[^>]*>/i";
+  $s[] = "/<(\/?(TABLE|TR|TD|TH|IFRAME))[^>]*>/i";
   $s[] = "/^[^#]*/i";
   $s[] = "/(TABLEEMARK@)[^#]*(#TABLESMARK)/i";
   $s[] = "/<[^>]*>/i";
@@ -303,6 +303,8 @@ function check_htmltable($str,$rep='') {
     elseif(strtoupper($ary[$i]) == "</TR>") $clstr++;
     elseif(strtoupper($ary[$i]) == "<TD>") $opentd++;
     elseif(strtoupper($ary[$i]) == "</TD>") $clstd++;
+    elseif(strtoupper($ary[$i]) == "<IFRAME>") $openif++;
+    elseif(strtoupper($ary[$i]) == "</IFRAME>") $clsif++;
   }
 
   if(!$rep) {
@@ -310,6 +312,7 @@ function check_htmltable($str,$rep='') {
     if($openth != $clsth) $msg .= $langs[chk_th]."\n";
     if($opentr != $clstr) $msg .= $langs[chk_tr]."\n";
     if($opentd != $clstd) $msg .= $langs[chk_td]."\n";
+    if($openif != $clsif) $msg .= $langs[chk_if]."\n";
 
     $msg = $msg ? $langs[chk_ta]."\n\nError Check:\n".trim($msg)."\n" : "";
 
@@ -317,17 +320,20 @@ function check_htmltable($str,$rep='') {
   } else {
     echo "\n##  TABLE CHECK RESULT\n".
          "##  ----------------------------------------------------------------------\n".
-         "##  OPEN  TABLE TAG : $opentable\n".
-         "##  CLOSE TABLE TAG : $clstable\n##  \n".
+         "##  OPEN  TABLE  TAG : $opentable\n".
+         "##  CLOSE TABLE  TAG : $clstable\n##  \n".
 
-         "##  OPEN  TH    TAG : $openth\n".
-         "##  CLOSE TH    TAG : $clsth\n##  \n".
+         "##  OPEN  TH     TAG : $openth\n".
+         "##  CLOSE TH     TAG : $clsth\n##  \n".
 
-         "##  OPEN  TR    TAG : $opentr\n".
-         "##  CLOSE TR    TAG : $clstr\n##  \n".
+         "##  OPEN  TR     TAG : $opentr\n".
+         "##  CLOSE TR     TAG : $clstr\n##  \n".
 
-         "##  OPEN  TD    TAG : $opentd\n".
-         "##  CLOSE TD    TAG : $clstd\n\n";
+         "##  OPEN  TD     TAG : $opentd\n".
+         "##  CLOSE TD     TAG : $clstd\n\n".
+
+         "##  OPEN  IFRAME TAG : $openif\n".
+         "##  CLOSE IFRAME TAG : $clsif\n\n";
   }
 }
 ?>
