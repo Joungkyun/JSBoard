@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.0
 
+2002.07.16 by 김정균 <http://www.oops.org>
+	- root script 버그 수정
+
 2002.07.10 by 김정균 <http://www.oops.org>
 	- 게시판 통계에서 오늘 올라온 글 통계 수정
 	- 0 byte 파일이 업로드 되는 것 막음

@@ -21,19 +21,14 @@ esac
 # location of apache configuration file
 if [ -f "/etc/httpd/conf/httpd.conf" ] ;then
   CONF="/etc/httpd/conf/httpd.conf"
-  break
 elif [ -f "/etc/www/conf/httpd.conf" ]; then
   CONF="/etc/www/conf/httpd.conf"
-  break
 elif [ -f "/etc/www/httpd.conf" ]; then
   CONF="/etc/www/httpd.conf"
-  break
 elif [ -f "/usr/local/apache/conf/httpd.conf" ]; then
   CONF="/usr/local/apache/conf/httpd.conf"
-  break
 elif [ -f "/usr/local/etc/apache/httpd.conf" ]; then
   CONF="/usr/local/etc/apache/httpd.conf"
-  break
 else
   while [ true ];
   do
