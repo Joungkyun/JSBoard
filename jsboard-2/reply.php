@@ -42,9 +42,14 @@ $reti = ++$reti;
 if ($reti == "1") $reti = "";
 else $reti = "^$reti";
 
-$list[text] = preg_replace("/<([^<>\n]+)\n([^\n<>]+)>/i", "<\\1 \\2>", $list[text]);
-$list[text] = str_replace("^", ": ", $list[text]);
-$list[text] = preg_replace("/\n/", "\n: ", $list[text]);
+$conv_list[0] = "/<([^<>\n]+)\n([^\n<>]+)>/i";
+$resu_list[0] = "<\\1 \\2>";
+$conv_list[1] = "/^/";
+$resu_list[1] = ": ";
+$conv_list[2] = "/\n/";
+$resu_list[2] = "\n: ";
+$list[text] = preg_replace($conv_list, $resu_list, $list[text]);
+
 # 본문에 html tag 가 존재할 경우를 대비
 $list[text] = htmlspecialchars($list[text]);
 

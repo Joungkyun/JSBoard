@@ -24,6 +24,7 @@ If you wnat to see windog's change log, see also
   by 김정균 <http://www.oops.org>
 	- 글 본문에 textarea 관련 태그가 존재할 경우 수정/답변 화면이 깨지는
 	  버그 수정
+	- 답장시 원본글 파실 에러 수정
 
 2002.11.16
   by 김정균 <http://www.oops.org>
