@@ -2,7 +2,6 @@
 $no_button = $ndesc = 1;
 include("include/header.ph");
 
-
 $title .= $read_sub_title ;
 include("include/$table/desc.ph");
 
@@ -16,7 +15,9 @@ $result = dquery("SELECT * FROM $table WHERE no = $no");
 drow_check($result);
 
 if($act == "search") {
-    $search = "&act=search&page=$page&sc_column=$sc_column&sc_string=$sc_string";
+  $sc_string = rawurldecode(stripslashes($sc_string));
+  $enc_search = rawurlencode($sc_string);
+  $search = "&act=search&page=$page&sc_column=$sc_column&sc_string=$enc_search";
 }
 
 while($list = dfetch_row($result)) {
@@ -41,14 +42,17 @@ while($list = dfetch_row($result)) {
     $date   = date_format($date,$lang);
     $title  = htmlspecialchars($title);
 
-    if ($act == "search") {
-      $sc[string] = eregi_replace("(\[|\])","\\\\0",$sc_string);
-      $sc[string] = eregi_replace("\\\\\\\"","&quot;",$sc[string]);
-      $title  = eregi_replace("($sc[string])","<font color=darkred><b>\\0</b></font>",$title);
+    if($sc_string) {
+      if($sc_column == "title") $title = high_lighting($title);
+      elseif($sc_column == "name") $name = high_lighting($name);
+      elseif($sc_column == "text") $text = high_lighting($text);
+      elseif($sc_column == "all" ) {
+        $title = high_lighting($title);
+        $name = high_lighting($name);
+        $text = high_lighting($text);
+      }
     }
 
-    if ($act == "search")
-      $text  = eregi_replace("($sc[string])","<font color=darkred><b>\\0</b></font>",$text);
     $text   = eregi_replace("\r\n", "\n", $text);
     $text   = eregi_replace("\n", "\r\n", $text);
     $text   = nl2br($text);
@@ -137,7 +141,8 @@ while($list = dfetch_row($result)) {
       $tail = substr( strrchr($bofile, "."), 1 );
       $tail = strtolower($tail) ;
       if ($tail == "gif" || $tail == "jpg") {
-        echo ("<img src=\"$filesavedir/$bcfile/$bofile\"><p>");
+		$image_size = GetImageSize("$filesavedir/$bcfile/$bofile");
+        echo ("<img src=\"$filesavedir/$bcfile/$bofile\" $image_size[3] vspace=\"5\" hspace=\"5\" alt=\"$bofile\"><p>");
       }
 
     }
