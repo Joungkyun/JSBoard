@@ -20,7 +20,13 @@ include_once "{$prlist['path']}/include/sql.php";
 include_once "{$prlist['path']}/include/get.php";
 include_once "{$prlist['path']}/include/print.php";
 
+if ( $prlist['starttag'] )
+  echo $prlist['starttag'];
+
 print_preview_src(1);
+
+if ( $prlist['endtag'] )
+  echo $prlist['endtag'];
 
 # 글리스트들을 출력하는 design
 #   echo 문의 "" 사이에서 디자인을 넣으면 됨
