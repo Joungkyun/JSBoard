@@ -3,7 +3,7 @@ $p_time[] = microtime(); # 加档 眉农
 include "include/header.php";
 include "admin/include/check.php";
 
-if(!session_is_registered("$jsboard")) print_error("{$langs['login_err']}");
+if(!session_is_registered("$jsboard")) print_error($langs['login_err']);
 
 $a_time[] = microtime(); # 加档 眉农
 
