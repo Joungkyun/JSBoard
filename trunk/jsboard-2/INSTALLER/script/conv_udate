@@ -86,12 +86,6 @@ case ${AUSES} in
   *) AUSES=0;;
 esac
 
-AMTA=$(sed -n -e '/rmail\[mta\]/ s/.*rmail\[mta\][^=]*=[^\"0-9]*[\"]*\([0-9 ]*\)[\"]*;.*/\1/p;' ${ACONFFILE})
-[ "${AMTA}" = "" ] && AMTA=0
-
-ASMTP=$(sed -n -e '/rmail\[smtp\]/ s/.*rmail\[smtp\][^=]*=[^\"0-9a-zA-Z\xA1-\xFE\.]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
-[ "${ASMTP}" = "" ] && ASMTP="127.0.0.1"
-
 ABBS=$(sed -n -e '/rmail\[bbshome\]/ s/.*rmail\[bbshome\][^=]*=[^\"0-9a-zA-Z\xA1-\xFE\.]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
 [ "${ABBS}" = "" ] && ABBS="http://127.0.0.1/jsboard/"
 
@@ -183,12 +177,6 @@ echo "<?
 #  Mail Configuration
 ##############################################################################
 \$rmail[uses]     = ${AUSES};
-# MTA type
-# 1 - send mail to use socket connection
-# 0 - used mail() function in php
-\$rmail[mta]      = ${AMTA};
-# smtp server address
-\$rmail[smtp]     = \"${ASMTP}\";
 # charactor of converted mail address
 \$rmail[chars]    = \"__at__\";
 
