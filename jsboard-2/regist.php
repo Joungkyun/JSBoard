@@ -4,7 +4,6 @@ include "include/header.ph";
 include "admin/include/check.ph";
 
 if(!$board[regist]) {
-  session_start();
   if($_SESSION[$jsboard][pos] != 1) print_error("ADMIN $langs[login_err]");
 }
 
@@ -44,6 +43,7 @@ if($m == "act") {
   sql_query($query);
   mysql_close();
 
+  if(!session_is_registered("$jsboard")) session_destroy();
   if($check) move_page("./regist.php?check=1");
   else move_page($print[dpage]);
   exit;
@@ -164,4 +164,5 @@ $langs[reg_attention]
   include "theme/$print[theme]/ext.template";
   echo "\n</TD></TR>\n</TABLE>\n";
 }
+if(!session_is_registered("$jsboard")) session_destroy();
 ?>

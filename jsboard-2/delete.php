@@ -1,7 +1,6 @@
 <?
 include "./include/header.ph";
 
-if($_COOKIE[$cjsboard][id]) { session_start(); }
 if($_SESSION[$jsboard][id] == $board[ad] || $_SESSION[$jsboard][pos] == 1) $board[super] = 1;
 
 if(eregi("^(1|3)$",$board[mode])) { if(!$board[super]) print_error($langs[perm_err],250,150,1); }
@@ -93,4 +92,5 @@ mysql_close();
 
 # Template file À» È£Ãâ
 include "theme/$print[theme]/delete.template";
+if(!session_is_registered("$jsboard")) session_destroy();
 ?>

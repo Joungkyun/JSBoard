@@ -2,7 +2,6 @@
 $p_time[] = microtime(); # 속도 체크
 include "include/header.ph";
 
-if($_COOKIE[$cjsboard][id]) { session_start(); }
 if(eregi("^(2|3|5)$",$board[mode]) && !session_is_registered("$jsboard"))
   print_error("$langs[login_err]");
 
@@ -127,4 +126,5 @@ $sform[ss] = preg_replace("/\\\\+/i","\\",$sform[ss]);
 # PAGE DISPLAY
 include "theme/$print[theme]/read.template";
 echo $preview[bo];
+if(!session_is_registered("$jsboard")) session_destroy();
 ?>

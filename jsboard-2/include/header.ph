@@ -1,4 +1,8 @@
 <?
+if(eregi("(write|edit|reply)\.php",$_SERVER[PHP_SELF]))
+  session_cache_limiter('nocache, must-revalidate');
+session_start();
+
 include_once "include/print.ph";
 # GET/POST 변수를 제어
 parse_query_str();

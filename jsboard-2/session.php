@@ -1,5 +1,4 @@
 <?
-session_start();
 include_once "include/print.ph";
 parse_query_str();
 
@@ -39,14 +38,6 @@ if ($m == "login") {
     # 세션 등록
     session_register("$jsboard");
 
-    # cookie 설정
-    $CookieTime = time()+900;
-    SetCookie("c{$jsboard}[id]",${$jsboard}[id],$CookieTime,"/");
-    SetCookie("c{$jsboard}[name]",${$jsboard}[name],$CookieTime,"/");
-    SetCookie("c{$jsboard}[email]",${$jsboard}[email],$CookieTime,"/");
-    SetCookie("c{$jsboard}[url]",${$jsboard}[url],$CookieTime,"/");
-    SetCookie("c{$jsboard}[super]",${$jsboard}[pos],$CookieTime,"/");
-
     if($type == "admin" && ${$jsboard}[pos] == 1) {
       header("Location: admin/admin.php");
     } elseif(!$table) header("Location: $print[dpage]");
@@ -55,6 +46,7 @@ if ($m == "login") {
     move_page("./session.php?m=logout$opt$var",0);
   }
 } else if ($m == "logout") {
+  session_start();
   include "./config/global.ph";
 
   if(!$edb[logout]) {
@@ -64,13 +56,6 @@ if ($m == "login") {
 
   # 세션을 삭제
   session_destroy();
-
-  # admin login 상태를 삭제
-  SetCookie("c{$jsboard}[id]","",0,"/");
-  SetCookie("c{$jsboard}[name]","",0,"/");
-  SetCookie("c{$jsboard}[email]","",0,"/");
-  SetCookie("c{$jsboard}[url]","",0,"/");
-  SetCookie("c{$jsboard}[super]","",0,"/");
 
   if($edb[logout]) { header("Location: $edb[logout]"); }
   else { header("Location: ./login.php$var"); }

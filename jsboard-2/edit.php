@@ -1,14 +1,14 @@
 <?
 include "include/header.ph";
 
-if($_COOKIE[$cjsboard][id] == $board[ad] || $_COOKIE[$cjsboard][super] == 1)
+if($_SESSION[$jsboard][id] == $board[ad] || $_SESSION[$jsboard][pos] == 1)
   $board[super] = 1;
 
 if(eregi("^(1|3)$",$board[mode])) { if(!$board[super]) print_error($langs[perm_err],250,150,1); }
-if(eregi("^(1|3|5)$",$board[mode]) && !$_COOKIE[$cjsboard][id]) print_error($langs[perm_err],250,150,1);
+if(eregi("^(1|3|5)$",$board[mode]) && !$_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);
 
 # 로그인이 되어 있고 전체어드민 로그인시에는 모든것을 수정할수 있게.
-if(eregi("^(2|5)$",$board[mode]) && $_COOKIE[$cjsboard][id] && !$board[super]) $disable = " disabled";
+if(eregi("^(2|5)$",$board[mode]) && $_SESSION[$jsboard][id] && !$board[super]) $disable = " disabled";
 
 # upload[dir] 에 mata character 포함 여부 체크
 meta_char_check($upload[dir]);
@@ -22,7 +22,7 @@ sql_select_db($db[name]);
 $list = get_article($table, $no);
 
 if(eregi("^(2|3|5|7)$",$board[mode]) && !$board[super])
-  if($list[name] != $_COOKIE[$cjsboard][id]) print_error($langs[perm_err],250,150,1);
+  if($list[name] != $_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);
 
 $list[text] = htmlspecialchars($list[text]);
 $list[email] = str_replace("@",$rmail[chars],$list[email]);
@@ -77,4 +77,5 @@ mysql_close();
 
 # Template file 을 호출
 include "theme/$print[theme]/edit.template";
+if(!session_is_registered("$jsboard")) session_destroy();
 ?>

@@ -1,6 +1,6 @@
 <?
 function print_error($str,$width=250,$height=150,$back='') {
-  global $table, $path, $prlist, $agent;
+  global $table, $path, $prlist, $agent, ${$jsboard};
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
@@ -41,6 +41,7 @@ function print_error($str,$width=250,$height=150,$back='') {
 
   $var .= $table ? "&table=$table" : "";
 
+  if(!session_is_registered("$jsboard")) session_destroy();
   if($back) echo "<SCRIPT>history.back()</SCRIPT>";
   else move_page("$gopage/session.php?m=logout$var",0);
   exit;
@@ -78,7 +79,7 @@ function print_notice($str,$width = 330, $height = 210) {
 }
 
 function print_pwerror($str, $width = 250, $height = 130) {
-  global $table, $path, $agent, $table;
+  global $table, $path, $agent, $table, ${$jsboard};
 
   if(!is_array($agent)) 
     $agent = @get_agent();
@@ -86,6 +87,9 @@ function print_pwerror($str, $width = 250, $height = 130) {
   if ($path[type] == "user_admin") $err_fn = "../..";
   elseif ($path[type] == "admin") $err_fn = "..";
   else $err_fn = ".";
+
+  # 돌아가기전 세션 삭제
+  if(!session_is_registered("$jsboard")) session_destroy();
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
