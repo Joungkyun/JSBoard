@@ -422,8 +422,15 @@ function viewfile($tail) {
         $p[vars] = $imginfo[0]/$board[width];
         $p[width] = $board[width] - 6;
         $p[height] = intval($imginfo[1]/$p[vars]);
+
+        if(extension_loaded("gd")) {
+          $ImgUrl = rawurlencode("$wupload_file");
+          $ImgPath = "<IMG SRC=\"./image.php?path=$ImgUrl&width=$p[width]&height=$p[height]\" WIDTH=$p[width] HEIGHT=$p[height] BORDER=0>";
+        } else
+          $ImgPath = "<IMG SRC=\"$wupload_file\" WIDTH=$p[width] HEIGHT=$p[height] BORDER=0>";
+
         $p[up]  = "[ <B>Original Size</B> $imginfo[0] * $imginfo[1] ]<br>\n";
-        $p[up] .= "<A HREF=javascript:new_windows(\"$uplink_file\",\"photo\",0,0,$imginfo[0],$imginfo[1])><IMG SRC=\"$wupload_file\" WIDTH=$p[width] HEIGHT=$p[height] BORDER=0></A>\n<P>\n";
+        $p[up] .= "<A HREF=javascript:new_windows(\"$uplink_file\",\"photo\",0,0,$imginfo[0],$imginfo[1])>$ImgPath</A>\n<P>\n";
       } else {
         $p[up] = "<IMG SRC=\"$wupload_file\" $imginfo[3] BORDER=0>\n<p>\n";
       }

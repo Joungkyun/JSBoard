@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Mon, Feb 25 2002
+Date      : Tue, Feb 26 2002
 Version   : jsboard-2.0pre4
 
 
@@ -76,6 +76,7 @@ Version   : jsboard-2.0pre4
 50. changed check_mail() function to check valid mail server
 51. removed cookie that used with user auth
 52. fixed problem of creat empty session file
+53. added image.php
 
 
 -----------------------------------------------------------------------------
