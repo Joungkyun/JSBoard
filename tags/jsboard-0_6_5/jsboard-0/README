@@ -1,0 +1,471 @@
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 1월 6일
+버전   : jsboard-0.6.5 (적수게시판 버전 0.6 안정 버젼)
+
+* 변경된점
+
+1. Auto Link 정규 표현식 대폭 수정(이전 버젼보다 훨씬
+   보완 되었음)
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 1월 5일
+버전   : jsboard-0.6.4 (적수게시판 버전 0.6 안정 버젼)
+
+* 변경된점
+
+1. Email, URL을 link를 할때 이상하게 출력이 되는 부분 수정
+
+2. Table color 수정
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 1월 4일
+버전   : jsboard-0.6.3 (적수게시판 버전 0.6 안정 버젼)
+
+* 변경된점
+
+1. 글 리스트에서 2000년이 00년으로 표기 되는 것을
+   Y2K로 표기 되게 수정. - east egg :-)
+
+2. misc.ph에서 get_page 함수의 SQL query 문 수정
+   Count(no) -> Count(*)
+
+3. user_admin page 에서 html bug 수정(네스케이프 사용시
+   테이블이 티나지 않게 헝클어지던 문제)
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 1월 2일
+버전   : jsboard-0.6.2 (적수게시판 버전 0.6 안정 버젼)
+
+* 변경된점
+
+1. permission및 소유권 설정 script 생성
+   Install/Config 에 account.sh 와 root.ph
+
+   INSTALL.txt 참조
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 1월 1일
+버전   : jsboard-0.6.1 (적수게시판 버전 0.6 안정 버젼)
+
+* 변경된점
+
+1. cookie 관련 변수 수정 (act.php3)
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 1999년 12월 27일
+버전   : jsboard-0.6 (적수게시판 버전 0.6 안정 버젼)
+
+* 참고
+
+더이상 기능 향상은 없음. (version freeze). 안정 버젼으로서의
+bug patch로만 minor version update가 될것임
+
+* 변경된점
+
+1. menu allow 시에 list.php3 이외에서는 출력이 안되는 현상 수정
+2. file_upload 가 허락되었을때 보여주는 file type icon의 size 조정.
+3. upload 된 file 이 있을 경우 mime type을 검사하여 gif, jgp, txt 일
+   경우에는 글 내용란에 같이 첨부하여 보여줌. (이때에는 file_upload가
+   yes 이든 no 이든 상관하지 않고 첨부file의 유무만 검사하여 출력함)
+4. Search시에 admin link가 출력이 안되는 문제 수정
+5. ".." 으로 search시에 리스트 한글이 깨져 나오는 현상 수정 및
+   "\.", "\.." 으로 수정시 모든 글이 검색되는 현상 수정
+
+   list.ph 에서 $sc_string = chop($sc_string); 을
+   $sc_string = addslashes(chop($sc_string)); 으로 수정
+6. windog용 netscape에서 input size가 반이던 것을 수정.
+   리눅스용과 윈도그용 netcape 구분을 할때 한글 버젼만
+   구분 하던 것을 영문 버젼도 구분을 시킴.
+
+   변경 부분 misc.ph :
+
+      if (ereg("Linux", $agent)) {
+        $agent = "moz";
+      } else if (ereg("Win", $agent)) {
+        if (ereg("\[ko\]", $agent)) {
+          $agent = "moz_w_ko";
+        } else {
+          $agent = "moz";
+        }
+
+   부분을
+
+      if (ereg("Linux", $agent)) {
+        $agent = "moz";
+      } else if (ereg("Win", $agent)) {
+        if (ereg("\[ko\]", $agent)) {
+          $agent = "moz_w_ko";
+        } else if (ereg("\[en\]", $agent)) {
+          $agent = "moz_w_en";
+        } else {
+          $agent = "moz";
+        }
+
+   와 같이 moz_w_en 을 추가.
+7. misc.ph의 mail() 함수에서 $from 부분 수정.
+8. INSTALL.txt 재정리.
+
+   - 처음 설치하는 사람을 위한 설치
+   - 계정에 설치를 하는 사람을 위한 설치
+   - 기존의 사용자들을 위한 설치
+
+  로 구분하여 기술.
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 1999년 12월 24일
+버전   : jsboard-0.6pre2-5 (적수게시판 버전 0.6 pre2)
+
+* 변경된점
+
+1. 파일 업로드를 가능하게 했을 경우 파일을 선택하지 않으면
+   글이 포스팅 되지않던 버그 수정
+2. admin center 로그인 실패시 나오는 메세지의 오타 수정
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 1999년 12월 24일
+버전   : jsboard-0.6pre2-4 (적수게시판 버전 0.6 pre2)
+
+* 변경된점
+
+1. Admin center에서 숫자로만 된 이름으로 게시판을 생성할
+   경우 DB table이 만들어 지지 않던 현상 수정. '숫자'로만
+   된 게시판이름은 생성할수 없게 함.
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 1999년 12월 21일
+버전   : jsboard-0.6pre2-3 (적수게시판 버전 0.6 pre2)
+
+*변경된점
+
+1. 0 byte file을 upload할때 발생하는 에러 수정
+   0 byte file은 upload를 할수 없게 함.
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 1999년 12월 21일
+버전   : jsboard-0.6pre2-2 (적수게시판 버전 0.6 pre2)
+
+*변경된점
+
+1. admin page에서 DB삭제시 DB명을 지정하지 않고 삭제를 할때
+   include 디렉토리의 모든 파일들이 삭제 되는 문제 수정
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 1999년 12월 20일
+버전   : jsboard-0.6pre2-1 (적수게시판 버전 0.6 pre2)
+
+*변경된점
+
+1. delete.php3에서 font color지정시에 "="가 없어서
+   화면 출력이 안되는 부분 수정
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 1999년 12월 19일
+버전   : jsboard-0.6pre2 (적수게시판 버전 0.6 pre2)
+
+# 특징
+
+  0.6버젼과 0.5 버젼의 기능상의 차이를 좁힘.
+  0.5에 들어 있던 $use_email, $use_url 변수를 추가.
+  
+  $disp_name $use_write는 어떤 기능인지 파악을 못해서
+  추가 안함. 실제로 변수만 존재하는 듯함. 어디서 수정이 됐나??
+
+# 변경된점
+
+1. reply시에 글쓰기 란에 tab이 먹는것 삭제. (reply.php3)
+
+2. misc.ph 에서 send_mail() function 변경
+   메일이 왔다는 메세지만 보내는 것이 아니라 내용까지
+   다 보냄.
+
+   act.php3의 send_mail(....) 역시 같이 변경
+
+   config.ph 에 $webboard_version 함수 등록(메일 정보로)
+
+3. reply.php3 write.php3, edit.php3 delete.php3에서 
+   file_upload가 no 일때 file_upload 보이는 부분 수정
+
+4. $use_url, $use_email 변수 등록(config.ph)
+   reply.php3 write.php3, edit.php3 수정해 줌.
+   
+5. delete.php3 에서 윈도그용 익스플로러에서 테이블 사이즈가
+   엉망이 되는 것 수정 (blank.gif 를 이용하여 고정)
+
+6. INSTALL.txt 에 기존의 db를 사용하는 사람들을 위한
+   설치법 추가
+
+7. 글쓰기에서 html 사용여부의 디폴트를 사용안함으로 수정
+
+8. list.php3에서 search부분 때문에 form문을 사용.
+   그런데 이것이 </form>으로 닫혀 있지를
+   않아서 tail부분에서 form문을 또사용할 경우
+   에러를 발생. 요거 patch
+
+9. read.ph 에서 space를 &nbsp로 변환
+
+10. reply.php3에서 file_upload를 no로 했을때도
+   file_upload 부분이 뜨는 것을 수정
+
+기록하면서 하기는 했는데 빠진 부분이 더 있을지도 모름.
+
+# 변경된 file
+
+jsbpard/reply.php3
+jsboard/act.php3
+jsboard/write.php3
+jsboard/edit.php3
+jsboard/delete.php3
+jsboard/list.php3
+jsboard/include/misc.ph
+jsboard/include/list.ph
+jsboard/Install/sample/config.ph
+jsboard/admin/include/sample/config.ph
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
+작성일 : 1999년 12월 17일
+버전   : jsboard-0.6pre1 (적수게시판 버전 0.6) + OOPS administration center v1.2
+
+1. Installation 을 웹상에서 직접 할수 있게끔 추가.
+   (추가시 DB user, 계정, table을 바로 생성. test table이 생성됨)
+2. 각 게시판 마다 설정을 웹상에서 변경시킬수 있도록
+   관리자 기능 부여.
+3. 모든 게시판을 관리할수 있는 admin page 추가
+   (CrazyWWWBoard의 admin center와 유사한 기능)
+4. 적수님이 지적한 db table 구조 변경
+   date field에 키 인덱싱 추가.
+5. 게시판 관리자와 전체 관리자의 패스워드로 수정및 삭제를 할수 있게끔
+   jsborad-version/act.php3 의 del, edit 부분 변경.
+6. jsborad-version/include/db.ph 에서 admin 변수 삭제.
+   게시판 관리자와 중복되므로 삭제함.
+7. jsborad-version/include/$table/menu.ph 사용여부를 게시판 admin기능에서
+   사용하거나 사용안할수 있게끔 수정.
+8. jsborad-version/include/$table/head.html 삭제. desc.ph와 중복됨.
+   html header 부분은 desc.ph에서 처리를 함. (게시판 admin기능에서 html header
+   변경 부분)
+9. jsboard-version/list.php3 제일 하단에 tail.ph를 include.
+   tail.ph는 include/$table/tail.ph 임. 게시판 관리 기능에서 tail.ph를 웹상에서
+   수정 가능
+10. 각 패스워드들을 crypt() 암호화 하여 저장하였음.
+
+더 있는 것 같은데 기억이 안남. --;
+
+-----------------------------------------------------------------------------
+작성자 : 김영민 (blhole@hotmail.com)
+작성일 : 1999년 12월 10일
+버전   : jsboard-0.5 (적수게시판 버전 0.5)
+
+다른 분들이 다 해 놓은 것을 제가 덥석 집어 먹은 듯한 느낌이지만, 그래도
+제가 조금 수정한 부분을 적겠습니다. 
+
+ㅇ파일이 포함되지 않은 글을 지울때 생기는 버그를 고침
+ㅇ파일이 포함되지 않은 글에 X 표시가 되는 부분을 지움
+ㅇ글을 쓴 컴의 주소를 보여주도록 함
+ㅇ글이 쓰여졌을 때, 관리자에게 메일을 보내는 기능
+ㅇ답장을 썼을 때, 원래글을 쓴 사람에게 메일 보내는 기능
+ㅇ답장을 썼을 때, 원래글을 쓴 사람의 이름과 내용을 textarea에 포함시킴
+  내용은 원래 포함되어 있었으나 이름은 새로 추가
+o file 업로드시 화일이름에 공백이 있어도 업로드 가능..
+
+
+-----------------------------------------------------------------------------
+작성자 : 이진우(지누스) jinoos@hanmail.net
+작성일 : 1999년11월30일
+버전 : jsboard-0.4 (적수게시판 버전 0.4)
+
+1999년11월30일
+
+실력은 미진하지만 저도 일조하고픈 마음에서 신경을 써서 작업을 했습니다.
+아래는 업데이트 로그 입니다. 방창현님 께서 수정하신 manual.php3부분은 
+너무도 고난이도 기술( -_-;) 이어서 제가 따라가기가 힘들었습니다. 
+그래서 제가 페키지 한것은 방창현님의 manual.php3부분을 제하고 하였읍니다.
+파일은 같이 들어 있지만 실제 사용되지 않도록 설정을 했거든요. 어떻게 사용
+하는지도 잘 모르고요.. -_-;;; 
+기존에 문태준님이 작성하신 파일 삭제 코드가 제대로 동작하지 않아 약간 수정
+하였습니다.  제가 급하게 하느라고(아침에 셤보는데 이거 수정하고 있네요.. 현재
+새벽 5시) 제대로 되었는지 모르겠습니다. 너무나 실력있는 분들이(적수님, 태준님,
+창현님) 작업해두신거라.. 아무쪼록 잘못된거 있으면 바로 멜좀 부탁 드려요,, 
+
+* 등록된 파일종류별 썸네일 기능 추가
+* 업로드 세팅중 파일 미등록시 "홀" 현상 제거  "X" 볼드체로 변경
+* list.ph 의 함수중에 있는 링크안되어 사용된 include문제 해결(global 선언)
+* read.php3 파일중 정규표현식 에러 교정(실제 에러가 아님, 정규표현 라이브러리상에 차이)
+* 관리자 조회수 증가 방지 IP변수 등록 / 설정 가능. 관리차원에 편리성을 위해서 db.php3에 위치
+* 업로드된 파일 삭제루틴을 filesystem function으로 교채하였습니다. 
+* 작성글 수정과 삭제시 file 참고 부분 첨가
+
+아래 주소로 가시면 수정된 게시판 을 보실수 있습니다. 
+
+  http://delta.seonam.ac.kr/~jinoos/tmp/jsboard04/
+
+-----------------------------------------------------------------------------
+
+작성자: 방창현 (겨울아이) winchild@kldp.org
+작성일: 1999년11월26일 
+버전: jsboard-0.3 (적수게시판 버전 0.3)
+
+적수님의 게시판이 많은 사람들에세 사용되고 있는것 같습니다. 최초의 적수님의
+프로그램을 가져사 나름대로 수정하여 자기만 사용하시는 분들이 계셨던것 같은데
+문태준님께서 상당히 개선을 해서 처음으로 올리신것 같습니다. 이것을 시작으로
+오픈소스로서 리눅스의 개발체계를 따라가도록 하는것이 좋을것 같아서 문태준님의
+버전에 잘못된점을 수정하여 다시 올립니다. 버전은 적수님이 최초로 배포한 버전
+을 0.1 로 하여 문태준님의 버전을 0.2, 제가 수정하여 올리는 버전을 0.3 으로 
+할까 하며 프로그램의 명청도 적수-게시판으로 하여 jsboard 로 하는것이 좋을듯
+합니다. 적수님의 동의를 구합니다.
+
+동의 하신다면 jsboard-03.tar.gz 으로 배포를 시작합니다. (물론 동의 하시겠지요)
+본 프로그램의 라이선 스는 GNU 카피레프트를 따름니다.
+
+끝으로 본 프로그램을 시작으로 한국에서도 오픈기반의 창작 프로그램이 많이 생겨
+나기를 바랍니다.
+
+문태준 님께서 작업하신 파일을 올릴수 있도록 만든 적수님의 게시판에 몇가지 문제
+가 있는 부분을 수정하여 올립니다. 화면은 이쁘게 만드셨군요. 그리고 desc에 헤더
+의 내용을 포함시킨 부분이 커스터마이즈에 훨씬 유리하기도 하구요.
+
+몇가지 문제점은....
+
+1. test.sql 의 내용과 include 및의 테이블 내용과 다릅니다.
+   따라서 include 디렉토리 밑에 study 내용을 복사하였습니다.
+
+2. desc.ph 에서 header.phtml 및 menu.phtml 파일을 읽어들이는데 include 에
+   phtml 로 확장자가 붙은 파일은 없습니다. 따라서 header.ph 및 menu.ph로 
+   변경시켜 주었습니다.
+
+3. desc.ph 에서 header.ph를 읽어들이는데 이미 list.php3 에서 읽어들였기 때문
+   에 redeclation 에러가 발생합니다. desc.ph 에서 header.ph (header.phtml) 은
+   삭제하였습니다.
+
+4. desc.ph 에서 $DOCUMENT_ROOT 를 이용하여 include 를 하는데 htdocs 파일에
+   바로 설치하지 않으면 해당 파일을 찾을수 없다는 메세지가 나옵니다. 이것은
+   $DOCUMENT_ROOT 는 떼어내고 프로그램의 시작시에 list.php3?table=<table>
+   로 하지말고 이전의 적수님 게시판에서 이용한 <메뉴명>.php3 파일을 이용하여
+   구동하도록 하여야 합니다.
+
+   즉 
+
+     <?
+     Header("Cache-Control: no-cache, must-revalidate");           // HTTP/1.1
+     Header("Location: list.php3?table=hn_faq");
+     ?>
+
+   의 내용을 가지는 test.sql 에 정의된 manual.php3 파일을 만들어서 이것을
+   불러주면 directory 패스가 현재로 변경되어 $DOCUMENT_ROOT 에 의한 문제를
+   해결 할수 있습니다.
+
+5. 파일등록을 하도록 만들어진 부분에서 act.php3 에서 등록하는 파일명과 파일사이즈
+   를 초기화 시켜주지 않아서 DB에 등록시에 에러가 발생할 수 있습니다. (만약에 운
+   좋게 0 나 NULL로 세팅되면 에러가 발생하지 않음.) 이부분을 초기화 시켰습니다.
+
+
+-----------------------------------------------------------------------------
+
+작성자 : 문태준
+작성일 : 1999.11.17
+버전: jsboard-0.2 (적수게시판 버전 0.2)
+
+먼저 install.eng인가를 먼저 읽고 설치한다.
+게시판 자체에 대한 질문은 linux.sarang.net에서 한다.
+원래 게시판은 regex(정규표현식)에서 문제가 있더군요.
+저는 수정했는데 왜 잘 되는지는 잘 모름. 그냥 무대포...
+아래는 제가 수정한 파일들입니다. 약간씩 수정했습니다.
+
+
+수정내용
+- 파일 업로드 추가
+-board/include/table이름/config.ph에서 업로드 화면이 나오거나 나오지 않도록 조정가능
+** .ph 설정파일을 php에서 해석하도록 하는게 보안적인 면에서 좋음. 설정파일을
+남이 보면 좀 그렇죠?
+** 이유는 귀찮아서 안 찾아보았는데 regex 정규표현식에서 에러가 나서 
+이부분은 고쳤음. 
+
+
+board/ 
+-->> 
+act.php3 : 파일 업로드 및 목록에서 보여주기 추가
+delete.php3 : 파일 삭제 기능 추가
+list.php3 : 파일 목록 나오게
+read.php3 : 파일 이름과 크기 나오게
+reply.php3 : 파일 업로드 폼 추가
+write.php3 : 파일 업로드 폼 추가
+
+total 40
+drwxrwxr-x   4 www      www          1024 Nov 17 20:43 ./
+drwxrwxr-x   3 www      www          1024 Nov 17 09:56 ../
+-rwxrwxr-x   1 www      www          2651 Nov 17 09:56 INSTALL.ENG*
+-rw-rw-r--   1 www      www           196 Nov 17 20:43 README
+-rwxrwxr-x   1 www      www          4331 Nov 17 20:39 act.php3*
+-rwxrwxr-x   1 www      www          4035 Nov 17 20:40 delete.php3*
+-rwxrwxr-x   1 www      www          3504 Nov 17 09:56 edit.php3*
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 images/
+drwxrwxr-x  12 www      www          1024 Nov 17 20:36 include/
+-rwxrwxr-x   1 www      www            46 Nov 17 09:56 index.php3*
+-rwxrwxr-x   1 www      www          2574 Nov 17 18:02 list.php3*
+-rwxrwxr-x   1 www      www          6130 Nov 17 20:41 read.php3*
+-rwxrwxr-x   1 www      www          3890 Nov 17 20:41 reply.php3*
+-rwxrwxr-x   1 www      www           752 Nov 17 18:09 test.sql*
+-rwxrwxr-x   1 www      www          3349 Nov 17 11:07 write.php3*
+
+board/include
+여기선 수정할것 없음것임.
+
+total 34
+drwxrwxr-x  12 www      www          1024 Nov 17 20:48 ./
+drwxrwxr-x   4 www      www          1024 Nov 17 20:48 ../
+-rwxrwxr-x   1 www      www           187 Nov 17 09:56 db.ph*
+-rwxrwxr-x   1 www      www           523 Nov 17 09:56 error.ph*
+drwxrwxr-x   2 www      www          1024 Nov 17 12:05 free/
+-rwxrwxr-x   1 www      www           200 Nov 17 09:56 header.ph*
+-rwxrwxr-x   1 www      www           300 Nov 17 09:56 html.ph*
+drwxrwxr-x   2 www      www          1024 Nov 17 10:07 life/
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 linuxinfo/
+-rwxrwxr-x   1 www      www          7492 Nov 17 20:34 list.ph*
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 manual/
+-rwxrwxr-x   1 www      www          6144 Nov 17 09:56 misc.ph*
+drwxrwxr-x   2 www      www          1024 Nov 17 10:06 mysql/
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 plaza/
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 qa/
+-rwxrwxr-x   1 www      www           825 Nov 17 09:56 search.ph*
+-rwxrwxr-x   1 www      www           245 Nov 17 09:56 spam*
+-rwxrwxr-x   1 www      www           338 Nov 17 09:56 spam.ph*
+-rwxrwxr-x   1 www      www           830 Nov 17 09:56 sql.ph*
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 study/
+drwxrwxr-x   3 www      www          1024 Nov 17 20:27 test/
+drwxrwxr-x   3 www      www          1024 Nov 17 18:49 test1/
+
+
+board/include/test(table 명)
+config.ph : 여기에 파일 업로드 할것인지 말것인지 추가
+
+
+
+-rwxrwxr-x   1 www      www          1339 Nov 17 20:27 config.ph*
+-rwxrwxr-x   1 www      www           631 Nov 17 10:07 desc.ph*
+drwxrwxrwx   2 www      www          1024 Nov 17 20:21 files/
+
+
+-----------------------------------------------------------------------------
+
+최초작성자 : 적수
+작성일: 모름
+
+버전: jsboard-0.1 (적수게시판 버전 0.1)
+
+-----------------------------------------------------------------------------
