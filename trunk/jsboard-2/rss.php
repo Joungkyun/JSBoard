@@ -91,7 +91,14 @@ mysql_close();
 //exit();
 //--------------[이상이 없으면 출력]-----------------------
 
-echo "<?xml version=\"1.0\" encoding=\"euc-kr\"?>\n";
++include ("include/header.ph");
++
++header ('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
++header ('Expires: ' . gmdate('D, d M Y H:i:s', time()) . ' GMT');
++header ('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
++header ('Content-Type: text/xml');
++
++echo "<?xml version=\"1.0\" encoding=\"{$langs[charset]}\"?>\n";
 ?>
 <rdf:RDF xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://purl.org/rss/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:wiki="http://purl.org/rss/1.0/modules/wiki/">
   <channel rdf:about="<?=$rss['link']?>">
