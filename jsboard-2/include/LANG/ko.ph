@@ -98,6 +98,7 @@ $langs[chk_th] = "TH 태그가 열리지 않았거나 닫히지 않았습니다.";
 $langs[chk_tr] = "TR 태그가 열리지 않았거나 닫히지 않았습니다.";
 $langs[chk_td] = "TD 태그가 열리지 않았거나 닫히지 않았습니다.";
 $langs[chk_if] = "IFRAME 태그가 열리지 않았거나 닫히지 않았습니다.";
+$langs[chk_hy] = "Hyper Link 에 의한 접근을 허락하지 않습니다.";
 
 # get.ph
 $langs[get_v] = " [ 게시판 보기 ]";
@@ -203,9 +204,13 @@ $langs[ua_etc3] = "ID 거부";
 $langs[ua_etc4] = "Email 거부";
 $langs[ua_etc5] = "게시판 Table";
 
+$langs[ua_dhyper] = "등록된 주소의 링크만";
+$langs[ua_dhyper1] = "허락";
+$langs[ua_dhyper2] = "막음";
+$langs[ua_dhyper3] = "등록된 값이 없으면 이 기능은 작동하지 않습니다.\n해당 값은 IP Address 로만 한줄에 하나씩 지정이 가능합니다.";
+
 $langs[ua_pw_n] = "로그인 과정을 거쳐 주십시오!!";
 $langs[ua_pw_c] = "패스워드가 틀립니다";
-$pang[ua_pw_comp] = "두 패스워드가 동일하지 않으므로\n패스워드는 변경되지 않습니다.";
 
 # admin print.ph
 $langs[p_wa] = "전체 관리자 인증";

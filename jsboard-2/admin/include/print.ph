@@ -122,5 +122,4 @@ function userlist_sortlink($t,$c='') {
   }
   return $index;
 }
-
 ?>

@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Fri, Mar  1 2002
+Date      : Fri, Mar  2 2002
 Version   : jsboard-2.0pre4
 
 
@@ -78,6 +78,7 @@ Version   : jsboard-2.0pre4
 52. fixed problem of creat empty session file
 53. added image.php
 53. fixed full scanning idx field for check of jsboard table in admin/admin.php
+54. added function of control access from hyper link of other site
 
 
 -----------------------------------------------------------------------------
