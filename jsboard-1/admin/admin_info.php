@@ -43,16 +43,17 @@ if(!$mode) {
 
   $configfile = "../config/global.ph";
   $spamlistfile = "../config/spam_list.txt";
+  $allow_brfile = "../config/allow_browser.txt";
 
   # global 설정 가져오기
-  $global_con = get_file("../config/global.ph");
+  $global_con = file_operate($configfile,"r","Don't open $configfile");
 
   # spam list 가져오기
-  if(file_exists("../config/spam_list.txt")) $spamlist = get_file("../config/spam_list.txt");
+  if(file_exists($spamlistfile)) $spamlist = file_operate($spamlistfile,"r");
   else $spamlist = "jsboard/config 에 spam_list.txt 가 존재하지 않습니다";
 
   # 등록 허락할 브라우져 명단 가져오기
-  if(file_exists("../config/allow_browser.txt")) $allow_br = get_file("../config/allow_browser.txt");
+  if(file_exists($allow_brfile)) $allow_br = file_operate($allow_brfile,"r");
   else $allow_br = "jsboard/config 에 allow_browser.txt 가 존재하지 않습니다";
 
   $global_con = trim($global_con);

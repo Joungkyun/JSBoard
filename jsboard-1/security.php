@@ -43,9 +43,7 @@ if($viewtype || $adminsession) {
                          "\$security[serial] = $security[serial];\n".
                          "\$security[prints] = 0;\n?>";
 
-    $f = @fopen("./config/security_data.ph","w");
-    @fwrite($f,$security[content]);
-    @fclose($f);
+    file_operate("./config/security_data.ph","w","Failed security record update",$security[content]);
   }
 } else $body_text = "<FORM METHOD=POST ACTION=$PHP_SELF>\n".
                     "<TABLE BORDER=0 CELLPADDING=3 CELLSPACING=0 ALIGN=center>\n".

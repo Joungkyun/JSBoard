@@ -231,7 +231,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
   # 게시물 삭제 함수
   function article_delete($table, $no, $passwd, $adm = 0) {
     global $sadmin, $admin, $o, $langs, $adminsession;
-    global $delete_filename, $delete_dir, $sadm;
+    global $delete_filename, $delete_dir, $sadm, $upload;
 
     $adm = $o[am];
     $atc = get_article($table, $no);
@@ -424,15 +424,17 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
 
   $dn[path] = "data/$dn[tb]/$upload[dir]/$dn[cd]/$dn[name]";
 
-  if($fp=@fopen($dn[path],"r")) { 
-    Header("Content-type: file/unknown"); 
-    Header("Content-Disposition: attachment; filename=".$dn[name]);
-    Header("Content-Description: PHP Generated Data"); 
-    while($data=fread($fp,filesize($dn[path]))) { print($data); } 
-    fclose($fp);
-  } else {
-    print_error("Don't open $dn[name]");
-    exit; 
+  if($dn[dl] = file_operate($dn[path],"r","Don't open $dn[name]")) {
+    if($agent[br] == "MSIE5.5") {
+      header("Content-Type: doesn/matter");
+      header("Content-Disposition: filename=".$dn[name]);
+      header("Content-Transfer-Encoding: binary");
+    } else {
+      Header("Content-type: file/unknown");
+      Header("Content-Disposition: attachment; filename=".$dn[name]);
+      Header("Content-Description: PHP Generated Data");
+    }
+    echo $dn[dl];
   }
 } elseif ($o[at] == "sm") {
   include "include/version.ph";
@@ -463,7 +465,9 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
   if ($o[se] == "login") {
     if($pcheck != "") SetCookie("pcheck","","0");
     # Cookie 를 등록한다.
-    SetCookie("pcheck",$pcheck,time()+900);
+    if($agent[br] = "MSIE") $CookieTime = strftime("%A, %d-%b-%Y %H:%M:%S MST", time()+900);
+    else $CookieTime = "time()+900";
+    SetCookie("pcheck",$pcheck,$CookieTime);
     if(!$page) $page = 1;
     header("Location: $kind.php?table=$table&no=$no&page=$page");
   } else if ($o[se] == "logout") {

@@ -83,7 +83,7 @@ if($trans[type] == "gdbm") {
 
       $text = "$var=$context\n";
 
-      $p = fopen("temp.trans","w");
+      $p = fopen("temp.trans","wb");
       fwrite($p,$text);
       fclose($p);
 
@@ -102,7 +102,7 @@ if($trans[type] == "gdbm") {
 } elseif($trans[type] == "ascii") {
   # ascii file의 ^M값을 %0a 로 치환
   exec("$perl -p -i -e 's/\\r\\n/%0a/' $trans[file]");
-  $p = fopen($trans[file],"r");
+  $p = fopen($trans[file],"rb");
   while(!feof($p)) {
     $text = fgets($p,30000);
     if(eregi("^[0-9]",$text)) {
@@ -116,7 +116,7 @@ if($trans[type] == "gdbm") {
 
       echo "$c_no  :";
 
-      $wc=fopen("temp.trans","w");
+      $wc=fopen("temp.trans","wb");
       fwrite($wc,$context."\n");
       fclose($wc);
 

@@ -86,17 +86,13 @@ if ($indb[check]) {
 
   # 설정 파일에 DB 정보를 입력
   $create[gfile] = "../config/global.ph";
-  $fp[glo] = fopen($create[gfile],"r");
-  $create[str] = fread($fp[glo], filesize($create[gfile]));
-  fclose($fp[glo]);
+  $create[str] = file_operate($create[gfile],"r","Can't open $create[gfile]");
 
   $create[str] = ereg_replace("DBname",$dbinst[name],$create[str]);
   $create[str] = ereg_replace("DBpass",$dbinst[pass],$create[str]);
   $create[str] = ereg_replace("DBuser",$dbinst[user],$create[str]);
 
-  $fp[glo] = fopen($create[gfile],"w");
-  fwrite($fp[glo],$create[str]);
-  fclose($fp[glo]);
+  file_operate($create[gfile],"w","Can't update $create[gfile]",$create[str]);
 
   # 등록후 변수값들 초기화
   $dbinst[name] = "";

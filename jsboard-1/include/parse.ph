@@ -232,46 +232,37 @@ function cut_string($s, $l) {
 # eregi_replace - 정규 표현식을 이용한 치환 (대소문자 무시)
 #                 http://www.php.net/manual/function.eregi-replace.php
 function auto_link($str) {
-  global $color;
   $agent = get_agent();
 
   $regex[file] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
   $regex[http] = "(http|https|ftp|telnet|news):\/\/(([\xA1-\xFEa-z0-9_\-]+\.[][\xA1-\xFEa-z0-9:;&#@=_~%\?\/\.\,\+\-]+)(\/|[\.]*[a-z0-9]))";
   $regex[mail] = "([\xA1-\xFEa-z0-9_\.\-]+)@([\xA1-\xFEa-z0-9_\-]+\.[a-z0-9\-\._\-]+[\.]*[\xA1-\xFEa-z0-9\?=]*)";
 
-  # < 로 열린 태그가 그 줄에서 닫히지 않을 경우 nl2br()에서 <BR> 태그가
-  # 붙어 깨지는 문제를 막기 위해 다음 줄까지 검사하여 이어줌
-  $str = eregi_replace("<([^<>\n]*)\n([^<>\n]+)\n([^<>\n]*)>", "<\\1\\2\\3>", $str);
-  $str = eregi_replace("<([^<>\n]*)\n([^\n<>]*)>", "<\\1\\2>", $str);
-  
-  # 특수 문자와 링크시 target 삭제
+  # IMG tag 와 A tag 의 경우 링크가 여러줄에 걸쳐 이루어져 있을 경우
+  # 이를 한줄로 합침 (합치면서 부가 옵션들은 모두 삭제함)
+  $str = eregi_replace("<(A|IMG)[^>]*(HREF|SRC)[^>]*($regex[http]|mailto:$regex[mail])[^>]*>","<\\1 \\2=\"\\3\">",$str);
+
+  # 특수 문자를 치환
   $str = eregi_replace("&(quot|gt|lt)","!\\1",$str);
-  
+
   # html사용시 link 보호
-  $str = eregi_replace("<a[ ]+href=[\"']*($regex[http])[\"']*[ ]?[^>]*>","<a href=\"\\2_orig://\\3\" target=\"_blank\">", $str);
-  $str = eregi_replace("<a[ ]+href=[\"']*mailto:($regex[mail])[\"']*>","<a href=\"mailto:\\2#-#\\3\">", $str);
-  $str = eregi_replace("<([a-z0-9\"'%= ]+) (background|codebase|src)=[\"']*($regex[http])[\"']*","<\\1 \\2=\"\\4_orig://\\5\"",$str);
+  $str = eregi_replace("href=\"($regex[http])\"[^>]*>","HREF=\"\\2_orig://\\3\" TARGET=\"_blank\">", $str);
+  $str = eregi_replace("href=\"mailto:($regex[mail])\">","HREF=\"mailto:\\2#-#\\3\">", $str);
+  $str = eregi_replace("(background|codebase|src)[ \n]*=[\n\"' ]*($regex[http])[\"']*","\\1=\"\\3_orig://\\4\"",$str);
   if($agent[br] != "MSIE") $str = eregi_replace("<embed","&lt;embed",$str);
-  
+
   # 링크가 안된 url및 email address 자동링크
-  $str = eregi_replace("($regex[http])","<a href=\"\\1\" target=\"_blank\">\\1</a>", $str);
-  $str = eregi_replace("($regex[mail])","<a href=\"mailto:\\1\">\\1</a>", $str);
-  
+  $str = eregi_replace("($regex[http])","<A HREF=\"\\1\" TARGET=\"_blank\">\\1</a>", $str);
+  $str = eregi_replace("($regex[mail])","<A HREF=\"mailto:\\1\">\\1</a>", $str);
+
   # 보호를 위해 치환한 것들을 복구
   $str = eregi_replace("!(quot|gt|lt)","&\\1",$str);
   $str = eregi_replace("(http|https|ftp|telnet|news)_orig","\\1", $str);
   $str = eregi_replace("#-#","@",$str);
-  
-  # link가 2개 겹쳤을때 이를 하나로 줄여줌
-  $str = eregi_replace("(<a href=[\"']?($regex[http])[\"']?[^>]*>)(<a href=[\"']?($regex[http])[\"']?[^>]*>)+","\\1", $str);
-  $str = eregi_replace("(<a href=[\"']?mailto:($regex[mail])[\"']?>)(<a href=[\"']?mailto:($regex[mail])[\"']?>)+","\\1", $str);
-  $str = eregi_replace("</a></a>","</a>",$str);
-  $str = eregi_replace("([a-z])(\.)*(\" target=\"_blank)\">","\\1\\3\">",$str);
-  $str = eregi_replace("([a-z])(\.)*\">","\\1\">",$str);
-  
+
   # file link시 target 을 삭제
-  $str = eregi_replace("(\.($regex[file])\") target=\"_blank\"","\\1",$str);
-  
+  $str = eregi_replace("(\.($regex[file])\") TARGET=\"_blank\"","\\1",$str);
+
   return $str;
 }
 

@@ -183,6 +183,10 @@ $view[email]	= "yes";
 #  mail 발송 여부 설정
 ##############################################################################
 $rmail[uses]	= "yes";
+# MTA type 을 지정
+# 1 - socket type 으로 발송 (sendmail only)
+# 0 - php 의 mail() 함수 사용 (sendmail 또는 sendmail 이외의 mta 의 경우)
+$rmail[mta]     = 1;
 # 메일을 발송할 서버를 지정
 $rmail[smtp]	= "127.0.0.1";
 # jsboard가 설치되어 있는 웹경로
