@@ -20,10 +20,14 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
-2002.4.8 by 임은재 <http://kldp.org/~eunjea/>
+2002.4.7 by 김정균 < http://www.oops.org>
+	- 글등록시 이름,제목,본문의 null 체크시 0xA1A1 이 통과되는 것 수정
+	- Changelog 양식 변경
+
+2002.4.7 by 임은재 <http://kldp.org/~eunjea/>
 	- qmail 에서 maildaemon class 작동 제대로 안되던 것 수정
 
-2002.4.8 by 김정균 < http://www.oops.org>
+2002.4.6 by 김정균 < http://www.oops.org>
 	- 4.1.0 이상의 버젼을 요구
 	- 내부 회원 DB 사용시 유저관리 페이지 뜨지 않는 버그 수정
 	- 답장 등록시 의 최고 no 값 가져오는 SQL 버그 수정
@@ -104,7 +108,6 @@ If you wnat to see windog's change log, see also
 	- install script 수정
 	- auto_link() 함수 수정
 	- 검색 루틴 수정
-	- Changelog 양식 변경
 
 
 -----------------------------------------------------------------------------
