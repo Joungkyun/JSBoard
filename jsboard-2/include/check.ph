@@ -81,10 +81,11 @@ function check_url($url) {
 #          http://www.php.net/manual/function.checkdnsrr.php
 function check_email($email) {
   $url = trim($email);
-  if(!eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$", $url))
-    return;
-
-  return $url;
+  $host = explode("@",$url);
+  if(eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$", $url)) {
+    if(checkdnsrr($host[1],"MX") || gethostbynamel($host[1])) return $url;
+    else return;
+  }
 }
 
 # 패스워드 비교 함수

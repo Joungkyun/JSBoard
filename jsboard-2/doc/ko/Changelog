@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  2월 23일
+작성일 : 2002년  2월 25일
 버전   : jsboard-2.0pre4
 
 
@@ -76,6 +76,7 @@ If you wnat to see windog's change log, see also
 47. mail.template 의 오타 수정
 48. 메일발송을 JSBoard 자체적으로 하게 변경 (시스템의 mail daemon 에 의존 안함)
 49. 정규 표현식 버그 수정
+50. 메일등록시 메일 서버가 유효한지 체크하도록 수정
 
 
 -----------------------------------------------------------------------------
