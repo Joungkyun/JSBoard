@@ -20,16 +20,6 @@ if($board['super'] == 1 || $board['adm']) {
                   "{$print['adpath']}</A>";
 }
 
-if($board['super'] == 1) {
-  $security_file = "include/security.ph";
-  if(file_exists($security_file)) {
-    @include "include/security.ph";
-    $board['secwarn'] = get_security_info();
-    if($board['secwarn'] == "warning")
-      $print['admin'] = "[ <a href=security.php?table=$table><font color={$color['n0_fg']}>warnning</font></a> ]";
-  }
-}
-
 # SQL 시작 시간 체크
 $a_time[] = microtime();
 
