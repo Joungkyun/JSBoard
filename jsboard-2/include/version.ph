@@ -1,4 +1,4 @@
 <?
-$board[ver] = "2.0.2";
+$board[ver] = "2.0.3";
 $theme[ver] = "A4"
 ?>
