@@ -67,6 +67,13 @@ $upload[maxsize] = "2000000";		# upload max size
 
 
 ##############################################################################
+#  Config of IP Blocking
+#  if value of $board[useipbl] is 0, then all board disable check ip blocking.
+##############################################################################
+$board[useipbl] = 0;
+
+
+##############################################################################
 #  Control Access From Remote Hyper Link
 #  if value of $board[usedhyper] is 0, then all board disable check dhyper.
 ##############################################################################
