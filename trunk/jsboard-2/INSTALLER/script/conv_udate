@@ -41,12 +41,6 @@ APERNO=$(sed -n -e '/board\[perno\]/ s/.*board\[perno\][^=]*=[^\"0-9]*[\"]*\([0-
 APLIST=$(sed -n -e '/board\[plist\]/ s/.*board\[plist\][^=]*=[^\"0-9]*[\"]*\([0-9 ]*\)[\"]*;.*/\1/p;' ${ACONFFILE})
 [ "${APLIST}" = "" ] && APLIST=3
 
-AUCONF=$(sed -n -e '/board\[uconf\]/ s/.*board\[uconf\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
-case ${AUCONF} in
-  y*|Y*) AUCONF=1;;
-  *) AUCONF=0;;
-esac
-
 ALANG=$(sed -n -e '/langs\[code\]/ s/.*langs\[code\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
 case ${ALANG} in
   ko|KO|Ko|kO) ATHEME="KO-default" ;;
@@ -129,7 +123,7 @@ echo "<?
 \$board[nam_l]    = ${ANAM_L};			# Max lenth of writer field
 \$board[perno]    = ${APERNO};			# Article number per page
 \$board[plist]    = ${APLIST};			# Print page link number (x2+1)
-\$board[uconf]    = ${AUCONF};			# Permited to use configuration per user
+\$board[uconf]    = 1;			# Permited to use configuration per user
 \$board[date_fmt] = \"${ADATEF}\";		# format of date
 
 # period of cookie time (day value)
