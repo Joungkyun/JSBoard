@@ -20,5 +20,5 @@ include("./include/multi_lang.ph");
 if(!$table) { error(); }
 include("./include/$table/config.ph");
 
-$wver = "0.7.7";
+$wver = "0.7.8";
 ?>
