@@ -2,7 +2,7 @@
 ##############################################################################
 #  DATABASE Configuration
 ##############################################################################
-$db[server]      = ":/var/lib/mysql/mysql.sock";	# DB address
+$db[server]      = "@DBSERVER@";	# DB address
 $db[user]        = "@DBUSER@";				# DB login user
 $db[pass]        = "@DBPASS@";				# DB login pass
 $db[name]        = "@DBNAME@";				# DB name

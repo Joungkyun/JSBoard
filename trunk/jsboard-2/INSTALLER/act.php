@@ -137,9 +137,10 @@ if ($indb[check]) {
   $create[gfile] = "../config/global.ph";
   $create[str] = file_operate($create[gfile],"r","Can't open $create[gfile]");
 
-  $create[str] = ereg_replace("@DBNAME@",$dbinst[name],$create[str]);
-  $create[str] = ereg_replace("@DBPASS@",$dbinst[pass],$create[str]);
-  $create[str] = ereg_replace("@DBUSER@",$dbinst[user],$create[str]);
+  $create[str] = str_replace("@DBSERVER@",$mysql_sock,$create[str]);
+  $create[str] = str_replace("@DBNAME@",$dbinst[name],$create[str]);
+  $create[str] = str_replace("@DBPASS@",$dbinst[pass],$create[str]);
+  $create[str] = str_replace("@DBUSER@",$dbinst[user],$create[str]);
 
   # theme ¼³Á¤
   $themes = ($langs[code] == "ko") ? "KO-default" : "EN-default";
