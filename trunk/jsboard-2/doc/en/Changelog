@@ -19,6 +19,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.7
 
+Sat, Feb 14 2004
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed php unset() function
+
 Sat, Feb  7 2004
   by GiHoon Ham <cloou at scscian.net>
 	- added rss function
