@@ -849,25 +849,25 @@ function detail_searchform($p='') {
 function print_comment($table,$no,$print=0) {
   global $board, $color, $size, $rname, $page, $langs;
   global $pre_regist;
-  $textareasize = $size[text]-form_size(9);
+  $textareasize = $size['text']-form_size(9);
 
-  if (preg_match("/^(2|3|5|7)$/",$board[mode])) {
-    if($board[super] != 1) $disable = " readonly";
+  if (preg_match("/^(2|3|5|7)$/",$board['mode'])) {
+    if($board['super'] != 1) $disable = " readonly";
     else $disable = "";
   } else $disable = "";
 
-  $t = "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=5 BGCOLOR=$color[l5_bg]>\n".
+  $t = "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=5 BGCOLOR={$color['l5_bg']}>\n".
        get_comment($table,$no,0).
        "<TR><TD COLSPAN=4 ALIGN=right>\n".
-       "<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=1 BGCOLOR=$color[l3_bg]>\n".
+       "<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=1 BGCOLOR={$color['l3_bg']}>\n".
        "<FORM METHOD=POST ACTION=act.php>\n".
        "<TR>\n".
        "<TD ROWSPAN=2 ALIGN=center>".
        "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
        "</TD>\n".
        "<TD ALIGN=right>\n".
-       "$langs[c_na] <INPUT TYPE=text$disable NAME=atc[name] MAXLENGTH=30 SIZE=$size[pass] VALUE=\"$pre_regist[name]\"><BR>\n".
-       "$langs[c_ps] <INPUT TYPE=password$disable NAME=atc[passwd] SIZE=$size[pass]>\n".
+       "{$langs['c_na']} <INPUT TYPE=text$disable NAME=atc[name] MAXLENGTH=30 SIZE={$size['pass']} VALUE=\"{$pre_regist['name']}\"><BR>\n".
+       "{$langs['c_ps']} <INPUT TYPE=password$disable NAME=atc[passwd] SIZE={$size['pass']}>\n".
        "</TD>\n".
        "<TD ROWSPAN=2 ALIGN=center>".
        "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
@@ -880,10 +880,10 @@ function print_comment($table,$no,$print=0) {
        "</TD>\n".
        "</TR>\n".
        "<TR>\n".
-       "<TD ALIGN=right><INPUT TYPE=submit VALUE=\"$langs[c_en]\"></TD>\n".
+       "<TD ALIGN=right><INPUT TYPE=submit VALUE=\"{$langs['c_en']}\"></TD>\n".
        "</TR>\n".
        "<INPUT TYPE=hidden NAME=atc[no] VALUE=$no>\n".
-       "<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"$pre_regist[rname]\">\n".
+       "<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"{$pre_regist['rname']}\">\n".
        "<INPUT TYPE=hidden NAME=table VALUE=$table>\n".
        "<INPUT TYPE=hidden NAME=page VALUE=$page>\n".
        "<INPUT TYPE=hidden NAME=o[at] VALUE=\"c_write\">\n".

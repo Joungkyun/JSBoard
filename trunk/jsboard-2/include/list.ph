@@ -248,12 +248,13 @@ function get_comment($table,$no,$prints=0) {
               "</TR>\n";
 
     while ($list = sql_fetch_array($r)) {
-      if($lines[comment_design]) $lists .= $lines[comment_design];
+      if($lines['comment_design']) $lists .= $lines['comment_design'];
       $lists .= print_comment_art($table,$list,0,$delimgcheck);
     }
   }
 
-  if($lines[comment_design]) $lists .= $lines[comment_design];
+  if($lines['comment_design']) $lists .= $lines['comment_design'];
+  $lists = conv_emoticon ($lists, $GLOBALS['enable']['emoticon']);
 
   if($prints) echo $lists;
   else return $lists;

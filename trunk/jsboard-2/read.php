@@ -145,7 +145,6 @@ if($alert) {
   
   # 커멘트 리스트
   $print[comment] = $enable[comment] ? print_comment($table,$no,0) : "";
-  $print[comment] = $print[comment] ? conv_emoticon($print[comment], $enable[emoticon]) : "";
   
   # 글 읽었을 경우 조회수 1 늘림
   #if (get_hostname(0) != $list[host]) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'");
