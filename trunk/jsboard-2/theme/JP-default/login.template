@@ -99,11 +99,12 @@ Session Reset <INPUT TYPE=BUTTON VALUE=RESET onClick="document.location='./sessi
 <?=$tin?>
 </FORM>
 
+</TD></TR>
+</TABLE>
+
 <?
 if($table) { include "data/$table/html_tail.ph"; }
 include "html/tail.ph";
 ?>
 
-</TD></TR>
-</TABLE>
 </BODY></HTML>
