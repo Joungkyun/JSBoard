@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.0
 
+Tue, Jul 16 2002 by JoungKyun Kim <http://www.oops.org>
+	- fixed break bug of root script
+
 Wed, Jul 10 2002 by JoungKyun Kim <http://www.oops.org>
 	- fixed total articles number of today's registration
 	- prevented upload of 0 byte file
