@@ -1,0 +1,31 @@
+Version: A6
+- 함수이름 보정 (pirnt_keymenu -> print_keymenu)
+- SYTLE SHEET 보정
+
+Version: A5
+- edit, replay, write template 의 textarea 에서 tab 을 누르면 등록으로
+  이동되게 수정
+
+Version: A4
+- 키보드 제어 코드 추가 : <?=pirnt_keymenu()?>
+- edit.template, reply.template, write.template 의
+  if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
+  라인을
+  if ($upload[yesno] && $cupload[yesno] && $noup != 1) {
+  로 수정
+
+Version: A3
+- logout 링크 추가 (<?=$print[lout]?> - list.template, read.template)
+- img/notice.gif 추가 (공지글 ICON)
+- 공지사항 배경,폰트 색상 추가 (config.ph)
+
+Version: A2
+- INPUT 문의 password 를 MAXLENGTH=8 에서 MAXLENGTH=16 으로 수정
+- INPUT 문의 password 에 style sheet  STYLE=\"font: 10px tahoma\" 추가
+  (IE 6.x -xp용- 의 패스워드 필드를 이상하게 출력하는 것 방지)
+- mail 발송 방식 변경에 따른 mail html design 템플릿 파일 추가 (mail.template)
+- login.php 와 read.php 에서 커멘트 관련 수정
+- reply design 변경
+
+Version: A1
+- theme 관리 시작

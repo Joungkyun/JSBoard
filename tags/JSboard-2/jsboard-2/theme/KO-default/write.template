@@ -1,0 +1,228 @@
+<HTML>
+<HEAD>
+<!-#######################################################################-->
+<!-  $langs[charset] : 게시판의 언어 타입에 따라 charset 을 가져온다.     -->
+<!-  $board[ver]     : 게시판의 버젼 정보를 가지고 온다.                  -->
+<!-  get_title()     : 게시판의 헤더 타이틀을 가지고 온다.                -->
+<!-  $user_stylesheet : 사용자 정의 스타일 시트                           -->
+<!-#######################################################################-->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs[charset]?>">
+<TITLE>Jsboard <?=$board[ver]?> - <?=get_title()?></TITLE>
+
+<STYLE TYPE=text/css>
+<!--
+BODY,TD {font-size:12px;font-family:굴림체;color:#555555;}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+INPUT {font: 11px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; padding-right:1px; background-color:#FFFFFF; }
+TEXTAREA {font: 13px 굴림체; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; background-Color:#ffffff;}
+
+<?=$user_stylesheet?>
+-->
+</style>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+
+<!-------------------- 헤더 디자인 시작 -------------------->
+<?
+if(!$np) {
+  # 각 유저별 Design
+  include "$board[headpath]";
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.ph";
+ }
+?>
+<!-------------------- 헤더 디자인 끝   -------------------->
+
+<!-#######################################################################-->
+<!-  $board[align] : 게시판의 align 을 정의한다. 이는 게시판 관리자에서   -->
+<!-                  설정을 할수 있다.                                    -->
+<!-  $board[width] : 게시판의 넓이를 지정한다. 게시판 관리자에서 조정     -->
+<!-  $board[formtype] : 이미지 업로드를 지원 여부를 위해 꼭 필요          -->
+<!-#######################################################################-->
+<DIV ALIGN=<?=$board[align]?>>
+<FORM NAME=writep METHOD=post ACTION=act.php<?=$board[formtype]?>>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN=bottom COLSPAN=2>
+<IMG SRC=./theme/KO-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
+<FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Write new article</FONT>
+</TD>
+</TR>
+
+<TR BGCOLOR=#FFAE00>
+<TD COLSPAN=2>
+<IMG SRC=./theme/KO-default/img/board_no.gif ALIGN=absmiddle ALT=''>
+<FONT STYLE="color:#FFFFFF"><IMG SRC=theme/KO-default/img/write_title.gif BORDER=0></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=10><IMG SRC=images/blank.gif WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $size[name]         : input 문의 사이즈 theme config 에서 설정       -->
+<!-  $pre_regist[name]   : cookie 에 등록된 이름이 자동 지정되도록        -->
+<!-#######################################################################-->
+<TR>
+<TD WIDTH=80>이름</TD>
+<TD><INPUT TYPE=text NAME=atc[name] SIZE=<?=$size[name]?> MAXLENGTH=50 VALUE="<?=$pre_regist[name]?>"<?=$disable?>></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $view[email]          : email 등록 여부 결정                         -->
+<!-  $pre_regist[email]    : cookie 에 등록된 이 메일이 자동 지정되도록   -->
+<!-#######################################################################-->
+<?
+if($view[email]) {
+  echo "
+<TR>
+<TD>메일</TD>
+<TD><INPUT TYPE=text NAME=atc[email] SIZE=$size[name] MAXLENGTH=255 VALUE=\"$pre_regist[email]\"$disable></TD>
+</TR>\n";
+}
+?>
+
+<!-#######################################################################-->
+<!-  $view[url]             : url 등록 여부 결정                          -->
+<!-  $pre_regist[url]       : cookie 에 등록된 url이 자동 지정되도록      -->
+<!-#######################################################################-->
+<?
+if($view[url]) {
+  echo "
+<TR>
+<TD>홈페이지</TD>
+<TD><INPUT TYPE=text NAME=atc[url] SIZE=$size[name] MAXLENGTH=255 VALUE=\"$pre_regist[url]\"$disable></TD>
+</TR>\n";
+}
+?>
+
+<TR>
+<TD>HTML</TD>
+<TD>
+<INPUT TYPE=radio NAME=atc[html] VALUE=1> 사용함
+<INPUT TYPE=radio NAME=atc[html] VALUE=0 CHECKED> 사용안함
+</TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  upload 부분 출력여부 설정 (왠만하면 그냥 쓰면 됨)                    -->
+<!-#######################################################################-->
+<?
+if ($upload[yesno] && $cupload[yesno] && $noup != 1) {
+  echo "<TR>\n".
+       "<TD>파일</TD>\n".
+       "<TD>\n".
+       "<INPUT TYPE=HIDDEN NAME=max_file_size VALUE=$upload[maxsize]>\n".
+       "<INPUT TYPE=file NAME=userfile SIZE=$size[uplo] MAXLENGTH=256>\n".
+       "</TD>\n".
+       "</TR>\n";
+} elseif(!$upload[yesno] && $cupload[yesno]) {
+  echo "<TR>\n".
+       "<TD>파일</TD>\n".
+       "<TD><FONT STYLE=\"color:red;font-weight:bold\">$langs[upload]<FONT></TD>\n".
+       "</TR>\n";
+}
+?>
+
+<!-#######################################################################-->
+<!-  $size[titl]  : title input 문의 사이즈                               -->
+<!-#######################################################################-->
+<TR>
+<TD>제목</TD>
+<TD><INPUT TYPE=text NAME=atc[title] SIZE=<?=$size[titl]?> MAXLENGTH=100></TD>
+</TR>
+
+<TR>
+<!-#######################################################################-->
+<!-  admin login 상태일 경우 패스워드를 안적어도 되게끔 하는 루틴         -->
+<!-  IE, NS6 의 경우에는 textarea 창 사이즈 조정 버튼도 같이 출력         -->
+<!-#######################################################################-->
+<?
+if((!$board[mode] || $board[mode] == 6) && $board[super] != 1) {
+  echo "<TD>패스워드</TD>\n".
+       "<TD>\n".
+       "<INPUT TYPE=password NAME=atc[passwd] SIZE=$size[pass] MAXLENGTH=16 STYLE=\"font:10px tahoma;\">\n".
+       "<IMG SRC=./images/blank.gif WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>\n".
+       "TextSize Operation $print[operate]\n".
+       "</TD>\n";
+} else {
+  echo "<TD COLSPAN=2 ALIGN=right>\n".
+       "TextSize Operation $print[operate]\n".
+       "</TD>\n";
+}
+?>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR=<?=$color[l5_bg]?> ALIGN=CENTER>
+
+<!-#######################################################################-->
+<!-  $wrap[op]   : textarea 의 wrap 옵션출력                              -->
+<!-  $size[text] : textarea 의 size 출력                                  -->
+<!-#######################################################################-->
+<!-- =============================== 글내용 =============================== -->
+<TEXTAREA NAME="wpost" <?=$wrap[op]?> ROWS=10 COLS=<?=$size[text]?>></TEXTAREA>
+<!-- =============================== 글내용 =============================== -->
+
+</TD></TR>
+</TABLE>
+
+
+<!-#######################################################################-->
+<!- $wrap[ment]       : textarea 에 wrap 이 hard 가 아닐 경우 경고 메세지 -->
+<!- $table.$pages     : 목록으로 돌아가는 링크에 필요한 변수들            -->
+<!- $print[passform]  : 글 등록하는데 필요한 hidden 변수들                -->
+<!- $orig_option      : 글쓰기 창 조절시 원래 크기로 돌아가는 옵션        -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN=right><?=$wrap[ment]?></TD></TR>
+<TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
+<?=$print[passform]?>
+<INPUT TYPE=submit VALUE=등록>
+<INPUT TYPE=reset VALUE="다시"<?=$orig_option?>>
+<INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록">
+<INPUT TYPE=button onClick=history.back() VALUE="이전">
+</TD></TR>
+</TABLE>
+
+<!-#######################################################################-->
+<!-  print_license()  : 라이센스 출력                                     -->
+<!-#######################################################################-->
+<?=print_license()?>
+
+</FORM>
+</DIV>
+
+<!-------------------- 꼬리 디자인 시작 -------------------->
+<?
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.ph";
+  # 각 유저별 Design
+  include "$board[tailpath]";
+}
+?>
+<!-------------------- 꼬리 디자인 끝   -------------------->
+</BODY>
+</HTML>
