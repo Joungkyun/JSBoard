@@ -149,12 +149,16 @@ if($db[name] && !$table) {
   $to_today = !$to_today ? "0" : $to_today;
   $to_today_t = !$to_today_t ? "0" : $to_today_t;
 
+  # 외부 DB 를 사용할 경우 JSBoard 관리자에서 user 관리를 하지 않음
+  $userclick = ${jsboard}[external] ? "window.alert('External user tabel Can\'t be Use')" : 
+                            "document.location='./userlist.php?t=a'";
+
   echo "\n<tr align=center bgcolor=$color[d_bg]>\n".
        "<td><font color=$color[d_fg]><b>$langs[a_t41] [ $langs[a_t16] ]</b></font></td>\n".
        "<td align=center><font color=$color[d_fg]>$to_today [$to_today_t]</font></td>\n".
        "<td align=center><font color=$color[d_fg]>$to [$to_t]</font></td>\n".
        "<td colspan=2 bgcolor=$color[m_bg]>\n".
-       "<form><input type=button value=\"$langs[a_t20]\" onClick=\"document.location='./userlist.php?t=a'\">\n".
+       "<form><input type=button value=\"$langs[a_t20]\" onClick=\"$userclick\">\n".
        "<input type=button value=\"$langs[a_t11]\" onClick=logout()>\n".
        "</td></form>\n</tr>\n\n".
        "<tr bgcolor=$color[m_bg]><form name='create_db' method='post' action='act.php'>\n".

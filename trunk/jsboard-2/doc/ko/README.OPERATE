@@ -1,6 +1,6 @@
 JSBoard v2.0 Upgrade document
 
-2001.09.05 김정균 <http://www.oops.org>
+2001.12.19 김정균 <http://www.oops.org>
 
 
 목차
@@ -14,8 +14,15 @@ JSBoard v2.0 Upgrade document
   4.2 게시판 디자인 붙이기
   4.3 전체 관리자 링크하기
   4.4 로그인창 만들기
+5. 외부의 회원 DB 사용하기
+  5.1 jsboard 설정
+  5.2 외부의 login 과 연동하기
+  5.3 로그아웃 연동하기
 
 
+###
+외부의 회원 DB 를 사용할 경우에는 0,3 번은 무시하고 바로 5번 항목을 보도록 한다
+###
 
 0. 유저 가입
 
@@ -228,3 +235,182 @@ JSBoard 의 로그인 모드는 총 7가지 단계를 가진다. 각 단계의 설정은 다음과 같다. �
     의 코드만 원하는 페이지에 넣어주면 된다. 즉 ID 를 $lu 에 password 를 lp 에 넣
     어서 session.php 에 넘겨 주면 된다. 좀더 자세한 것을 원하면 jsboard 안에 들어
     있는 session.php 를 분석해 보도록 한다.
+
+
+5. 외부의 회원 DB 사용하기
+
+  만약 이 기능을 사용하게 되면, 기존의 jsboard 의 회원 DB 는 무조건 무시하고 생각
+  을 해야 한다.
+
+  5.1 jsboard 설정
+
+    외부의 회원 DB 를 사용하기 위해서는 사용 하려는 회원 DB 에 ID, 이름, 패스워드
+    이메일, 홈페이지 와 같이 5개의 필드가 존재해야 한다. 이것을 명심하고 진행하자. 
+
+    외부회원 DB 의 설정은 jsboard/config/external.ph 에서 하도록한다. 없으면 새로
+    만들면 되며 이 파일의 소유권과 퍼미션은 global.ph 와 동일하게 한다. 이 파일은
+    기본적으로 위치가 안되어 있으니 필요하면 
+
+    jsboard/INSTALLER/sample/admin/external.ph.orig
+
+    를 jsboard/config/external.ph 로 복사하여 사용을 하면 된다. 외부 회원 DB를 사
+    용할 경우에는 관리자 페이지에서 회원 정보를 관리할 수 없게 된다.
+
+    일단 JSBoard 에서 외부 회원  DB 와 연동을 할때 필요한 external.ph 의 변수들을
+    나열하겠다
+
+    <?
+    ###############################################################################
+    #  외부 DB 를 이용한 인증 정보
+    #  JSBoard 의 인증을 JSBoard 의 user table 을 이용하지 않고 싶을 경우
+    #  사용하는 기능
+    ###############################################################################
+    # 외부 DB 사용여부 표시
+    $edb[uses] = 1;
+
+    # 외부 DB 정보
+    $edb[server] = "$db[server]";  # DB address
+    $edb[user] = "test";           # DB user name
+    $edb[pass] = "test";           # DB password
+    $edb[name] = "test";           # DB database name
+    $edb[table] = "user_info";     # 회원관리 DB 테이블 이름
+
+
+    위의 값들은 회원 정보가 들어있는 DB 의 정보들이다.  위의 JSBoard 관련 DB 정보
+    와 별 다를바는 없을 것이나 여기서는 table 이름까지 지정해 줘야 한다는 점이 조
+    금 틀리다.
+
+
+    # 필요한 필드 정의
+    $edb[userid] = "id";
+    $edb[username] = "name";
+    $edb[useremail] = "mail";
+    $edb[userurl] = "homepage";
+    $edb[userpasswd] = "pass";
+
+    여기서는 만약 필요한 필드 이름이 jsboard 와 틀릴 경우 매핑을 시키기 위한 변수
+    들을 지정한다. 
+
+    [userid]     : 회원 DB 에서 사용하는 회원 ID 필드 이름을 지정한다.
+    [username]   : 회원 DB 에서 사용하는 회원 이름 필드 이름을 지정한다.
+    [useremail]  : 회원 DB 에서 사용하는 회원 이메일  필드 이름을 지정한다.
+    [userurl]    : 회원 DB 에서 사용하는 회원  홈페이지 필드 이름을 지정한다.
+    [userpasswd] : 회원 DB 에서 사용하는 회원  암호 필드 이름을 지정한다.
+
+
+    # 회원 정보를 가져오는 SQL 문을 직접 작성할 경우 또는
+    # 회원 정보를 조인을 해서 가져와야 할 경우 사용
+    $edb[sql] = "";
+
+    이 부분은 만약 필요한 필드가 모자르다거나 또는 회원 DB 를 join 을 해야할 경우
+    에 직접 필요한 결과들은 불러 올 SQL 문을 지정을 한다. 만약 회원 table 이 하나
+    이고 JSBoard 에 필요한 5개의 필드를 모두 가지고 있다면 굳이 $edb[sql] 은 지정
+    할 필요가 없다.
+
+    예를 들면 다음과 같이 할 수 있다.
+
+    SELECT id AS nid,name AS name,mail AS email,homepage AS url
+           password AS passwd
+      FROM user_info WHERE id = '$id'
+
+    여기서 주의해야 할 것은 쿼리결과로 나오는 필드이름들을 jsboard 에 필요한 이름
+    으로 alias 를 해야 한다. 각각은 다음과 같다.
+
+    nid -> 회원 ID
+    name -> 회원이름
+    email -> 회원 이메일
+    url -> 회원 홈페이지
+    passwd -> 회원 패스워드
+
+
+    # super user 의 id 정의
+    $edb[super] = "admin";
+
+    JSBoard 전체를 관리할 유저의 id 를 적는다.  물론 회원 DB 에 존재하는 관리자를
+    지정해야 한다. 이 유저는 JSBoard 에 대해서는 막강한 권력을 가지게 된다.
+
+
+
+    # 패스워드 필드 암호화 여부
+    # crypt() 암호화일 경우 0, PLAIN 일 경우 1
+    $edb[crypts] = 0;
+
+    회원 DB 의 패스워드가 암호화가 되어 저장이 되는지 아닌지를 결정한다. 암호화는
+    php 의 crypt() 함수를 기준으로 한다. 그 외에는 필자가 어떻게 할 역량이 없다.
+
+
+
+    # logout page
+    $edb[logout] = "http://domain.com/login.php?mode=logout";
+
+    로그아웃 페이지를 지정해 준다.
+    ?>
+
+
+  5.2 외부의 login 과 연동하기
+
+    일단 기존의 회원인증 로그인 페이지에서 인증을 성공을 하면 다음과 같이 값을 세
+    션에 같이 올려 주면 된다.
+
+    session_start();
+
+    # JSBoard session 등록
+    $jsboardoopslogin = array("id"=>"$USER_ID","pass"=>"$USER_PASSWORD",
+                              "name"=>"$USER_NAME","email"=>"$USER_EMAIL",
+                              "url"=>"$USER_HOMEPAGE","pos"=>"$관리자여부",
+                              "super"=>"$전체관리자_ID","external"=>1);
+
+    여기서 주의할 것은 pos 에는 전체관리자로 로그인을 했을 경우에는 1의 값이 들어
+    가야 하며, 전체 관리자가 아닐 경우에는 0 을 주도록 한다. 또한 유저 패스워드는
+    crypt() 암호화를 한 다음 세션에 올려 주도록 한다.
+
+    session_register("$세션이름");
+
+    # cookie 설정
+    $CookieTime = "time()+900";
+    SetCookie("c세션이름[id]","$USER_ID",$CookieTime,"/");
+    SetCookie("c세션이름[name]","$USER_NAME",$CookieTime,"/");
+    SetCookie("c세션이름[email]","$USER_EMAIL",$CookieTime,"/");
+    SetCookie("c세션이름[url]","$USER_HOEMPAGE",$CookieTime,"/");
+    SetCookie("c세션이름[super]","$전체관리자_ID",$CookieTime,"/");
+
+    쿠키 등록시에도 pos 와 super 는 동일하다. 그리고 세션과 쿠기 등록시에 위의 예
+    제에서 세션이름은 jsboard 의 global.ph 의  $jsboard 의 변수값을 넣어주도록 한
+    다. 즉 global.ph 에
+
+    ##############################################################################
+    #  login mode Configuration
+    ##############################################################################
+    # login variation name (This value must be modified as security problem)
+    $jsboard         = "ummha";
+
+    # Don't touch this line.
+    $jsboard         = "jsboard".$jsboard;
+
+    라고 지정이 되어 있다면 세션이름은 jsboardummha 가 된다. 즉 세션 등록은
+
+    session_register("$jsboardummha");
+
+    로 해야 하며 쿠키는
+
+    SetCookie("cjsboardummha[id]","$USER_ID",$CookieTime,"/");
+
+    와 같이 되어야 한다.
+
+5.3 로그아웃 연동하기
+
+    로그 아웃시에는 일단 global.ph 에서 위에서 설명을 했듯이 $edb[logout] 을 지정
+    하여 로그아웃을 보내도록 한다. 로그아웃 할때 jsboard 를 위해 올렸던 세션과 쿠
+    키는 아래와 같이 삭제를 한다.    
+
+    # 세션을 삭제
+    session_unregister("세션이름");
+    # admin login 상태를 삭제
+    SetCookie("c세션이름[id]","",0,"/");
+    SetCookie("c세션이름[name]","",0,"/");
+    SetCookie("c세션이름[email]","",0,"/");
+    SetCookie("c세션이름[url]","",0,"/");
+    SetCookie("c세션이름[super]","",0,"/");
+
+    세션이름은 세션 등록시의 세션이름과 동일하다.
+

@@ -7,29 +7,42 @@ if ($m == "login") {
   include "./include/header.ph";
   $var = ($type == "admin") ? "&type=admin" : "";
 
-  sql_connect($db[server], $db[user], $db[pass]);
-  sql_select_db($db[name]);
+  if(!$edb[uses]) {
+    sql_connect($db[server], $db[user], $db[pass]);
+    sql_select_db($db[name]);
+  }
   $r = get_authinfo($lu);
-  if($r[position]) mysql_close();
+
+  if($r[position] == 1 && !$edb[uses]) mysql_close();
 
   if(check_auth($lp,$r[passwd])) {
-    $$jsboard = array("id"=>$r[nid],"pass"=>$r[passwd],
+    if($edb[super] == $r[nid]) $r[position] = 1;
+    $uppass = crypt($lp);
+    $$jsboard = array("id"=>$r[nid],"pass"=>$uppass,
                       "name"=>$r[name],"email"=>$r[email],
-                      "url"=>$r[url],"pos"=>$r[position]);
+                      "url"=>$r[url],"pos"=>$r[position],"external"=>$edb[uses]);
 
-    if(!${$jsboard}[pos]) {
-      $result = sql_query("SELECT nid FROM userdb WHERE position = 1");
-      ${$jsboard}[super] = sql_result($result,0,"nid");
-      sql_free_result($result);
-      mysql_close();
-    } else ${$jsboard}[super] = ${$jsboard}[id];
+    if(!$edb[uses]) {
+      if(!${$jsboard}[pos]) {
+        $result = sql_query("SELECT nid FROM userdb WHERE position = 1");
+        ${$jsboard}[super] = sql_result($result,0,"nid");
+        sql_free_result($result);
+        mysql_close();
+      } else ${$jsboard}[super] = ${$jsboard}[id];
+    } else {
+      if($r[position] == 1) ${$jsboard}[super] = $r[nid];
+      else ${$jsboard}[super] = $edb[super];
+    }
 
     # 세션 등록
     session_register("$jsboard");
 
     # cookie 설정
-    if(eregi("MSIE",$agent[br])) $CookieTime = strftime("%A, %d-%b-%Y %H:%M:%S MST", time()+900);
-    else $CookieTime = "time()+900";
+    $CookieTime = "time()+900";
+
+    if(eregi("MSIE",$agent[br]) && $agent[vr] == 5.5)
+      $CookieTime = strftime("%A, %d-%b-%Y %H:%M:%S MST",$CookieTime);
+
     SetCookie("c{$jsboard}[id]",${$jsboard}[id],$CookieTime,"/");
     SetCookie("c{$jsboard}[name]",${$jsboard}[name],$CookieTime,"/");
     SetCookie("c{$jsboard}[email]",${$jsboard}[email],$CookieTime,"/");
@@ -44,8 +57,12 @@ if ($m == "login") {
   }
 } else if ($m == "logout") {
   include "./config/global.ph";
-  if($type == "admin") $var = "?type=admin";
-  elseif($table) $var = "?table=$table";
+
+  if(!$edb[logout]) {
+    if($type == "admin") $var = "?type=admin";
+    elseif($table) $var = "?table=$table";
+  }
+
 
   # 세션을 삭제
   session_unregister("$jsboard");
@@ -55,7 +72,9 @@ if ($m == "login") {
   SetCookie("c{$jsboard}[email]","",0,"/");
   SetCookie("c{$jsboard}[url]","",0,"/");
   SetCookie("c{$jsboard}[super]","",0,"/");
-  header("Location: ./login.php$var");
+
+  if($edb[logout]) { header("Location: $edb[logout]"); }
+  else { header("Location: ./login.php$var"); }
 } else if ($m == "back") {
   header("Location:admin.php");
 }

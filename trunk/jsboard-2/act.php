@@ -375,7 +375,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     global $board,$agent;
     $month = 60 * 60 * 24 * $board[cookie];
 
-    if(eregi("MSIE",$agent[br]) && $agent[vr] >= 5.5)
+    if(eregi("MSIE",$agent[br]) && $agent[vr] == 5.5)
       $cookietime = strftime("%A, %d-%b-%Y %H:%M:%S MST", time() + $month);
     else $cookietime = time() + $month;
 

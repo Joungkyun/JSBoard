@@ -20,8 +20,8 @@ function sql_connect($server,$user,$pass,$mode='w') {
 
 # mysql_select_db - MySQL 데이타베이스를 선택함
 #                   http://www.php.net/manual/function.mysql-select-db.php
-function sql_select_db($name) {
-  $return = mysql_select_db($name);
+function sql_select_db($name,$c='') {
+  $return = $c ? mysql_select_db($name,$c) : mysql_select_db($name);
   sql_error(mysql_errno(), mysql_error());
 
   return $return;
@@ -29,8 +29,17 @@ function sql_select_db($name) {
 
 # mysql_query - MySQL에 SQL 질의를 보냄
 #               http://www.php.net/manual/function.mysql-query.php
-function sql_query($query) {
-  $return = mysql_query($query);
+function sql_query($query,$c='') {
+  $return = $c ? mysql_query($query,$c) : mysql_query($query);
+  sql_error(mysql_errno(), mysql_error());
+
+  return $return;
+}
+
+# mysql_db_query - MySQL에 Database 를 선택해 SQL 질의를 보냄
+#               http://www.php.net/manual/function.mysql-db-query.php
+function sql_db_query($db,$query,$c='') {
+  $return = $c ? mysql_db_query($db,$query,$c) : mysql_query($db,$query);
   sql_error(mysql_errno(), mysql_error());
 
   return $return;

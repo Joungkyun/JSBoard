@@ -292,9 +292,9 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
 
     table 구조체를 만들었으면, 다음 설정 file 들을 위치 시키고 그 file 들의 퍼미
     션을 조정하도록 한다. jsboard/INSTALLER/script 에서 root 의 권한을 가지고 설
-    치를 할수 있다면 root.sh 를 실행하도록 한다.
+    치를 할수 있다면 root 를 실행하도록 한다.
 
-      $ ./root.sh
+      $ ./root
       ########################################################
       # JSBoard Config File Installer v2.0                   #
       # Scripted By JoungKyun Kim < http://www.oops.org >    #
@@ -339,9 +339,9 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
 
 
 
-    계정 사용자의 경우에는 account.sh 를 실행하도록 한다.
+    계정 사용자의 경우에는 account 를 실행하도록 한다.
 
-      $ ./account.sh
+      $ ./account
       ########################################################
       # JSBoard Config File Installer v2.0                   #
       # Scripted By JoungKyun Kim < http://www.oops.org >    #
@@ -355,11 +355,11 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
       에게 있어야 합니다. 만약 위의 파일들의 그룹 소유권을 변경할 수 없다
       면 permission 을 606으로 맞춰 주십시오
 
-    account.sh 를 실행 하면 다음과 같이 나온다. 위의 경우는 한글을 사용할수 있다
-    고 선택한 경우이다. 없다면 영문 메세지로 위의 내용이 나오게된다. 위의 내용은
-    db의 password를 가지고 있는 file을 보호하기 위한 것을 설명한다. 즉 다른 유저
-    가 db 의 패스워드를 볼수 없도록 하기 위한 것으로 이 부분은 root(서버 관리자)
-    가 해 주어야 할 부분이다. 만약 이게 불가능 하다면 이 파일들의 권한을 606으로
+    account 를 실행 하면 다음과 같이 나온다.  위의 경우는 한글을 사용할수 있다고
+    선택한 경우이다. 없다면 영문 메세지로 위의 내용이 나오게된다. 위의 내용은 db
+    의 password를 가지고 있는 file을 보호하기 위한 것을 설명한다. 즉 다른 유저가
+    db 의 패스워드를 볼수 없도록 하기 위한 것으로 이 부분은 root(서버 관리자) 가
+    해 주어야 할 부분이다. 만약 이것이 불가능 하다면 이 파일들의 권한을 606 으로
     설정을 하라는 의미이다. 즉
     
     jsbaord/config/global.ph,
@@ -373,7 +373,7 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
     $ chgrp nobody jsboard/config/spam_list.txt (root가 실행해야 하는 명령)
 
     명령을 실행해 달라고 해야 한다. 이를 시행하면 아래와 같이 소유권을 가지게 된
-    다. 이것은 account.sh를 실행한 후에 행할 일들이다. (Debian의 경우에는 nobody
+    다. 이것은 account 를 실행한 후에 행할 일들이다. (Debian의 경우에는 nobody
     가 아니라 www-data가 되어야 한다. RH 7.x 의 경우에는 apache 이다.)
 
     -rw-rw----    accountname    nobody     config/global.ph
@@ -383,7 +383,6 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
 
     $ chmod 606 config/global.ph
     $ chmod 606 config/spam_list.txt
-    $ chmod 606 admin/include/config.ph
 
     을 실행하고, 퍼미션은 다음과 같이 된다.
 
@@ -506,6 +505,14 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
   용할수도 있기 때문에 이 셋팅을 해 놓는 것을 권장 한다.
 
   설정은 다음과 같이 할수 있다.
+
+  일단 우선 1-3 에서 언급을 했듯이 .ph 파일을 .php 로 인식 하도록 하여 .ph 로 접
+  근할 경우 해당 코드를 뿌려주지 않도록 httpd.conf 에서
+
+  AddType application/x-httpd-php .php .php3 .ph
+
+  의 설정을 해 줘야 한다.  그리고 아래와 같이 각 jsboard 에서 사용하는 data 디렉
+  토리에서는 php 가 구동이 되지 않도록 해 주도록 한다.
 
   <DirectoryMatch "^/.*/jsboard/data">
     AddType application/x-httpd-php3-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
