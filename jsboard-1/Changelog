@@ -29,6 +29,7 @@ If you wnat to see windog's change log, see also
 3. html 사용안함에서 &nbsp; blank 문자로 출력되는 것 수정
 4. cookie 등록시 strftime 함수 삭제
 5. 수정 모드시, email, url field 를 검사하도록 수정
+6. html 문서 타입 정의 추가
 
 
 -----------------------------------------------------------------------------
