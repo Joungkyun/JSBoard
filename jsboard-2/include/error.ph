@@ -31,7 +31,8 @@ function print_error($str,$width=250,$height=150,$back='') {
          "remoteWindow();\n";
   }
 
-  echo "//-->\n</SCRIPT>\n";
+  echo "//-->\n</SCRIPT>\n".
+       "<NOSCRIPT>".urldecode($str)."</NOSCRIPT>\n";
 
   if(eregi("/user_admin",$_SERVER[PHP_SELF])) $gopage = "../..";
   elseif(eregi("/admin",$_SERVER[PHP_SELF])) {
