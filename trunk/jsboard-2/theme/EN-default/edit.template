@@ -130,9 +130,7 @@ if($list[bofile]) {
        "<A HREF=$down_link>\n".
        "<IMG SRC=images/$icon width=16 height=16 border=0 alt=$list[bofile] align=absmiddle>\n".
        "<FONT style=\"color:$color[text]\">$list[bofile]</FONT></A> - $hfsize &nbsp; &nbsp;\n".
-       "<INPUT TYPE=CHECKBOX NAME=atc[fdel] VALUE=1> 颇老昏力\n".
-       "<INPUT TYPE=HIDDEN NAME=atc[fdelname] VALUE=\"$list[bofile]\">\n".
-       "<INPUT TYPE=HIDDEN NAME=atc[fdeldir] VALUE=\"$list[bcfile]\">\n";
+       "<INPUT TYPE=CHECKBOX NAME=atc[fdel] VALUE=1> 颇老昏力\n";
 }
 
 if ($upload[yesno] && $cupload[yesno] && $noup != 1) {

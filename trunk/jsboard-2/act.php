@@ -176,6 +176,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
   # 게시물 수정 함수
   function article_edit($table, $atc, $passwd) {
     global $max_file_size, $jsboard, $board, $langs, $agent, $rmail;
+    global $upload, $cupload;
 
     # 어드민 모드가 아닐 경우 패스워드 인증
     if($board['super'] != 1 && !$board['adm']) {
@@ -207,24 +208,27 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     }
 
     # file 수정 루틴
-    $bfilename = date("YmdHis",$atc['date']);
-    $upfile = file_upload("userfile",$bfilename);
+    if($upload['yesno'] && $cupload['yesno'] && $agent['br'] != "LYNX") {
+      # file 수정 루틴
+      $bfilename = date("YmdHis",$atc['date']);
+      $upfile = file_upload("userfile",$bfilename);
 
-    if(trim($upfile['name'])) {
-      $fdelqy = sql_query("SELECT bcfile, bofile FROM {$table} WHERE no = '{$atc['no']}'");
-      $fdelinfo = sql_fetch_array($fdelqy);
-      sql_free_result($fdelqy);
-      if(file_exists("data/$table/files/{$fdelinfo['bcfile']}/{$fdelinfo['bofile']}") && trim($fdelinfo['bofile'])) {
-        unlink("data/$table/files/{$fdelinfo['bcfile']}/{$fdelinfo['bofile']}");
-        rmdir("data/$table/files/{$fdelinfo['bcfile']}");
+      if (trim($upfile['name'])) {
+        $fdelqy = sql_query("SELECT bcfile, bofile FROM {$table} WHERE no = '{$atc['no']}'");
+        $fdelinfo = sql_fetch_array($fdelqy);
+        sql_free_result($fdelqy);
+        if(file_exists("data/$table/files/{$fdelinfo['bcfile']}/{$fdelinfo['bofile']}") && trim($fdelinfo['bofile'])) {
+          unlink("data/$table/files/{$fdelinfo['bcfile']}/{$fdelinfo['bofile']}");
+          rmdir("data/$table/files/{$fdelinfo['bcfile']}");
+        }
+
+        sql_query("
+          UPDATE $table SET date = '{$atc['date']}', host = '{$atc['host']}',
+          name = '{$atc['name']}', email = '{$atc['email']}', url = '{$atc['url']}',
+          title = '{$atc['title']}', text = '{$atc['text']}', html = '{$atc['html']}',
+          bofile = '{$upfile['name']}', bcfile = '{$bfilename}', bfsize = '{$upfile['size']}'
+          WHERE no = '{$atc['no']}'");
       }
-
-      sql_query("
-        UPDATE $table SET date = '{$atc['date']}', host = '{$atc['host']}',
-        name = '{$atc['name']}', email = '{$atc['email']}', url = '{$atc['url']}',
-        title = '{$atc['title']}', text = '{$atc['text']}', html = '{$atc['html']}',
-        bofile = '{$upfile['name']}', bcfile = '{$bfilename}', bfsize = '{$upfile['size']}'
-        WHERE no = '{$atc['no']}'");
     } else {
       sql_query("
         UPDATE $table SET date = '{$atc['date']}', host = '{$atc['host']}',
