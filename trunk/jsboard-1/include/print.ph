@@ -13,7 +13,7 @@ function parse_query_str() {
     $O_COOKIE = $HTTP_COOKIE_VARS;
     $O_SESSION = $HTTP_SESSION_VARS;
     $O_SERVER = $HTTP_SERVER_VARS;
-  } else
+  } else {
     $O_GET  = $_GET;
     $O_POST = $_POST;
     $O_COOKIE = $_COOKIE;
