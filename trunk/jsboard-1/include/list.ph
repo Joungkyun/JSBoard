@@ -6,7 +6,9 @@ function print_list($table, $list)
 
     $search = search2url($o);
 
+    $list[name] = eregi_replace("&quot;","\"",$list[name]);
     $list[name]  = cut_string($list[name], $board[nam_l]);
+    $list[name] = eregi_replace("\"","&quot;",$list[name]);
     $list[title] = eregi_replace("&quot;","\"",$list[title]);
     $list[title] = cut_string($list[title], $board[tit_l] - $list[rede]);
     $list[title] = eregi_replace("\"","&quot;",$list[title]);
@@ -64,10 +66,12 @@ function print_list($table, $list)
     if($cupload[yesno] == "yes") {
       if($list[bofile]) {
         $bofile = "$list[bofile]";
+        $hfsize = human_fsize($list[bfsize]);
         $tail = check_filetype($bofile);
         $icon = icon_check($tail,$bofile);
-        $list[icon] = "<img src=\"images/$icon\" width=16 height=16 border=0 alt=\"$list[bofile]\">";
-        $up_link    = "<a href=\"data/$table/$upload[dir]/$list[bcfile]/$list[bofile]\">";
+        $list[icon] = "<img src=\"images/$icon\" width=16 height=16 border=0 alt=\"$list[bofile] ($hfsize)\">";
+        $up_link    = "<a href=\"act.php3?o[at]=dn&dn[tb]=$table&dn[udir]=$upload[dir]&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]\">";
+
         $up_link_x  = "</a>";
       } else {
         $list[icon] = "&nbsp;";
@@ -78,7 +82,7 @@ function print_list($table, $list)
     }
   }
 
-   echo("  <TD BGCOLOR=\"$bg\"><FONT SIZE=\"-1\" COLOR=\"$fg\"><NOBR>$date</NOBR></FONT></TD>");
+   echo("  <TD BGCOLOR=\"$bg\" align=right><FONT SIZE=\"-1\" COLOR=\"$fg\"><NOBR>$date</NOBR></FONT></TD>");
 
     if(get_date() <= $list[date]) {
 	echo("

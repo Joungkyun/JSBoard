@@ -8,7 +8,7 @@ java_scr();
 compare_pass($sadmin,$login);
 
 // 패스워드가 기본값에서 변경이 되지 않았을 경우 계속 경고를 함 - admin/include/print.ph
-print_chgpass($sadmin[loginpass]);
+print_chgpass($login[pass]);
 
 // input 문의 size를 browser별로 맞추기 위한 설정
 $size = form_size(9);

@@ -8,6 +8,7 @@
 #
 #  CVS Server 관리	: 김영민 < blhole@hotmail.com >
 #  Homepage 공간 제공	: http://www.kldp.org
+#  Special Thanks	: 임은재 < eunjae@kldp.org>
 #
 #############################################################################
 #
@@ -17,7 +18,7 @@
 
 
 작성 : 김정균 <admin@oops.org>
-일시 : 2000.6.18
+일시 : 2000.7.3
 
 이 문서는 JSBoard 1.0 version의 수동 설치를 위해 제공을 한다.
 이 문서로 인한 피해나 JSBoard의 사용으로 인한 피해에 대해서는
@@ -45,7 +46,7 @@
     4-1. 0.8 또는 1.0 prelease version에서의 upgrade
     4-2. 0.7 이하 버젼에서의 upgrade
       4-2-1. 임은재의 소스를 이용하는 방법
-  5. 알려진 버그
+  5. Bug report
 
 ***************
 
@@ -259,15 +260,24 @@
     명령을 실행하도록 한다. 또한 account user의 권한으로 설치를 하려면
     먼저 주의 할 것이 있다. 즉 db의 password를 가지고 있는 파일을 보호해야
     한다. 이를 위해서는 root의 권한을 가진 관리자에게 일단 부탁을 해야 할
-    일이 있다. 바로 jsbaord/config/config.ph file에 대한 group 소유권을
-    nobody로 지정해 달라고 해야 한다. 즉
+    일이 있다. 바로
+    
+    jsbaord/config/global.ph,
+    jsboard/config/spma_list.ph,
+    jsboard/admin/include/config.ph
+    
+    에 대한 group 소유권을 nobody로 지정해 달라고 해야 한다. 즉
 
     $ chgrp nobody jsboard/config/global.ph (root가 실행해야 하는 명령)
+    $ chgrp nobody jsboard/config/spam_list.ph (root가 실행해야 하는 명령)
+    $ chgrp nobody jsboard/admin/include/config.ph (root가 실행해야 하는 명령)
 
     명령을 실행해 달라고 해야 한다. 이를 시행하면 아래와 같이 소유권을 가지게
     된다.
 
-    -rx-r--r--    accountname    nobody     global.ph
+    -rx-rx----    accountname    nobody     config/global.ph
+    -rx-rx----    accountname    nobody     config/spam_list.ph
+    -rx-rx-r--    accountname    nobody     admin/include/config.ph
 
     단 주의 할것은 account user의 권한으로 설치시에는 보안의 문제성이 대두
     될수 있으니 home directory의 권한을 꼭 711로 해야한다.
@@ -295,7 +305,10 @@
 
 3. JSBoard 운영
 
-  설치가 돤료 되었다면 이제 웹브라우져에서 접속을 해 보도록 한다. 우선 전체
+  JSBoard에는 관리자 기증이 존재 한다. 이 기능은 JSBoard 와는 별도의 코드로서
+  admin/License 를 읽어 보고 동의할 경우에만 사용이 가능하다.
+
+  설치가 완료 되었다면 이제 웹브라우져에서 접속을 해 보도록 한다. 우선 전체
   설정 부터 살펴 보도록 한다.
 
   http://domain.com/jsboard/admin
@@ -309,14 +322,14 @@
   되었다. 그외에 검으죽죽한 화면을 게시판의 색상에 맞춰서 나오게끔 최적화를
   하였으며, 그외의 달라진 점은 거의 없다. :-) 써 본 사람들은 잘 사용을 할
   것이다. 좀 신경을 쓴 부분이 있다면 게시판 삭제시에 한번은 물어 보고
-  conform을 받은 뒤에 삭제가 이루어 지게 해 놓은 것이다.
+  confirm을 받은 뒤에 삭제가 이루어 지게 해 놓은 것이다.
 
 4. UPGRADE
 
-  4-1. 0.8 또는 1.0 prelease version에서의 upgrade
+  4-1. 0.8 이상 1.0.0p1 이하 version에서의 upgrade
 
-    0.8 또는 1.0 prelease 에서의 upgrade 무척 단순하다. 즉, 1.0의 소스를 받
-    아서 덮어 씌어 주기만 하면 된다. 소스를 덮어 씌운후에
+    0.8 이상 1.0.0p1 이하 version 에서의 upgrade 무척 단순하다. 즉, 1.0의
+    소스를 받아서 덮어 씌어 주기만 하면 된다. 소스를 덮어 씌운후에
     jsbaord/Installer/script 에서 root사용자의 경우에는 root_p.sh 를 실행해
     주면 되며, 계정 유저의 경우에는 account_p.sh를 실행해 주기만 하면 된다.
 
@@ -425,14 +438,9 @@
       된다.
 
 
-5. 알려진 버그
+5. Bug report
 
-  5-1. 글쓰기, 수정 및 관련글 쓰기 화면에서 <textarea> 에 WRAP을 hard로 설정할
-    시에 auto_link() 함수 - url을 자동으로 링크시키는 함수 - 와 글내용에 table tag를
-    사용할시에 문제점이 발생할 여지가 있다. 
+  버그를 발견할 경우에는 http://jsboard.kldp.org/bbs/list.php3?table=bbs_upgrade 에
+  리포팅을 해 주면 감사하겠다
 
-  5-2. 만약 글쓰기에서 '나 "가 들어갈 경우 SQL error가 나는 경우에는 php3.ini
-    (zend에서는 php.ini) 설정 파일이 제위치에 있지 않아서 발생하는 경우이다.
-    phpinfo() 함수를 이용하여 php3.ini 의 위치를 알아낸 다음 php3 source의
-    php3.ini-dist 를 해당 path에 php3.ini라는 이름으로 수동으로 설치를 해 줘야
-    한다.
+

@@ -22,6 +22,8 @@ $list[text] = text_nl2br($list[text], $list[html]);
 
 $list       = search_hl($list);
 
+if ($o[sc]) $list[text] = eregi_replace("<a href=(.*)<font color=#000000><b><u>(.*)</u></b></font>(.*) target=(.*)>","<a href=\\1\\2\\3 target=\\4>",$list[text]);
+
 if($list[email])
   $list[name] = url_link($list[email], $list[name], $color[r3_fg]);
 
@@ -40,11 +42,17 @@ $str[sepa]   = separator($color[n0_fg]);
 $c_time[] = microtime(); // 속도 체크
 $time = get_microtime($c_time[0], $c_time[1]);
 
+if ($board[img] == "yes") {
+  $icons[add] = "<img src=./images/blank.gif width=$icons[size] border=0>";
+  if (eregi("%",$board[width])) $icons[td]  = "1%";
+  else $icons[td] = $icons[size];
+}
+
 echo "
 <!------ 상단 메뉴 시작 --------->
 <TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" BGCOLOR=\"$color[bgcol]\">
 <TR>
-  <TD VALIGN=bottom><nobr>[ <a href=./admin/user_admin/auth.php3?table=$table title=\"$langs[ln_titl]\">admin</a> ]</nobr></TD>
+  <TD VALIGN=bottom><nobr>$icons[add][ <a href=./admin/user_admin/auth.php3?table=$table title=\"$langs[ln_titl]\">admin</a> ]</nobr></TD>
   <TD ALIGN=right VALIGN=bottom>";
 
 // 게시판 읽기 페이지 상단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
@@ -53,7 +61,7 @@ if ($board[cmd] == "yes" && $board[img] != "yes") {
   $str[align] = "";
   read_cmd($str);
 } else
-  echo("$langs[writerad] [ <a href=./whois.php3?table=$table&host=$list[host]&window=1><font color=$color[text]>$list[host]</font></a> ]");
+  echo("$langs[writerad] [ <a href=./whois.php3?table=$table&host=$list[host]&window=1><font color=$color[text]>$list[host]</font></a> ]$icons[add]");
 
 echo "
 </TD>
@@ -66,13 +74,13 @@ echo "
 
 // image menu bar 출력
 if ($board[img] == "yes") {
-  echo "<TD rowspan=2 valign=top bgcolor=$color[bgcol]>";
-  img_rmenu($str);
+  echo "<TD rowspan=2 width=$icons[td] align=right valign=top bgcolor=$color[bgcol]>";
+  img_rmenu($str,$icons[size]);
   echo "</TD>\n";
 }
 
 echo "<TD valign=top>
-<TABLE WIDTH=\"$board[width]\" border=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
+<TABLE WIDTH=\"100%\" border=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
 <TR>
   <TD COLSPAN=\"3\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\">$list[num]: $list[title]</FONT></TD>
 </TR><TR>
@@ -87,7 +95,7 @@ if($list[bofile]) {
   $fileicon = icon_check($tail,$bofile);
   echo "</TR><TR>\n" .
        "   <TD COLSPAN=\"3\" BGCOLOR=\"$color[r4_bg]\">\n" .
-       "   <A HREF=\"./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]\">\n" .
+       "   <A HREF=\"act.php3?o[at]=dn&dn[tb]=$table&dn[udir]=$upload[dir]&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]\">\n" .
        "   <IMG SRC=\"images/$fileicon\" width=16 height=16 border=0 alt=\"$list[bofile]\" align=texttop>\n" .
        "   <FONT COLOR=\"$color[r4_fg]\">$list[bofile]</FONT>\n" .
        "   </A>\n" .
@@ -131,15 +139,15 @@ echo "
 
 // image menu bar 출력
 if ($board[img] == "yes") {
-  echo "<TD rowspan=2 valign=bottom bgcolor=$color[bgcol]>";
-  img_rmenu($str);
+  echo "<TD rowspan=2 width=$icons[td] valign=bottom bgcolor=$color[bgcol]>";
+  img_rmenu($str,$icons[size]);
   echo "</TD>\n";
 }
 
 echo "</TR>
 <TR><TD>
 
-<TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"6\" ALIGN=\"center\">
+<TABLE WIDTH=\"100%\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"6\" ALIGN=\"center\">
 <TR>
   <TD VALIGN=\"top\" ROWSPAN=\"2\">
 $str[s_form]

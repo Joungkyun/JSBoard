@@ -6,8 +6,10 @@
 #  개발 version corder	: 김정균 < admin@oops.org >
 #  안정 version corder	: 차경묵 < dimanche@dimanche.co.kr >
 #
+#
 #  CVS Server 관리	: 김영민 < blhole@hotmail.com >
 #  Homepage 공간 제공	: http://www.kldp.org
+#  Special Thanks	: 임은재 < eunjae@kldp.org>
 #
 #############################################################################
 #
@@ -16,7 +18,7 @@
 #############################################################################
 
 작성 : 김정균 <admin@oops.org>
-일시 : 2000.6.16
+일시 : 2000.7.2
 
 이 문서는 JSBoard 1.0 version의 설치를 위해 제공을 한다.
 이 문서로 인한 피해나 JSBoard의 사용으로 인한 피해에 대해서는
@@ -32,7 +34,7 @@
 
 하나.
 JSBoard 1.0은 PHP4 기반하에서 정상작동을 하며, Session 기능을
-compile 시에 꼭 넣도록 해야 한다.
+compile 시에 빼면 절대 안된다.
 
 하나.
 계정 유저들과 0.7 이하 버젼에서의 upgrade를 하는 유저들은 QUICK_INSTALL 를
@@ -57,7 +59,7 @@ compile 시에 꼭 넣도록 해야 한다.
   4. UPGRADE
     4-1. 0.8 또는 1.0 prelease version에서의 upgrade
     4-2. 0.7 이하 버젼에서의 upgrade
-  5. 알려진 버그
+  5. Bug report
 
 ***************
 
@@ -366,6 +368,8 @@ compile 시에 꼭 넣도록 해야 한다.
     아서 덮어 씌어 주기만 하면 된다. 소스를 덮어 씌운후에
     jsbaord/Installer/script 에서 root사용자의 경우에는 root_p.sh 를 실행해
     주면 되며, 계정 유저의 경우에는 account_p.sh를 실행해 주기만 하면 된다.
+    (단 계정 유저들의 경우에는 jsboard/config/global.ph 의 group 소유권을
+     root에게 부탁하여 nobody로 변경 해 놓는 것을 잊지 말라!!!!)
 
     단 주의 할것은.... PHP3 사용자들은 PHP4로 update를 해 줘야만 한다.!!!!!!
 
@@ -375,8 +379,7 @@ compile 시에 꼭 넣도록 해야 한다.
     버젼을 사용하는 user들은 최소한 0.6 안정 버젼으로 upgrade를 한후에
     upgrade를 할수가 있다. 자세한 사항은 QUICK_INSTALL 문서에서 다루도록 한다
 
-5. 알려진 버그
+5. Bug report
 
-글쓰기, 수정 및 관련글 쓰기 화면에서 <textarea> 에 WRAP을 hard로 설정할
-시에 auto_link() 함수 - url을 자동으로 링크시키는 함수 - 와 글내용에
-table tag를 사용할시에 문제점이 발생할 여지가 있다. 
+  버그를 발견할 경우에는 http://jsboard.kldp.org/bbs/list.php3?table=bbs_upgrade 에
+  리포팅을 해 주면 감사하겠다

@@ -31,6 +31,10 @@ $list[text] = ereg_replace("\n", "\n: ", $list[text]);
 
 $wrap = form_wrap();
 
+// image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
+if ($board[img] && !eregi("%",$board[width])) 
+  $board[width] = $board[width]-$icons[size]*2;
+
 echo "
 <TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"0\" BGCOLOR=\"$color[r0_bg]\"><TR><TD>
 <TABLE WIDTH=\"100%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
@@ -110,7 +114,7 @@ echo "
     <FONT SIZE=\"-1\" COLOR=\"$color[l0_fg]\">
     <INPUT TYPE=\"hidden\" NAME=\"o[at]\" value=\"r\">
     <INPUT TYPE=\"hidden\" NAME=\"table\" VALUE=\"$table\">
-    <INPUT TYPE=\"hidden\" NAME=\"rmail[origmail]\" VALUE=\"$origmail\">
+    <INPUT TYPE=\"hidden\" NAME=\"rmail[origmail]\" VALUE=\"$list[email]\">
     <INPUT TYPE=\"hidden\" NAME=\"atc[reno]\" VALUE=\"$list[no]\">
     <INPUT TYPE=\"submit\" VALUE=\"$langs[b_re]\">&nbsp;
     <INPUT TYPE=\"reset\" VALUE=\"$langs[b_reset]\">&nbsp;

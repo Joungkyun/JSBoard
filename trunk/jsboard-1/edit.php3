@@ -10,7 +10,7 @@ $passment = "$langs[w_pass]";
 
 // 패스워드가 없는 게시물이나 수정을 허락치 않을 경우 관리자 패스워드를 사용해야 함
 if(!$list[passwd] || !$enable[edit] || !$cenable[edit]) {
-  if (!$enable[edit]) $passment = "$langs[b_wpw]";
+  if (!$enable[edit]) $passment = "$langs[e_wpw]";
   else $passment = "$langs[b_apw]";
 }
 
@@ -22,6 +22,10 @@ $wrap = form_wrap();
 
 if($list[html]) $html[1] = " CHECKED";
 else $html[0] = " CHECKED";
+
+// image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
+if ($board[img] && !eregi("%",$board[width])) 
+  $board[width] = $board[width]-$icons[size]*2;
 
 echo "
 <TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"0\" BGCOLOR=\"$color[r0_bg]\"><TR><TD>
@@ -65,7 +69,7 @@ if($list[bofile]) {
   echo "</TR><TR>\n" .
        "   <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[file]</NOBR></FONT></TD>\n" .
        "   <TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\">\n" .
-       "   <A HREF=\"./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]\">\n" .
+       "   <A HREF=\"act.php3?o[at]=dn&dn[tb]=$table&dn[udir]=$upload[dir]&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]\">\n" .
        "   <IMG SRC=\"images/$icon\" width=16 height=16 border=0 alt=\"$list[bofile]\" align=texttop>\n" .
        "   <FONT COLOR=\"$color[r2_fg]\">$list[bofile]</FONT>\n" .
        "   </A>\n" .

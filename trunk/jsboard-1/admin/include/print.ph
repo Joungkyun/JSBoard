@@ -74,7 +74,7 @@ function complete_adminpass() {
 // eregi_replace() - 변수에 들어 있는 모든 첫번째 인자를 두번째 인자로 변경
 // strtoupper() - 문자열의 소문자를 대문자로 변경
 function get_theme_list($name,$num, $path = "../config") {
-  global $table, $color, $PHP_SELF, $langs;
+  global $table, $color, $PHP_SELF, $langs, $exec;
 
   // link에서 원 파일의 정보를 가져온다.
   if (!eregi("uadmin.php3",$PHP_SELF)) {
@@ -87,11 +87,15 @@ function get_theme_list($name,$num, $path = "../config") {
   $dtheme = eregi_replace("(themes|config|\/|\.)","",$dtheme);
 
   // Theme list를 받아온다.
+
   $p = opendir("$path/themes");
   while($i = readdir($p)) {
     if($i != "." && $i != ".." && $i != "default.themes") $theme[] = $i;
   }
   closedir($p);
+
+//  exec("$exec[ls] $path/themes | $exec[grep] themes",$theme);
+
 
   $until = sizeof($theme);
 
@@ -154,7 +158,7 @@ function get_lang_list($code) {
 
 // 패스워드 변경을 안하면 변경을 하게끔 귀찮게 메시지 뿌리기 :-)
 function print_chgpass($pass) {
-  global $langs
+  global $langs;
   if ($pass == "0000") echo "<script>\nalert('$langs[p_chm]')\n</script>\n";
 }
 

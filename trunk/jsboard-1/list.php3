@@ -31,9 +31,11 @@ $str[p_list] = page_list($table, $pages, $count, $board[plist]);
 $str[s_form] = search_form($table, $pages);
 $str[p_form] = page_form($table, $pages, $color[l0_fg]);
 
-if (eregi("%",$board[width])) 
+if ($board[img] == "yes") {
   $icons[add] = "<img src=./images/blank.gif width=$icons[size] border=0>";
-
+  if (eregi("%",$board[width])) $icons[td]  = "1%";
+  else $icons[td] = $icons[size];
+}
 
 // 게시판 목록 제목줄 출력
 echo "
@@ -59,7 +61,7 @@ echo "</TD>
 
 // image menu bar 출력
 if ($board[img] == "yes") {
-  echo "<TD rowspan=2 width=$icons[size] align=right valign=top bgcolor=$color[bgcol]>";
+  echo "<TD rowspan=2 width=$icons[td] align=right valign=top bgcolor=$color[bgcol]>";
   img_lmenu($str,$icons[size]);
   echo "</TD>\n";
 }
@@ -98,7 +100,7 @@ echo "
 
 // image menu bar 출력
 if ($board[img] == "yes") {
-  echo "<TD rowspan=2 width=$icons[size] valign=bottom bgcolor=$color[bgcol]>";
+  echo "<TD rowspan=2 width=$icons[td] valign=bottom bgcolor=$color[bgcol]>";
   img_lmenu($str,$icons[size]);
   echo "</TD>\n";
 }
@@ -106,7 +108,7 @@ if ($board[img] == "yes") {
 echo "</TR>
 <TR><TD>
 
-<TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"6\" ALIGN=\"center\">
+<TABLE WIDTH=\"100%\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"6\" ALIGN=\"center\">
 <TR>
   <TD VALIGN=\"top\" ROWSPAN=\"2\">$str[s_form]</TD>
   <TD VALIGN=\"top\" ALIGN=\"right\">$str[p_list]</TD>

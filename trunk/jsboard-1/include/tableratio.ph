@@ -1,16 +1,16 @@
 <?
 
 // list paget table ratio ===================================
-$td_width[1] = "7%";	// 번호 필드 너비
+$td_width[1] = "6%";	// 번호 필드 너비
 
 // 제목 필드 너비
 if ($upload[yesno] == "yes") $td_width[2] = "52%";
-else $td_width[2] = "60%";
+else $td_width[2] = "63%";
 
-$td_width[3] = "13%";	// 글쓴이 필드 너비
+$td_width[3] = "12%";	// 글쓴이 필드 너비
 $td_width[4] = "8%";	// 파일 필드 너비
 $td_width[5] = "13%";	// 날짜 필드 너비
-$td_width[6] = "7%";	// 읽은수 필드 너비
+$td_width[6] = "6%";	// 읽은수 필드 너비
 
 
 // read page table ratio=====================================
@@ -25,7 +25,7 @@ $icons[size] = "20";
 $size[name] = form_size(14);
 $size[pass] = form_size(4);
 $size[titl] = form_size(25);
-$size[text] = form_size(31);
+$size[text] = form_size(30);
 $size[uplo] = form_size(19);
 
 ?>
