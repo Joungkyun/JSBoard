@@ -13,6 +13,14 @@ file.
 
 ******************************************************************************
 
+Version   : jsboard-2.0.10
+
+Mon, Dec 20 2004
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed hangul filename handleing bug
+
+
+-----------------------------------------------------------------------------
 Version   : jsboard-2.0.9
 
 Thu, Dec 09 2004
