@@ -20,7 +20,10 @@ If you wnat to see windog's change log, see also
 
 ¹öÀü   : jsboard-2.0pre4
 
-2002.4. 1 by ±èÄ¥ºÀ <http://linuxchannel.net>
+2002.5. 3 by ÀÓÀºÀç <http://kldp.org/~eunjea/>
+	- get_agent ÇÔ¼ö¿¡ links ¿Í w3m Ãß°¡
+
+2002.5. 1 by ±èÄ¥ºÀ <http://linuxchannel.net>
 	- get_microtim(), human_fsize() ÇÔ¼ö ÀçÀÛ¼º
 
 2002.4.29 by ±èÁ¤±Õ <http://www.oops.org>

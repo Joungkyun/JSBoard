@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0pre4
 
+Fri, May  3 2002 by Eunjea Im <http://kldp.org/~eunjea/>
+	- added links, w3m in entry of get_agent function 
+
 Wed, May  1 2002 by Chilbong Kim <http://linuxchannel.net>
 	- rewrited get_microtim(), human_fsize() function
 
