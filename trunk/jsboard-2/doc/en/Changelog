@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Sat, Feb 23 2002
+Date      : Mon, Feb 25 2002
 Version   : jsboard-2.0pre4
 
 
@@ -73,6 +73,7 @@ Version   : jsboard-2.0pre4
 47. fix typo in mail.template
 48. changed to use self smtp of JSBoard when send mail
 49. fixed bug of regex
+50. changed check_mail() function to check valid mail server
 
 
 -----------------------------------------------------------------------------
