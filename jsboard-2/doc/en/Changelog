@@ -21,6 +21,51 @@ Attention : OOPS administration Center is not GPL.
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
+Date      : Wed, Dec 5 2001
+Version   : jsboard-2.0pre3
+
+
+1. updated README.THEME file
+2. fixed to use null field on fields of list in list.ph
+3. fixed $board[path] bug with port number
+4. fixed typo in Korean Theme
+5. fixed to enable user registration whether only admin or anybody
+6. lined user registration page in whole admin area
+7. fixed only whole admin can change board admin in board admin area
+8. fixed $board[uadmin] to admin if $board[uadmin] value is null
+9. fixed string filtering bug in check_url and check_email function
+10. fixed deleted/modified article bug that has null password
+11. fixed INSTALLER bug that restricted user access to localhost 
+    with extanl db
+12. hide mail address in status bar when mouse over email link
+13. removed duplicated get_agent() function
+14. fixed upload of 2byte filename with UTF8 use of IE
+15. fixed missprint of image size
+16. fixed article registration with Lynx
+17. fixed cookie ploblem under IE 5.5
+18. fixed miss configuration of login mode
+19. fixed miss pritn of email link in search
+20. complate changed search_hl() function
+21. updated KnownBug document
+22. fixed null string problem in user registration
+23. fixed redirect problem after user regist in whole admin area
+24. changed to added number of read after load read page
+25. removed duplicated include rule
+26. fixed imoticon of png file
+27. modified to change expression of email link
+28. fixed sendmail() function
+29. supported mysql replication
+30. fixed to use session_start() function when only login mode
+31. prevented registraton of article with null password
+32. added version of theme in include/version.ph
+33. added detail search
+34. change form method to GET from POST in first search
+35. fixed password problem in mode 4, 5
+36. updated INSTALLER/script/conv_update file
+
+
+-----------------------------------------------------------------------------
+Writer    : JoungKyun Kim (admin at oops.org)
 Date      : Mon, Nov 4 2001
 Version   : jsboard-2.0pre2
 
