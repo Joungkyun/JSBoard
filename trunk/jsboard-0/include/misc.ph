@@ -1,6 +1,6 @@
 <?
 
-/* mail 보내기 함수 */
+/* mail 보내기 함수 2000.1.16 수정 by 김정균 */
 
 function send_mail($no, $bbshome, $mailtoadmin, $mailtowriter, $table, $reno, $name,
                     $email, $reply_writer_email, $url, $webboard_version, $text, $title) {
@@ -44,7 +44,7 @@ Reply Article	: $reply_article
 
 [ Article Infomation ]-----------------------------------------------------
 이 름		: $name
-Email		: mailto:$reply_writer_email
+Email		: mailto:$email
 HomeURL		: $url
 일 시		: $year $day $ampm $hms
 ---------------------------------------------------------------------------
@@ -63,15 +63,15 @@ OOPS Form mail service - http://www.oops.org
 Scripted by JoungKyun Kim <admin@oops.org>
 ";
 
-  if ($mailtowriter=="yes" && $email != "") {
-    $to = $email;
-    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSboard@$HOST_NAME")
+  if ($mailtowriter=="yes" && $reply_writer_email != "") {
+    $to = $reply_writer_email;
+    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSboard Message <$email>")
     or die("mail을 보내지 못했습니다");
   }
 
   if ($mailtoadmin!="") {
-    $to = $mailtoadmin;
-    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSboard@$HOST_NAME")
+    $to = "Board Admin<$mailtoadmin>";
+    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSboard Message <$email>")
     or die("mail을 보내지 못했습니다");
   }
 }
@@ -287,6 +287,14 @@ function g_agent($test = "0")
   } else if (ereg("^Moz", $agent)) {
       if (ereg("Linux", $agent)) {
 	$agent = "moz";
+      } else if (ereg("WinNT", $agent)) {
+	if (ereg("\[ko\]", $agent)) {
+	  $agent = "moz_nt_ko";
+	} else if (ereg("\[en\]", $agent)) {
+	  $agent = "moz_nt_en";
+	} else {
+	  $agent = "moz";
+	}
       } else if (ereg("Win", $agent)) {
 	if (ereg("\[ko\]", $agent)) {
 	  $agent = "moz_w_ko";
