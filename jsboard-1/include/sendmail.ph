@@ -156,7 +156,8 @@ function mail_header($to,$from,$title,$mta='') {
             "MIME-Version: 1.0\r\n".
             "Content-Type: text/plain; charset=$langs[charset]\r\n".
             "Content-Transfer-Encoding: $charbit\r\n";
-  if(!$mta) $header .= "To: $to\r\n".
+  if(!$mta) $header .= "Date: ".date ("D, j M Y H:i:s T",time())."\r\n".
+                       "To: $to\r\n".
                        "Subject: $title\r\n\r\n";
 
   return $header;

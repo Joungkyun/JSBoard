@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
-작성일 : 2002년   4월 12일
+작성일 : 2002년   4월 15일
 버전   : jsboard-1.3.9
 
 * 변경된점
@@ -32,6 +32,7 @@ If you wnat to see windog's change log, see also
 7. getenv() 함수를 $HTTP_SERVER_VARS 변수로 대체
 8. admin 로그인시 페이지 이동을 Header 에서 Meta tag 로 변경
 9. sendmail.ph 에서 Message-ID 문제 수정
+10. sendmail.ph 에서 Date Header 추가
 
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
