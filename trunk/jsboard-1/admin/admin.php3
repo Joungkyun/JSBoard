@@ -1,14 +1,14 @@
 <?php
 include("./include/admin_head.ph");
 
-htmlhead();
-java_scr();
-
 // password 비교함수 - admin/include/check.ph
 compare_pass($sadmin,$login);
 
 // 패스워드가 기본값에서 변경이 되지 않았을 경우 계속 경고를 함 - admin/include/print.ph
 print_chgpass($login[pass]);
+
+htmlhead();
+java_scr();
 
 // input 문의 size를 browser별로 맞추기 위한 설정
 $size = form_size(9);
@@ -16,7 +16,7 @@ $langs[a_t41] = strtoupper($langs[a_t4]);
 $langs[a_t61] = strtolower($langs[a_t6]);
 
 /* MySQL 서버에 연결한다 */
-$connect=mysql_connect( "$db[server]", "$db[user]" , "$db[pass]" )  or  
+$connect=@mysql_connect( "$db[server]", "$db[user]" , "$db[pass]" )  or  
               die("$langs[sql_na]" ); 
 
 echo "<table border=0 width=100% height=100% cellpadding=0 cellspacing=0>\n" .
@@ -71,9 +71,13 @@ if($db[name] && !$table) {
         // table list 를 불러 옵니다.
         $table_name[$i] = mysql_tablename($tbl_list,$i);
 
+        // jsboard에서 사용하는 게시판인지를 판단
+        $chk = "select idx from $table_name[$i]";
+        $chk_result = mysql_query($chk,$connect);
+
         // 각 table에 등록된 글 수를 check 합니다.
         $total = "select count(*) from $table_name[$i]";
-        $result = mysql_query($total,$connect );
+        $result = mysql_query($total,$connect);
 
         $total_count = mysql_result($result, 0, "COUNT(*)");
 
@@ -83,7 +87,7 @@ if($db[name] && !$table) {
         $total = "select count(*) from $table_name[$i] where date > '$current_time'";
 
         $result = mysql_query($total,$connect );
-        $total_today = mysql_result($result, 0, "COUNT(*)");
+        $total_today = @mysql_result($result, 0, "COUNT(*)");
 
         // 오늘 등록된 글들의 합을 구합니다.
         $to_today = $to_today + $total_today;
@@ -91,13 +95,24 @@ if($db[name] && !$table) {
         echo "<tr align=center bgcolor=$color[l0_bg]>\n" .
              "<td align=left width=30%><font color=$color[l0_fg]>&nbsp;&nbsp;&nbsp;$table_name[$i]</font></td>\n" .
              "<td align=right width=15%><font color=$color[l0_fg]>$total_today &nbsp;&nbsp;</font></td>\n" .
-             "<td align=right width=15%><font color=$color[l0_fg]>$total_count &nbsp;&nbsp;</font></td>\n" .
-             "<form method='POST'><td width=30%>\n" .
+             "<td align=right width=15%><font color=$color[l0_fg]>$total_count &nbsp;&nbsp;</font></td>\n";
+
+        if($chk_result) {
+
+        echo "<form method='POST'><td width=30%>\n" .
              "<input type=button value=$langs[a_t7] onClick=fork('popup','../list.php3?table=$table_name[$i]')>\n" .
              "<input type=button value=$langs[a_t8] onClick=fork('popup','./user_admin/uadmin.php3?table=$table_name[$i]')>\n" .
              "<input type=button value=$langs[a_t17] onClick=fork('popup','./stat.php3?table=$table_name[$i]')>\n" .
-             "</td></form>\n" .
-             "<form name='delete_db' method='post' action='act.php3'>\n" .
+             "</td></form>\n";
+        } else {
+        echo "<td width=30%>\n" .
+             "<font color=$color[l0_fg]>Not JSBoard table</font>\n" .
+             "</td>\n";
+
+        }
+
+
+        echo "<form name='delete_db' method='post' action='act.php3'>\n" .
              "<td width=10%>\n" .
              "<input type='hidden' name='table_name' value='$table_name[$i]'>\n" .
              "<input type='hidden' name='mode' value='db_del'>\n" .
@@ -126,7 +141,7 @@ if($db[name] && !$table) {
 
         $total_t = "select count(*) from $table_name_t[$t] where date > '$current_time'";
         $result_t = mysql_query($total_t,$connect );
-        $total_today_t = mysql_result($result_t, 0, "COUNT(*)");
+        $total_today_t = @mysql_result($result_t, 0, "COUNT(*)");
 
         // 오늘 등록된 글들의 합을 구합니다.
         $to_today_t = $to_today_t + $total_today_t;

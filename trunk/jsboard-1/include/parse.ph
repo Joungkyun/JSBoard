@@ -1,4 +1,10 @@
 <?
+// html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
+function ugly_han($text,$html=0) {
+  if (!$html) $text = eregi_replace("&amp;#","&#",$text);
+  return $text;
+}
+
 // 검색 폼에서 넘어온 값을 URL로 바꿔줌 (POST -> GET 전환)
 //
 // trim         - 문자열 양쪽의 공백 문자를 없앰
@@ -124,12 +130,12 @@ function search_hl($list) {
       break;
     case 'c':
       $list[text] = eregi_replace($str, "$hl[0]\\0$hl[1]", $list[text]);
-      $list[text] = eregi_replace("<a href=([^<]*)<font color=#000000><b><u>([^<]*)</u></b></font>([^>]*)>","<a href=\\1\\2\\3>",$list[text]);
+      $list[text] = eregi_replace("<a href=([^<]*)$hl[0]([^<]*)$hl[1]([^>]*)>","<a href=\\1\\2\\3>",$list[text]);
       break;
     case 'a':
       $list[text] = eregi_replace($str, "$hl[0]\\0$hl[1]", $list[text]);
       $list[title] = eregi_replace($str, "$hl[0]\\0$hl[1]", $list[title]);
-      $list[text] = eregi_replace("<a href=([^<]*)<font color=#000000><b><u>([^<]*)</u></b></font>([^>]*)>","<a href=\\1\\2\\3>",$list[text]);
+      $list[text] = eregi_replace("<a href=([^<]*)$hl[0]([^<]*)$hl[1]([^>]*)>","<a href=\\1\\2\\3>",$list[text]);
       break;
   }
 
@@ -142,14 +148,14 @@ function text_nl2br($text, $html) {
     $text = eregi_replace("<\\?(.*)\\?>", "&lt;?\\1?&gt;", $text);
     $text = eregi_replace("<script([^>]*)>(.*)</script>", "&lt;script\\1&gt;\\2&lt;/script&gt;", $text);
     $text = ereg_replace("\r\n", "\n", $text);
-    $text = remove_tbbr($text);
     $text = auto_link($text);
     $text = ereg_replace("\n", "\r\n", $text);
     $text = nl2br($text);
     $text = ereg_replace("<br>\n", "<BR>", $text);
+    $text = remove_tdbr($text);
   } else {
     $text = htmlspecialchars($text);
-    if ($langs[code] == "ko") $text = eregi_replace("&amp;#","&#",$text); // 한글 깨지는것 보정
+    if ($langs[code] == "ko") $text = ugly_han($text,$html); // 한글 깨지는것 보정
     $text = "<PRE>\n$text\n</PRE>";
     $text = auto_link($text);
   }
@@ -158,18 +164,18 @@ function text_nl2br($text, $html) {
 
 
 // html 사용시에 table이 있으면 nl2br() 함수를 적용시키지 않음
-function remove_tbbr($text) {
-  $text = eregi_replace("(\n)*<tr([^>]*)>(\n)*","<tr\\2>",$text);
-  $text = eregi_replace("(\n)*<td([^>]*)>(\n)*","<td\\2>",$text);
-  $text = eregi_replace("(\n)*</table>(\n)*","</table>",$text);
-  $text = eregi_replace("(\n)*([a-z&\; ])*(<[\/]*(tab|tr|td|li|ul|ol))","\\3",$text);
+function remove_tdbr($text) {
+  $text = eregi_replace("(<BR>|[ ])*<tr([^>]*)>(\n)*","<tr\\2>",$text);
+  $text = eregi_replace("(<BR>|[ ])*<td([^>]*)>(\n)*","<td\\2>",$text);
+  $text = eregi_replace("(<BR>|[ ])*</table>(\n)*","</table>",$text);
+  $text = eregi_replace("(<BR>|[ ])*</(tr|td|li|ul|ol)","</\\2",$text);
+  $text = eregi_replace("(<BR>|[ ])*<(li|ul|ol)","<\\2",$text);
+  $text = eregi_replace("<td>\r<BR>(.*)</td>","<td>\r\\1</td>",$text);
 
   return $text;
 }
 
 function delete_tag($text) {
-
-  $text = eregi_replace("<\\?(.*)\\?>", "", $text);
   $text = eregi_replace("<html(.*)<body([^>]*)>","",$text);
   $text = eregi_replace("</body(.*)</html>","",$text);
   $text = eregi_replace("<(\/)*(div|layer|body|html|head|meta)[^>]*>","",$text);
@@ -177,13 +183,6 @@ function delete_tag($text) {
   $text = eregi_replace("<[/]*(script|style|title)>","",$text);
   $text = trim($text);
 
-  return $text;
-
-}
-
-// html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
-function ugly_han($text,$html=0) {
-  if (!$html) $text = eregi_replace("&amp;#","&#",$text);
   return $text;
 }
 
@@ -240,7 +239,7 @@ function auto_link($str) {
   global $color;
 
   $regex[http] = "(http|https|ftp|telnet|news):\/\/([a-z0-9_\-]+\.[][a-zA-Z0-9:;&#@=_~%\?\/\.\,\+\-]+)";
-  $regex[mail] = "([a-z0-9_\-]+)@([a-z0-9_\-]+\.[a-z0-9\._\-]+)";
+  $regex[mail] = "([a-z0-9_\-]+)@([a-z0-9_\-]+\.[a-z0-9\-\._\-]+)";
 
   // < 로 열린 태그가 그 줄에서 닫히지 않을 경우 nl2br()에서 <BR> 태그가
   // 붙어 깨지는 문제를 막기 위해 다음 줄까지 검사하여 이어줌
@@ -248,7 +247,7 @@ function auto_link($str) {
 
   // 특수 문자와 링크시 target 삭제
   $str = eregi_replace("&(quot|gt|lt)","!\\1",$str);
-  $str = eregi_replace("([ ]*)target=[\"'_a-z,A-Z]+","", $str);
+  $str = eregi_replace("([ ]+)target=[\"'_a-z,A-Z]+","", $str);
   $str = eregi_replace("([ ]+)on([a-z]+)=[\"'_a-z,A-Z\?\.\-_\/()]+","", $str);
 
   // html사용시 link 보호
@@ -274,9 +273,11 @@ function auto_link($str) {
 }
 
 // 간편하게 링크를 만들기 위한 함수
-function url_link($url, $str, $color) {
+function url_link($url, $str, $color, $no = 0) {
+  global $table, $board;
+
   if(check_email($url)) {
-    $str = "<A HREF=\"mailto:$url\"><FONT COLOR=\"$color\">$str</FONT></A>";
+    $str = "<A HREF=javascript:new_windows('form.php3?table=$table&no=$no','form',0,0,$board[width],420)><FONT COLOR=\"$color\">$str</FONT></A>";
   } else if(check_url($url)) {
     $str = "<A HREF=\"$url\" target=\"_blank\"><FONT COLOR=\"$color\">$str</FONT></A>";
   } else {

@@ -2,16 +2,18 @@
 function print_list($table, $list)
 {
     global $color, $board, $langs, $enable;
-    global $o, $upload, $cupload, $agent;
+    global $o, $upload, $cupload, $agent, $no;
 
     $search = search2url($o);
-
     $list[name] = eregi_replace("&quot;","\"",$list[name]);
     $list[name]  = cut_string($list[name], $board[nam_l]);
     $list[name] = eregi_replace("\"","&quot;",$list[name]);
     $list[title] = eregi_replace("&quot;","\"",$list[title]);
     $list[title] = cut_string($list[title], $board[tit_l] - $list[rede]);
     $list[title] = eregi_replace("\"","&quot;",$list[title]);
+    if($enable[re_list])  {
+      if($no == $list[no]) $list[title] = str_replace($list[title],"<b><u>$list[title]</u></b>",$list[title]);
+    }
 
     if($list[reno]) {
 	$list[rede] *= 10;
@@ -35,14 +37,13 @@ function print_list($table, $list)
     }
 
     $date = date($board[date_fmt], $list[date]);
-//    $date = eregi_replace("2000","Y2K",$date);
 
-    $list[refer] = sprintf("%7d", $list[refer]);
+    $list[refer] = sprintf("%5d", $list[refer]);
     $list[refer] = str_replace(" ", ".", $list[refer]);
     $list[refer] = ereg_replace("^(\.+)", "<FONT COLOR=\"$bg\">\\1</FONT>", $list[refer]);
 
     if($list[email]) {
-	$list[name] = url_link($list[email], $list[name], $fg);
+	$list[name] = url_link($list[email], $list[name], $fg, $list[no]);
     } else {
 	$list[name] = "<FONT COLOR=\"$fg\">$list[name]</FONT>";
     }
@@ -65,13 +66,12 @@ function print_list($table, $list)
   if ($upload[yesno] == "yes") {
     if($cupload[yesno] == "yes") {
       if($list[bofile]) {
-        $bofile = "$list[bofile]";
         $hfsize = human_fsize($list[bfsize]);
-        $tail = check_filetype($bofile);
-        $icon = icon_check($tail,$bofile);
+        $tail = check_filetype($list[bofile]);
+        $icon = icon_check($tail,$list[bofile]);
+        $down_link = check_dnlink($table,$list);
         $list[icon] = "<img src=\"images/$icon\" width=16 height=16 border=0 alt=\"$list[bofile] ($hfsize)\">";
-        $up_link    = "<a href=\"act.php3?o[at]=dn&dn[tb]=$table&dn[udir]=$upload[dir]&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]\">";
-
+        $up_link    = "<a href=\"$down_link\">";
         $up_link_x  = "</a>";
       } else {
         $list[icon] = "&nbsp;";
@@ -99,11 +99,15 @@ function print_list($table, $list)
 function get_list($table, $pages, $reply = 0)
 {
     global $color, $board;
-    global $o;
+    global $o, $enable, $PHP_SELF;
 
-    $sql = search2sql($o);
+    if($reply[ck]) $sql = search2sql($reply);
+    else $sql = search2sql($o);
 
-    $result = sql_query("SELECT * FROM $table $sql ORDER BY idx DESC LIMIT $pages[no], $board[perno]");
+    if ($enable[re_list] && eregi("read",$PHP_SELF)) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
+    else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT $pages[no], $board[perno]";
+
+    $result = sql_query($query);
     if(sql_num_rows($result)) {
 	while($list = sql_fetch_array($result)) {
 	    print_list($table, $list);
@@ -118,10 +122,8 @@ function print_narticle($table, $fg, $bg, $print = 0)
 {
     global $o, $colspan, $langs;
 
-    if($o[at] == "s")
-	$str = "$langs[no_seacrh]";
-    else
-	$str = "$langs[no_art]";
+    if($o[at] == "s") $str = "$langs[no_seacrh]";
+    else $str = "$langs[no_art]";
 
     $article = "
 <TR>
@@ -130,8 +132,7 @@ function print_narticle($table, $fg, $bg, $print = 0)
   </TD>
 </TR>\n";
 
-    if($print)
-	echo $article;
+    if($print) echo $article;
 
     return $article;
 }

@@ -35,6 +35,18 @@ $wrap = form_wrap();
 if ($board[img] && !eregi("%",$board[width])) 
   $board[width] = $board[width]-$icons[size]*2;
 
+// 원본글 포함 선택 여부
+if ($enable[ore]) {
+  $list[text] = htmlspecialchars($list[text]);
+  $text_area = "<TEXTAREA NAME=\"text\" $wrap ROWS=\"10\" COLS=\"$size[text]\"></TEXTAREA>";
+  $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"hide\" VALUE=\"\n\n$list[name] wrote..\n$list[text]\">\n" .
+                 "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=1>\n" .
+                 "    <INPUT TABINDEX=\"100\" TYPE=\"button\" NAME=\"quote\" VALUE=\"원본 포함\" onClick=\"this.form.text.value=this.form.text.value + this.form.hide.value; this.form.hide.value ='';\">";
+} else {
+  $text_area = "<TEXTAREA NAME=\"atc[text]\" $wrap ROWS=\"10\" COLS=\"$size[text]\">\n\n\n$list[name] wrote..\n$list[text]</TEXTAREA>";
+  $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=0>\n";
+}
+
 echo "
 <TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"0\" BGCOLOR=\"$color[r0_bg]\"><TR><TD>
 <TABLE WIDTH=\"100%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
@@ -93,7 +105,7 @@ echo "
 </TR><TR>
   <TD COLSPAN=\"3\" ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">
 <!-- ---------- 글 내용 ---------- -->
-    <TEXTAREA NAME=\"atc[text]\" $wrap ROWS=\"10\" COLS=\"$size[text]\">\n\n\n\n$list[name] wrote..\n$list[text]</TEXTAREA>
+    $text_area
 <!-- ---------- 글 내용 ---------- -->
   </TD>
 </TR><TR>
@@ -119,6 +131,7 @@ echo "
     <INPUT TYPE=\"submit\" VALUE=\"$langs[b_re]\">&nbsp;
     <INPUT TYPE=\"reset\" VALUE=\"$langs[b_reset]\">&nbsp;
     <INPUT TYPE=\"button\" onClick=\"history.back()\" VALUE=\"$langs[b_can]\">
+    $orig_button
     </FONT>
   </TD>
 </TR>

@@ -1,7 +1,7 @@
 <?
-if ($o[at] != "dn") {
-  @include("include/header.ph");
-  @include("./admin/include/config.ph");
+if ($o[at] != "dn" && $o[at] != "sm") {
+  include("include/header.ph");
+  include("./admin/include/config.ph");
 
   sql_connect($db[server], $db[user], $db[pass]);
   sql_select_db($db[name]);
@@ -288,8 +288,8 @@ if ($o[at] != "dn") {
         article_delete($table, $list[no], $passwd, $adm);
         // upload file이 존재할 경우 삭제
         if ($list[bofile]) {
-          unlink("./data/$table/files/$list[bcfile]/$list[bofile]");
-          rmdir("./data/$table/files/$list[bcfile]");
+          unlink("./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]");
+          rmdir("./data/$table/$upload[dir]/$list[bcfile]");
         }
       }
     }
@@ -313,7 +313,7 @@ if ($o[at] != "dn") {
     $atc[title] = trim($atc[title]);
     $atc[text]  = chop($atc[text]);
 
-    if(!$atc[name] || !$atc[title] || !$atc[text]) print_error("$langs[act_in]");
+    if(!$atc[name] || !$atc[title] || !$atc[text]) print_error($langs[act_in]);
     if($atc[url]) $atc[url] = check_url($atc[url]);
     if($atc[email]) $atc[email] = check_email($atc[email]);
 
@@ -323,16 +323,22 @@ if ($o[at] != "dn") {
     $spasswd = crypt($atc[repasswd],$sadmin[passwd]);
     $upasswd = crypt($atc[repasswd],$admin[passwd]);
 
-    if ($atc[name] == "$compare[name]" || $atc[email] == "$compare[email]") {
-      if($sadmin[passwd] != $spasswd) print_error("$langs[act_ad]");
-    } else if ($atc[name] == "$ccompare[name]" || $atc[email] == "$ccompare[email]") {
-      if($admin[passwd] != $upasswd && $sadmin[passwd] != $spasswd) print_error("$langs[act_d]");
+    if (eregi($compare[name],$atc[name])) $cmp[name] = 1;
+    if (eregi($compare[email],$atc[email])) $cmp[email] = 1;
+    if (eregi($ccompare[name],$atc[name])) $ccmp[name] = 1;
+    if (eregi($ccompare[email],$atc[email])) $ccmp[email] = 1;
+
+    if ($cmp[name] || $cmp[email]) {
+      if($sadmin[passwd] != $spasswd) print_error($langs[act_ad]);
+    } else if ($ccmp[name] || $ccmp[email]) {
+      if($admin[passwd] != $upasswd && $sadmin[passwd] != $spasswd) print_error($langs[act_d]);
     }
 
     // 스팸 체크
-    if(check_spam($atc[text])) {
-      print_error("$langs[act_s]");
-    }
+    if(check_spam($atc[text])) print_error($langs[act_s]);
+
+    // 등록 가능한 browser check
+    if(!chk_spam_browser()) print_error($langs[act_sb]);
 
     // 이름, 제목의 HTML 코드 문자를 치환함
     $atc[name]  = htmlspecialchars($atc[name]);
@@ -385,6 +391,7 @@ if ($o[at] != "dn") {
       Header("Location: list.php3?table=$table");
       break;
     case 'r':
+      if ($cenable[ore]) $atc[text] = $text;
       $page = article_reply($table, $atc);
       Header("Location: list.php3?table=$table&page=$page");
       break;
@@ -397,11 +404,11 @@ if ($o[at] != "dn") {
       Header("Location: list.php3?table=$table&page=$page");
       break;
   }
-} else {
-  @include("config/global.ph");
+} elseif ($o[at] == "dn") {
+  include("config/global.ph");
   $dn[path] = "data/$dn[tb]/$upload[dir]/$dn[cd]/$dn[name]";
 
-  if(eregi("/",$dn[name]) || eregi("\.\.",$dn[path]) || !$dn[cd] || !$dn[name]) {
+  if(eregi("/",$dn[name]) || eregi("\.\./",$dn[path]) || !$dn[cd] || !$dn[name]) {
     echo "<script>\n".
          "alert('U attempted invalid method in this program!');\n".
          "history.back();\n".
@@ -421,6 +428,20 @@ if ($o[at] != "dn") {
          "</script>\n";
     exit; 
   }
-}
+} elseif ($o[at] == "sm") {
+  include "config/global.ph";
+  include "include/sendmail.ph";
 
+  $rmail[name] = "$atc[name]";
+  $rmail[text] = "$atc[text]";
+  $rmail[title] = "$atc[title]";
+  $rmail[email] = "$atc[email]";
+  $rmail[version] = "$version";
+  $rmail[reply_orig_email] = "$atc[to]";
+
+  sendmail($rmail,1);
+
+  echo "<script>window.close()</script>";
+
+}
 ?>

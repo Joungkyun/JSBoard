@@ -34,6 +34,7 @@ if (crypt($login[pass],$sadmin[passwd]) != $sadmin[passwd]) {
 // password 변경 루틴
 if ($ua[passwd] && $ua[passwd] == $ua[repasswd]) {
   $passwd = crypt($ua[passwd],$admin[passwd]);
+  $passwd = str_replace("\$","\\\$",$passwd);
   if ($passwd != $admin[passwd]) $chg[passwd] = "$passwd";
   else $chg[passwd] = "$admin[passwd]";
 } else {
@@ -68,6 +69,14 @@ else {
   if ($enable[pren]) $chg[pren] = $enable[pren];
   else $chg[pren] = 50;
 }
+
+// Option of include original message in reply
+if ($ua[ore]) $chg[ore] = 1;
+else $chg[ore] = 0;
+
+// Option of print conjunct list when reply
+if ($ua[re_list]) $chg[re_list] = 1;
+else $chg[re_list] = 0;
 
 // Board Basic Configuration
 if ($ua[title] && $ua[title] != $board[title])
@@ -288,6 +297,19 @@ $chg_conf = "<?
 \$cenable[delete] = $chg[delete];	// 삭제 허가
 \$enable[pre]     = $chg[pre];		// 미리 보기 허가
 \$enable[preren]  = $chg[pren];		// 미리 보기 허가시 글 길이
+
+
+/*****************************************************************************
+  답장시 원본글 포함을 선택사항으로 설정
+*****************************************************************************/
+\$enable[ore] = $chg[ore];	// 0 - 무조건 출력  1 - 선택사항
+
+
+/*****************************************************************************
+  글읽기에서 관련글이 있을 경우 관련글 리스트를 보여줄지 여부 설정
+*****************************************************************************/
+\$enable[re_list] = $chg[re_list];   // 0 - 보여주지 않음 1 - 보여줌
+
 
 /******************************************************************************
   게시판 기본 설정

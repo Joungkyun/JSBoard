@@ -1,26 +1,24 @@
 ##### JSBOARD + OOPS administartion Center #################################
 #
-#  Original Developer	: 김병찬 < redhands@linux.sarang.net >
+#  Original Developer	: 김병찬 <redhands@linux.sarang.net>
+#  Source Disturibute	: 김정균 <admin@oops.org>
 #
-#  Maintainer		: 방창현 < winchild@kldp.org >
-#  개발 version corder	: 김정균 < admin@oops.org >
-#  안정 version corder	: 차경묵 < dimanche@dimanche.co.kr >
-#
-#
-#  CVS Server 관리	: 김영민 < blhole@hotmail.com >
-#  Homepage 공간 제공	: http://www.kldp.org
-#  Special Thanks	: 임은재 < eunjea@kldp.org>
+#  CVS Server 관리	: 김영민 <blhole@hotmail.com>
+#  Homepage 공간 제공	: 권순선 <http://www.kldp.org>
+#  Special Thanks	: 임은재 <eunjea@kldp.org>
+#			: 차경묵 <dimanche@dimanche.co.kr>
+#			: 방창현 <winchild@kldp.org>
 #
 #############################################################################
 #
-#                               Installation in JSBoard 1.0 v0.4
+#                               Installation in JSBoard 1.1 v0.4
 #
 #############################################################################
 
 작성 : 김정균 <admin@oops.org>
-일시 : 2000.7.17
+일시 : 2000.7.16
 
-이 문서는 JSBoard 1.0 version의 설치를 위해 제공을 한다.
+이 문서는 JSBoard 1.1 version의 설치를 위해 제공을 한다.
 이 문서로 인한 피해나 JSBoard의 사용으로 인한 피해에 대해서는
 아무런 책임을 질수 없으니 신중하게 판단하고 설치를 시도하도록
 하기를 바란다.
@@ -33,7 +31,7 @@
 ******* 주의사항 ***********************************************************
 
 하나.
-JSBoard 1.0은 PHP4 기반하에서 정상작동을 하며, Session 기능을
+JSBoard 1.1은 PHP4 기반하에서 정상작동을 하며, Session 기능을
 compile 시에 빼면 절대 안된다.
 
 하나.
@@ -43,6 +41,11 @@ compile 시에 빼면 절대 안된다.
 하나.
 0.7 이하 버젼과 DB 구조체와 SQL query의 형식이 변경이
 되었으므로 무조건 덮어 씌우지 말기 바란다.
+
+하나.
+!!!!!!!!!!!!!
+Linux, FreeBSD 이외의 OS에서 설치시에는 꼭
+jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
 
 ****************************************************************************
 
@@ -57,8 +60,8 @@ compile 시에 빼면 절대 안된다.
   2. JSBoard 설치
   3. JSBoard 운영
   4. UPGRADE
-    4-1. 0.8 또는 1.0.x 에서의 upgrade
-    4-2. 0.7 이하 버젼에서의 upgrade
+    4-1. 0.8 또는 1.0.x version에서의 upgrade
+    4-3. 0.7 이하 버젼에서의 upgrade
   5. Bug report
 
 ***************
@@ -152,7 +155,7 @@ compile 시에 빼면 절대 안된다.
     DirectoryIndex 지시자에 index.php3를 추가해 주도록 한다. 또한 ph file
     들의 보안을 위해서 httpd.conf 의
 
-    AddType application/x-httpd-php3 .php3
+    AddType application/x-httpd-php .php .php3
 
     설정에 .ph 를 추가해 주도록 한다.
 
@@ -178,21 +181,49 @@ compile 시에 빼면 절대 안된다.
   해야 한다!!!!!!!!!!!!
 
   $ ./root.sh
+  ===================================================
+   Scripted By JoungKyun Kim <admin@oops.org>
+   JSBoard Permission Configurations v1.0
+  ===================================================
 
-  실행을 한후에 아무런 메세지가 나오지 않으면 된것이다. 그리고 다시
-  jsboard/Install/include/passwd.ph 를 편집한다.
+  ## Operating System : Redhat
+  ## Httpd Group : nobody
+
+  Is right follow information? [Y/N](default Y) : y <--Enter
+
+  DONE!!!!
+  $
+
+  root.sh를 실행을 하면 같이 수행이 된다. 만약 위에서 HTTPD의 그룹이
+  nobody가 아니라면 (debian은 보통 www-data로 되어 있다) n 또는 N을
+  넣고 그룹 이름을 다시 지정하면 된다. 아래와 같은 문구가 나올것이다.
+
+  Input Ur httpd group :
+
+
+  그리고 다시 jsboard/Installer/include/passwd.ph 를 편집한다.
 
   <?php
   /****************************************************/
-  // Specify MySQL Root Password
-  // mysql을 관리할 root의 password 를 지정
+  # Specify MySQL Root Password
+  # mysql을 관리할 root의 password 를 지정
 
-  $passwd = "MySQL_ROOT_PASSWORD";
+  $passwd = "";
+
+  # apache의 설정파일(httpd.conf)의 경로를 지정
+  # redhat rpm package의 경우 /etc/httpd/conf/httpd.conf
+  # debian package의 경우 /etc/apache/httpd.conf
+  # 수동으로 설치했을 경우 /usr/local/apache/etc/httpd.conf
+  # 에 위치하는 경우가 많음.
+
+  $apache_config_file = "/etc/httpd/conf/httpd.conf";
+
   /****************************************************/
   ?>
 
   위는 passwd.ph 의 내용이며, "MySQL_ROOT_PASSWORD" 부분에 MySQL의
-  root password를 넣어 준다.
+  root password를 넣어 준다. 그리고 그 아래에는 apache web server의
+  설정 파일인 httpd.conf가 있는 경로를 적어 주도록 한다.
 
   다음 웹 브라우져로 http://domain.com/jsboard/Installer 로 접근을 한다.
 
@@ -249,6 +280,10 @@ compile 시에 빼면 절대 안된다.
           Jsboard를 사용하기 위한 환경 설정을 검사하고 있습니다
           5초 후에 결과를 보실수 있습니다
 
+          만약 Linux용 Browser를 사용하신다면 다음 페이지로
+          자동으로 넘어가지 않을수도 있습니다.
+          이때에는 QUICK_INSTALL문서를 참조하셔서 설치를 하십시오 
+
   -------------------------------------------------------------------------
                           [ 5초간 기다려 주세요 ]
   -------------------------------------------------------------------------
@@ -267,7 +302,7 @@ compile 시에 빼면 절대 안된다.
                       JSBoard Enviornment Check Reuslt
   -------------------------------------------------------------------------
 
-  OS Type			: Linux 
+  OS Type			: Debian 
   MySQL check			: Failed 
 
   MySQL login에 실패를 했습니다. jsboard/Installer/include/passwd.ph 에
@@ -290,10 +325,6 @@ compile 시에 빼면 절대 안된다.
   에러가 발생하면 다시 처음 화면으로 가게 된다. 에러가 발생할 경우에는
   위와 같이 점검할 사항들을 제시해 준다.
 
-  * index file check error message에서 httpd.conf file이 여러개가 있다는
-    메세지가 나올 경우에는 사용하는 설정파일외에는 다른 파일들의 이름을
-    변경해 줘야 한다. 안그러면 index file 설정에 문제가 없을 경우에도
-    계속해서 이 메세지가 뜨게 된다.
 
   -------------------------------------------------------------------------
                              JSBoard Installer
@@ -362,14 +393,14 @@ compile 시에 빼면 절대 안된다.
 
 4. UPGRADE
 
-  4-1. 0.8 또는 1.0.x 에서의 upgrade
+  4-1. 0.8 이상 1.0.x 이하 version에서의 upgrade
 
-    0.8 또는 1.0.x 에서의 upgrade 무척 단순하다. 즉, 1.0.2의 소스를 받
-    아서 덮어 씌어 주기만 하면 된다. 소스를 덮어 씌운후에
-    jsbaord/Installer/script 에서 root사용자의 경우에는 root_p.sh 를 실행해
-    주면 되며, 계정 유저의 경우에는 account_p.sh를 실행해 주기만 하면 된다.
-    (단 계정 유저들의 경우에는 jsboard/config/global.ph 의 group 소유권을
-     root에게 부탁하여 nobody로 변경 해 놓는 것을 잊지 말라!!!!)
+    0.8 이상 1.0.x 이하 version 에서의 upgrade 무척 단순하다. 즉, 1.1의
+    소스를 받아서 덮어 씌어 주기만 하면 된다. 그리고 Installer/ad_sample/OSname
+    에 보면 allow_browser.txt.orig 라는 파일이 있다 이걸 jsbaord/config 에
+    allow_browser.txt 로 copy를 한다. 다음 jsbaord/Installer/script 에서
+    root사용자의 경우에는 root_p.sh 를 실행해 주면 되며, 계정 유저의 경우
+    에는 account_p.sh를 실행해 주기만 하면 된다.
 
     단 주의 할것은.... PHP3 사용자들은 PHP4로 update를 해 줘야만 한다.!!!!!!
 

@@ -1,7 +1,7 @@
 <?php
 /* mail 보내기 함수 2000.1.16 김정균 */
 
-function sendmail($rmail) {
+function sendmail($rmail,$fm=0) {
 
   global $REMOTE_ADDR, $HTTP_USER_AGENT, $HTTP_ACCEPT_LANGUAGE, $SERVER_NAME, $langs;
   global $mail_error, $mail_msg_header;
@@ -40,6 +40,17 @@ function sendmail($rmail) {
   $webboard_address =  sprintf("%s%s",$rmail[bbshome],"read.php3?table=$rmail[table]&no=$rmail[no]");
   $reply_article    =  sprintf("%s%s",$rmail[bbshome],"reply.php3?table=$rmail[table]&no=$rmail[no]");
 
+  if (!$fm) {
+    $dbname  = "DB Name         : $rmail[table]";
+    $dbloca  = "DB Location     : $webboard_address";
+    $repart  = "Reply Article   : $reply_article";
+    $nofm    = "\n$dbname\n$dbloca\n$repart";
+    $homeurl = "HomeURL		: $rmail[url]";
+  } else {
+    $rmail[user] = "yes";
+    $homeurl = "To		: mailto:$rmail[reply_orig_email]";
+  }
+
   $message ="
 
 $mail_msg_header
@@ -48,16 +59,13 @@ $mail_msg_header
 
 [ Server Infomation ]------------------------------------------------------
 ServerWare	: JSBoard-$rmail[version]
-Server Name	: $SERVER_NAME
-DB Name		: $rmail[table]
-DB Location	: $webboard_address
-Reply Article	: $reply_article
+Server Name	: $SERVER_NAME$nofm
 
 
 [ Article Infomation ]-----------------------------------------------------
 이 름		: $rmail[name]
 Email		: mailto:$rmail[email]
-HomeURL		: $rmail[url]
+$homeurl
 일 시		: $year $day $ampm $hms
 ---------------------------------------------------------------------------
 
@@ -75,7 +83,7 @@ OOPS Form mail service - http://www.oops.org
 Scripted by JoungKyun Kim <admin@oops.org>
 ";
 
-  if ($rmail[user] == "yes" && $rmail[reply_orig_email] != "") {
+  if ($rmail[user] == "yes" && $rmail[reply_orig_email]) {
     $to = $rmail[reply_orig_email];
     mail($to, $rmail[title], $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSBoard Message <$rmail[email]>")
     or die("$mail_error");
@@ -88,4 +96,16 @@ Scripted by JoungKyun Kim <admin@oops.org>
   }
 
 }
+
+function get_send_info($table,$no) {
+  global $db;
+  $c = sql_connect($db[host],$db[user],$db[pass]);
+  sql_select_db($db[name]);
+  $r = sql_query("SELECT email FROM $table WHERE no = $no");
+  $row = sql_fetch_array($r);
+  mysql_close($c);
+
+  return $row;
+}
+
 ?>

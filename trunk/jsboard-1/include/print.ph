@@ -282,7 +282,9 @@ function read_cmd($str) {
   $str[search] = search2url($o);
 
   $pos[prev_t] = AddSlashes($pos[prev_t]);
-  $pos[next_t] = AddSlashes($pos[next_t]); 
+  $pos[next_t] = AddSlashes($pos[next_t]);
+
+  if (!$o[ck]) $str[search] = "";
 
   $str[prev]  = "<A HREF=\"read.php3?table=$table&no=$pos[prev]$str[search]\" onMouseOut=\"window.status=''; return true\" onMouseOver=\"window.status='$pos[prev_t]'; return true\"><FONT COLOR=\"$color[n0_fg]\"><NOBR>$langs[cmd_upp]</NOBR></FONT></A>";
   $str[next]  = "<A HREF=\"read.php3?table=$table&no=$pos[next]$str[search]\" onMouseOut=\"window.status=''; return true\" onMouseOver=\"window.status='$pos[next_t]'; return true\"><FONT COLOR=\"$color[n0_fg]\"><NOBR>$langs[cmd_down]</NOBR></FONT></A>";
@@ -296,7 +298,10 @@ function read_cmd($str) {
 
   $str[edit]  = "<A HREF=\"edit.php3?table=$table&no=$no&page=$page\"><FONT COLOR=\"$color[n0_fg]\"><NOBR>$langs[cmd_edit]</NOBR></FONT></A>";
   $str[dele]  = "<A HREF=\"delete.php3?table=$table&no=$no&page=$page\"><FONT COLOR=\"$color[n0_fg]\"><NOBR>$langs[cmd_del]</NOBR></FONT></A>";
-  $str[rep]   = "<FONT COLOR=\"$color[n1_fg]\"><NOBR>$langs[cmd_con]</NOBR></FONT>";
+  if(!$enable[re_list]) {
+    $str[rep]   = "<FONT COLOR=\"$color[n1_fg]\"><NOBR>$langs[cmd_con]</NOBR></FONT>";
+    $str[sepa_rep] = $str[sepa];
+  }
 
   if(!$pos[prev]) $str[prev] = "<FONT COLOR=\"$color[n1_fg]\"><NOBR>$langs[cmd_upp]</NOBR></FONT>";
   if(!$pos[next]) $str[next] = "<FONT COLOR=\"$color[n1_fg]\"><NOBR>$langs[cmd_down]</NOBR></FONT>";
@@ -312,7 +317,7 @@ function read_cmd($str) {
     $str[dele] = "<A HREF=\"delete.php3?table=$table&no=$no&page=$page\"><FONT COLOR=\"$color[n1_fg]\"><NOBR>$langs[cmd_del]</NOBR></FONT></A>";
   if(!$enable[edit] || !$cenable[edit])
     $str[edit]  = "<A HREF=\"edit.php3?table=$table&no=$no&page=$page\"><FONT COLOR=\"$color[n1_fg]\"><NOBR>$langs[cmd_edit]</NOBR></FONT></A>";
-  if($list[reto] || $list[reyn]) {
+  if(!$enable[re_list] && ($list[reto] || $list[reyn])) {
     $reto = $list[reto] ? $list[reto] : $list[no];
     $str[rep] = "<A HREF=\"list.php3?table=$table&o[at]=s&o[sc]=r&o[no]=$reto\"><FONT COLOR=\"$color[n0_fg]\"><NOBR>$langs[cmd_con]</NOBR></FONT></A>";
   }
@@ -335,7 +340,7 @@ function read_cmd($str) {
        "  <TD WIDTH=\"1%\">$str[dele]</TD>\n" .
        "  $str[sepa]\n" .
        "  <TD WIDTH=\"1%\">$str[rep]</TD>\n" .
-       "  $str[sepa]\n" .
+       "  $str[sepa_rep]\n" .
        "</TR>\n" .
        "</TABLE>";
 }
@@ -412,7 +417,7 @@ function img_rmenu($str,$icons = 20) {
     $str[dele] = "<A HREF=\"delete.php3?table=$table&no=$no&page=$page\"><img src=./$themes[img]/delete_b.gif width=$icons height=$icons border=0 alt=\"$langs[cmd_del]\"></A><br>\n";
   if(!$enable[edit] || !$cenable[edit])
     $str[edit]  = "<A HREF=\"edit.php3?table=$table&no=$no&page=$page\"><img src=./$themes[img]/edit_b.gif width=$icons height=$icons border=0 alt=\"$langs[cmd_edit]\"></A><br>\n";
-  if($list[reto] || $list[reyn]) {
+  if(!$enable[re_list] && ($list[reto] || $list[reyn])) {
     $reto = $list[reto] ? $list[reto] : $list[no];
     $str[rep] = "<A HREF=\"list.php3?table=$table&o[at]=s&o[sc]=r&o[no]=$reto\"><img src=./$themes[img]/conjunct.gif width=$icons height=$icons border=0 alt=\"$langs[cmd_con]\"></A><br>\n";
   }
@@ -427,24 +432,40 @@ function img_rmenu($str,$icons = 20) {
        "$str[rep]";
 }
 
-// upload file 미리 보기 함수
-function viewfile($tail,$mode = 0) {
-  global $table, $list, $upload, $langs;
-  $upload_file = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
 
-  if (($tail == "gif" || $tail == "jpg" || $tail == "png") && !$mode) echo ("<img src=\"$upload_file\">\n<p>\n");
-  else if (($tail == "phps" || $tail == "txt" || $tail == "htmls" || $tail == "htm" || $tail == "shs") && $mode) {
-    $source1 = "<p><br>\n---- $list[bofile] $langs[inc_file] -------------------------- \n<p>\n<pre>\n";
-    $source2 = "\n</pre>\n<br><br>";
-    echo "$source1";
+// 해달글의 관련글 리스트를 뿌려준다.
+function article_reply_list($table,$pages) {
+  global $list, $langs, $upload, $td_width;
 
-    $fp = fopen("$upload_file", "r");
-    $view = fread($fp, filesize("$upload_file"));
-    fclose($fp);
-    $view = htmlspecialchars($view);
-    echo "$view";
-    echo "$source2";
+  $reto = $list[reto] ? $list[reto] : $list[no];
+  $o[ck]=1;
+  $o[at]=s;
+  $o[sc]=r;
+  $o[no]=$reto;
+  $o[ss]="";
+  
+  echo "<p>[ $langs[conj] ]<HR width=40% size=1 noshade align=left>
+<TABLE WIDTH=\"100%\" border=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">\n";
+  
+  get_list($table, $pages, $o);
+  
+  echo "<TR>
+  <TD WIDTH=\"$td_width[1]\" ALIGN=\"center\"><img src=images/blank.gif width=100% height=1></TD>
+  <TD WIDTH=\"$td_width[2]\" ALIGN=\"center\"><img src=images/blank.gif width=100% height=1></TD>
+  <TD WIDTH=\"$td_width[3]\" ALIGN=\"center\"><img src=images/blank.gif width=100% height=1></TD>\n";
+  
+  if ($upload[yesno] == "yes") {
+    if ($cupload[yesno] == "yes")
+      echo "  <TD WIDTH=\"$td_width[4]\" ALIGN=\"center\"><img src=images/blank.gif width=100% height=1></TD>";
   }
+  
+  echo "
+  <TD WIDTH=\"$td_width[5]\" ALIGN=\"center\"><img src=images/blank.gif width=100% height=1></TD>
+  <TD COLSPAN=\"2\" WIDTH=\"$td_width[6]\" ALIGN=\"center\"><img src=images/blank.gif width=100% height=1></TD>
+</TR>
+</TABLE>\n";
+
+
 }
 
 ?>

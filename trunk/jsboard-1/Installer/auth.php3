@@ -73,7 +73,7 @@ if (!$mode) {
        "<font color=$color[l0_fg]>JSBoard Environment Check</font>\n" .
        "</td></tr>\n<tr><td align=center>\n<font color=white>\n";
 
-  $mcheck = mysql_connect("127.0.0.1", "root", "$passwd");
+  $mcheck = @mysql_connect("127.0.0.1", "root", "$passwd");
 
   if ($mcheck) {
     mysql_select_db("mysql");
@@ -89,26 +89,12 @@ if (!$mode) {
 
   if (exec("echo hellow")) {
     $echeck = 1;
-    if (file_exists("/etc/httpd/conf/httpd.conf"))
-      $conffile = "/etc/httpd/conf/httpd.conf";
-    elseif (file_exists("/usr/local/apache/conf/httpd.conf"))
-      $conffile = "/usr/local/apache/conf/httpd.conf";
-    elseif (file_exists("/usr/local/etc/httpd.conf"))
-      $conffile = "/usr/local/etc/httpd.conf";
-    else {
-      exec("find / -name httpd.conf",$array);
-      if (sizeof($array) > 1) $numment = 1;
-      else $conffile = "$array[0];";
-    }
-
-    exec("cat $conffile | grep DirectoryIndex | grep index.html",$array);
+    exec("cat $apache_config_file | grep DirectoryIndex | grep index.html",$array);
 
     if (eregi("index.php3",$array[0])) {
       $cindex = 1;
-      $cconf  = 0;
     } else {
       $cindex = 0;
-      if($numment) $cconf = 1;
     }
   } else {
     $echeck = 0;
@@ -118,12 +104,12 @@ if (!$mode) {
 
   if(touch("../data/aaa.test")) {
     $p1 = 1;
-    unlink("../data/aaa.test");
+    @unlink("../data/aaa.test");
   }
 
   if(touch("../config/aaa.test")) {
     $p2 = 1;
-    unlink("../config/aaa.test");
+    @unlink("../config/aaa.test");
   }
 
   if ($p1 && $p2) $pcheck = 1;
@@ -155,13 +141,18 @@ if (!$mode) {
   if (!$mcheck || $cnum != "13" || !$echeck || !$cindex || $cconf || !$pcheck) $actlink = "";
   else $actlink = "choise";
 
+  if (eregi("linux",$OSTYPE)) {
+    if (file_exists("/etc/redhat-release")) $os_type = "Redhat";
+    elseif (file_exists("/etc/debian_version")) $os_type = "Debian";
+  } else $os_type = $OSTYPE;
+
   echo "<form method=POST action=$PHP_SELF>\n\n" .
        "<table width=400 border=0 cellpadding=5>\n" .
        "<tr><td bgcolor=$color[l0_bg] align=center>\n" .
        "<font color=$color[l0_fg]>JSBoard Enviornment Check Reuslt</font>\n" .
        "</td></tr>\n<tr><td align=center>\n" .
        "<font color=$color[text]>\n&nbsp;<br>\n\n" .
-       "<table>\n<tr>\n<td>OS Type</td>\n<td>:</td>\n<td>$OSTYPE</td>\n</tr>\n\n";
+       "<table>\n<tr>\n<td>OS Type</td>\n<td>:</td>\n<td>$os_type</td>\n</tr>\n\n";
 
   if (!eregi("linux",$OSTYPE))
     echo "<tr>\n<td colspan=3>\n<font color=red>$lnags[os_check]</font>\n</td>\n</tr>\n\n";
@@ -182,12 +173,7 @@ if (!$mode) {
 
   if ($echeck) {
     echo "<tr>\n<td>index file check</td>\n<td>:</td>\n<td>$ci</td>\n</tr>\n\n";
-    if ($ci == "Failed") {
-      if ($cconf)
-        echo "<tr>\n<td colspan=3>\n<font color=red>$langs[dcheck]</font>\n</td>\n</tr>\n\n";
-      else
-        echo "<tr>\n<td colspan=3>\n<font color=red>$langs[icheck]</font>\n</td>\n</tr>\n\n";
-    }
+    if ($ci == "Failed") echo "<tr>\n<td colspan=3>\n<font color=red>$langs[icheck]</font>\n</td>\n</tr>\n\n";
   }
 
   echo "<tr>\n<td>Permission check</td>\n<td>:</td>\n<td>$p</td>\n</tr>\n\n";

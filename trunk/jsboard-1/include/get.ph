@@ -287,7 +287,7 @@ function get_article($table, $no, $field0 = "*", $field1 = "no") {
 }
 
 function get_theme_img($t) {
-  if (file_exists("./data/$t/default.themes"))
+  if (@file_exists("./data/$t/default.themes"))
     $theme = readlink("./data/$t/default.themes");
   else  
     $theme = readlink("./config/default.themes");
@@ -326,5 +326,34 @@ function human_fsize($bfsize, $sub = "0") {
 
   return $bfsize; 
 } 
+
+function viewfile($tail) {
+  global $table, $list, $upload, $langs;
+  $upload_file = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
+
+  $source1 = "<p><br>\n---- $list[bofile] $langs[inc_file] -------------------------- \n<p>\n<pre>\n";
+  $source2 = "\n</pre>\n<br><br>";
+  $source3 = "   <font color=red>$list[bofile]</font> file is broken link!!\n\n";
+
+  if (@file_exists($upload_file)) {
+    if ($tail == "gif" || $tail == "jpg" || $tail == "png") $p[up] = "<img src=\"$upload_file\">\n<p>\n";
+    else if ($tail == "phps" || $tail == "txt" || $tail == "htmls" || $tail == "htm" || $tail == "shs") {
+      $fsize = filesize($upload_file);
+      $fsize_ex = 1000;
+      if ($fsize == $fsize_ex) $check = 1;
+      if ($tail == "txt" && $fsize > $fsize_ex) $fsize = $fsize_ex;
+
+      $fp = fopen($upload_file, "r");
+      $view = fread($fp,$fsize);
+      fclose($fp);
+      $view = htmlspecialchars($view);
+      if ($fsize == $fsize_ex && !$check) $view = $view . " <p>\n ......$langs[preview]\n\n";
+
+      $p[down] = "$source1$view$source2";
+    }
+  } else $p[down] = "$source1$source3$source2";
+
+  return $p;
+}
 
 ?>

@@ -18,27 +18,29 @@ else
 fi
 
 if [ "$OS" = "Linux" ]; then
-  cp -af ../ad_sample/global.ph.orig ../../config/global.ph
-  cp -af ../ad_sample/spam_list.txt.orig ../../config/spam_list.txt
-  cp -af ../ad_sample/config.ph.orig ../../admin/include/config.ph
-  if [ -d "../../data/test" ]; then
-    cp -a ../sample/* ../../data/test/
+  cp -af ../ad_sample/$AD/global.ph.orig ../../config/global.ph
+  cp -af ../ad_sample/$AD/spam_list.txt.orig ../../config/spam_list.txt
+  cp -af ../ad_sample/$AD/allow_browser.txt.orig ../../config/allow_browser.txt
+  cp -af ../ad_sample/$AD/config.ph.orig ../../admin/include/config.ph
+  if [ ! -d "../../data/test" ]; then
+    cp -a ../sample/$AD/* ../../data/test/
   else
-    cp -a ../sample ../../data/test
+    cp -a ../sample/$AD ../../data/test
   fi
 else
-  cp -Rp ../ad_sample/global.ph.orig ../../config/global.ph
-  cp -Rp ../ad_sample/spam_list.txt.orig ../../config/spam_list.txt
-  cp -Rp ../ad_sample/config.ph.orig ../../admin/include/config.ph
+  cp -Rp ../ad_sample/$AD/global.ph.orig ../../config/global.ph
+  cp -Rp ../ad_sample/$AD/spam_list.txt.orig ../../config/spam_list.txt
+  cp -Rp ../ad_sample/$AD/allow_browser.txt.orig ../../config/allow_browser.txt
+  cp -Rp ../ad_sample/$AD/config.ph.orig ../../admin/include/config.ph
   if [ -d "../../data/test" ]; then
-    cp -Rp ../sample/* ../../data/test/
+    cp -Rp ../sample/$AD/* ../../data/test/
   else
-    cp -Rp ../sample/ ../../data/test
+    cp -Rp ../sample/$AD ../../data/test
   fi
 fi
 
 if [ ! -f ../../config/default.themes ]; then
-  ln -sf ./themes/basic.themes ../../config/default.themes
+  ln -s ./themes/basic.themes ../../config/default.themes
 fi
 
 # permission configuration
@@ -48,10 +50,10 @@ chmod 707 ../../data/test
 chmod 707 ../../data/test/files
 chmod 660 ../../config/global.ph
 chmod 606 ../../config/spam_list.txt
+chmod 606 ../../config/allow_browser.txt
 chmod 606 ../../admin/include/config.ph
 chmod 606 ../../data/test/config.ph
 chmod 606 ../../data/test/html_head.ph
 chmod 606 ../../data/test/html_tail.ph
 
-echo -e "\nDone !!!"
 exit 0

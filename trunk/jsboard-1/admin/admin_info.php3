@@ -48,10 +48,16 @@ if (!$mode) {
   $global_con = get_file("../config/global.ph");
 
   // spam list 가져오기
-  $spamlist = get_file("../config/spam_list.txt");
+  if(file_exists("../config/spam_list.txt")) $spamlist = get_file("../config/spam_list.txt");
+  else $spamlist = "jsboard/config 에 spam_list.txt 가 존재하지 않습니다";
+
+  // 등록 허락할 브라우져 명단 가져오기
+  if(file_exists("../config/allow_browser.txt")) $allow_br = get_file("../config/allow_browser.txt");
+  else $allow_br = "jsboard/config 에 allow_browser.txt 가 존재하지 않습니다";
 
   $global_con = trim($global_con);
   $spamlist = trim($spamlist);
+  $allow_br = trim($allow_br);
 
   echo "<form name='global_chg' method='post' action='act.php3'>\n" .
        "<table border=0 cellpadding=2 cellspacing=1 width=100%>\n" .
@@ -68,8 +74,13 @@ if (!$mode) {
 
   echo "</td></tr>\n\n" .
        "<tr><td align=center><font color=$color[l0_fg]><b>SPAMER LIST</b></font></td></tr>\n" .
-       "<tr><td bgcolor=white align=center>&nbsp;\n" .
-       "<textarea name=glob[spam] rows=20 cols=\"$textsize\">$spamlist</textarea>\n" .
+       "<tr><td bgcolor=white>&nbsp;\n" .
+       "<br><font color=$color[l0_bg]>$langs[spmaer_m]</font><p>" .
+       "<center><textarea name=glob[spam] rows=10 cols=\"$textsize\">$spamlist</textarea></center>\n</td></tr>\n\n" .
+       "<tr><td align=center><font color=$color[l0_fg]><b>Allow Browser LIST</b></font></td></tr>\n" .
+       "<tr><td bgcolor=white>&nbsp;\n" .
+       "<br><font color=$color[l0_bg]>$langs[brlist_m]</font><p>" .
+       "<center><textarea name=glob[brlist] rows=5 cols=\"$textsize\">$allow_br</textarea></center>\n" .
        "</td></tr>\n\n<tr><td align=center>\n" .
        "<input type=submit value=$langs[b_sm]>\n" .
        "<input type=reset value=$langs[b_reset]>\n" .

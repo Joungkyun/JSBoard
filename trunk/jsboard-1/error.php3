@@ -1,7 +1,6 @@
 <?
 require("config/global.ph");
-if (file_exists("data/$table/config.ph"))
-  include("data/$table/config.ph");
+if (@file_exists("data/$table/config.ph")) { @include("data/$table/config.ph"); }
 require("include/lang.ph");
 $str = urldecode($str);
 $str = stripslashes($str);

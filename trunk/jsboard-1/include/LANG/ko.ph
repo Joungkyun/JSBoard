@@ -1,7 +1,7 @@
 <?
 // Language Charactor Set
 $langs[charset] = "EUC-KR";
-$langs[font] = "굴림";
+$langs[font] = "굴림체";
 
 // Header file Message
 $table_err = "테이블을 지정해야 합니다";
@@ -11,10 +11,10 @@ $table_err = "테이블을 지정해야 합니다";
 function count_msg() {
   global $pages, $count;
 
-  $langs[count1] = "총 $pages[all] 페이지, $count[all]개의 글이 ";
-  $langs[count2] = "검색되었습니다. ";
-  $langs[count3] = "있습니다. ";
-  $langs[count4] = "오늘 올라온 글은 $count[today]개입니다. ";
+  $langs[count1] = "총 $pages[all]페이지, $count[all]개의 글이 ";
+  $langs[count2] = "검색. ";
+  $langs[count3] = "등록. ";
+  $langs[count4] = "오늘 올라온 글 $count[today] 개. ";
   $langs[count5] = "글이 없습니다.";
 
   return $langs;
@@ -29,7 +29,7 @@ $langs[titl] = "제목";
 $langs[name] = "글쓴이";
 $langs[file] = "파일";
 $langs[date] = "등록";
-$langs[hit] = "읽은수";
+$langs[hit] = "조회";
 
 
 // read.php3
@@ -59,6 +59,7 @@ $langs[b_can] = "취소";
 
 // reply.php3
 $langs[b_re] = "답장";
+$langs[conj] = "관련글";
 
 
 // edit.php3
@@ -100,6 +101,7 @@ $langs[act_in] = "이름, 제목, 내용은 필히 입력해야 합니다.";
 $langs[act_ad] = "등록하신 이름과 이메일은 전체관리자 비밀번호가 있어야 등록이 가능합니다";
 $langs[act_d] = "등록하신 이름과 이메일은 비밀번호가 있어야 등록이 가능합니다";
 $langs[act_s] = "스팸으로 판단되어 글쓰기를 거부합니다.";
+$langs[act_sb] = "님의 브라우져는 글등록을 허락하지 않습니다. 만약 특이한 브라우져를 사용하신다고 생각하신다면 admin에게 연락을 주시기 바랍니다";
 $langs[act_same] = "똑같은 글을 두번 올리지 마십시오.";
 $langs[act_dc] = "바뀐 내용이 없습니다.";
 $langs[act_complete] = "변경이 완료 되었습니다";
@@ -190,6 +192,14 @@ $langs[ua_d]    = "삭제";
 $langs[ua_pr]   = "미리보기";
 $langs[ua_pren] = "미리보기 글수";
 
+$langs[ua_ore]   = "원본글";
+$langs[ua_ore_y] = "포함";
+$langs[ua_ore_n] = "선택";
+
+$langs[ua_re_list]   = "관련글";
+$langs[ua_re_list_y] = "보여주기";
+$langs[ua_re_list_n] = "보여주지 않기";
+
 $langs[ua_p] = "허가";
 $langs[ua_n] = "불허";
 
@@ -260,19 +270,24 @@ $langs[maker] = "만든이";
 
 $langs[p_dp] = "두개의 Password가 서로 다릅니다";
 $langs[p_cp] = "패스워드가 변경되었습니다 Admin Center를\\nlogout 하시고 다시 login 하십시오";
-$langs[p_chm] = "패스워드를 0000에서 변경하지 않으시면\\n이 메세지는 계속 출력 됩니다 :-)";
+$langs[p_chm] = "패스워드를 0000에서 변경하지 않으시면 이 메세지는 계속 출력 됩니다 :-)";
 $lnags[p_nd] = "등록된 Theme가 없습니다";
 
 // admin check.ph
 $langs[nodb] = "SQL server에 DB가 존재하지 않습니다.";
 $langs[n_t_n] = "새로 생성할 게시판 이름을 지정해 주십시오";
-$langs[n_db] = "숫자로 시작되는 게시판 이름은 생성을\\n할수가 없습니다. 다시 지정해 주십시오";
+$langs[n_db] = "게시판 이름은 반드시 알파벳으로 시작해야 합니다. 다시 지정해 주십시오";
+$langs[n_dash] = "게시판 이름에 dash를 포함할수 없습니다.";
 $langs[n_acc] = "게시판 계정이 존재하지 않습니다";
-$langs[a_acc] = "이미 동일한 이름의\\n게시판이 존재 합니다";
+$langs[a_acc] = "이미 동일한 이름의 게시판이 존재 합니다";
 
 $langs[first1] = "배포자";
 $langs[first2] = "이 글을 보신후에 꼭 삭제를 하십시오!";
 $langs[first3] = "게시판을 처음 사용하실때 유의하실 점입니다\n게시판 우측 상단의 [admin] link를 통하여 관리자 모드로 들어가실수\n있으며 기본 패스워드는 0000 으로 맞추어져 있으니 관리자 모드에서\\n패스워드를 변경을 하십시오.\\n\\n이글을 읽으신 후에는 꼭 삭제를 하십시오!";
+
+// admin admin_info.php3
+$langs[spamer_m] = "SPAMER LIST에는 글내용중 들어 있으면 거부할 단어를 한줄씩 등록합니다. 일단 이것을 사용하기 위해서는 jsboard/config에 spam_list.txt라는 file이 존재해야 하며, nobody에게 쓰기 권한이 있어야 합니다.<p>제일 마지막에 공백라인과 공백 문자가 있으면 안됩니다.";
+$langs[brlist_m] = "Allow Browser LIST에는 글등록을 허락할 Agent를 기입합니다. 일단 이것을 사용하기 위해서는 jsboard/config에 allow_browser.txt라는 file이 존재해야 하며, nobody에게 쓰기 권한이 있어야 합니다. Netscape와 IE는 Mozilla 하나로 사용이 가능합니다.<p>제일 마지막에 공백라인과 공백 문자가 있으면 안됩니다.";
 
 // ADMIN
 $langs[a_reset] = "패스워드 초기화";
@@ -304,14 +319,13 @@ $langs[a_act_nm] = "다음 페이지로 이동";
 $langs[a_act_cp] = "변경할 패스워드를 지정하십시오";
 
 // Inatllation
-$langs[waitm] = "Jsboard를 사용하기 위한 환경 설정을 검사하고 있습니다<br>\n5초 후에 결과를 보실수 있습니다<p>";
+$langs[waitm] = "Jsboard를 사용하기 위한 환경 설정을 검사하고 있습니다<br>\n5초 후에 결과를 보실수 있습니다<p>만약 Linux용 Browser를 사용하신다면 다음 페이지로<br>자동으로 넘어가지 않을수도 있습니다.<br>이때에는 QUICK_INSTALL문서를 참조하셔서 설치를 하십시오";
 $langs[wait] = "[ 5초간 기다려 주세요 ]";
 $lnags[os_check] ="Linux가 아닌 다른 OS의 경우에는 jsboard/include/exec.ph 에서\nshell 명령들의 option 값을 적절히 수정해 주셔야 합니다";
 $langs[mcheck] = "MySQL login에 실패를 했습니다.\njsboard/Installer/include/passwd.ph 에 MySQL의 root\npassword가 정확한지 확인해 주시고 맞으면 PHP의 설치시에\n--with-mysql 옵션이 들어갔는지 확인해 주십시오<br>\n만약 DB server가 독립되어 있다면 QuickInstall문서를 참조\n하여 설치를 하시기 바랍니다";
 $langs[ccheck] = "mysql database의 db table의 컬럼수가 틀립니다.\njabord/Installer/act.php3의 37번째 라인의 query에서\n컬럼수를 맞춰 주시기 바랍니다";
 $langs[echeck] = "exec() 함수가 제대로 동작을 하고 있지 않습니다.\nexec() 함수를 사용하기 위해서는 php3.ini 또는 php4에서는\nphp.ini가 제 위치에 있어야 합니다.\nphpinfo() 함수를 사용하여 php3,ini의 위치를 파악한\n후에 그 위치에 php3.ini가 있는지 확인해 주십시오";
 $langs[icheck] = "httpd.conf의 DirectoryIndex 지시자에 index.php3를 추가<br>\n해 주시고 apache를 재실행 하십시오";
-$langs[dcheck] = "apache 설정 파일이 여러개가 있습니다\n사용하시는 httpd.conf file에서 DirectoryIndex\n지시자에 index.php3가 있는지 확인해 주십시오";
 $langs[pcheck] = "Install을 하기 이전에 먼저 jsboard/Installer/script에서\nroot.sh 나 account.sh를 실행해 주셔야 합니다. INSTALL문서를\n참조하십시오";
 $langs[auser] = "계정 설치자는 QUICK_INSTALL 문서를 참고하여 설치하십시오";
 

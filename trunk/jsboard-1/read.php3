@@ -25,7 +25,7 @@ $list       = search_hl($list);
 if ($o[sc]) $list[text] = eregi_replace("<a href=(.*)<font color=#000000><b><u>(.*)</u></b></font>(.*) target=(.*)>","<a href=\\1\\2\\3 target=\\4>",$list[text]);
 
 if($list[email])
-  $list[name] = url_link($list[email], $list[name], $color[r3_fg]);
+  $list[name] = url_link($list[email], $list[name], $color[r3_fg], $no);
 
 if($list[url]) {
   if(eregi("^http://", $list[url]))
@@ -50,7 +50,7 @@ if ($board[img] == "yes") {
 
 echo "
 <!------ 상단 메뉴 시작 --------->
-<TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" BGCOLOR=\"$color[bgcol]\">
+<TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
 <TR>
   <TD VALIGN=bottom><nobr>$icons[add][ <a href=./admin/user_admin/auth.php3?table=$table title=\"$langs[ln_titl]\">admin</a> ]</nobr></TD>
   <TD ALIGN=right VALIGN=bottom>";
@@ -69,17 +69,17 @@ echo "
 </TABLE>
 <!------ 상단 메뉴 끝 --------->
 
-<TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" BGCOLOR=\"$color[r0_bg]\">
+<TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
 <TR>";
 
 // image menu bar 출력
 if ($board[img] == "yes") {
-  echo "<TD rowspan=2 width=$icons[td] align=right valign=top bgcolor=$color[bgcol]>";
+  echo "<TD rowspan=2 width=$icons[td] align=right valign=top>";
   img_rmenu($str,$icons[size]);
   echo "</TD>\n";
 }
 
-echo "<TD valign=top>
+echo "<TD valign=top BGCOLOR=\"$color[r0_bg]\">
 <TABLE WIDTH=\"100%\" border=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
 <TR>
   <TD COLSPAN=\"3\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\">$list[num]: $list[title]</FONT></TD>
@@ -112,27 +112,28 @@ echo "
   <TD valign=top height=60>
     <FONT COLOR=\"$color[r3_fg]\">\n";
 
-// jpg, gif file이 있으면 미리 보기 출력음 함
 if ($list[bofile]) {
   $tail = check_filetype($list[bofile]);
-  viewfile($tail);
+  $preview = viewfile($tail);
 }
 
 echo "
+$preview[up]
 <!-- =============================== 글내용 =============================== -->
 $list[text]
-<!-- =============================== 글내용 =============================== -->\n";
-
-// text등 ascii file이 있으면 미리 보기 출력음 함
-if ($list[bofile]) viewfile($tail,1);
+<!-- =============================== 글내용 =============================== -->
+$preview[down]\n";
 
 echo "
     </FONT>
   </TD>
 </TR>
-</TABLE>
+</TABLE>\n\n";
 
-  </TD>
+# 글읽기에서 관련글 리스트 출력
+if($enable[re_list] && ($list[reto] || $list[reyn])) article_reply_list($table,$pages);
+
+echo "  </TD>
 </TR>
 </TABLE>
 
@@ -140,13 +141,13 @@ echo "
 
 // image menu bar 출력
 if ($board[img] == "yes") {
-  echo "<TD rowspan=2 width=$icons[td] valign=bottom bgcolor=$color[bgcol]>";
+  echo "<TD rowspan=2 width=$icons[td] valign=bottom>";
   img_rmenu($str,$icons[size]);
   echo "</TD>\n";
 }
 
 echo "</TR>
-<TR><TD>
+<TR><TD BGCOLOR=\"$color[r0_bg]\">
 
 <TABLE WIDTH=\"100%\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"6\" ALIGN=\"center\">
 <TR>

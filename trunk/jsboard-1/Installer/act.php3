@@ -5,6 +5,7 @@ $path[type] = "Install";
 if ($langss == "ko") $langs[code] = "ko";
 else $langs[code] = "en";
 
+include("../include/ostype.ph");
 require("../include/lang.ph");
 require("./include/passwd.ph");
 require("./include/check.ph");
@@ -45,7 +46,7 @@ if ($indb[check]) {
 		  date int(11) DEFAULT '0' NOT NULL,
 		  host tinytext,
 		  name tinytext,
-		  passwd varchar(13),
+		  passwd varchar($ostypes[pfield]),
 		  email tinytext,
 		  url tinytext,
 		  title tinytext,

@@ -40,7 +40,7 @@ if ($board[img] == "yes") {
 // 게시판 목록 제목줄 출력
 echo "
 <!------ 상단 메뉴 시작 --------->
-<TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" BGCOLOR=\"$color[bgcol]\">
+<TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
 <TR>
   <TD VALIGN=bottom><nobr>$icons[add][ <a href=./admin/user_admin/auth.php3?table=$table title=\"$langs[ln_titl]\">admin</a> ]</nobr></TD>
   <TD ALIGN=right VALIGN=bottom>";
@@ -56,17 +56,17 @@ echo "</TD>
 </TR>
 </TABLE>
 <!------ 상단 메뉴 끝 --------->
-<TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" BGCOLOR=\"$color[l0_bg]\">
+<TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
 <TR>";
 
 // image menu bar 출력
 if ($board[img] == "yes") {
-  echo "<TD rowspan=2 width=$icons[td] align=right valign=top bgcolor=$color[bgcol]>";
+  echo "<TD rowspan=2 width=$icons[td] align=right valign=top>";
   img_lmenu($str,$icons[size]);
   echo "</TD>\n";
 }
 
-echo "<TD valign=top>
+echo "<TD valign=top BGCOLOR=\"$color[l0_bg]\">
 <TABLE WIDTH=\"100%\" border=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
 <TR>
   <TD WIDTH=\"$td_width[1]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\"><FONT COLOR=\"$color[l1_fg]\"><NOBR>$langs[no]</NOBR></FONT></TD>
@@ -100,13 +100,13 @@ echo "
 
 // image menu bar 출력
 if ($board[img] == "yes") {
-  echo "<TD rowspan=2 width=$icons[td] valign=bottom bgcolor=$color[bgcol]>";
+  echo "<TD rowspan=2 width=$icons[td] valign=bottom>";
   img_lmenu($str,$icons[size]);
   echo "</TD>\n";
 }
 
 echo "</TR>
-<TR><TD>
+<TR><TD BGCOLOR=\"$color[l0_bg]\">
 
 <TABLE WIDTH=\"100%\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"6\" ALIGN=\"center\">
 <TR>

@@ -39,6 +39,8 @@ function check_url($url) {
   if(!eregi("^(http://|https://|ftp://|telnet://|news://)", $url))
     $url = eregi_replace("^", "http://", $url);
 
+  if(is_hangul($url)) return;
+
   if(!eregi("(http|https|ftp|telnet|news):\/\/[a-z0-9-]+\.[][a-zA-Z0-9:&#@=_~%\-\?\/\.\+]+", $url))
     return;
     
@@ -51,6 +53,8 @@ function check_url($url) {
 //         http://www.php.net/manual/function.eregi.php3
 function check_email($email) {
   $url = trim($email);
+
+  if(is_hangul($url)) return;
 
   if(!eregi("^[a-z0-9_-]+@[a-z0-9-]+\.[a-z0-9-]+", $email))
     return;
@@ -101,6 +105,25 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
   }
 
   return 0;
+}
+
+// 등록 가능한 브라우져 체크
+// file() - file을 읽어 한줄씩 배열로 받음
+//
+function chk_spam_browser($file = "config/allow_browser.txt") {
+  $agent_env = getenv("HTTP_USER_AGENT");
+
+  if(@file_exists($file)) {
+    $br = file($file);
+    for($i=0;$i<sizeof($br);$i++) {
+      $br[$i] = trim($br[$i]);
+      if (eregi($br[$i],$agent_env)) {
+        return 1;
+        break;
+      }
+    }
+    return 0;
+  } else return 1;
 }
 
 function check_net($ipaddr, $network, $netmask) {

@@ -7,13 +7,13 @@ if (!file_exists("../../config/global.ph")) {
 } else include("../../config/global.ph");
 include("../include/config.ph");
 
-if (@file_exists("../../data/$table/config.ph"))
-  @include("../../data/$table/config.ph");
+if (file_exists("../../data/$table/config.ph"))
+  include("../../data/$table/config.ph");
 
 if ($color[theme]) {
   include("../../config/default.themes");
-  if (@file_exists("../../data/$table/default.themes"))
-    @include("../../data/$table/default.themes");
+  if (file_exists("../../data/$table/default.themes"))
+    include("../../data/$table/default.themes");
 }
 
 $path[type] = "user_admin";
@@ -56,6 +56,12 @@ else $een_no = "checked";
 
 if ($cenable[delete]) $den_ok = "checked";
 else $den_no = "checked";
+
+if ($enable[ore]) $ore_no = "checked";
+else $ore_ok = "checked";
+
+if ($enable[re_list]) $re_list_ok = "checked";
+else $re_list_no = "checked";
 
 if ($enable[pre]) $pview_ok = "checked";
 else $pview_no = "checked";
@@ -220,6 +226,36 @@ echo "] $langs[lang_m2]
 <tr><td colspan=6><font id=bg>&nbsp;</font>
 </td></tr>
 
+<tr><td bgcolor=$color[l0_bg] align=center colspan=6><font id=l0fg>Option whether include parent article text when reply</font>
+</td></tr>
+
+<tr>
+<td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_ore]</font></td>
+<td colspan=4>
+<input type=radio name=ua[ore] $ore_ok value=\"0\" id=radio>$langs[ua_ore_y]
+<input type=radio name=ua[ore] $ore_no value=\"1\" id=radio>$langs[ua_ore_n]
+</td>
+<td bgcolor=$color[r2_bg]>&nbsp;</td>
+</tr>
+
+<tr><td colspan=6><font id=bg>&nbsp;</font>
+</td></tr>
+
+<tr><td bgcolor=$color[l0_bg] align=center colspan=6><font id=l0fg>Option whether print related list when reply</font>
+</td></tr>
+
+<tr>
+<td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_re_list]</font></td>
+<td colspan=4>
+<input type=radio name=ua[re_list] $re_list_ok value=\"1\" id=radio>$langs[ua_re_list_y]
+<input type=radio name=ua[re_list] $re_list_no value=\"0\" id=radio>$langs[ua_re_list_n]
+</td>
+<td bgcolor=$color[r2_bg]>&nbsp;</td>
+</tr>
+
+<tr><td colspan=6><font id=bg>&nbsp;</font>
+</td></tr>
+
 <tr><td bgcolor=$color[l0_bg] align=center colspan=6><font id=l0fg>Article Preview Check</font>
 </td></tr>
 
@@ -254,7 +290,7 @@ echo "] $langs[lang_m2]
 <td colspan=4>$langs[ua_b18] [
 <input type=radio name=ua[img] $img_ok value=\"yes\" id=radio>$langs[ua_b15]
 <input type=radio name=ua[img] $img_no value=\"no\" id=radio>$langs[ua_b16]
-] $langs[ua_b4]
+]
 </td>
 <td bgcolor=$color[r2_bg]>&nbsp;</td>
 </tr>
