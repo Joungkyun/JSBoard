@@ -244,6 +244,10 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
       mysql query의 Y 값 수를 맞춰 줘야 한다. 나의 예상으로는 MySQL 3.23.x alpha
       version들과 3.22.25 이하 버젼들이 틀릴수도 있을 것이다.
 
+      mysql> flush privileges;
+
+      유저 등록을 마쳤으면 다시 mysql database 를 갱신을 해 주도록 한다.
+
       mysql> quit
       Bye
 
