@@ -304,9 +304,6 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       }
     }
 
-    $atc[name] = ugly_han(htmlspecialchars($atc[name]));
-    $atc[text] = ugly_han(htmlspecialchars($atc[text]));
-
     if (!empty($compare[name]) && eregi($compare[name],$atc[name])) $cmp[name] = 1;
     if (!empty($ccompare[name]) && eregi($ccompare[name],$atc[name])) $ccmp[name] = 1;
 
