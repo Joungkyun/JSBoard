@@ -288,11 +288,11 @@ function text_nl2br($text, $html) {
                     "/<(\/*(script|style|pre|xmp|base|span|html)[^>]*)>/i");
     $target = array("&lt;\\1","\\1&gt;","deny_\\1","\n","&lt;\\1&gt;");
     $text = preg_replace($source,$target,$text);
-    if(!eregi("<--no-autolink>",$text)) $text = auto_link($text);
+    if(!preg_match("/<--no-autolink>/i",$text)) $text = auto_link($text);
     else $text = chop(str_replace("<--no-autolink>","",$text));
 
-    $text = eregi_replace("(\n)?<table","</PRE><TABLE",$text);
-    $text = eregi_replace("</table>(\n)?","</TABLE><PRE>",$text);
+    $text = preg_replace("/(\n)?<table/i","</PRE><TABLE",$text);
+    $text = preg_replace("/<\/table>(\n)?/i","</TABLE><PRE>",$text);
     $text = !$text ? "No Contents" : $text;
     $text = "<PRE>$text</PRE>";
   } else {
@@ -458,7 +458,7 @@ function file_upload($fn,$updir) {
     }
 
     # file name에 공백이 있을 경우 공백 삭제
-    $ufile[name] = eregi_replace(" ","",$ufile[name]);
+    $ufile[name] = str_replace(" ","",$ufile[name]);
 
     # file name에 특수 문자가 있을 경우 등록 거부
     upload_name_chk($ufile[name]);
