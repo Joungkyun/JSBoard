@@ -82,7 +82,7 @@ function check_url($url) {
 function check_email($email) {
   $url = trim($email);
   if(!eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$", $url)) {
-    if(checkdnsrr($host,"MX") || gethostbynamel($host)) return $url;
+    if(checkdnsrr($url,"MX") || gethostbynamel($url)) return $url;
     else return;
   }
 }
