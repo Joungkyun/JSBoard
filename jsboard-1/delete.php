@@ -87,7 +87,7 @@ if($list[bofile]) {
   $down_link = check_dnlink($table,$list);
     
   echo "</TR><TR>\n" .
-       "   <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[file]</NOBR></FONT></TD>\n" .
+       "   <TD BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[file]</NOBR></FONT></TD>\n" .
        "   <TD COLSPAN=\"3\" BGCOLOR=\"$color[r2_bg]\">\n" .
        "   <A HREF=\"$down_link\">\n" .
        "   <IMG SRC=\"images/$icon\" width=16 height=16 border=0 alt=\"$bofile\" align=texttop>\n" .
@@ -98,7 +98,7 @@ if($list[bofile]) {
 
 echo "
 </TR><TR>
-  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[titl]</NOBR></FONT></TD>
+  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[titl]</NOBR></FONT></TD>
   <TD BGCOLOR=\"$color[r2_bg]\" COLSPAN=\"3\"><FONT COLOR=\"$color[r2_fg]\">$list[title]</FONT></TD>
 </TR><TR>
   <TD BGCOLOR=\"$color[r3_bg]\" COLSPAN=\"4\">

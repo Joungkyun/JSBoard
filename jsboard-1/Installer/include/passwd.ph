@@ -21,7 +21,7 @@ $apache_config_file = "/etc/httpd/conf/httpd.conf";
 # 한다.
 #
 # socket file의 위치를 알고 싶다면 
-# netsatat -an | grep mysql 
+# netstat -an | grep mysql 
 # 로 알수가 있다.
 #
 $mysql_sock = ":/var/lib/mysql/mysql.sock";

@@ -68,10 +68,12 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
         $rmail[no] = $atc[no];
         $rmail[reply_orig_email] = "$rmail[origmail]";
 
-        sendmail($rmail);
+        if(sendmail($rmail)) $page[m_err] = 0;
+        else $page[m_err] = 1;
       }
     }
     set_cookie($atc);
+    return $page;
   }
 
   # 게시물 답장 함수
@@ -142,12 +144,13 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
         $rmail[table] = "$table";
         $rmail[reply_orig_email] = "$rmail[origmail]";
 
-        sendmail($rmail);
+        if(sendmail($rmail)) $page[m_err] = 0;
+        else $page[m_err] = 1;
       }
     }
 
     set_cookie($atc);
-    $page = get_current_page($table, $atc[idx]);
+    $page[no] = get_current_page($table, $atc[idx]);
     return $page;
   }
 
@@ -299,10 +302,10 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
   #        http://www.php.net/manual/function.chop.php
   function article_check($table, $atc) {
     # 검색 등 관련 변수 (CGI 값)
-    global $sadmin, $admin, $compare, $o, $ccompare, $langs, $adminsession;
+    global $sadmin, $admin, $compare, $o, $ccompare, $langs, $adminsession, $ramil;
 
     # location check
-    check_location(1);
+    if($rmail[uses] == "yes") check_location(1);
 
     # 이름, 제목, 내용의 공백을 없앰
     $atc[name]  = trim($atc[name]);
@@ -385,15 +388,17 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
   switch($o[at]) {
     case 'p':
       $atc[text] = $wpost;
-      article_post($table, $atc);
+      $page = article_post($table, $atc);
       SetCookie("pcheck","",0);
-      Header("Location: list.php?table=$table");
+      if(!$page[m_err]) Header("Location: list.php?table=$table");
+      else move_page("list.php?table=$table");
       break;
     case 'r':
       $atc[text] = $rpost;
       $page = article_reply($table, $atc);
       SetCookie("pcheck","",0);
-      Header("Location: list.php?table=$table&page=$page");
+      if(!$page[m_err]) Header("Location: list.php?table=$table&page=$page[no]");
+      else move_page("list.php?table=$table&page=$page[no]");
       break;
     case 'e':
       $atc[text] = $epost;
@@ -432,25 +437,26 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
 } elseif ($o[at] == "sm") {
   include "include/version.ph";
   include "config/global.ph";
-  include "config/get.ph";
   include "include/error.ph";
   include "include/check.ph";
   include "include/sendmail.ph";
   include "include/lang.ph";
 
-  # 등록 가능한 browser check
-  if(!chk_spam_browser()) print_error($langs[act_sb]);
+  if($rmail[uses] == "yes") {
+    # 등록 가능한 browser check
+    if(!chk_spam_browser()) print_error($langs[act_sb]);
 
-  check_location(1);
+    check_location(1);
 
-  $rmail[name] = "$atc[name]";
-  $rmail[text] = "$atc[text]";
-  $rmail[title] = "$atc[title]";
-  $rmail[email] = "$atc[email]";
-  $rmail[version] = "$board[ver]";
-  $rmail[reply_orig_email] = "$atc[to]";
+    $rmail[name] = "$atc[name]";
+    $rmail[text] = "$atc[text]";
+    $rmail[title] = "$atc[title]";
+    $rmail[email] = "$atc[email]";
+    $rmail[version] = "$board[ver]";
+    $rmail[reply_orig_email] = "$atc[to]";
 
-  sendmail($rmail,1);
+    sendmail($rmail,1);
+  }
 
   echo "<script>window.close()</script>";
 } elseif ($o[at] == "se") {

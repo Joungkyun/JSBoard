@@ -427,9 +427,17 @@ echo "] $langs[lang_m2]
 
 <tr>
 <td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_m1]</font></td>
-<td colspan=4> [
-<input type=radio name=ua[mchk] $mchk_ok value=1 id=radio> $langs[ua_m2]
-<input type=radio name=ua[mchk] $mchk_no value=0 id=radio> $langs[ua_m3] ]
+<td colspan=4> [ ";
+
+if($rmail[uses] == "yes") {
+  echo "<input type=radio name=ua[mchk] $mchk_ok value=1 id=radio> $langs[ua_m2]\n".
+       "<input type=radio name=ua[mchk] $mchk_no value=0 id=radio> $langs[ua_m3]";
+} else {
+  echo "( ) $langs[ua_m2]\n".
+       "<input type=radio name=ua[mchk] checked value=0 id=radio> $langs[ua_m3]";
+}
+
+echo " ]
 </td>
 <td bgcolor=$color[r2_bg]>&nbsp;</td>
 </tr>
@@ -695,22 +703,42 @@ echo "
 
 <tr>
 <td bgcolor=$color[l1_bg]><font id=l1fg>Admin</font></td>
-<td align=center>
-<input type=radio name=ua[admin] $amail_ok value=\"yes\" id=radio>$langs[ua_mail_p]
-<input type=radio name=ua[admin] $amail_no value=\"no\" id=radio>$langs[ua_mail_n]
-</td>
+<td align=center>\n";
+
+if ($rmail[uses] == "yes") {
+  echo "<input type=radio name=ua[admin] $amail_ok value=\"yes\" id=radio>$langs[ua_mail_p]\n".
+       "<input type=radio name=ua[admin] $amail_no value=\"no\" id=radio>$langs[ua_mail_n]\n";
+} else {
+  echo "( )$langs[ua_mail_p]\n".
+       "<input type=radio name=ua[admin] checked value=\"no\" id=radio>$langs[ua_mail_n]\n";
+}
+
+echo "</td>
 <td bgcolor=$color[r2_bg]>&nbsp;</td>
 <td bgcolor=$color[l1_bg]><font id=l1fg>User</font></td>
-<td align=center>
-<input type=radio name=ua[user] $umail_ok value=\"yes\" id=radio>$langs[ua_mail_p]
-<input type=radio name=ua[user] $umail_no value=\"no\" id=radio>$langs[ua_mail_n]
-</td>
+<td align=center>\n";
+
+if ($rmail[uses] == "yes") {
+  echo "<input type=radio name=ua[user] $umail_ok value=\"yes\" id=radio>$langs[ua_mail_p]\n".
+       "<input type=radio name=ua[user] $umail_no value=\"no\" id=radio>$langs[ua_mail_n]\n";
+} else {
+  echo "( )$langs[ua_mail_p]\n".
+       "<input type=radio name=ua[user] checked value=\"no\" id=radio>$langs[ua_mail_n]\n";
+}
+
+
+echo "</td>
 <td bgcolor=$color[r2_bg]>&nbsp;</td>
 </tr>
 
 <tr>
 <td bgcolor=$color[l1_bg]><font id=l1fg>E-mail</font></td>
-<td colspan=4><input type=text name=ua[toadmin] size=$lsize value=\"$rmail[toadmin]\"></td>
+<td colspan=4>";
+
+if ($rmail[uses] == "yes") echo "<input type=text name=ua[toadmin] size=$lsize value=\"$rmail[toadmin]\">";
+else echo "<CENTER><FONT COLOR=RED><B>$langs[ua_while_wn]</B></FONT></CENTER>";
+
+echo "</td>
 <td bgcolor=$color[r2_bg]>&nbsp;</td>
 </tr>
 
@@ -777,7 +805,7 @@ echo "
 </td></tr>
 
 <tr><td bgcolor=$color[l0_bg] align=center colspan=6>
-<font id=l0fg>Scripted by <a href=mailto:$copy[email]>$copy[name]</a><br>
+<font id=l0fg>Scripted by <a href=http://www.oops.org>JoungKyun Kim</a><br>
 and all right reserved</font>
 </td></tr>
 
