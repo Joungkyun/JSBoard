@@ -18,9 +18,12 @@ if(!$list[passwd] || !$enable[edit] || !$cenable[edit]) {
   else $passment = "$langs[b_apw]";
 }
 
-if(!$adminsession || $cenable[edit])
-  $passment = "$passment: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size[pass]\" MAXLENGTH=\"8\" STYLE=\"font: 10px tahoma\">&nbsp;";
-else $passment = "";
+if(!$adminsession || $cenable[edit]) {
+  if(!$adminsession) {
+    $passment = "$passment: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size[pass]\" \n".
+                "MAXLENGTH=\"8\" STYLE=\"font: 10px tahoma\">&nbsp;";
+  } else $passment = "";
+} else $passment = "";
 
 if($board[notice]) print_notice($board[notice]);
 
