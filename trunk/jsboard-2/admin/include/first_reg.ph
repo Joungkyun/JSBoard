@@ -3,7 +3,7 @@
 $date = time();
 $host_ext = "127.0.0.1";
 $name_ext = "$langs[first1]";
-$passwd_ext = "lHJTjGW8VhHc.";
+$passwd_ext = "$ostype[dpass]";
 $email_ext = "";
 $url_ext = "http://www.oops.org";
 $subj_msg = "$langs[first2]";

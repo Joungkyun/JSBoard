@@ -6,8 +6,8 @@ $langs[charset] = "EUC-KR";
 # Header file Message
 $table_err = "테이블을 지정해야 합니다";
 $langs[ln_titl] = "JSBoard $board[ver] 관리자 페이지";
-$langs[sec_error] = "버그 알림 설정이 안되어 있습니다.\nKnownBUG file 의 5번 항목을 참조하십시오";
-$langs[login_err] = "Login 을 해 주십시오";
+$langs[sec_error] = "버그 알림 기능 설정이 되어 있지 않습니다.\nKnownBUG file 의 5번 항목을 참조하십시오";
+$langs[login_err] = "로그인을 해 주십시오";
 $langs[perm_err] = "권한이 없습니다.";
 
 # read.php
@@ -16,7 +16,7 @@ $langs[conj] = "관련글";
 
 # write.php
 $langs[w_ment] = "띄어쓰기 없이 쓰거나 HTML 미사용 시 한줄을 너무 길게 쓰지 마십시오.";
-$langs[upload] = "File upload 기능을 전체 관리자가 제한을 하고 있습니다.";
+$langs[upload] = "File upload 기능을 전체 관리자가 제한하고 있습니다.";
 
 # edit.php
 $langs[e_wpw] = "[전체 관리자]";
@@ -40,22 +40,22 @@ $langs[er_msg] = "경고";
 $langs[er_msgs] = "오류";
 
 # act.php
-$langs[act_ud] = "0byte file은 upload 할수 없으며\nphp.ini에서 지정된 " . get_cfg_var(upload_max_filesize) ."\n이상의 file역시 upload 할수 없습니다.";
-$langs[act_md] = "$upload[maxsize] 이상의 파일은 upload 하실수 없으며\nphp.ini에서 지정된 " . get_cfg_var(upload_max_filesize) ." 이상의 file역시\nupload 할수 없습니다.";
-$langs[act_de] = "file 이름에 특수문자(#,\$,%등)를 포함할수 없습니다";
-$langs[act_ed] = "upload file이 없거나 비정상적인 upload가 수행 되었습니다.";
+$langs[act_ud] = "크기가 0인 파일은 업로드할 수 없으며\nphp.ini에서 지정된 " . get_cfg_var(upload_max_filesize) ."\n이상의 파일 역시 업로드할 수 없습니다.";
+$langs[act_md] = "$upload[maxsize] 이상의 파일은 업로드하실 수 없으며\nphp.ini에서 지정된 " . get_cfg_var(upload_max_filesize) ." 이상의 파일 역시\n업로드할 수 없습니다.";
+$langs[act_de] = "파일 이름에 특수문자(#,\$,%등)를 포함할 수 없습니다";
+$langs[act_ed] = "업로드할 파일이 없거나 비정상적인 업로드가 수행 되었습니다.";
 $langs[act_pw] = "패스워드가 틀립니다. 확인 후 재시도하십시오.";
 $langs[act_pww] = "전체 관리자 패스워드가 틀립니다. 확인 후 재시도하십시오.";
 $langs[act_pwa] = "관리자 패스워드가 틀립니다. 확인 후 재시도하십시오.";
 $langs[act_c] = "관련글이 있으므로 삭제할 수 없습니다.";
 $langs[act_in] = "이름, 제목, 내용은 필히 입력해야 합니다.";
 $langs[act_pwm] = "패스워드를 지정해 주셔야 합니다.";
-$langs[act_ad] = "등록하신 이름과 이메일은 전체관리자 비밀번호가 있어야 등록이 가능합니다";
+$langs[act_ad] = "등록하신 이름과 이메일은 전체 관리자의 비밀번호가 있어야 등록이 가능합니다";
 $langs[act_d] = "등록하신 이름과 이메일은 비밀번호가 있어야 등록이 가능합니다";
 $langs[act_s] = "스팸으로 판단되어 글쓰기를 거부합니다.";
 $langs[act_same] = "똑같은 글을 두번 올리지 마십시오.";
 $langs[act_dc] = "바뀐 내용이 없습니다.";
-$langs[act_complete] = "변경이 완료 되었습니다";
+$langs[act_complete] = "변경이 완료되었습니다";
 
 # list.ph message
 $langs[ln_re] = "답장";
@@ -63,7 +63,7 @@ $langs[no_search] = "검색된 글이 없습니다.";
 $langs[no_art] = "글이 없습니다.";
 $langs[preview] = "생략";
 $langs[nsearch] = "검색어는 한글 2자, 영문 3자 이상이어야 합니다.";
-$langs[nochar] = "[\"'] 가 포함된 검색어는 검색 하실수 없습니다.";
+$langs[nochar] = "[\"'] 가 포함된 검색어는 검색하실 수 없습니다.";
 
 # print.ph message
 $langs[cmd_priv] = "이전페이지";
@@ -78,14 +78,14 @@ $langs[cmd_reply] = "답장쓰기";
 $langs[cmd_edit] = "수정";
 $langs[cmd_del] = "삭제";
 $langs[cmd_con] = "관련글";
-$langs[ln_write] = "Admin만 :-)";
+$langs[ln_write] = "관리자만 :-)";
 
 $langs[check_y] = "정규표현식";
 $langs[sh_str] = "검색어";
 $langs[sh_pat] = "검색분야";
 $langs[sh_dat] = "검색기간";
 $langs[sh_sbmit] = "검색시작";
-$langs[sh_ment] = "+ 검색 기간은 기본적으로 최초 등록글 부터 최후 등록글의 날자를 보여줍니다.\n".
+$langs[sh_ment] = "+ 검색 기간은 기본적으로 최초 등록글 부터 최후 등록글의 날짜를 보여줍니다.\n".
                   "+ 검색어는 AND, OR 연산을 지원합니다. AND 연산은 + 기호로 OR 연산은 - 기호\n".
                   "  로 표시를 할 수 있습니다.\n".
                   "+ 검색어에서 +,- 문자를 검색시 \+,\- 로 표현해 주셔야 합니다.\n";
@@ -112,18 +112,23 @@ $langs[get_n] = "지정한 글이 없습니다.";
 $langs[sql_m] = "SQL 시스템에 문제가 있습니다.";
 
 # sendmail.ph
-$langs[sm_dr] = "이 메일은 JSBoard에 올려진 글에 대한 Reporting입니다.\nReply를 하지 마세요";
-$langs[mail_to_chk_err] = "받는이 주소가 지정되어 있지 않습니다.";
-$langs[mail_from_chk_err] = "보내는이 주소가 지정되어 있지 않습니다.";
+$langs[sm_dr] = "이 메일은 JSBoard에 올려진 글에 대한 알림 글입니다.\n답장을 하지 마세요";
+$langs[mail_to_chk_err] = "받는이의 주소가 지정되어 있지 않습니다.";
+$langs[mail_from_chk_err] = "보내는 이의 주소가 지정되어 있지 않습니다.";
 $langs[mail_title_chk_err] = "메일 제목이 없습니다.";
 $langs[mail_body_chk_drr] = "메일 내용이 없습니다.";
-$langs[mail_send_err] = "Mail Server 접속에 실패 했습니다";
+$langs[mail_send_err] = "메일 서버와의 접속에 실패했습니다";
 
 # User_admin
 
 $langs[ua_ment] = "패스워드를 넣으세요";
 
 $langs[ua_ad]   = "관리자";
+$langs[ua_pname] = "이름출력";
+$langs[ua_namemt1] = "로그인 모드 사용시에 이름을 [";
+$langs[ua_namemt2] = " ] 으로 출력";
+$langs[ua_realname] = "실명";
+$langs[ua_nickname] = "닉네임";
 $langs[ua_w]    = "글쓰기";
 $langs[ua_r]    = "답장";
 $langs[ua_e]    = "수정";
@@ -151,7 +156,7 @@ $langs[ua_align_r] = "우측";
 $langs[ua_p] = "허가";
 $langs[ua_n] = "불허";
 
-$langs[ua_b1]  = "게시판 Title";
+$langs[ua_b1]  = "게시판 타이틀";
 $langs[ua_b5]  = "게시판 너비";
 $langs[ua_b6]  = "픽셀";
 $langs[ua_b7]  = "제목길이";
@@ -194,40 +199,40 @@ $langs[ua_etc5] = "게시판 Table";
 
 $langs[ua_pw_n] = "로그인 과정을 거쳐 주십시오!!";
 $langs[ua_pw_c] = "패스워드가 틀립니다";
-$pang[ua_pw_comp] ="두 패스워드가 동일하지 않아서\n패스워드는 변경되지 않습니다.";
+$pang[ua_pw_comp] = "두 패스워드가 동일하지 않으므로\n패스워드는 변경되지 않습니다.";
 
 # admin print.ph
 $langs[p_wa] = "전체 관리자 인증";
-$langs[p_aa] = "전체 관리자 Page";
+$langs[p_aa] = "전체 관리자 페이지";
 $langs[p_wv] = "전역 변수 설정";
 $langs[p_ul] = "유저 관리 설정";
 
 $langs[maker] = "만든이";
 
-$langs[p_dp] = "두개의 Password가 서로 다릅니다";
-$langs[p_cp] = "패스워드가 변경되었습니다 Admin Center를\nlogout 하시고 다시 login 하십시오";
-$langs[p_chm] = "패스워드를 0000에서 변경하지 않으시면 이 메세지는 계속 출력 됩니다 :-)";
-$lnags[p_nd] = "등록된 Theme가 없습니다";
+$langs[p_dp] = "두개의 패스워드가 서로 다릅니다";
+$langs[p_cp] = "패스워드가 변경되었습니다 Admin Center에서\n로그아웃하시고 다시 로그인 하십시오.";
+$langs[p_chm] = "패스워드를 0000에서 변경하지 않으시면 이 메세지는 계속 출력됩니다 :-)";
+$lnags[p_nd] = "등록된 테마가 없습니다";
 
 # admin check.ph
 $langs[nodb] = "SQL server에 DB가 존재하지 않습니다.";
 $langs[n_t_n] = "게시판 이름을 지정해 주십시오";
 $langs[n_db] = "게시판 이름은 반드시 알파벳으로 시작해야 합니다. 다시 지정해 주십시오";
 $langs[n_meta] = "게시판 이름은 알파벳, 숫자 그리고 _,- 문자만 가능합니다.";
-$langs[n_promise] = "지정하신 게시판 이름은 DB의 예약어 입니다.";
-$langs[n_acc] = "게시판 계정이 존재하지 않습니다";
-$langs[a_acc] = "이미 동일한 이름의 게시판이 존재 합니다";
+$langs[n_promise] = "지정하신 게시판 이름은 DB에서 사용하는 예약어입니다.";
+$langs[n_acc] = "게시판 계정이 존재하지 않습니다.";
+$langs[a_acc] = "이미 동일한 이름의 게시판이 존재 합니다.";
 
 $langs[first1] = "배포자";
-$langs[first2] = "이 글을 보신후에 꼭 삭제를 하십시오!";
-$langs[first3] = "게시판을 처음 사용하실때 유의하실 점입니다\n게시판 좌측 상단의 [admin] link를 통하여 관리자 모드로 들어가실수\n있으며 기본 패스워드는 0000 으로 맞추어져 있으니 관리자 모드에서\n패스워드를 변경을 하십시오.\n\n이글을 읽으신 후에는 꼭 삭제를 하십시오!";
+$langs[first2] = "이 글은 읽으신 후에 꼭 삭제하십시오!";
+$langs[first3] = "게시판을 처음 사용하실때 유의하실 점입니다.\n게시판 좌측 상단의 [admin] link를 통하여 관리자 모드로 들어가실 수\n있으며 기본 패스워드는 0000 으로 맞추어져 있으니 관리자 모드에서\n패스워드를 변경하시고\n이 글은 읽으신 후에 꼭 삭제하십시오!";
 
 # admin admin_info.php
-$langs[spamer_m] = "SPAMER LIST에는 글내용중 들어 있으면 거부할 단어를 한줄씩 등록합니다. 일단 이것을 사용하기 위해서는 jsboard/config에 spam_list.txt라는 file이 존재해야 하며, nobody에게 쓰기 권한이 있어야 합니다.<p>제일 마지막에 공백라인과 공백 문자가 있으면 안됩니다.";
+$langs[spamer_m] = "SPAMMER LIST에는 글내용중 들어 있으면 거부할 단어를 한 줄씩 등록합니다. 일단 이것을 사용하기 위해서는 jsboard/config에 spam_list.txt라는 파일이 존재해야 하며, nobody에게 쓰기 권한이 있어야 합니다.<p>제일 마지막에 빈 줄이나 공백 문자가 있으면 안됩니다.";
 
 # ADMIN
 $langs[a_reset] = "패스워드 초기화";
-$langs[sql_na] = "<p><font color=red><b>DB 연결에 실패를 했습니다!<p>\njsboard/config/global.ph에서 db server, db user, db password를<br>\n확인해 주십시오\n 이상이 없다면 MySQL로 root의 권한으로 로그인을<br>\n하여 flush privileges 명령을 실행하십시오</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ 돌아가기 ]</a><p>\n Copyleft 1999-2001 <a href=http://kldp.org/jsboard>JSBoard Open Project</a>"; 
+$langs[sql_na] = "<p><font color=red><b>DB 연결에 실패했습니다!<p>\njsboard/config/global.ph에서 db server, db user, db password를<br>\n확인해 주십시오\n 이상이 없다면 MySQL로 root의 권한으로 로그인을<br>\n해서 flush privileges 명령을 실행하십시오</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ 돌아가기 ]</a><p>\n Copyleft 1999-2001 <a href=http://jsboard.kldp.org/>JSBoard Open Project</a>";
 
 $langs[a_t1] = "게시판 이름";
 $langs[a_t2] = "게시물 등록수";
@@ -250,49 +255,49 @@ $langs[a_t18] = "전체보기";
 $langs[a_t19] = "알파벳별";
 $langs[a_t20] = "유저 관리";
 
-$langs[a_del_cm] = "진짜 지울겨?";
-$langs[a_act_fm] = "첫 page로 이동";
-$langs[a_act_lm] = "마지막 page로 이동";
+$langs[a_del_cm] = "삭제 하시겠습니까?";
+$langs[a_act_fm] = "첫 페이지로 이동";
+$langs[a_act_lm] = "마지막 페이지로 이동";
 $langs[a_act_pm] = "이전 페이지로 이동";
 $langs[a_act_nm] = "다음 페이지로 이동";
 $langs[a_act_cp] = "변경할 패스워드를 지정하십시오";
 
 # stat.php
-$langs[st_ar_no]        = "글 수";
-$langs[st_pub]          = "보통";
-$langs[st_rep]          = "답장";
-$langs[st_per]          = "률";
-$langs[st_tot]          = "합계";
-$langs[st_a_ar_no]	= "평균 글 수";
-$langs[st_ea]		= "개";
-$langs[st_year]		= "年";
-$langs[st_mon]		= "月";
-$langs[st_day]		= "日";
-$langs[st_hour]		= "時";
-$langs[st_read]		= "조회수";
-$langs[st_max]		= "최고";
-$langs[st_no]		= "글번호";
-$langs[st_ever] 	= "평균";
-$langs[st_read_no] 	= "번";
-$langs[st_read_no_ar] 	= "번 글";
-$langs[st_lweek]	= "최 근 한 주";
-$langs[st_lmonth]	= "최 근 한 달";
-$langs[st_lhalfyear]	= "최 근 반 년";
-$langs[st_lyear]	= "최 근 일 년";
-$langs[st_ltot]		= "전 체";
+$langs[st_ar_no] = "글 수";
+$langs[st_pub] = "보통";
+$langs[st_rep] = "답장";
+$langs[st_per] = "률";
+$langs[st_tot] = "합계";
+$langs[st_a_ar_no] = "평균 글 수";
+$langs[st_ea] = "개";
+$langs[st_year] = "年";
+$langs[st_mon] = "月";
+$langs[st_day] = "日";
+$langs[st_hour] = "時";
+$langs[st_read] = "조회수";
+$langs[st_max] = "최고";
+$langs[st_no] = "글번호";
+$langs[st_ever] = "평균";
+$langs[st_read_no] = "번";
+$langs[st_read_no_ar] = "번 글";
+$langs[st_lweek] = "최 근 한 주";
+$langs[st_lmonth] = "최 근 한 달";
+$langs[st_lhalfyear] = "최 근 반 년";
+$langs[st_lyear] = "최 근 일 년";
+$langs[st_ltot] = "전 체";
 
 # Inatllation
-$langs[waitm] = "Jsboard를 사용하기 위한 환경 설정을 검사하고 있습니다<br>\n5초 후에 결과를 보실수 있습니다<p>만약 Linux용 Netscape 4.x 를 사용하신다면 다음 페이지로<br>자동으로 넘어가지 않을수도 있습니다.<br>이때에는 doc/ko/INSTALL.MANUALY 문서를 참조하셔서 설치를 하십시오";
+$langs[waitm] = "Jsboard를 사용하기 위한 환경 설정을 검사하고 있습니다<br>\n5초 후에 결과를 보실 수 있습니다<p>만약 Linux용 Netscape 4.x 를 사용하신다면 다음 페이지로<br>자동으로 넘어가지 않을 수도 있습니다.<br>이때는 doc/ko/INSTALL.MANUALY 문서를 참조하셔서 설치를 하십시오";
 $langs[wait] = "[ 5초간 기다려 주세요 ]";
 $lnags[os_check] ="Linux가 아닌 다른 OS의 경우에는 jsboard/include/exec.ph 에서\nshell 명령들의 option 값을 적절히 수정해 주셔야 합니다";
-$langs[mcheck] = "MySQL login에 실패를 했습니다.\njsboard/Installer/include/passwd.ph 에 MySQL의 root\npassword가 정확한지 확인해 주시고 맞으면 PHP의 설치시에\n--with-mysql 옵션이 들어갔는지 확인해 주십시오<br>\n만약 DB server가 독립되어 있다면 QuickInstall문서를 참조\n하여 설치를 하시기 바랍니다";
-$langs[echeck] = "exec() 함수가 제대로 동작을 하고 있지 않습니다.\nexec() 함수를 사용하기 위해서는 php3.ini 또는 php4에서는\nphp.ini가 제 위치에 있어야 합니다.\nphpinfo() 함수를 사용하여 php,ini의 위치를 파악한\n후에 그 위치에 php.ini가 있는지 확인해 주십시오";
+$langs[mcheck] = "MySQL login에 실패했습니다.\njsboard/Installer/include/passwd.ph 에 MySQL의 root\npassword가 정확한지 확인해 주시고 맞으면 PHP의 설치시에\n--with-mysql 옵션이 들어갔는지 확인해 주십시오<br>\n만약 DB server가 독립되어 있다면 QuickInstall문서를 참조\n하여 설치를 하시기 바랍니다";
+$langs[echeck] = "exec() 함수가 제대로 동작하고 있지 않습니다.\nexec() 함수를 사용하기 위해서는 php3.ini 또는 php4에서는\nphp.ini가 제 위치에 있어야 합니다.\nphpinfo() 함수를 사용하여 php,ini의 위치를 파악한\n후에 그 위치에 php.ini가 있는지 확인해 주십시오";
 $langs[icheck] = "httpd.conf의 DirectoryIndex 지시자에 index.php를 추가<br>\n해 주시고 apache를 재실행 하십시오.";
-$langs[pcheck] = "Install을 하기 이전에 먼저 jsboard/Installer/script에서\npreinstall 을 실행해 주셔야 합니다. INSTALL문서를\n참조하십시오";
-$langs[auser] = "설치에 한번 실패 하셨다면 doc/ko/INSTALL.MANUALY 를 보시고 수동 설치를 하셔야 합니다.";
+$langs[pcheck] = "설치를 하기 전에 먼저 jsboard/Installer/script에서\npreinstall 을 실행해 주셔야 합니다. INSTALL문서를\n참조하십시오";
+$langs[auser] = "설치에 한번 실패하셨다면 doc/ko/INSTALL.MANUALY 를 보시고 수동으로 설치하셔야 합니다.";
 
 $langs[inst_r] = "초기화";
-$langs[inst_sql_err] = "<p><font color=red><b>DB 연결에 실패를 했습니다!<p>\nMySQL Root password를<br>\n확인해 주십시오\n</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ 돌아가기 ]</a><p>\n Copyleft 1999-2001 <a href=http://kldp.org/jsboard target=_blank>JSBoard Open Project</a>"; 
+$langs[inst_sql_err] = "<p><font color=red><b>DB 연결에 실패했습니다!<p>\nMySQL Root password를<br>\n확인해 주십시오\n</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ 돌아가기 ]</a><p>\n Copyleft 1999-2001 <a href=http://jsboard.kldp.org/ target=_blank>JSBoard Open Project</a>"; 
 $langs[inst_chk_varp] = "DB에서 사용할 패스워드를 지정하지 않았습니다.";
 $langs[inst_chk_varn] = "DB에서 DB 이름을 지정하지 않았습니다.";
 $langs[inst_chk_varu] = "DB에서 DB user를 지정하지 않았습니다.";
@@ -301,10 +306,10 @@ $langs[inst_ndb] = "숫자로 시작하는 DB 이름은 지정할수 없습니다.";
 $langs[isnt_udb] = "숫자로 시작하는 DB user는 지정할수 없습니다.";
 $langs[inst_adb] = "지정하신 DB 이름이 이미 존재합니다.";
 $langs[inst_cudb] = "지정하신 DB user가 이미 존재합니다.";
-$langs[inst_error] = "먼가 이상한 짓을 하시려 하는 군요 :-)";
+$langs[inst_error] = "뭔가 이상한 짓을 하시려 하는 군요 :-)";
 
 $langs[regi_ment] = "DB name과 DB user는 MySQL에 등록이 되어 있지 않은 것을 지정하셔야 합니다.";
-$langs[first_acc] = "등록이 완료 되었습니다.\nAdmin Page로 이동을 합니다.\nAdmin User의 초기 Password는\n0000 입니다.";
+$langs[first_acc] = "등록이 완료되었습니다.\nAdmin Page로 이동을 합니다.\nAdmin User의 초기 Password는\n0000 입니다.";
 
 # user.php
 $langs[u_nid] = "ID";
@@ -330,22 +335,22 @@ $langs[reg_format_n] = "이름의 형식이 틀립니다. 이름은 한글, 알파벳 그리고 점으�
 $langs[reg_format_e] = "이메일의 형식이 틀립니다.";
 $langs[reg_dup] = "중복확인";
 
-$langs[reg_attention] = "다음은 가입을 할때 주의할점입니다.\n\n".
+$langs[reg_attention] = "다음은 가입하실 때 주의할 점입니다.\n\n".
                         "<B>[ ID ]</B>\n".
-                        "ID 는 한글,숫자,알파벳 만으로 지정하실수 있습니다. ID 를 적으신 후에\n".
-                        "중복확인 버튼을 이용하여 이미 가입된 ID 인지를 확인하십시오.\n\n".
+                        "ID 는 한글,숫자,알파벳만으로 지정하실 수 있습니다. ID 를 적으신 후에\n".
+                        "중복확인 버튼을 이용하여 이미 가입된 ID인지 확인하십시오.\n\n".
                         "<B>[ 이름 ]</B>\n".
-                        "이름은 한글, 알파벳 그리고 점만을 이용하셔 적어 주셔야 합니다.\n\n".
+                        "이름은 한글, 알파벳 그리고 .만을 이용하셔 적어 주셔야 합니다.\n\n".
                         "<B>[ 패스워드 ]</B>\n".
                         "8자 이내의 패스워드를 정하시면 됩니다. 패스워드는 암호화가 되어 저장\n".
                         "이 되므로 관리자에게 누설될 염려는 하지 않으셔도 됩니다.\n\n".
                         "<B>[ 이메일,홈페이지 ]</B>\n".
                         "홈페이지가 없으신 분들은 적지 않으셔도 됩니다만 이메일은 꼭 적\n".
                         "어 주셔야 합니다. 가입을 하신후에 로그인을 하시면 여기서 지정한 정보\n".
-                        "들을 수정을 할수가 있습니다.\n";
+                        "들을 수정하실 수가 있습니다.\n";
 
 # ext
-$langs[nomatch_theme] = "테마 버젼이 맞지 않습니다. doc/$langs[code]/README.THEME\n".
-                        " 파일에서 버젼에 관한 부분을 참조 하십시오";
+$langs[nomatch_theme] = "테마 버전이 맞지 않습니다. doc/$langs[code]/README.THEME\n".
+                        "파일에서 버전에 관한 부분을 참조 하십시오";
 $langs[detable_search_link] = "상세 검색";
 ?>

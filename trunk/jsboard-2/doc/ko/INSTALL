@@ -328,7 +328,7 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
   존재한다. 이럴때에는 httpd.conf의 DirectoryIndex 지시자의 앞에 공백 문
   자가 있는지 살펴 보고 만약 공백 문자가 있으면 이를 삭제해 주면 된다.
 
-  Fermission check		: OK 
+  Permission check		: OK 
 
 
   -------------------------------------------------------------------------

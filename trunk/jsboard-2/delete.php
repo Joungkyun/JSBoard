@@ -56,8 +56,11 @@ if($enable[dhost]) {
   } else $list[dhost] = "<FONT style=\"color:$color[text]\">$list[dhost]</FONT>";
 } else $list[dhost] = "";
 
-if($list[email]) $list[uname] = url_link($list[email], $list[name], $color[r2_fg], $no);
-else $list[uname] = $list[name];
+if($board[rnname] && eregi("^(2|3|5|7)",$board[mode])) 
+  $list[ename] = $list[rname] ? $list[rname] : $list[name];
+
+if($list[email]) $list[uname] = url_link($list[email], $list[ename], $color[r2_fg], $no);
+else $list[uname] = $list[ename];
 if($list[url]) {
   if(eregi("^http://", $list[url])) $list[uname] .= " [" . url_link($list[url], "$langs[ln_url]", $color[r2_fg]) . "]";
   else $list[uname] .= " [" . url_link("http://$list[url]", "$langs[ln_url]", $color[r3_fg]) . "]";

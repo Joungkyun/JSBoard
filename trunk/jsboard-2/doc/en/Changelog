@@ -21,7 +21,7 @@ Attention : OOPS administration Center is not GPL.
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Dec 11 2001
+Date      : Wed, Dec 17 2001
 Version   : jsboard-2.0pre3
 
 
@@ -72,6 +72,12 @@ Version   : jsboard-2.0pre3
 44. fixed UTF-8 problem of IE in view original image file
 45. fixed order by include file in user admin
 46. changed to session_unregisted() function from session_destory() function
+47. fixed typo
+48. fixed lenth of password in PHP 4.1.0
+49. added part of field name in INSERT query
+50. removed moder field
+51. In login mode, enable to select print name whether nickname or realname
+    (added rname field)
 
 
 -----------------------------------------------------------------------------

@@ -52,7 +52,8 @@ if ($indb[check]) {
 		  date int(11) DEFAULT '0' NOT NULL,
 		  host tinytext,
 		  name tinytext,
-		  passwd varchar($ostypes[pfield]),
+                  rname tinytext,
+		  passwd varchar(56),
 		  email tinytext,
 		  url tinytext,
 		  title tinytext,
@@ -63,7 +64,6 @@ if ($indb[check]) {
 		  rede int(6) DEFAULT '0' NOT NULL,
 		  reto int(6) DEFAULT '0' NOT NULL,
 		  html int(1) DEFAULT '1' NOT NULL,
-		  moder int(1) DEFAULT '0' NOT NULL,
 		  bofile varchar(100),
 		  bcfile varchar(100),
 		  bfsize int(4),
@@ -92,10 +92,15 @@ if ($indb[check]) {
   #require("../admin/include/first_reg.ph");
   $passwd_ext = crypt($passwd_ext);
 
-  $create[data] = "insert into test values ('',1,1,$date,'$host_ext','$name_ext','$passwd_ext',
-                   '$email_ext','$url_ext','$subj_msg','$text_msg',0,0,0,0,0,0,0,'','','')";
-  $create[udata] =  "INSERT INTO userdb VALUES ('','$dbinst[aid]','$dbinst[aname]','$dbinst[aemail]',
-                     '','$ostypes[dpass]',1)";
+  $create[data] = "INSERT INTO test (no,num,idx,date,host,name,passwd,email,url,title,
+                                      text,refer,reyn,reno,rede,reto,html,bofile,
+                                      bcfile,bfsize)
+                          VALUES ('',1,1,$date,'$host_ext','$name_ext','$passwd_ext',
+                                  '$email_ext','$url_ext','$subj_msg','$text_msg',0,0,
+                                  0,0,0,0,'','','')";
+  $create[udata] = "INSERT INTO userdb (no,nid,name,email,url,passwd,position)
+                           VALUES ('','$dbinst[aid]','$dbinst[aname]','$dbinst[aemail]',
+                                   '','$ostype[dpass]',1)";
 
   $result[table] = mysql_query($create[table], $connect );
   $result[utable] = mysql_query($create[utable], $connect );

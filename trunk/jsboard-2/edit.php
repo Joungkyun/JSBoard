@@ -66,7 +66,9 @@ $print[passform] = "<INPUT TYPE=hidden NAME=o[at] VALUE=edit>\n".
                    "<INPUT TYPE=hidden NAME=atc[no] VALUE=\"$list[no]\">";
 
 if($disable) {
+  $list[rname] = !$list[rname] ? "" : "\n<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"$list[rname]\">";
   $print[passform] .= "\n<INPUT TYPE=hidden NAME=atc[name] VALUE=\"$list[name]\">".
+                      "$list[rname]".
                       "\n<INPUT TYPE=hidden NAME=atc[email] VALUE=\"$list[email]\">".
                       "\n<INPUT TYPE=hidden NAME=atc[url] VALUE=\"$list[url]\">\n";
 }

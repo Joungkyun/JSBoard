@@ -54,16 +54,18 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     $atc[mxidx] = sql_result($result, 0, "idx") + 1; # 최고 인덱스 번호
     sql_free_result($result);
 
-    sql_query("
-      INSERT INTO $table VALUES ('', $atc[mxnum], $atc[mxidx],
-      $atc[date], '$atc[host]', '$atc[name]', '$atc[passwd]',
-      '$atc[email]', '$atc[url]', '$atc[title]', '$atc[text]',
-      0, 0, 0, 0, 0, $atc[html], 0,'$userfile_name','$bfilename','$userfile_size')");
+    sql_query("INSERT INTO $table (no,num,idx,date,host,name,rname,passwd,email,url,
+                                   title,text,refer,reyn,reno,rede,reto,html,bofile,
+                                   bcfile,bfsize)
+                      VALUES ('', $atc[mxnum], $atc[mxidx],$atc[date],'$atc[host]',
+                              '$atc[name]','$atc[rname]','$atc[passwd]','$atc[email]',
+                              '$atc[url]','$atc[title]','$atc[text]',0,0,0,0,0,$atc[html],
+                              '$userfile_name','$bfilename','$userfile_size')");
 
     # mail 보내는 부분
     if ($rmail[uses]) {
       if ($rmail[admin] || $rmail[user]) {
-        $rmail[name] = $atc[rname];
+        $rmail[name] = $atc[rtname];
         $rmail[text] = $atc[text];
         $rmail[title] = $atc[rtitle];
         $rmail[url] = $atc[url];
@@ -85,7 +87,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
   # 게시물 답장 함수
   function article_reply($table, $atc) {
-    global $board, $upload, $cupload, $rmail, $langs, $agent;
+    global $board, $upload, $cupload, $rmail, $langs, $agent, $jsboard;
     global $userfile, $userfile_name, $userfile_size, $max_file_size;
 
     $atc[date] = time(); # 현재 시각
@@ -117,7 +119,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     }
 
     # 답장글에 대한 정보를 가져옴
-    sql_query("LOCK TABLES $table WRITE");
+    #sql_query("LOCK TABLES $table WRITE");
     $reply = get_article($table, $atc[reno]);
     $atc[rede] = $reply[rede] + 1; # 답장글의 깊이
     $atc[idx]  = $reply[idx]; # 부모글의 인덱스 번호 상속
@@ -128,11 +130,13 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     # 부모글 이상의 인덱스 번호를 가진 글들의 인덱스를 1씩 더함
     sql_query("UPDATE $table SET idx = idx + 1 WHERE (idx + 0) >= $atc[idx]");
     sql_query("UPDATE $table SET reyn = 1 WHERE no = $atc[reno]");
-    sql_query("
-      INSERT INTO $table VALUES ('', 0, $atc[idx], $atc[date],
-      '$atc[host]', '$atc[name]', '$atc[passwd]', '$atc[email]',
-      '$atc[url]', '$atc[title]', '$atc[text]', 0, 0, $atc[reno],
-      $atc[rede], $atc[reto], $atc[html], 0,'$userfile_name','$bfilename','$userfile_size')");
+    sql_query("INSERT INTO $table (no,num,idx,date,host,name,rname,passwd,email,url,
+                                   title,text,refer,reyn,reno,rede,reto,html,bofile,
+                                   bcfile,bfsize)
+                      VALUES ('',0,$atc[idx],$atc[date],'$atc[host]','$atc[name]','$atc[rname]',
+                              '$atc[passwd]','$atc[email]','$atc[url]','$atc[title]','$atc[text]',
+                              0,0,'$atc[reno]','$atc[rede]',$atc[reto],$atc[html],'$userfile_name',
+                              '$bfilename','$userfile_size')");
     sql_query("UNLOCK TABLES");
 
     # mail 보내는 부분
@@ -140,7 +144,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       if ($rmail[admin] || $rmail[user]) {
         $result = sql_query("SELECT MAX(no) no FROM $table");
         $rmail[no] = sql_result($result, 0, "no"); # 최고 번호
-        $rmail[name] = $atc[rname];
+        $rmail[name] = $atc[rtname];
         $rmail[text] = $atc[text];
         $rmail[title] = $atc[rtitle];
         $rmail[url] = $atc[url];
@@ -335,7 +339,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     if(check_spam($atc[text])) print_error($langs[act_s],250,150,1);
 
     # 메일로 보낼 변수 받음
-    $atc[rname] = $atc[name];
+    $atc[rtname] = $atc[name];
     $atc[rtitle] = $atc[title];
 
     # 이름, 제목의 HTML 코드 문자를 치환함
