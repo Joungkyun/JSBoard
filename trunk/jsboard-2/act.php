@@ -358,7 +358,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   #        http://www.php.net/manual/function.chop.php
   function article_check($table, $atc) {
     # 검색 등 관련 변수 (CGI 값)
-    global $jsboard, $compare, $o, $ccompare, $langs, $ramil;
+    global $jsboard, $compare, $o, $ccompare, $langs, $rmail;
     global $board, $passwd, $agent;
 
     # spam 등록기 체크
