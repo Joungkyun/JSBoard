@@ -14,7 +14,7 @@ $designer['ver'] = "A7";
 # Language configuration
 ##############################################################
 $langs['code'] = "jp";		# webboard language
-$langs['font'] = "arial";		# Fixed width font
+$langs['font'] = "arial";	# Fixed width font
 $langs['vfont'] = "tahoma";	# Variable width font
 
 ##############################################################
@@ -70,8 +70,8 @@ $lines['height'] = "25";
 # 하게 되어 있음 다음의 예제를 이용하여 테스트 해 보기 바람
 #$line_design = "<TD COLSPAN=AA><hr></TD>";
 $lines['design'] = "";
-$lines['comment_design'] = "<TR><TD COLSPAN=4 BACKGROUND=./images/dotline.gif>".
-                         "<IMG SRC=./images/blank.gif WIDTH=1 HEIGHT=4 BORDER=0 ALT=''>".
+$lines['comment_design'] = "<TR><TD COLSPAN=4 BACKGROUND=\"./images/dotline.gif\">".
+                         "<IMG SRC=\"./images/blank.gif\" WIDTH=1 HEIGHT=4 BORDER=0 ALT=''>".
                          "<TD></TR>";
 
 ##############################################################

@@ -2,12 +2,24 @@
 <HEAD>
 <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET={$langs['charset']}">
 <TITLE>JSBoard Reply Notice</TITLE>
-<STYLE TYPE=text/css>
+<STYLE TYPE="text/css">
 <!--
-BODY,TD {font:12px ±¼¸²Ã¼;color:#555555;}
-A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
-A:hover {text-decoration:underline; color:#555555}
-TD { FONT:12px ±¼¸²Ã¼; COLOR: #555555;}
+BODY,TD {
+  font: 12px tahoma, sans-serif;
+  color: #555555;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+TD {
+  font: 12px tahoma, arial, sans-serif;
+  color: #555555;
+}
 -->
 </STYLE>
 

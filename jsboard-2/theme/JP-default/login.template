@@ -2,7 +2,7 @@
 <HEAD>
 <META HTTP-EQUIV=Cache-Control CONTENT=No-Cache>
 <META HTTP-EQUIV=Pragma	CONTENT=No-Cache>
-<TITLE>Login page for Jsboard <?=$board['ver']?></TITLE>
+<TITLE>JSBoard <?=$board['ver']?> Login page</TITLE>
 <STYLE TYPE="text/css">
 A:LINK, A:VISITED, A:ACTIVE { TEXT-DECORATION: NONE; COLOR:<?=$color['text']?>; }
 A:HOVER { TEXT-DECORATION:UNDERLINE; COLOR:<?=$color['text']?>; }
@@ -38,7 +38,7 @@ if($mode == "comment") {
 ?>
 
 <TABLE WIDTH=100% HEIGHT=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<TR><TD ALIGN=center VALIGN=center>
+<TR><TD ALIGN=center VALIGN=middle>
 
 <FORM NAME=auth METHOD=POST ACTION=<?=$actpage?>>
 <TABLE WIDTH=200 BORDER=0 CELLPADDING=3 CELLSPACING=0>

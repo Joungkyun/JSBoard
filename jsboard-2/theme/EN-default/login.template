@@ -2,12 +2,30 @@
 <HEAD>
 <META HTTP-EQUIV=Cache-Control CONTENT=No-Cache>
 <META HTTP-EQUIV=Pragma	CONTENT=No-Cache>
-<TITLE>Login page for JSBoard <?=$board['ver']?></TITLE>
+<TITLE>JSBoard <?=$board['ver']?> Login page</TITLE>
 <STYLE TYPE="text/css">
-A:LINK, A:VISITED, A:ACTIVE { TEXT-DECORATION: NONE; COLOR:<?=$color['text']?>; }
-A:HOVER { TEXT-DECORATION:UNDERLINE; COLOR:<?=$color['text']?>; }
-TD { FONT: 12px tahoma; COLOR:#555555; }
-INPUT {font: 11px tahoma; color:<?=$color['m_fg']?>; border-width:1; border-style:solid; border-color:<?=$color['d_bg']?>; padding-left:1px; padding-right:1px; background-color:<?=$color['m_bg']?>; }
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: <?=$color['text']?>;
+}
+a:hover {
+  text-decoration: underline;
+  color: <?=$color['text']?>;
+}
+td {
+  font: 12px tahoma,sans-serif;
+  color: #555555;
+}
+input {
+  font: 11px tahoma,sans-serif;
+  color: <?=$color['m_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['d_bg']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?=$color['m_bg']?>;
+}
 </STYLE>
 <script language=JavaScript>
 <!--
@@ -38,7 +56,7 @@ if($mode == "comment") {
 ?>
 
 <TABLE WIDTH=100% HEIGHT=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<TR><TD ALIGN=center VALIGN=center>
+<TR><TD ALIGN=center VALIGN=middle>
 
 <FORM NAME=auth METHOD=POST ACTION=<?=$actpage?>>
 <TABLE WIDTH=200 BORDER=0 CELLPADDING=3 CELLSPACING=0>
