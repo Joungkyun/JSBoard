@@ -20,6 +20,7 @@ file.
   by 김정균 <http://www.oops.org>
 	- rss.php 업데이트. RSS 2.0 지원
 	- auto_increment 시 DEFAULT VALUE 설정 삭제 (MySQL 4.1 지원)
+	- rss feed 의 글 제목에 특수 문자 삽입시 에러 수정
 
 2004.08.17
   by 김정균 <http://www.oops.org>

@@ -45,6 +45,7 @@ $result = sql_db_query ($db['name'], $sql);
 $i = 0;
 
 while( $rss_article[$i] = sql_fetch_array($result) ) {
+  $rss_article[$i]['title'] = htmlspecialchars ($rss_article[$i]['title'], ENT_QUOTES);
   $rss_article[$i]['link'] = "{$board['path']}read.php?table={$table}&amp;no={$rss_article[$i]['no']}";
   $rss_article[$i]['date'] = date ("r", $rss_article[$i]['date']);
   #$rss_article[$i]['date'] = date("Y-m-d",$rss_article[$i]['date'] ) . 'T' . date("H:i:sO", $rss_article[$i]['date']);
