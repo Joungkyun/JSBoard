@@ -95,6 +95,7 @@ $langs[chk_tb] = "Don't match number of open or close table tag";
 $langs[chk_th] = "Don't open or close TH tag.";
 $langs[chk_tr] = "Don't open or close TR tag.";
 $langs[chk_td] = "Don't open or close TD tag.";
+$langs[chk_if] = "Don't open or close IFRAME tag.";
 
 # get.ph
 $langs[get_v]= " [ View Article ]";

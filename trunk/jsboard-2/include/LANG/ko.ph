@@ -97,6 +97,7 @@ $langs[chk_tb] = "TABLE 태그가 열리지 않았거나 닫히지 않았습니다.";
 $langs[chk_th] = "TH 태그가 열리지 않았거나 닫히지 않았습니다.";
 $langs[chk_tr] = "TR 태그가 열리지 않았거나 닫히지 않았습니다.";
 $langs[chk_td] = "TD 태그가 열리지 않았거나 닫히지 않았습니다.";
+$langs[chk_if] = "IFRAME 태그가 열리지 않았거나 닫히지 않았습니다.";
 
 # get.ph
 $langs[get_v] = " [ 게시판 보기 ]";
