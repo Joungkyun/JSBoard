@@ -8,7 +8,7 @@ echo
 
 echo "STEP 1 Language Check"
 echo "---------------------"
-echo -n "Can you enable to use KOREAN in this console? [Y/N](default Y) : "
+echo -n "Do you want to use Korean during the installation? [Y/N](default Y) : "
 read langs
 
 case "${langs}" in
@@ -40,8 +40,8 @@ else
       echo -n "httpd.conf 의 절대 경로를 지정해 주십시오 : "
     else
       echo
-      echo "^[[1;31mERROR^[[7;0m : Can't file httpd.conf"
-      echo -n "Input absolute path of httpd.conf : "
+      echo "^[[1;31mERROR^[[7;0m : Can't find httpd.conf"
+      echo -n "Please specify the location of httpd.conf : "
     fi
     read CONF
 

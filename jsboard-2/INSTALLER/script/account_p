@@ -8,7 +8,7 @@ echo
 
 echo "STEP 1 Language Check"
 echo "---------------------"
-echo -n "Can you enable to use KOREAN in this console? [Y/N](default Y) : "
+echo -n "Do you want to use Korean during the installation? [Y/N](default Y) : "
 read langs
 
 case "${langs}" in
