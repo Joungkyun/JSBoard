@@ -13,6 +13,18 @@ file.
 
 ******************************************************************************
 
+Version   : jsboard-2.0.11
+
+Sun, Feb 20 2005
+  by JoungKyun Kim <http://www.oops.org>
+	- HTML 4.01 Validation
+	- CSS 2.0 Validation
+
+Mon, Jan 24 2005
+  by HyunSung Jang
+	- fixed to register severral apache config path on insterller
+
+-----------------------------------------------------------------------------
 Version   : jsboard-2.0.10
 
 Sun, Jan 02 2005

@@ -82,20 +82,20 @@ if ($enable['ore']) {
 
 $page = $page ? $page : 1;
 $wkey = get_spam_value($board['antispam']);
-$print['passform'] = "<INPUT TYPE=hidden NAME=o[at] VALUE=reply>\n".
-                   "<INPUT TYPE=hidden NAME=page VALUE=$page>\n".
-                   "<INPUT TYPE=hidden NAME=table VALUE=$table>\n".
-                   "<INPUT TYPE=hidden NAME=atc[wkey] VALUE=$wkey>\n".
-                   "<INPUT TYPE=hidden NAME=rmail[origmail] VALUE=\"{$list['email']}\">\n".
-                   "<INPUT TYPE=hidden NAME=atc[reno] VALUE=\"{$list['no']}\">";
+$print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=\"reply\">\n".
+                   "<INPUT TYPE=hidden NAME=\"page\" VALUE=\"$page\">\n".
+                   "<INPUT TYPE=hidden NAME=\"table\" VALUE=\"$table\">\n".
+                   "<INPUT TYPE=hidden NAME=\"atc[wkey]\" VALUE=\"$wkey\">\n".
+                   "<INPUT TYPE=hidden NAME=\"rmail[origmail]\" VALUE=\"{$list['email']}\">\n".
+                   "<INPUT TYPE=hidden NAME=\"atc[reno]\" VALUE=\"{$list['no']}\">";
 
-$pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"{$pre_regist['rname']}\">";
+$pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<INPUT TYPE=hidden NAME=\"atc[rname]\" VALUE=\"{$pre_regist['rname']}\">";
 
 if(!$nodisable) {
-  $print['passform'] .= "\n<INPUT TYPE=hidden NAME=atc[name] VALUE=\"{$pre_regist['name']}\">".
+  $print['passform'] .= "\n<INPUT TYPE=hidden NAME=\"atc[name]\" VALUE=\"{$pre_regist['name']}\">".
                       "{$pre_regist['rname']}".
-                      "\n<INPUT TYPE=hidden NAME=atc[email] VALUE=\"{$pre_regist['email']}\">".
-                      "\n<INPUT TYPE=hidden NAME=atc[url] VALUE=\"{$pre_regist['url']}\">\n";
+                      "\n<INPUT TYPE=hidden NAME=\"atc[email]\" VALUE=\"{$pre_regist['email']}\">".
+                      "\n<INPUT TYPE=hidden NAME=\"atc[url]\" VALUE=\"{$pre_regist['url']}\">\n";
 }  elseif($_SESSION[$jsboard]['pos'] == 1) {
   $print['passform'] .= "{$pre_regist['rname']}\n";
 }
@@ -103,7 +103,7 @@ if(!$nodisable) {
 if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode']) && $_SESSION[$jsboard]['pos'] != 1)
   $pre_regist['name'] = $_SESSION[$jsboard]['name'] ? $_SESSION[$jsboard]['name'] : $pre_regist['name'];
 
-$pages = "&page=$page";
+$pages = "&amp;page=$page";
 
 mysql_close();
 

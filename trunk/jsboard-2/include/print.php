@@ -90,6 +90,9 @@ function form_wrap($print = 0) {
     $wrap['ment'] = "{$langs['w_ment']}&nbsp;";
   }
 
+  if ( $agent['br'] == "OTHER" )
+    $wrap['op'] = '';
+
   if($print) echo $wrap;
   return $wrap;
 }
@@ -121,9 +124,9 @@ function page_list($table, $pages, $count, $num, $print = 0) {
   }
 
   # 처음 페이지 링크
-  $str .= "\n<!-- ============================ 페이지 목록 폼 ========================== -->\n";
+  $str .= "\n<!-- ============================ Page List Form ========================== -->\n";
   if ($pages['cur'] != "1" && $d0 > 0)
-    $str .= "<A HREF=list.php?table=$table&page=1$search title='First Page'>".
+    $str .= "<A HREF=\"list.php?table=$table&amp;page=1$search\" title='First Page'>".
             "<FONT style=\"font-size:10px;font-family:tahoma;color:{$color['text']}\">[F]..</FONT></A>\n";
 
   # 지정된 수 만큼 페이지 링크
@@ -134,7 +137,7 @@ function page_list($table, $pages, $count, $num, $print = 0) {
       if($repages > "0" && $repages > $num_p - $num * 2 && $repages <= $pages['all']) {
         if($co) {
           $page = $pages['cur'] + $co;
-          $str .= "<A HREF=list.php?table=$table&page=$page$search>".
+          $str .= "<A HREF=\"list.php?table=$table&amp;page=$page$search\">".
                   "<FONT style=\"font-size:10px;font-family:tahoma;color:{$color['text']}\">[$page]</FONT></A>\n";
         } else $str .= "<FONT style=\"font-size:10px;font-family:tahoma;color:{$color['cp_co']};\"><B>[{$pages['cur']}]</B></FONT>\n";
       }
@@ -145,7 +148,7 @@ function page_list($table, $pages, $count, $num, $print = 0) {
       if($pages['cur'] + $co <= $pages['all']) {
         if($co) {
           $page = $pages['cur'] + $co;
-          $str .= "<A HREF=list.php?table=$table&page=$page$search>".
+          $str .= "<A HREF=\"list.php?table=$table&amp;page=$page$search\">".
                   "<FONT style=\"font-size:10px;font-family:tahoma;color:{$color['text']}\">[$page]</FONT></A>\n";
         } else $str .= "<FONT style=\"font-size:10px;font-family:tahoma\"><B>[{$pages['cur']}]</B></FONT>\n";
       }
@@ -154,11 +157,11 @@ function page_list($table, $pages, $count, $num, $print = 0) {
 
   # 마지막 페이지 링크
   if($pages['cur'] != $pages['all'] && $d1 > 0)
-      $str .= "<A HREF=list.php?table=$table&page={$pages['all']}$search title='Last Page'>".
+      $str .= "<A HREF=\"list.php?table=$table&amp;page={$pages['all']}$search\" title='Last Page'>".
               "<FONT style=\"font-size:10px;font-family:tahoma;color:{$color['text']}\">".
               "..[L]</FONT></A>\n";
     
-  $str .= "<!-- ============================ 페이지 목록 폼 ========================== -->\n";
+  $str .= "<!-- ============================ Page List Form ========================== -->\n";
 
   if($print) {
 	echo $str;
@@ -234,21 +237,21 @@ function list_cmd($img=0,$prt=0) {
     $menu['write'] = "<IMG SRC=./theme/{$print['theme']}/img/write.gif BORDER=0 ALT='{$langs['cmd_write']}'>";
     $menu['today'] = "<IMG SRC=./theme/{$print['theme']}/img/today.gif BORDER=0 ALT='{$langs['cmd_today']}'>";
   } else {
-    $menu['pre'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_priv']}</FONT>";
-    $menu['nxt'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_next']}</FONT>";
-    $menu['all'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_all']}</FONT>";
-    $menu['write'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_write']}</FONT>";
-    $menu['today'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_today']}</FONT>";
+    $menu['pre'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_priv']}</FONT>";
+    $menu['nxt'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_next']}</FONT>";
+    $menu['all'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_all']}</FONT>";
+    $menu['write'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_write']}</FONT>";
+    $menu['today'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_today']}</FONT>";
   }
 
-  $str['prev']  = !$pages['pre'] ? "" : "<A HREF=list.php?table=$table&page={$pages['pre']}{$str['search']} TITLE=\"{$langs['cmd_priv']}\">{$menu['pre']}</A>\n";
-  $str['next']  = !$pages['nex'] ? "" : "<A HREF=list.php?table=$table&page={$pages['nex']}{$str['search']} TITLE=\"{$langs['cmd_next']}\">{$menu['nxt']}</A>\n";
-  $str['write'] = "<A HREF=write.php?table=$table&page=$page TITLE='{$langs['cmd_write']}'>{$menu['write']}</A>\n";
+  $str['prev']  = !$pages['pre'] ? "" : "<A HREF=\"list.php?table=$table&amp;page={$pages['pre']}{$str['search']}\" TITLE=\"{$langs['cmd_priv']}\">{$menu['pre']}</A>\n";
+  $str['next']  = !$pages['nex'] ? "" : "<A HREF=\"list.php?table=$table&amp;page={$pages['nex']}{$str['search']}\" TITLE=\"{$langs['cmd_next']}\">{$menu['nxt']}</A>\n";
+  $str['write'] = "<A HREF=\"write.php?table=$table&amp;page=$page\" TITLE='{$langs['cmd_write']}'>{$menu['write']}</A>\n";
 
   if($o['at'] == "s" || $o['at'] == "d")
-     $str['all'] = "<A HREF=list.php?table=$table TITLE=\"{$langs['cmd_all']}\">{$menu['all']}</A>\n";
+     $str['all'] = "<A HREF=\"list.php?table=$table\" TITLE=\"{$langs['cmd_all']}\">{$menu['all']}</A>\n";
   if($o['st'] != "t")
-     $str['today'] = "<A HREF=list.php?table=$table&o[at]=s&o[st]=t TITLE=\"{$langs['cmd_today']}\">{$menu['today']}</A>\n";
+     $str['today'] = "<A HREF=\"list.php?table=$table&amp;o[at]=s&amp;o[st]=t\" TITLE=\"{$langs['cmd_today']}\">{$menu['today']}</A>\n";
 
   if($board['mode'] != 0 && $board['mode'] != 2 && $board['mode'] != 6 && $board['mode'] != 7) {
     # 어드민이 아니면 쓰기 링크를 제거
@@ -280,46 +283,46 @@ function read_cmd($img=0,$prt=0) {
     $menu['write'] = "<IMG SRC=./theme/{$print['theme']}/img/write.gif BORDER=0 ALT='{$langs['cmd_write']}'>";
     $menu['conj'] = "<IMG SRC=./theme/{$print['theme']}/img/conj.gif BORDER=0 ALT='{$langs['cmd_con']}'>";
   } else {
-    $menu['pre'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_upp']}</FONT>";
-    $menu['nxt'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_down']}</FONT>";
-    $menu['del'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_del']}</FONT>";
-    $menu['edit'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_edit']}</FONT>";
-    $menu['lists'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_list']}</FONT>";
-    $menu['reply'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_reply']}</FONT>";
-    $menu['write'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_write']}</FONT>";
-    $menu['conj'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_con']}</FONT>";
+    $menu['pre'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_upp']}</FONT>";
+    $menu['nxt'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_down']}</FONT>";
+    $menu['del'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_del']}</FONT>";
+    $menu['edit'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_edit']}</FONT>";
+    $menu['lists'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_list']}</FONT>";
+    $menu['reply'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_reply']}</FONT>";
+    $menu['write'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_write']}</FONT>";
+    $menu['conj'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_con']}</FONT>";
   }
 
-  $str['prev']  = "<A HREF=read.php?table=$table&no={$pos['prev']}{$str['search']} onMouseOut=\"window.status=''; return true;\" onMouseOver=\"window.status='{$pos['prev_t']}'; return true;\">{$menu['pre']}</A>";
-  $str['next']  = "<A HREF=read.php?table=$table&no={$pos['next']}{$str['search']} onMouseOut=\"window.status=''; return true;\" onMouseOver=\"window.status='{$pos['next_t']}'; return true;\">{$menu['nxt']}</A>";
-  $str['write'] = "<A HREF=write.php?table=$table&page=$page>{$menu['write']}</A>";
+  $str['prev']  = "<A HREF=\"read.php?table=$table&amp;no={$pos['prev']}{$str['search']}\" onMouseOut=\"window.status=''; return true;\" onMouseOver=\"window.status='{$pos['prev_t']}'; return true;\">{$menu['pre']}</A>";
+  $str['next']  = "<A HREF=\"read.php?table=$table&amp;no={$pos['next']}{$str['search']}\" onMouseOut=\"window.status=''; return true;\" onMouseOver=\"window.status='{$pos['next_t']}'; return true;\">{$menu['nxt']}</A>";
+  $str['write'] = "<A HREF=\"write.php?table=$table&amp;page=$page\">{$menu['write']}</A>";
 
   if ($rmail['user'])
-    $str['reply'] = "<A HREF=reply.php?table=$table&no=$no&page=$page&origmail={$list['email']}>{$menu['reply']}</A>";
+    $str['reply'] = "<A HREF=\"reply.php?table=$table&amp;no=$no&amp;page=$page&amp;origmail={$list['email']}\">{$menu['reply']}</A>";
   else
-    $str['reply'] = "<A HREF=reply.php?table=$table&no=$no&page=$page>{$menu['reply']}</A>";
+    $str['reply'] = "<A HREF=\"reply.php?table=$table&amp;no=$no&amp;page=$page\">{$menu['reply']}</A>";
 
-  $str['edit']  = "<A HREF=edit.php?table=$table&no=$no&page=$page>{$menu['edit']}</A>";
-  $str['dele']  = "<A HREF=delete.php?table=$table&no=$no&page=$page>{$menu['del']}</A>";
-  if(!$enable['re_list']) $str['rep'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_con']}</FONT>";
+  $str['edit']  = "<A HREF=\"edit.php?table=$table&amp;no=$no&amp;page=$page\">{$menu['edit']}</A>";
+  $str['dele']  = "<A HREF=\"delete.php?table=$table&amp;no=$no&amp;page=$page\">{$menu['del']}</A>";
+  if(!$enable['re_list']) $str['rep'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_con']}</FONT>";
 
-  if(!$pos['prev']) $str['prev'] = $img ? "" : "<FONT style=\"font-face:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_upp']}</FONT>";
-  if(!$pos['next']) $str['next'] = $img ? "" : "<FONT style=\"font-face:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_down']}</FONT>";
+  if(!$pos['prev']) $str['prev'] = $img ? "" : "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_upp']}</FONT>";
+  if(!$pos['next']) $str['next'] = $img ? "" : "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_down']}</FONT>";
   if(!session_is_registered("$jsboard") && !$list['passwd']) {
     if(!$img) {
-      $menu['edit'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_edit']}</FONT>";
-      $menu['dele'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_del']}</FONT>";
+      $menu['edit'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_edit']}</FONT>";
+      $menu['dele'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_del']}</FONT>";
     }
-    $str['edit'] = "<A HREF=\"edit.php?table=$table&no=$no&page=$page\">{$menu['edit']}</A>";
-    $str['dele'] = "<A HREF=\"delete.php?table=$table&no=$no&page=$page\">{$menu['del']}</A>";
+    $str['edit'] = "<A HREF=\"edit.php?table=$table&amp;no=$no&amp;page=$page\">{$menu['edit']}</A>";
+    $str['dele'] = "<A HREF=\"delete.php?table=$table&amp;no=$no&amp;page=$page\">{$menu['del']}</A>";
   }
   if($list['reyn'] && !$_SESSION[$jsboard]['pos']) {
-    if(!$img) $menu['del'] = "<FONT style=\"font-face:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_del']}</FONT>";
-    $str['dele'] = "<A HREF=\"delete.php?table=$table&no=$no&page=$page\">{$menu['del']}</A>";
+    if(!$img) $menu['del'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_del']}</FONT>";
+    $str['dele'] = "<A HREF=\"delete.php?table=$table&amp;no=$no&amp;page=$page\">{$menu['del']}</A>";
   }
   if(!$enable['re_list'] && ($list['reto'] || $list['reyn'])) {
     $reto = $list['reto'] ? $list['reto'] : $list['no'];
-    $str['rep'] = "<A HREF=\"list.php?table=$table&o[at]=s&o[sc]=r&o[no]=$reto\">{$menu['conj']}</A>";
+    $str['rep'] = "<A HREF=\"list.php?table=$table&amp;o[at]=s&amp;o[sc]=r&amp;o[no]=$reto\">{$menu['conj']}</A>";
   } else $str['rep'] = "";
 
   # 로그인 mode 에서 관리자가 아니고 자신의 글이 아닐경우 수정과 삭제링크를 제거
@@ -344,7 +347,7 @@ function read_cmd($img=0,$prt=0) {
   if(preg_match("/^(6|7)$/i",$board['mode']) && $_SESSION[$jsboard]['pos'] != 1 && !$board['adm'])
     $str['reply'] = "";
 
-  $t = "<A HREF=\"list.php?table=$table&page=$page{$str['search']}\">{$menu['lists']}</A>\n".
+  $t = "<A HREF=\"list.php?table=$table&amp;page=$page{$str['search']}\">{$menu['lists']}</A>\n".
        "{$str['prev']}\n".
        "{$str['next']}\n".
        "{$str['write']}\n".
@@ -354,7 +357,7 @@ function read_cmd($img=0,$prt=0) {
        "{$str['rep']}\n";
 
   if($alert) {
-    $t = "<A HREF=\"list.php?table=$table&page=$page{$str['search']}\">{$menu['lists']}</A>\n".
+    $t = "<A HREF=\"list.php?table=$table&amp;page=$page{$str['search']}\">{$menu['lists']}</A>\n".
          "{$str['write']}\n";
   }
 
@@ -404,7 +407,7 @@ function article_reply_list($table,$pages,$print=0) {
 
   $CPADDING = $lines['design'] ? 0 : 1;
   
-  $t = "<TABLE WIDTH=100% BORDER=0 CELLSPACING=1 CELLPADDING=$CPADDING>\n".
+  $t = "<TABLE SUMMARY=\"\" WIDTH=\"100%\" BORDER=0 CELLSPACING=1 CELLPADDING=$CPADDING>\n".
        "<TR>\n".
        "  <TD WIDTH={$td_width[1]} ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=4 ALT=''></TD>\n".
        "  <TD WIDTH={$td_width[2]} ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
@@ -446,7 +449,7 @@ function print_preview_src($print=0) {
                           "  }\n\n".
 
                           "  function dts(d,text) {\n".
-                          "    txt = \"<TABLE WIDTH=360 STYLE=\\\"border:1 {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=0><TR><TD BGCOLOR={$color['p_bg']}><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"</FONT></TD></TR></TABLE>\"\n".
+                          "    txt = \"<TABLE SUMMARY=\\\"\\\" WIDTH=360 STYLE=\\\"border:1 {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=0><TR><TD BGCOLOR=\\\"{$color['p_bg']}\\\"><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"<\\/FONT><\\/TD><\\/TR><\\/TABLE>\"\n".
                           "    layerWrite(txt);\n".
                           "    dir = d;\n".
                           "    disp();\n".
@@ -497,7 +500,7 @@ function print_preview_src($print=0) {
 
 
                           "  function dts(d,text) {\n".
-                          "    txt = \"<TABLE WIDTH=360 STYLE=\\\"border:1 {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=1><TR><TD BGCOLOR={$color['p_bg']}><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"</FONT></TD></TR></TABLE>\"\n".
+                          "    txt = \"<TABLE SUMMARY=\\\"\\\" WIDTH=360 STYLE=\\\"border:1 {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=1><TR><TD BGCOLOR=\\\"{$color['p_bg']}\\\"><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"<\\/FONT><\\/TD><\\/TR><\\/TABLE>\"\n".
                           "    layerWrite(txt);\n".
                           "    dir = d;\n".
                           "    disp();\n".
@@ -546,7 +549,7 @@ function print_preview_src($print=0) {
                           "  }\n\n".
 
                           "  function dts(d,text) {\n".
-                          "    txt = \"<TABLE WIDTH=360 STYLE=\\\"border:1 {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=1><TR><TD BGCOLOR={$color['p_bg']}><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"</FONT></TD></TR></TABLE>\"\n".
+                          "    txt = \"<TABLE SUMMARY=\\\"\\\" WIDTH=360 STYLE=\\\"border:1 {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=1><TR><TD BGCOLOR=\\\"{$color['p_bg']}\\\"><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"<\\/FONT><\\/TD><\\/TR><\\/TABLE>\"\n".
                           "    layerWrite(txt);\n".
                           "    dir = d;\n".
                           "    disp();\n".
@@ -588,8 +591,8 @@ function print_preview_src($print=0) {
                           "  function moveTo(obj,xL,yL) { obj.left = xL; obj.top = yL; }";
   }
 
-  $t = "<DIV ID=\"overDiv\" STYLE=\"position: absolute; z-index: 50; width: 260; visibility: hidden\"></DIV>\n".
-       "<SCRIPT LANGUAGE=JavaScript>\n".
+  $t = "<DIV ID=\"overDiv\" STYLE=\"position: absolute; z-index: 50; width: 260px; visibility: hidden\"></DIV>\n".
+       "<SCRIPT TYPE=\"text/javascript\">\n".
        "  var x = 0;\n".
        "  var y = 0;\n".
        "  var snow = 0;\n".
@@ -610,7 +613,7 @@ function print_preview_src($print=0) {
 
 function print_newwindow_src($upload,$cupload,$dwho) {
   if(($upload && $cupload) || $dwho) {
-    echo "<script LANGUAGE=JavaScript>\n".
+    echo "<script type=\"text/javascript\">\n".
          "  <!-- Begin\n".
          "    var child = null;\n".
          "    var count = 0;\n".
@@ -641,12 +644,12 @@ function print_newwindow_src($upload,$cupload,$dwho) {
          "      }\n\n".
 
          "      var childname = 'JSBoard' + count++;\n".
-         "      // child window가 떠 있을 경우 child window를 닫는다.\n".
+         "      // if child window is opend, close child window.\n".
          "      if(child != null) {\n".
          "        if(!child.closed) { child.close(); }\n".
          "      }\n".
          "      child = window.open(addr,tag,'left=0, top=0, toolbar=0,scrollbars=' + scroll + ',status=0,menubar=0,resizable=' + resize + ',width=' + wid + ',height=' + hei +'');\n".
-         "      // child window가 로드 될때 가장 앞으로 올린다.\n".
+         "      // if child window load, change window focus topest\n".
          "      child.focus();\n".
          "      return;\n".
          "    }\n".
@@ -658,7 +661,7 @@ function print_newwindow_src($upload,$cupload,$dwho) {
 # FORM size 를 동적으로 조정하기 위한 스크립트 출력함수
 #
 function form_operate($fn,$in,$x=73,$y=10,$prt=0) {
-  $var = "<SCRIPT LANGUAGE=JavaScript>\n".
+  $var = "<SCRIPT TYPE=\"text/javascript\">\n".
          "<!--\n".
          "function fresize(value) {\n".
          "  if (value == 0) {\n".
@@ -683,15 +686,15 @@ function print_license() {
   global $board, $color, $gpl_link, $designer;
 
   if($designer['license'] != 2) {
-    echo "<p>\n".
-         "<TABLE WIDTH={$board['width']} BORDER=0 CELLPADDING=0 CELLSPACING=0>\n".
+    echo "<BR>\n".
+         "<TABLE SUMMARY=\"\" WIDTH=\"{$board['width']}\" BORDER=0 CELLPADDING=0 CELLSPACING=0>\n".
          "<TR><TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\">\n".
          "<FONT STYLE=\"font: 12px tahoma;color:{$color['text']}\">\n".
-         "<A STYLE=\"color={$color['text']}\" HREF=$gpl_link TARGET=_blank>Copyleft</A> 1999-".date("Y")."\nby ".
-         "<A STYLE=\"color={$color['text']};font-weight:bold\" HREF=http://jsboard.kldp.org TARGET=_blank>".
+         "<A STYLE=\"color:{$color['text']}\" HREF=\"$gpl_link\" TARGET=_blank>Copyleft</A> 1999-".date("Y")."\nby ".
+         "<A STYLE=\"color:{$color['text']};font-weight:bold\" HREF=\"http://jsboard.kldp.org\" TARGET=_blank>".
          "JSBoard Open Project</A><BR>\n".
          "Theme Designed by ".
-         "<A STYLE=\"color={$color['text']};font-weight:bold\" HREF={$designer['url']} TARGET=_blank>".
+         "<A STYLE=\"color:{$color['text']};font-weight:bold\" HREF=\"{$designer['url']}\" TARGET=_blank>".
          "{$designer['name']}</A>{$designer['license']}\n".
          "</FONT>\n".
          "</TD></TR>\n".
@@ -765,10 +768,10 @@ function detail_searchform($p='') {
 
   $o['ss'] = preg_replace("/\\\\+/i","\\",$o['ss']);
 
-  $form = "<!-------- Detail Search Table ------------>\n".
-          "<TABLE WIDTH={$board['width']} BORDER=0 CELLPADDING=0 CELLSPACING=0>\n<TR><TD>\n".
+  $form = "<!-- ======================  Detail Search Table ==================== -->\n".
+          "<TABLE SUMMARY=\"\" WIDTH=\"{$board['width']}\" BORDER=0 CELLPADDING=0 CELLSPACING=0>\n<TR><TD>\n".
           "<FORM METHOD=post ACTION=locate.php?table=$table>\n".
-          "<TABLE WIDTH={$board['width']} BORDER=0 CELLPADDING=10 CELLSPACING=0 ALIGN=center BGCOLOR={$color['l5_bg']}>\n".
+          "<TABLE SUMMARY=\"\" WIDTH=\"{$board['width']}\" BORDER=0 CELLPADDING=10 CELLSPACING=0 ALIGN=center BGCOLOR=\"{$color['l5_bg']}\">\n".
           "<TR>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['sh_str']}</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
@@ -839,7 +842,7 @@ function detail_searchform($p='') {
           "</TABLE>\n".
           "</FORM>\n".
           "</TD></TR>\n</TABLE>\n".
-          "<!-------- Detail Search Table ------------>\n\n".
+          "<!-- ======================  Detail Search Table ==================== -->\n\n".
           "<P>\n";
 
   if($p) echo $form;
@@ -856,10 +859,10 @@ function print_comment($table,$no,$print=0) {
     else $disable = "";
   } else $disable = "";
 
-  $t = "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=5 BGCOLOR={$color['l5_bg']}>\n".
+  $t = "<TABLE SUMMARY=\"\" WIDTH=\"100%\" BORDER=0 CELLPADDING=0 CELLSPACING=5 BGCOLOR=\"{$color['l5_bg']}\">\n".
        get_comment($table,$no,0).
        "<TR><TD COLSPAN=4 ALIGN=right>\n".
-       "<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=1 BGCOLOR={$color['l3_bg']}>\n".
+       "<TABLE SUMMARY=\"\" BORDER=0 CELLPADDING=0 CELLSPACING=1 BGCOLOR=\"{$color['l3_bg']}\">\n".
        "<FORM METHOD=POST ACTION=act.php>\n".
        "<TR>\n".
        "<TD ROWSPAN=2 ALIGN=center>".
@@ -902,12 +905,12 @@ function print_keymenu($type=0) {
   if(!$type) {
     $nextpage = $pages['nex'] ? $pages['nex'] : $pages['all'];
     $prevpage = $pages['pre'] ? $pages['pre'] : 1;
-    $nlink = "./list.php?table=$table&page=$nextpage";
-    $plink = "./list.php?table=$table&page=$prevpage";
+    $nlink = "./list.php?table=$table&amp;page=$nextpage";
+    $plink = "./list.php?table=$table&amp;page=$prevpage";
     $ment = "Page";
 
     $precmd = " if (cc == 13) {\n".
-              "    if(strs.length > 0) self.location = 'read.php?table=$table&num=' + strs + '&page=$page';\n".
+              "    if(strs.length > 0) self.location = 'read.php?table=$table&amp;num=' + strs + '&amp;page=$page';\n".
               "    else strs = \"\";\n".
               "  } else";
 
@@ -920,25 +923,25 @@ function print_keymenu($type=0) {
               "    document.getElementById(\"num\").innerHTML=strs;\n".
               "  }\n";
   } else {
-    $nlink = "./read.php?table=$table&no={$pos['prev']}";
-    $plink = "./read.php?table=$table&no={$pos['next']}";
+    $nlink = "./read.php?table=$table&amp;no={$pos['prev']}";
+    $plink = "./read.php?table=$table&amp;no={$pos['next']}";
     $ment = "Article";
 
     $anycmd = "else if(ch == 'l' || ch == '.' || ch == 'L') {\n".
-              "    self.location = './list.php?table=$table&page=$page';\n".
+              "    self.location = './list.php?table=$table&amp;page=$page';\n".
               "  } else if(ch == 'r' || ch == 'R' || ch == '/') {\n".
-              "    self.location = './reply.php?table=$table&no=$no&page=$page';\n".
+              "    self.location = './reply.php?table=$table&amp;no=$no&amp;page=$page';\n".
               "  } else if(ch == 'e' || ch == 'E') {\n".
-              "    self.location = './edit.php?table=$table&no=$no&page=$page';\n".
+              "    self.location = './edit.php?table=$table&amp;no=$no&amp;page=$page';\n".
               "  } else if(ch == 'd' || ch == 'D') {\n".
-              "    self.location = './delete.php?table=$table&no=$no&page=$page';\n".
+              "    self.location = './delete.php?table=$table&amp;no=$no&amp;page=$page';\n".
               "  } else if(ch == ':' || strs == ':') {\n".
               "    strs = strs + ch;\n".
               "    if(strs == ':q') { self.close(); }\n".
               "  }\n";
   }
 
-  echo " <SCRIPT LANGUAGE=\"javascript\">\n".
+  echo " <SCRIPT TYPE=\"text/javascript\">\n".
        "<!--//\n".
        "_dom=0;\n".
        "strs=\"\";\n".
@@ -967,13 +970,13 @@ function print_keymenu($type=0) {
        "  if(e.altKey || e.ctrlKey) return;\n\n".
        
        " ${precmd} if(ch == 'p' || ch == 'P') {\n".
-       "    self.location = './list.php?table=$table&page=1';\n".
+       "    self.location = './list.php?table=$table&amp;page=1';\n".
        "  } else if(ch == 'n' || ch == 'N' || ch == '+') {\n".
        "    self.location = '$nlink';\n".
        "  } else if(ch == 'b' || ch == 'B' || ch == '-') {\n".
        "    self.location = '$plink';\n".
        "  } else if(ch == 'w' || ch == 'W' || ch == '*') {\n".
-       "    self.location = './write.php?table=$table&page=$page';\n".
+       "    self.location = './write.php?table=$table&amp;page=$page';\n".
        "  } $anycmd\n".
        "  return;\n".
        "}\n\n".

@@ -43,22 +43,22 @@ if ($agent['br'] == "MSIE" || $agent['br'] == "MOZL" || ($agent['br'] == "NS" &&
 } else $print['operate'] = "No support this browser";
 
 $wkey = get_spam_value($board['antispam']);
-$print['passform'] = "<INPUT TYPE=hidden NAME=o[at] VALUE=write>\n".
-                   "<INPUT TYPE=hidden NAME=table VALUE=$table>\n".
-                   "<INPUT TYPE=hidden NAME=atc[wkey] VALUE=$wkey>\n";
+$print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=\"write\">\n".
+                   "<INPUT TYPE=hidden NAME=\"table\" VALUE=\"$table\">\n".
+                   "<INPUT TYPE=hidden NAME=\"atc[wkey]\" VALUE=\"$wkey\">\n";
 
-$pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"{$pre_regist['rname']}\">";
+$pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<INPUT TYPE=hidden NAME=\"atc[rname]\" VALUE=\"{$pre_regist['rname']}\">";
 
 if(!$nodisable) {
-  $print['passform'] .= "<INPUT TYPE=hidden NAME=atc[name] VALUE=\"{$pre_regist['name']}\">".
+  $print['passform'] .= "<INPUT TYPE=hidden NAME=\"atc[name]\" VALUE=\"{$pre_regist['name']}\">".
                       "{$pre_regist['rname']}".
-                      "\n<INPUT TYPE=hidden NAME=atc[email] VALUE=\"{$pre_regist['email']}\">".
-                      "\n<INPUT TYPE=hidden NAME=atc[url] VALUE=\"{$pre_regist['url']}\">\n";
+                      "\n<INPUT TYPE=hidden NAME=\"atc[email]\" VALUE=\"{$pre_regist['email']}\">".
+                      "\n<INPUT TYPE=hidden NAME=\"atc[url]\" VALUE=\"{$pre_regist['url']}\">\n";
 } elseif($_SESSION[$jsboard]['pos'] == 1) {
   $print['passform'] .= "{$pre_regist['rname']}\n";
 }
 
-$pages = $page ? "&page=$page" : "";
+$pages = $page ? "&amp;page=$page" : "";
 
 if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode']) && $_SESSION[$jsboard]['pos'] != 1) 
   $pre_regist['name'] = $_SESSION[$jsboard]['name'] ? $_SESSION[$jsboard]['name'] : $pre_regist['name'];

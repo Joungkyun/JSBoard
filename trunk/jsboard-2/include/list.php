@@ -5,7 +5,7 @@ function print_list($table, $list, $r=0)
   global $o, $upload, $cupload, $agent, $no, $lines, $page, $nolenth;
 
   $search = search2url($o);
-  $pages = $page ? "&page=$page" : "&page=1";
+  $pages = $page ? "&amp;page=$page" : "&amp;page=1";
 
   $nolenth = strlen($list['no']) > $nolenth ? strlen($list['no']) : $nolenth;
 
@@ -19,7 +19,7 @@ function print_list($table, $list, $r=0)
 
   if(preg_match("/<font[^>]*color=/i",$list['title'])) {
     $fchk = 1;
-    $list['title'] = preg_replace("/<font[^>]*color=([a-z0-9#]+)[^>]*>/i","<font color=\\1>",$list['title']);
+    $list['title'] = preg_replace("/<font[^>]*color=([a-z0-9#]+)[^>]*>/i","<font color=\"\\1\">",$list['title']);
     $board['tit_l'] += 28;
   }
 
@@ -47,8 +47,8 @@ function print_list($table, $list, $r=0)
 
   if($list['reno']) {
     $list['rede'] *= 10;
-    $list['title'] = "<IMG SRC=images/n.gif BORDER=0 WIDTH={$list['rede']} HEIGHT=1 ALT=''>" .
-                   "<IMG SRC=$repimg WIDTH=12 BORDER=0 HEIGHT=12 ALT='{$langs['ln_re']}'> {$list['title']}";
+    $list['title'] = "<IMG SRC=\"images/n.gif\" BORDER=0 WIDTH={$list['rede']} HEIGHT=1 ALT=''>" .
+                   "<IMG SRC=\"$repimg\" WIDTH=12 BORDER=0 HEIGHT=12 ALT='{$langs['ln_re']}'> {$list['title']}";
     $list['num']   = "&nbsp;";
 
     $bg = $color['l3_bg'];
@@ -91,8 +91,8 @@ function print_list($table, $list, $r=0)
         $tail = check_filetype($list['bofile']);
         $icon = icon_check($tail,$list['bofile']);
         $down_link = check_dnlink($table,$list);
-        $list['icon'] = "<IMG SRC=images/$icon width=16 height=16 border=0 alt='{$list['bofile']} ($hfsize)'>";
-        $up_link    = "<A HREF=$down_link>";
+        $list['icon'] = "<IMG SRC=\"images/$icon\" width=16 height=16 border=0 alt='{$list['bofile']} ($hfsize)'>";
+        $up_link    = "<A HREF=\"$down_link\">";
         $up_link_x  = "</A>";
       } else {
         $list['icon'] = "&nbsp;";
@@ -104,19 +104,19 @@ function print_list($table, $list, $r=0)
   } else $field['upload'] = "";
 
   if(get_date() >= $list['date'])
-    $field['dates'] = "<TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"color:$fg;\"><NOBR>$date&nbsp;</NOBR></FONT></TD>";
+    $field['dates'] = "<TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"color:$fg;\">$date&nbsp;</FONT></TD>";
   else
-    $field['dates'] = "<TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"color:{$color['td_co']};\"><NOBR>$date&nbsp;</NOBR></FONT></TD>";
+    $field['dates'] = "<TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"color:{$color['td_co']};\">$date&nbsp;</FONT></TD>";
 
-  $field['no'] = "<TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"color:$fg;\">{$list['num']}</FONT><IMG SRC=./images/blank.gif WIDTH=5 HEIGHT={$lines['height']} BORDER=0 ALIGN=absmiddle ALT=''></TD>";
-  $field['title'] = "<TD><A HREF=read.php?table=$table&no={$list['no']}$pages$search{$list['preview']}><FONT STYLE=\"color:$fg;\">{$list['title']}&nbsp;$comment_size</FONT></A></TD>";
+  $field['no'] = "<TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"color:$fg;\">{$list['num']}</FONT><IMG SRC=\"./images/blank.gif\" WIDTH=5 HEIGHT={$lines['height']} BORDER=0 ALIGN=middle ALT=''></TD>";
+  $field['title'] = "<TD><A HREF=\"read.php?table=$table&amp;no={$list['no']}$pages$search\"{$list['preview']}><FONT STYLE=\"color:$fg;\">{$list['title']}&nbsp;$comment_size</FONT></A></TD>";
   $field['name'] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">{$list['name']}&nbsp;</FONT></TD>";
   $field['refer'] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">{$list['refer']}&nbsp;</FONT></TD>";
-  $field['nulls'] = "<TD><IMG SRC=./images/blank.gif WIDTH=1 HEIGHT={$lines['height']} BORDER=0 ALT=''>";
+  $field['nulls'] = "<TD><IMG SRC=\"./images/blank.gif\" WIDTH=1 HEIGHT={$lines['height']} BORDER=0 ALT=''>";
 
   # td field 를 지정하지 않았을 경우 기본값을 지정한다.
   $td_array = !$td_array ? "nTNFDR" : $td_array;
-  $prints = "\n<TR bgcolor=$bg onMouseOver=\"this.style.backgroundColor='{$color['ms_ov']}'\" onMouseOut=\"this.style.backgroundColor=''\">\n";
+  $prints = "\n<TR bgcolor=\"$bg\" onMouseOver=\"this.style.backgroundColor='{$color['ms_ov']}'\" onMouseOut=\"this.style.backgroundColor=''\">\n";
   for($i=0;$i<strlen($td_array);$i++) {
     switch ($td_array[$i]) {
       case 'n' :
@@ -226,12 +226,12 @@ function get_comment($table,$no,$prints=0) {
 
   if($corder == 2) {
     $imgfile = "./theme/{$print['theme']}/img/csortup.gif";
-    $sortimg = file_exists($imgfile) ? "<IMG SRC=$imgfile BORDER=0 ALT=''>" : "&#9651;";
-    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=1&page=$page>$sortimg</A>";
+    $sortimg = file_exists($imgfile) ? "<IMG SRC=\"$imgfile\" BORDER=0 ALT=''>" : "&#9651;";
+    $orlink = "<A HREF=\"read.php?table=$table&amp;no=$no&amp;corder=1&amp;page=$page\">$sortimg</A>";
   } else {
     $imgfile = "./theme/{$print['theme']}/img/csortdn.gif";
-    $sortimg = file_exists($imgfile) ? "<IMG SRC=$imgfile BORDER=0 ALT=''>" : "&#9661;";
-    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=2&page=$page>$sortimg</A>";
+    $sortimg = file_exists($imgfile) ? "<IMG SRC=\"$imgfile\" BORDER=0 ALT=''>" : "&#9661;";
+    $orlink = "<A HREF=\"read.php?table=$table&amp;no=$no&amp;corder=2&amp;page=$page\">$sortimg</A>";
   }
 
   if($comment_no > 0) {
@@ -268,16 +268,16 @@ function print_comment_art($table,$list,$prints=0,$delimg) {
 
   if(($board['adm'] || $board['super'] == 1) ||
      (preg_match("/^(2|3|5|7)$/i",$board['mode']) && $_SESSION[$jsboard]['id'])) {
-    $delPath = "./act.php?table=$table&o[at]=c_del&atc[no]=$no&atc[cid]={$list['no']}&page=$page";
+    $delPath = "./act.php?table=$table&amp;o[at]=c_del&amp;atc[no]=$no&amp;atc[cid]={$list['no']}&amp;page=$page";
   } else {
-    $delPath = "./login.php?table=$table&mode=comment&no=$no&cid={$list['no']}&page=$page";
+    $delPath = "./login.php?table=$table&amp;mode=comment&amp;no=$no&amp;cid={$list['no']}&amp;page=$page";
   }
 
   if((preg_match("/^(2|3|5|7)$/i",$board['mode']) && $_SESSION[$jsboard]['id'] != $list['name']) &&
      (!$board['adm'] && $board['super'] != 1)) {
      $del_mark = "&nbsp;";
   } else {
-     $dmark = $delimg ? "<IMG SRC=./theme/{$print['theme']}/img/cdelete.gif BORDER=0 ALT=''>" : "&#9447;";
+     $dmark = $delimg ? "<IMG SRC=\"./theme/{$print['theme']}/img/cdelete.gif\" BORDER=0 ALT=''>" : "&#9447;";
      $del_mark = "<A HREF=$delPath TITLE='Comment Delete'>$dmark</A>";
   } 
 
@@ -286,11 +286,11 @@ function print_comment_art($table,$list,$prints=0,$delimg) {
   else $names = $list['name'];
 
   $ret = "<TR>\n".
-         "<TD VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\"><NOBR>$del_mark</NOBR></TD>\n".
-         "<TD VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\"><NOBR>".
-         "<FONT Style=\"font-weight:bold\">$names</FONT></NOBR></TD>\n".
+         "<TD VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\">$del_mark</TD>\n".
+         "<TD VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\">".
+         "<FONT Style=\"font-weight:bold\">$names</FONT></TD>\n".
          "<TD><PRE>{$list['text']}</TD></PRE>\n".
-         "<TD ALIGN=right VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\"><NOBR><FONT STYLE=\"font: 11px tahoma\">{$list['date']} </FONT></NOBR></TD>\n".
+         "<TD ALIGN=right VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"font: 11px tahoma\">{$list['date']} </FONT></TD>\n".
          "</TR>\n";
 
   if($prints) echo $ret;

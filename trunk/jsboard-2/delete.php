@@ -53,7 +53,7 @@ if($list['bofile']) {
 if($enable['dhost']) {
   $list['dhost'] = get_hostname($enable['dlook'],$list['host']);
   if($enable['dwho']) {
-    $list['dhost'] = "<A HREF=javascript:new_windows('./whois.php?table=$table&host={$list['host']}',0,1,0,600,480)>".
+    $list['dhost'] = "<A HREF=\"javascript:new_windows('./whois.php?table=$table&amp;host={$list['host']}',0,1,0,600,480)\">".
                    "<FONT style=\"color:{$color['text']}\">{$list['dhost']}</FONT></a>";
   } else $list['dhost'] = "<FONT style=\"color:{$color['text']}\">{$list['dhost']}</FONT>";
 } else $list['dhost'] = "";
@@ -82,16 +82,16 @@ if($board['super'] != 1 && $_SESSION[$jsboard]['id'] != $list['name']) {
 $page = $page ? $page : 1;
 
 # 패스워드 폼 출력을 위한 변수
-$print['passform'] = "<INPUT TYPE=hidden NAME=o[at] value=del>\n".
-                   "<INPUT TYPE=hidden NAME=page value=$page>\n".
-                   "<INPUT TYPE=hidden NAME=no VALUE=\"$no\">\n".
-                   "<INPUT TYPE=hidden NAME=table VALUE=\"$table\">\n".
-                   "<INPUT TYPE=hidden NAME=delete_dir VALUE=\"$deldir\">\n".
-                   "<INPUT TYPE=hidden NAME=delete_filename VALUE=\"$delfile\">\n".
+$print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" value=\"del\">\n".
+                   "<INPUT TYPE=hidden NAME=\"page\" value=\"$page\">\n".
+                   "<INPUT TYPE=hidden NAME=\"no\" VALUE=\"$no\">\n".
+                   "<INPUT TYPE=hidden NAME=\"table\" VALUE=\"$table\">\n".
+                   "<INPUT TYPE=hidden NAME=\"delete_dir\" VALUE=\"$deldir\">\n".
+                   "<INPUT TYPE=hidden NAME=\"delete_filename\" VALUE=\"$delfile\">\n".
                    "{$print['passform']}";
 
 # Page 가 존재할 경우 목록으로 갈때 해당 페이지로 이동
-$page = $page ? "&page=$page" : "1";
+$page = $page ? "&amp;page=$page" : "1";
 
 mysql_close();
 

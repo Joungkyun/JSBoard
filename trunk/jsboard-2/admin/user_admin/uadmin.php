@@ -186,28 +186,77 @@ if($textBrowser) {
                  "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'n');\" TITLE=\"Up Down\">";
 }
 ?>
-
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
 <TITLE>JSBoard Administration Center [ User ADMIN page ]</TITLE>
 
 <style type='text/css'>
-A:link, A:visited, A:active { text-decoration:none; color:<?=$color['text']?>; }
-A:hover { color:red; }
-TD { font:12px <?=$langs['font']?>; color: <?=$color['text']?> }
-INPUT {font: 11px tahoma; color:<?=$color['text']?>; border-width:1; border-style:solid; border-color:<?=$color['n1_fg']?>; padding-left:1px; padding-right:1px; background-color:<?=$color['b_bg']?>; }
-SELECT {font: 11px tahoma; color:<?=$color['text']?>; border-width:1; border-style:solid; border-color:<?=$color['n1_fg']?>; background-Color:<?=$color['b_bg']?>; }
-TEXTAREA {font: 11px ±¼¸²Ã¼; color:<?=$color['text']?>; border-width:1; border-style:solid; border-color:<?=$color['n1_fg']?>; padding-left:1px; background-Color:<?=$color['b_bg']?>;}
- #RADIO {font: 12px <?=$langs['font']?>; BACKGROUND-COLOR:<?=$color['b_bg']?>; COLOR:<?=$color['text']?>; BORDER:2x solid <?=$color['b_bg']?>}
- #RADIO1 {font: 12px <?=$langs['font']?>; BACKGROUND-COLOR:<?=$color['m_bg']?>; COLOR:<?=$color['text']?>; BORDER:2x solid <?=$color['m_bg']?>}
- #BG {font:12px <?=$langs['font']?>; color:<?=$color['bocol']?>}
- #TCOLOR {font:12px tahoma; color:<?=$color['t_fg']?>; font-weight:bold}
- #MCOLOR {font:12px <?=$langs['font']?>; color:<?=$color['m_fg']?>}
- #DCOLOR {font:12px <?=$langs['font']?>; color:<?=$color['d_fg']?>}
+A:link, A:visited, A:active { text-decoration: none; color: <?=$color['text']?>; }
+A:hover { color: red; }
+TD {
+  font: 12px <?=$langs['font']?>,sans-serif;
+  color: <?=$color['text']?>;
+}
+INPUT {
+  font: 11px tahoma,sans-serif;
+  color: <?=$color['text']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['n1_fg']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?=$color['b_bg']?>;
+}
+SELECT {
+  font: 11px tahoma,sans-serif;
+  color: <?=$color['text']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['n1_fg']?>;
+  background-Color: <?=$color['b_bg']?>;
+}
+TEXTAREA {
+  font: 11px GulimChe,sans-serif;
+  color: <?=$color['text']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['n1_fg']?>;
+  padding-left: 1px;
+  background-Color: <?=$color['b_bg']?>;
+}
+ #RADIO {
+  font: 12px <?=$langs['font']?>,sans-serif;
+  background-color: <?=$color['b_bg']?>;
+  color: <?=$color['text']?>;
+  border: 2px solid <?=$color['b_bg']?>;
+}
+ #RADIO1 {
+  font: 12px <?=$langs['font']?>,sans-serif;
+  background-color: <?=$color['m_bg']?>;
+  color: <?=$color['text']?>;
+  border: 2px solid <?=$color['m_bg']?>;
+}
+ #BG {
+  font: 12px <?=$langs['font']?>,sans-serif;
+  color: <?=$color['bocol']?>;
+}
+ #TCOLOR {
+  font: 12px tahoma,sans-serif;
+  color: <?=$color['t_fg']?>;
+  font-weight: bold;
+}
+ #MCOLOR {
+  font: 12px <?=$langs['font']?>,sans-serif;
+  color: <?=$color['m_fg']?>;
+}
+ #DCOLOR {
+  font: 12px <?=$langs['font']?>,sans-serif;
+  color: <?=$color['d_fg']?>;
+}
 </style>
 
-<SCRIPT LANGUAGE=JavaScript>
+<SCRIPT TYPE="text/javascript">
 <!--
 function fresize(value,name) {
   if(name == 'h') {

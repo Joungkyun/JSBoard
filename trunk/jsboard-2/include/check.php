@@ -241,9 +241,9 @@ function check_dnlink($table,$list) {
 
   if(!$cupload['dnlink']) {
     if (preg_match("/(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs|\.ppt|\.xls)$/i",$list['bofile'])) {
-      $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]={$list['bcfile']}&dn[name]={$list['bofile']}";
+      $dn = "act.php?o[at]=dn&amp;dn[tb]=$table&amp;dn[cd]={$list['bcfile']}&amp;dn[name]={$list['bofile']}";
     } else {
-      if ($list['bfsize'] < 51200) $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]={$list['bcfile']}&dn[name]={$list['bofile']}";
+      if ($list['bfsize'] < 51200) $dn = "act.php?o[at]=dn&amp;dn[tb]=$table&amp;dn[cd]={$list['bcfile']}&amp;dn[name]={$list['bofile']}";
       else $dn = "./data/$table/{$upload['dir']}/{$list['bcfile']}/{$list['bofile']}";
     }
   } else {

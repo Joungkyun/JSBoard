@@ -10,7 +10,7 @@ if ( preg_match ('!/\.+|%00$!', $table) ) {
 }
 
 if($window) {
-  echo "<SCRIPT LANGUAGE = \"Javascript\">\n" .
+  echo "<SCRIPT TYPE=\"text/javascript\">\n" .
        "<!--\nvar farwindow = null;\n" .
        "function remoteWindow() {\n" .
        "  farwindow = window.open(\"\",\"Whois\",\"width=600,height=480,scrollbars=1,resizable=1\");\n" .
@@ -27,7 +27,7 @@ if($window) {
 }
 
 if (!trim($table) || !trim($host)) {
-  echo "<script>\n".
+  echo "<script type=\"text/javascript\">\n".
        "alert('U attempted invalid method in this program!');\n".
        "history.back();\n".
        "</script>\n";
@@ -35,7 +35,7 @@ if (!trim($table) || !trim($host)) {
 }
 
 if ( ! @file_exists("config/global.php") ) {
-  echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
+  echo "<script type=\"text/javascript\">\nalert('Don\'t exist global\\nconfiguration file');\n" .
        "history.back();\nexit;\n</script>\n";
 } else { include_once "config/global.php"; }
 
@@ -62,7 +62,7 @@ TD { font-size: 12px;font-family: <?=$langs['font']?> }
 </HEAD>
 
 <?
-echo "<BODY BGCOLOR={$color['b_bg']} TEXT={$color['b_fg']}>\n<PRE>";
+echo "<BODY BGCOLOR=\"{$color['b_bg']}\" TEXT=\"{$color['text']}\">\n<PRE>";
 
 $server = "whois.krnic.net";
 $port   = "43";

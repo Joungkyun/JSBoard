@@ -2,7 +2,7 @@
 function print_error($str,$width=250,$height=150,$back='') {
   global $table, $path, $prlist, $agent, ${$jsboard};
 
-  echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
+  echo "<SCRIPT type=\"text/javascript\">\n<!--\n";
 
   if(!is_array($agent))
     $agent = @get_agent();
@@ -53,7 +53,7 @@ function print_notice($str,$width = 330, $height = 210) {
   if(!is_array($agent)) 
     $agent = @get_agent();
 
-  echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
+  echo "<SCRIPT TYPE=\"text/javascript\">\n<!--\n";
   if(preg_match("/^(WIN|NT)$/i",$agent['os'])) {
     $str = wordwrap($str,40);
     $str = preg_replace("/\n/","\\n",$str);
@@ -88,7 +88,7 @@ function print_pwerror($str, $width = 250, $height = 130) {
   elseif ($path['type'] == "admin") $err_fn = "..";
   else $err_fn = ".";
 
-  echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
+  echo "<SCRIPT TYPE=\"text/javascript\">\n<!--\n";
 
   if(preg_match("/^(WIN|NT)$/i",$agent['os'])) {
     $str = wordwrap($str,40);

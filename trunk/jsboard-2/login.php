@@ -15,7 +15,7 @@ if($table && file_exists("data/$table/config.php"))
 # input 문의 size를 browser별로 맞추기 위한 설정
 $size = form_size(6);
 
-$opt = !$table ? "" : "&table=$table";
+$opt = !$table ? "" : "&amp;table=$table";
 $hin = !$table ? "" : "<INPUT TYPE=hidden NAME=table VALUE=\"$table\">";
 $tin = ($type == "admin") ? "<INPUT TYPE=hidden NAME=type VALUE=\"$type\">" : "";
 $board['align'] = $board['align'] ? $board['align'] : "center";

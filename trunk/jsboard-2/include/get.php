@@ -375,7 +375,7 @@ function viewfile($tail) {
 
   $source1 = "<p><br>\n---- {$list['bofile']} {$langs['inc_file']} -------------------------- \n<p>\n<pre>\n";
   $source2 = "\n</pre>\n<br><br>";
-  $source3 = "   <font color=red>{$list['bofile']}</font> file is broken link!!\n\n";
+  $source3 = "   <font color=\"#ff0000\">{$list['bofile']}</font> file is broken link!!\n\n";
 
   if (@file_exists($upload_file)) {
     if ($agent['br'] == "MSIE" && $agent['vr'] >= 6)
@@ -384,7 +384,7 @@ function viewfile($tail) {
     if (preg_match("/^(gif|jpg|png{$bmpchk})$/i",$tail)) {
       $imginfo = GetImageSize($upload_file);
       if($agent['co'] == "mozilla") $list['bofile'] = urlencode($list['bofile']);
-      $uplink_file = "./form.php?mode=photo&table=$table&f[c]={$list['bcfile']}&f[n]={$list['bofile']}&f[w]={$imginfo[0]}&f[h]={$imginfo[1]}";
+      $uplink_file = "./form.php?mode=photo&amp;table=$table&amp;f[c]={$list['bcfile']}&amp;f[n]={$list['bofile']}&amp;f[w]={$imginfo[0]}&amp;f[h]={$imginfo[1]}";
       if($imginfo[0] > $board['width'] - 6 && !preg_match("/%/",$board['width'])) {
         $p['vars'] = $imginfo[0]/$board['width'];
         $p['width'] = $board['width'] - 6;
@@ -392,14 +392,14 @@ function viewfile($tail) {
 
         if(extension_loaded("gd") && $tail != "gif" && $tail != "bmp") {
           $ImgUrl = rawurlencode("$wupload_file");
-          $ImgPath = "<IMG SRC=\"./image.php?path=$ImgUrl&width={$p['width']}&height={$p['height']}\" WIDTH={$p['width']} HEIGHT={$p['height']} BORDER=0>";
+          $ImgPath = "<IMG SRC=\"./image.php?path=$ImgUrl&amp;width={$p['width']}&amp;height={$p['height']}\" WIDTH={$p['width']} HEIGHT={$p['height']} BORDER=0 ALT=''>";
         } else
-          $ImgPath = "<IMG SRC=\"$wupload_file\" WIDTH={$p['width']} HEIGHT={$p['height']} BORDER=0>";
+          $ImgPath = "<IMG SRC=\"$wupload_file\" WIDTH={$p['width']} HEIGHT={$p['height']} BORDER=0 ALT=''>";
 
         $p['up']  = "[ <B>Original Size</B> $imginfo[0] * $imginfo[1] ]<br>\n";
-        $p['up'] .= "<A HREF=javascript:new_windows(\"$uplink_file\",\"photo\",0,0,$imginfo[0],$imginfo[1])>$ImgPath</A>\n<P>\n";
+        $p['up'] .= "<A HREF=\"javascript:new_windows(\"$uplink_file\",\"photo\",0,0,$imginfo[0],$imginfo[1])\">$ImgPath</A>\n<P>\n";
       } else {
-        $p['up'] = "<IMG SRC=\"$wupload_file\" $imginfo[3] BORDER=0>\n<p>\n";
+        $p['up'] = "<IMG SRC=\"$wupload_file\" $imginfo[3] BORDER=0 ALT=''>\n<p>\n";
       }
     } else if (preg_match("/^(phps|txt|html?|shs)$/i",$tail)) {
       $view = file_operate($upload_file,"r",0,1200);
@@ -413,14 +413,14 @@ function viewfile($tail) {
       elseif($agent['br'] == "LYNX")
         $p['bo'] = "";
       else
-        $p['bo'] = "<embed src=$upload_file autostart=true hidden=true mastersound>";
+        $p['bo'] = "<embed src=\"$upload_file\" autostart=\"true\" hidden=\"true\" mastersound>";
     } elseif (preg_match("/^(mpeg|mpg|asf|dat|avi|wmv)$/i",$tail)) {
-      if($agent['br'] == "MSIE") $p['up'] = "<embed src=$upload_file autostart=true>";
+      if($agent['br'] == "MSIE") $p['up'] = "<embed src=\"$upload_file\" autostart=\"true\">";
     } elseif ($tail == "mov" && $agent['br'] == "MSIE") {
-      $p['up'] = "<embed src=$upload_file autostart=true width=300 height=300 align=center>";
+      $p['up'] = "<embed src=\"$upload_file\" autostart=\"true\" width=300 height=300 align=\"center\">";
     } elseif ($tail == "swf") {
       $flash_size = $board['width'] - 10;
-      if($agent['br'] == "MSIE" || $agent['br'] == "MOZL" || ($agent['br'] == "NS" && $agent['vr'] == 6)) $p['up'] = "<embed src=$upload_file width=$flash_size height=$flash_size align=center>";
+      if($agent['br'] == "MSIE" || $agent['br'] == "MOZL" || ($agent['br'] == "NS" && $agent['vr'] == 6)) $p['up'] = "<embed src=\"$upload_file\" width=\"$flash_size\" height=\"$flash_size\" align=\"center\">";
     }
   } else $p['down'] = "$source1$source3$source2";
 

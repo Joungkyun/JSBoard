@@ -19,9 +19,9 @@ if($alert) {
   # Admin Link
   if($board['super'] == 1 || $board['adm']) {
     if(@file_exists("./theme/{$print['theme']}/img/admin.gif"))
-      $print['adpath'] = "<IMG SRC=./theme/{$print['theme']}/img/admin.gif BORDER=0 ALT='{$langs['ln_titl']}'>";
+      $print['adpath'] = "<IMG SRC=\"./theme/{$print['theme']}/img/admin.gif\" BORDER=0 ALT='{$langs['ln_titl']}'>";
     else $print['adpath'] = "<FONT STYLE=\"font:12px tahoma;color:{$color['text']}\">[ admin ]</FONT>";
-    $print['admin'] = "<A HREF=./admin/user_admin/uadmin.php?table=$table TITLE='{$langs['ln_titl']}'>".
+    $print['admin'] = "<A HREF=\"./admin/user_admin/uadmin.php?table=$table\" TITLE='{$langs['ln_titl']}'>".
                     "{$print['adpath']}</A>";
   }
 
@@ -85,7 +85,7 @@ if($alert) {
   
   # title 에서 폰트 색상 지정할수 있게 함
   $list['title'] = preg_replace("/&lt;((\/)*font[^&]*)&gt;/i","<\\1>",$list['title']);
-  $list['title'] = preg_replace("/<font[^>]*color=([a-z0-9#]+)[^>]*>/i","<font color=\\1>",$list['title']);
+  $list['title'] = preg_replace("/<font[^>]*color=([a-z0-9#]+)[^>]*>/i","<font color=\"\\1\">",$list['title']);
   
   # 검색 문자열 색상 변경
   $list = search_hl($list);
@@ -104,9 +104,9 @@ if($alert) {
   # Admin Link
   if($board['super'] == 1 || $board['adm']) {
     if(@file_exists("./theme/{$print['theme']}/img/admin.gif"))
-      $print['adpath'] = "<IMG SRC=./theme/{$print['theme']}/img/admin.gif BORDER=0 ALT='{$langs['ln_titl']}'>";
+      $print['adpath'] = "<IMG SRC=\"./theme/{$print['theme']}/img/admin.gif\" BORDER=0 ALT='{$langs['ln_titl']}'>";
     else $print['adpath'] = "<FONT STYLE=\"font:12px tahoma;color:{$color['text']}\">[ admin ]</FONT>";
-    $print['admin'] = "<A HREF=./admin/user_admin/uadmin.php?table=$table TITLE='{$langs['ln_titl']}'>".
+    $print['admin'] = "<A HREF=\"./admin/user_admin/uadmin.php?table=$table\" TITLE='{$langs['ln_titl']}'>".
                     "{$print['adpath']}</A>";
   }
   
@@ -114,9 +114,9 @@ if($alert) {
   if($enable['dhost']) {
     $list['dhost'] = get_hostname($enable['dlook'],$list['host']);
     if($enable['dwho'])
-      $langs['hlinked'] = "<A HREF=javascript:new_windows('./whois.php?table=$table&host={$list['host']}',0,1,0,600,480)>".
-                        "<font color={$color['text']}>{$list['dhost']}</font></a>";
-    else $langs['hlinked'] = "<font color={$color['text']}>{$list['dhost']}</font>";
+      $langs['hlinked'] = "<A HREF=\"javascript:new_windows('./whois.php?table=$table&amp;host={$list['host']}',0,1,0,600,480)\">".
+                        "<font color=\"{$color['text']}\">{$list['dhost']}</font></a>";
+    else $langs['hlinked'] = "<font color=\"{$color['text']}\">{$list['dhost']}</font>";
     $print['regist'] = "Register [ {$langs['hlinked']} ]";
   }
   
@@ -159,7 +159,7 @@ if($alert) {
     $print['dsearch'] = detail_searchform();
   else {
     $page = $page ? $page : "1";
-    $print['dserlink'] = "<A HREF={$_SERVER['PHP_SELF']}?table=$table&no=$no&page=$page&o[at]=dp>[ {$langs['detable_search_link']} ]</A>";
+    $print['dserlink'] = "<A HREF=\"{$_SERVER['PHP_SELF']}?table=$table&amp;no=$no&amp;page=$page&amp;o[at]=dp\">[ {$langs['detable_search_link']} ]</A>";
   }
   
   # 검색폼, 페이지폼 관련 변수
