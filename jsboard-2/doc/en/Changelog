@@ -23,6 +23,7 @@ Version   : jsboard-2.0pre4
 Sun, Apr 7 2002 by JoungKyun Kim  <http://www.oops.org>
 	- fixed 0xA1A1 problem on null check
 	- changed form of changelog
+	- change image formsize button to text if language isn't ko
 
 Sun, Apr 7 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- fixed maildaemon class under qmail

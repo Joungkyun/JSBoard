@@ -132,54 +132,21 @@ if(file_exists("../../data/$table/stylesheet.ph")) {
   include "../../data/$table/stylesheet.ph";
 }
 
-if($langs[code] == "ko") {
-  $ipbl_button = "<INPUT TYPE=BUTTON VALUE=\"¢¹\" onClick=\"fresize(1,'i');\" TITLE=\"Left Right\">".
-                 "<INPUT TYPE=BUTTON VALUE=\"¢Ã\" onClick=\"fresize(0,'i');\" TITLE=\"RESET\">".
-                 "<INPUT TYPE=BUTTON VALUE=\"¡ä\" onClick=\"fresize(2,'i');\" TITLE=\"Up Down\">";
-  $dlin_button = "<INPUT TYPE=BUTTON VALUE=\"¢¹\" onClick=\"fresize(1,'d');\" TITLE=\"Left Right\">".
-                 "<INPUT TYPE=BUTTON VALUE=\"¢Ã\" onClick=\"fresize(0,'d');\" TITLE=\"RESET\">".
-                 "<INPUT TYPE=BUTTON VALUE=\"¡ä\" onClick=\"fresize(2,'d');\" TITLE=\"Up Down\">";
-  $styl_button = "<INPUT TYPE=BUTTON VALUE=\"¢¹\" onClick=\"fresize(1,'s');\" TITLE=\"Left Right\">".
-                 "<INPUT TYPE=BUTTON VALUE=\"¢Ã\" onClick=\"fresize(0,'s');\" TITLE=\"RESET\">".
-                 "<INPUT TYPE=BUTTON VALUE=\"¡ä\" onClick=\"fresize(2,'s');\" TITLE=\"Up Down\">";
-  $head_button = "<INPUT TYPE=BUTTON VALUE=\"¢¹\" onClick=\"fresize(1,'h');\" TITLE=\"Left Right\">".
-                 "<INPUT TYPE=BUTTON VALUE=\"¢Ã\" onClick=\"fresize(0,'h');\" TITLE=\"RESET\">".
-                 "<INPUT TYPE=BUTTON VALUE=\"¡ä\" onClick=\"fresize(2,'h');\" TITLE=\"Up Down\">";
-  $tail_button = "<INPUT TYPE=BUTTON VALUE=\"¢¹\" onClick=\"fresize(1,'t');\" TITLE=\"Left Right\">".
-                 "<INPUT TYPE=BUTTON VALUE=\"¢Ã\" onClick=\"fresize(0,'t');\" TITLE=\"RESET\">".
-                 "<INPUT TYPE=BUTTON VALUE=\"¡ä\" onClick=\"fresize(2,'t');\" TITLE=\"Up Down\">";
-} else {
-  $ipbl_button = "<A HREF=javascript:fresize(1,'i') TITLE=\"Left Righ\">".
-                 "<IMG SRC=../../images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
-                 "<A HREF=javascript:fresize(0,'i') TITLE=\"RESET\">".
-                 "<IMG SRC=../../images/form_back.gif ALT=\"RESET\" ALIGN=absmiddle BORDER=0></A>\n".
-                 "<A HREF=javascript:fresize(2,'i') TITLE=\"Up Down\">".
-                 "<IMG SRC=../../images/form_height.gif ALT=\"Up Down\" ALIGN=absmiddle BORDER=0></A>\n";
-  $dlin_button = "<A HREF=javascript:fresize(1,'d') TITLE=\"Left Righ\">".
-                 "<IMG SRC=../../images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
-                 "<A HREF=javascript:fresize(0,'d') TITLE=\"RESET\">".
-                 "<IMG SRC=../../images/form_back.gif ALT=\"RESET\" ALIGN=absmiddle BORDER=0></A>\n".
-                 "<A HREF=javascript:fresize(2,'d') TITLE=\"Up Down\">".
-                 "<IMG SRC=../../images/form_height.gif ALT=\"Up Down\" ALIGN=absmiddle BORDER=0></A>\n";
-  $styl_button = "<A HREF=javascript:fresize(1,'s') TITLE=\"Left Righ\">".
-                 "<IMG SRC=../../images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
-                 "<A HREF=javascript:fresize(0,'s') TITLE=\"RESET\">".
-                 "<IMG SRC=../../images/form_back.gif ALT=\"RESET\" ALIGN=absmiddle BORDER=0></A>\n".
-                 "<A HREF=javascript:fresize(2,'s') TITLE=\"Up Down\">".
-                 "<IMG SRC=../../images/form_height.gif ALT=\"Up Down\" ALIGN=absmiddle BORDER=0></A>\n";
-  $head_button = "<A HREF=javascript:fresize(1,'h') TITLE=\"Left Righ\">".
-                 "<IMG SRC=../../images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
-                 "<A HREF=javascript:fresize(0,'h') TITLE=\"RESET\">".
-                 "<IMG SRC=../../images/form_back.gif ALT=\"RESET\" ALIGN=absmiddle BORDER=0></A>\n".
-                 "<A HREF=javascript:fresize(2,'h') TITLE=\"Up Down\">".
-                 "<IMG SRC=../../images/form_height.gif ALT=\"Up Down\" ALIGN=absmiddle BORDER=0></A>\n";
-  $tail_button = "<A HREF=javascript:fresize(1,'t') TITLE=\"Left Righ\">".
-                 "<IMG SRC=../../images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
-                 "<A HREF=javascript:fresize(0,'t') TITLE=\"RESET\">".
-                 "<IMG SRC=../../images/form_back.gif ALT=\"RESET\" ALIGN=absmiddle BORDER=0></A>\n".
-                 "<A HREF=javascript:fresize(2,'t') TITLE=\"Up Down\">".
-                 "<IMG SRC=../../images/form_height.gif ALT=\"Up Down\" ALIGN=absmiddle BORDER=0></A>\n";
-}
+$ipbl_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'i');\" TITLE=\"Left Right\">".
+               "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'i');\" TITLE=\"RESET\">".
+               "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'i');\" TITLE=\"Up Down\">";
+$dlin_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'d');\" TITLE=\"Left Right\">".
+               "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'d');\" TITLE=\"RESET\">".
+               "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'d');\" TITLE=\"Up Down\">";
+$styl_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'s');\" TITLE=\"Left Right\">".
+               "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'s');\" TITLE=\"RESET\">".
+               "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'s');\" TITLE=\"Up Down\">";
+$head_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'h');\" TITLE=\"Left Right\">".
+               "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'h');\" TITLE=\"RESET\">".
+               "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'h');\" TITLE=\"Up Down\">";
+$tail_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'t');\" TITLE=\"Left Right\">".
+               "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'t');\" TITLE=\"RESET\">".
+               "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'t');\" TITLE=\"Up Down\">";
 ?>
 
 <HTML>
