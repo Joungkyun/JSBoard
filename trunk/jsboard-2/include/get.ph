@@ -154,7 +154,7 @@ function get_board_info($table) {
   $sql    = search2sql($o, 0);
 
   if(!$sql) {
-    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > $today");
+    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$today'");
     $tcount = sql_result($result, 0, "COUNT(*)");
     sql_free_result($result);
   }
@@ -219,7 +219,7 @@ function get_current_page($table, $idx) {
   $count = get_board_info($table);
 
   # 지정된 글의 idx보다 큰 번호를 가진 글의 갯수를 가져옴
-  $result     = sql_query("SELECT COUNT(*) FROM $table WHERE idx > $idx $sql");
+  $result     = sql_query("SELECT COUNT(*) FROM $table WHERE idx > '$idx' $sql");
   $count[cur] = sql_result($result, 0, "COUNT(*)");
   sql_free_result($result);
 
@@ -242,12 +242,12 @@ function get_pos($table, $idx) {
     $idxminus = $idx - 10;
 
     # 지정된 글의 idx보다 작은 번호를 가진 글 중에 idx가 가장 큰 글 (다음글)
-    #$result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < $idx $sql");
-    $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE (idx BETWEEN $idxminus AND $idxdm) $sql");
+    #$result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < '$idx' $sql");
+    $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxminus' AND '$idxdm') $sql");
     $pos[next] = sql_result($result, 0, "idx");
     sql_free_result($result);
     if($pos[next]) { 
-	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = $pos[next]");
+	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '$pos[next]'");
 	$next   = sql_fetch_array($result);
 	sql_free_result($result);
         $next[title] = str_replace("&amp;","&",$next[title]);
@@ -255,7 +255,7 @@ function get_pos($table, $idx) {
 
 	$pos[next] = $next[no];
 	if($next[reto]) {
-	    $result    = sql_query("SELECT num FROM $table WHERE no = $next[reto]");
+	    $result    = sql_query("SELECT num FROM $table WHERE no = '$next[reto]'");
 	    $next[num] = sql_result($result, 0, "num");
 	    sql_free_result($result);
 	    $pos[next_t] = "Reply of No.$next[num]: $next[title]";
@@ -265,12 +265,12 @@ function get_pos($table, $idx) {
     }
 
     # 지정된 글의 idx보다 큰 번호를 가진 글 중에 idx가 가장 작은 글 (이전글)
-    #$result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > $idx $sql");
-    $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE (idx BETWEEN $idxdp AND $idxplus) $sql");
+    #$result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > '$idx' $sql");
+    $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxdp' AND '$idxplus') $sql");
     $pos[prev] = sql_result($result, 0, "idx");
     sql_free_result($result);
     if($pos[prev]) { 
-	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = $pos[prev]");
+	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '$pos[prev]'");
 	$prev   = sql_fetch_array($result);
 	sql_free_result($result);
         $prev[title] = str_replace("&amp;","&",$prev[title]);
@@ -278,7 +278,7 @@ function get_pos($table, $idx) {
 
 	$pos[prev] = $prev[no];
 	if($prev[reto]) {
-	    $result    = sql_query("SELECT num FROM $table WHERE no = $prev[reto]");
+	    $result    = sql_query("SELECT num FROM $table WHERE no = '$prev[reto]'");
 	    $prev[num] = sql_result($result, 0, "num");
 	    sql_free_result($result);
 	    $pos[prev_t] = "Reply of No.$prev[num]: $prev[title]";
@@ -365,7 +365,7 @@ function get_article($table, $no, $field0 = "*", $field1 = "no") {
   if(!$no)
     print_error("$langs[get_no]",250,150,1);
 
-  $result  = sql_query("SELECT $field0 FROM $table WHERE $field1 = $no");
+  $result  = sql_query("SELECT $field0 FROM $table WHERE $field1 = '$no'");
   $article = sql_fetch_array($result);
   sql_free_result($result);
 

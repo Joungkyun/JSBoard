@@ -18,7 +18,7 @@ function replication_addrefer($db) {
   
   if($c && get_hostname(0) != $list[host]) {
     @mysql_select_db($db[name],$c);
-    mysql_query("UPDATE $table SET refer = refer + 1 WHERE no = $no",$c);
+    mysql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'",$c);
     sql_error($mysql_errno,$mysql_error);
     $list[refer]++;
   }

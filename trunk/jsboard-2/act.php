@@ -61,9 +61,9 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     sql_query("INSERT INTO $table (no,num,idx,date,host,name,rname,passwd,email,url,
                                    title,text,refer,reyn,reno,rede,reto,html,bofile,
                                    bcfile,bfsize)
-                      VALUES ('', $atc[mxnum], $atc[mxidx],$atc[date],'$atc[host]',
+                      VALUES ('','$atc[mxnum]','$atc[mxidx]',$atc[date],'$atc[host]',
                               '$atc[name]','$atc[rname]','$atc[passwd]','$atc[email]',
-                              '$atc[url]','$atc[title]','$atc[text]',0,0,0,0,0,$atc[html],
+                              '$atc[url]','$atc[title]','$atc[text]',0,0,0,0,0,'$atc[html]',
                               '$upfile[name]','$bfilename','$upfile[size]')");
 
     # mail 보내는 부분
@@ -135,14 +135,14 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     else $atc[reto] = $reply[no]; # 부모글 번호
 
     # 부모글 이상의 인덱스 번호를 가진 글들의 인덱스를 1씩 더함
-    sql_query("UPDATE $table SET idx = idx + 1 WHERE (idx + 0) >= $atc[idx]");
-    sql_query("UPDATE $table SET reyn = 1 WHERE no = $atc[reno]");
+    sql_query("UPDATE $table SET idx = idx + 1 WHERE (idx + 0) >= '$atc[idx]'");
+    sql_query("UPDATE $table SET reyn = 1 WHERE no = '$atc[reno]'");
     sql_query("INSERT INTO $table (no,num,idx,date,host,name,rname,passwd,email,url,
                                    title,text,refer,reyn,reno,rede,reto,html,bofile,
                                    bcfile,bfsize)
-                      VALUES ('',0,$atc[idx],$atc[date],'$atc[host]','$atc[name]','$atc[rname]',
+                      VALUES ('',0,'$atc[idx]','$atc[date]','$atc[host]','$atc[name]','$atc[rname]',
                               '$atc[passwd]','$atc[email]','$atc[url]','$atc[title]','$atc[text]',
-                              0,0,'$atc[reno]','$atc[rede]',$atc[reto],$atc[html],'$upfile[name]',
+                              0,0,'$atc[reno]','$atc[rede]','$atc[reto]','$atc[html]','$upfile[name]',
                               '$bfilename','$upfile[size]')");
     sql_query("UNLOCK TABLES");
 
@@ -195,7 +195,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
     # file 삭제 루틴
     if($atc[fdel]) {
-      sql_query("UPDATE $table SET bcfile='', bofile='', bfsize='' WHERE no = $atc[no]");
+      sql_query("UPDATE $table SET bcfile='', bofile='', bfsize='' WHERE no = '$atc[no]'");
       if(file_exists("data/$table/files/$atc[fdeldir]/$atc[fdelname]")) {
         unlink("data/$table/files/$atc[fdeldir]/$atc[fdelname]");
         rmdir("data/$table/files/$atc[fdeldir]");
@@ -213,17 +213,17 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       }
 
       sql_query("
-        UPDATE $table SET date = $atc[date], host = '$atc[host]',
+        UPDATE $table SET date = '$atc[date]', host = '$atc[host]',
         name = '$atc[name]', email = '$atc[email]', url = '$atc[url]',
-        title = '$atc[title]', text = '$atc[text]', html = $atc[html],
+        title = '$atc[title]', text = '$atc[text]', html = '$atc[html]',
         bofile = '$upfile[name]', bcfile = '$bfilename', bfsize = '$upfile[size]'
-        WHERE no = $atc[no]");
+        WHERE no = '$atc[no]'");
     } else {
       sql_query("
-        UPDATE $table SET date = $atc[date], host = '$atc[host]',
+        UPDATE $table SET date = '$atc[date]', host = '$atc[host]',
         name = '$atc[name]', email = '$atc[email]', url = '$atc[url]',
-        title = '$atc[title]', text = '$atc[text]', html = $atc[html]
-        WHERE no = $atc[no]");
+        title = '$atc[title]', text = '$atc[text]', html = '$atc[html]'
+        WHERE no = '$atc[no]'");
     }
 
     set_cookie($atc);
@@ -249,15 +249,15 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
     # 부모글의 답장글이 자신 밖에 없을 때 부모글의 reyn을 초기화 (답장글 여부)
     if($atc[reno]) {
-      $result = sql_query("SELECT COUNT(*) FROM $table WHERE reno = $atc[reno]");
+      $result = sql_query("SELECT COUNT(*) FROM $table WHERE reno = '$atc[reno]'");
       if(sql_result($result, 0, "COUNT(*)") == 1)
-        sql_query("UPDATE $table SET reyn = 0 WHERE no = $atc[reno]");
+        sql_query("UPDATE $table SET reyn = 0 WHERE no = '$atc[reno]'");
       sql_free_result($result);
     }
 
     sql_query("LOCK TABLES $table WRITE");
-    sql_query("DELETE FROM $table WHERE no = $atc[no]");
-    sql_query("UPDATE $table SET idx = idx - 1 WHERE (idx + 0) > $atc[idx]");
+    sql_query("DELETE FROM $table WHERE no = '$atc[no]'");
+    sql_query("UPDATE $table SET idx = idx - 1 WHERE (idx + 0) > '$atc[idx]'");
 
     if(!$atc[reyn]) {
       # upload file이 존재할 경우 삭제
@@ -269,7 +269,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
     # 관련글이 있을 경우 관련글을 모두 삭제함 (관리자 모드)
     if($atc[reyn] && ($_SESSION[$jsboard][pos] || $_SESSION[$jsboard][id] == $board[ad] || $admchk == 2)) {
-      $result = sql_query("SELECT no,bofile,bcfile FROM $table WHERE reno = $atc[no]");
+      $result = sql_query("SELECT no,bofile,bcfile FROM $table WHERE reno = '$atc[no]'");
       while($list = sql_fetch_array($result)) {
         sql_query("UNLOCK TABLES");
         article_delete($table, $list[no], $passwd);
