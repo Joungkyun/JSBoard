@@ -20,6 +20,11 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.5
 
+2003.02.28
+  by 김정균 <http://www.oops.org>
+	- image 공격 태크 삭제하게 변경
+	- 이모티콘 함수 수정
+
 2003.02.21
   by 김정균 <http://www.oops.org>
 	- shot tag 관련 업데이트
