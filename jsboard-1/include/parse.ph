@@ -204,7 +204,7 @@ function cut_string($str, $length) {
     return $str;
 
   for($co = 1; $co <= $length; $co++) {
-    if(is_hangul(substr($str, $co - 1, $co))) {
+    if(is_hangul(substr($str, $co-1,1))) {
       if($first) { // first 값이 있으면 한글의 두번째 바이트로 정의
         $second = 1;
         $first  = 0;
@@ -217,7 +217,7 @@ function cut_string($str, $length) {
       // 한글이 아닐 경우 한글의 몇번째 바이트인지 나타내는 변수 초기화
       $first = $second = 0;
       // 대문자의 갯수를 기록
-      if(is_alpha(substr($str, $co - 1, $co)) == 2)
+      if(is_alpha(substr($str,$co-1,1)) == 2)
         $alpha++;
     }
   }
@@ -241,7 +241,7 @@ function auto_link($str) {
   global $color;
 
   $regex[http] = "(http|https|ftp|telnet|news):\/\/([a-z0-9_\-]+\.[][a-zA-Z0-9:;&#@=_~%\?\/\.\,\+\-]+)";
-  $regex[mail] = "([a-z0-9_\-]+)@([a-z0-9_\-]+\.[a-z0-9\-\._\-]+)";
+  $regex[mail] = "([a-z0-9_\.\-]+)@([a-z0-9_\-]+\.[a-z0-9\-\._\-]+)";
 
   // < 로 열린 태그가 그 줄에서 닫히지 않을 경우 nl2br()에서 <BR> 태그가
   // 붙어 깨지는 문제를 막기 위해 다음 줄까지 검사하여 이어줌
@@ -256,7 +256,8 @@ function auto_link($str) {
   $str = eregi_replace("<a([ ]+)href=([\"']*)($regex[http])([\"']*)>","<a href=\"\\4_orig://\\5\" target=\"_blank\">", $str);
   $str = eregi_replace("<a([ ]+)href=([\"']*)mailto:($regex[mail])([\"']*)>","<a href=\"mailto:\\4#-#\\5\">", $str);
   $str = eregi_replace("<img([ ]*)src=([\"']*)($regex[http])([\"']*)","<img src=\"\\4_orig://\\5\"",$str);
-  $str = eregi_replace("<embed([ ]*)src=([\"']*)($regex[http])([\"']*)","<embed src=\"\\4_orig://\\5\"",$str);
+  if($agent[br] == "MSIE")
+    $str = eregi_replace("<embed([ ]*)src=([\"']*)($regex[http])([\"']*)","<embed src=\"\\4_orig://\\5\"",$str);
 
   // 링크가 안된 url및 email address 자동링크
   $str = eregi_replace("($regex[http])","<a href=\"\\1\" target=\"_blank\">\\1</a>", $str);
@@ -270,7 +271,8 @@ function auto_link($str) {
   // link가 2개 겹쳤을때 이를 하나로 줄여줌 
   $str = eregi_replace("(<a href=([\"']*)($regex[http])([\"']*)+([^>]*)>)+<a href=([\"']*)($regex[http])([\"']*)+([^>]*)>","\\1", $str);
   $str = eregi_replace("(<a href=([\"']*)mailto:($regex[mail])([\"']*)>)+<a href=([\"']*)mailto:($regex[mail])([\"']*)>","\\1", $str);
-  $str = eregi_replace("</a></a>","</a>",$str);
+  $str = eregi_replace("((\.+)</a>|</a></a>)","</a>\\2",$str);
+  $str = eregi_replace("([a-z])(\.)*\">","\\1\">",$str);
 
   return $str;
 }

@@ -234,7 +234,7 @@ for($i = 0; $i < 4; $i++) {
   <TD ALIGN=\"right\" BGCOLOR=\"$color[l2_bg]\"><FONT COLOR=\"$color[l2_fg]\">%d 번</FONT></TD>
 </TR><TR>
   <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"$color[l3_bg]\"><NOBR><FONT COLOR=\"$color[l3_fg]\">글번호</FONT></NOBR></TD>
-  <TD ALIGN=\"right\" BGCOLOR=\"$color[l2_bg]\"><A HREF=\"../read.php3?table=%s&no=%d\ tar=_blank"><FONT COLOR=\"$color[l2_fg]\">%d 번 글</FONT></A></TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"$color[l2_bg]\"><A HREF=\"../read.php3?table=%s&no=%d\" target=_blank><FONT COLOR=\"$color[l2_fg]\">%d 번 글</FONT></A></TD>
 </TR><TR>
   <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"$color[l3_bg]\"><NOBR><FONT COLOR=\"$color[l3_fg]\">평균</FONT></NOBR></TD>
   <TD ALIGN=\"right\" BGCOLOR=\"$color[l2_bg]\"><FONT COLOR=\"$color[l2_fg]\">%0.2f 번</FONT></TD>

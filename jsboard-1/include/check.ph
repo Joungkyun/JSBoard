@@ -183,7 +183,7 @@ function check_filetype($filetype) {
 function icon_check($tail,$fn) {
   if ($tail == "rm" || $tail == "doc" || $tail == "exe" || $tail == "hwp" || $tail == "mp3" || $tail == "mov" || $tail == "txt") $icon = "$tail.gif";
   else if ($tail == "zip" || $tail == "arj" || $tail == "gz" || $tail == "lha" || $tail == "rar" || $tail == "tar" || $tail == "tgz") $icon = "comp.gif";
-  else if ($tail == "php" || $tail == "php3" || $tail == "phps") {
+  else if ($tail == "php" || $tail == "php3" || $tail == "phps" || $tail == "vbs") {
     if (eregi("(_htm|_cgi|_pl|_shtm|_sh)",$fn)) $icon = "html.gif";
     else $icon = "php.gif";
   } else if ($tail == "avi" || $tail == "mpg" || $tail == "mpeg") $icon = "mpeg.gif";
@@ -197,7 +197,7 @@ function icon_check($tail,$fn) {
 
 function check_dnlink($table,$list) {
   global $upload;
-  if (eregi("(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch)$",$list[bofile])) {
+  if (eregi("(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs)$",$list[bofile])) {
     $dn = "act.php3?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
   } else {
     if ($list[bfsize] < 51200) $dn = "act.php3?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";

@@ -6,6 +6,8 @@ sql_connect($db[server], $db[user], $db[pass]);
 sql_select_db($db[name]);
 
 $list = get_article($table, $no);
+$list[text] = eregi_replace("&([a-z]+);","&amp;\\1;",$list[text]);
+
 $passment = "$langs[w_pass]";
 
 // 패스워드가 없는 게시물이나 수정을 허락치 않을 경우 관리자 패스워드를 사용해야 함

@@ -5,7 +5,7 @@
 //                 http://www.php.net/manual/function.getenv.php3
 // gethostbyaddr - IP 주소와 일치하는 호스트명을 가져옴
 //                 http://www.php.net/manual/function.gethostbyaddr.php3
-function get_hostname() {
+function get_hostname($reverse = 0) {
   // 아파치 환경 변수인 REMOTE_ADDR에서 접속자의 IP를 가져옴
   $host = getenv("REMOTE_ADDR");
   $check = @gethostbyaddr($host);

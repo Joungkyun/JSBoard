@@ -40,7 +40,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
                 "history.back()\n</script>";
            exit;
          }                                     
-         $bfilename=strstr("$userfile","php");
+         $bfilename=date("YmdHis",$atc[date]);
 
          // file name에 특수 문자가 있을 경우 등록 거부
          if (eregi("(#|\\$|%)",$userfile_name)) {
@@ -51,7 +51,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
 
          // php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
          $userfile_name = eregi_replace(".(php[0-9a-z]*|phtml)$", ".phps", $userfile_name);
-         $userfile_name = eregi_replace("(.*).(cgi|pl|sh|html|htm|shtml)$", "\\1_\\2.phps", $userfile_name);
+         $userfile_name = eregi_replace("(.*).(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $userfile_name);
          // file name에 공백이 있을 경우 공백 삭제
          $userfile_name = eregi_replace(" ","",$userfile_name);
 
@@ -134,7 +134,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
                 "</script>";
            exit;
          }                                     
-         $bfilename=strstr("$userfile","php");
+         $bfilename=date("YmdHis",$atc[date]);
 
          // file name에 특수 문자가 있을 경우 등록 거부
          if (eregi("(#|\\$|%)",$userfile_name)) {
@@ -147,7 +147,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
 
          // php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
          $userfile_name = eregi_replace(".(php[0-9a-z]*|phtml)$", ".phps", $userfile_name);
-         $userfile_name = eregi_replace("(.*).(cgi|pl|sh|html|htm|shtml)$", "\\1_\\2.phps", $userfile_name);
+         $userfile_name = eregi_replace("(.*).(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $userfile_name);
          // file name에 공백이 있을 경우 공백 삭제
          $userfile_name = eregi_replace(" ","",$userfile_name);
 
