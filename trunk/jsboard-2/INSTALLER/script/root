@@ -18,14 +18,34 @@ case "${langs}" in
     langs=ko ;;
 esac
 
+# location of apache configuration file
 if [ -f "/etc/httpd/conf/httpd.conf" ] ;then
   CONF="/etc/httpd/conf/httpd.conf"
+  break
 elif [ -f "/etc/www/conf/httpd.conf" ]; then
   CONF="/etc/www/conf/httpd.conf"
+  break
 elif [ -f "/etc/www/httpd.conf" ]; then
   CONF="/etc/www/httpd.conf"
-else
+  break
+elif [ -f "/usr/local/apache/conf/httpd.conf" ]; then
   CONF="/usr/local/apache/conf/httpd.conf"
+else
+  while [ true ];
+  do
+    if [ "${langs}" = "ko" ]; then
+      echo
+      echo "[1;31mERROR[7;0m : httpd.conf ¸¦ Ã£À» ¼ö°¡ ¾ø½À´Ï´Ù."
+      echo -n "httpd.conf ÀÇ Àý´ë °æ·Î¸¦ ÁöÁ¤ÇØ ÁÖ½Ê½Ã¿À : "
+    else
+      echo
+      echo "[1;31mERROR[7;0m : Can't file httpd.conf"
+      echo -n "Input absolute path of httpd.conf : "
+    fi
+    read CONF
+
+    [ -f "${CONF}" ] && break
+  done
 fi
 
 DIST=`uname -s`
@@ -51,9 +71,15 @@ echo "#"
 echo "########################################################"
 echo
 echo
-echo "${SYSTEM_MN}"
-echo -n "${SYSTEM_AL}"
-read INFO
+
+if [ "${Agroup}" = "#-1" ]; then
+  echo -e "${SYSTEM_GE}"
+  exit 1
+else
+  echo "${SYSTEM_MN}"
+  echo -n "${SYSTEM_AL}"
+  read INFO
+fi
 
 case "${INFO}" in
   N*|n*)

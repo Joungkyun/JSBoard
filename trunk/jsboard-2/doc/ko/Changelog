@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  4월  4일
+작성일 : 2002년  4월  5일
 버전   : jsboard-2.0pre4
 
 
@@ -101,6 +101,7 @@ If you wnat to see windog's change log, see also
 69. 리스트에서 글 본문 미리보기시 KSX 1001 범위외의 글자가 NCR 코드 그대로
     보이는 것을 수정
 70. meta_char_check() 함수 수정
+71. insall script 수정
 
 
 -----------------------------------------------------------------------------
