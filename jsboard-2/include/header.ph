@@ -1,9 +1,6 @@
 <?
 if(eregi("(write|edit|reply)\.php",$_SERVER[PHP_SELF]))
   session_cache_limiter('nocache, must-revalidate');
-session_start();
-if(!session_is_registered("$jsboard") && eregi("session\.php",$_SERVER[PHP_SELF]))
-  session_destroy();
 
 include_once "include/print.ph";
 # GET/POST 변수를 제어
