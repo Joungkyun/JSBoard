@@ -68,7 +68,7 @@ $agent = get_agent();
 $db = replication_mode($db);
 
 # 외부 hyper link 를 막기 위한 설정
-check_dhyper($board[usedhyper],$board[dhyper],$enable[dhyper],$enable[plink]);
+check_dhyper($board[usedhyper],$board[endhyper],$board[dhyper],$enable[dhyper],$enable[plink]);
 check_access($board[useipbl],$board[ipbl],$enable[ipbl]);
 
 # write, edit, reply page form size ========================
