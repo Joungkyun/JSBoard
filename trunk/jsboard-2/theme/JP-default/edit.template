@@ -135,7 +135,7 @@ if($list[bofile]) {
        "<INPUT TYPE=HIDDEN NAME=atc[fdeldir] VALUE=\"$list[bcfile]\">\n";
 }
 
-if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
+if ($upload[yesno] && $cupload[yesno] && $noup != 1) {
   echo "<TR>\n".
        "<TD><B>Edit File</B></TD>\n".
        "<TD>\n".
