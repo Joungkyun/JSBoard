@@ -30,6 +30,10 @@ $mysqlusername = "";
 # debian package의 경우 /etc/apache/httpd.conf
 # 수동으로 설치했을 경우 /usr/local/apache/conf/httpd.conf
 # 에 위치하는 경우가 많음.
+# 이 설정은 httpd.conf 의 Group 지시자의 값을 얻어오기 위
+# 하여 필요하므로, Zento Linux 의 경우에는 commonapache.conf
+# 에 Group 지시자가 존재하기 때문에, commonapache.conf 의
+# 위치를 지정하도록 함
 #
 $apache_config_file = "/etc/httpd/conf/httpd.conf";
 

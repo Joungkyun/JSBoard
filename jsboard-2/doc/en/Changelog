@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 ¹öÀü   : jsboard-2.0.2
 
+Sat, Aug 17 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- support Zento Linux on Installer
+
 Fri, Aug  9 2002
   by JoungKyun Kim <http://www.oops.org>
 	- fixed typo in sql_db_query() function
