@@ -71,6 +71,9 @@ function print_list($table, $list, $r=0)
     $list[preview] = " onMouseOver=\"drs('$list[ptext]'); return true;\" onMouseOut=\"nd(); return true;\"";
   }
 
+  if($enable[comment] && $list[cmtSize] > 0)
+    $comment_size = "<FONT STYLE=\"font: 9px tahoma;\">[{$list[cmtSize]}]</FONT>";
+
   # UPLOAD 관련 설정
   if($upload[yesno]) {
     if($cupload[yesno]) {
@@ -97,7 +100,7 @@ function print_list($table, $list, $r=0)
     $field[dates] = "<TD ALIGN=right NOWRAP><FONT STYLE=\"color:$color[td_co];\"><NOBR>$date&nbsp;</NOBR></FONT></TD>";
 
   $field[no] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">$list[num]</FONT><IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=$lines[height] BORDER=0 ALIGN=absmiddle ALT=''></TD>";
-  $field[title] = "<TD><A HREF=read.php?table=$table&no=$list[no]$pages$search$list[preview]><FONT STYLE=\"color:$fg;\">$list[title]&nbsp;</FONT></A></TD>";
+  $field[title] = "<TD><A HREF=read.php?table=$table&no=$list[no]$pages$search$list[preview]><FONT STYLE=\"color:$fg;\">$list[title]&nbsp;$comment_size</FONT></A></TD>";
   $field[name] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">$list[name]&nbsp;</FONT></TD>";
   $field[refer] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">$list[refer]&nbsp;</FONT></TD>";
   $field[nulls] = "<TD><IMG SRC=./images/blank.gif WIDTH=1 HEIGHT=$lines[height] BORDER=0 ALT=''>";
@@ -145,30 +148,23 @@ function get_list($table,$pages,$reply=0,$print=0)
   global $o,$enable,$count,$agent;
 
   $readchk = (eregi("read\.php",$_SERVER[PHP_SELF]) && $enable[re_list]) ? 1 : 0;
+  $limits = $readchk ? "" : " Limit {$pages[no]}, {$board[perno]}";
 
-  if($reply[ck]) $sql = search2sql($reply);
-  else $sql = search2sql($o);
+  if($enable[comment]) {
+    $sql = $reply[ck] ? search2sql($reply,1,1) : search2sql($o,1,1);
 
-  # 50 만건 이상의 대용량 DB 를 위한 SQL 추가 패치
-  #if(!$o[at] && !eregi("WHERE",$sql) && $page > 1) {
-  #  $startidx = $count[all] - $pages[no] - ($board[perno] * 2);
-  #  $endidx = $count[all] - $pages[no];
-  #  $sql = "WHERE idx BETWEEN $startidx AND $endidx"; 
-  #} elseif ($readchk) {
-  #  if($reply[idx]) $idx = $reply[idx];
-  #  else {
-  #    $ridx = sql_query("SELECT idx FROM $table WHERE no = '$reply[reto]'");
-  #    $idx = sql_result($ridx,0,idx);
-  #  }
-  #  $startidx = ($idx - 1000 > 1) ? $idx - 1000 : 0;
-  #  $sql = "WHERE (idx BETWEEN $startidx AND $idx) AND".eregi_replace("WHERE","",$sql);
-  #}
+    # main column
+    $columns = "tb.no, tb.num, tb.idx, tb.date, tb.name, tb.rname, tb.email, tb.url, ".
+               "tb.title, tb.text, tb.refer, tb.reyn, tb.reno, tb.rede, tb.reto, tb.html, ".
+               "tb.bofile, tb.bcfile, tb.bfsize";
 
-  # 50 만건 이상의 대용량 DB 를 위한 SQL 추가 패치
-  # parse.ph 의 search2sql() 에서 50 만건으로 검색
-  if ($readchk) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
-  else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT $pages[no], $board[perno]";
-  #else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT 0, $board[perno]";
+    $query = "SELECT $columns, COUNT(cmt.reno) AS cmtSize\n".
+             "  FROM {$table} AS tb LEFT JOIN {$table}_comm AS cmt ON tb.no = cmt.reno $sql\n".
+             "  GROUP BY tb.no ORDER BY idx DESC{$limits};";
+  } else {
+    $sql = $reply[ck] ? search2sql($reply) : search2sql($o);
+    $query = "SELECT * FROM $table $sql ORDER BY idx DESC{$limits}";
+  }
 
   $result = sql_query($query);
   if(sql_num_rows($result)) {
