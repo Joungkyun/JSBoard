@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Tue, Mar  5 2002
+Date      : Thu, Mar  7 2002
 Version   : jsboard-2.0pre4
 
 
@@ -81,6 +81,7 @@ Version   : jsboard-2.0pre4
 54. added function of control access from hyper link of other site
 55. added function of ip blocking
 56. forced configuration of magic quotes
+57. fixed highlight bug of multiple keyword on url link
 
 
 -----------------------------------------------------------------------------
