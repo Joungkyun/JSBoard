@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  1월 29일
+작성일 : 2002년  1월 30일
 버전   : jsboard-2.0pre4
 
 
@@ -51,6 +51,7 @@ If you wnat to see windog's change log, see also
 24. oops admincenter 타이틀및 하단 copyright 삭제
 25. Cookie 시간 표현 방식 변경
 26. register_globals = off 를 위해 upload file 처리 변경
+27. auto_link() 함수 버그 수정
 
 
 -----------------------------------------------------------------------------
