@@ -57,7 +57,15 @@ password 변경시 오타를 방지하기 위해서 한번더 입력을 하여
 }
 
 
+else if ($hintname == "brdname") {
+  echo ("
 
+<font id=ac><b>♤ Board Name</b></font>
+
+<p>
+게시판의 이름을 적는 곳입니다.
+");
+}
 
 else if ($hintname == "scale") {
   echo ("
@@ -99,6 +107,16 @@ else if ($hintname == "tablewidth") {
 
 <p>
 게시판 테이블의 넓이를 지정한다.
+");
+}
+
+else if ($hintname == "brdnotice") {
+  echo ("
+
+<font id=ac><b>♤ Board Notice</b></font>
+
+<p>
+공지 사항등을 기재할 수 있는 공간입니다.
 ");
 }
 
@@ -289,6 +307,25 @@ else if ($hintname == "todayarticlebg") {
 ");
 }
 
+else if ($hintname == "mouseoverbg") {
+  echo ("
+
+<font id=ac><b>♤ MouseOverBG</b></font>
+
+<p>
+글 리스트에서 각 줄에 마우스 커서 올릴때 변경될 그 줄의 색상을 지정한다.
+");
+}
+
+else if ($hintname == "searchbg") {
+  echo ("
+
+<font id=ac><b>♤ SearchBG</b></font>
+
+<p>
+검색창의 배경 색상을 지정한다.
+");
+}
 
 else if ($hintname == "mailtoadmin") {
   echo ("
@@ -395,6 +432,15 @@ else if ($hintname == "backlink") {
 
 <p>
 이전 페이지로 돌아간다.
+");
+}
+
+else if ($hintname == "headname") {
+  echo ("
+<font id=ac><br>♤ Shortname of Title</b></font>
+
+<p>
+게시물 제목에 말머리를 선택할 수 있게 해줍니다.
 ");
 }
 

@@ -60,7 +60,9 @@ if ($menuallow == "yes") {
   <td bgcolor="<? echo $r2_bg ?>"><font color="<? echo $r2_fg ?>" size="2">HTML 코드 사용 여부</font></td>
 </tr><tr>
   <td bgcolor="<? echo $r1_bg ?>"><font color="<? echo $r1_fg ?>">제목</font></td>
-  <td colspan="2" bgcolor="<? echo $r2_bg ?>"><input name="title" size="<? sform(25) ?>" maxlength="100"></td>
+  <td colspan="2" bgcolor="<? echo $r2_bg ?>">
+	<? if($headname) { include ("./include/$table/shorthead.ph"); } ?>
+	 <input name="title" size="<? sform(25) ?>" maxlength="100"></td>
 <!-- 
 올릴 파일 지정
 -->

@@ -4,15 +4,16 @@
 *                     Scripted by JoungKyun Kim                         *
 *               admin@oops.org http://www.oops.org                      *
 *                                                                       *
+*                 LevelUp by Dimanche(KyeongMook Cha)                   *
+*	   dimanche@dimanche.co.kr http://www.dimanche.co.kr            *
 *************************************************************************
 
 
-Title : JSBoard-0.6.7
+Title : JSBoard-0.6.20
 
 
 ¿€º∫	: ±Ë¡§±’. <admin@oops.org> http://www.oops.org
 ¿€º∫¿œ	: 2000.1.2
-
 
 
 

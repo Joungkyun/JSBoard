@@ -15,6 +15,9 @@ if ($menuallow == "yes") {
     include("include/$table/menu.ph") ;
 }
 
+if ($boardname) echo "<center><font size=\"2\"><b>$boardname</b></font></center><p>";
+if ($boardnotice) echo "<center><font id=td>&gt;&gt; $boardnotice &lt;&lt;</font></center><p>";
+
 dconnect($db_server, $db_user, $db_pass);
 dselect_db("$db_name");
 
@@ -54,6 +57,7 @@ echo ("<center>\n") ;
 list_cmd_bar ($page, $l0_bg, $table, $sc_column);
 echo("<center>\n</form>\n");
 
+include("publicity.ph");
 include("include/$table/tail.ph");
 
 ?>

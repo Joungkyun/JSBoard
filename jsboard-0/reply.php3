@@ -21,12 +21,13 @@ $result = dquery("SELECT * FROM $table WHERE no = $no");
 drow_check($result);
 
 while($list = dfetch_row($result)) {
+    $num    = $list[1];
     $name   = $list[4];  // 이름
     $title  = $list[8];  // 제목
     $text   = $list[9];  // 본문
 
-    $text  = eregi_replace("^", ": ", $text);
-    $text  = eregi_replace("\n", "\n: ", $text);
+    $text  = eregi_replace("^", "> ", $text);
+    $text  = eregi_replace("\n", "\n> ", $text);
 }
 
 ?>
@@ -75,7 +76,7 @@ while($list = dfetch_row($result)) {
   <td bgcolor="<? echo $r2_bg ?>"><font color="<? echo $r2_fg ?>" size="2">HTML 코드 사용 여부</font></td>
 </tr><tr>
   <td bgcolor="<? echo $r1_bg ?>"><font color="<? echo $r1_fg ?>">제목</font></td>
-  <td colspan="2" bgcolor="<? echo $r2_bg ?>"><input name="title" size="<? sform(25) ?>" maxlength="100" value="RE: <? echo $title ?>"></td>
+  <td colspan="2" bgcolor="<? echo $r2_bg ?>"><input name="title" size="<? sform(25) ?>" maxlength="100" value="[관련글]:  <? echo $title ?>"></td>
 <!-- 
 올릴 파일 지정
 -->

@@ -123,6 +123,9 @@ if ($act == "post" || $act == "edit") {
 	
 	if (!$reno) {
 	// ±Û ¾²±â
+	$headtit .= " ";
+	$headtit .= $title;
+	$title = $headtit;
 	    dquery("INSERT INTO $table VALUES ('', $last, $date, '$host', 
 		'$name', '$passwd', '$email', '$url', '$title', '$text', 0, 
 		0, 0, 0, 0,'$userfile_name','$bfilename',$userfile_size)");
