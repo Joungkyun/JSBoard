@@ -425,6 +425,7 @@ function url_link($url, $str = "", $no = 0) {
     if(eregi("^s|d$",$o[at]) && ($o[sc] == "n" || $o[sc] == "a")) {
       $strs = preg_replace("/<[^>]+>/i","",$str);
     } else $strs = $str;
+    $strs = str_replace("'", "\'", $strs);
 
     $url = str_replace("@",$rmail[chars],$url);
     $str = "<A HREF=./act.php?o[at]=ma&target=$url ".
