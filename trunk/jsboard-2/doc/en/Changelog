@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Fri, Feb 15 2002
+Date      : Sun, Feb 17 2002
 Version   : jsboard-2.0pre4
 
 
@@ -64,6 +64,7 @@ Version   : jsboard-2.0pre4
 38. changed session_unregisted() to session_destroy() function
 39. fixed typo of detail search form
 40. added check of iframe when registrated article
+41. removed check of $table in error.php
 
 
 -----------------------------------------------------------------------------
