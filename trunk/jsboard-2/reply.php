@@ -46,7 +46,6 @@ else $reti = "^$reti";
 $list[text] = eregi_replace("<([^<>\n]+)\n([^\n<>]+)>", "<\\1 \\2>", $list[text]);
 $list[text] = ereg_replace("^", ": ", $list[text]);
 $list[text] = ereg_replace("\n", "\n: ", $list[text]);
-$list[text] = htmlspecialchars($list[text]);
 
 if($list[html]) $html_chk_ok = " checked";
 else $html_chk_no = " checked";
@@ -66,7 +65,6 @@ if ($agent[br] == "MSIE" || $agent[br] == "MOZL" || ($agent[br] == "NS" && $agen
 
 # 원본글 포함 선택 여부
 if ($enable[ore]) {
-  $list[text] = htmlspecialchars($list[text]);
   $text_area = "<TEXTAREA NAME=\"rpost\" $wrap[op] ROWS=\"10\" COLS=\"$size[text]\"></TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"hide\" VALUE=\"\n\n$list[name] wrote..\n$list[text]\">\n" .
                  "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=1>\n" .

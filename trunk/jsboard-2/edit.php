@@ -23,8 +23,6 @@ $list = get_article($table, $no);
 
 if(eregi("^(2|3|5|7)$",$board[mode]) && !$board[super])
   if($list[name] != $_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);
-
-$list[text] = htmlspecialchars($list[text]);
 $list[email] = str_replace("@",$rmail[chars],$list[email]);
 
 if(!$board[super])

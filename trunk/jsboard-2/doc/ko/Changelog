@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  3월  9일
+작성일 : 2002년  3월 10일
 버전   : jsboard-2.0pre4
 
 
@@ -89,6 +89,7 @@ If you wnat to see windog's change log, see also
 59. mbstring 함수 지원 - check_spam() function
 60. sql 쿼리에 악의적인 공격을 막기위해 쿼리에 사용되는 모든 변수를 '' 처리
 61. wordwrap 관련 syntax error 수정
+62. 수정/답장시 원본글을 변형해서 DB 에 넣는것 수정
 
 
 -----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Sat, Mar  9 2002
+Date      : Sun, Mar 10 2002
 Version   : jsboard-2.0pre4
 
 
@@ -85,6 +85,7 @@ Version   : jsboard-2.0pre4
 59. supported mbrstring in check_spam() function
 60. added single quote on all variables in all sql query
 61. fixed syntax error on wordwrap
+62. fixed problem of changed original text in edit/reply mode
 
 
 -----------------------------------------------------------------------------
