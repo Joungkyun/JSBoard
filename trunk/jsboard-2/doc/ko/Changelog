@@ -103,6 +103,7 @@ If you wnat to see windog's change log, see also
 70. meta_char_check() 함수 수정
 71. insall script 수정
 72. auto_link() 함수 수정
+73. 검색 루틴 수정
 
 
 -----------------------------------------------------------------------------
