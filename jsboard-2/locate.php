@@ -3,6 +3,7 @@ include "include/header.php";
 
 $go = $o['go'];
 $url = search2url($o);
+$url = str_replace ('&amp;', '&', $url);
 
 switch($go) {
   case "p":
