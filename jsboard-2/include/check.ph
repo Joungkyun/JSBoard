@@ -98,11 +98,13 @@ function check_email($email,$hchk=0) {
 # crpyt - 문자열을 DES로 암호화함
 #         http://www.php.net/manual/function.crypt.php
 function check_passwd($table,$no,$passwd) {
-  global $jsboard, $board;
+  global $jsboard, $board, $o;
   if($board[mode] && session_is_registered("$jsboard")) $sql_field = "name";
   else $sql_field = "passwd";
 
   $passwd = !trim($passwd) ? "null passwd" : $passwd;
+
+  $table = ($table && $o[at] == "c_del") ? $table."_comm" : $table;
 
   if ($table && $no) {
     $result = sql_query("SELECT $sql_field FROM $table WHERE no = '$no'");

@@ -3,6 +3,7 @@ Version: A2
 - INPUT 문의 password 에 style sheet  STYLE=\"font: 10px tahoma\" 추가
   (IE 6.x -xp용- 의 패스워드 필드를 이상하게 출력하는 것 방지)
 - mail 발송 방식 변경에 따른 mail html design 템플릿 파일 추가 (mail.template)
+- login.php 와 read.php 에서 커멘트 관련 수정
 
 Version: A1
 - theme 관리 시작
