@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  2월  8일
+작성일 : 2002년  2월 11일
 버전   : jsboard-2.0pre4
 
 
@@ -65,6 +65,7 @@ If you wnat to see windog's change log, see also
 36. spam check 에 글제목도 추가
 37. Installer 에서 외부 DB 를 지정했을 경우 global.ph 에 반영되지 않던것 수정
 38. session_unregisted() 함수를 session_destroy() 로 변경
+39. 상세 검색폼에서 오타 수정
 
 
 -----------------------------------------------------------------------------

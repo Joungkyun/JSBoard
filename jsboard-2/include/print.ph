@@ -787,7 +787,7 @@ function detail_searchform($p='') {
           "</TR>\n\n".
 
           "<TR>\n".
-          "<TD NOWRAP>$langs[ch_pat]</TD>\n".
+          "<TD NOWRAP>$langs[sh_pat]</TD>\n".
           "<TD NOWRAP>:</TD>\n".
           "<TD NOWRAP>\n".
           "<INPUT TYPE=radio NAME=o[sc] VALUE=t$TCHK> <FONT STYLE=\"font-family: tahoma;\">TITLE</FONT>\n".
