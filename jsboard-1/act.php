@@ -284,9 +284,6 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
 			}
     }
 
-    echo 1;
-		exit;
-
     if($atc[reyn] && !$adm) # 관리자 모드일 경우 관련글을 함께 삭제함
       print_error("$langs[act_c]");
 
