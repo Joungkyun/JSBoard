@@ -843,7 +843,7 @@ function detail_searchform($p='') {
           "</FORM>\n".
           "</TD></TR>\n</TABLE>\n".
           "<!-- ======================  Detail Search Table ==================== -->\n\n".
-          "<P>\n";
+          "<BR>\n";
 
   if($p) echo $form;
   else return $form;
