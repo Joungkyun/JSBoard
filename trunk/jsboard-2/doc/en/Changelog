@@ -62,6 +62,7 @@ Version   : jsboard-2.0pre4
 36. added spam check with article subject
 37. fixed miss db path in global.ph when used Installer
 38. changed session_unregisted() to session_destroy() function
+39. fixed typo of detail search form
 
 
 -----------------------------------------------------------------------------
