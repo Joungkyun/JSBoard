@@ -72,7 +72,7 @@ $lines[height] = "25";
 $lines[design] = "";
 $lines[comment_design] = "<TR><TD COLSPAN=4 BACKGROUND=./images/dotline.gif>".
                          "<IMG SRC=./images/blank.gif WIDTH=1 HEIGHT=4 BORDER=0 ALT=''>".
-                         "<TD></TR>";
+                         "</TD></TR>";
 
 ##############################################################
 # Width Configuration
