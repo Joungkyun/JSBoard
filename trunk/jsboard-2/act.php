@@ -195,12 +195,14 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
 
     # file 삭제 루틴
     if($atc['fdel']) {
-      upload_name_chk($atc['fdelname']);
-      upload_name_chk($atc['fdeldir']);
+      $fdelqy = sql_query("SELECT bcfile, bofile FROM {$table} WHERE no = '{$atc['no']}'");
+      $fdelinfo = sql_fetch_array($fdelqy);
+      sql_free_result($fdelqy);
+      
       sql_query("UPDATE $table SET bcfile='', bofile='', bfsize='' WHERE no = '{$atc['no']}'");
-      if(file_exists("data/$table/files/{$atc['fdeldir']}/{$atc['fdelname']}")) {
-        unlink("data/$table/files/{$atc['fdeldir']}/{$atc['fdelname']}");
-        rmdir("data/$table/files/{$atc['fdeldir']}");
+      if(file_exists("data/$table/files/{$fdelinfo['bcfile']}/{$fdelinfo['bofile']}")) {
+        unlink("data/$table/files/{$fdelinfo['bcfile']}/{$fdelinfo['bofile']}");
+        rmdir("data/$table/files/{$fdelinfo['bcfile']}");
       }
     }
 
@@ -209,9 +211,12 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     $upfile = file_upload("userfile",$bfilename);
 
     if(trim($upfile['name'])) {
-      if(file_exists("data/$table/files/{$atc['fdeldir']}/{$atc['fdelname']}") && $atc['fdelname']) {
-        unlink("data/$table/files/{$atc['fdeldir']}/{$atc['fdelname']}");
-        rmdir("data/$table/files/{$atc['fdeldir']}");
+      $fdelqy = sql_query("SELECT bcfile, bofile FROM {$table} WHERE no = '{$atc['no']}'");
+      $fdelinfo = sql_fetch_array($fdelqy);
+      sql_free_result($fdelqy);
+      if(file_exists("data/$table/files/{$fdelinfo['bcfile']}/{$fdelinfo['bofile']}") && trim($fdelinfo['bofile'])) {
+        unlink("data/$table/files/{$fdelinfo['bcfile']}/{$fdelinfo['bofile']}");
+        rmdir("data/$table/files/{$fdelinfo['bcfile']}");
       }
 
       sql_query("
