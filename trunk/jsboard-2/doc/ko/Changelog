@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.0
 
+2002.6. 8 by 김정균 <http://www.oops.org>
+	- 게시판 관리자에서 첨부파일 링크 설정 에러 수정
+
 2002.6. 7 by 임은재 <http://kldp.org/~eunjea/>
 	- 코멘트 등록시 관리자 사칭 설정이 안되어 있을 경우 에러 발생하는 것
 	  수정

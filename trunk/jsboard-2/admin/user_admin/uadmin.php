@@ -490,7 +490,7 @@ function fresize(value,name) {
 <TR>
 <TD BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR><?=$langs[ua_fl]?></font></TD>
 <TD COLSPAN=4>
-<INPUT TYPE=radio<?=$upload_disable?> name=ua[up_link] <?=$uplink_ok?> value=1 id=RADIO><?=$langs[ua_fld]?>
+<INPUT TYPE=radio<?=$upload_disable?> name=ua[uplink] <?=$uplink_ok?> value=1 id=RADIO><?=$langs[ua_fld]?>
 <INPUT TYPE=radio<?=$upload_disable?> name=ua[uplink] <?=$uplink_no?> value=0 id=RADIO><?=$langs[ua_flh]?>
 </TD>
 <TD BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
