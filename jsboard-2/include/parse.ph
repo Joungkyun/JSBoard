@@ -542,6 +542,8 @@ function conv_emoticon($str, $opt=0) {
   $con[] = "<IMG SRC=./emoticon/icon13.gif ALT='emoticon'>";
   $src[] = '/\?/';
   $con[] = "<IMG SRC=./emoticon/icon14.gif ALT='emoticon'>";
+  $src[] = '/h<IMG=./emoticon/icon2.gif[^>]*>p/i';
+  $con[] = "http";
   
   $ret = preg_replace($src, $con, $str);
   return $ret;
