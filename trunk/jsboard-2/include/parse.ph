@@ -516,8 +516,8 @@ function conv_emoticon($str, $opt=0) {
 
   $src[] = "/\^\^|\^\.\^/";
   $con[] = "<IMG SRC=./emoticon/icon1.gif BORDER=0 ALT='emoticon'>";
-  $src[] = '/T\.T/i';
-  $con[] = "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>";
+  $src[] = '/([^0-9a-z])T\.T/i';
+  $con[] = "\\1<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/\?\.\?/';
   $con[] = "<IMG SRC=./emoticon/icon3.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/:-?(\(|<)/';
@@ -540,8 +540,6 @@ function conv_emoticon($str, $opt=0) {
   $con[] = "<IMG SRC=./emoticon/icon11.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/\^_\^/';
   $con[] = "<IMG SRC=./emoticon/icon12.gif BORDER=0 ALT='emoticon'>";
-  $src[] = '/!/';
-  $con[] = "<IMG SRC=./emoticon/icon13.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/:-P|:P/';
   $con[] = "<IMG SRC=./emoticon/icon14.gif BORDER=0 ALT='emoticon'>";
 
