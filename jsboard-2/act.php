@@ -197,6 +197,8 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if($atc['fdel']) {
       sql_query("UPDATE $table SET bcfile='', bofile='', bfsize='' WHERE no = '{$atc['no']}'");
       if(file_exists("data/$table/files/{$atc['fdeldir']}/{$atc['fdelname']}")) {
+        upload_name_chk($atc['fdelname']);
+        upload_name_chk($atc['fdeldir']);
         unlink("data/$table/files/{$atc['fdeldir']}/{$atc['fdelname']}");
         rmdir("data/$table/files/{$atc['fdeldir']}");
       }
