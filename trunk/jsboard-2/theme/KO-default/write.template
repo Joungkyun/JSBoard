@@ -199,8 +199,8 @@ if((!$board[mode] || $board[mode] == 6) && $board[super] != 1) {
 <TR><TD ALIGN=right><?=$wrap[ment]?></TD></TR>
 <TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
 <?=$print[passform]?>
-<INPUT TYPE=submit VALUE=등록>&nbsp;
-<INPUT TYPE=reset VALUE="다시"<?=$orig_option?>>&nbsp;
+<INPUT TYPE=submit VALUE=등록>
+<INPUT TYPE=reset VALUE="다시"<?=$orig_option?>>
 <INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록">
 <INPUT TYPE=button onClick=history.back() VALUE="이전">
 </TD></TR>
