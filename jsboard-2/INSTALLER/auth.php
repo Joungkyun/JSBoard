@@ -106,19 +106,13 @@ if (!$mode) {
   if ($mcon) $mcheck = 1;
   else $mcheck = 0;
 
-  # exec() 함수 작동 여부
-  if (@exec("echo hello")) {
-    $echeck = 1;
-    @exec("cat $apache_config_file | grep -i DirectoryIndex",$array);
+  # httpd.conf 의 DirectoryIndex 에 index.php 가 등록되어 있는지 여부
+  $array = file ($apache_config_file);
 
-    # httpd.conf 의 DirectoryIndex 에 index.php 가 등록되어 있는지 여부
-    for($i=0;$i<sizeof($array);$i++) {
-      $array[$i] = trim($array[$i]);
-      if(preg_match("/^Directory/i",$array[$i]) && preg_match("/index.(php |php$)/i",$array[$i])) $cindex = 1;
-    }
-  } else {
-    $echeck = 0;
-    $cindex = 0;
+  $cindex = 0;
+  for($i=0;$i<sizeof($array);$i++) {
+    $array[$i] = trim($array[$i]);
+    if(preg_match("/^[ \t]*DirectoryIndex/i",$array[$i]) && preg_match("/index.(php |php$)/i",$array[$i])) $cindex = 1;
   }
 
   # jsboard/data 에 쓰기 권한이 있는지 여부
@@ -137,7 +131,7 @@ if (!$mode) {
   else $pcheck = 0;
 
   echo "\n<FONT STYLE=\"color:#555555;font-size:12px;\">{$langs['waitm']}</FONT>\n" .
-       "<meta http-equiv=\"refresh\" content=\"5;URL={$_SERVER['PHP_SELF']}?mode=check_conform&mcheck=$mcheck&echeck=$echeck&cindex=$cindex&pcheck=$pcheck&langss={$langs['code']}\">" .
+       "<meta http-equiv=\"refresh\" content=\"5;URL={$_SERVER['PHP_SELF']}?mode=check_conform&mcheck=$mcheck&cindex=$cindex&pcheck=$pcheck&langss={$langs['code']}\">" .
        "</td></tr>\n" .
        "<tr><td bgcolor=#D3DAC3 align=center>\n" .
        "<font style=\"font: 12px $charfont; color:#555555\">{$langs['wait']}</font>\n" .
@@ -148,33 +142,27 @@ if (!$mode) {
   if ($mcheck) $m = "OK";
   else $m = "Failed";
 
-  if ($echeck) {
-    $e = "OK";
-    if ($cindex) $ci = "OK";
-    else $ci = "Failed";
-  } else $e = "Failed";
+  if ($cindex) $ci = "OK";
+  else $ci = "Failed";
 
   if ($pcheck) $p = "OK";
   else $p = "Error";
 
-  if (!$mcheck || !$echeck || !$cindex || !$pcheck) $actlink = "";
+  if (!$mcheck || !$cindex || !$pcheck) $actlink = "";
   else $actlink = "first";
 
-  if (preg_match("/linux/i",$_ENV['OSTYPE'])) {
-    if (file_exists("/etc/redhat-release")) $os_type = "Redhat";
+  $os_type = php_uname();
+  if (preg_match("/freebsd/i",$os_type)) $os_type = "FreeBSD";
+  elseif (preg_match("/openbsd/i",$os_type)) $os_type = "OpenBSD";
+  elseif (preg_match("/netbsd/i",$os_type)) $os_type = "NetBSD";
+  elseif (preg_match("/windows/i",$os_type)) $os_type = "Windows";
+  elseif (preg_match("/linux/i",$os_type)) {
+    if ( file_exists ("/etc/annyung-release") ) $os_type = "AnNyung";
+    elseif (file_exists("/etc/redhat-release")) $os_type = "Redhat";
     elseif (file_exists("/etc/debian_version")) $os_type = "Debian";
-  } else $os_type = $_ENV['OSTYPE'];
-
-  if(!$os_type) {
-    $os_type = php_uname();
-    if (preg_match("/freebsd/i",$os_type)) $os_type = "FreeBSD";
-    elseif (preg_match("/openbsd/i",$os_type)) $os_type = "OpenBSD";
-    elseif (preg_match("/netbsd/i",$os_type)) $os_type = "NetBSD";
-    elseif (preg_match("/windows/i",$os_type)) $os_type = "Windows";
-    elseif (preg_match("/linux/i",$os_type)) $os_type = "Linux";
-    elseif (preg_match("/solaris/i",$os_type)) $os_type = "Solaris";
-    else $os_type = "Unknowns";
-  }
+    else $os_type = "Linux";
+  } elseif (preg_match("/solaris/i",$os_type)) $os_type = "Solaris";
+  else $os_type = "Unknowns";
 
   echo "<form method=POST action={$_SERVER['PHP_SELF']}>\n\n" .
        "<table width=400 border=0 cellpadding=5>\n" .
@@ -185,26 +173,15 @@ if (!$mode) {
        "<table>\n<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">OS Type</FONT></td>\n".
        "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$os_type</FONT></td>\n</tr>\n\n";
 
-  if (!preg_match("/linux/i",$_ENV['OSTYPE']))
-    echo "<tr>\n<td colspan=3>\n<font color=red>{$langs['os_check']}</font>\n</td>\n</tr>\n\n";
-
   echo "<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">MySQL check</FONT></td>\n".
        "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$m</FONT></td>\n</tr>\n\n";
 
   if (!$mcheck)
     echo "<tr>\n<td colspan=3>\n<font color=red>{$langs['mcheck']}</font>\n</td>\n</tr>\n\n";
 
-  echo "<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">exec() function check</FONT></td>\n".
-       "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$e</FONT></td>\n</tr>\n\n";
-
-  if ($e == "Failed")
-    echo "<tr>\n<td colspan=3>\n<font color=red>{$langs['echeck']}</font>\n</td>\n</tr>\n\n";
-
-  if ($echeck) {
-    echo "<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">index file check</FONT></td>\n".
-         "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$ci</FONT></td>\n</tr>\n\n";
-    if ($ci == "Failed") echo "<tr>\n<td colspan=3>\n<font color=red>{$langs['icheck']}</font>\n</td>\n</tr>\n\n";
-  }
+  echo "<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">index file check</FONT></td>\n".
+       "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$ci</FONT></td>\n</tr>\n\n";
+  if ($ci == "Failed") echo "<tr>\n<td colspan=3>\n<font color=red>{$langs['icheck']}</font>\n</td>\n</tr>\n\n";
 
   echo "<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">Permission check</FONT></td>\n".
        "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$p</FONT></td>\n</tr>\n\n";

@@ -82,7 +82,7 @@ else if($mode=='db_del') {
       //sql_error(mysql_errno(),mysql_error());
 
       # 게시판 계정에서 사용되는 file 삭제
-      exec("{$exec['rm']} ../data/$table_name");
+      unlink_r ("../data/{$table_name}");
     }
   }
 

@@ -4,5 +4,4 @@ Do It Yourself!!!!! ^.^
 
 CHECK
 
-1. checked option of each commands in include/exec.ph on your OS
-2. Maybe can't operate INSTALLER
+1. Maybe can't operate INSTALLER
