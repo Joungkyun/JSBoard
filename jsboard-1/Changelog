@@ -1,8 +1,8 @@
 ***** JSBOARD + OOPS administartion Center *********************************
 
-Original Developer              : Byung Chan Kim <redhands@linux.sarang.net>
-Source Disturibute              : Joung Kyun Kim <admin@oops.org>
-Windog Version                  : Ki Soo Choi <choiks@nuri.net>
+Original Developer              : Byung Chan Kim <redhands AT linux.sarang.net>
+Source Disturibute              : Joung Kyun Kim <admin AT oops.org>
+Windog Version                  : Ki Soo Choi <choiks AT nuri.net>
 
 ## Warning ##
 
@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2002년   4월 22일
 버전   : jsboard-1.3.9
 
@@ -40,7 +40,7 @@ If you wnat to see windog's change log, see also
 15. 정규표현식 검색시 [,( 패턴을 제대로 닫지 않을 경우 처리 루틴 추가
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2002년   4월  6일
 버전   : jsboard-1.3.8
 
@@ -87,7 +87,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2002년   2월  8일
 버전   : jsboard-1.3.7
 
@@ -119,7 +119,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2001년  12월 31일
 버전   : jsboard-1.3.6
 
@@ -130,7 +130,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2001년  12월 20일
 버전   : jsboard-1.3.5
 
@@ -147,7 +147,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2001년  11월  7일
 버전   : jsboard-1.3.4
 
@@ -172,7 +172,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2001년  8월   2일
 버전   : jsboard-1.3.3
 
@@ -184,7 +184,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2001년  7월  16일
 버전   : jsboard-1.3.2
 
@@ -208,7 +208,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2001년  6월   3일
 버전   : jsboard-1.3.1
 
@@ -232,7 +232,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2001년  5월   9일
 버전   : jsboard-1.3pre7
 
@@ -249,7 +249,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2001년  4월   5일
 버전   : jsboard-1.3pre6
 
@@ -269,7 +269,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2001년  3월  31일
 버전   : jsboard-1.3pre5
 
@@ -295,7 +295,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2001년  3월  4일
 버전   : jsboard-1.3pre4
 
@@ -310,7 +310,7 @@ If you wnat to see windog's change log, see also
 6. mail link 를 formmail 과 mailto 선택 방식으로 변경
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년  2월 24일
 버전   : jsboard-1.3pre3
 
@@ -330,7 +330,7 @@ If you wnat to see windog's change log, see also
    들을 절대 경로로 변경
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2001년  2월  3일
 버전   : jsboard-1.3pre2
 
@@ -353,7 +353,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 12월 31일
 버전   : jsboard-1.3pre1
 
@@ -384,12 +384,12 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 11월 25일
 버전   : jsboard-1.2pre5
 
 * 변경된점
-1. 미리보기 기능의 Java Script 수정 (patched by goyo@netian.com)
+1. 미리보기 기능의 Java Script 수정 (patched by goyo AT netian.com)
 2. file upload시에 글등록이 거부되어도 파일은 업로드 되는 버그 수정
 3. spam bug patch 재수정
 4. list 화면에서 ugly 한글 깨져서 나오는 것 보정
@@ -403,7 +403,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 11월 3일
 버전   : jsboard-1.2pre4
 
@@ -414,7 +414,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 10월 31일
 버전   : jsboard-1.2pre3
 
@@ -443,7 +443,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 10월 4일
 버전   : jsboard-1.2pre2
 
@@ -476,7 +476,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 9월 21일
 버전   : jsboard-1.2pre1
 
@@ -515,7 +515,7 @@ If you wnat to see windog's change log, see also
 3. 통계에서 Syntax error 수정
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 8월 30일
 버전   : jsboard-1.1pre5
 
@@ -536,7 +536,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 8월 11일
 버전   : jsboard-1.1pre4
 
@@ -548,7 +548,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 8월  2일
 버전   : jsboard-1.1pre3
 
@@ -572,7 +572,7 @@ If you wnat to see windog's change log, see also
    대신 "Not JSBoard table" message 출력)
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 7월 26일
 버전   : jsboard-1.1pre2
 
@@ -591,7 +591,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 7월 16일
 버전   : jsboard-1.1pre1
 
@@ -609,7 +609,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 7월 3일
 버전   : jsboard-1.0pre2
 
@@ -656,7 +656,7 @@ If you wnat to see windog's change log, see also
 36. CREDIT 문서에 임은재님 추가
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 5월 21일
 버전   : jsboard-1.0pre1
 
@@ -690,7 +690,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 4월 29일
 버전   : jsboard-0.8pre6
 
@@ -706,7 +706,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 4월 13일
 버전   : jsboard-0.8pre5
 
@@ -727,7 +727,7 @@ If you wnat to see windog's change log, see also
 
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 3월 19일
 버전   : jsboard-0.8pre4
 
@@ -744,7 +744,7 @@ If you wnat to see windog's change log, see also
 8. 영문 게시판 선택시 폰트타입을 Arial 로 fix
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 3월 5일
 버전   : jsboard-0.8pre3
 
@@ -778,7 +778,7 @@ If you wnat to see windog's change log, see also
     (기존의 README, LICENSE file 삭제)
 
 -----------------------------------------------------------------------------
-작성자 : 김정균 (admin@oops.org)
+작성자 : 김정균 (admin AT oops.org)
 작성일 : 2000년 2월 20일
 버전   : jsboard-0.8pre2
 
@@ -816,7 +816,7 @@ If you wnat to see windog's change log, see also
 27. Quick Install 문서 추가
 
 -----------------------------------------------------------------------------
-작성자 : 적수 (redhands@linux.sarang.net)
+작성자 : 적수 (redhands AT linux.sarang.net)
 작성일 : 2000년 1월 ??일
 버전   : jsboard-0.8pre1
 
