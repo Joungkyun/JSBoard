@@ -38,7 +38,7 @@ if(file_exists("./config/external.ph")) {
 include "include/version.ph";
 include "include/lang.ph";
 include "include/check.ph";
-if(!check_iis()) { include "include/exec.ph"; }
+if(!check_windows()) { include "include/exec.ph"; }
 include "include/error.ph";
 include "include/get.ph";
 include "include/list.ph";

@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  1월 14일
+작성일 : 2002년  1월 16일
 버전   : jsboard-2.0pre4
 
 
@@ -37,6 +37,12 @@ If you wnat to see windog's change log, see also
 11. 테마에서 잘못된 tag 수정
 12. sendmail.cf 의 한글 하드코딩 수정
 13. prelist.ph 의 쓸모없는 코드 삭제
+14. exec 함수를 iis 만 체크 하던 것을 windows 체크로 변경
+15. 문서파일 정리
+16. 언어 파일에서 필요 없는 변수 삭제
+17. 외부 DB 사용시 패스워드가 암호화가 되어 있지 않을 경우 발생하는 문제 수정
+18. theme 버젼 A2 로 업데이트 (theme/Changelog.theme 참조)
+19. 패스워드 길이를 16자 까지 가능하게 변경
 
 
 -----------------------------------------------------------------------------

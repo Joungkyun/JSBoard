@@ -14,10 +14,15 @@ function meta_char_check($name,$i=0,$t=0) {
 # 로그인에 사용되는 Password 비교 함수
 #
 function compare_pass($l) {
-  global $langs;
-  $r = get_authinfo($l[id]);
+  global $langs,$edb;
+  $nocrypt = $edb[crypts] ? 1 : "";
+  $r = get_authinfo($l[id],$nocrypt);
 
-  if ($r[passwd] != $l[pass]) print_pwerror($langs[ua_pw_c]);
+  if($nocrypt) {
+    if (crypt($r[passwd],$l[pass]) != $l[pass]) print_pwerror($langs[ua_pw_c]);
+  } else {
+    if ($r[passwd] != $l[pass]) print_pwerror($langs[ua_pw_c]);
+  }
 }
 
 # 문자열에 한글이 포함되어 있는지 검사하는 함수

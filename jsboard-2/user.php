@@ -87,7 +87,7 @@ $print[body] = "
 <TD BGCOLOR=$color[m_bg]><FONT STYLE=\"color:$color[m_fg];font-weight:bold;\">$langs[u_name]</FONT></TD>
 <TD BGCOLOR=$color[d_bg]><INPUT TYPE=text SIZE=$sform NAME=chg[name] VALUE=\"$row[name]\"></TD>
 <TD WIDTH=15% BGCOLOR=$color[m_bg]><FONT STYLE=\"color:$color[m_fg];font-weight:bold;\">$langs[u_pass]</FONT></TD>
-<TD WIDTH=35% BGCOLOR=$color[d_bg]><INPUT TYPE=password SIZE=$sform NAME=chg[pass] MAXLENGTH=8></TD>
+<TD WIDTH=35% BGCOLOR=$color[d_bg]><INPUT TYPE=password SIZE=$sform NAME=chg[pass] MAXLENGTH=16></TD>
 </TR>
 
 <TR>

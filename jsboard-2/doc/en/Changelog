@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Jan 14 2002
+Date      : Wed, Jan 16 2002
 Version   : jsboard-2.0pre4
 
 
@@ -35,6 +35,12 @@ Version   : jsboard-2.0pre4
 11. removed miss table tag in theme
 12. fixed hard conding of korean code
 13. removed unuseful code in prelist.ph
+14. changed exec check to windows check from iis check (for windows version)
+15. update some document file
+16. removed useless variable in language file
+17. fixed authentication of external user db include uncrypt password field
+18. update theme version to A2 (See also theme/Changelog.theme)
+19. changed password length to 16 charactors
 
 
 -----------------------------------------------------------------------------

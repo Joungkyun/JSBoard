@@ -28,7 +28,7 @@ $list[text] = htmlspecialchars($list[text]);
 $list[email] = str_replace("@",$rmail[chars],$list[email]);
 
 if(!$board[super])
-  $passment = "$passment <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size[pass]\" MAXLENGTH=\"8\">&nbsp;";
+  $passment = "$passment <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size[pass]\" MAXLENGTH=16>&nbsp;";
 else $passment = "";
 
 if($board[notice]) print_notice($board[notice]);

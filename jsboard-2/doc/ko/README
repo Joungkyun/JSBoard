@@ -54,10 +54,6 @@ Root의 권한을 가지고 있는 사용자들에게는 INSTALLER 를 제공하고 있다. 단 계정유저
 
 라이센스
 
-JSBoard의 모든 code(OOPS Administration은 제외)는 GPL을 따른다. 이 코드를 사용하
-여 상용화를 할 시에는 상용화 되는 상품의 코드 역시 공개를 해야 한다.
-OOPS Administration의 code의 경우에는 JSBoard 의 부산물이 아닌 독립적인 Licesnse
-를 가진 프로그램을 JSBoard 에서 연동을 시킨것이기 때문이다. 이 프로그램에 대해서
-는 admin/License 를 읽어보고 동의하면 사용하기를 바란다.
+JSBoard의 모든 code 는 GPL2 를 따른다.
 
-2001년 09월 04일 김정균 <http://www.oops.org>
+2002년 01월 16일 김정균 <http://www.oops.org>

@@ -5,7 +5,6 @@ $langs[charset] = "iso-8859-1";
 # Header file Message
 $table_err = "Table name Missing! You must select a table";
 $langs[ln_titl]	= "JSBoard $board[ver] Admin Page";
-$langs[sec_error] = "You did not set Bug Alram funtion in global.ph.\nSee Also 5th section in KnownBug file";
 $langs[login_err] = "Please login first";
 $langs[perm_err] = "Sorry, you don't have access permission on this page";
 

@@ -72,6 +72,10 @@ function print_notice($str,$width = 330, $height = 210) {
 function print_pwerror($str, $width = 250, $height = 130) {
   global $table, $path, $agent;
 
+  if ($path[type] == "user_admin") $err_fn = "../..";
+  elseif ($path[type] == "admin") $err_fn = "..";
+  else $err_fn = ".";
+
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
   if(eregi("^(WIN|NT)$",$agent[os])) {
@@ -83,20 +87,17 @@ function print_pwerror($str, $width = 250, $height = 130) {
     $str = str_replace("\n","<BR>",$str);
     $str = urlencode($str);
 
-    if ($path[type] == "admin") $err_fn = "../error.php";
-    else $err_fn = "error.php";
-
     echo "var farwindow = null;\n".
          "function remoteWindow() {\n".
          "  farwindow = window.open(\"\",\"LinksRemote\",\"width=$width,height=$height,scrollbars=1,resizable=0\");\n".
          "  if (farwindow != null) {\n".
          "    if (farwindow.opener == null) { farwindow.opener = self; }\n".
-         "    farwindow.location.href = \"$err_fn?table=$table&str=$str\";\n".
+         "    farwindow.location.href = \"$err_fn/error.php?table=$table&str=$str\";\n".
          "  }\n}\n".
          "remoteWindow();\n";
   }
 
-  echo "document.location='../session.php?m=logout'\n".
+  echo "document.location='$err_fn/session.php?m=logout'\n".
        "//-->\n</SCRIPT>\n";
   exit;
 }

@@ -6,7 +6,6 @@ $langs[charset] = "EUC-KR";
 # Header file Message
 $table_err = "테이블을 지정해야 합니다";
 $langs[ln_titl] = "JSBoard $board[ver] 관리자 페이지";
-$langs[sec_error] = "버그 알림 기능 설정이 되어 있지 않습니다.\nKnownBUG file 의 5번 항목을 참조하십시오";
 $langs[login_err] = "로그인을 해 주십시오";
 $langs[perm_err] = "권한이 없습니다.";
 

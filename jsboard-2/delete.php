@@ -69,7 +69,7 @@ if(!$board[super] && ${$jsboard}[id] != $list[name]) {
     $warning = "$langs[d_wa]";
     # 패스워드가 없는 게시물일  경우 관리자 인증을 거침
     if(!$list[passwd] || $list[reyn]) $warning = "$langs[d_waa]";
-    $print[passform] = "$langs[w_pass]: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" MAXLENGTH=\"8\">&nbsp;\n";
+    $print[passform] = "$langs[w_pass]: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" MAXLENGTH=\"16\">&nbsp;\n";
   } else $warning = "&nbsp;";
 } else $warning = "&nbsp;";
 
