@@ -84,6 +84,7 @@ Version   : jsboard-2.0pre4
 58. fixed highlight bug of multiple keyword on url link
 59. supported mbrstring in check_spam() function
 60. added single quote on all variables in all sql query
+61. fixed syntax error on wordwrap
 
 
 -----------------------------------------------------------------------------
