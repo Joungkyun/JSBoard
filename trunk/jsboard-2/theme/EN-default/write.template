@@ -204,7 +204,7 @@ if((!$board[mode] || $board[mode] == 6) && $board[super] != 1) {
 <?=$print[passform]?>
 <INPUT TYPE=submit VALUE="Regist">&nbsp;
 <INPUT TYPE=reset VALUE="Reset"<?=$orig_option?>>&nbsp;
-<INPUT TYPE=button onClick=history.back() VALUE="Cancle">
+<INPUT TYPE=button onClick=history.back() VALUE="Cancel">
 </TD></TR>
 </TABLE>
 
