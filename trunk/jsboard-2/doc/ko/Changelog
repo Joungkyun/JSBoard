@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  2월 18일
+작성일 : 2002년  2월 19일
 버전   : jsboard-2.0pre4
 
 
@@ -71,6 +71,7 @@ If you wnat to see windog's change log, see also
 42. prelist 사용시 에러 출력에서 agent 정보가 전달되지 못하던것 수정
 43. 다운로드 헤더 변경
 44. register_globals = Off 상에서 보안 정보 페이지에서 목록 돌아오지 못하던것 수정
+45. register_globals = ON 상태에서 parse_query() 함수 작동하지 않도록 수정
 
 
 -----------------------------------------------------------------------------
