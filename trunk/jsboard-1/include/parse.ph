@@ -272,6 +272,7 @@ function auto_link($str) {
   $str = eregi_replace("(<a href=([\"']*)($regex[http])([\"']*)+([^>]*)>)+<a href=([\"']*)($regex[http])([\"']*)+([^>]*)>","\\1", $str);
   $str = eregi_replace("(<a href=([\"']*)mailto:($regex[mail])([\"']*)>)+<a href=([\"']*)mailto:($regex[mail])([\"']*)>","\\1", $str);
   $str = eregi_replace("((\.+)</a>|</a></a>)","</a>\\2",$str);
+  $str = eregi_replace("([a-z])(\.)*(\" target=\"_blank)\">","\\1\\3\">",$str);
   $str = eregi_replace("([a-z])(\.)*\">","\\1\">",$str);
 
   return $str;

@@ -1,6 +1,32 @@
 <?php
 /* mail º¸³»±â ÇÔ¼ö 2000.10.4 ±èÁ¤±Õ */
 
+function check_sendmail($n=0) {
+  global $rmail;
+  $s = eregi_replace("(\.php)\?(.*)","\\1",getenv("HTTP_REFERER"));
+  $o[l] = "$rmail[bbshome]list.php3";
+  $o[r] = "$rmail[bbshome]read.php3";
+  $o[w] = "$rmail[bbshome]write.php3";
+  $o[re] = "$rmail[bbshome]reply.php3";
+  $o[f] = "$rmail[bbshome]form.php3";
+
+  if ($s != $o[l] && $s != $o[r] && $s != $o[f] && $s != $o[w] && $s != $o[re]) {
+    if($n) print_error("confirmed \$rmail[bbshome] in global.ph");
+    return 0;
+  } else return 1;
+}
+
+function get_send_info($table,$no) {
+  global $db;
+  $c = sql_connect($db[host],$db[user],$db[pass]);
+  sql_select_db($db[name]);
+  $r = sql_query("SELECT email FROM $table WHERE no = $no");
+  $row = sql_fetch_array($r);
+  mysql_close($c);
+
+  return $row;
+}
+
 function sendmail($rmail,$fm=0) {
 
   global $REMOTE_ADDR, $HTTP_USER_AGENT, $HTTP_ACCEPT_LANGUAGE, $SERVER_NAME, $langs;
@@ -40,8 +66,8 @@ function sendmail($rmail,$fm=0) {
     else if ($day == "(Sun)") $day="(ìí)";
   }
 
-  $webboard_address =  sprintf("%s%s",$rmail[bbshome],"read.php?table=$rmail[table]&no=$rmail[no]");
-  $reply_article    =  sprintf("%s%s",$rmail[bbshome],"reply.php?table=$rmail[table]&no=$rmail[no]");
+  $webboard_address =  sprintf("%s%s",$rmail[bbshome],"read.php3?table=$rmail[table]&no=$rmail[no]");
+  $reply_article    =  sprintf("%s%s",$rmail[bbshome],"reply.php3?table=$rmail[table]&no=$rmail[no]");
 
   if (!$fm) {
     $dbname  = "DB Name         : $rmail[table]";
@@ -83,7 +109,7 @@ HTTP_ACCEPT_LANGUAGE : $HTTP_ACCEPT_LANGUAGE
 ---------------------------------------------------------------------------
 
 OOPS Form mail service - http://www.oops.org
-Scripted by JoungKyun Kim <admin@oops.org>
+Scripted by JoungKyun Kim
 ";
 
   if ($rmail[user] == "yes" && $rmail[reply_orig_email]) {
@@ -100,17 +126,6 @@ Scripted by JoungKyun Kim <admin@oops.org>
     or die("$mail_error");
   }
 
-}
-
-function get_send_info($table,$no) {
-  global $db;
-  $c = sql_connect($db[host],$db[user],$db[pass]);
-  sql_select_db($db[name]);
-  $r = sql_query("SELECT email FROM $table WHERE no = $no");
-  $row = sql_fetch_array($r);
-  mysql_close($c);
-
-  return $row;
 }
 
 ?>

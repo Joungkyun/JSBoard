@@ -146,7 +146,7 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
     mysql>
 
     만약 위와 같은 결과가 나오지 않는다면 (즉 column 수가 동일한지 확인을 한
-    다) jsboard/Install/act.php3 의 37번째 라인의 query에서 컬럼수대로 수정
+    다) jsboard/Installer/act.php3 의 37번째 라인의 query에서 컬럼수대로 수정
     을 해 줘야 한다.
 
   1-4. web server 설정
@@ -174,7 +174,7 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
 
 
   일단 설정 파일들을 위치 시키고 그 파일들의 퍼미션을 조정하도록 한다.
-  jsboard/Install/script 에서 아래의 명령을 실행한다. 실행이 되지 않으면
+  jsboard/Installer/script 에서 아래의 명령을 실행한다. 실행이 되지 않으면
   퍼미션을 755로 수정하기 바란다.
 
   다시 한번 주의를 주는데, 계정 유저들은 QUICK_INSTALL 를 따라서

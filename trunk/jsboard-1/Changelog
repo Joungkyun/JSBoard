@@ -16,13 +16,25 @@ Attention : OOPS administration Center is not GPL.
 ******************************************************************************
 
 작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 11월 3일
+버전   : jsboard-1.1.3
+
+* 변경된점
+1. Install시 DirectoryIndex 체크시 DirectoryIndex를 여러줄로 설정했을
+   경우 제대로 체크하지 못하는 버그 수정
+2. 메일 reply 기능 사용시 게시판 경로가 잘못 나가는 것 수정
+3. SPAM 메일 공격 버그 수정
+4. auto_link 함수에서 url뒤에 dot가 붙을 경우 이를 포함하던것 수정
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 10월 4일
-버전   : jsboard-1.1.2 (적수게시판 안정버전)
+버전   : jsboard-1.1.2
 
 * 변경된점
 1. cut_string() 함수 버그 수정
 2. 메일 기능 사용시 글쓴이의 메일 주소가 없을 경우 JSBoard message
-    만 나타나도록 수정
+   만 나타나도록 수정
 3. 메일 기능 사용시 "' 문자에 escape문자(\)가 붙는 것 수정
 4. 일부 영문 배포판 사용자들을 위해 Lang/ko.ph 에 스케일 설정
 5. vb script file upload시 확장자 변환 (vbs 로 된 virus 방지)
@@ -39,7 +51,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 9월 17일
-버전   : jsboard-1.1.1 (적수게시판 안정버전)
+버전   : jsboard-1.1.1
 
 * 변경된점
 1. auto_link() 함수에서 flash link 적용
@@ -61,7 +73,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 9월 5일
-버전   : jsboard-1.1.0 (적수게시판 안정버전 1.1.0)
+버전   : jsboard-1.1.0
 
 * 변경된점
 
@@ -107,7 +119,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 8월 14일
-버전   : jsboard-1.0.3 (적수게시판 안정버전 1.0.3)
+버전   : jsboard-1.0.3
 
 * 변경된점
 
@@ -121,7 +133,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 7월 17일
-버전   : jsboard-1.0.2 (적수게시판 안정버전 1.0.2)
+버전   : jsboard-1.0.2
 
 * 변경된점
 
@@ -143,7 +155,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 7월 3일
-버전   : jsboard-1.0.1 (적수게시판 안정버전 1.0.1)
+버전   : jsboard-1.0.1
 
 * 변경된점
 
@@ -170,7 +182,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 6월 16일
-버전   : jsboard-1.0.0 (적수게시판 버전 1.0 정식 버젼)
+버전   : jsboard-1.0.0
 
 1. 새로운 알고리즘으로 변경 (DB table 구조 변경)
 2. Image Theme 기능 추가
@@ -232,7 +244,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 임은재 (eunjea@kldp.org) 김정균 (admin@oops.org)
 작성일 : 2000년 6월 2일
-버전   : jsboard-0.7.9 (적수게시판 버전 0.7 정식 버젼)
+버전   : jsboard-0.7.9
 
 1. 검색 문자에 ? (예: 요?) 또는 ...  가 들어가면 문자열이 깨지는것 등의
    검색버그 수정, 따옴표로 둘러 싸인 문자 검색시의 버그수정.
@@ -246,7 +258,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 5월 27일
-버전   : jsboard-0.7.8 (적수게시판 버전 0.7 정식 버젼)
+버전   : jsboard-0.7.8
 
 1. 검색시 [ 나 "가 들어갈 경우 에러나는 것 수정
 2. 글 제목에 "가 들어 있을 경우 수정및 답장쓸때 제목이 짤리는 것 수정
@@ -261,7 +273,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 4월 27일
-버전   : jsboard-0.7.7 (적수게시판 버전 0.7 정식 버젼)
+버전   : jsboard-0.7.7
 
 1. preview 기능 사용시 글내용에 double quote가 존재할 경우 list page에서
    글 제목이 깨지는 것 fix
@@ -273,7 +285,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 차경묵 (dimanche@dimanche.co.kr)
 작성일 : 2000년 4월 26일
-버전   : jsboard-0.7.6 (적수게시판 버전 0.7 정식 버젼)
+버전   : jsboard-0.7.6
 
 1. 게시물 리스트에서 게시물 제목에 마우스 커서를 올리면 
    해당 게시물의 내용을 미리 볼 수 있는 기능 추가 (IE 전용)
@@ -281,7 +293,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 4월 22일
-버전   : jsboard-0.7.5 (적수게시판 버전 0.7 정식 버젼)
+버전   : jsboard-0.7.5
 
 1. 글읽기에서 YN이라는 문자가 들어 갔을 경우 사라지는 현상 fix
 2. 쬬, 떄와 같이 존재하지 않는 철자법 표기 에러 나는 것 fix
@@ -292,7 +304,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 4월 13일
-버전   : jsboard-0.7.4 (적수게시판 버전 0.7 정식 버젼)
+버전   : jsboard-0.7.4 
 
 1. first_regist.ph file에서 에러 유발하는 charactor 제거
 2. PHP4에서 name resolving error patch
@@ -301,7 +313,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 3월 19일
-버전   : jsboard-0.7.3 (적수게시판 버전 0.7 정식 버젼)
+버전   : jsboard-0.7.3
 
 1. read.php3에서 조건식 or의 표현이 잘못된것 수정
 2. get_hostname() 함수 수정 (ip address가 resolving이 될 경우 hostname으로
@@ -314,7 +326,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 3월 4일
-버전   : jsboard-0.7.2 (적수게시판 버전 0.7 정식 버젼)
+버전   : jsboard-0.7.2
 
 1. cgi, sh, pl file upload시에 file name에 위의 문자열이 있을때 file 이름이
    변형되는 것 수정
@@ -327,7 +339,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 2월 23일
-버전   : jsboard-0.7.1 (적수게시판 버전 0.7 정식 버젼)
+버전   : jsboard-0.7.1
 
 1. script file upload시에 실행을 할수 없게 확장자를 변경시킴.
    (php3,php -> phps , cgi -> cgis, pl -> pls, sh -> shs)
@@ -336,7 +348,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 31일
-버전   : jsboard-0.7.0 (적수게시판 버전 0.7 정식 버젼)
+버전   : jsboard-0.7.0
 
 1. Install/SQL/mysql.sql 에서 table 명이 잘못된것 수정 및 최초 등록날짜 수정
 2. INSTALL.txt 재작성
@@ -373,7 +385,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 디망쉬(차경묵) (dimanche@dimanche.co.kr)
 작성일 : 2000년 1월 28일
-버전   : jsboard-0.6.20 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.20
 
 * 변경된점
 
@@ -388,7 +400,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 25일
-버전   : jsboard-0.6.10 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.10
 
 1. file upload시에 썸네일기능에 의해 jpg, gif file의 미리 보기를 할때
    파일 이름에 blank가 있을 경우 링크가 깨지는 것 패치.
@@ -400,7 +412,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 22일
-버전   : jsboard-0.6.9 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.9
 
 1. misc.ph의 auto_link() 함수 정규 표현식에서 system regex와
    php regex의 차이 부분 수정
@@ -409,7 +421,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 20일
-버전   : jsboard-0.6.8 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.8
 
 1. list에서 name과 subject의 문자열(한글 처리) 자르는 부분 수정
    적수님 패치 적용
@@ -428,7 +440,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 16일
-버전   : jsboard-0.6.7 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.7
 
 1. 이름, 제목, 글에 space만 넣었을때 글이 등록되는 버그 패치
 2. 글쓰기에서 스크립트 사용 막는 정규 표현식 수정
@@ -441,7 +453,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 12일
-버전   : jsboard-0.6.6 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.6
 
 1. Auto Link 정규 표현식 보완
 2. Install/SQL/mysql.sql 에서 에러 나던것 수정.
@@ -450,7 +462,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 6일
-버전   : jsboard-0.6.5 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.5
 
 1. Auto Link 정규 표현식 대폭 수정(이전 버젼보다 훨씬
    보완 되었음)
@@ -459,7 +471,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 5일
-버전   : jsboard-0.6.4 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.4
 
 1. Email, URL을 link를 할때 이상하게 출력이 되는 부분 수정
 2. Table color 수정
@@ -468,7 +480,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 4일
-버전   : jsboard-0.6.3 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.3
 
 1. 글 리스트에서 2000년이 00년으로 표기 되는 것을
    Y2K로 표기 되게 수정. - east egg :-)
@@ -481,7 +493,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 2일
-버전   : jsboard-0.6.2 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.2
 
 1. permission및 소유권 설정 script 생성. Install/Config 에 account.sh 와
    root.ph
@@ -490,7 +502,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 1일
-버전   : jsboard-0.6.1 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.1
 
 1. cookie 관련 변수 수정 (act.php3)
 
@@ -498,7 +510,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 1999년 12월 27일
-버전   : jsboard-0.6.0 (적수게시판 버전 0.6 안정 버젼)
+버전   : jsboard-0.6.0
 
 * 변경된점
 
@@ -574,7 +586,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 김영민 (blhole@hotmail.com)
 작성일 : 1999년 12월 10일
-버전   : jsboard-0.5 (적수게시판 버전 0.5)
+버전   : jsboard-0.5
 
 1. 파일이 포함되지 않은 글을 지울때 생기는 버그를 고침
 2. 파일이 포함되지 않은 글에 X 표시가 되는 부분을 지움
@@ -589,7 +601,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자 : 이진우(지누스) jinoos@hanmail.net
 작성일 : 1999년11월30일
-버전 : jsboard-0.4 (적수게시판 버전 0.4)
+버전 : jsboard-0.4
 
 1. 등록된 파일종류별 썸네일 기능 추가
 2. 업로드 세팅중 파일 미등록시 "홀" 현상 제거  "X" 볼드체로 변경
@@ -605,7 +617,7 @@ Attention : OOPS administration Center is not GPL.
 -----------------------------------------------------------------------------
 작성자: 방창현 (겨울아이) winchild@kldp.org
 작성일: 1999년11월26일 
-버전: jsboard-0.3 (적수게시판 버전 0.3)
+버전: jsboard-0.3
 
 1. test.sql 의 내용과 include 및의 테이블 내용과 다릅니다.
    따라서 include 디렉토리 밑에 study 내용을 복사하였습니다.
@@ -640,7 +652,7 @@ Attention : OOPS administration Center is not GPL.
 
 작성자 : 문태준 <taejun@taejun.pe.kr>
 작성일 : 1999.11.17
-버전: jsboard-0.2 (적수게시판 버전 0.2)
+버전: jsboard-0.2
 
 수정내용
 1. 파일 업로드 추가
@@ -651,6 +663,6 @@ Attention : OOPS administration Center is not GPL.
 
 최초작성자 : 김병찬 <redhands@linux.sarang.net>
 작성일: 모름
-버전: jsboard-0.1 (적수게시판 버전 0.1)
+버전: jsboard-0.1
 
 -----------------------------------------------------------------------------
