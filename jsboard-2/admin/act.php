@@ -44,7 +44,7 @@ if($mode=='db_del') {
   if(!preg_match("/_comm$/",$table_name)) {
     $comm_del = "drop table {$table_name}_comm";
     mysql_query($comm_del,$connect);
-    sql_error(mysql_errno(),mysql_error());
+    //sql_error(mysql_errno(),mysql_error());
   }
 
   # 게시판 계정에서 사용되는 file 삭제
