@@ -6,11 +6,11 @@
 
 # JSBoard가 설치되어 있는 절대 경로
 # 마지막에 /를 붙이면 안됨
-$prlist[path] = "/webroot/jsboard-version";
+$prlist[path] = "/home/httpd/html/jsboard";
 
 # JSBoard가 설치되어 있는 웹 경로
 # 마지막에 /를 붙이면 안됨
-$prlist[wpath] = "http://domain.com/jsboard-version";
+$prlist[wpath] = "http://www.domain.com/jsboard";
 
 # 글리스트들을 출력하는 design
 #   echo 문의 "" 사이에서 디자인을 넣으면 됨
@@ -24,7 +24,16 @@ $prlist[wpath] = "http://domain.com/jsboard-version";
 # 잘 연계해야함
 #
 function print_prlist($p) {
-  echo "$p[link] $p[name] - $p[date] $p[count]<br>\n";
+  global $prlist;
+  $p[date] = $p[date] ? "[$p[date]]" : "";
+  if($prlist[type] == "main") {
+    $p[link] = eregi_replace("\[참고\]|\[TIP\]","",$p[link]);
+    echo "<Li type=disc>$p[link] $p[name] $p[date] $p[count]<br>\n";
+  } elseif ($prlist[type] == "proftpd") {
+    echo "$p[link] $p[name] $p[date] $p[count]<br>\n";
+  } else {
+    echo "$p[link] $p[name] - $p[date] $p[count]<br>\n";
+  }
 }
 
 

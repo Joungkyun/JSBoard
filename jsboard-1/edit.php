@@ -131,7 +131,7 @@ if (value == 2) document.editp.epost.rows += 5;
 
   # 언어 코드에 따라 버튼을 text 로 처리 할것인지 이미지로 처리할 것인지를 결정
   form_size_button($langs[code]);
-  
+
   echo "  </TD>";
 }
 

@@ -66,3 +66,5 @@ if(file_exists("data/$table/html_head.ph")) {
   @include "html/head2.ph";
 }
 ?>
+
+

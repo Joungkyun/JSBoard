@@ -51,11 +51,9 @@ function check_url($url) {
   if(!eregi("^(http://|https://|ftp://|telnet://|news://)", $url))
     $url = eregi_replace("^", "http://", $url);
 
-  if(is_hangul($url)) return;
-
-  if(!eregi("(http|https|ftp|telnet|news):\/\/[\xA1-\xFEa-z0-9-]+\.[][\xA1-\xFEa-zA-Z0-9:&#@=_~%\-\?\/\.\+]+", $url))
+  if(!eregi("(http|https|ftp|telnet|news):\/\/[\xA1-\xFEa-z0-9-]+\.[][\xA1-\xFEa-zA-Z0-9:&#@=_~%\?\/\.\+-]+$", $url))
     return;
-    
+
   return $url;
 }
 
@@ -65,13 +63,10 @@ function check_url($url) {
 #         http://www.php.net/manual/function.eregi.php
 function check_email($email) {
   $url = trim($email);
-
-  if(is_hangul($url)) return;
-
-  if(!eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9-]+\.[a-z0-9-]+", $email))
+  if(!eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9\._-]+$", $url))
     return;
-    
-  return $email;
+
+  return $url;
 }
 
 # 패스워드 비교 함수
@@ -237,11 +232,16 @@ function upload_name_chk($f) {
 # 허락됨
 #
 function check_location($n=0) {
-  global $rmail, $langs;
+  global $board, $langs;
 
   if($n) {
-    $r = gethostbyname(eregi_replace("http[s]?://([^/]+)/.*","\\1",getenv("HTTP_REFERER")));
-    $l = gethostbyname(eregi_replace("http[s]?://([^/]+)/.*","\\1",$rmail[bbshome]));
+    $sre[] = "/http[s]?:\/\/([^\/]+)\/.*/i";
+    $tre[] = "\\1";
+    $sre[] = "/:[0-9]+/i";
+    $tre[] = "";
+
+    $r = gethostbyname(preg_replace($sre,$tre,getenv("HTTP_REFERER")));
+    $l = gethostbyname(preg_replace($sre,$tre,$rmail[bbshome]));
 
     if ($r != $l) {
       print_error("$langs[chk_lo]");

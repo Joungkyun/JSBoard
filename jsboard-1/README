@@ -7,7 +7,7 @@ JSBoard는 김병찬<redhands@linux.sarang.net>님의 공개 게시판을
 토대로 하여 사용자들이 자신만의 기능을 추가한 것을 모아서 새로운
 기능을 추가한 웹상에서 사용을 할수 있는 게시판이다.
 
-JSBoard를 사용하기 위해서는 Redhat, Devian, FreeBSD 3.5, Windog 2K,
+JSBoard를 사용하기 위해서는 Redhat, Devian, FreeBSD (3.5,4.4), Windog 2K,
 Windog NT box와 apache, mysql, php4가 요구되며 시스템 사양은 위의
 것들이 돌아갈수만 있으면 누구나 사용을 할수가 있다.
 
@@ -55,4 +55,4 @@ OOPS Administration의 code의 경우에는 마음대로 사용을 할수도 있고 공개를
 안해도 상관은 없으나 상용화는 금한다. (주의 할것은 JSBoard에 들어가 있는
 OOPS Administration의 code중에는 일부 JSBoard code를 사용한 것이 있음)
 
-2000년 12월 01일 김정균 <admin@oops.org>
+2000년 12월 01일 김정균 <admin at oops.org>

@@ -37,14 +37,17 @@ function get_agent() {
     # 5.5 를 경계로 구분
     if(eregi("5\.5",$agent_env)) $agent[br] = "MSIE5.5";
     else $agent[br] = "MSIE";
-    if(ereg("NT", $agent_env)) {
-      $agent[os] = "NT";
-    } else if(ereg("Win", $agent_env)) {
-      $agent[os] = "WIN";
-    } else $agent[os] = "OTHER";
+    # OS 별 구분
+    if(ereg("NT", $agent_env)) $agent[os] = "NT";
+    else if(ereg("Win", $agent_env)) $agent[os] = "WIN";
+    else $agent[os] = "OTHER";
+  } else if(ereg("Lynx", $agent_env)) {
+    $agent[br] = "LYNX";
+  } else if(ereg("Konqueror",$agent_env)) {
+    $agent[br] = "KONQ";
   } else if(ereg("^Mozilla", $agent_env)) {
     # Netscape 6 을 위한 구분
-    if(eregi("Gecko",$agent_env)) $agent[br] = "MOZL6";
+    if(eregi("Gecko|Galeon",$agent_env)) $agent[br] = "MOZL6";
     else $agent[br] = "MOZL";
 
     # client OS 구분
@@ -58,10 +61,6 @@ function get_agent() {
       $agent[os] = "LINUX";
       if(ereg("\[ko\]", $agent_env)) $agent[ln] = "KO";
     } else $agent[os] = "OTHER";
-  } else if(ereg("Lynx", $agent_env)) {
-    $agent[br] = "LYNX";
-  } else if(ereg("Konqueror",$agent_env)) {
-    $agent[br] = "KONQ";
   } else $agent[br] = "OTHER";
 
   return $agent;
@@ -376,8 +375,8 @@ function viewfile($tail) {
       else
         $p[bo] = "<embed src=$upload_file autostart=true hidden=true mastersound>";
     } elseif (eregi("^(mpeg|mpg|asf|dat|avi)$",$tail)) {
-      if(eregi("MSIE",$agent[br])) $p[up] = "<embed src=$upload_file autostart=true>";
-    } elseif ($tail == "mov" && eregi("MSIE",$agent[br])) {
+      if($agent[br] == "MSIE") $p[up] = "<embed src=$upload_file autostart=true>";
+    } elseif ($tail == "mov" && $agent[br] == "MSIE") {
       $p[up] = "<embed src=$upload_file autostart=true width=300 height=300 align=center>";
     } elseif ($tail == "swf") {
       $flash_size = $board[width] - 10;
@@ -389,14 +388,14 @@ function viewfile($tail) {
 }
 
 # 파일을 변수로 받고 쓰는 함수
-# p -> 파일 경로 
+# p -> 파일 경로
 # m -> 파일 작동 모드(r-읽기,w-쓰기,a-파일끝부터 쓰기)
 # msg -> 실패시 에러 메세지
 # s -> 쓰기모드에서는 쓸내용
 # t -> 읽기모드에서 사이즈 만큼 받을 것인지 아니면 배열로 파일
-#      전체를 받을 것인지 결정 
+#      전체를 받을 것인지 결정
 #
-function file_operate($p,$m,$msg='',$s='',$t=0) { 
+function file_operate($p,$m,$msg='',$s='',$t=0) {
   if($m == "r" || $m == "w" || $m == "a") {
     $m .= "b";
 
@@ -433,5 +432,4 @@ function get_html_src($url,$size=5000,$file="",$type="") {
     return $s;
   } else return $f;
 }
-
 ?>
