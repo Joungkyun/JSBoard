@@ -32,6 +32,7 @@ function search2url($o, $method = "get") {
     next($o);
   }
 
+  $url = preg_replace("/(%5C)%5C/i","\\1",$url);
   return $url;
 }
 

@@ -96,6 +96,7 @@ Version   : jsboard-2.0pre4
 70. fixed meta_char_check() function
 71. modified install script
 72. fixed auto_link() function
+73. fixed rutine of search
 
 
 -----------------------------------------------------------------------------
