@@ -14,7 +14,6 @@ $langs[conj] = "Replies";
 $langs[c_na] = "Name";
 $langs[c_ps] = "Pass";
 $langs[c_en] = "ENTER";
-$langs[c_lu] = "Line Up";
 
 # write.php
 $langs[w_ment] = "Don't write a long sentence unless you use HTML code or spaces";

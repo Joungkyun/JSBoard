@@ -230,8 +230,8 @@ function get_comment($table,$no,$print=0) {
   
   if($comment_no > 0) {
     $lists .= "<TR>\n".
-              "<TD COLSPAN=2><FONT STYLE=\"font: 10px tahoma; font-weight:bold;\">Total Comment : $comment_no</FONT></TD>\n".
-              "<TD COLSPAN=2 ALIGN=right>$langs[c_lu] $orlink</TD>\n".
+              "<TD COLSPAN=3><FONT STYLE=\"font: 10px tahoma; font-weight:bold;\">Total Comment : $comment_no</FONT></TD>\n".
+              "<TD ALIGN=right><FONT STYLE=\"font: 10px tahoma; font-weight:bold;\">SORT</FONT> $orlink</TD>\n".
               "</TR>\n";
 
     while ($list = sql_fetch_array($r)) {
