@@ -15,6 +15,10 @@ file.
 
 Version   : jsboard-2.0.7
 
+Fri, Mar 07 2004
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed rss align bug
+
 Fri, Feb 27 2004
   by JoungKyun Kim <http://www.oops.org>
 	- fixed comm field error when update previous version and
