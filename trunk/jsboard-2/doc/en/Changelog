@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Sun, Mar 10 2002
+Date      : Mon, Mar 11 2002
 Version   : jsboard-2.0pre4
 
 
@@ -87,6 +87,7 @@ Version   : jsboard-2.0pre4
 61. fixed syntax error on wordwrap
 62. fixed problem of changed original text in edit/reply mode
 63. enabled to use external mail server
+64. added check of spam register
 
 
 -----------------------------------------------------------------------------

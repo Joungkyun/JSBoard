@@ -446,4 +446,13 @@ function check_access($c=0,$wips='',$ips='') {
     if($val) print_error($langs[chk_bl],250,250,1);
   }
 }
+
+# spam 등록기 체크 함수
+function check_spamer($anti,$wkey,$ran) {
+  global $langs,$o;
+  if($o[at] == "write" || $o[at] == "reply") {
+    if(!$anti || !preg_match("/^[0-9]+:[0-9]+:[0-9]+$/i",$anti)) print_error($langs[chk_an],250,250,1);
+    if($wkey != get_spam_value($anti,$ran)) print_error($langs[chk_sp],250,250,1);
+  }
+}
 ?>
