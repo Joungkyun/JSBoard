@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.7
 
+2004.02.07
+  by 함기훈 <cloou at scscian.net>
+	- RSS 기능 추가
+
 2003.12.03
   by 김정균 <http://www.oops.org>
 	- 타 OS 와의 호환성을 위하여 exec 함수 완전 제거
