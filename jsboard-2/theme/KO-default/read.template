@@ -70,7 +70,7 @@ if(!$np) {
 <TR BGCOLOR=#FFAE00>
 <TD COLSPAN=2>
 <IMG SRC=./theme/KO-default/img/board_no.gif ALIGN=absmiddle>
-<FONT STYLE="color:#FFFFFF"><?=$list[title]?></FONT>
+<FONT STYLE="color:#FFFFFF; font-weight:bold;"><?=$list[title]?></FONT>
 </TD>
 </TR>
 
