@@ -3,19 +3,19 @@
 # register_globals 값이 off 일 경우 편리하게 사용
 #
 function parse_query_str() {
-  if(!ini_get("register_globals")) {
-    if(is_array($_GET)) {
-      foreach($_GET as $key => $value) {
-        global ${$key};
-        ${$key} = $value;
-      }
-    }
+  if(!ini_get("register_globals")) $tvars = 1;
 
-    if(is_array($_POST)) {
-      foreach($_POST as $key => $value) {
-        global ${$key};
-        ${$key} = $value;
-      }
+  if(count($_GET) && $tvars) {
+    foreach($_GET as $key => $value) {
+      global ${$key};
+      ${$key} = $value;
+    }
+  }
+
+  if(count($_POST) && $tvars) {
+    foreach($_POST as $key => $value) {
+      global ${$key};
+      ${$key} = $value;
     }
   }
 }
