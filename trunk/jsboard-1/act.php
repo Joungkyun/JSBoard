@@ -175,7 +175,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
   function article_edit($table, $atc, $passwd) {
     global $HTTP_POST_FILES, $max_file_size, $agent;
     global $enable, $cenable, $board, $adminsession;
-    global $sadmin, $admin, $langs;
+    global $sadmin, $admin, $langs, $upload;
 
     if($adminsession) {
       $passwd = $adminsession;
@@ -211,28 +211,36 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
 
     # file 삭제 루틴
     if($atc[fdel]) {
+      $fdelqy = sql_query("SELECT bcfile, bofile FROM {$table} WHERE no = '{$atc['no']}'");
+      $fdelinfo = sql_fetch_array($fdelqy);
+      sql_free_result($fdelqy);
+
       sql_query("UPDATE $table SET bcfile='', bofile='', bfsize='' WHERE no = '$atc[no]'");
-      unlink("data/$table/files/$atc[fdeldir]/$atc[fdelname]");
-      rmdir("data/$table/files/$atc[fdeldir]");
+      unlink("data/$table/files/$fdelinfo[bcfile]/$fdelinfo[bofile]");
+      rmdir("data/$table/files/$fdelinfo[bcfile]");
     }
 
     # file 수정 루틴
-    $bfilename = date("YmdHis",$atc[date]);
-    $upfile = file_upload("userfile",$bfilename);
+    if($upload['yesno'] && $cupload['yesno'] && $agent['br'] != "LYNX") {
+      $bfilename = date("YmdHis",$atc[date]);
+      $upfile = file_upload("userfile",$bfilename);
+      if(trim($upfile[name])) {
+        $fdelqy = sql_query("SELECT bcfile, bofile FROM {$table} WHERE no = '{$atc['no']}'");
+        $fdelinfo = sql_fetch_array($fdelqy);
+        sql_free_result($fdelqy);
+        if(file_exists("data/$table/files/$fdelinfo[bcfile]/$fdelinfo[bofile]") && $atc[fdelname]) {
+          unlink("data/$table/files/$fdelinfo[bcfile]/$fdelinfo[bofile]");
+          rmdir("data/$table/files/$fdelinfo[bcfile]");
+        }
 
-    if(trim($upfile[name])) {
-      if(file_exists("data/$table/files/$atc[fdeldir]/$atc[fdelname]") && $atc[fdelname]) {
-        unlink("data/$table/files/$atc[fdeldir]/$atc[fdelname]");
-        rmdir("data/$table/files/$atc[fdeldir]");
+        sql_query("
+          UPDATE $table SET date = '$atc[date]', host = '$atc[host]',
+          name = '$atc[name]', email = '$atc[email]', url = '$atc[url]',
+          title = '$atc[title]', text = '$atc[text]', html = '$atc[html]',
+          bofile = '$upfile[name]', bcfile = '$bfilename',
+          bfsize = '$upfile[size]'
+          WHERE no = '$atc[no]'");
       }
-
-      sql_query("
-        UPDATE $table SET date = '$atc[date]', host = '$atc[host]',
-        name = '$atc[name]', email = '$atc[email]', url = '$atc[url]',
-        title = '$atc[title]', text = '$atc[text]', html = '$atc[html]',
-        bofile = '$upfile[name]', bcfile = '$bfilename',
-        bfsize = '$upfile[size]'
-        WHERE no = '$atc[no]'");
     } else {
       sql_query("
         UPDATE $table SET date = '$atc[date]', host = '$atc[host]',

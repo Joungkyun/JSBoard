@@ -92,9 +92,7 @@ if($list[bofile]) {
        "   </A>\n" .
        "   <FONT COLOR=\"$color[r2_fg]\" $board[css]>- $hfsize</FONT>\n</TD>\n".
        "   <TD BGCOLOR=\"$color[r2_bg]\"><FONT COLOR=\"$color[r2_fg]\" $board[css]>$langs[fdel]</FONT>\n".
-       "   <INPUT TYPE=CHECKBOX NAME=atc[fdel] VALUE=1>\n".
-       "   <INPUT TYPE=HIDDEN NAME=atc[fdelname] VALUE=\"$list[bofile]\">\n".
-       "   <INPUT TYPE=HIDDEN NAME=atc[fdeldir] VALUE=\"$list[bcfile]\"></TD>\n";
+       "   <INPUT TYPE=CHECKBOX NAME=atc[fdel] VALUE=1>\n";
 }
 
 if($upload[yesno] == "yes" && $cupload[yesno] == "yes" && $agent[br] != "LYNX") {
