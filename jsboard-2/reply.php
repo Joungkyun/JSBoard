@@ -83,13 +83,19 @@ $print[passform] = "<INPUT TYPE=hidden NAME=o[at] VALUE=reply>\n".
                    "<INPUT TYPE=hidden NAME=rmail[origmail] VALUE=\"$list[email]\">\n".
                    "<INPUT TYPE=hidden NAME=atc[reno] VALUE=\"$list[no]\">";
 
+$pre_regist[rname] = !$pre_regist[rname] ? "" : "\n<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"$pre_regist[rname]\">";
+
 if(!$nodisable) {
-  $pre_regist[rname] = !$pre_regist[rname] ? "" : "\n<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"$pre_regist[rname]\">";
   $print[passform] .= "\n<INPUT TYPE=hidden NAME=atc[name] VALUE=\"$pre_regist[name]\">".
                       "$pre_regist[rname]".
                       "\n<INPUT TYPE=hidden NAME=atc[email] VALUE=\"$pre_regist[email]\">".
                       "\n<INPUT TYPE=hidden NAME=atc[url] VALUE=\"$pre_regist[url]\">\n";
+}  elseif($HTTP_COOKIE_VARS[$cjsboard][super] == 1) {
+  $print[passform] .= "$pre_regist[rname]\n";
 }
+
+if($board[rnname] && eregi("^(2|3|5|7)",$board[mode]) && $HTTP_COOKIE_VARS[$cjsboard][super] != 1)
+  $pre_regist[name] = $HTTP_COOKIE_VARS[$cjsboard][name] ? $HTTP_COOKIE_VARS[$cjsboard][name] : $pre_regist[name];
 
 $pages = "&page=$page";
 

@@ -44,18 +44,22 @@ if ($agent[br] == "MSIE" || $agent[br] == "MOZL" || ($agent[br] == "NS" && $agen
 } else $print[operate] = "No support this browser";
 
 $print[passform] = "<INPUT TYPE=hidden NAME=o[at] VALUE=write>\n".
-                   "<INPUT TYPE=hidden NAME=table VALUE=$table>";
+                   "<INPUT TYPE=hidden NAME=table VALUE=$table>\n";
+
+$pre_regist[rname] = !$pre_regist[rname] ? "" : "\n<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"$pre_regist[rname]\">";
+
 if(!$nodisable) {
-  $pre_regist[rname] = !$pre_regist[rname] ? "" : "\n<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"$pre_regist[rname]\">";
-  $print[passform] .= "\n<INPUT TYPE=hidden NAME=atc[name] VALUE=\"$pre_regist[name]\">".
+  $print[passform] .= "<INPUT TYPE=hidden NAME=atc[name] VALUE=\"$pre_regist[name]\">".
                       "$pre_regist[rname]".
                       "\n<INPUT TYPE=hidden NAME=atc[email] VALUE=\"$pre_regist[email]\">".
                       "\n<INPUT TYPE=hidden NAME=atc[url] VALUE=\"$pre_regist[url]\">\n";
+} elseif($HTTP_COOKIE_VARS[$cjsboard][super] == 1) {
+  $print[passform] .= "$pre_regist[rname]\n";
 }
 
 $pages = $page ? "&page=$page" : "";
 
-if($board[rnname] && eregi("^(2|3|5|7)",$board[mode])) 
+if($board[rnname] && eregi("^(2|3|5|7)",$board[mode]) && $HTTP_COOKIE_VARS[$cjsboard][super] != 1) 
   $pre_regist[name] = $HTTP_COOKIE_VARS[$cjsboard][name] ? $HTTP_COOKIE_VARS[$cjsboard][name] : $pre_regist[name];
 
 include "theme/$print[theme]/write.template";
