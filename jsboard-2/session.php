@@ -67,14 +67,20 @@ if ($m == "login") {
       header("Location: ./login.php$var");
     }
   } else {
+    include "./include/error.php";
+    include "./include/get.php";
+    include "./include/check.php";
+
     $urls = $edb['logout'];
     if($url && preg_match("/^http:/i",$url)) {
       $urls = rawurldecode($url);
     }
 
     if(!trim($urls)) {
-      meta_char_check($table,0,1);
-      if($table) { include "./data/$table/config.php"; }
+      if ($table) {
+        meta_char_check($table,0,1);
+        include "./data/$table/config.php";
+      }
       $urls = trim($print['dopage']) ? $print['dopage'] : "./login.php$var";
     }
     header("Location: $urls");
