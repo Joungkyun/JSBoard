@@ -284,9 +284,9 @@ function search_hl($list) {
 function text_nl2br($text, $html) {
   global $langs;
   if($html) {
-    $source = array("/<(\?|%)/i","/(\?|%)>/i","/([a-z0-9]*script:)/i","/\r\n/",
+    $source = array("/<(\?|%)/i","/(\?|%)>/i","/<img .*src=[a-z0-9\"\']*script:[^>]+>/i","/\r\n/",
                     "/<(\/*(script|style|pre|xmp|base|span|html)[^>]*)>/i","/(=[0-9]+%)&gt;/i");
-    $target = array("&lt;\\1","\\1&gt;","deny_\\1","\n","&lt;\\1&gt;","\\1>");
+    $target = array("&lt;\\1","\\1&gt;","","\n","&lt;\\1&gt;","\\1>");
     $text = preg_replace($source,$target,$text);
     if(!preg_match("/<--no-autolink>/i",$text)) $text = auto_link($text);
     else $text = chop(str_replace("<--no-autolink>","",$text));
