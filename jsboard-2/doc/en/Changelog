@@ -18,85 +18,87 @@ If you wnat to see windog's change log, see also
 ******************************************************************************
 
 
-Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Sat, Apr  6 2002
 Version   : jsboard-2.0pre4
 
+Sun, Apr 8 2002 by Eunjea Im <http://kldp.org/~eunjea/>
+	- fixed maildaemon class under qmail
 
-1. support over php 4.1.0
-2. fixed userlist administrate with internal user database
-3. fixed sql that get max no field value, When retist reply article
-4. changed file_operate() function
-5. added environment various in get_hostname() function
-6. fixed auto_link() function
-7. added table check function when regist article to use html tag
-8. don't send mail when reply for own's article
-9. fixed hilighting bug of search string
-10. fixed fintering bug of under 2 search characters in detail search
-11. removed miss table tag in theme
-12. fixed hard conding of korean code
-13. removed unuseful code in prelist.ph
-14. changed exec check to windows check from iis check (for windows version)
-15. update some document file
-16. removed useless variable in language file
-17. fixed authentication of external user db include uncrypt password field
-18. update theme version to A2 (See also theme/Changelog.theme)
-19. changed password length to 16 charactors
-20. fixed wrong print of name in delete page of article that include valid
-    value of email address field
-21. supported regist_globals = Off in php.ini
-22. fixed problem too big window size in case of image size equal screen size
-23. fixed include exec.ph of header file if windows version.
-24. remove copyright in oops administration page
-25. changed method of cookie time
-26. changed method of upload file for register_globals = off
-27. fixed bug of auto_link() function
-28. modified theme
-29. changed encode method of send notice mail to base64 from plain
-30. fixed syntax error of INSTALLER/script/dbconv_to_20
-31. fixed trackvar bug of user admin
-32. modified spam check
-33. fixed problem that lost value of table various
-34. removed double quote in -f option of mail() function
-35. fixed miss search during same day
-36. added spam check with article subject
-37. fixed miss db path in global.ph when used Installer
-38. changed session_unregisted() to session_destroy() function
-39. fixed typo of detail search form
-40. added check of iframe when registrated article
-41. removed check of $table in error.php
-42. fixed forward agent information when use prelist() function
-43. changed header of download
-44. fixed return problem in security.php on register_globals = Off
-45. changed parse_query() function that can't parse when register_globals = ON
-46. fix miss path in mysql error with Installer
-47. fix typo in mail.template
-48. changed to use self smtp of JSBoard when send mail
-49. fixed bug of regex
-50. changed check_mail() function to check valid mail server
-51. removed cookie that used with user auth
-52. fixed problem of creat empty session file
-53. added image.php
-54. fixed full scanning idx field for check of jsboard table in admin/admin.php
-55. added function of control access from hyper link of other site
-56. added function of ip blocking
-57. forced configuration of magic quotes
-58. fixed highlight bug of multiple keyword on url link
-59. supported mbrstring in check_spam() function
-60. added single quote on all variables in all sql query
-61. fixed syntax error on wordwrap
-62. fixed problem of changed original text in edit/reply mode
-63. enabled to use external mail server
-64. added check of spam register
-65. auto resize upload_max_filesize lower than (post_max_size - 1) Mb in php.ini
-66. if upload_maxsize > post_max_size, auto resize upload_maxsize value to post_max_size
-67. enable reconfig php_excution_tim in global.ph
-68. enable to use "," character in URL
-69. fixed charactors of beyond the scope of KSX 1001 in preview of list
-70. fixed meta_char_check() function
-71. modified install script
-72. fixed auto_link() function
-73. fixed rutine of search
+Sun, Apr 8 2002 by JoungKyun Kim <http://www.oops.org>
+	- support over php 4.1.0
+	- fixed userlist administrate with internal user database
+	- fixed sql that get max no field value, When retist reply article
+	- changed file_operate() function
+	- added environment various in get_hostname() function
+	- fixed auto_link() function
+	- added table check function when regist article to use html tag
+	- don't send mail when reply for own's article
+	- fixed hilighting bug of search string
+	- fixed fintering bug of under 2 search characters in detail search
+	- removed miss table tag in theme
+	- fixed hard conding of korean code
+	- removed unuseful code in prelist.ph
+	- changed exec check to windows check from iis check (for windows version)
+	- update some document file
+	- removed useless variable in language file
+	- fixed authentication of external user db include uncrypt password field
+	- update theme version to A2 (See also theme/Changelog.theme)
+	- changed password length to 16 charactors
+	- fixed wrong print of name in delete page of article that include valid
+	  value of email address field
+	- supported regist_globals = Off in php.ini
+	- fixed problem too big window size in case of image size equal screen size
+	- fixed include exec.ph of header file if windows version.
+	- remove copyright in oops administration page
+	- changed method of cookie time
+	- changed method of upload file for register_globals = off
+	- fixed bug of auto_link() function
+	- modified theme
+	- changed encode method of send notice mail to base64 from plain
+	- fixed syntax error of INSTALLER/script/dbconv_to_20
+	- fixed trackvar bug of user admin
+	- modified spam check
+	- fixed problem that lost value of table various
+	- removed double quote in -f option of mail() function
+	- fixed miss search during same day
+	- added spam check with article subject
+	- fixed miss db path in global.ph when used Installer
+	- changed session_unregisted() to session_destroy() function
+	- fixed typo of detail search form
+	- added check of iframe when registrated article
+	- removed check of $table in error.php
+	- fixed forward agent information when use prelist() function
+	- changed header of download
+	- fixed return problem in security.php on register_globals = Off
+	- changed parse_query() function that can't parse when register_globals = ON
+	- fix miss path in mysql error with Installer
+	- fix typo in mail.template
+	- changed to use self smtp of JSBoard when send mail
+	- fixed bug of regex
+	- changed check_mail() function to check valid mail server
+	- removed cookie that used with user auth
+	- fixed problem of creat empty session file
+	- added image.php
+	- fixed full scanning idx field for check of jsboard table in admin/admin.php
+	- added function of control access from hyper link of other site
+	- added function of ip blocking
+	- forced configuration of magic quotes
+	- fixed highlight bug of multiple keyword on url link
+	- supported mbrstring in check_spam() function
+	- added single quote on all variables in all sql query
+	- fixed syntax error on wordwrap
+	- fixed problem of changed original text in edit/reply mode
+	- enabled to use external mail server
+	- added check of spam register
+	- auto resize upload_max_filesize lower than (post_max_size - 1) Mb in php.ini
+	- if upload_maxsize > post_max_size, auto resize upload_maxsize value to post_max_size
+	- enable reconfig php_excution_tim in global.ph
+	- enable to use "," character in URL
+	- fixed charactors of beyond the scope of KSX 1001 in preview of list
+	- fixed meta_char_check() function
+	- modified install script
+	- fixed auto_link() function
+	- fixed rutine of search
+	- changed form of changelog
 
 
 -----------------------------------------------------------------------------
@@ -105,75 +107,75 @@ Date      : Mon, Dec 31 2001
 Version   : jsboard-2.0pre3
 
 
-1. updated README.THEME file
-2. fixed to use null field on fields of list in list.ph
-3. fixed $board[path] bug with port number
-4. fixed typo in Korean Theme
-5. fixed to enable user registration whether only admin or anybody
-6. lined user registration page in whole admin area
-7. fixed only whole admin can change board admin in board admin area
-8. fixed $board[uadmin] to admin if $board[uadmin] value is null
-9. fixed string filtering bug in check_url and check_email function
-10. fixed deleted/modified article bug that has null password
-11. fixed INSTALLER bug that restricted user access to localhost 
-    with extanl db
-12. hide mail address in status bar when mouse over email link
-13. removed duplicated get_agent() function
-14. fixed upload of 2byte filename with UTF8 use of IE
-15. fixed missprint of image size
-16. fixed article registration with Lynx
-17. fixed cookie ploblem under IE 5.5
-18. fixed miss configuration of login mode
-19. fixed miss pritn of email link in search
-20. complate changed search_hl() function
-21. updated KnownBug document
-22. fixed null string problem in user registration
-23. fixed redirect problem after user regist in whole admin area
-24. changed to added number of read after load read page
-25. removed duplicated include rule
-26. fixed imoticon of png file
-27. modified to change expression of email link
-28. fixed sendmail() function
-29. supported mysql replication
-30. fixed to use session_start() function when only login mode
-31. prevented registraton of article with null password
-32. added version of theme in include/version.ph
-33. added detail search
-34. change form method to GET from POST in first search
-35. fixed password problem in mode 4, 5
-36. updated INSTALLER/script/conv_update file
-37. fixed problem of add new board
-38. fixed name search problem
-39. When registed user, removed http:// string in url
-40. fixed typo in search_hl()
-41. fixed include bug in prelist.ph
-42. modified auto_link() function
-43. fixed typo in print_newwindow_src() function
-44. fixed UTF-8 problem of IE in view original image file
-45. fixed order by include file in user admin
-46. changed to session_unregisted() function from session_destory() function
-47. fixed typo
-48. fixed lenth of password in PHP 4.1.0
-49. added part of field name in INSERT query
-50. removed moder field
-51. In login mode, enable to select print name whether nickname or realname
-    (added rname field)
-52. fixed cookie problem of IE 6.0
-53. enable to use external user table (See also README.OPERATE)
-54. fixed local security hole
-55. re-cording delete_tag(), nl2br() function in parse.ph
-56. changed SQL query for over 1000,000 records
-57. changed License oops admin center to GPL2 from OOPS License
-58. changed header of form mail
-59. fixed print '&amp;' to '&' in url link
-60. fixed wrong security date
-61. fixed ask password when login admin mode
-62. removed embed, img tag in article preview of listing for security problem
-63. added db convert script
-64. changed mothod of preview in list page to don't parse html from parse html
-65. fixed INSTALLER
-66. updated DOCUMENT
-67. modified print of real name or nickname in regist article page
+	- updated README.THEME file
+	- fixed to use null field on fields of list in list.ph
+	- fixed $board[path] bug with port number
+	- fixed typo in Korean Theme
+	- fixed to enable user registration whether only admin or anybody
+	- lined user registration page in whole admin area
+	- fixed only whole admin can change board admin in board admin area
+	- fixed $board[uadmin] to admin if $board[uadmin] value is null
+	- fixed string filtering bug in check_url and check_email function
+	- fixed deleted/modified article bug that has null password
+	- fixed INSTALLER bug that restricted user access to localhost 
+	  with extanl db
+	- hide mail address in status bar when mouse over email link
+	- removed duplicated get_agent() function
+	- fixed upload of 2byte filename with UTF8 use of IE
+	- fixed missprint of image size
+	- fixed article registration with Lynx
+	- fixed cookie ploblem under IE 5.5
+	- fixed miss configuration of login mode
+	- fixed miss pritn of email link in search
+	- complate changed search_hl() function
+	- updated KnownBug document
+	- fixed null string problem in user registration
+	- fixed redirect problem after user regist in whole admin area
+	- changed to added number of read after load read page
+	- removed duplicated include rule
+	- fixed imoticon of png file
+	- modified to change expression of email link
+	- fixed sendmail() function
+	- supported mysql replication
+	- fixed to use session_start() function when only login mode
+	- prevented registraton of article with null password
+	- added version of theme in include/version.ph
+	- added detail search
+	- change form method to GET from POST in first search
+	- fixed password problem in mode 4, 5
+	- updated INSTALLER/script/conv_update file
+	- fixed problem of add new board
+	- fixed name search problem
+	- When registed user, removed http:// string in url
+	- fixed typo in search_hl()
+	- fixed include bug in prelist.ph
+	- modified auto_link() function
+	- fixed typo in print_newwindow_src() function
+	- fixed UTF-8 problem of IE in view original image file
+	- fixed order by include file in user admin
+	- changed to session_unregisted() function from session_destory() function
+	- fixed typo
+	- fixed lenth of password in PHP 4.1.0
+	- added part of field name in INSERT query
+	- removed moder field
+	- In login mode, enable to select print name whether nickname or realname
+	  (added rname field)
+	- fixed cookie problem of IE 6.0
+	- enable to use external user table (See also README.OPERATE)
+	- fixed local security hole
+	- re-cording delete_tag(), nl2br() function in parse.ph
+	- changed SQL query for over 1000,000 records
+	- changed License oops admin center to GPL2 from OOPS License
+	- changed header of form mail
+	- fixed print '&amp;' to '&' in url link
+	- fixed wrong security date
+	- fixed ask password when login admin mode
+	- removed embed, img tag in article preview of listing for security problem
+	- added db convert script
+	- changed mothod of preview in list page to don't parse html from parse html
+	- fixed INSTALLER
+	- updated DOCUMENT
+	- modified print of real name or nickname in regist article page
 
 
 -----------------------------------------------------------------------------
@@ -182,37 +184,37 @@ Date      : Mon, Nov 4 2001
 Version   : jsboard-2.0pre2
 
 
-1. modified auto_link function (replace eregi_replace to preg_replace)
-2. In no login mode, fixed delete action
-3. removed useless </FONT> tag
-4. modified unlimited loop problem in login mode.
-5. fixed wrong path of image in login.php
-6. fixed theme that wrong close html tag
-7. changed include order in design of user level and administrator
-8. fixed wrong variable in act.php
-9. modifed to use mail() function if don't exists return path
-10. moved form size config to each board admin page
-11. added to use port number in url check
-12. added mode level 6th and 7th
-    mode 6 -> Reply only admin (No login mode)
-    mode 7 -> Reply only admin (Login mode)
-13. modified miss config Cookie in IE 5.5
-14. added admin variable in login.php
-15. enable modified arrow icon of reply article
-16. removed stylesheet font size of list article
-17. enable choise font in each theme
-18. enable change field order in list page
-19. modified include/sendmail.ph
-20. updated README.CONFIG
-21. modified print of page link in list page
-22. modified reply action When registed reply article, parents article
-    is up to next link
-23. added mms protocol in auto_link() function
-24. fixed function of email and url check
-25. devieded design of search form and move page form to each theme
-26. changed printing of license
-27. modified broken image link When searching
-28. fixed that anybody can edit/delete article that has null password
+	- modified auto_link function (replace eregi_replace to preg_replace)
+	- In no login mode, fixed delete action
+	- removed useless </FONT> tag
+	- modified unlimited loop problem in login mode.
+	- fixed wrong path of image in login.php
+	- fixed theme that wrong close html tag
+	- changed include order in design of user level and administrator
+	- fixed wrong variable in act.php
+	- modifed to use mail() function if don't exists return path
+	- moved form size config to each board admin page
+	- added to use port number in url check
+	- added mode level 6th and 7th
+	  mode 6 -> Reply only admin (No login mode)
+	  mode 7 -> Reply only admin (Login mode)
+	- modified miss config Cookie in IE 5.5
+	- added admin variable in login.php
+	- enable modified arrow icon of reply article
+	- removed stylesheet font size of list article
+	- enable choise font in each theme
+	- enable change field order in list page
+	- modified include/sendmail.ph
+	- updated README.CONFIG
+	- modified print of page link in list page
+	- modified reply action When registed reply article, parents article
+	  is up to next link
+	- added mms protocol in auto_link() function
+	- fixed function of email and url check
+	- devieded design of search form and move page form to each theme
+	- changed printing of license
+	- modified broken image link When searching
+	- fixed that anybody can edit/delete article that has null password
 
 
 -----------------------------------------------------------------------------
