@@ -1,6 +1,5 @@
 <?php
 $path[type] = "user_admin";
-$langs[code] = "en";
 include "../include/admin_head.ph";
 
 if(!session_is_registered("$jsboard") || ($_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1))
