@@ -73,12 +73,12 @@ function plist($n, $act = "normal")
     if($act != "reply") {
 	echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"$l0_bg\"><tr><td>\n" .
 	     "<table width=\"100%\" border=\"0\" cellspacing=\"2\" cellpadding=\"3\">\n<tr>\n" .
-	     "<td width=\"7%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\"><nobr>번호<nobr></font></td>\n" .
-	     "<td width=\"63%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">제목</font></td>\n" .
-	     "<td width=\"18%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">글쓴이</font></td>\n" );
+	     "<td width=\"5%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\"><nobr>번호<nobr></font></td>\n" .
+	     "<td width=\"59%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">제목</font></td>\n" .
+	     "<td width=\"10%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">글쓴이</font></td>\n" );
 
         if($file_upload == "yes"){
-		echo("<td width=\"5%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">파일</font></td>\n");
+		echo("<td width=\"8%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">파일</font></td>\n");
         }   	// file upload 시만 나옴(taejun. 99.11.17)
 
 
@@ -176,7 +176,7 @@ function vlist($no) {
 	
 
 	// jinoos -- 화일에 확장자를 검사해서 알맞은 아이콘으로 변화 시킨다. 
-	// jinoos -- 만일 화일이 없다면 "X" 볼드체로 변경다.
+	// jinoos -- 만일 화일이 없다면 아무것도 표시하지 않는다.
 	if($file_upload == "yes")
 	{
 		if($bofile)
@@ -185,13 +185,12 @@ function vlist($no) {
 			if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram || $tail==hwp || $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj || $tail==tar || $tail==avi || $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp))
 			{
 			    echo"<td align=\"center\" bgcolor=\"$bg\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" border=\"0\" alt=\"$bofile\"></a></td>\n";
-			}else
-			{
+			}else {
 			    echo"<td align=\"center\" bgcolor=\"$bg\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/$tail.gif\" border=\"0\" alt=\"$bofile\"></a></td>\n";
 			}
 		}else
 		{
-			echo"<td align=\"center\" bgcolor=\"$bg\"><b><font color=\"$fg\">X</font></b></td>\n";
+			echo"<td align=\"center\" bgcolor=\"$bg\"><br></td>\n";
 		}
 	}
 	
@@ -200,9 +199,9 @@ function vlist($no) {
 
 	if ($date2 > $today) {
 	    echo("<td align=\"left\" width=\"1\" bgcolor=\"$t0_bg\"><img src=\"images/n.gif\" width=\"1\" height=\"1\" alt=\"0\" border=\"0\"></td>\n" .
-		 "<td align=\"center\" bgcolor=\"$bg\"><font color=\"$fg\">$refer</font></td>\n");
+		 "<td align=\"right\" bgcolor=\"$bg\"><font color=\"$fg\">$refer</font></td>\n");
 	} else {
-	     echo("<td colspan=\"2\" align=\"center\" bgcolor=\"$bg\"><font color=\"$fg\">$refer</font></td>\n");
+	     echo("<td colspan=\"2\" align=\"right\" bgcolor=\"$bg\"><font color=\"$fg\">$refer</font></td>\n");
 	} 
 	echo("</tr>\n");
 
