@@ -381,7 +381,10 @@ function viewfile($tail) {
   $source3 = "   <font color=red>{$list['bofile']}</font> file is broken link!!\n\n";
 
   if (@file_exists($upload_file)) {
-    if (preg_match("/^(gif|jpg|png)$/i",$tail)) {
+    if ($agent['br'] == "MSIE" && $agent['vr'] >= 6)
+      $bmpchk = "|bmp";
+
+    if (preg_match("/^(gif|jpg|png{$bmpchk})$/i",$tail)) {
       $imginfo = GetImageSize($upload_file);
       if($agent['co'] == "mozilla") $list['bofile'] = urlencode($list['bofile']);
       $uplink_file = "./form.php?mode=photo&table=$table&f[c]={$list['bcfile']}&f[n]={$list['bofile']}&f[w]={$imginfo[0]}&f[h]={$imginfo[1]}";
@@ -390,7 +393,7 @@ function viewfile($tail) {
         $p['width'] = $board['width'] - 6;
         $p['height'] = intval($imginfo[1]/$p['vars']);
 
-        if(extension_loaded("gd") && $tail != "gif") {
+        if(extension_loaded("gd") && $tail != "gif" && $tail != "bmp") {
           $ImgUrl = rawurlencode("$wupload_file");
           $ImgPath = "<IMG SRC=\"./image.php?path=$ImgUrl&width={$p['width']}&height={$p['height']}\" WIDTH={$p['width']} HEIGHT={$p['height']} BORDER=0>";
         } else
