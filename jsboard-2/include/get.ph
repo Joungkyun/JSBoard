@@ -396,7 +396,7 @@ function viewfile($tail) {
         $p[width] = $board[width] - 6;
         $p[height] = intval($imginfo[1]/$p[vars]);
 
-        if(extension_loaded("gd")) {
+        if(extension_loaded("gd") && $tail != "gif") {
           $ImgUrl = rawurlencode("$wupload_file");
           $ImgPath = "<IMG SRC=\"./image.php?path=$ImgUrl&width=$p[width]&height=$p[height]\" WIDTH=$p[width] HEIGHT=$p[height] BORDER=0>";
         } else
