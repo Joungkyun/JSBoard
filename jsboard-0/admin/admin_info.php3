@@ -1,16 +1,51 @@
 <!----
 /************************************************************************
 *                                                                       *
-*                 OOPS Administration Center v1.2                       *
+*                 OOPS Administration Center v1.3                       *
 *                     Scripted by JoungKyun Kim                         *
 *               admin@oops.org http://www.oops.org                      *
 *                                                                       *
 ************************************************************************/
 //--->
 
+
+<?
+
+include("../include/db.ph") ;
+include("./include/boardinfo.ph");
+
+$super_user = board_info($super_user);
+$lang = superpass_info($lang) ;
+
+include("../include/multi_lang.ph");
+
+$login_pass = crypt("$login_pass","oo") ;
+
+
+if ( !$login_pass ) {
+  echo ("<script>\n" .
+        "alert('$nopasswd')\n" .
+        "history.back() \n" .
+        "</script>" );
+  exit ;
+}
+
+if ( $login_pass != $super_user ) {
+  echo ("<script>\n" .
+        "alert('$pass_alert')\n" .
+        "document.location='./cookie.php3?mode=logout'\n" .
+        "</script>" );
+  exit ;
+}
+
+?>
+
+
+
+
 <html>
 <head>
-<title>OOPS Adminitration v1.2 [ Whole ADMIN Password Change ]</title>
+<title>OOPS Adminitration v1.3 [ Whole ADMIN Password Change ]</title>
 <style type="text/css">
 a:link { text-decoration:none; color:white ; }
 a:visited { text-decoration:none; color:white ; }
@@ -60,7 +95,6 @@ td { font-size:9pt; color:#999999 }
 
 <font id=title><b>Admin Center Password Change</b></font>
 
-<p>
 
 <!--------------------------- Upper is HTML_HEAD --------------------------->
 
@@ -70,15 +104,33 @@ td { font-size:9pt; color:#999999 }
 <td>Passwd</td>
 <td><input type=password name=admincenter_pass id=input></td>
 </tr>
+
 <tr>
 <td>Re Passwd</td>
 <td><input type=password name=readmincenter_pass id=input></td>
+</tr>
+
+<tr>
+<td><? echo $lang_text ?></td>
+<td>
+<?
+if ($lang == "ko") {
+echo("<input type=radio name=langs value=ko checked>$lang_ko\n" .
+     "<input type=radio name=langs value=en>$lang_en");
+
+} else {
+echo("<input type=radio name=langs value=ko>$lang_ko\n" .
+     "<input type=radio name=langs value=en checked>$lang_en");
+}
+?>
 </td>
+</tr>
 
 <tr>
 <td colspan=2 align=center>
-<input type=submit value=변경 id=input>
-<input type=reset value=수정 id=input>
+<input type=submit value=<? echo $reg_bu ?> id=input>
+<input type=reset value=<? echo $re_bu ?> id=input>
+</td>
 </tr>
 
 <input type=hidden name=mode value=manager_config>

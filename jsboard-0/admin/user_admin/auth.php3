@@ -2,17 +2,19 @@
 
 /************************************************************************
 *                                                                       *
-*                 OOPS Administration Center v1.2                       *
+*                 OOPS Administration Center v1.3                       *
 *                     Scripted by JoungKyun Kim                         *
 *               admin@oops.org http://www.oops.org                      *
 *                                                                       *
 ************************************************************************/
 
+include("../../include/multi_lang.ph");
+
 echo ("
 
 <html>
 <head>
-<title>OOPS administration center v.1.2 [ Whole ADMIN page ]</title>
+<title>OOPS administration center v.1.3 [ Whole ADMIN page ]</title>
 
 <style type='text/css'>
 a:link { text-decoration:none; color:white ; }
@@ -69,10 +71,10 @@ td { font-size:9pt; color:#999999 }
 <!--------------------------- Upper is HTML_HEAD --------------------------->
 
 <form method=POST action=./uadmin.php3>
-패스워드를 넣으세요<br>
+$ment<br>
 <input type=password name=admin_auth id=input>
 <input type=hidden name=db value=$db>
-</form>
+</form>\n
 
 <!----------------- Follow is HTML_TAIL ---------------------->
 
@@ -111,5 +113,7 @@ and all right reserved
 
 </body>
 </html>
+
 ");
+
 ?>

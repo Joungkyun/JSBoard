@@ -1,7 +1,7 @@
 <?
 /************************************************************************
 *                                                                       *
-*                 OOPS Administration Center v1.2                       *
+*                 OOPS Administration Center v1.3                       *
 *                     Scripted by JoungKyun Kim                         *
 *               admin@oops.org http://www.oops.org                      *
 *                                                                       *
@@ -11,7 +11,7 @@
 
 <html>
 <head>
-<title>Board Manager v1.2 [LoGin Page]</title>
+<title>Board Manager v1.3 [LoGin Page]</title>
 
 <style type=text/css>
 a:link { text-decoration:none; }
@@ -46,8 +46,16 @@ Mysql User Registration Page
 </tr>
 
 <tr>
+<td align=center>
+<input type=radio name=lang value=ko>Korean
+<input type=radio name=lang value=en checked>English
+</td>
+</tr>
+
+<tr>
 <td align=center>&nbsp;<input type=hidden name=mode value=login></td>
 </tr>
+
 <tr><td align=center><input type='submit' value='E N T E R' id=submit></td></tr>
 </form>
 </table>

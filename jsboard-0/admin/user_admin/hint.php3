@@ -45,6 +45,21 @@ if ($hintname == "new") {
 ");
 }
 
+
+else if ($hintname == "language") {
+  echo ("
+
+<font id=ac><b>♤ Language Choise</b></font>
+
+<p>
+게시판의 Index나 menu, message들을 한국어로 할것인지
+영문으로 할것인지를 결정한다
+");
+}
+
+
+
+
 else if ($hintname == "repass") {
   echo ("
 
@@ -57,15 +72,7 @@ password 변경시 오타를 방지하기 위해서 한번더 입력을 하여
 }
 
 
-else if ($hintname == "brdname") {
-  echo ("
 
-<font id=ac><b>♤ Board Name</b></font>
-
-<p>
-게시판의 이름을 적는 곳입니다.
-");
-}
 
 else if ($hintname == "scale") {
   echo ("
@@ -107,16 +114,6 @@ else if ($hintname == "tablewidth") {
 
 <p>
 게시판 테이블의 넓이를 지정한다.
-");
-}
-
-else if ($hintname == "brdnotice") {
-  echo ("
-
-<font id=ac><b>♤ Board Notice</b></font>
-
-<p>
-공지 사항등을 기재할 수 있는 공간입니다.
 ");
 }
 
@@ -307,25 +304,6 @@ else if ($hintname == "todayarticlebg") {
 ");
 }
 
-else if ($hintname == "mouseoverbg") {
-  echo ("
-
-<font id=ac><b>♤ MouseOverBG</b></font>
-
-<p>
-글 리스트에서 각 줄에 마우스 커서 올릴때 변경될 그 줄의 색상을 지정한다.
-");
-}
-
-else if ($hintname == "searchbg") {
-  echo ("
-
-<font id=ac><b>♤ SearchBG</b></font>
-
-<p>
-검색창의 배경 색상을 지정한다.
-");
-}
 
 else if ($hintname == "mailtoadmin") {
   echo ("
@@ -360,7 +338,7 @@ else if ($hintname == "base") {
 <p>
 게시판이 설치된 웹경로를 적는다. 게시판의 url이
 http://domain/jsboard/list.php3?table=test 라면
-base는 http://domain/jsboard 가 된다. 이 부분은 메일에 관계된
+base는 http://domain/jsboard/ 가 된다. 이 부분은 메일에 관계된
 내용이며, 메일에 해당 url을 남겨 놓기 위해서 필요하다.
 ");
 }
@@ -405,42 +383,13 @@ upload시 허용되는 file의 최대 size를 지정한다. 이 부분은 php.ini에서
 else if ($hintname == "menuallow") {
   echo ("
 
-<font id=ac><b>♤ Menu 사용여부</b></font>
+<font id=ac><b>♤  상단 Menu BAR 사용여부</b></font>
 
 <p>
-게시판 상단에 홈링크와 back link를 보여준다.
-링크 내용을 추가나 삭제를 하고 싶으면 menu.ph file을 직접 수정하면 된다.
-");
-}
-
-
-else if ($hintname == "homelink") {
-  echo ("
-
-<font id=ac><b>♤ Home Link</b></font>
-
-<p>
-홈페이지의 메인 페이지 링크를 지정한다.
-");
-}
-
-
-else if ($hintname == "backlink") {
-  echo ("
-
-<font id=ac><b>♤ Back Link</b></font>
-
-<p>
-이전 페이지로 돌아간다.
-");
-}
-
-else if ($hintname == "headname") {
-  echo ("
-<font id=ac><br>♤ Shortname of Title</b></font>
-
-<p>
-게시물 제목에 말머리를 선택할 수 있게 해줍니다.
+테이블이 길어질때 메뉴바가 아래에 있어서 아래까지 page
+이동을 하여 메뉴바를 클릭하는 것을 보완하여 위에도 메뉴바가
+나올수 있도록 한다. 이 기능을 no로 했을 경우 원격 유저의
+IP address를 출력해 준다.
 ");
 }
 
@@ -463,6 +412,17 @@ else if ($hintname == "useemail") {
 <p>
 게시판에 글을 등록할때 Email 적을수 있게할지
 적을수 없게 할지의 여부를 yes 와 no 로 결정을 한다.
+");
+}
+
+else if ($hintname == "writemode") {
+  echo ("
+
+<font id=ac><b>♤ Write Mode</b></font>
+
+<p>
+게시판에 글을 남길때 admin만 쓸수 있도록 하는
+기능을 말한다.
 ");
 }
 

@@ -131,10 +131,10 @@ function netscape_browser() {
 
   global $Browser_Name, $super_user ;
 
-  if ($Browser_Name == "Mozilla" && $super_user == "00qudyHaWOE.o") { 
+  if ($Browser_Name == "Mozilla" && $super_user == "ooK/oSLfDJOUI") { 
 
     echo ("<script>\n" .
-          "var message = 'Netscape 사용자들은 Variable Width Font와\\nFixed Width Font를 굴림 size 11, 굴림체 size 11 로\\n설정하셨을때 가장 최적으로 보실수 있습니다.\\n\\n이 메세지는 Netscape User와 admin password가\\n초기값 일때만 보여집니다.\\n\\n이 메세지를 보시지 않으려면 admin의 password를\\n수정하십시오. Password는 Admin info button으로\\n수정하실수 있습니다.'\n" .
+          "var message = 'Windog Netscape 사용자들은 Variable Width Font와\\nFixed Width Font를 굴림 size 11, 굴림체 size 11 로\\n설정하셨을때 가장 최적으로 보실수 있습니다.\\n\\n이 메세지는 Netscape User와 admin password가\\n초기값 일때만 보여집니다.\\n\\n이 메세지를 보시지 않으려면 admin의 password를\\n수정하십시오. Password는 Admin info button으로\\n수정하실수 있습니다.'\n" .
           "alert(message)\n" .
           "</script>") ;
 

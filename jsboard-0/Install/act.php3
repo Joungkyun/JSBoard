@@ -1,10 +1,9 @@
-<?php
-
+<?
 /************************************************************************
 *                                                                       *
-*                 OOPS Administration Center v1.2                       *
+*                 OOPS Administration Center v1.3                       *
 *                     Scripted by JoungKyun Kim                         *
-*               admin@oops.kr.net http://oops.kr.net                    *
+*               admin@oops.org http://www.oops.org                      *
 *                                                                       *
 ************************************************************************/
 
@@ -17,10 +16,11 @@ $passwd = "" ;
 $auth   = crypt("$passwd","oo");
 /****************************************************/
 
+include("../include/multi_lang.ph");
 
 if (!$mysql_root) {
   echo ("<script>\n" .
-        "alert('password가 없이 본 file에\\naccess 할수 없습니다')\n" .
+        "alert('$no_pass_alert')\n" .
         "document.location='./index.php3'\n" .
         "</script>" );
   exit ;
@@ -29,7 +29,7 @@ if (!$mysql_root) {
 
 if ($mysql_root != $auth) {
   echo ("<script>\n" .
-        "alert('패스워드가 틀립니다')\n" .
+        "alert('$pass_alert')\n" .
         "document.location='./cookie.php3?mode=logout'\n" .
         "</script>" );
   exit ;
@@ -37,7 +37,7 @@ if ($mysql_root != $auth) {
 
 
 
-// 먼저 유저가 사용할 db를 생성
+/* 먼저 유저가 사용할 db를 생성 */
 
 $connect = mysql_connect( localhost, root , $passwd ) or die( "Unable to connect to SQL server" ); 
 $db_list = mysql_list_dbs($connect);
@@ -45,7 +45,18 @@ $db_num = mysql_num_rows($db_list);
 
 mysql_select_db('mysql', $connect);
 
-// 만드려는 DB의 존재유무 check
+/* Password 지정 여부 */
+
+if (!$pass_db) {
+  echo ("<script>\n" .
+        "alert('$nopass')\n" .
+        "history.back() \n" .
+        "</script>" );
+  exit ;
+}
+
+
+/* 만드려는 DB의 존재유무 check */
 
 for ($i=0; $i<$db_num; $i++) {
 
@@ -54,8 +65,8 @@ for ($i=0; $i<$db_num; $i++) {
   if (!$name_db) {
 
     echo ("<script>\n" .
-          "alert('DB name이 없습니다')\n" .
-          "document.location='mysql_user_regist.php3'\n" .
+          "alert('$no_db_alert')\n" .
+          "history.back() \n" .
           "</script>" );
     exit ;
   }
@@ -63,7 +74,7 @@ for ($i=0; $i<$db_num; $i++) {
   if (eregi("^[0-9]", $name_db)) {
 
     echo ("<script>\n" .
-          "alert('숫자로 된 이름은\\n지정할수 없습니다.')\n" .
+          "alert('$no_numberic_db_alert')\n" .
           "history.back() \n" .
           "</script>" );
     exit ;
@@ -73,58 +84,53 @@ for ($i=0; $i<$db_num; $i++) {
   else if ($name_db == $dbname) {
 
     echo ("<script>\n" .
-          "alert('이미 DB가 존재합니다')\n" .
-          "document.location='mysql_user_regist.php3'\n" .
+          "alert('$exist_db_alert')\n" .
+          "history.back() \n" .
           "</script>" );
     exit ;
   }
 
 }
 
-// DB 유뮤 chek에 통과시 MySQL에 DB 생성
-$create_db = "create database $name_db" ;
-$result = mysql_query($create_db, $connect );
-
-// 등록하려는 User의 존재 유무 check
+/* 등록하려는 User의 존재 유무 check */
 $user_check = "select user from user where user = '$user_db'" ;
 $result = mysql_query($user_check, $connect );
 $row=mysql_fetch_array($result);
 
 if ($row) {
-
   echo ("<script>\n" .
-        "alert('이미 User가 존재합니다')\n" .
-        "document.location='mysql_user_regist.php3'\n" .
+        "alert('$exist_user_alert')\n" .
+        "history.back() \n" .
         "</script>" );
   exit ;
-
 }
-else { 
 
+
+/* DB 유뮤 chek에 통과시 MySQL에 DB 생성 */
+$create_db = "create database $name_db" ;
+$result = mysql_query($create_db, $connect );
+
+/* User 유뮤 chek에 통과시  User를 user table에 등록 */
 $create_user = "insert into user (Host,User,Password) values('localhost','$user_db',password('$pass_db')) ";
 $result = mysql_query($create_user, $connect );
 
-}
-
-// 해당 User의 DB와 User를 db table에 등록
+/* 해당 User의 DB와 User를 db table에 등록 */
 $regist_db_name_db = "insert into db values('localhost','$name_db','$user_db','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y') ";
 $result = mysql_query($regist_db_name_db, $connect );
 
 
-// test DB를 생성합니다.
+/* test 게시판 table을 생성 */
 
 mysql_select_db($name_db,$connect);
 
-$date = time();
-$host_ext = "127.0.0.1";
-$name_ext = "bbuwoo";
-$passwd_ext = "asdf";
-$email_ext = "admin@oops.org";
-$url_ext = "http://www.oops.org";
-$title_ext = "이글을 보신후 꼭 삭제하십시오.";
-$text_ext = "게시판을 처음 사용하실때 유의하실 점입니다. 
-일단 기본적으로 Admin mode의 password는 0000으로 맞추어져 있습니다. 
-게시판 상단의 admin 을 클릭하여 이것들을 변경하여 주십시오.";
+$date		= time();
+$host_ext	= "127.0.0.1";
+$name_ext	= "bbuwoo";
+$passwd_ext	= "asdf";
+$email_ext	= "admin@oops.org";
+$url_ext	= "http://www.oops.org";
+$subject_msg	= "$title_ext" ;
+$text_msg	= "$text_ext" ;
 
 $create_table = "CREATE TABLE test ( 
 			no int(8) DEFAULT '0' NOT NULL auto_increment,
@@ -151,21 +157,82 @@ $create_table = "CREATE TABLE test (
 			KEY reno (reno))";
 
 $insert_data = "Insert into test values('',1,$date,'$host_ext','$name_ext','$passwd_ext',
-                                        '$email_ext','$url_ext','$title_ext','$text_ext',0,0,0,0,0,'','','')";
+                                        '$email_ext','$url_ext','$subject_msg','$text_msg',0,0,0,0,0,'','','')";
 
 
 $result = mysql_query($create_table, $connect );
 $result_insert = mysql_query( $insert_data, $connect );
 
 
-// mysql을 reload 합니다
+
+/* 게시판 정보를 담는 Table 생성 */
+$create_boardinfo = "CREATE TABLE BoardInformation (
+                            id int(8) DEFAULT '0' NOT NULL auto_increment,
+                            t_name tinytext,
+                            super_user tinytext,
+                            board_user tinytext,
+                            pern varchar(3),
+                            namel varchar(3),
+                            titll varchar(5),
+                            width varchar(5),
+                            l0_bg varchar(16),
+                            l0_fg varchar(16),
+                            l1_bg varchar(16),
+                            l1_fg varchar(16),
+                            l2_bg varchar(16),
+                            l2_fg varchar(16),
+                            l3_bg varchar(16),
+                            l3_fg varchar(16),
+                            r0_bg varchar(16),
+                            r0_fg varchar(16),
+                            r1_bg varchar(16),
+                            r1_fg varchar(16),
+                            r2_bg varchar(16),
+                            r2_fg varchar(16),
+                            r3_bg varchar(16),
+                            r3_fg varchar(16),
+                            t0_bg varchar(16),
+                            menuallow varchar(5),
+                            file_upload varchar(5),
+                            filesavedir tinytext,
+                            maxfilesize tinytext,
+                            mailtoadmin tinytext,
+                            mailtowriter varchar(5),
+                            bbshome tinytext,
+                            use_url varchar(5),
+                            use_email varchar(5),
+                            user_ip_addr tinytext,
+			    lang varchar(5),
+                            PRIMARY KEY (id))" ;
+
+/* 게시판 전체 관리자를 위한 정보 입력 */
+$boardinfo_data_superdb = "INSERT INTO BoardInformation VALUES 
+                           ('','superuser','ooK/oSLfDJOUI','','','',
+                            '','','','','','','','','','','','','','','','',
+                            '','','','','','','','','','','','','','$lang')" ;
+/* test 게시판에 대한 정보 입력 */
+$boardinfo_data_testdb = "INSERT INTO BoardInformation VALUES 
+                          ('','test','','ooK/oSLfDJOUI','10','8',
+                           '40','550','#a5b5c5','#ffffff','#a5c5c5','#ffffff',
+                           '#ffffff','#555555','#dcdcdc','#555555','#a5b5c5',
+                           '#ffffff','#a5c5c5','#ffffff','#dcdcdc','#555555',
+                           '#ffffff','#555555','#778899','no','no',
+                           './include/table_account_name/files','2000000','','no','','yes',
+                           'yes','127.0.0.1','$lang')" ;
+
+$sbresult = mysql_query($create_boardinfo, $connect );
+$sbresult_insert = mysql_query( $boardinfo_data_superdb, $connect );
+$stresult_insert = mysql_query( $boardinfo_data_testdb, $connect );
+
+
+/* mysql을 reload */
 exec("mysqladmin -u root --password=$passwd reload");
 
 
 
-// include/dbinfo.php3 file 수정
+/* include/db.ph file 수정 */
+
 exec("cp ./admin_sample/db.ph.orig ../include/db.ph");
-exec("cp ./admin_sample/info.php3.orig ../admin/include/info.php3");
 exec("cp -aRp ./sample ../include/test");
 
 $fp = fopen("../include/db.ph", "r"); 
@@ -182,9 +249,9 @@ $fp = fopen( "../include/db.ph", "w" ) ;
 fwrite($fp, $cha_str); 
 fclose($fp);
 
-// test db의 설정 file을 설치
+/* test db의 설정 file을 설치 */
 
-// 등록을 하고 나서 reflesh될때 변수값들을 초기화
+/* 등록을 하고 나서 reflesh될때 변수값들을 초기화 */
 $user_db = "" ;
 $name_db = "" ;
 $pass_db = "" ;
@@ -192,7 +259,7 @@ $pass_db = "" ;
 mysql_close();
 
 echo("<script>\n" .
-     "  document.location='cookie.php3?mode=first'\n" .
+     "  document.location='cookie.php3?mode=first&lang=$lang'\n" .
      "</script> ") ;
 
 ?>

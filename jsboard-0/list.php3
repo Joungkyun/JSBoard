@@ -1,25 +1,18 @@
 <?
 $no_button = $ndesc = 1;
-$sub_title = " [ 게시판 보기 ]";
 
 include("include/header.ph");
-
 if(!$table) { error(); }
 
-include("include/$table/config.ph");
-
-$title .= $sub_title;
+$title .= $list_sub_title;
 include("include/$table/desc.ph");
-
-if ($menuallow == "yes") {
-    include("include/$table/menu.ph") ;
-}
-
-if ($boardname) echo "<center><font size=\"2\"><b>$boardname</b></font></center><p>";
-if ($boardnotice) echo "<center><font id=td>&gt;&gt; $boardnotice &lt;&lt;</font></center><p>";
 
 dconnect($db_server, $db_user, $db_pass);
 dselect_db("$db_name");
+
+$page_value = $PHP_SELF ;
+$start_sql_time = microtime(); //속도 체크
+
 
 $result = dquery("SELECT UNIX_TIMESTAMP(CURDATE())");
 $today  = mysql_result($result, 0, "UNIX_TIMESTAMP(CURDATE())"); // 오늘
@@ -57,7 +50,6 @@ echo ("<center>\n") ;
 list_cmd_bar ($page, $l0_bg, $table, $sc_column);
 echo("<center>\n</form>\n");
 
-include("publicity.ph");
 include("include/$table/tail.ph");
 
 ?>
