@@ -176,6 +176,20 @@ function page_form($pages,$o) {
 function search_form($o) {
   $s[ss] = htmlspecialchars(stripslashes($o[ss]));
 
+	if($o[er]) {
+    # 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
+    $chk = preg_replace("/\\\([\]\[()])/i","",$s[ss]);
+    $chk = preg_replace("/[^\[\]()]/i","",$chk);
+
+    $chkAOpen = strlen(preg_replace("/\]/i","",$chk));
+    $chkAClos = strlen(preg_replace("/\[/i","",$chk));
+    $chkBOpen = strlen(preg_replace("/\)/i","",$chk));
+    $chkBClos = strlen(preg_replace("/\(/i","",$chk));
+
+    if($chkAOpen !== $chkAClos) $s[ss] .= "]";
+    elseif($chkBOpen !== $chkBClos) $s[ss] .= ")";
+  }
+
   $s[sc][$o[sc]] = ($o[sct] != "s") ? " CHECKED" : " SELECTED";
   $s[st][$o[st]] = ($o[stt] != "s") ? " CHECKED" : " SELECTED";
   $s[er][$o[er]] = " CHECKED";

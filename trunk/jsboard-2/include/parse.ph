@@ -64,8 +64,19 @@ function search2sql($o, $wh = 1) {
     $str = addslashes($str);
 
     if (eregi("\"",$str)) print_error($langs[nochar],250,150,1);
-  }
+  } else {
+		# 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
+    $chk = preg_replace("/\\\([\]\[()])/i","",$str);
+    $chk = preg_replace("/[^\[\]()]/i","",$chk);
 
+    $chkAOpen = strlen(preg_replace("/\]/i","",$chk));
+    $chkAClos = strlen(preg_replace("/\[/i","",$chk));
+    $chkBOpen = strlen(preg_replace("/\)/i","",$chk));
+    $chkBClos = strlen(preg_replace("/\(/i","",$chk));
+
+		if($chkAOpen !== $chkAClos) $str .= "]";
+		elseif($chkBOpen !== $chkBClos) $str .= ")";
+  }
 
   if($o[at] == "d") {
     # 검색 연산자에 의해 검색어 분리
@@ -164,16 +175,6 @@ function search2sql($o, $wh = 1) {
 
 # 검색 문자열 하이라이팅 함수
 #
-# explode      - 구분 문자열을 기준으로 문자열을 나눔
-#                http://www.php.net/manual/function.explode.php
-# rawurldecode - 암호화된 URL을 복호화
-#                http://www.php.net/manual/function.rawurldecode.php
-# trim         - 문자열 양쪽의 공백 문자를 없앰
-#                http://www.php.net/manual/function.trim.php
-# stripslashes -
-#                http://www.php.net/manual/function.stripslashes.php
-# quotemeta    -
-#                http://www.php.net/manual/function.quotemeta.php
 function search_hl($list) {
   global $board ,$o;
 
@@ -183,6 +184,25 @@ function search_hl($list) {
   $str = rawurldecode($o[ss]);
   $str = trim($str);
   $str = stripslashes($str);
+
+  # 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
+  if ($o[er]) {
+    $chk = preg_replace("/\\\([\]\[()])/i","",$str);
+    $chk = preg_replace("/[^\[\]()]/i","",$chk);
+
+    $chkAOpen = strlen(preg_replace("/\]/i","",$chk));
+    $chkAClos = strlen(preg_replace("/\[/i","",$chk));
+    $chkBOpen = strlen(preg_replace("/\)/i","",$chk));
+    $chkBClos = strlen(preg_replace("/\(/i","",$chk));
+
+    if($chkAOpen !== $chkAClos) {
+       $str .= "]";
+       $o[ss] .= "]";
+    } elseif($chkBOpen !== $chkBClos) {
+       $str .= ")";
+       $o[ss] .= ")";
+    }
+  }
 
   # regex 에서 충돌되는 문자 escape 처리
   $dead = array("/\?|\)|\(|\*|\.|\^|\+|\%/i");
