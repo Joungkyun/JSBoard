@@ -448,8 +448,8 @@ function get_upload_value($up) {
 function get_spam_value($v) {
   global $HTTP_COOKIE_VARS;
   $chk = explode(":",$v);
-  $ran = preg_replace("/[a-z]/i","",substr($HTTP_COOKIE_VARS[PHPSESSID],0,10));
-  $ran = $ran ? $ran : preg_replace("/[a-z]/i","",substr($HTTP_COOKIE_VARS[PHPSESSID],10));
+  $ran = preg_replace("/[a-z]/i","",substr($HTTP_COOKIE_VARS[PHPSESSID],0,5));
+  $ran = $ran ? $ran : preg_replace("/[a-z]/i","",substr($HTTP_COOKIE_VARS[PHPSESSID],5));
   $ret = $chk[0] * $ran - ($chk[1] * $chk[2]);
 
   return $ret;
