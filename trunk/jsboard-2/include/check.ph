@@ -75,6 +75,10 @@ function check_url($url) {
 #
 # eregi - 정규 표현식을 이용한 검사 (대소문자 무시)
 #         http://www.php.net/manual/function.eregi.php
+# gethostbynamel - 호스트 이름으로 ip 를 얻어옴
+#          http://www.php.net/manual/function.gethostbynamel.php
+# checkdnsrr - 인터넷 호스트 네임이나 IP 어드레스에 대응되는 DNS 레코드를 체크함
+#          http://www.php.net/manual/function.checkdnsrr.php
 function check_email($email) {
   $url = trim($email);
   if(!eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$", $url)) {
