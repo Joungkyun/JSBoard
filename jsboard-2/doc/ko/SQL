@@ -42,3 +42,20 @@ JSBoard userdb table
 | passwd   | varchar(100) |      |     |         |                | 회원 패스워드(암호화)
 | position | int(1)       |      | MUL | 0       |                | 전체 관리자여부
 +----------+--------------+------+-----+---------+----------------+
+
+
+
+JSBoard comment table
+
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| no     | int(6)      |      | PRI | NULL    | auto_increment |    고유 번호
+| reno   | int(20)     |      | MUL | 0       |                |    부모글 번호
+| rname  | tinytext    | YES  |     | NULL    |                |    글쓴이 본명
+| name   | tinytext    | YES  |     | NULL    |                |    글쓴이 NICK
+| passwd | varchar(56) | YES  |     | NULL    |                |    패스워드
+| text   | mediumtext  | YES  |     | NULL    |                |    코멘트 본문
+| host   | tinytext    | YES  |     | NULL    |                |    코멘트 등록지
+| date   | int(11)     |      |     | 0       |                |    코멘트 등록일
++--------+-------------+------+-----+---------+----------------+

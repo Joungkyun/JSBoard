@@ -366,17 +366,8 @@ JSBoard ÀÇ ·Î±×ÀÎ ¸ðµå´Â ÃÑ 7°¡Áö ´Ü°è¸¦ °¡Áø´Ù. °¢ ´Ü°èÀÇ ¼³Á¤Àº ´ÙÀ½°ú °°´Ù. ¸
 
     session_register("$¼¼¼ÇÀÌ¸§");
 
-    # cookie ¼³Á¤
-    $CookieTime = "time()+900";
-    SetCookie("c¼¼¼ÇÀÌ¸§[id]","$USER_ID",$CookieTime,"/");
-    SetCookie("c¼¼¼ÇÀÌ¸§[name]","$USER_NAME",$CookieTime,"/");
-    SetCookie("c¼¼¼ÇÀÌ¸§[email]","$USER_EMAIL",$CookieTime,"/");
-    SetCookie("c¼¼¼ÇÀÌ¸§[url]","$USER_HOEMPAGE",$CookieTime,"/");
-    SetCookie("c¼¼¼ÇÀÌ¸§[super]","$ÀüÃ¼°ü¸®ÀÚ_ID",$CookieTime,"/");
-
-    ÄíÅ° µî·Ï½Ã¿¡µµ pos ¿Í super ´Â µ¿ÀÏÇÏ´Ù. ±×¸®°í ¼¼¼Ç°ú Äí±â µî·Ï½Ã¿¡ À§ÀÇ ¿¹
-    Á¦¿¡¼­ ¼¼¼ÇÀÌ¸§Àº jsboard ÀÇ global.ph ÀÇ  $jsboard ÀÇ º¯¼ö°ªÀ» ³Ö¾îÁÖµµ·Ï ÇÑ
-    ´Ù. Áï global.ph ¿¡
+    ¼¼¼Ç µî·Ï½Ã¿¡ À§ÀÇ ¿¹Á¦¿¡¼­ ¼¼¼ÇÀÌ¸§Àº jsboardÀÇ global.ph ÀÇ  $jsboard ÀÇ º¯
+    ¼ö°ªÀ» ³Ö¾îÁÖµµ·Ï ÇÑ´Ù. Áï global.ph ¿¡
 
     ##############################################################################
     #  login mode Configuration
@@ -391,10 +382,6 @@ JSBoard ÀÇ ·Î±×ÀÎ ¸ðµå´Â ÃÑ 7°¡Áö ´Ü°è¸¦ °¡Áø´Ù. °¢ ´Ü°èÀÇ ¼³Á¤Àº ´ÙÀ½°ú °°´Ù. ¸
 
     session_register("$jsboardummha");
 
-    ·Î ÇØ¾ß ÇÏ¸ç ÄíÅ°´Â
-
-    SetCookie("cjsboardummha[id]","$USER_ID",$CookieTime,"/");
-
     ¿Í °°ÀÌ µÇ¾î¾ß ÇÑ´Ù.
 
 5.3 ·Î±×¾Æ¿ô ¿¬µ¿ÇÏ±â
@@ -405,12 +392,6 @@ JSBoard ÀÇ ·Î±×ÀÎ ¸ðµå´Â ÃÑ 7°¡Áö ´Ü°è¸¦ °¡Áø´Ù. °¢ ´Ü°èÀÇ ¼³Á¤Àº ´ÙÀ½°ú °°´Ù. ¸
 
     # ¼¼¼ÇÀ» »èÁ¦
     session_unregister("¼¼¼ÇÀÌ¸§");
-    # admin login »óÅÂ¸¦ »èÁ¦
-    SetCookie("c¼¼¼ÇÀÌ¸§[id]","",0,"/");
-    SetCookie("c¼¼¼ÇÀÌ¸§[name]","",0,"/");
-    SetCookie("c¼¼¼ÇÀÌ¸§[email]","",0,"/");
-    SetCookie("c¼¼¼ÇÀÌ¸§[url]","",0,"/");
-    SetCookie("c¼¼¼ÇÀÌ¸§[super]","",0,"/");
 
     ¼¼¼ÇÀÌ¸§Àº ¼¼¼Ç µî·Ï½ÃÀÇ ¼¼¼ÇÀÌ¸§°ú µ¿ÀÏÇÏ´Ù.
 
