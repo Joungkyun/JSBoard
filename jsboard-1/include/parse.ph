@@ -327,7 +327,8 @@ function file_upload($updir) {
     }
 
     # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
-    $userfile_name = eregi_replace(".(php[0-9a-z]*|phtml)$", ".phps", $userfile_name);
+    $userfile_name = eregi_replace("([\.]*)$","",$userfile_name);
+    $userfile_name = eregi_replace(".(ph|inc|php[0-9a-z]*|phtml)$", ".phps", $userfile_name);
     $userfile_name = eregi_replace("(.*).(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $userfile_name);
 
     mkdir("data/$table/$upload[dir]/$updir",0755);
