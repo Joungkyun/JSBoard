@@ -346,42 +346,70 @@ function check_htmltable($str,$rep='') {
 # m -> 0 : ips 에 등록된 Ip 에서의 링크만 허락
 #      1 : ips 에 등록된 Ip 에서의 링크만 막음
 #
-function check_dhyper($m,$ips) {
-  global $langs,$board;
-  # 레퍼럴이 존재하지 않거나 ips 변수가 없으면 체크 중지
-  if(!trim($ips) || !$_SERVER[HTTP_REFERER]) return;
+function check_dhyper($c=0,$wips='',$m=0,$ips='') {
+  global $langs;
 
-  # global.ph 에 $board[dhyper] 가 정의 되어 있으면 체크 목록을 합침
-  $ips = $board[dhyper] ? "$board[dhyper];$ips" : $ips;
+  # $c 설정이 있고, list read from write page 에서만 체크
+  if($c && preg_match("/(list|read|form|write)\.php/i",$_SERVER[PHP_SELF])) {
+    # global.ph 에 $board[dhyper] 가 정의 되어 있으면 체크 목록을 합침
+    $ips = trim($wips) ? "$wips;$ips" : $ips;
 
-  # 레퍼럴에서 서버 이름만 추출
-  preg_match("/^(http:\/\/)?([^\/]+)/i",$_SERVER[HTTP_REFERER],$chks);
-  # 추출한 이름의 ip 를 구함
-  $chk = gethostbyname($chks[2]);
+    # 레퍼럴이 존재하지 않거나 ips 변수가 없으면 체크 중지
+    if(!trim($ips) || !$_SERVER[HTTP_REFERER]) return;
 
-  # chk 가 자신과 동일하면 체크 중지
-  if($chk == $_SERVER[SERVER_ADDR]) return;
+    # 레퍼럴에서 서버 이름만 추출
+    preg_match("/^(http:\/\/)?([^\/]+)/i",$_SERVER[HTTP_REFERER],$chks);
+    # 추출한 이름의 ip 를 구함
+    $chk = gethostbyname($chks[2]);
 
-  $addr = explode(";",$ips);
-  for($i=0;$i<sizeof($addr);$i++) {
-    # ip address 체크
-    $ipchk = explode(".",$addr[$i]);
-    for($j=1;$j<4;$j++) $ipchk[$j] = $ipchk[$j] ? $ipchk[$j] : 0;
-    # 각 자리수 마다 255 보다 크면 ip 주소를 벋어나므로 체크 안함
-    if($ipchk[0] > 255 || $ipchk[1] > 255 || $ipchk[2] > 255 || $ipchk[3] > 255) continue;
-    # 4 자리 이상일 경우 ipv4 방식이 아니므로 체크 안함 (ipv6 도입시 변경요)
-    if(preg_match("/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}.+/i",$addr[$i])) continue;
-    if(!preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|\.$/i",$addr[$i])) $addr[$i] .= ".";
-    if(preg_match("/^$addr[$i]/i",$chk)) $val = 1;
+    # chk 가 자신과 동일하면 체크 중지
+    if($chk == $_SERVER[SERVER_ADDR]) return;
+
+    $addr = explode(";",$ips);
+    for($i=0;$i<sizeof($addr);$i++) {
+      if(!preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|\.$/i",$addr[$i])) $addr[$i] .= ".";
+      $addr[$i] = str_replace(".","\.",$addr[$i]);
+      if(preg_match("/^$addr[$i]/i",$chk)) $val = 1;
+    }
+
+    switch($m) {
+      case '1' :
+        if($val) print_error($langs[chk_hy],250,250,1);
+        break;
+      default:
+        if(!$val) print_error($langs[chk_hy],250,250,1);
+        break;
+    }
   }
+}
 
-  switch($m) {
-    case '1' :
-      if($val) print_error($langs[chk_hy],250,250,1);
-      break;
-    default:
-      if(!$val) print_error($langs[chk_hy],250,250,1);
-      break;
+# IP blocking 함수
+#
+function check_access($c=0,$wips='',$ips='') {
+  global $langs;
+
+  if($c) {
+    # global.ph 에 $board[ipbl] 이 존재하면 함침
+    $ips = trim($wips) ? "$wips;$ips" : $ips;
+
+    # 원격 접속지가 존재하지 않거나 ips 변수가 없거나, 접속지가 자신이라면 체크 중지
+    if(!trim($ips) || !$_SERVER[REMOTE_ADDR] || $_SERVER[REMOTE_ADDR] == $_SERVER[SERVE_ADDR]) return;
+
+    # spoofing 체크
+    $ipchk = explode(".",$_SERVER[REMOTE_ADDR]);
+    for($j=1;$j<4;$j++) $ipchk[$j] = $ipchk[$j] ? $ipchk[$j] : 0;
+    # 각 자리수 마다 255 보다 크면 ip 주소를 벋어나므로 체크 
+    if($ipchk[0] > 255 || $ipchk[1] > 255 || $ipchk[2] > 255 || $ipchk[3] > 255)
+      print_error($langs[chk_sp],250,250,1);
+ 
+    $addr = explode(";",$ips);
+    for($i=0;$i<sizeof($addr);$i++) {
+      if(!preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|\.$/i",$addr[$i])) $addr[$i] .= ".";
+      $addr[$i] = str_replace(".","\.",$addr[$i]);
+      if(preg_match("/^$addr[$i]/i",$_SERVER[REMOTE_ADDR])) $val = 1;
+    }
+
+    if($val) print_error($langs[chk_bl],250,250,1);
   }
 }
 ?>

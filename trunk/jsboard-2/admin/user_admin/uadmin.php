@@ -76,7 +76,14 @@ else $align_c = "checked";
 if($board[rnname]) $nameck_r = "checked";
 else $nameck_n = "checked";
 
-$denylink = trim($enable[plink]) ? parse_ipvalue($enable[plink],0,1) : $langs[ua_dhyper3];
+$ipbl = trim($enable[ipbl]) ? parse_ipvalue($enable[ipbl],1) : $langs[ua_dhyper3];
+if(!$board[useipbl]) {
+  $ipbl = "Prevent this function by super user!\n".
+          "If you want to this function, config \"\$board[useipbl]\" = 1; in global.ph";
+  $ipbllinkro = " disabled";
+}
+
+$denylink = trim($enable[plink]) ? parse_ipvalue($enable[plink],1) : $langs[ua_dhyper3];
 if(!$board[usedhyper]) {
   $denylink = "Prevent this function by super user!\n".
               "If you want to this function, config \"\$board[usedhyer]\" = 1; in global.ph";
@@ -126,6 +133,9 @@ if(file_exists("../../data/$table/stylesheet.ph")) {
 }
 
 if($langs[code] == "ko") {
+  $ipbl_button = "<INPUT TYPE=BUTTON VALUE=\"¢¹\" onClick=\"fresize(1,'i');\" TITLE=\"Left Right\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"¢Ã\" onClick=\"fresize(0,'i');\" TITLE=\"RESET\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"¡ä\" onClick=\"fresize(2,'i');\" TITLE=\"Up Down\">";
   $dlin_button = "<INPUT TYPE=BUTTON VALUE=\"¢¹\" onClick=\"fresize(1,'d');\" TITLE=\"Left Right\">".
                  "<INPUT TYPE=BUTTON VALUE=\"¢Ã\" onClick=\"fresize(0,'d');\" TITLE=\"RESET\">".
                  "<INPUT TYPE=BUTTON VALUE=\"¡ä\" onClick=\"fresize(2,'d');\" TITLE=\"Up Down\">";
@@ -139,6 +149,12 @@ if($langs[code] == "ko") {
                  "<INPUT TYPE=BUTTON VALUE=\"¢Ã\" onClick=\"fresize(0,'t');\" TITLE=\"RESET\">".
                  "<INPUT TYPE=BUTTON VALUE=\"¡ä\" onClick=\"fresize(2,'t');\" TITLE=\"Up Down\">";
 } else {
+  $ipbl_button = "<A HREF=javascript:fresize(1,'i') TITLE=\"Left Righ\">".
+                 "<IMG SRC=../../images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
+                 "<A HREF=javascript:fresize(0,'i') TITLE=\"RESET\">".
+                 "<IMG SRC=../../images/form_back.gif ALT=\"RESET\" ALIGN=absmiddle BORDER=0></A>\n".
+                 "<A HREF=javascript:fresize(2,'i') TITLE=\"Up Down\">".
+                 "<IMG SRC=../../images/form_height.gif ALT=\"Up Down\" ALIGN=absmiddle BORDER=0></A>\n";
   $dlin_button = "<A HREF=javascript:fresize(1,'d') TITLE=\"Left Righ\">".
                  "<IMG SRC=../../images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
                  "<A HREF=javascript:fresize(0,'d') TITLE=\"RESET\">".
@@ -216,6 +232,13 @@ function fresize(value,name) {
     }
     if (value == 1) document.uadmin.denylink.cols += 5;
     if (value == 2) document.uadmin.denylink.rows += 5;
+  } else if (name == 'i') {
+    if (value == 0) {
+      document.uadmin.ipbl.cols = <?=$tsize?>;
+      document.uadmin.ipbl.rows = 5;
+    }
+    if (value == 1) document.uadmin.ipbl.cols += 5;
+    if (value == 2) document.uadmin.ipbl.rows += 5;
   } else {
     document.uadmin.uaheader.cols = <?=$tsize?>;
     document.uadmin.uaheader.rows = 10;
@@ -550,6 +573,21 @@ else echo "<CENTER><FONT COLOR=RED><B>$langs[ua_while_wn]</B></FONT></CENTER>";
 <TD><INPUT TYPE=text name=ua[d_email] size=<?=$dsize?> value="<?=$ccompare[email]?>"></TD>
 <TD BGCOLOR=<?=$color[d_bg]?> ALIGN=center>&nbsp;</TD>
 </TR>
+
+<TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>
+
+<TR><TD BGCOLOR=<?=$color[t_bg]?> ALIGN=center COLSPAN=6><font id=TCOLOR>Blocking IP Address</font></TD></TR>
+
+<TR>
+<TD COLSPAN=6 ALIGN=right>
+<font id=MCOLOR>TEXTAREA SIZE OPERATION
+<?=$ipbl_button?>
+</font>
+</TD></TR>
+
+<TR><TD ALIGN=center COLSPAN=6>
+<textarea name=ipbl cols=<?=$tsize.$ipbllinkro?> rows=5 wrap=off><?=$ipbl?></textarea>
+</TD></TR>
 
 <TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>
 

@@ -96,6 +96,8 @@ $langs[chk_th] = "Don't open or close TH tag.";
 $langs[chk_tr] = "Don't open or close TR tag.";
 $langs[chk_td] = "Don't open or close TD tag.";
 $langs[chk_if] = "Don't open or close IFRAME tag.";
+$langs[chk_sp] = "Your ip address is Invalid IP range";
+$langs[chk_bl] = "Deny access your ip address by administrator";
 $langs[chk_hy] = "Deny access thorough hyper link of other server";
 
 # get.ph

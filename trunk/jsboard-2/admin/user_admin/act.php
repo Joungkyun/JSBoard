@@ -101,6 +101,8 @@ else $chg[d_email] = "$ccompare[email]";
 $chg[dhyper] = $ua[dhyper] ? 1 : 0;
 $chg[plink] = parse_ipvalue($denylink);
 
+$chg[ipbl] = parse_ipvalue($ipbl);
+
 # FORM size Configuration
 $ua[s_name] = !$ua[s_name] ? "14" : $ua[s_name];
 $ua[s_pass] = !$ua[s_pass] ? "4" : $ua[s_pass];
@@ -228,6 +230,15 @@ $chg_conf = "<?
 #
 \$ccompare[name]  = \"$chg[d_name]\";
 \$ccompare[email] = \"$chg[d_email]\";
+
+
+###############################################################################
+#  IP Blocking 기능
+#  설정값의 구분자는 ';' 로 한다.
+#  설정 예) 1.1.1.1;2.2.2.2;3.3.3.3
+###############################################################################
+\$enable[ipbl] = \"$chg[ipbl]\";
+
 
 ###############################################################################
 #  원격의 하이퍼링크를 통해 들어오는 접속제어
