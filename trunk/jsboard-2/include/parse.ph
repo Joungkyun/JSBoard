@@ -192,7 +192,7 @@ function search_hl($list) {
   $regex2 = "/(<\/?FONT[^<>]+)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)/i";
   $regex3 = "/(HREF|SRC)=([^<]*)$hl[0]([^<]*)<\/FONT>([^>]*)/i";
 
-  $src = array($regex2,$regex);
+  $src = array($regex1,$regex2);
   $tar = array("\\1\\2\\3","\\1\\2\\3");
   $tsrc = array($regex1,$regex2,$regex3);
   $ttar = array("\\1\\2\\3","\\1\\2\\3","\\1=\\2\\3\\4");
