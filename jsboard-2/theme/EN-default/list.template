@@ -38,7 +38,7 @@ if(!$np) {
   # Design per user
   include "{$board['headpath']}";
   # Input by whole admin
-  include "html/head.ph";
+  include "html/head.php";
 }
 ?>
 <!-------------------- End Header Design   -------------------->
@@ -72,7 +72,7 @@ if(!$np) {
 
 <!-#######################################################################-->
 <!-  $td_width[ ] : print width ratio on table                            -->
-<!-                 config in theme/theme_name/config.ph                  -->
+<!-                 config in theme/theme_name/config.php                 -->
 <!-#######################################################################-->
 <!---- Start main table ----->
 <TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0>
@@ -204,7 +204,7 @@ if(!$np) {
 <?
 if(!$np) {
   # Input by whole admin
-  include "html/tail.ph";
+  include "html/tail.php";
   # Design per user
   include "{$board['tailpath']}";
 }

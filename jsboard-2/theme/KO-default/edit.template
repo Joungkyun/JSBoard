@@ -29,7 +29,7 @@ if(!$np) {
   # 각 유저별 Design
   include "{$board['headpath']}";
   # 전체 관리자에 의해 강제 input 되는 Design
-  include "html/head.ph";
+  include "html/head.php";
  }
 ?>
 <!-------------------- 헤더 디자인 끝   -------------------->
@@ -229,7 +229,7 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 <?
 if(!$np) {
   # 전체 관리자에 의해 강제 input 되는 Design
-  include "html/tail.ph";
+  include "html/tail.php";
   # 각 유저별 Design
   include "{$board['tailpath']}";
 }

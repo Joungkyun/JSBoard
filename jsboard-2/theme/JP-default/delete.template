@@ -33,7 +33,7 @@ if(!$np) {
   # Design per user
   include "{$board['headpath']}";
   # Input by whole admin
-  include "html/head.ph";
+  include "html/head.php";
  }
 ?>
 <!-------------------- End Header Design   -------------------->
@@ -148,7 +148,7 @@ if(!$np) {
 <?
 if(!$np) {
   # Input by whole admin
-  include "html/tail.ph";
+  include "html/tail.php";
   # Design per user
   include "{$board['tailpath']}";
 }

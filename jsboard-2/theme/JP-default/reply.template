@@ -29,7 +29,7 @@ if(!$np) {
   # Design per user
   include "{$board['headpath']}";
   # Input by whole admin
-  include "html/head.ph";
+  include "html/head.php";
 }
 ?>
 <!-------------------- End Header Design   -------------------->
@@ -224,7 +224,7 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <?
 if(!$np) {
   # Input by whole admin
-  include "html/tail.ph";
+  include "html/tail.php";
   # Design per user
   include "{$board['tailpath']}";
 }

@@ -25,8 +25,8 @@ function InputFocus() {
 <BODY BGCOLOR=<?=$color['b_bg']?> onLoad=InputFocus()>
 
 <?
-include "html/head.ph";
-if($table) { include "data/$table/html_head.ph"; }
+include "html/head.php";
+if($table) { include "data/$table/html_head.php"; }
 
 if($mode == "comment") {
   $actpage = "./act.php";
@@ -103,8 +103,8 @@ Session Reset <INPUT TYPE=BUTTON VALUE=RESET onClick="document.location='./sessi
 </TABLE>
 
 <?
-if($table) { include "data/$table/html_tail.ph"; }
-include "html/tail.ph";
+if($table) { include "data/$table/html_tail.php"; }
+include "html/tail.php";
 ?>
 
 </BODY></HTML>

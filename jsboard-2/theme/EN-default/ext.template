@@ -25,13 +25,13 @@ TEXTAREA {font: 13px <?=$langs['font']?>; color:<?=$color['l4_fg']?>; border-wid
 
 <?
 # 전체 관리자에 의해 강제 input 되는 디자인
-include "html/head.ph";
+include "html/head.php";
 
 # 메인 출력
 echo $print['body'];
 
 # 전체 관리자에 의해 강제 input 되는 디자인
-include "html/tail.ph";
+include "html/tail.php";
 ?>
 
 </BODY>
