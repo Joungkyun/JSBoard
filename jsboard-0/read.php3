@@ -49,7 +49,8 @@ while($list = dfetch_row($result)) {
     /* 들여쓰기 기능을 지원. pre tag처럼 완벽하게 지원하지는 못함 */
     $text   = eregi_replace("  ", "&nbsp;&nbsp;", $text);
     /* html 사용시에 table이 있으면 nl2br() 함수를 적용시키지 않음 */
-    $text = eregi_replace("<br([>a-z&\;])+([<\/]*(ta|tr|td|ul|ol|li))","\\2",$text) ;
+    $text = eregi_replace("<br([>a-z&\;])+(<[\/]*(ta|tr|td|ul|ol|li))","\\2",$text) ;
+    $text = eregi_replace("&amp;#([0-9]?)","&#\\1",$text) ;
 
 
     if ($reto) {

@@ -33,7 +33,7 @@ if ($act == "post" || $act == "edit") {
     
     $host  = get_hostname();
     $name  = htmlspecialchars(chop($name));
-    $title = htmlspecialchars(chop($title));
+    $title = chop($title);
     
     /*
      * html 을 사용할때에 자바스크립, PHP3 스크립을 사용하지 못하도록
