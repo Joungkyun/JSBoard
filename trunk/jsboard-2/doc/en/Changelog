@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Fri, Feb  4 2002
+Date      : Tue, Feb  5 2002
 Version   : jsboard-2.0pre4
 
 
@@ -56,6 +56,7 @@ Version   : jsboard-2.0pre4
 30. fixed syntax error of INSTALLER/script/dbconv_to_20
 31. fixed trackvar bug of user admin
 32. modified spam check
+33. fixed problem that lost value of table various
 
 
 -----------------------------------------------------------------------------
