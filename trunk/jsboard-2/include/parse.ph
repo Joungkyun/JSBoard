@@ -216,7 +216,7 @@ function search_hl($list) {
       for($i=0;$i<sizeof($strs);$i++) {
         $strs[$i] = trim($strs[$i]);
         $list[name] = preg_replace("/$strs[$i]/i","$hl[0]\\0$hl[1]",$list[name]);
-        $list[name] = preg_replace($regex2,"\\1\\2\\3",$list[name]);
+        $list[name] = preg_replace("/$regex2/i","\\1\\2\\3",$list[name]);
       }
       break;
     case 't':
