@@ -280,11 +280,11 @@ function print_comment_art($table,$list,$prints=0,$delimg) {
   else $names = $list[name];
 
   $ret = "<TR>\n".
-         "<TD WIDTH=1 VALIGN=top NOWRAP>$del_mark</TD>\n".
-         "<TD WIDTH=60 VALIGN=top NOWRAP><NOBR>".
+         "<TD VALIGN=top NOWRAP><NOBR>$del_mark</NOBR></TD>\n".
+         "<TD VALIGN=top NOWRAP><NOBR>".
          "<FONT Style=\"font-weight:bold\">$names</FONT></NOBR></TD>\n".
-         "<TD>\n<PRE>\n$list[text]\n<PRE>\n</TD>\n".
-         "<TD WIDTH=20 VALIGN=top NOWRAP><NOBR><FONT STYLE=\"font: 11px tahoma\">$list[date]</FONT></NOBR></TD>\n".
+         "<TD><PRE>$list[text]</TD></PRE>\n".
+         "<TD ALIGN=right VALIGN=top NOWRAP><NOBR><FONT STYLE=\"font: 11px tahoma\">$list[date] 1</FONT></NOBR></TD>\n".
          "</TR>\n";
 
   if($prints) echo $ret;
