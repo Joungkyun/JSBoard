@@ -311,7 +311,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     }
     if(!$atc[name] || !$atc[title] || !$atc[text]) print_error($langs[act_in],250,150,1);
     if($atc[url]) $atc[url] = check_url($atc[url]);
-    if($atc[email]) $atc[email] = check_email($atc[email]);
+    if($atc[email]) $atc[email] = check_email($atc[email],1);
 
     # 쓰기,답장 모드에서 html 사용시 table tag 검사
     if($o[at] == "write" || $o[at] == "reply" || $o[at] == "edit")

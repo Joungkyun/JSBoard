@@ -79,11 +79,16 @@ function check_url($url) {
 #          http://www.php.net/manual/function.gethostbynamel.php
 # checkdnsrr - 인터넷 호스트 네임이나 IP 어드레스에 대응되는 DNS 레코드를 체크함
 #          http://www.php.net/manual/function.checkdnsrr.php
-function check_email($email) {
+function check_email($email,$hchk=0) {
   $url = trim($email);
-  $host = explode("@",$url);
-  if(eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$", $url)) {
-    if(checkdnsrr($host[1],"MX") || gethostbynamel($host[1])) return $url;
+  if($hchk) {
+    $host = explode("@",$url);
+    if(eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$", $url)) {
+      if(checkdnsrr($host[1],"MX") || gethostbynamel($host[1])) return $url;
+      else return;
+    }
+  } else {
+    if(eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$", $url)) return $url;
     else return;
   }
 }
