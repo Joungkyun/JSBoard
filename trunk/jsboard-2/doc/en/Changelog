@@ -24,6 +24,7 @@ Thu, Oct 10 2002
   by JoungKyun Kim <http://www.oops.org>
 	- fixed parse bug when end % charactor in html tag
 	- prevented iframe html tag on use html condition
+	- fixed preview of html attached file
 
 Sat, Sep 7 2002
   by Chilbong Kim <http://www.linuxchannel.net>
