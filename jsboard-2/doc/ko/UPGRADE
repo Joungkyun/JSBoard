@@ -41,7 +41,10 @@ shell> cp -af $PATH/jsboard-old/data/* $PATH/jsboard-new/data/
 shell> cp -af $PATH/jsboard-old/config/* $PATH/jsboard-new/config/
 
 복사를 마쳤으면 이제 설정 파일들을 변환을 해야 한다. JSBoard 2.0 에서는 1.3 버
-젼대의 설정파일을 2.0 style 로 변환을 해 주는 convert program 을 제공한다.
+젼대의 설정파일을 2.0 style 로 변환을 해 주는 convert program 을 제공한다.  이
+프로그램을 시작하기 전에 이 파일을 열어서 가장 윗라인의 펄경로를 지정하도록 한
+다. 기본값으로는 RH의 rpm으로 설치되어 있는 /usr/bin/perl 이 지정이 되어 있다.
+만약 이 경로가 아니라면 수정을 해 줘야 한다.
 
 shell> cd $PATH/jsboard-2.0/INSTALLER/script
 shell> ./conv_udate

@@ -142,6 +142,15 @@ if ($indb[check]) {
   $create[str] = str_replace("@DBPASS@",$dbinst[pass],$create[str]);
   $create[str] = str_replace("@DBUSER@",$dbinst[user],$create[str]);
 
+  # spam 변수 설정
+  mt_srand((double) microtime() * 1000000);
+  $cerate[spam1] = mt_rand(10001,99999);
+  $create[spam2] = mt_rand(11,99);
+  $create[spam3] = mt_rand(11,99);
+  $create[str] = str_replace("@SPAM1@",$create[spam1],$create[str]);
+  $create[str] = str_replace("@SPAM2@",$create[spam2],$create[str]);
+  $create[str] = str_replace("@SPAM3@",$create[spam3],$create[str]);
+
   # theme 설정
   $themes = ($langs[code] == "ko") ? "KO-default" : "EN-default";
   $create[str] = ereg_replace("@THEME@",$themes,$create[str]);

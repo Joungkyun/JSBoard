@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  3월 10일
+작성일 : 2002년  3월 11일
 버전   : jsboard-2.0pre4
 
 
@@ -91,6 +91,7 @@ If you wnat to see windog's change log, see also
 61. wordwrap 관련 syntax error 수정
 62. 수정/답장시 원본글을 변형해서 DB 에 넣는것 수정
 63. 외부 메일 서버 지정할 수 있도록 수정
+64. 스팸 등록기 체크 기능 추가
 
 
 -----------------------------------------------------------------------------
