@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<!-#######################################################################-->
+<!-    왠만 하면 그냥 사용하기르 :-) 디자인이 별로 필요 없음              -->
+<!-#######################################################################-->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE>Jsboard <?=$board['ver']?> - <?=$print['head']?></TITLE>
+<STYLE TYPE=text/css>
+<!--
+BODY,TD {font-size:12px;font-family:<?=$langs['font']?>;color:#555555;}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+INPUT {font: 11px tahoma; color:<?=$color['l4_fg']?> ; border-width:1; border-style:solid; border-color:<?=$color['l4_gu']?>; padding-left:1px; padding-right:1px; background-color:<?=$color['l4_bg']?>; }
+SELECT {font: 11px tahoma; color:<?=$color['l4_fg']?>; border-width:1; border-style:solid; border-color:<?=$color['l4_gu']?>; background-Color:<?=$color['l4_bg']?> }
+TEXTAREA {font: 13px <?=$langs['font']?>; color:<?=$color['l4_fg']?>; border-width:1; border-style:solid; border-color:<?=$color['l4_gu']?>; padding-left:1px; background-Color:<?=$color['l4_bg']?>;}
+ #radio {font: 9pt <?=$langs['font']?>; BACKGROUND-COLOR: <?=$color['bgcol']?>; COLOR: <?=$color['text']?>; BORDER:2x solid <?=$color['bgcol']?> }
+ #title {font: 15pt <?=$langs['font']?>; color: <?=$color['n0_fg']?>; font-weight: bold}
+ #en {font: 15pt Tahoma; font-weight: bold; COLOR: <?=$color['text']?>}
+<?=$user_stylesheet?>
+-->
+</STYLE>
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT="<?=$color['text']?>" LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0>
+
+<?
+# 전체 관리자에 의해 강제 input 되는 디자인
+include "html/head.php";
+
+# 메인 출력
+echo $print['body'];
+
+# 전체 관리자에 의해 강제 input 되는 디자인
+include "html/tail.php";
+?>
+
+</BODY>
+</HTML>
