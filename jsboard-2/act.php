@@ -222,21 +222,15 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
           rmdir("data/$table/files/{$fdelinfo['bcfile']}");
         }
 
-        $upquery = ",\n        bofile = '{$upfile['name']}', bcfile = '{$bfilename}', bfsize = '{$upfile['size']}'";
+        $upquery = ",\n        bofile = '{$upfile['name']}', bcfile = '{$bfilename}', bfsize = '{$upfile['size']}'\n";
       }
-
-      sql_query("
-        UPDATE $table SET date = '{$atc['date']}', host = '{$atc['host']}',
-        name = '{$atc['name']}', email = '{$atc['email']}', url = '{$atc['url']}',
-        title = '{$atc['title']}', text = '{$atc['text']}', html = '{$atc['html']}'$upquery
-        WHERE no = '{$atc['no']}'");
-    } else {
-      sql_query("
-        UPDATE $table SET date = '{$atc['date']}', host = '{$atc['host']}',
-        name = '{$atc['name']}', email = '{$atc['email']}', url = '{$atc['url']}',
-        title = '{$atc['title']}', text = '{$atc['text']}', html = '{$atc['html']}'
-        WHERE no = '{$atc['no']}'");
     }
+
+    sql_query("
+      UPDATE $table SET date = '{$atc['date']}', host = '{$atc['host']}',
+      name = '{$atc['name']}', email = '{$atc['email']}', url = '{$atc['url']}',
+      title = '{$atc['title']}', text = '{$atc['text']}', html = '{$atc['html']}'$upquery
+      WHERE no = '{$atc['no']}'");
 
     set_cookie($atc);
 
