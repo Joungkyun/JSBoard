@@ -301,7 +301,7 @@ function sendmail($rmail) {
 
   $dbname  = "DB Name           : $rmail[table]";
   $dbloca  = "DB Location       : $webboard_address";
-  $repart  = "Reply Article     : $reply_article";
+  #$repart  = "Reply Article     : $reply_article";
   $nofm    = "\n$dbname\n$dbloca\n$repart";
   $mailurl = "Email             : $rmail[pemail]\r\n";
   $homeurl = "HomeURL           : $rmail[url]\r\n";
