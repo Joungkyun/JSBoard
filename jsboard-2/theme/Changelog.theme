@@ -1,0 +1,5 @@
+Version: A2
+- INPUT 문의 password 를 MAXLENGTH=8 에서 MAXLENGTH=16 으로 수정
+
+Version: A1
+- theme 관리 시작
