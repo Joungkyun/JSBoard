@@ -22,6 +22,10 @@ If you wnat to see windog's change log, see also
 
 Tue, Aug 27 2002
   by JoungKyun Kim <http://www.oops.org>
+	- modified language file
+
+Tue, Aug 27 2002
+  by JoungKyun Kim <http://www.oops.org>
 	- fixed urlencoded name of attach file
 	- if php conjuncted over gd 1.6, fixed preview problem with gif attach file
 
