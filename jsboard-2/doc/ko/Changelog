@@ -16,6 +16,10 @@ file.
 
 버전   : jsboard-2.0.8
 
+2004.09.22
+  by 김정균 <http://www.oops.org>
+	- rss.php 업데이트. RSS 2.0 지원
+
 2004.08.17
   by 김정균 <http://www.oops.org>
 	- NOWRAP 을 CSS 로 변경
