@@ -245,8 +245,8 @@ $rwritemode	= \"$writemodes\" ;
 $rwebboard_version = \"0.7\" ;
 
 // Preview
-$rpreviewn = \"$preview\" ;
-$rpreviewsizen = \"$previewsize\" ;
+$rpreviewn	= \"$preview\" ;
+$rpreviewsizen	= \"$previewsize\" ;
 
 ?>" ;
 
