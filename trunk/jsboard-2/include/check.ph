@@ -248,4 +248,9 @@ function check_iis() {
   if(php_sapi_name() == "isapi") return 1;
   else return 0;
 }
+
+function check_windows() {
+  if(eregi("Windows",php_uname()) return 1;
+  else return 0;
+}
 ?>

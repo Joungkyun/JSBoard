@@ -47,12 +47,21 @@ function get_authinfo($id) {
 #                 http://www.php.net/manual/function.gethostbyaddr.php
 function get_hostname($reverse = 0,$addr = 0) {
   if(!$addr) {
-    # proxy 를 통해서 들어올때 원 ip address 추적
-    $host = check_iis() ? $GLOBALS[HTTP_X_FORWARDED_FOR] : getenv("HTTP_X_FORWARDED_FOR");
+    # proxy 에서 제공하는 원 ip address 의 환경 변수를 제공할때 원 ip address 를 받음
+    $proxytype = array("HTTP_VIA","HTTP_X_COMING_FROM","HTTP_X_FORWARDED_FOR",
+                       "HTTP_X_FORWARDED","HTTP_COMING_FROM","HTTP_FORWARDED_FOR",
+                       "HTTP_FORWARDED");
+                       
+    for($i=0;$i<$i<$sizeof($proxytype);$i++) {
+      if($GLOBALS[$proxytype[$i]]) {
+        $host = $GLOBALS[$proxytype[$i]];
+        break;
+      }
+    }
 
     # proxy를 통하지 않고 접근 할때 아파치 환경 변수인
     # REMOTE_ADDR에서 접속자의 IP를 가져옴
-    $host = $host ? $host : (check_iis() ? $GLOBALS[REMOTE_ADDR] : getenv("REMOTE_ADDR"));
+    $host = $host ? $host : $GLOBALS[REMOTE_ADDR];
   } else $host = $addr;
 
   $check = $reverse ? @gethostbyaddr($host) : "";
@@ -458,8 +467,14 @@ function file_operate($p,$m,$msg='',$s='',$t=0) {
     
     # file point 를 open
     if(!$t && $f=@fopen($p,$m)) {
-      $s = eregi_replace("","",$s);
-      $s = eregi_replace("\r\n","\n",$s);
+      if(check_windows()) {
+        $src = array("/\n/i","/\r*\n/i");
+        $tar = array("\r\n","\r\n");
+      else {
+        $src = array("/^M/i","/\r\n/i");
+        $tar = array("","\n");
+      }
+      $s = preg_replace($src,$tar,$s);
       if($m != "rb") @fwrite($f,$s);
       else $var = @fread($f,filesize($p));
       @fclose($f);

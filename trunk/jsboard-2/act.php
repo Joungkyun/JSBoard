@@ -142,7 +142,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     # mail 보내는 부분
     if ($rmail[uses]) {
       if ($rmail[admin] || $rmail[user]) {
-        $result = sql_query("SELECT MAX(no) no FROM $table");
+        $result = sql_query("SELECT MAX(no) AS no FROM $table");
         $rmail[no] = sql_result($result, 0, "no"); # 최고 번호
         $rmail[name] = $atc[rtname];
         $rmail[text] = $atc[text];
