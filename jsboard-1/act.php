@@ -337,7 +337,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
     $atc[text]  = chop($atc[text]);
 
     # blank check
-    $blankChk = "[\xA1A1\s]+|(&nbsp;)+";
+    $blankChk = "(\xA1A1|\s|&nbsp;)+";
     $nameChk = array("name","title","text");
     for($bc=0;$bc<3;$bc++) {
       if(!$atc[$nameChk[$bc]] || preg_match("/^$blankChk$/i",$atc[$nameChk[$bc]]))
