@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.0
 
+2002.07.10 by 김정균 <http://www.oops.org>
+	- 게시판 통계에서 오늘 올라온 글 통계 수정
+
 2002.07.06 by 김정균 <http://www.oops.org>
 	- 외부 DB 를 이용한 인증시, 암호화 여부 설정이 반대로 된 것 수정
 
