@@ -77,5 +77,4 @@ mysql_close();
 
 # Template file À» È£Ãâ
 include "theme/$print[theme]/edit.template";
-if(!session_is_registered("$jsboard")) session_destroy();
 ?>

@@ -26,5 +26,4 @@ if($mode) {
   if(!$print[theme]) $print[theme] = "EN-default";
   include "theme/$print[theme]/ext.template";
 }
-if(!session_is_registered("$jsboard")) session_destroy();
 ?>

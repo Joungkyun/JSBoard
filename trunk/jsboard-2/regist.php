@@ -43,7 +43,6 @@ if($m == "act") {
   sql_query($query);
   mysql_close();
 
-  if(!session_is_registered("$jsboard")) session_destroy();
   if($check) move_page("./regist.php?check=1");
   else move_page($print[dpage]);
   exit;
@@ -164,5 +163,4 @@ $langs[reg_attention]
   include "theme/$print[theme]/ext.template";
   echo "\n</TD></TR>\n</TABLE>\n";
 }
-if(!session_is_registered("$jsboard")) session_destroy();
 ?>

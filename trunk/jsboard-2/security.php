@@ -78,5 +78,4 @@ $print[body] = "<DIV ALIGN=$board[align]>\n".
 $board[align] = $baord[align] ? $board[align] : "center";
 $print[head] = get_title();
 include "theme/$print[theme]/ext.template";
-if(!session_is_registered("$jsboard")) session_destroy();
 ?>

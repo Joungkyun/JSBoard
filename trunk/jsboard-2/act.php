@@ -398,26 +398,22 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     case 'write':
       $atc[text] = $wpost;
       $page = article_post($table, $atc);
-      if(!session_is_registered("$jsboard")) session_destroy();
       if(!$page[m_err]) Header("Location: list.php?table=$table");
       else move_page("list.php?table=$table");
       break;
     case 'reply':
       $atc[text] = $rpost;
       $gopage = article_reply($table, $atc);
-      if(!session_is_registered("$jsboard")) session_destroy();
       if(!$gopage[m_err]) Header("Location: list.php?table=$table&page=$gopage[no]");
       else move_page("list.php?table=$table&page=$gopage[no]");
       break;
     case 'edit':
       $atc[text] = $epost;
       $no = article_edit($table, $atc, $passwd);
-      if(!session_is_registered("$jsboard")) session_destroy();
       Header("Location: read.php?table=$table&no=$no");
       break;
     case 'del':
       $gopage = article_delete($table, $no, $passwd, $o[am]);
-      if(!session_is_registered("$jsboard")) session_destroy();
       Header("Location: list.php?table=$table&page=$gopage");
       break;
   }
@@ -449,7 +445,6 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
     echo $dn[dl];
   }
-  if(!session_is_registered("$jsboard")) session_destroy();
 } elseif($o[at] == "ma") {
   include "config/global.ph";
   if(eregi($rmail[chars],$target)) {
