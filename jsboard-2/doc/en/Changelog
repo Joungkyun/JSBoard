@@ -18,6 +18,8 @@ Version   : jsboard-2.0.8
 Wed, Sep 22 2004
   by JoungKyun Kim <http://www.oops.org>
 	- Support RSS version 2.0
+	- removed DEFAULT VALUE on auto_increment field.
+	  support mysql 4.1
 
 Tue, Aug 17 2004
   by JoungKyun Kim <http://www.oops.org>

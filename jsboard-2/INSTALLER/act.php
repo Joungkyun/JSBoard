@@ -53,7 +53,7 @@ if ($indb['check']) {
 
   # test 게시판을 생성
   $create['table'] = "CREATE TABLE test ( 
-		  no int(6) DEFAULT '0' NOT NULL auto_increment,
+		  no int(6) NOT NULL auto_increment,
 		  num int(6) DEFAULT '0' NOT NULL,
 		  idx int(6) DEFAULT '0' NOT NULL,
 		  date int(11) DEFAULT '0' NOT NULL,
