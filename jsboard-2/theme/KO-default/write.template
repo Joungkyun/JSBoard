@@ -151,7 +151,7 @@ if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
 <!-  IE, NS6 의 경우에는 textarea 창 사이즈 조정 버튼도 같이 출력         -->
 <!-#######################################################################-->
 <?
-if(!$board[mode] || $board[mode] == 6) {
+if((!$board[mode] || $board[mode] == 6) && $board[super] != 1) {
   echo "<TD>패스워드</TD>\n".
        "<TD>\n".
        "<INPUT TYPE=password NAME=atc[passwd] SIZE=$size[pass] MAXLENGTH=8>\n".

@@ -18,8 +18,9 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2001년 12월 21일
+작성일 : 2001년 12월 27일
 버전   : jsboard-2.0pre3
+
 
 * 변경된점
 1. README.THEME 추가 설명
@@ -81,6 +82,12 @@ If you wnat to see windog's change log, see also
 55. parse.ph 의 delete_tag(), nl2br() 함수 수정
 56. 1000,000 건 이상의 레코드를 위해 SQL query 변경
 57. admin center 라이센스를 GPL 로 변경
+58. Form mail header 변경
+59. url link 에서 & 가 &amp; 로 표기되던것 수정
+60. security 정보가 초기화 되는것 수정
+61. 관리자 로그인시 패스워드 묻는것 수정
+62. 보안을 위해 미리보기에서 embed, img tag 를 삭제
+63. db 변환 스크립트 추가
 
 
 -----------------------------------------------------------------------------

@@ -64,9 +64,11 @@ function print_list($table, $list, $r=0)
   # 글 내용 미리 보기 설정
   if($enable[pre]) {
     $list[ptext] = cut_string($list[text],$enable[preren]);
+    $psrc = array("/#|'|\\\\/i","/<\/*(img|embed)[^>]*>/i","/<\/*script[^>]*>/i");
+    $ptar = array("\\\\\\0","","");
+    $list[ptext] = preg_replace($psrc,$ptar,$list[ptext]);
     $list[ptext] = htmlspecialchars($list[ptext]);
-    $list[ptext] = eregi_replace("(\r*)\n","<BR>",$list[ptext]);
-    $list[ptext] = eregi_replace("(#|'|\\\\)","\\\\1",$list[ptext]);
+    $list[ptext] = preg_replace("/\r*\n/i","<BR>",$list[ptext]);
     $list[preview] = " onMouseOver=\"drs('$list[ptext]'); return true;\" onMouseOut=\"nd(); return true;\"";
   }
 
@@ -149,24 +151,25 @@ function get_list($table,$pages,$reply=0,$print=0)
   else $sql = search2sql($o);
 
   # 50 만건 이상의 대용량 DB 를 위한 SQL 추가 패치
-  if(!$o[at] && !eregi("WHERE",$sql) && $page > 1) {
-    $startidx = $count[all] - $pages[no] - ($board[perno] * 2);
-    $endidx = $count[all] - $pages[no];
-    $sql = "WHERE idx BETWEEN $startidx AND $endidx"; 
-  } elseif ($readchk) {
-    if($reply[idx]) $idx = $reply[idx];
-    else {
-      $ridx = sql_query("SELECT idx FROM $table WHERE no = '$reply[reto]'");
-      $idx = sql_result($ridx,0,idx);
-    }
-    $startidx = ($idx - 1000 > 1) ? $idx - 1000 : 0;
-    $sql = "WHERE (idx BETWEEN $startidx AND $idx) AND".eregi_replace("WHERE","",$sql);
-  }
+  #if(!$o[at] && !eregi("WHERE",$sql) && $page > 1) {
+  #  $startidx = $count[all] - $pages[no] - ($board[perno] * 2);
+  #  $endidx = $count[all] - $pages[no];
+  #  $sql = "WHERE idx BETWEEN $startidx AND $endidx"; 
+  #} elseif ($readchk) {
+  #  if($reply[idx]) $idx = $reply[idx];
+  #  else {
+  #    $ridx = sql_query("SELECT idx FROM $table WHERE no = '$reply[reto]'");
+  #    $idx = sql_result($ridx,0,idx);
+  #  }
+  #  $startidx = ($idx - 1000 > 1) ? $idx - 1000 : 0;
+  #  $sql = "WHERE (idx BETWEEN $startidx AND $idx) AND".eregi_replace("WHERE","",$sql);
+  #}
 
-  # 50 만건 이상의 대용량 DB 를 위한 SQL 추가 패치 (위와 이곳만 수정하면 복구가능)
+  # 50 만건 이상의 대용량 DB 를 위한 SQL 추가 패치
+  # parse.ph 의 search2sql() 에서 50 만건으로 검색
   if ($readchk) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
-  else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT 0, $board[perno]";
-  #else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT $pages[no], $board[perno]";
+  else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT $pages[no], $board[perno]";
+  #else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT 0, $board[perno]";
 
   $result = sql_query($query);
   if(sql_num_rows($result)) {
