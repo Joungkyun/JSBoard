@@ -619,10 +619,13 @@ function print_newwindow_src($upload,$cupload,$dwho) {
 
          "      if (chkwid < wid) {\n".
          "        wid = width - 5\n".
-         "        hei = height - 60\n".
+         "        if(chkhei < hei) { hei = height - 60 }\n".
          "        scroll = 'yes'\n".
-         "      } else if (chkhei < height) {\n".
-         "        hei = height - 40\n".       
+         "      }\n\n".
+
+         "      if (chkhei < hei) {\n".
+         "        if(chkwid < wid) { wid = width - 5 }\n".
+         "        hei = height - 60\n".
          "        scroll = 'yes'\n".
          "      }\n\n".
 
