@@ -14,9 +14,9 @@
 BODY,TD {font-size:12px;font-family:±¼¸²Ã¼;color:#555555;}
 A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
 A:hover {text-decoration:underline; color:#555555}
-INPUT {font: 11px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; padding-right:1px; background-color:#FFFFFF; }
-SELECT {font: 11px tahoma; color:#555555; border-width:1; border-style:solid; border-color:#555555; background-Color: #FFFFFF}
-TEXTAREA {font: 13px ±¼¸²Ã¼; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; background-Color:#ffffff;}
+INPUT {font: 11px tahoma; color:<?=$color['l4_fg']?>; border-width:1; border-style:solid; border-color:<?=$color['l4_gu']?>; padding-left:1px; padding-right:1px; background-color:<?=$color['l4_bg']?>; }
+SELECT {font: 11px tahoma; color:<?=$color['l4_fg']?>; border-width:1; border-style:solid; border-color:<?=$color['l4_gu']?>; background-Color: <?=$color['l4_bg']?>}
+TEXTAREA {font: 13px ±¼¸²Ã¼; color:<?=$color['l4_fg']?>; border-width:1; border-style:solid; border-color:<?=$color['l4_gu']?>; padding-left:1px; background-Color:<?=$color['l4_bg']?>;}
 
 <?=$user_stylesheet?>
 -->
@@ -184,24 +184,24 @@ if(!$np) {
 <FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
 <TR>
 <TD>
-<SELECT NAME=o[sc] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<SELECT NAME=o[sc] style="border:1x solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma;color:<?=$color['l4_fg']?>">
 <OPTION VALUE=t<?=$sform['sc']['t']?>>Title
 <OPTION VALUE=c<?=$sform['sc']['c']?>>Contents
 <OPTION VALUE=n<?=$sform['sc']['n']?>>Writer
 <OPTION VALUE=a<?=$sform['sc']['a']?>>All
 </SELECT>
-<INPUT TYPE=text NAME=o[ss] SIZE=<?=form_size(8)?> MAXLENGTH=255 style="border:1x solid #555555;background-Color:#ffffff;font:12px;color:#555555;" VALUE="<?=$sform['ss']?>"
+<INPUT TYPE=text NAME=o[ss] SIZE=<?=form_size(8)?> MAXLENGTH=255 style="border:1x solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:12px;color:<?=$color['l4_fg']?>;" VALUE="<?=$sform['ss']?>"
 >
-<INPUT TYPE=submit VALUE=Search style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555;">
+<INPUT TYPE=submit VALUE=Search style="border:1x solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma;color:<?=$color['l4_fg']?>;">
 </TD>
 </TR><TR>
 <TD>
-<SELECT NAME=o[st] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<SELECT NAME=o[st] style="border:1x solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma;color:<?=$color['l4_fg']?>">
 <OPTION VALUE=m<?=$sform['st']['m']?>>A Month
 <OPTION VALUE=w<?=$sform['st']['w']?>>A Week
 <OPTION VALUE=a<?=$sform['st']['a']?>>All
 </SELECT>
-<INPUT TYPE=checkbox NAME=o[er] VALUE=y<?=$sform['er']['y']?> style="border:1x solid #555555;background-Color:#ffffff">
+<INPUT TYPE=checkbox NAME=o[er] VALUE=y<?=$sform['er']['y']?> style="border:1x solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>">
 <FONT STYLE="font-face:±¼¸²;color:#555555">Á¤±ÔÇ¥Çö½Ä</FONT> <?=$print['dserlink']?>
 </TD>
 </TR>
@@ -225,13 +225,12 @@ SQL Time [ <?=$print['sqltime']?> Sec ]<BR>
 <TD ALIGN=right>
 <FONT STYLE="font-size:10px;font-family:tahoma;">
 <?=$pform['post']?>
-<SELECT NAME=o[go] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<SELECT NAME=o[go] style="border:1x solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma;color:<?=$color['l4_fg']?>">
 <OPTION VALUE=p SELECTED>Page No.
 <OPTION VALUE=n>Article No.
 </SELECT>
-<INPUT TYPE=text NAME=o[no] SIZE=<?=form_size(2)?> MAXLENGTH=6 style="border:1x solid #555555;background-Color:#ffffff;font:12px;color:#555555" VALUE='<?=$pform['value']?>'
->
-<INPUT TYPE=submit VALUE=Go! style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<INPUT TYPE=text NAME=o[no] SIZE=<?=form_size(2)?> MAXLENGTH=6 style="border:1x solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:12px;color:<?=$color['l4_fg']?>" VALUE='<?=$pform['value']?>'>
+<INPUT TYPE=submit VALUE=Go! style="border:1x solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma;color:<?=$color['l4_fg']?>">
 </FONT>
 </TD>
 </TR></FORM>
