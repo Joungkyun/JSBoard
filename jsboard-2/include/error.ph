@@ -36,6 +36,8 @@ function print_error($str,$width=250,$height=150,$back='') {
     $var = "&type=admin";
   } else $gopage = ".";
 
+  $var .= $table ? "&table=$table" : "";
+
   if($back) echo "<SCRIPT>history.back()</SCRIPT>";
   else move_page("$gopage/session.php?m=logout$var",0);
   exit;
@@ -70,7 +72,7 @@ function print_notice($str,$width = 330, $height = 210) {
 }
 
 function print_pwerror($str, $width = 250, $height = 130) {
-  global $table, $path, $agent;
+  global $table, $path, $agent, $table;
 
   if ($path[type] == "user_admin") $err_fn = "../..";
   elseif ($path[type] == "admin") $err_fn = "..";
@@ -97,7 +99,9 @@ function print_pwerror($str, $width = 250, $height = 130) {
          "remoteWindow();\n";
   }
 
-  echo "document.location='$err_fn/session.php?m=logout'\n".
+  $var = $table ? "&table=$table" : "";
+
+  echo "document.location='$err_fn/session.php?m=logout$var'\n".
        "//-->\n</SCRIPT>\n";
   exit;
 }
