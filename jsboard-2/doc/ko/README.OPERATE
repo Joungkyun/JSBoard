@@ -231,6 +231,7 @@ JSBoard 의 로그인 모드는 총 7가지 단계를 가진다. 각 단계의 설정은 다음과 같다. �
     <INPUT TYPE=text NAME=lu> ID
     <INPUT TYPE=password NAME=lp> Password
     <INPUT TYPE=submit VALUE=ENTER>
+    <INPUT TYPE=HIDDEN NAME=m VALUE=login>
     </FORM>
 
     의 코드만 원하는 페이지에 넣어주면 된다. 즉 ID 를 $lu 에 password 를 lp 에 넣
