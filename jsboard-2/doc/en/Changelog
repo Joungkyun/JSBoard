@@ -63,6 +63,7 @@ Version   : jsboard-2.0pre3
 35. fixed password problem in mode 4, 5
 36. updated INSTALLER/script/conv_update file
 37. fixed problem of add new board
+38. fixed name search problem
 
 
 -----------------------------------------------------------------------------
