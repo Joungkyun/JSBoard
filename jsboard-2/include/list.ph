@@ -15,6 +15,7 @@ function print_list($table, $list, $r=0)
   $list[title] = unhtmlspecialchars($list[title]);
 
   if(eregi("<font[^>]*color=",$list[title])) {
+    $fchk = 1;
     $list[title] = eregi_replace("<font[^>]*color=([a-z0-9#]+)[^>]*>","<font color=\\1>",$list[title]);
     $board[tit_l] += 28;
   }
@@ -22,6 +23,11 @@ function print_list($table, $list, $r=0)
   # read시의 관련글 출력시 제목길이 조정
   if(!$r[ln]) $list[title] = htmlspecialchars(cut_string($list[title],$board[tit_l]-$list[rede]*2));
   else $list[title] = htmlspecialchars(cut_string($list[title],$board[tit_l]-$r[ln]-$list[rede]*2));
+
+  if ($fchk == 1) {
+    $fchk = 0;
+    $board[tit_l] -= 28;
+  }
 
   $list[title] = eregi_replace("&lt;((/)*font[^&]*)&gt;","<\\1>",$list[title]);
   $list[title] = ugly_han($list[title]);

@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 ¹öÀü   : jsboard-2.0.2
 
+Thu, Oct 10 2002
+  by JoungKyun Kim <http://www.oops.org>
+    - fixed wrong number of title charactors when use font tag
+
 Tue, Oct  8 2002
   by JoungKyun Kim <http://www.oops.org>
 	- modified dynamical add of language pack

@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.2
 
+2002.10.10
+  by 김정균 <http://www.oops.org>
+    - 글리스트에 font tag 사용할 경우 제목 글수가 엉키는 현상 수정
+
 2002.10.08
   by 김정균 <http://www.oops.org>
 	- 언어 추가를 유연하게 하도록 수정
