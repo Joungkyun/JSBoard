@@ -1,0 +1,31 @@
+<?
+
+// list paget table ratio ===================================
+$td_width[1] = "7%";	// 번호 필드 너비
+
+// 제목 필드 너비
+if ($upload[yesno] == "yes") $td_width[2] = "52%";
+else $td_width[2] = "60%";
+
+$td_width[3] = "13%";	// 글쓴이 필드 너비
+$td_width[4] = "8%";	// 파일 필드 너비
+$td_width[5] = "13%";	// 날짜 필드 너비
+$td_width[6] = "7%";	// 읽은수 필드 너비
+
+
+// read page table ratio=====================================
+$readp[name] = "40%";
+$readp[date] = "40%";
+$readp[read] = "20%";
+
+// menu icon의 크기 =========================================
+$icons[size] = "20";
+
+// write, edit, reply page form size ========================
+$size[name] = form_size(14);
+$size[pass] = form_size(4);
+$size[titl] = form_size(25);
+$size[text] = form_size(31);
+$size[uplo] = form_size(19);
+
+?>
