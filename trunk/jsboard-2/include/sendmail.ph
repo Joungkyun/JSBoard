@@ -18,7 +18,7 @@ class maildaemon {
     $this->debug = $v[debug];
     $this->ofhtml = $v[ofhtml];
     if($_SERVER[SERVER_NAME]) $this->helo = $_SERVER[SERVER_NAME];
-    if(!$this->helo || eregi("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$",$this->helo))
+    if(!$this->helo || preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/i",$this->helo))
       $this->helo = "JSBoardMessage";
 
     $this->from = $v[from];
@@ -73,7 +73,7 @@ class maildaemon {
       if(!$str) $this->failed = 1;
       if($this->sock) $returnmsg = trim(fgets($this->sock,1024));
     } else {
-      if(!eregi("^(220|221|250|251|354)$",substr(trim($str),0,3)))
+      if(!preg_match("/^(220|221|250|251|354)$/",substr(trim($str),0,3)))
         $this->failed = 1;
     }
 
@@ -109,7 +109,7 @@ class maildaemon {
   function send($str,$chk=0) {
     if(!$this->failed) {
       if($this->debug) {
-        if(eregi("\r\n",trim($str)))
+        if(preg_match("/\r\n/",trim($str)))
           $str_debug = trim(str_replace("\r\n","\r\n       ",$str));
         else $str_debug = $str;
       }
@@ -118,7 +118,7 @@ class maildaemon {
       $recvchk = $recv;
       $this->debug($recv,0,$this->debug);
 
-      if(eregi("Mail From:",$str) && eregi("exist|require|error",$recvchk) && !$chk) {
+      if(preg_match("/Mail From:/i",$str) && preg_match("/exist|require|error/i",$recvchk) && !$chk) {
         $this->failed = 0;
         $this->send("MAIL FROM: <".$this->to.">",1);
       }
@@ -176,7 +176,7 @@ function get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm) {
   if($nofm) $nofm = auto_link($nofm);
   if($rmail[url]) $homeurl = "HomeURL           : ".auto_link($rmail[url])."\r\n";
   if($rmail[email]) {
-    $rmail[pemail] = (eregi("^nobody@",$rmail[email])) ? "" : $rmail[email];
+    $rmail[pemail] = (preg_match("/^nobody@/i",$rmail[email])) ? "" : $rmail[email];
     if($rmail[pemail]) {
       $rmail[pemail] = preg_replace("/$rmail[pemail]/i","mailto:<A HREF=mailto:\\0>\\0</A>",$rmail[pemail]);
       $mailurl = "Email             : $rmail[pemail]\r\n";
@@ -219,7 +219,7 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
   mailcheck($to,$from,$title,$pbody);
 
   $title = "=?$langs[charset]?B?".trim(base64_encode($title))."?=";
-  $title = eregi_replace("\n[ |\t]*"," ",str_replace("\r\n","\n",$title));
+  $title = preg_replace("/[\s]+/i"," ",str_replace("\r\n","\n",$title));
   
   # mail header 를 작성 
   $mail_header = mail_header($to,$from,$title,$mta);
@@ -274,10 +274,10 @@ function sendmail($rmail) {
   $rmail[name] = stripslashes($rmail[name]);
   $rmail[title] = stripslashes($rmail[title]);
   $rmail[email] = !trim($rmail[email]) ? "nobody@$_SERVER[SERVER_NAME]" : $rmail[email];
-  if(eregi("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$",$_SERVER[SERVER_NAME]))
+  if(preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/i",$_SERVER[SERVER_NAME]))
     $rmail[email] = "nobody@[".$_SERVER[SERVER_NAME]."]";
 
-  $rmail[pemail] = (eregi("^nobody@",$rmail[email])) ? "" : "mailto:$rmail[email]";
+  $rmail[pemail] = (preg_match("/^nobody@/i",$rmail[email])) ? "" : "mailto:$rmail[email]";
 
   if ($langs[code] == "ko") {
     if ($day == "(Mon)") $day="(월)";

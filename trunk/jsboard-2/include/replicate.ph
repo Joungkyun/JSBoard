@@ -1,7 +1,7 @@
 <?
 function replication_mode($db) {
   $db[userver] = $db[userver] ? $db[userver] : $db[server];
-  if(!eregi("#",$db[userver])) $db[userver] .= "#w";
+  if(!preg_match("/#/",$db[userver])) $db[userver] .= "#w";
 
   $chk = explode("#",$db[userver]);
   $db[rhost] = $chk[0];

@@ -3,13 +3,13 @@ include "include/header.ph";
 
 $board[super] = $board[adm] ? 1 : $board[super];
 
-if(eregi("^(1|3|6|7)$",$board[mode]))
+if(preg_match("/^(1|3|6|7)$/",$board[mode]))
   if($board[super] != 1) print_error($langs[perm_err],250,150,1);
 
-if(eregi("^(1|3|5)$",$board[mode]) && !$_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);
+if(preg_match("/^(1|3|5)$/",$board[mode]) && !$_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);
 
 # 로그인이 되어 있고 전체어드민 로그인시에는 모든것을 수정할수 있게.
-if(eregi("^(2|5)$",$board[mode]) && $_SESSION[$jsboard][id] &&
+if(preg_match("/^(2|5)$/",$board[mode]) && $_SESSION[$jsboard][id] &&
    $_SESSION[$jsboard][pos] != 1) $disable = " disabled";
 else $nodisable = 1;
 
@@ -17,15 +17,15 @@ $kind = "reply";
 $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
 $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
 
-if((eregi("^(2|3|5)$",$board[mode]) && $_SESSION[$jsboard][id]) || $board[super] == 1) {
+if((preg_match("/^(2|3|5)$/",$board[mode]) && $_SESSION[$jsboard][id]) || $board[super] == 1) {
   $pre_regist[name] = $_SESSION[$jsboard][id];
   $pre_regist[rname] = $_SESSION[$jsboard][name];
   $pre_regist[email] = $_SESSION[$jsboard][email];
   $pre_regist[url] = $_SESSION[$jsboard][url];
 } else {
-  $pre_regist[name] = eregi_replace("[\]","",$_COOKIE[board_cookie][name]);
-  $pre_regist[email] = eregi_replace("[\]","",$_COOKIE[board_cookie][email]);
-  $pre_regist[url] = eregi_replace("[\]","",$_COOKIE[board_cookie][url]);
+  $pre_regist[name] = preg_replace("/[\]/","",$_COOKIE[board_cookie][name]);
+  $pre_regist[email] = preg_replace("/[\]/","",$_COOKIE[board_cookie][email]);
+  $pre_regist[url] = preg_replace("/[\]/","",$_COOKIE[board_cookie][url]);
 }
 
 if($board[notice]) print_notice($board[notice]);
@@ -35,22 +35,22 @@ sql_select_db($db[name]);
 
 $list = get_article($table, $no);
 
-$list[title] = eregi_replace("Re(\^[0-9]{0,10})*: ", "", $list[title]);
+$list[title] = preg_replace("/Re(\^[0-9]{0,10})*: /i", "", $list[title]);
 $reti = $list[rede];
 $reti = ++$reti;
 
 if ($reti == "1") $reti = "";
 else $reti = "^$reti";
 
-$list[text] = eregi_replace("<([^<>\n]+)\n([^\n<>]+)>", "<\\1 \\2>", $list[text]);
-$list[text] = ereg_replace("^", ": ", $list[text]);
-$list[text] = ereg_replace("\n", "\n: ", $list[text]);
+$list[text] = preg_replace("/<([^<>\n]+)\n([^\n<>]+)>/i", "<\\1 \\2>", $list[text]);
+$list[text] = str_replace("^", ": ", $list[text]);
+$list[text] = preg_replace("/\n/", "\n: ", $list[text]);
 
 if($list[html]) $html_chk_ok = " checked";
 else $html_chk_no = " checked";
 
 # Browser가 Lynx일때 multim form 삭제
-if($agent[br] == "LYNX") $board[formtype] = "";
+if($noup == 1) $board[formtype] = "";
 else $board[formtype] = " ENCTYPE=\"multipart/form-data\"";
 
 # TEXTAREA에서 wrap option check
@@ -93,7 +93,7 @@ if(!$nodisable) {
   $print[passform] .= "$pre_regist[rname]\n";
 }
 
-if($board[rnname] && eregi("^(2|3|5|7)",$board[mode]) && $_SESSION[$jsboard][pos] != 1)
+if($board[rnname] && preg_match("/^(2|3|5|7)/",$board[mode]) && $_SESSION[$jsboard][pos] != 1)
   $pre_regist[name] = $_SESSION[$jsboard][name] ? $_SESSION[$jsboard][name] : $pre_regist[name];
 
 $pages = "&page=$page";

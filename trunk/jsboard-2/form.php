@@ -2,7 +2,7 @@
 include "./include/header.ph";
 
 if($mode == "photo") {
-  if(eregi("^(2|3|5)$",$board[mode]) && !session_is_registered("$jsboard"))
+  if(preg_match("/^(2|3|5)$/",$board[mode]) && !session_is_registered("$jsboard"))
     print_error("$langs[login_err]");
 
   meta_char_check($table,0,1);

@@ -5,7 +5,7 @@ include "include/header.ph";
 
 $page = !$page ? 1 : $page;
 
-if(!session_is_registered("$jsboard") && eregi("^(2|3|5|7)$",$board[mode]))
+if(!session_is_registered("$jsboard") && preg_match("/^(2|3|5|7)$/",$board[mode]))
   print_error("$langs[login_err]");
 
 $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";

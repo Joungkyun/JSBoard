@@ -5,7 +5,7 @@
 # $t    -> table 이름 검사시 1
 #
 function meta_char_check($name,$i=0,$t=0) {
-  if (!$i && !trim($name))  print_error(" Table Value Name Missing! You must specify a value",250,150,1);
+  if (!$i && !trim($name))  print_error("Table Value Name Missing! You must specify a value",250,150,1);
   if ($t && !preg_match("/^[a-z]/i",$name)) print_error("$name Value must start with an alphabet",250,150,1);
   if (preg_match("/[^a-z0-9_-]/i",$name)) print_error("Can't use special characters except alphabat, numberlic , _, - charcters",250,150,1);
   if ($t && preg_match("/^as$/i",$name)) print_error("Cat't use table name as &quot;as&quot;",250,150,1);
@@ -52,19 +52,15 @@ function is_alpha($char) {
 
 # URL이 정확한 것인지 검사하는 함수
 #
-# eregi         - 정규 표현식을 이용한 검사 (대소문자 무시)
-#                 http://www.php.net/manual/function.eregi.php
-# eregi_replace - 정규 표현식을 이용한 치환 (대소문자 무시)
-#                 http://www.php.net/manual/function.eregi-replace.php
 function check_url($url) {
   $url = trim($url);
 
   # 프로토콜(http://, ftp://...)을 나타내는 부분이 없을 때 기본값으로
   # http://를 붙임
-  if(!eregi("^(http://|https://|ftp://|telnet://|news://)", $url))
-    $url = eregi_replace("^", "http://", $url);
+  if(!preg_match("/^(http|https|ftp|telnet|news):\/\//i", $url))
+    $url = "http://$url";
 
-  if(!eregi("(http|https|ftp|telnet|news):\/\/[\xA1-\xFEa-z0-9-]+\.[][\xA1-\xFEa-zA-Z0-9,:&#@=_~%?\/.+-]+$", $url))
+  if(!preg_match("/(http|https|ftp|telnet|news):\/\/[\xA1-\xFEa-z0-9-]+\.[\xA1-\xFEa-zA-Z0-9,:&#@=_~%?\/.+-]+$/i", $url))
     return;
     
   return $url;
@@ -72,8 +68,6 @@ function check_url($url) {
 
 # E-MAIL 주소가 정확한 것인지 검사하는 함수
 #
-# eregi - 정규 표현식을 이용한 검사 (대소문자 무시)
-#         http://www.php.net/manual/function.eregi.php
 # gethostbynamel - 호스트 이름으로 ip 를 얻어옴
 #          http://www.php.net/manual/function.gethostbynamel.php
 # checkdnsrr - 인터넷 호스트 네임이나 IP 어드레스에 대응되는 DNS 레코드를 체크함
@@ -82,12 +76,12 @@ function check_email($email,$hchk=0) {
   $url = trim($email);
   if($hchk) {
     $host = explode("@",$url);
-    if(eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$", $url)) {
+    if(preg_match("/^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$/i", $url)) {
       if(checkdnsrr($host[1],"MX") || gethostbynamel($host[1])) return $url;
       else return;
     }
   } else {
-    if(eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$", $url)) return $url;
+    if(preg_match("/^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$/i", $url)) return $url;
     else return;
   }
 }
@@ -218,23 +212,24 @@ function check_net($ipaddr, $network, $netmask) {
 # strchr - 문자열이 마지막으로 나타나는 위치를 구한다
 #
 function check_filetype($filetype) {
+  $filetype = preg_replace("/\.$/", "", $filetype);
   $tail = substr( strrchr($filetype, "."), 1 );
   $tail = strtolower($tail);
   return $tail;
 }
 
 function icon_check($t,$fn) {
-  if (eregi("^(hwp|mov|txt)$",$t)) $icon = "$t.gif";
-  else if (eregi("^(exe|com)$",$t)) $icon = "exe.gif";
-  else if (eregi("^(zip|arj|gz|lha|rar|tar|tgz|ace)$",$t)) $icon = "comp.gif";
-  else if (eregi("^(php|php3|phps|vbs)$",$t)) {
-    if (eregi("(_htm|_cgi|_pl|_shtm|_sh)",$fn)) $icon = "html.gif";
+  if (preg_match("/^(hwp|mov|txt)$/i",$t)) $icon = "$t.gif";
+  else if (preg_match("/^(exe|com)$/i",$t)) $icon = "exe.gif";
+  else if (preg_match("/^(zip|arj|gz|lha|rar|tar|tgz|ace)$/i",$t)) $icon = "comp.gif";
+  else if (preg_match("/^(php|php3|phps|vbs)$/i",$t)) {
+    if (preg_match("/_htm|_cgi|_pl|_shtm|_sh/i",$fn)) $icon = "html.gif";
     else $icon = "php.gif";
-  } else if (eregi("^(avi|mpg|mpeg|asf|swf|wmv)$",$t)) $icon = "mpeg.gif";
-  else if (eregi("^(jpg|gif|bmp|psd|png)$",$t)) $icon = "pic.gif";
-  else if (eregi("^(ppt|xls|doc)$",$t)) $icon = "doc.gif";
-  else if (eregi("^(ra|ram|rm)$",$t)) $icon = "ra.gif";
-  else if (eregi("^(mp3|mp2|wav|mid)$",$t)) $icon = "mp3.gif";
+  } else if (preg_match("/^(avi|mpg|mpeg|asf|swf|wmv)$/i",$t)) $icon = "mpeg.gif";
+  else if (preg_match("/^(jpg|gif|bmp|psd|png)$/i",$t)) $icon = "pic.gif";
+  else if (preg_match("/^(ppt|xls|doc)$/i",$t)) $icon = "doc.gif";
+  else if (preg_match("/^(ra|ram|rm)$/i",$t)) $icon = "ra.gif";
+  else if (preg_match("/^(mp3|mp2|wav|mid)$/i",$t)) $icon = "mp3.gif";
   else $icon = "file.gif";
 
   return $icon;
@@ -244,7 +239,7 @@ function check_dnlink($table,$list) {
   global $upload, $cupload;
 
   if(!$cupload[dnlink]) {
-    if (eregi("(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs|\.ppt|\.xls)$",$list[bofile])) {
+    if (preg_match("/(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs|\.ppt|\.xls)$/i",$list[bofile])) {
       $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
     } else {
       if ($list[bfsize] < 51200) $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
@@ -264,7 +259,7 @@ function upload_name_chk($f) {
   if(!trim($f)) print_error($langs[act_de],250,150,1);
 
   # file 이름에서 특수문자가 있으면 에러 출력
-  if (eregi("[^\xA1-\xFEa-z0-9._\-]|\.\.",urldecode($f))) {
+  if (preg_match("/[^\xA1-\xFEa-z0-9._\-]|\.\./i",urldecode($f))) {
     print_error($langs[act_de],250,150,1);
     exit;
   }
@@ -304,7 +299,7 @@ function check_iis() {
 # 윈도우용 php 인지 아닌지를 판단.
 # 윈도우용 php 일 경우 turn 를 반환
 function check_windows() {
-  if(eregi("Windows",php_uname())) return 1;
+  if(preg_match("/Windows/i",php_uname())) return 1;
   else return 0;
 }
 

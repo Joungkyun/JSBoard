@@ -120,7 +120,7 @@ if($view[url]) {
 <!-  upload 부분 출력여부 설정 (왠만하면 그냥 쓰면 됨)                    -->
 <!-#######################################################################-->
 <?
-if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
+if ($upload[yesno] && $cupload[yesno] && $noup != 1) {
   echo "<TR>\n".
        "<TD>파일</TD>\n".
        "<TD>\n".

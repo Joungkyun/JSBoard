@@ -7,16 +7,16 @@ function print_list($table, $list, $r=0)
   $search = search2url($o);
   $pages = $page ? "&page=$page" : "&page=1";
 
-  if($board[rnname] && eregi("^(2|3|5|7)",$board[mode])) 
+  if($board[rnname] && preg_match("/^(2|3|5|7)/",$board[mode])) 
     $list[name] = $list[rname] ? $list[rname] : $list[name];
   $list[name] = unhtmlspecialchars($list[name]);
   $list[name]  = htmlspecialchars(cut_string($list[name],$board[nam_l]));
   $list[name] = trim(ugly_han($list[name]));
   $list[title] = unhtmlspecialchars($list[title]);
 
-  if(eregi("<font[^>]*color=",$list[title])) {
+  if(preg_match("/<font[^>]*color=/i",$list[title])) {
     $fchk = 1;
-    $list[title] = eregi_replace("<font[^>]*color=([a-z0-9#]+)[^>]*>","<font color=\\1>",$list[title]);
+    $list[title] = preg_replace("/<font[^>]*color=([a-z0-9#]+)[^>]*>/i","<font color=\\1>",$list[title]);
     $board[tit_l] += 28;
   }
 
@@ -29,9 +29,9 @@ function print_list($table, $list, $r=0)
     $board[tit_l] -= 28;
   }
 
-  $list[title] = eregi_replace("&lt;((/)*font[^&]*)&gt;","<\\1>",$list[title]);
+  $list[title] = preg_replace("/&lt;((\/)*font[^&]*)&gt;/i","<\\1>",$list[title]);
   $list[title] = ugly_han($list[title]);
-  $list[title] = eregi_replace("\"","&quot;",$list[title]);
+  $list[title] = preg_replace("/\"/","&quot;",$list[title]);
 
   $list = search_hl($list);
 
@@ -59,7 +59,7 @@ function print_list($table, $list, $r=0)
 
   $list[refer] = sprintf("%5d", $list[refer]);
   $list[refer] = str_replace(" ", ".", $list[refer]);
-  $list[refer] = ereg_replace("^(\.+)", "<FONT STYLE=\"color:$bg\">\\1</FONT>", $list[refer]);
+  $list[refer] = preg_replace("/^(\.+)/", "<FONT STYLE=\"color:$bg\">\\1</FONT>", $list[refer]);
 
   if($list[email]) {
     $list[name] = url_link($list[email], $list[name], $list[no]);
@@ -153,7 +153,7 @@ function get_list($table,$pages,$reply=0,$print=0)
   global $color,$board,$lines,$upload,$page;
   global $o,$enable,$count,$agent;
 
-  $readchk = (eregi("read\.php",$_SERVER[PHP_SELF]) && $enable[re_list]) ? 1 : 0;
+  $readchk = (preg_match("/read\.php/i",$_SERVER[PHP_SELF]) && $enable[re_list]) ? 1 : 0;
   $limits = $readchk ? "" : " Limit {$pages[no]}, {$board[perno]}";
 
   if($enable[comment]) {
@@ -187,7 +187,7 @@ function get_list($table,$pages,$reply=0,$print=0)
   if($lines[design] && !$print) {
     $colspan_no = $upload[yesno] ? "6" : "5";
     $lines[design] = str_replace("=AA","=$colspan_no",$lines[design]);
-    $lists = eregi_replace("###LINE-DESIGN###\\\n$","",$lists);
+    $lists = preg_replace("/###LINE-DESIGN###\\\n$/i","",$lists);
     $lists = str_replace("###LINE-DESIGN###","\n<TR>\n$lines[design]\n</TR>\n",$lists);
   }
 
@@ -270,13 +270,13 @@ function print_comment_art($table,$list,$prints=0,$delimg) {
   $list[date] = date("m/d H:i:s",$list[date]);
 
   if(($board[adm] || $board[super] == 1) ||
-     (eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id])) {
+     (preg_match("/^(2|3|5|7)$/i",$board[mode]) && $_SESSION[$jsboard][id])) {
     $delPath = "./act.php?table=$table&o[at]=c_del&atc[no]=$no&atc[cid]=$list[no]&page=$page";
   } else {
     $delPath = "./login.php?table=$table&mode=comment&no=$no&cid=$list[no]&page=$page";
   }
 
-  if((eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id] != $list[name]) &&
+  if((preg_match("/^(2|3|5|7)$/i",$board[mode]) && $_SESSION[$jsboard][id] != $list[name]) &&
      (!$board[adm] && $board[super] != 1)) {
      $del_mark = "&nbsp;";
   } else {

@@ -101,15 +101,15 @@ if(!$board[usedhyper]) {
   $denylinkro = " disabled";
 }
 
-$board[hls] = eregi_replace("<FONT COLOR=","",$board[hl]);
-$board[hls] = eregi_replace("><B><U>STR</U></B></FONT>","",$board[hls]);
+$board[hls] = preg_replace("/<FONT COLOR=/i","",$board[hl]);
+$board[hls] = preg_replace("/><B><U>STR<\/U><\/B><\/FONT>/i","",$board[hls]);
 
 # html header의 정보를 가져 온다
 $top_head = file_operate("../../html/head.ph","r");
 
 $top_head = htmlspecialchars($top_head);
 $top_head = str_replace("&lt;? echo ","",$top_head);
-$top_head = eregi_replace(" \?&gt;(;|\}|&lt;|&quot;| -)","\\1",$top_head);
+$top_head = preg_replace("/ \?&gt;(;|\}|&lt;|&quot;| -)/i","\\1",$top_head);
 $top_head = str_replace("\$table",$table,$top_head);
 $top_head = str_replace("\$version",$version,$top_head);
 $top_head = str_replace("\$langs[charset]",$langs[charset],$top_head);
@@ -141,7 +141,7 @@ if($textBrowser) {
 }
 
 $bottom_tail = file_operate("../../html/tail.ph","r");
-$bottom_tail = eregi_replace("<\?(.*)\?>","",$bottom_tail);
+$bottom_tail = preg_replace("/<\?(.*)\?>/i","",$bottom_tail);
 $bottom_tail = trim($bottom_tail);
 $bottom_tail = htmlspecialchars($bottom_tail);
 $bottom_tail = nl2br($bottom_tail);

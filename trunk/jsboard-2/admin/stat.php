@@ -1,6 +1,6 @@
 <?
 # This flie applied under GPL License
-if(eregi("user_admin",$_SERVER[HTTP_REFERER])) $path[type] = "user_admin";
+if(preg_match("/user_admin/",$_SERVER[HTTP_REFERER])) $path[type] = "user_admin";
 else $path[type] = "admin";
 include "./include/admin_head.ph";
 

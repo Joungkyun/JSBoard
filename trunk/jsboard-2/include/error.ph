@@ -7,10 +7,10 @@ function print_error($str,$width=250,$height=150,$back='') {
   if(!is_array($agent))
     $agent = @get_agent();
 
-  if(eregi("^(WIN|NT)$",$agent[os])) {
+  if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
     $str = wordwrap($str,40);
-    $str = eregi_replace("\n","\\n",$str);
-    $str = eregi_replace("('|#|\))","\\\\1",$str);
+    $str = preg_replace("/\n/","\\n",$str);
+    $str = preg_replace("/('|#|\))/","\\\\1",$str);
     echo "alert('$str');\n";
   } else {
     $str = str_replace("\n","<BR>",$str);
@@ -34,8 +34,8 @@ function print_error($str,$width=250,$height=150,$back='') {
   echo "//-->\n</SCRIPT>\n".
        "<NOSCRIPT>".urldecode($str)."</NOSCRIPT>\n";
 
-  if(eregi("/user_admin",$_SERVER[PHP_SELF])) $gopage = "../..";
-  elseif(eregi("/admin",$_SERVER[PHP_SELF])) {
+  if(preg_match("/\/user_admin/i",$_SERVER[PHP_SELF])) $gopage = "../..";
+  elseif(preg_match("/\/admin/i",$_SERVER[PHP_SELF])) {
     $gopage = "..";
     $var = "&type=admin&logins=fail";
   } else $gopage = ".";
@@ -54,10 +54,10 @@ function print_notice($str,$width = 330, $height = 210) {
     $agent = @get_agent();
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
-  if(eregi("^(WIN|NT)$",$agent[os])) {
+  if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
     $str = wordwrap($str,40);
-    $str = eregi_replace("\n","\\n",$str);
-    $str = eregi_replace("('|#|\))","\\\\1",$str);
+    $str = preg_replace("/\n/","\\n",$str);
+    $str = preg_replace("/('|#|\))/i","\\\\1",$str);
     echo "alert('$str');\n";
   } else {
     $str = str_replace("\n","<BR>",$str);
@@ -90,10 +90,10 @@ function print_pwerror($str, $width = 250, $height = 130) {
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
-  if(eregi("^(WIN|NT)$",$agent[os])) {
+  if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
     $str = wordwrap($str,40);
-    $str = eregi_replace("\n","\\n",$str);
-    $str = eregi_replace("('|#|\))","\\\\1",$str);
+    $str = preg_replace("/\n/i","\\n",$str);
+    $str = preg_replace("/('|#|\))/i","\\\\1",$str);
     echo "alert('$str');\n";
   } else {
     $str = str_replace("\n","<BR>",$str);

@@ -4,7 +4,7 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<? echo $langs[charset] ?>">
 <TITLE>JSBoard Administration Center [ 
 <?
- if (!eregi("admin",$file_lo)) echo get_title();
+ if (!preg_match("/admin/i",$file_lo)) echo get_title();
  else    echo "$sub_title";
 ?> ]</TITLE>
 <STYLE TYPE="text/css">
@@ -19,7 +19,7 @@ TEXTAREA {font: 10pt <? echo $langs[font] ?>; BACKGROUND-COLOR:<? echo $color[l4
 -->
 </STYLE>
 <?
-if(eregi("auth.php",$_SERVER[PHP_SELF])) {
+if(preg_match("/auth.php/i",$_SERVER[PHP_SELF])) {
   $onload = " onLoad=InputFocus()";
   echo "<SCRIPT language=JavaScript>\n".
        "<!--\n function InputFocus() {\n".

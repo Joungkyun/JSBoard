@@ -1,5 +1,10 @@
 Version: A4
 - 키보드 제어 코드 추가 : <?=pirnt_keymenu()?>
+- edit.template, reply.template, write.template 의
+  if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
+  라인을
+  if ($upload[yesno] && $cupload[yesno] && $noup != 1) {
+  로 수정
 
 Version: A3
 - logout 링크 추가 (<?=$print[lout]?> - list.template, read.template)

@@ -34,7 +34,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     if($atc[html]) $atc[text] = delete_tag($atc[text]);
 
     $atc = article_check($table, $atc);
-    if(eregi("^0|4|6$",$board[mode])) $atc[passwd] = crypt($atc[passwd]);
+    if(preg_match("/^0|4|6$/",$board[mode])) $atc[passwd] = crypt($atc[passwd]);
 
     # 전체 관리자가 허락하였을시에만 upload 기능을 사용할수 있음
     if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
@@ -107,7 +107,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     $atc[text] = preg_replace("/(^[:]+ [^\r\n]+)\r?\n([^:\r\n]+\r?\n)/mi","\\1 \\2",$atc[text]);
 
     $atc = article_check($table, $atc);
-    if(eregi("^(0|4)$",$board[mode]) || !session_is_registered("$jsboard")) $atc[passwd] = crypt($atc[passwd]);
+    if(preg_match("/^(0|4)$/",$board[mode]) || !session_is_registered("$jsboard")) $atc[passwd] = crypt($atc[passwd]);
 
     # 답변시 file upload 설정 부분, 전체 관리자가 허락시에만 가능
     if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
@@ -382,7 +382,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     $atc[title] = trim($atc[title]);
     $atc[text]  = chop($atc[text]);
 
-    if(($o[at] == "write" || $o[at] == "reply") && eregi("^(0|4|6)$",$board[mode]) && !$board[adm] && $board[super] != 1) {
+    if(($o[at] == "write" || $o[at] == "reply") && preg_match("/^(0|4|6)$/",$board[mode]) && !$board[adm] && $board[super] != 1) {
       if(!trim($atc[passwd]) && !trim($passwd)) print_error($langs[act_pwm],250,150,1);
     }
 

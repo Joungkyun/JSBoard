@@ -3,8 +3,8 @@ include "./include/header.ph";
 
 $board[super] = $board[adm] ? 1 : $board[super];
 
-if(eregi("^(1|3)$",$board[mode])) { if($board[super] != 1) print_error($langs[perm_err],250,150,1); }
-if(eregi("^(2|5)$",$board[mode]) && !session_is_registered("$jsboard")) print_error($langs[perm_err],250,150,1);
+if(preg_match("/^(1|3)$/",$board[mode])) { if($board[super] != 1) print_error($langs[perm_err],250,150,1); }
+if(preg_match("/^(2|5)$/",$board[mode]) && !session_is_registered("$jsboard")) print_error($langs[perm_err],250,150,1);
 
 # upload[dir] 에 mata character 포함 여부 체크
 meta_char_check($upload[dir]);
@@ -16,7 +16,7 @@ sql_connect($db[server], $db[user], $db[pass]);
 sql_select_db($db[name]);
 $list = get_article($table, $no);
 
-if(eregi("^(2|3|5|7)$",$board[mode]) && $board[super] != 1)
+if(preg_match("/^(2|3|5|7)$/",$board[mode]) && $board[super] != 1)
   if($list[name] != $_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);
 
 $size = form_size(4);
@@ -58,14 +58,14 @@ if($enable[dhost]) {
   } else $list[dhost] = "<FONT style=\"color:$color[text]\">$list[dhost]</FONT>";
 } else $list[dhost] = "";
 
-if($board[rnname] && eregi("^(2|3|5|7)",$board[mode])) 
+if($board[rnname] && preg_match("/^(2|3|5|7)/",$board[mode])) 
   $list[ename] = $list[rname] ? $list[rname] : $list[name];
 else $list[ename] = $list[name];
 
 if($list[email]) $list[uname] = url_link($list[email], $list[ename], $color[r2_fg], $no);
 else $list[uname] = $list[ename];
 if($list[url]) {
-  if(eregi("^http://", $list[url])) $list[uname] .= " [" . url_link($list[url], "$langs[ln_url]", $color[r2_fg]) . "]";
+  if(preg_match("/^http:\/\//", $list[url])) $list[uname] .= " [" . url_link($list[url], "$langs[ln_url]", $color[r2_fg]) . "]";
   else $list[uname] .= " [" . url_link("http://$list[url]", "$langs[ln_url]", $color[r3_fg]) . "]";
 }
 

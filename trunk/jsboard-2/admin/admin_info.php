@@ -49,7 +49,7 @@ if(!$mode) {
 
   # global 설정 가져오기
   $global_con = file_operate($configfile,"r","Don't open $configfile");
-  $global_con = eregi_replace("<\?|\?>","",$global_con);
+  $global_con = preg_replace("/<\?|\?>/i","",$global_con);
 
   # spam list 가져오기
   if(file_exists($spamlistfile)) $spamlist = file_operate($spamlistfile,"r");

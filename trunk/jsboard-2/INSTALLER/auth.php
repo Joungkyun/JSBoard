@@ -66,7 +66,7 @@ if (!$mode) {
   if ($langs[code] == "ko") $agreefile = "../COPYING.ko";
   else $agreefile = "../COPYING";
 
-  $agree_ment = eregi_replace("(http://jsboard.kldp.org)","<a href=\\1 target=_blank>\\1</a>",$agree_ment);
+  $agree_ment = preg_replace("/(http:\/\/jsboard.kldp.org)/i","<a href=\\1 target=_blank>\\1</a>",$agree_ment);
 
   echo "<form name=auth method=POST action=auth.php>\n" .
        "<table width=500 border=0 cellpadding=5>\n" .

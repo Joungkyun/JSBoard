@@ -1,7 +1,7 @@
 <?
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
-  if (!$html) $text = eregi_replace("&amp;(#|amp)","&\\1",$text);
+  if (!$html) $text = preg_replace("/&amp;(#|amp)/i","&\\1",$text);
   else $text = str_replace("&amp;","&",$text);
   return $text;
 }
@@ -64,7 +64,7 @@ function search2sql($o, $wh = 1, $join = 0) {
     }
     $str = addslashes($str);
 
-    if (eregi("\"",$str)) print_error($langs[nochar],250,150,1);
+    if (preg_match("/\"/",$str)) print_error($langs[nochar],250,150,1);
   } else {
 		# 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
     $chk = preg_replace("/\\\([\]\[()])/i","",$str);
@@ -167,8 +167,8 @@ function search2sql($o, $wh = 1, $join = 0) {
         break;
     }
 
-    $sql = eregi_replace("((title|name|text) (LIKE|REGEXP) \"%?)!p!"," AND \\1",$sql);
-    $sql = eregi_replace("((title|name|text) (LIKE|REGEXP) \"%?)!m!"," OR \\1",$sql);
+    $sql = preg_replace("/((title|name|text) (LIKE|REGEXP) \"%?)!p!/i"," AND \\1",$sql);
+    $sql = preg_replace("/((title|name|text) (LIKE|REGEXP) \"%?)!m!/i"," OR \\1",$sql);
   }
 
   return $sql;
@@ -422,7 +422,7 @@ function url_link($url, $str = "", $no = 0) {
   }
 
   if(check_email($url) && $rmail[uses]) {
-    if(eregi("^s|d$",$o[at]) && ($o[sc] == "n" || $o[sc] == "a")) {
+    if(preg_match("/^s|d$/i",$o[at]) && ($o[sc] == "n" || $o[sc] == "a")) {
       $strs = preg_replace("/<[^>]+>/i","",$str);
     } else $strs = $str;
     $strs = str_replace("'", "\'", $strs);
@@ -470,9 +470,14 @@ function file_upload($fn,$updir) {
     upload_name_chk($ufile[name]);
 
     # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
-    $f[name] = eregi_replace("[.]*$","",$f[name]);
-    $f[name] = eregi_replace(".(ph|inc|php[0-9a-z]*|phtml)$",".phps", $f[name]);
-    $f[name] = eregi_replace("(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $f[name]);
+    $fcname[0] = "/\.*$/";
+    $fvname[0] = "";
+    $fcname[1] = "/\.(ph|inc|php[0-9a-z]*|phtml)$/i"
+    $fvname[1] = ".phps";
+    $fcname[2] = "/(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$/i";
+    $fvname[2] = "\\1_\\2.phps";
+
+    $f[name] = preg_replace($fcname, $fvname, $f[name]);
 
     mkdir("data/$table/$upload[dir]/$updir",0755);
     move_uploaded_file($ufile[tmp_name],"data/$table/$upload[dir]/$updir/".$ufile[name]);
