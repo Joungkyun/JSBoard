@@ -34,7 +34,9 @@ function get_agent() {
   #                  [os] 운영체제
   #                  [ln] 언어 (넷스케이프)
   if(ereg("MSIE", $agent_env)) {
-    $agent[br] = "MSIE";
+    # 5.5 를 경계로 구분
+    if(eregi("5\.5",$agent_env)) $agent[br] = "MSIE5.5";
+    else $agent[br] = "MSIE";
     if(ereg("NT", $agent_env)) {
       $agent[os] = "NT";
     } else if(ereg("Win", $agent_env)) {
@@ -353,23 +355,15 @@ function viewfile($tail) {
         if($board[img] != "yes") $p[width] = $board[width] - 6;
         else $p[width] = $board[width] - $icons[size] * 2 - 6;
         $p[height] = intval($imginfo[1]/$p[vars]);
-        $p[up]  = "[ <b>Orizinal Size</b> $imginfo[0] * $imginfo[1] ]<br>\n";
+        $p[up]  = "[ <b>Original Size</b> $imginfo[0] * $imginfo[1] ]<br>\n";
         $p[up] .= "<a href=javascript:new_windows(\"$uplink_file\",\"photo\",0,0,$imginfo[0],$imginfo[1])><img src=\"$upload_file\" width=$p[width] height=$p[height] border=0></a>\n<p>\n";
       } else {
         $p[up] = "<img src=\"$upload_file\" $imginfo[2]>\n<p>\n";
       }
     } else if (eregi("^(phps|txt|htm|shs)$",$tail)) {
-      $fsize = filesize($upload_file);
-      $fsize_ex = 1000;
-      if ($fsize == $fsize_ex) $check = 1;
-      if ($tail == "txt" || eregi("_html",$list[bofile]) && $fsize > $fsize_ex)
-        $fsize = $fsize_ex;
-
-      $fp = fopen($upload_file, "r");
-      $view = fread($fp,$fsize);
-      fclose($fp);
-      $view = htmlspecialchars($view);
-      if ($fsize == $fsize_ex && !$check) $view = $view . " <p>\n ......$langs[preview]\n\n";
+      $view = file_operate($upload_file,"r",0,1200);
+      $view = htmlspecialchars(cut_string($view,1000));
+      if (filesize($upload_file) > 1000) $view = $view . " <p>\n ......$langs[preview]\n\n";
 
       $p[down] = "$source1$view$source2";
     } elseif (eregi("^(mid|wav|mp3)$",$tail)) {
@@ -392,14 +386,29 @@ function viewfile($tail) {
   return $p;
 }
 
-# file 내용을 변수로 받는 함수
+# 파일을 변수로 받고 쓰는 함수
+# p -> 파일 경로 
+# m -> 파일 작동 모드(r-읽기,w-쓰기,a-파일끝부터 쓰기)
+# msg -> 실패시 에러 메세지
+# s -> 쓰기모드에서는 쓸내용
+# t -> 읽기모드에서 사이즈 만큼 받을 것인지 아니면 배열로 파일
+#      전체를 받을 것인지 결정 
 #
-function get_file($filename) {
-  $fp = fopen($filename,"r");
-  $getfile = fread($fp, filesize($filename));
-  fclose($fp);
+function file_operate($p,$m,$msg='',$s='',$t=0) { 
+  if($m == "r" || $m == "w" || $m == "a") {
+    $m .= "b";
 
-  return $getfile;
+    # file point 를 open
+    if(!$t && $f=@fopen($p,$m)) {
+      if($m != "rb") @fwrite($f,$s);
+      else $var = @fread($f,filesize($p));
+      @fclose($f);
+    }
+    elseif ($t && $m == "rb" && @file_exists($p)) $var = file($p);
+    else { if(trim($msg)) print_error($msg); }
+  }
+
+  if($m == "rb") return $var;
 }
 
 # http socket 으로 연결을 하여 html source 를 가져오는 함수
@@ -413,7 +422,7 @@ function get_html_src($url,$size=5000,$file="",$type="") {
   if(!$type) {
     $p = @fsockopen($url,80,&$errno,&$errstr);
     fputs($p,"GET /$file HTTP/1.1\r\nhost: $url\r\n\r\n");
-  } else $p = @fopen("http://$url/$file","r");
+  } else $p = @fopen("http://$url/$file","rb");
   $f = fread($p,$size);
   fclose($p);
 
@@ -422,4 +431,5 @@ function get_html_src($url,$size=5000,$file="",$type="") {
     return $s;
   } else return $f;
 }
+
 ?>

@@ -520,10 +520,8 @@ $chg_conf = "<?
 ?>";
 
 # 변경된 설정 값을 config.ph 에 쓴다.
-$fp = fopen("../../data/$table/config.ph","w"); 
-fwrite($fp,"$chg_conf"); 
-fclose($fp);
-
+$wfile = "../../data/$table/config.ph";
+file_operate("$wfile","w","Can't update $wfile",$chg_conf);
 
 # quot 변환된 문자를 un quot 한다
 $head = $ua[header];
@@ -531,14 +529,11 @@ $tail = $ua[tail];
 $head = stripslashes("$head");
 $tail = stripslashes("$tail");
 
-$hh = fopen("../../data/$table/html_head.ph","w"); 
-fwrite($hh,"$head"); 
-fclose($hh);
+$wfile = "../../data/$table/html_head.ph";
+file_operate("$wfile","w","Can't update $wfile",$head);
 
-$ht = fopen("../../data/$table/html_tail.ph","w"); 
-fwrite($ht,"$tail"); 
-fclose($ht);
-
+$wfile = "../../data/$table/html_tail.ph";
+file_operate("$wfile","w","Can't update $wfile",$tail);
 
 # theme를 변경한다.
 chdir("../../data/$table/");

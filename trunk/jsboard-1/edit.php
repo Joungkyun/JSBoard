@@ -127,9 +127,12 @@ if (value == 1) document.editp.epost.cols += 5;
 if (value == 2) document.editp.epost.rows += 5;
 }
 // -->
-</SCRIPT>
-  <INPUT TYPE=BUTTON VALUE=\"▷\" onClick=\"fresize(1);\"><INPUT TYPE=BUTTON VALUE=\"▣\" onClick=\"fresize(0);\"><INPUT TYPE=BUTTON VALUE=\"▽\" onClick=\"fresize(2);\">
-  </TD>";
+</SCRIPT>\n";
+
+  # 언어 코드에 따라 버튼을 text 로 처리 할것인지 이미지로 처리할 것인지를 결정
+  form_size_button($langs[code]);
+  
+  echo "  </TD>";
 }
 
 echo "

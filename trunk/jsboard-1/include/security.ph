@@ -32,9 +32,8 @@ function get_security_info() {
                          "\$security[serial] = $security[serial];\n".
                          "\$security[prints] = $chk_print;\n?>";
 
-    $f = @fopen("./config/security_data.ph","w");
-    @fwrite($f,$security[content]);
-    @fclose($f);
+    $err_msg = "Don't update security infomation";
+    file_operate("./config/security_data.ph","w",$err_msg,$security[content]);
 
   } else { if($security[prints]) $ment = "warning"; }
 

@@ -130,7 +130,7 @@ $board[hls] = eregi_replace("<FONT COLOR=","",$board[hl]);
 $board[hls] = eregi_replace("><B><U>STR</U></B></FONT>","",$board[hls]);
 
 # html header의 정보를 가져 온다
-$top_head = get_file("../../html/head.ph");
+$top_head = file_operate("../../html/head.ph","r");
 
 $top_head = htmlspecialchars($top_head);
 $top_head = str_replace("&lt;? echo ","",$top_head);
@@ -153,11 +153,11 @@ $top_head = str_replace("  ","&nbsp;&nbsp;",$top_head);
 $top_head = nl2br($top_head);
 $top_head = trim($top_head);
 
-$html_head = get_file("../../data/$table/html_head.ph");
+$html_head = file_operate("../../data/$table/html_head.ph","r");
 
 # html tail의 정보를 가져온다
-$html_tail = get_file("../../data/$table/html_tail.ph");
-$bottom_tail = get_file("../../html/tail.ph");
+$html_tail = file_operate("../../data/$table/html_tail.ph","r");
+$bottom_tail = file_operate("../../html/tail.ph","r");
 $bottom_tail = eregi_replace("<\?(.*)\?>","",$bottom_tail);
 $bottom_tail = trim($bottom_tail);
 $bottom_tail = htmlspecialchars($bottom_tail);

@@ -50,9 +50,7 @@ if (!$mode) {
     echo "<iframe src=\"$agreefile\" width=600 height=200 frameborder=1>\n" .
          "</iframe>\n";
   } else {
-    $fp = fopen($agreefile,"r");
-    $agree_ment = fread($fp, filesize($agreefile));
-    fclose($fp);
+    $agree_ment = file_operate($agreefile,"r");
 
     if ($langs[code] == "en") $colsize = form_size(40);
     else $colsize = form_size(35);
@@ -154,7 +152,7 @@ if (!$mode) {
        "<table>\n<tr>\n<td>OS Type</td>\n<td>:</td>\n<td>$os_type</td>\n</tr>\n\n";
 
   if (!eregi("linux",$OSTYPE))
-    echo "<tr>\n<td colspan=3>\n<font color=red>$lnags[os_check]</font>\n</td>\n</tr>\n\n";
+    echo "<tr>\n<td colspan=3>\n<font color=red>$langs[os_check]</font>\n</td>\n</tr>\n\n";
 
   echo "<tr>\n<td>MySQL check</td>\n<td>:</td>\n<td>$m</td>\n</tr>\n\n";
 

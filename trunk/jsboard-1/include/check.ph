@@ -97,14 +97,8 @@ function check_passwd($table, $no, $passwd) {
 
 # 스팸 검사 함수
 function check_spam($str, $spam_list = "config/spam_list.txt") {
-  # $spam_list에 지정된 파일을 읽기 전용(r)으로 읽음
-  $fp = fopen($spam_list, "r");
-  # $spam_list에 지정된 파일의 크기만큼 내용을 읽어 $fr에 저장
-  $fr = fread($fp, filesize($spam_list));
-  fclose($fp);
-
-  # $fr의 값을 \n 문자로 구분하여 $list 배열에 저장
-  $list = explode("\n", $fr);
+  $open_fail = "Don't open spam list file";
+  $list = file_operate($spam_list,"r",$open_fail,0,1);
 
   # $list 배열의 갯수 만큼 for문을 돌려 $spam_list 파일에 지정되어 있던
   # 문자열들과 일치하는 문자열이 $spam_str에 있는지 검사함, 있을 경우
@@ -115,7 +109,6 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
       return 1;
     }
   }
-
   return 0;
 }
 
@@ -216,7 +209,7 @@ function icon_check($t,$fn) {
 
 function check_dnlink($table,$list) {
   global $upload;
-  if (eregi("(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs)$",$list[bofile])) {
+  if (eregi("(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs|\.ppt|\.xls)$",$list[bofile])) {
     $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
   } else {
     if ($list[bfsize] < 51200) $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
@@ -247,8 +240,8 @@ function check_location($n=0) {
   global $rmail, $langs;
 
   if($n) {
-    $r = gethostbyname(eregi_replace("http://([^/]+)/.*","\\1",getenv("HTTP_REFERER")));
-    $l = gethostbyname(eregi_replace("http://([^/]+)/.*","\\1",$rmail[bbshome]));
+    $r = gethostbyname(eregi_replace("http[s]?://([^/]+)/.*","\\1",getenv("HTTP_REFERER")));
+    $l = gethostbyname(eregi_replace("http[s]?://([^/]+)/.*","\\1",$rmail[bbshome]));
 
     if ($r != $l) {
       print_error("$langs[chk_lo]");

@@ -111,17 +111,9 @@ if( $mode != "manager_config") {
     $spam = stripslashes($glob[spam]);
     $br   = stripslashes($glob[brlist]);
 
-    $fp = fopen("../config/global.ph","w"); 
-    fwrite($fp,$vars); 
-    fclose($fp);
-
-    $gp = fopen("../config/spam_list.txt", "w"); 
-    fwrite($gp,$spam); 
-    fclose($gp);
-
-    $bp = fopen("../config/allow_browser.txt", "w"); 
-    fwrite($bp,$br); 
-    fclose($bp);
+    file_operate("../config/global.ph","w",0,$vars);
+    file_operate("../config/spam_list.txt","w",0,$vars);
+    file_operate("../config/allow_browser.txt","w",0,$vars);
 
     # 현재 디렉토리를 변경
     chdir("../config");
@@ -148,15 +140,10 @@ if( $mode != "manager_config") {
       $ad_pass = str_replace("\$","\\\$",$ad_pass);
 
       $configfile = "./include/config.ph";
-      $fp = fopen($configfile,"r");
-      $admininfo = fread($fp,filesize($configfile));
-      fclose($fp);
-
+      $admininfo = file_operate($configfile,"r","Don't open $configfile");
       $admininfo = eregi_replace("sadmin\[passwd\] = (\"[a-z0-9\.\/\$]*\")","sadmin[passwd] = \"$ad_pass\"",$admininfo);
 
-      $fp = fopen($configfile,"w"); 
-      fwrite($fp, $admininfo); 
-      fclose($fp);
+      file_operate($configfile,"w","Can't update $configfile",$admininfo);
 
       complete_adminpass();
     } else admin_pass_error();
