@@ -399,7 +399,7 @@ function article_reply_list($table,$pages,$print=0) {
 
   $CPADDING = $lines[design] ? 0 : 1;
   
-  $t = "<TABLE WIDTH=100% BORDER=1 CELLSPACING=1 CELLPADDING=$CPADDING>\n".
+  $t = "<TABLE WIDTH=100% BORDER=0 CELLSPACING=1 CELLPADDING=$CPADDING>\n".
        "<TR>\n".
        "  <TD WIDTH=$td_width[1] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=4 ALT=''></TD>\n".
        "  <TD WIDTH=$td_width[2] ALIGN=center BACKGROUND=./images/dotline.gif><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
