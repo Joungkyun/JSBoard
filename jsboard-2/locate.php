@@ -1,9 +1,10 @@
 <?php
 include "include/header.ph";
 
+$go = $o['go'];
 $url = search2url($o);
 
-switch($o['go']) {
+switch($go) {
   case "p":
     Header("Location: list.php?table=$table&page={$o['no']}$url");
     break;
