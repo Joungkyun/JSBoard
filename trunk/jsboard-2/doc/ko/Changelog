@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.5
 
+2002.12.28
+  by 김정균 <http://www.oops.org>
+	- 4.3.0 의 setlocale bug 수정
+
 2002.12.25
   by 김정균 <http://www.oops.org>
 	- 이모티콘 기능에 의해 http 프로토콜 표시가 깨지는 것 수정

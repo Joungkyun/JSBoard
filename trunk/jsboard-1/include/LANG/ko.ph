@@ -1,5 +1,5 @@
 <?
-setlocale("LC_ALL","ko");
+setlocale(LC_ALL,"ko");
 # Language Charactor Set
 $langs[charset] = "EUC-KR";
 $langs[font] = "±¼¸²Ã¼";
