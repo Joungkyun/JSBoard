@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.5
 
+2003.01.13
+  by 김정균 <http://www.oops.org>
+	- emoticon 에서 0.0 의 버그 패치
+
 2002.12.28
   by 김정균 <http://www.oops.org>
 	- 4.3.0 의 setlocale bug 수정
