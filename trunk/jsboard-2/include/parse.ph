@@ -285,7 +285,7 @@ function text_nl2br($text, $html) {
   global $langs;
   if($html) {
     $source = array("/<(\?|%)/i","/(\?|%)>/i","/<img .*src=[a-z0-9\"']*script:[^>]+>/i","/\r\n/",
-                    "/<(\/*(script|style|pre|xmp|base|span|html)[^>]*)>/i","/(=[0-9]+%)&gt;/i");
+                    "/<(\/*(script|style|pre|xmp|xml|base|span|html)[^>]*)>/i","/(=[0-9]+%)&gt;/i");
     $target = array("&lt;\\1","\\1&gt;","","\n","&lt;\\1&gt;","\\1>");
     $text = preg_replace($source,$target,$text);
     if(!preg_match("/<--no-autolink>/i",$text)) $text = auto_link($text);
@@ -309,7 +309,7 @@ function delete_tag($text) {
   $src = array("/\n/i","/<html.*<body[^>]*>/i","/<\/body.*<\/html>.*/i",
                "/<\/*(div|span|layer|body|html|head|meta|input|select|option|form)[^>]*>/i",
                "/<(style|script|title).*<\/(style|script|title)>/i",
-               "/<\/*(script|style|title|xmp)>/i","/<(\\?|%)/i","/(\\?|%)>/i","/(=[0-9]+%)&gt;/i",
+               "/<\/*(script|style|title|xmp|xml)>/i","/<(\\?|%)/i","/(\\?|%)>/i","/(=[0-9]+%)&gt;/i",
                "/#\^--ENTER--\^#/i");
   $tar = array("#^--ENTER--^#","","","","","","&lt;\\1","\\1&gt;","\\1>","\n");
 
