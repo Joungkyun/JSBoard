@@ -1,0 +1,184 @@
+-----------------------------------------------------------------------------
+작성자 : 이진우(지누스) jinoos@hanmail.net
+작성일 : 1999년11월30일
+버전 : jsboard-0.4 (적수게시판 버전 0.4)
+
+1999년11월30일
+
+실력은 미진하지만 저도 일조하고픈 마음에서 신경을 써서 작업을 했습니다.
+아래는 업데이트 로그 입니다. 방창현님 께서 수정하신 manual.php3부분은 
+너무도 고난이도 기술( -_-;) 이어서 제가 따라가기가 힘들었습니다. 
+그래서 제가 페키지 한것은 방창현님의 manual.php3부분을 제하고 하였읍니다.
+파일은 같이 들어 있지만 실제 사용되지 않도록 설정을 했거든요. 어떻게 사용
+하는지도 잘 모르고요.. -_-;;; 
+기존에 문태준님이 작성하신 파일 삭제 코드가 제대로 동작하지 않아 약간 수정
+하였습니다.  제가 급하게 하느라고(아침에 셤보는데 이거 수정하고 있네요.. 현재
+새벽 5시) 제대로 되었는지 모르겠습니다. 너무나 실력있는 분들이(적수님, 태준님,
+창현님) 작업해두신거라.. 아무쪼록 잘못된거 있으면 바로 멜좀 부탁 드려요,, 
+
+* 등록된 파일종류별 썸네일 기능 추가
+* 업로드 세팅중 파일 미등록시 "홀" 현상 제거  "X" 볼드체로 변경
+* list.ph 의 함수중에 있는 링크안되어 사용된 include문제 해결(global 선언)
+* read.php3 파일중 정규표현식 에러 교정(실제 에러가 아님, 정규표현 라이브러리상에 차이)
+* 관리자 조회수 증가 방지 IP변수 등록 / 설정 가능. 관리차원에 편리성을 위해서 db.php3에 위치
+* 업로드된 파일 삭제루틴을 filesystem function으로 교채하였습니다. 
+* 작성글 수정과 삭제시 file 참고 부분 첨가
+
+아래 주소로 가시면 수정된 게시판 을 보실수 있습니다. 
+
+  http://delta.seonam.ac.kr/~jinoos/tmp/jsboard04/
+
+-----------------------------------------------------------------------------
+
+작성자: 방창현 (겨울아이) winchild@kldp.org
+작성일: 1999년11월26일 
+버전: jsboard-0.3 (적수게시판 버전 0.3)
+
+적수님의 게시판이 많은 사람들에세 사용되고 있는것 같습니다. 최초의 적수님의
+프로그램을 가져사 나름대로 수정하여 자기만 사용하시는 분들이 계셨던것 같은데
+문태준님께서 상당히 개선을 해서 처음으로 올리신것 같습니다. 이것을 시작으로
+오픈소스로서 리눅스의 개발체계를 따라가도록 하는것이 좋을것 같아서 문태준님의
+버전에 잘못된점을 수정하여 다시 올립니다. 버전은 적수님이 최초로 배포한 버전
+을 0.1 로 하여 문태준님의 버전을 0.2, 제가 수정하여 올리는 버전을 0.3 으로 
+할까 하며 프로그램의 명청도 적수-게시판으로 하여 jsboard 로 하는것이 좋을듯
+합니다. 적수님의 동의를 구합니다.
+
+동의 하신다면 jsboard-03.tar.gz 으로 배포를 시작합니다. (물론 동의 하시겠지요)
+본 프로그램의 라이선 스는 GNU 카피레프트를 따름니다.
+
+끝으로 본 프로그램을 시작으로 한국에서도 오픈기반의 창작 프로그램이 많이 생겨
+나기를 바랍니다.
+
+문태준 님께서 작업하신 파일을 올릴수 있도록 만든 적수님의 게시판에 몇가지 문제
+가 있는 부분을 수정하여 올립니다. 화면은 이쁘게 만드셨군요. 그리고 desc에 헤더
+의 내용을 포함시킨 부분이 커스터마이즈에 훨씬 유리하기도 하구요.
+
+몇가지 문제점은....
+
+1. test.sql 의 내용과 include 및의 테이블 내용과 다릅니다.
+   따라서 include 디렉토리 밑에 study 내용을 복사하였습니다.
+
+2. desc.ph 에서 header.phtml 및 menu.phtml 파일을 읽어들이는데 include 에
+   phtml 로 확장자가 붙은 파일은 없습니다. 따라서 header.ph 및 menu.ph로 
+   변경시켜 주었습니다.
+
+3. desc.ph 에서 header.ph를 읽어들이는데 이미 list.php3 에서 읽어들였기 때문
+   에 redeclation 에러가 발생합니다. desc.ph 에서 header.ph (header.phtml) 은
+   삭제하였습니다.
+
+4. desc.ph 에서 $DOCUMENT_ROOT 를 이용하여 include 를 하는데 htdocs 파일에
+   바로 설치하지 않으면 해당 파일을 찾을수 없다는 메세지가 나옵니다. 이것은
+   $DOCUMENT_ROOT 는 떼어내고 프로그램의 시작시에 list.php3?table=<table>
+   로 하지말고 이전의 적수님 게시판에서 이용한 <메뉴명>.php3 파일을 이용하여
+   구동하도록 하여야 합니다.
+
+   즉 
+
+     <?
+     Header("Cache-Control: no-cache, must-revalidate");           // HTTP/1.1
+     Header("Location: list.php3?table=hn_faq");
+     ?>
+
+   의 내용을 가지는 test.sql 에 정의된 manual.php3 파일을 만들어서 이것을
+   불러주면 directory 패스가 현재로 변경되어 $DOCUMENT_ROOT 에 의한 문제를
+   해결 할수 있습니다.
+
+5. 파일등록을 하도록 만들어진 부분에서 act.php3 에서 등록하는 파일명과 파일사이즈
+   를 초기화 시켜주지 않아서 DB에 등록시에 에러가 발생할 수 있습니다. (만약에 운
+   좋게 0 나 NULL로 세팅되면 에러가 발생하지 않음.) 이부분을 초기화 시켰습니다.
+
+
+-----------------------------------------------------------------------------
+
+작성자 : 문태준
+작성일 : 1999.11.17
+버전: jsboard-0.2 (적수게시판 버전 0.2)
+
+먼저 install.eng인가를 먼저 읽고 설치한다.
+게시판 자체에 대한 질문은 linux.sarang.net에서 한다.
+원래 게시판은 regex(정규표현식)에서 문제가 있더군요.
+저는 수정했는데 왜 잘 되는지는 잘 모름. 그냥 무대포...
+아래는 제가 수정한 파일들입니다. 약간씩 수정했습니다.
+
+
+수정내용
+- 파일 업로드 추가
+-board/include/table이름/config.ph에서 업로드 화면이 나오거나 나오지 않도록 조정가능
+** .ph 설정파일을 php에서 해석하도록 하는게 보안적인 면에서 좋음. 설정파일을
+남이 보면 좀 그렇죠?
+** 이유는 귀찮아서 안 찾아보았는데 regex 정규표현식에서 에러가 나서 
+이부분은 고쳤음. 
+
+
+board/ 
+-->> 
+act.php3 : 파일 업로드 및 목록에서 보여주기 추가
+delete.php3 : 파일 삭제 기능 추가
+list.php3 : 파일 목록 나오게
+read.php3 : 파일 이름과 크기 나오게
+reply.php3 : 파일 업로드 폼 추가
+write.php3 : 파일 업로드 폼 추가
+
+total 40
+drwxrwxr-x   4 www      www          1024 Nov 17 20:43 ./
+drwxrwxr-x   3 www      www          1024 Nov 17 09:56 ../
+-rwxrwxr-x   1 www      www          2651 Nov 17 09:56 INSTALL.ENG*
+-rw-rw-r--   1 www      www           196 Nov 17 20:43 README
+-rwxrwxr-x   1 www      www          4331 Nov 17 20:39 act.php3*
+-rwxrwxr-x   1 www      www          4035 Nov 17 20:40 delete.php3*
+-rwxrwxr-x   1 www      www          3504 Nov 17 09:56 edit.php3*
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 images/
+drwxrwxr-x  12 www      www          1024 Nov 17 20:36 include/
+-rwxrwxr-x   1 www      www            46 Nov 17 09:56 index.php3*
+-rwxrwxr-x   1 www      www          2574 Nov 17 18:02 list.php3*
+-rwxrwxr-x   1 www      www          6130 Nov 17 20:41 read.php3*
+-rwxrwxr-x   1 www      www          3890 Nov 17 20:41 reply.php3*
+-rwxrwxr-x   1 www      www           752 Nov 17 18:09 test.sql*
+-rwxrwxr-x   1 www      www          3349 Nov 17 11:07 write.php3*
+
+board/include
+여기선 수정할것 없음것임.
+
+total 34
+drwxrwxr-x  12 www      www          1024 Nov 17 20:48 ./
+drwxrwxr-x   4 www      www          1024 Nov 17 20:48 ../
+-rwxrwxr-x   1 www      www           187 Nov 17 09:56 db.ph*
+-rwxrwxr-x   1 www      www           523 Nov 17 09:56 error.ph*
+drwxrwxr-x   2 www      www          1024 Nov 17 12:05 free/
+-rwxrwxr-x   1 www      www           200 Nov 17 09:56 header.ph*
+-rwxrwxr-x   1 www      www           300 Nov 17 09:56 html.ph*
+drwxrwxr-x   2 www      www          1024 Nov 17 10:07 life/
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 linuxinfo/
+-rwxrwxr-x   1 www      www          7492 Nov 17 20:34 list.ph*
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 manual/
+-rwxrwxr-x   1 www      www          6144 Nov 17 09:56 misc.ph*
+drwxrwxr-x   2 www      www          1024 Nov 17 10:06 mysql/
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 plaza/
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 qa/
+-rwxrwxr-x   1 www      www           825 Nov 17 09:56 search.ph*
+-rwxrwxr-x   1 www      www           245 Nov 17 09:56 spam*
+-rwxrwxr-x   1 www      www           338 Nov 17 09:56 spam.ph*
+-rwxrwxr-x   1 www      www           830 Nov 17 09:56 sql.ph*
+drwxrwxr-x   2 www      www          1024 Nov 17 09:56 study/
+drwxrwxr-x   3 www      www          1024 Nov 17 20:27 test/
+drwxrwxr-x   3 www      www          1024 Nov 17 18:49 test1/
+
+
+board/include/test(table 명)
+config.ph : 여기에 파일 업로드 할것인지 말것인지 추가
+
+
+
+-rwxrwxr-x   1 www      www          1339 Nov 17 20:27 config.ph*
+-rwxrwxr-x   1 www      www           631 Nov 17 10:07 desc.ph*
+drwxrwxrwx   2 www      www          1024 Nov 17 20:21 files/
+
+
+-----------------------------------------------------------------------------
+
+최초작성자 : 적수
+작성일: 모름
+
+버전: jsboard-0.1 (적수게시판 버전 0.1)
+
+-----------------------------------------------------------------------------
