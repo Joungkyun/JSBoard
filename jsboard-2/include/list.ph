@@ -160,8 +160,12 @@ function get_list($table,$pages,$reply=0,$print=0)
   $limits = $readchk ? "" : " Limit {$pages['no']}, {$board['perno']}";
 
   $sql = $reply['ck'] ? search2sql($reply,1) : search2sql($o);
+
+  $com_field = $enable['comment'] ? "comm, " : "";
   $columns = 'no, num, idx, date, name, rname, email, url, title, text, '.
-             'refer, reyn, reno, rede, reto, html, comm, bofile, bcfile, bfsize';
+             'refer, reyn, reno, rede, reto, html, '.
+             $com_field .
+             'bofile, bcfile, bfsize';
   $query = "SELECT {$columns} FROM {$table} {$sql} ORDER BY idx DESC{$limits}";
 
   $result = sql_query($query);
