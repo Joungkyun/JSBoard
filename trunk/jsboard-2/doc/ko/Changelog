@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
+2002.4.13 by 김정균 <http://www.oops.org>
+        - 제목이 길 경우 테이블 크기에 맞춰 다음줄로 넘기게 수정
+
 2002.4.12 by 임은재 <http://kldp.org/~eunjea/>
 	- sendmail.ph 에서 Message-Id 문제 수정
 

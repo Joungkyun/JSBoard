@@ -31,6 +31,11 @@ $list[num]  = print_reply($table, $list);
 $list[date] = date("Y-m-d H:i:s", $list[date]);
 $list[text] = $list[html] ? $list[text] : wordwrap($list[text],$board[wwrap]);
 $list[text] = text_nl2br($list[text], $list[html]);
+
+# 제목 길이를 테이블 크기에 맞춰 다음줄로 넘김
+$title_width = $board[width] / 8;
+settype($title_width,"integer");
+$list[title] = wordwrap($list[title],$title_width,"<br>\n",1);
 $list[title] = eregi_replace("&amp;(amp|lt|gt)","&\\1",$list[title]);
 
 # title 에서 폰트 색상 지정할수 있게 함

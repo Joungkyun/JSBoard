@@ -67,6 +67,7 @@ if(!$np) {
 <!-#######################################################################-->
 <!-  $list[title]  : 게시판 글 제목                                       -->
 <!-#######################################################################-->
+<? $list[title] = preg_replace("/<BR>\n/i","\\0<IMG SRC=$board[path]images/blank.gif width=40 height=1>",$list[title]); ?>
 <TR BGCOLOR=#FFAE00>
 <TD COLSPAN=2>
 <IMG SRC=./theme/KO-default/img/board_no.gif ALIGN=absmiddle ALT='TITLE: '>

@@ -56,10 +56,11 @@ if(!$np) {
 <!-#######################################################################-->
 <!-  $list[title]  : subject of article                                   -->
 <!-#######################################################################-->
+<? $list[title] = preg_replace("/<br>\n/i","\\0<IMG SRC=$board[path]images/blank.gif width=40 height=1>",$list[title]); ?>
 <TR BGCOLOR=#FFAE00>
 <TD COLSPAN=2>
 <IMG SRC=./theme/EN-default/img/board_no.gif ALIGN=absmiddle ALT='TITLE: '>
-<FONT STYLE="color:#FFFFFF"><?=$list[title]?></FONT>
+<FONT STYLE="color:#FFFFFF; font-weight:bold"><?=$list[title]?></FONT>
 </TD>
 </TR>
 
