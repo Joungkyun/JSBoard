@@ -15,15 +15,15 @@ class maildaemon {
   var $failed = 0;
 
   function maildaemon($v) {
-    $this->debug = $v[debug];
-    $this->ofhtml = $v[ofhtml];
-    if($_SERVER[SERVER_NAME]) $this->helo = $_SERVER[SERVER_NAME];
+    $this->debug = $v['debug'];
+    $this->ofhtml = $v['ofhtml'];
+    if($_SERVER['SERVER_NAME']) $this->helo = $_SERVER['SERVER_NAME'];
     if(!$this->helo || preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/i",$this->helo))
       $this->helo = "JSBoardMessage";
 
-    $this->from = $v[from];
-    $this->to   = $v[to];
-    $this->body = $v[text]."\r\n.";
+    $this->from = $v['from'];
+    $this->to   = $v['to'];
+    $this->body = $v['text']."\r\n.";
     $this->newline = $this->ofhtml ? "<br>\n" : "\n";
 
     $this->mx = $this->getMX($this->to);
@@ -128,10 +128,10 @@ class maildaemon {
 
 function mailcheck($to,$from,$title,$body) {
   global $langs;
-  if(!trim($to)) print_error($langs[mail_to_chk_err],250,150,1);
-  if(!trim($from)) print_error($langs[mail_from_chk_err],250,150,1);
-  if(!trim($title)) print_error($langs[mail_title_chk_err],250,150,1);
-  if(!trim($body)) print_error($langs[mail_body_chk_drr],250,150,1);
+  if(!trim($to)) print_error($langs['mail_to_chk_err'],250,150,1);
+  if(!trim($from)) print_error($langs['mail_from_chk_err'],250,150,1);
+  if(!trim($title)) print_error($langs['mail_title_chk_err'],250,150,1);
+  if(!trim($body)) print_error($langs['mail_body_chk_drr'],250,150,1);
 }
 
 function get_boundary_msg() {
@@ -174,19 +174,19 @@ function get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm) {
   global $langs,$color;
 
   if($nofm) $nofm = auto_link($nofm);
-  if($rmail[url]) $homeurl = "HomeURL           : ".auto_link($rmail[url])."\r\n";
-  if($rmail[email]) {
-    $rmail[pemail] = (preg_match("/^nobody@/i",$rmail[email])) ? "" : $rmail[email];
-    if($rmail[pemail]) {
-      $rmail[pemail] = preg_replace("/$rmail[pemail]/i","mailto:<A HREF=mailto:\\0>\\0</A>",$rmail[pemail]);
-      $mailurl = "Email             : $rmail[pemail]\r\n";
+  if($rmail['url']) $homeurl = "HomeURL           : ".auto_link($rmail['url'])."\r\n";
+  if($rmail['email']) {
+    $rmail['pemail'] = (preg_match("/^nobody@/i",$rmail['email'])) ? "" : $rmail['email'];
+    if($rmail['pemail']) {
+      $rmail['pemail'] = preg_replace("/{$rmail['pemail']}/i","mailto:<A HREF=mailto:\\0>\\0</A>",$rmail['pemail']);
+      $mailurl = "Email             : {$rmail['pemail']}\r\n";
     }
   }
   $addressinfo = $mailurl.$homeurl;
-  $rmail[text] = !$rmail[html] ? html_to_plain_lib($rmail[text]) : $rmail[text];
-  $servername = strtoupper($_SERVER[SERVER_NAME]);
+  $rmail['text'] = !$rmail['html'] ? html_to_plain_lib($rmail['text']) : $rmail['text'];
+  $servername = strtoupper($_SERVER['SERVER_NAME']);
 
-  $themepath = "theme/$rmail[theme]/mail.template";
+  $themepath = "theme/{$rmail['theme']}/mail.template";
   $htmltext = addslashes(file_operate("$themepath","r","can't open $themepath",sizeof($themepath)));
   eval("\$htmltext = \"$htmltext\";");
   $htmltext = stripslashes($htmltext);
@@ -218,7 +218,7 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
   # 빈 문자열 체크
   mailcheck($to,$from,$title,$pbody);
 
-  $title = "=?$langs[charset]?B?".trim(base64_encode($title))."?=";
+  $title = "=?{$langs['charset']}?B?".trim(base64_encode($title))."?=";
   $title = preg_replace("/[\s]+/i"," ",str_replace("\r\n","\n",$title));
   
   # mail header 를 작성 
@@ -227,26 +227,26 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
   # body 를 구성
   $body = "This is a multi-part message in MIME format.\r\n".
           "\r\n--$boundary\r\n".
-          "Content-Type: text/plain; charset=$langs[charset]\r\n".
+          "Content-Type: text/plain; charset={$langs['charset']}\r\n".
           "Content-Transfer-Encoding: base64\r\n\r\n".
           body_encode_lib($pbody).
           "\r\n\r\n--$boundary\r\n".
-          "Content-Type: text/html; charset=$langs[charset]\r\n".
+          "Content-Type: text/html; charset={$langs['charset']}\r\n".
           "Content-Transfer-Encoding: base64\r\n\r\n".
           body_encode_lib($hbody).
           "\r\n--$boundary--\r\n";
 
-  $mails[debug] = 0;
-  $mails[ofhtml] = 0;
-  $mails[to] = $to;
-  $mails[from] = $from;
-  $mails[text] = $mail_header.$body;
+  $mails['debug'] = 0;
+  $mails['ofhtml'] = 0;
+  $mails['to'] = $to;
+  $mails['from'] = $from;
+  $mails['text'] = $mail_header.$body;
 
   if($mta) {
     ini_set("SMTP","$smtp");
     $body = str_replace("\r\n","\n",$body);
     $mail_header = str_replace("\r\n","\n",$mail_header);
-    mail($mails[to],$title,$body,$mail_header,"-f$mails[from]");
+    mail($mails['to'],$title,$body,$mail_header,"-f{$mails['from']}");
   } else {
     new maildaemon($mails);
   }
@@ -255,11 +255,11 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
 function sendmail($rmail) {
   global $langs;
 
-  if($rmail[smtp]) $rmail[mta] = $rmail[smtp];
-  $rmail[mta] = $rmail[mta] ? $rmail[mta] : 0;
-  $mail_msg_head = "$langs[sm_dr]";
+  if($rmail['smtp']) $rmail['mta'] = $rmail['smtp'];
+  $rmail['mta'] = $rmail['mta'] ? $rmail['mta'] : 0;
+  $mail_msg_head = $langs['sm_dr'];
 
-  if ($langs[code] == "ko") $time = date("Y/m/d (D) a h시i분");
+  if ($langs['code'] == "ko") $time = date("Y/m/d (D) a h시i분");
   else $time = date("Y/m/d (D) a h:i");
 
   $time=explode(" ",$time);
@@ -270,16 +270,16 @@ function sendmail($rmail) {
   $hms=$time[3];
 
   # 메일에서의 double quote와 single quote 처리
-  $rmail[text] = stripslashes($rmail[text]);
-  $rmail[name] = stripslashes($rmail[name]);
-  $rmail[title] = stripslashes($rmail[title]);
-  $rmail[email] = !trim($rmail[email]) ? "nobody@$_SERVER[SERVER_NAME]" : $rmail[email];
-  if(preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/i",$_SERVER[SERVER_NAME]))
-    $rmail[email] = "nobody@[".$_SERVER[SERVER_NAME]."]";
+  $rmail['text'] = stripslashes($rmail['text']);
+  $rmail['name'] = stripslashes($rmail['name']);
+  $rmail['title'] = stripslashes($rmail['title']);
+  $rmail['email'] = !trim($rmail['email']) ? "nobody@{$_SERVER['SERVER_NAME']}" : $rmail['email'];
+  if(preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/i",$_SERVER['SERVER_NAME']))
+    $rmail['email'] = "nobody@[".$_SERVER['SERVER_NAME']."]";
 
-  $rmail[pemail] = (preg_match("/^nobody@/i",$rmail[email])) ? "" : "mailto:$rmail[email]";
+  $rmail['pemail'] = (preg_match("/^nobody@/i",$rmail['email'])) ? "" : "mailto:{$rmail['email']}";
 
-  if ($langs[code] == "ko") {
+  if ($langs['code'] == "ko") {
     if ($day == "(Mon)") $day="(월)";
     else if ($day == "(Tue)") $day="(화)";
     else if ($day == "(Wed)") $day="(수)";
@@ -287,7 +287,7 @@ function sendmail($rmail) {
     else if ($day == "(Fri)") $day="(금)";
     else if ($day == "(Sat)") $day="(토)";
     else if ($day == "(Sun)") $day="(일)";
-  } else if ($langs[code] == "jp") {
+  } else if ($langs['code'] == "jp") {
     if ($day == "(Mon)") $day="(月)";
     else if ($day == "(Tue)") $day="(火)";
     else if ($day == "(Wed)") $day="(水)";
@@ -297,54 +297,54 @@ function sendmail($rmail) {
     else if ($day == "(Sun)") $day="(日)";
   }
 
-  $webboard_address =  sprintf("%s%s",$rmail[path],"read.php?table=$rmail[table]&no=$rmail[no]");
-  $reply_article    =  sprintf("%s%s",$rmail[path],"reply.php?table=$rmail[table]&no=$rmail[no]");
+  $webboard_address =  sprintf("%s%s",$rmail['path'],"read.php?table={$rmail['table']}&no={$rmail['no']}");
+  $reply_article    =  sprintf("%s%s",$rmail['path'],"reply.php?table={$rmail['table']}&no={$rmail['no']}");
 
-  $dbname  = "DB Name           : $rmail[table]";
+  $dbname  = "DB Name           : {$rmail['table']}";
   $dbloca  = "DB Location       : $webboard_address";
   #$repart  = "Reply Article     : $reply_article";
   $nofm    = "\r\n$dbname\r\n$dbloca\r\n$repart";
-  $mailurl = "Email             : $rmail[pemail]\r\n";
-  $homeurl = "HomeURL           : $rmail[url]\r\n";
+  $mailurl = "Email             : {$rmail['pemail']}\r\n";
+  $homeurl = "HomeURL           : {$rmail['url']}\r\n";
 
   $message = "\r\n".
              "\r\n".
              "$mail_msg_header\r\n".
              "\r\n".
-             "■ JSBOARD $rmail[table] message\r\n".
+             "■ JSBOARD {$rmail['table']} message\r\n".
              "\r\n".
              "[ Server Infomation ]------------------------------------------------------\r\n".
-             "ServerWare        : JSBoard-$rmail[version]\r\n".
-             "Server Name       : $_SERVER[SERVER_NAME]$nofm\r\n".
+             "ServerWare        : JSBoard-{$rmail['version']}\r\n".
+             "Server Name       : {$_SERVER['SERVER_NAME']}$nofm\r\n".
              "\r\n".
              "\r\n".
              "[ Article Infomation ]-----------------------------------------------------\r\n".
-             "$langs[u_name]              : $rmail[name]\r\n".
+             "{$langs['u_name']}              : {$rmail['name']}\r\n".
              "$mailurl".
              "$homeurl".
-             "$langs[a_t13]              : $year $day $ampm $hms\r\n".
+             "{$langs['a_t13']}              : $year $day $ampm $hms\r\n".
              "---------------------------------------------------------------------------\r\n".
              "\r\n".
-             html_to_plain_lib($rmail[text])."\r\n".
+             html_to_plain_lib($rmail['text'])."\r\n".
              "\r\n".
              "\r\n".
              "\r\n".
              "---------------------------------------------------------------------------\r\n".
-             "REMOTE_ADDR : $_SERVER[REMOTE_ADDR]\r\n".
-             "HTTP_USER_AGENT : $_SERVER[HTTP_USER_AGENT]\r\n".
-             "HTTP_ACCEPT_LANGUAGE : $_SERVER[HTTP_ACCEPT_LANGUAGE]\r\n".
+             "REMOTE_ADDR : {$_SERVER['REMOTE_ADDR']}\r\n".
+             "HTTP_USER_AGENT : {$_SERVER['HTTP_USER_AGENT']}\r\n".
+             "HTTP_ACCEPT_LANGUAGE : {$_SERVER['HTTP_ACCEPT_LANGUAGE']}\r\n".
              "---------------------------------------------------------------------------\r\n".
              "\r\n".
              "JSBoard Form mail service - http://jsboard.kldp.org\r\n";
 
   $htmltext = get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm);
 
-  if ($rmail[user] && $rmail[reply_orig_email] && $rmail[email] != $rmail[toadmin]) {
-    socketmail($rmail[mta],$rmail[reply_orig_email],$rmail[email],$rmail[title],$message,$htmltext);
+  if ($rmail['user'] && $rmail['reply_orig_email'] && $rmail['email'] != $rmail['toadmin']) {
+    socketmail($rmail['mta'],$rmail['reply_orig_email'],$rmail['email'],$rmail['title'],$message,$htmltext);
   }
 
-  if ($rmail[admin] && $rmail[toadmin] != "" && $rmail[email] != $rmail[toadmin]) {
-    socketmail($rmail[mta],$rmail[toadmin],$rmail[email],$rmail[title],$message,$htmltext);
+  if ($rmail['admin'] && $rmail['toadmin'] != "" && $rmail['email'] != $rmail['toadmin']) {
+    socketmail($rmail['mta'],$rmail['toadmin'],$rmail['email'],$rmail['title'],$message,$htmltext);
   }
 }
 ?>

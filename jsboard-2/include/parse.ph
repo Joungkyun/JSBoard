@@ -13,12 +13,12 @@ function ugly_han($text,$html=0) {
 # rawurlencode - RFC1738에 맞게 URL을 암호화
 #                http://www.php.net/manual/function.rawurlencode.php
 function search2url($o, $method = "get") {
-  if($o[at] != "s" && $o[at] != "d") return;
+  if($o['at'] != "s" && $o['at'] != "d") return;
 
-  $str = trim($o[ss]);
+  $str = trim($o['ss']);
   $str = stripslashes($str);
 
-  unset($o[go]);
+  unset($o['go']);
 
   for($i = 0; $i < count($o); $i++) {
     $key   = key($o);
@@ -44,27 +44,27 @@ function search2url($o, $method = "get") {
 #                http://www.php.net/manual/function.rawurldecode.php
 function search2sql($o, $wh = 1, $join = 0) {
   global $langs;
-  if($o[at] != "s" && $o[at] != "d") return;
+  if($o['at'] != "s" && $o['at'] != "d") return;
 
-  $str = rawurldecode($o[ss]); # 검색 문자열을 복호화
+  $str = rawurldecode($o['ss']); # 검색 문자열을 복호화
   $str = trim($str);
   $join = $join ? "tb." : "";
 
-  if(strlen(stripslashes($str)) < 3 && !$o[op]) {
-    if($o[sc] != "r" && $o[st] != "t")
-      print_error($langs[nsearch],250,150,1);
+  if(strlen(stripslashes($str)) < 3 && !$o['op']) {
+    if($o['sc'] != "r" && $o['st'] != "t")
+      print_error($langs['nsearch'],250,150,1);
   }
 
-  if(!$o[er]) {
+  if(!$o['er']) {
     # %는 SQL 질의에서 And 연산으로 쓰이므로 \를 붙여서 일반 문자임을 나타냄
     $str = str_replace("%","\%",$str);
-    if($o[at] != "d") {
+    if($o['at'] != "d") {
       # \%\%를 and 연산으로 간주하여 %로 수정
       $str = str_replace("\%\%","%",$str);
     }
     $str = addslashes($str);
 
-    if (preg_match("/\"/",$str)) print_error($langs[nochar],250,150,1);
+    if (preg_match("/\"/",$str)) print_error($langs['nochar'],250,150,1);
   } else {
 		# 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
     $chk = preg_replace("/\\\([\]\[()])/i","",$str);
@@ -79,7 +79,7 @@ function search2sql($o, $wh = 1, $join = 0) {
 		elseif($chkBOpen !== $chkBClos) $str .= ")";
   }
 
-  if($o[at] == "d") {
+  if($o['at'] == "d") {
     # 검색 연산자에 의해 검색어 분리
     $src = array("/\\\\\\\\/i","/\\\\\+/i","/\\\\\-/i","/\+/i","/\-/i");
     $tar = array("\\","!pluschar!","!minuschar!","!explode!p!","!explode!m!");
@@ -90,18 +90,18 @@ function search2sql($o, $wh = 1, $join = 0) {
 
     for($i=0;$i<sizeof($strs);$i++) {
       $lenchk = strlen(trim(preg_replace("/!(m|p)!/i","",$strs[$i])));
-      if($lenchk < 3) print_error($langs[nsearch],250,150,1);
+      if($lenchk < 3) print_error($langs['nsearch'],250,150,1);
     }
   }
 
   $sql = $wh ? "WHERE " : "AND ";
 
-  if($o[at] != "d") {
+  if($o['at'] != "d") {
     $today = get_date();
     $month = $today - (60 * 60 * 24 * 30);
     $week  = $today - (60 * 60 * 24 * 7);
 
-    switch($o[st]) {
+    switch($o['st']) {
       case 't': $sql .= "({$join}date >= $today)";
         break; # 오늘
       case 'w': $sql .= "({$join}date >= $week) AND ";
@@ -110,16 +110,16 @@ function search2sql($o, $wh = 1, $join = 0) {
         break; # 한달간
     }
   } else {
-    $startday = mktime(0,0,0,$o[m1],$o[d1],$o[y1]);
-    $endday = mktime(23,59,59,$o[m2],$o[d2],$o[y2]);
+    $startday = mktime(0,0,0,$o['m1'],$o['d1'],$o['y1']);
+    $endday = mktime(23,59,59,$o['m2'],$o['d2'],$o['y2']);
     $sql .= "({$join}date BETWEEN $startday AND $endday) AND ";
   }
 
-  if($o[at] != "d") {
-    if($o[er]) $str = "REGEXP \"$str\"";
+  if($o['at'] != "d") {
+    if($o['er']) $str = "REGEXP \"$str\"";
     else $str = "LIKE \"%$str%\"";
 
-    switch($o[sc]) {
+    switch($o['sc']) {
       case 'a': $sql .= "({$join}title $str OR {$join}text $str OR {$join}name $str)";
         break;
       case 'c': $sql .= "({$join}text $str)";
@@ -128,13 +128,13 @@ function search2sql($o, $wh = 1, $join = 0) {
         break;
       case 't': $sql .= "({$join}title $str)";
         break;
-      case 'r': $sql .= "({$join}no = $o[no] OR {$join}reto = $o[no])";
+      case 'r': $sql .= "({$join}no = {$o['no']} OR {$join}reto = {$o['no']})";
         break;
     }
   } else {
-    $likeregex = $o[er] ? "REGEXP" : "LIKE";
-    $pchar = !$o[er] ? "%" : "";
-    switch($o[sc]) {
+    $likeregex = $o['er'] ? "REGEXP" : "LIKE";
+    $pchar = !$o['er'] ? "%" : "";
+    switch($o['sc']) {
       case 'a':
         for($i=0;$i<sizeof($strs);$i++) {
           $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
@@ -179,15 +179,15 @@ function search2sql($o, $wh = 1, $join = 0) {
 function search_hl($list) {
   global $board ,$o;
 
-  $hl = explode("STR", $board[hl]);
-  if(!$o[ss]) return $list;
+  $hl = explode("STR", $board['hl']);
+  if(!$o['ss']) return $list;
 
-  $str = rawurldecode($o[ss]);
+  $str = rawurldecode($o['ss']);
   $str = trim($str);
   $str = stripslashes($str);
 
   # 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
-  if ($o[er]) {
+  if ($o['er']) {
     $chk = preg_replace("/\\\([\]\[()])/i","",$str);
     $chk = preg_replace("/[^\[\]()]/i","",$chk);
 
@@ -198,10 +198,10 @@ function search_hl($list) {
 
     if($chkAOpen !== $chkAClos) {
        $str .= "]";
-       $o[ss] .= "]";
+       $o['ss'] .= "]";
     } elseif($chkBOpen !== $chkBClos) {
        $str .= ")";
-       $o[ss] .= ")";
+       $o['ss'] .= ")";
     }
   }
 
@@ -210,7 +210,7 @@ function search_hl($list) {
   $live = array("\\\\\\0");
   $str = preg_replace($dead,$live,$str);
 
-  if($o[at] != "d") {
+  if($o['at'] != "d") {
     # %% 검색시 필요 조건
     $strs = explode("%%",str_replace("/","\/",$str));
   } else {
@@ -224,37 +224,37 @@ function search_hl($list) {
 
   $regex1 = "(<\/?)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)";
   $regex2 = "(<\/?FONT[^<>]+)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)";
-  $regex3 = "(HREF|SRC)=([^<>]*)$hl[0]([^<]*)<\/FONT>([^>]*)";
+  $regex3 = "(HREF|SRC)=([^<>]*){$hl[0]}([^<]*)<\/FONT>([^>]*)";
 
   $src = array("/$regex1/i","/$regex2/i");
   $tar = array("\\1\\2\\3","\\1\\2\\3");
   $tsrc = array("/$regex1/i","/$regex2/i","/$regex3/i");
   $ttar = array("\\1\\2\\3","\\1\\2\\3","\\1=\\2\\3\\4");
 
-  if(!$o[er]) $str = quotemeta($str);
+  if(!$o['er']) $str = quotemeta($str);
 
-  switch($o[sc]) {
+  switch($o['sc']) {
     case 'n':
       for($i=0;$i<sizeof($strs);$i++) {
         $strs[$i] = trim($strs[$i]);
-        $list[name] = preg_replace("/$strs[$i]/i","$hl[0]\\0$hl[1]",$list[name]);
-        $list[name] = preg_replace("/$regex2/i","\\1\\2\\3",$list[name]);
+        $list['name'] = preg_replace("/{$strs[$i]}/i","{$hl[0]}\\0{$hl[1]}",$list['name']);
+        $list['name'] = preg_replace("/$regex2/i","\\1\\2\\3",$list['name']);
       }
       break;
     case 't':
       for($i=0;$i<sizeof($strs);$i++) {
         $strs[$i] = trim($strs[$i]);
-        $list[title] = preg_replace("/$strs[$i]/i","$hl[0]\\0$hl[1]",$list[title]);
-        $list[title] = preg_replace($src,$tar,$list[title]);
+        $list['title'] = preg_replace("/{$strs[$i]}/i","{$hl[0]}\\0{$hl[1]}",$list['title']);
+        $list['title'] = preg_replace($src,$tar,$list['title']);
       }
       break;
     case 'c':
       for($i=0;$i<sizeof($strs);$i++) {
         $strs[$i] = trim($strs[$i]);
-        $list[text] = preg_replace("/$strs[$i]/i", "$hl[0]\\0$hl[1]", $list[text]);
+        $list['text'] = preg_replace("/{$strs[$i]}/i", "{$hl[0]}\\0{$hl[1]}", $list['text']);
         while(true) {
-          if(preg_match("/($regex1)|($regex2)|($regex3)/i",$list[text]))
-            $list[text] = preg_replace($tsrc,$ttar,$list[text]);
+          if(preg_match("/($regex1)|($regex2)|($regex3)/i",$list['text']))
+            $list['text'] = preg_replace($tsrc,$ttar,$list['text']);
           else break;
         }
       }
@@ -262,18 +262,18 @@ function search_hl($list) {
     case 'a':
       for($i=0;$i<sizeof($strs);$i++) {
         $strs[$i] = trim($strs[$i]);
-        $list[name] = preg_replace("/$strs[$i]/i","$hl[0]\\0$hl[1]",$list[name]);
-        $list[name] = preg_replace($src,$tar,$list[name]);
+        $list['name'] = preg_replace("/{$strs[$i]}/i","{$hl[0]}\\0{$hl[1]}",$list['name']);
+        $list['name'] = preg_replace($src,$tar,$list['name']);
 
-        $list[text] = preg_replace("/$strs[$i]/i", "$hl[0]\\0$hl[1]", $list[text]);
+        $list['text'] = preg_replace("/{$strs[$i]}/i", "{$hl[0]}\\0{$hl[1]}", $list['text']);
         while(true) {
-          if(preg_match("/($regex1)|($regex2)|($regex3)/i",$list[text]))
-            $list[text] = preg_replace($tsrc,$ttar,$list[text]);
+          if(preg_match("/($regex1)|($regex2)|($regex3)/i",$list['text']))
+            $list['text'] = preg_replace($tsrc,$ttar,$list['text']);
           else break;
         }
 
-        $list[title] = preg_replace("/$strs[$i]/i", "$hl[0]\\0$hl[1]", $list[title]);
-        $list[title] = preg_replace($src,$tar,$list[title]);
+        $list['title'] = preg_replace("/{$strs[$i]}/i", "{$hl[0]}\\0{$hl[1]}", $list['title']);
+        $list['title'] = preg_replace($src,$tar,$list['title']);
       }
       break;
   }
@@ -298,7 +298,7 @@ function text_nl2br($text, $html) {
   } else {
     $text = htmlspecialchars($text);
     # 한글 깨지는것 보정
-    if ($langs[code] == "ko") $text = ugly_han($text);
+    if ($langs['code'] == "ko") $text = ugly_han($text);
     $text = "<PRE>\n$text\n</PRE>";
     $text = auto_link($text);
   }
@@ -338,10 +338,10 @@ function cut_string($s,$l) {
 function auto_link($str) {
   global $agent,$rmail;
 
-  $regex[file] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
-  $regex[file] = "(\.($regex[file])\") TARGET=\"_blank\"";
-  $regex[http] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9:_\-]+\.[\xA1-\xFEa-z0-9,:;&#=_~%\[\]?\/.,+\-]+)([.]*[\/a-z0-9\[\]]|=[\xA1-\xFE]+))";
-  $regex[mail] = "([\xA1-\xFEa-z0-9_.-]+)@([\xA1-\xFEa-z0-9_-]+\.[\xA1-\xFEa-z0-9._-]*[a-z]{2,3}(\?[\xA1-\xFEa-z0-9=&\?]+)*)";
+  $regex['file'] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
+  $regex['file'] = "(\.({$regex['file']})\") TARGET=\"_blank\"";
+  $regex['http'] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9:_\-]+\.[\xA1-\xFEa-z0-9,:;&#=_~%\[\]?\/.,+\-]+)([.]*[\/a-z0-9\[\]]|=[\xA1-\xFE]+))";
+  $regex['mail'] = "([\xA1-\xFEa-z0-9_.-]+)@([\xA1-\xFEa-z0-9_-]+\.[\xA1-\xFEa-z0-9._-]*[a-z]{2,3}(\?[\xA1-\xFEa-z0-9=&\?]+)*)";
 
   # &lt; 로 시작해서 3줄뒤에 &gt; 가 나올 경우와
   # IMG tag 와 A tag 의 경우 링크가 여러줄에 걸쳐 이루어져 있을 경우
@@ -350,7 +350,7 @@ function auto_link($str) {
   $tar[] = "<\\1\\2\\3>";
   $src[] = "/<([^<>\n]*)\n([^\n<>]*)>/i";
   $tar[] = "<\\1\\2>";
-  $src[] = "/<(A|IMG)[^>]*(HREF|SRC)[^=]*=[ '\"\n]*($regex[http]|mailto:$regex[mail])[^>]*>/i";
+  $src[] = "/<(A|IMG)[^>]*(HREF|SRC)[^=]*=[ '\"\n]*({$regex['http']}|mailto:{$regex['mail']})[^>]*>/i";
   $tar[] = "<\\1 \\2=\"\\3\">";
 
   # email 형식이나 URL 에 포함될 경우 URL 보호를 위해 @ 을 치환
@@ -360,17 +360,17 @@ function auto_link($str) {
   # 특수 문자를 치환 및 html사용시 link 보호
   $src[] = "/&(quot|gt|lt)/i";
   $tar[] = "!\\1";
-  $src[] = "/<a([^>]*)href=[\"' ]*($regex[http])[\"']*[^>]*>/i";
+  $src[] = "/<a([^>]*)href=[\"' ]*({$regex['http']})[\"']*[^>]*>/i";
   $tar[] = "<A\\1HREF=\"\\3_orig://\\4\" TARGET=\"_blank\">";
-  $src[] = "/href=[\"' ]*mailto:($regex[mail])[\"']*>/i";
+  $src[] = "/href=[\"' ]*mailto:({$regex['mail']})[\"']*>/i";
   $tar[] = "HREF=\"mailto:\\2#-#\\3\">";
-  $src[] = "/<([^>]*)(background|codebase|src)[ \n]*=[\n\"' ]*($regex[http])[\"']*/i";
+  $src[] = "/<([^>]*)(background|codebase|src)[ \n]*=[\n\"' ]*({$regex['http']})[\"']*/i";
   $tar[] = "<\\1\\2=\"\\4_orig://\\5\"";
 
   # 링크가 안된 url및 email address 자동링크
-  $src[] = "/((SRC|HREF|BASE|GROUND)[ ]*=[ ]*|[^=]|^)($regex[http])/i";
+  $src[] = "/((SRC|HREF|BASE|GROUND)[ ]*=[ ]*|[^=]|^)({$regex['http']})/i";
   $tar[] = "\\1<A HREF=\"\\3\" TARGET=\"_blank\">\\3</a>";
-  $src[] = "/($regex[mail])/i";
+  $src[] = "/({$regex['mail']})/i";
   $tar[] = "<A HREF=\"mailto:\\1\">\\1</a>";
   $src[] = "/<A HREF=[^>]+>(<A HREF=[^>]+>)/i";
   $tar[] = "\\1";
@@ -384,14 +384,14 @@ function auto_link($str) {
   $tar[] = "\\1";
   $src[] = "'#-#'";
   $tar[] = "@";
-  $src[] = "/$regex[file]/i";
+  $src[] = "/{$regex['file']}/i";
   $tar[] = "\\1";
 
   # email 주소를 변형시킴
-  $src[] = "/$regex[mail]/i";
+  $src[] = "/{$regex['mail']}/i";
   $tar[] = "\\1 at \\2";
   $src[] = "/<A HREF=\"mailto:([^ ]+) at ([^\">]+)/i";
-  $tar[] = "<A HREF=\"act.php?o[at]=ma&target=\\1$rmail[chars]\\2";
+  $tar[] = "<A HREF=\"act.php?o[at]=ma&target=\\1{$rmail['chars']}\\2";
 
   # email 주소를 변형한 뒤 URL 속의 @ 을 복구
   $src[] = "/_HTTPAT_/";
@@ -402,7 +402,7 @@ function auto_link($str) {
   $tar[] = "<\\1 BORDER=0>";
 
   # IE 가 아닌 경우 embed tag 를 삭제함
-  if($agent[br] != "MSIE") {
+  if($agent['br'] != "MSIE") {
     $src[] = "/<embed/i";
     $tar[] = "&lt;embed";
   }
@@ -416,18 +416,18 @@ function url_link($url, $str = "", $no = 0) {
   global $table, $board, $rmail, $o, $agent;
   $str = $str ? $str : $url;
 
-  if($agent[br] == "MSIE") {
+  if($agent['br'] == "MSIE") {
     $mailTarget = " Target=noPage";
     $mailFrame = "<IFRAME NAME=\"noPage\" SRC=\"\" STYLE=\"display:none;\"></IFRAME>";
   }
 
-  if(check_email($url) && $rmail[uses]) {
-    if(preg_match("/^s|d$/i",$o[at]) && ($o[sc] == "n" || $o[sc] == "a")) {
+  if(check_email($url) && $rmail['uses']) {
+    if(preg_match("/^s|d$/i",$o['at']) && ($o['sc'] == "n" || $o['sc'] == "a")) {
       $strs = preg_replace("/<[^>]+>/i","",$str);
     } else $strs = $str;
     $strs = str_replace("'", "\'", $strs);
 
-    $url = str_replace("@",$rmail[chars],$url);
+    $url = str_replace("@",$rmail['chars'],$url);
     $str = "<A HREF=./act.php?o[at]=ma&target=$url ".
            "onMouseOut=\"window.status=''; return true;\" ".
            "onMouseOver=\"window.status='Send mail to $strs'; return true;\"{$mailTarget}>$str</A>{$mailFrame}";
@@ -452,22 +452,22 @@ function url_link($url, $str = "", $no = 0) {
 function file_upload($fn,$updir) {
   global $upload, $langs, $table;
 
-  $ufile[name] = $_FILES[$fn][name];
-  $ufile[size] = $_FILES[$fn][size];
-  $ufile[type] = $_FILES[$fn][type];
-  $ufile[tmp_name] = $_FILES[$fn][tmp_name];
+  $ufile['name'] = $_FILES[$fn]['name'];
+  $ufile['size'] = $_FILES[$fn]['size'];
+  $ufile['type'] = $_FILES[$fn]['type'];
+  $ufile['tmp_name'] = $_FILES[$fn]['tmp_name'];
 
-  if(is_uploaded_file($ufile[tmp_name]) && $ufile[size] > 0) {
-    if ($ufile[size] > $upload[maxsize]) {
-      print_error($langs[act_md],250,150,1);
+  if(is_uploaded_file($ufile['tmp_name']) && $ufile['size'] > 0) {
+    if ($ufile['size'] > $upload['maxsize']) {
+      print_error($langs['act_md'],250,150,1);
       exit;
     }
 
     # file name에 공백이 있을 경우 공백 삭제
-    $ufile[name] = str_replace(" ","",urldecode($ufile[name]));
+    $ufile['name'] = str_replace(" ","",urldecode($ufile['name']));
 
     # file name에 특수 문자가 있을 경우 등록 거부
-    upload_name_chk($ufile[name]);
+    upload_name_chk($ufile['name']);
 
     # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
     $fcname[0] = "/\.*$/";
@@ -477,18 +477,18 @@ function file_upload($fn,$updir) {
     $fcname[2] = "/(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$/i";
     $fvname[2] = "\\1_\\2.phps";
 
-    $ufile[name] = preg_replace($fcname, $fvname, $ufile[name]);
+    $ufile['name'] = preg_replace($fcname, $fvname, $ufile['name']);
 
-    mkdir("data/$table/$upload[dir]/$updir",0755);
-    move_uploaded_file($ufile[tmp_name],"data/$table/$upload[dir]/$updir/".$ufile[name]);
-    chmod("data/$table/$upload[dir]/$updir/$ufile[name]",0644);
+    mkdir("data/$table/{$upload['dir']}/$updir",0755);
+    move_uploaded_file($ufile['tmp_name'],"data/$table/{$upload['dir']}/$updir/".$ufile['name']);
+    chmod("data/$table/{$upload['dir']}/$updir/{$ufile['name']}",0644);
 
     $up = 1;
-  } elseif($ufile[name]) {
-    if($ufile[size] == '0') {
-      print_error($langs[act_ud],250,150,1);
+  } elseif($ufile['name']) {
+    if($ufile['size'] == '0') {
+      print_error($langs['act_ud'],250,150,1);
     } else {
-      print_error($langs[act_ed],250,150,1);
+      print_error($langs['act_ed'],250,150,1);
     }
     exit;
   }

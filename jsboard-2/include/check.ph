@@ -15,12 +15,12 @@ function meta_char_check($name,$i=0,$t=0) {
 #
 function compare_pass($l) {
   global $langs,$edb;
-  $r = get_authinfo($l[id],$edb[crypts]);
+  $r = get_authinfo($l['id'],$edb['crypts']);
 
-  if($edb[uses] && $edb[crypts]) {
-    if (crypt($r[passwd],$l[pass]) != $l[pass]) print_pwerror($langs[ua_pw_c]);
+  if($edb['uses'] && $edb['crypts']) {
+    if (crypt($r['passwd'],$l['pass']) != $l['pass']) print_pwerror($langs['ua_pw_c']);
   } else {
-    if ($r[passwd] != $l[pass]) print_pwerror($langs[ua_pw_c]);
+    if ($r['passwd'] != $l['pass']) print_pwerror($langs['ua_pw_c']);
   }
 }
 
@@ -92,48 +92,48 @@ function check_email($email,$hchk=0) {
 #         http://www.php.net/manual/function.crypt.php
 function check_passwd($table,$no,$passwd) {
   global $jsboard, $board, $o;
-  if($board[mode] && session_is_registered("$jsboard")) $sql_field = "name";
+  if($board['mode'] && session_is_registered("$jsboard")) $sql_field = "name";
   else $sql_field = "passwd";
 
   $passwd = !trim($passwd) ? "null passwd" : $passwd;
 
-  $table = ($table && $o[at] == "c_del") ? $table."_comm" : $table;
+  $table = ($table && $o['at'] == "c_del") ? $table."_comm" : $table;
 
   if ($table && $no) {
     $result = sql_query("SELECT $sql_field FROM $table WHERE no = '$no'");
-    $r[chk] = sql_result($result,0,"$sql_field");
+    $r['chk'] = sql_result($result,0,"$sql_field");
     sql_free_result($result);
   }
 
   if (session_is_registered("$jsboard")) {
-    if($_SESSION[$jsboard][id] == $r[chk]) $chk = 1;
-    if($_SESSION[$jsboard][pos] == 1) $chk = 2;
+    if($_SESSION[$jsboard]['id'] == $r['chk']) $chk = 1;
+    if($_SESSION[$jsboard]['pos'] == 1) $chk = 2;
   }
 
   if(!$chk) {
-    if(crypt($passwd,$r[chk]) == $r[chk]) $chk = 1;
+    if(crypt($passwd,$r['chk']) == $r['chk']) $chk = 1;
   }
 
   if(!$chk || $chk == 1) {
     # 전체 관리자 패스워드
     $result = sql_query("SELECT passwd FROM userdb WHERE position = 1");
-    $r[su] = sql_result($result,0,"passwd");
+    $r['su'] = sql_result($result,0,"passwd");
     sql_free_result($result);
 
-    if($r[su] == crypt($passwd,$r[su])) $chk =2;
+    if($r['su'] == crypt($passwd,$r['su'])) $chk =2;
 
     if($chk != 2) {
-      $arrayadm = explode(";",$board[ad]);
+      $arrayadm = explode(";",$board['ad']);
       for($i=0;$i<sizeof($arrayadm);$i++) {
         # 게시판 관리자 패스워드
         $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$i]'");
-        $r[ad] = sql_result($result,0,"passwd");
+        $r['ad'] = sql_result($result,0,"passwd");
         sql_free_result($result);
 
         # 게시판 관리자가 존재하지 않을 경우를 대비
-        $r[ad] = !$r[ad] ? "null admin" : $r[ad];
+        $r['ad'] = !$r['ad'] ? "null admin" : $r['ad'];
 
-        if($r[ad] == crypt($passwd,$r[ad])) {
+        if($r['ad'] == crypt($passwd,$r['ad'])) {
           $chk = 2;
           break;
         }
@@ -191,17 +191,17 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
 }
 
 function check_net($ipaddr, $network, $netmask) {
-  $net[ip] = explode(".", $ipaddr);
-  $net[nw] = explode(".", $network);
-  $net[nm] = explode(".", $netmask);
+  $net['ip'] = explode(".", $ipaddr);
+  $net['nw'] = explode(".", $network);
+  $net['nm'] = explode(".", $netmask);
 
-  for($co = 0; $co < count($net[ip]); $co++) {
-    $nw[ip] = sprintf("%x", $net[ip][$co]);
-    $nw[nw] = sprintf("%x", $net[nw][$co]);
-    $nw[nm] = sprintf("%x", $net[nm][$co]);
+  for($co = 0; $co < count($net['ip']); $co++) {
+    $nw['ip'] = sprintf("%x", $net['ip'][$co]);
+    $nw['nw'] = sprintf("%x", $net['nw'][$co]);
+    $nw['nm'] = sprintf("%x", $net['nm'][$co]);
 
-    $mask1 .= $nw[nw] & $nw[nm];
-    $mask2 .= $nw[ip] & $nw[nm];
+    $mask1 .= $nw['nw'] & $nw['nm'];
+    $mask2 .= $nw['ip'] & $nw['nm'];
   }
   if($mask1 == $mask2)
     return 1;
@@ -238,15 +238,15 @@ function icon_check($t,$fn) {
 function check_dnlink($table,$list) {
   global $upload, $cupload;
 
-  if(!$cupload[dnlink]) {
-    if (preg_match("/(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs|\.ppt|\.xls)$/i",$list[bofile])) {
-      $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
+  if(!$cupload['dnlink']) {
+    if (preg_match("/(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs|\.ppt|\.xls)$/i",$list['bofile'])) {
+      $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]={$list['bcfile']}&dn[name]={$list['bofile']}";
     } else {
-      if ($list[bfsize] < 51200) $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]=$list[bcfile]&dn[name]=$list[bofile]";
-      else $dn = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
+      if ($list['bfsize'] < 51200) $dn = "act.php?o[at]=dn&dn[tb]=$table&dn[cd]={$list['bcfile']}&dn[name]={$list['bofile']}";
+      else $dn = "./data/$table/{$upload['dir']}/{$list['bcfile']}/{$list['bofile']}";
     }
   } else {
-    $dn = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
+    $dn = "./data/$table/{$upload['dir']}/{$list['bcfile']}/{$list['bofile']}";
   }
   return $dn;
 }
@@ -256,35 +256,35 @@ function check_dnlink($table,$list) {
 function upload_name_chk($f) {
   global $langs;
 
-  if(!trim($f)) print_error($langs[act_de],250,150,1);
+  if(!trim($f)) print_error($langs['act_de'],250,150,1);
 
   # file 이름에서 특수문자가 있으면 에러 출력
   if (preg_match("/[^\xA1-\xFEa-z0-9._\-]|\.\./i",urldecode($f))) {
-    print_error($langs[act_de],250,150,1);
+    print_error($langs['act_de'],250,150,1);
     exit;
   }
 }
 
 # 비정상적인 접근을 막기 위한 체크 함수.
-# referer 값과 rmail[bbs] 변수에 지정한 값이 동일할 경우에만
+# referer 값과 rmail['bbs'] 변수에 지정한 값이 동일할 경우에만
 # 허락됨
 #
 function check_location($n=0) {
   global $board, $langs, $agent;
 
-  if($n && $agent[br] != "LYNX") {
-    $board[referer] = $_SERVER[HTTP_REFERER];
+  if($n && $agent['br'] != "LYNX") {
+    $board['referer'] = $_SERVER['HTTP_REFERER'];
 
     $sre[] = "/http[s]?:\/\/([^\/]+)\/.*/i";
     $tre[] = "\\1";
     $sre[] = "/:[0-9]+/i";
     $tre[] = "";
 
-    $r = gethostbyname(preg_replace($sre,$tre,$board[referer]));
-    $l = gethostbyname(preg_replace($sre,$tre,$board[path]));
+    $r = gethostbyname(preg_replace($sre,$tre,$board['referer']));
+    $l = gethostbyname(preg_replace($sre,$tre,$board['path']));
 
     if ($r != $l) {
-      print_error("$langs[chk_lo]",250,150,1);
+      print_error("{$langs['chk_lo']}",250,150,1);
       return 0;
     } else return 1;
   } else return 1;
@@ -327,10 +327,10 @@ function check_htmltable($str) {
   $check = preg_replace($from,$to,$str);
 
   if(strlen($check)%3) {
-    print_error($langs[chk_ta], 250, 150, 1);
+    print_error($langs['chk_ta'], 250, 150, 1);
   }
   if(!preg_match('/^12(3|4).+9291$/',$check)) {
-    print_error($langs[chk_tb], 250, 150, 1);
+    print_error($langs['chk_tb'], 250, 150, 1);
   }
 
   while(preg_match('/([\d])9\1/',$check))
@@ -353,7 +353,7 @@ function check_iframe($str) {
   $check = preg_replace($from, $to, $str);
 
   if ($check) {
-    print_error($langs[chk_if], 250, 150, 1);
+    print_error($langs['chk_if'], 250, 150, 1);
   }
 }
 
@@ -365,8 +365,8 @@ function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
   global $langs;
 
   # $c 설정이 있고, list read from write page 에서만 체크
-  if($c && preg_match("/(list|read|form|write)\.php/i",$_SERVER[PHP_SELF])) {
-    # global.ph 에 $board[dhyper] 가 정의 되어 있으면 체크 목록을 합침
+  if($c && preg_match("/(list|read|form|write)\.php/i",$_SERVER['PHP_SELF'])) {
+    # global.ph 에 $board['dhyper'] 가 정의 되어 있으면 체크 목록을 합침
     $ips = trim($wips) ? "$wips;$ips" : $ips;
 
     # $i = 0 -> 전체 어드민에서의 설정 체크
@@ -377,15 +377,15 @@ function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
       $m_value = ($i === 0) ? $am : $m;
 
       # 레퍼럴이 존재하지 않거나 ips_value 변수가 없으면 체크 중지
-      if(!trim($ips_value) || !$_SERVER[HTTP_REFERER]) return;
+      if(!trim($ips_value) || !$_SERVER['HTTP_REFERER']) return;
 
       # 레퍼럴에서 서버 이름만 추출
-      preg_match("/^(http:\/\/)?([^\/]+)/i",$_SERVER[HTTP_REFERER],$chks);
+      preg_match("/^(http:\/\/)?([^\/]+)/i",$_SERVER['HTTP_REFERER'],$chks);
       # 추출한 이름의 ip 를 구함
       $chk = gethostbyname($chks[2]);
 
       # chk 가 자신과 동일하면 체크 중지
-      if($chk == $_SERVER[SERVER_ADDR]) return;
+      if($chk == $_SERVER['SERVER_ADDR']) return;
 
       $addr = explode(";",$ips_value);
       for($j=0;$j<sizeof($addr);$j++) {
@@ -395,10 +395,10 @@ function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
       }
       switch($m_value) {
         case '1' :
-          if($val) print_error($langs[chk_hy],250,250,1);
+          if($val) print_error($langs['chk_hy'],250,250,1);
           break;
         default:
-          if(!$val) print_error($langs[chk_hy],250,250,1);
+          if(!$val) print_error($langs['chk_hy'],250,250,1);
           break;
       }
     }
@@ -411,36 +411,36 @@ function check_access($c=0,$wips='',$ips='') {
   global $langs;
 
   if($c) {
-    # global.ph 에 $board[ipbl] 이 존재하면 함침
+    # global.ph 에 $board['ipbl'] 이 존재하면 함침
     $ips = trim($wips) ? "$wips;$ips" : $ips;
 
     # 원격 접속지가 존재하지 않거나 ips 변수가 없거나, 접속지가 자신이라면 체크 중지
-    if(!trim($ips) || !$_SERVER[REMOTE_ADDR] || $_SERVER[REMOTE_ADDR] == $_SERVER[SERVE_ADDR]) return;
+    if(!trim($ips) || !$_SERVER['REMOTE_ADDR'] || $_SERVER['REMOTE_ADDR'] == $_SERVER['SERVE_ADDR']) return;
 
     # spoofing 체크
-    $ipchk = explode(".",$_SERVER[REMOTE_ADDR]);
+    $ipchk = explode(".",$_SERVER['REMOTE_ADDR']);
     for($j=1;$j<4;$j++) $ipchk[$j] = $ipchk[$j] ? $ipchk[$j] : 0;
     # 각 자리수 마다 255 보다 크면 ip 주소를 벋어나므로 체크 
     if($ipchk[0] > 255 || $ipchk[1] > 255 || $ipchk[2] > 255 || $ipchk[3] > 255)
-      print_error($langs[chk_sp],250,250,1);
+      print_error($langs['chk_sp'],250,250,1);
  
     $addr = explode(";",$ips);
     for($i=0;$i<sizeof($addr);$i++) {
       if(!preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|\.$/i",$addr[$i])) $addr[$i] .= ".";
       $addr[$i] = str_replace(".","\.",$addr[$i]);
-      if(preg_match("/^$addr[$i]/i",$_SERVER[REMOTE_ADDR])) $val = 1;
+      if(preg_match("/^$addr[$i]/i",$_SERVER['REMOTE_ADDR'])) $val = 1;
     }
 
-    if($val) print_error($langs[chk_bl],250,250,1);
+    if($val) print_error($langs['chk_bl'],250,250,1);
   }
 }
 
 # spam 등록기 체크 함수
 function check_spamer($anti,$wkey) {
   global $langs,$o;
-  if($o[at] == "write" || $o[at] == "reply") {
-    if(!$anti || !preg_match("/^[0-9]+:[0-9]+:[0-9]+$/i",$anti)) print_error($langs[chk_an],250,250,1);
-    if($wkey != get_spam_value($anti)) print_error($langs[chk_sp],250,250,1);
+  if($o['at'] == "write" || $o['at'] == "reply") {
+    if(!$anti || !preg_match("/^[0-9]+:[0-9]+:[0-9]+$/i",$anti)) print_error($langs['chk_an'],250,250,1);
+    if($wkey != get_spam_value($anti)) print_error($langs['chk_sp'],250,250,1);
   }
 }
 ?>
