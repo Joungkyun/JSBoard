@@ -7,7 +7,7 @@
 <!-  $user_stylesheet : 사용자 정의 스타일 시트                           -->
 <!-#######################################################################-->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
-<TITLE>Jsboard <?=$board['ver']?> - <?=get_title()?></TITLE>
+<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
 
 <STYLE TYPE=text/css>
 <!--

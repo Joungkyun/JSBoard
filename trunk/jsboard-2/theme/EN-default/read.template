@@ -7,7 +7,7 @@
 <!-  $user_stylesheet : User Defined StyleSheet                           -->
 <!-#######################################################################-->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
-<TITLE>Jsboard <?=$board['ver']?> - <?=get_title()?></TITLE>
+<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
 
 <STYLE TYPE=text/css>
 <!--
