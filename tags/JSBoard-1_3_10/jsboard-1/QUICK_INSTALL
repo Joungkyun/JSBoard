@@ -1,0 +1,565 @@
+##### JSBOARD + OOPS administartion Center #####################################
+#
+#  Original Developer	: 김병찬 <redhands@linux.sarang.net>
+#  Source Disturibute	: 김정균 <admin@oops.org>
+#  Windog Version       : 최기수 <choiks@nuri.net>
+#
+#  CVS Server 관리	: 김영민 <blhole@hotmail.com>
+#  Homepage 공간 제공	: 권순선 <http://www.kldp.org>
+#  Special Thanks	: 임은재 <eunjea@kldp.org>
+#			: 차경묵 <dimanche@dimanche.co.kr>
+#			: 방창현 <winchild@kldp.org>
+#
+#################################################################################
+#
+#                              Quick Installation in JSBoard 1.3 v1.2
+#
+#################################################################################
+
+
+작성 : 김정균 <admin@oops.org>
+일시 : 2001.10.22
+
+이 문서는 JSBoard 1.3 version 의 수동 설치를 위해 제공을 한다. 이 문서로 인한 피
+해나 JSBoard 의 사용으로 인한 피해에 대해서는 아무런 책임을 질수 없으니 신중하게
+판 단하고 설치를 시도하도록 하기를 바란다.
+
+===================================   주의   ===================================
+
+JSBoard 1.2 부터는 확장자가 .php3에서 .php로 변경이 된다.
+
+JSBoard 1.3 은 PHP4-4.0.3 이상 버젼에서 정상 동작을 한다.
+
+0.7 이하 버젼과 DB 구조체와 SQL query 의 형식이 변경이 되었으므로 무조건 덮어 씌
+우지 말기 바란며 공식적인 지원은 하지 않는다. upgrade 시에는
+http://jsboard.kldp.org/bbs/read.php?table=bbs_download&no=30 를 참고하여 적절하
+게 upgrade 를 하기 바란다.
+
+!!!!!!!!!!!!!
+Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
+서를 읽어 보고 설치를 시작 해야 한다. Windog 용은 win32 버젼의 QUICK_INSTALL.win
+문 서를 참조 하도록 한다.
+================================================================================
+
+**** 목 차 ****
+
+  1. 사용환경
+    1-1. exec() 함수 test
+    1-2. MySQL 함수 test
+    1-3. web server 설정
+  2. JSBoard 설치
+    2-1. MySQL setting
+    2-2. 설정 file 셋팅하기
+  3. JSBoard 운영
+  4. JSBoard 보안
+  5. UPGRADE
+  6. 최신글 출력하기
+    6-1. 최신글 보기 구성
+    6-2. 최신글 보기 설정
+  7. Bug report
+
+***************
+
+
+1. 사용환경
+
+  Linux(Redhat, Debian) 또는 FreeBSD 가 설치되어 있는 Server (다른 NOS 에서는 어
+  떠한 문제가 발생할지 알수가 없음. DIY를 해 보기 바람) 다음 부터 Linux 라고함은
+  Redhat Linux 와 Debian Linux 만을 지칭한다.
+  
+  apache 1.3.x 이상
+  
+  MySQL 3.22.30 이상 (RPM 설치 권장 - ftp://mirror.oops.org)에서 받을수 있음
+  PHP-4.0.3 이상(RPM 설치 권장 - ftp://mirror.oops.org)에서 받을수 있음
+  JSBoard 1.1 은 PHP4-4.0.3 이상 버젼에서 정상 작동을 하며, compile 시에 Session
+  기능을 빼면 절대 안된다.
+
+  * 체크 사항 *
+
+  서버의 php가 exec() 함수와 MySQL 함수가 지원되는지 확인한다.
+
+  1-1. exec() 함수 test
+
+    일단 다음과 같은 file 을 하나 만든다.  test.php 라고 칭하겠다. 다음의 예제는
+    linux 상에서만 정확히 작동을 한다. 다른 Platform 에서는 알아서 제대로 작동을
+    하는지 확인을 해 보기 바란다.
+
+    <?php
+    echo "## exec() 함수 테스트  ##<p><br>\n\n";
+    exec("echo \"exec()함수가 정상 작동 합니다\"", $test);
+
+    echo $test[0];
+    ?>
+
+    file을 만든 다음 웹상에서 위의 file을 호출했을 경우
+
+    -------------------------------------------------
+    ## exec() 함수 테스트 ##
+
+    exec()함수가 정상 작동 합니다
+    -------------------------------------------------
+
+    가 출력이 되어져야 한다.
+
+  1-2. MySQL 함수 test
+
+    info.php 라는 file을 아래와 같은 내용으로 생성한다.
+
+    <?php
+    phpinfo();
+    ?>
+
+    그리고 웹상에서 호출을 했을 경우 MySQL에 대한정보가 있는지 확인한다. 단 주의
+    할것은 MySQL의 정보가 있더라도 php 설치시에 mysql 의 경로를 지정해 준것과 실
+    제 MySQL 의 경로가 틀릴 경우에는 접속 에러가 발생할수 있다. 가장 대표적인 경
+    우가 PHP는 rpm으로 설치를 하고 MySQL은 source compile을 했을 경우이다. PHP를
+    rpm 으로 설치를 할경우에는 거의 대부분이 /usr/lib/mysql 에 위치하는 경우이기
+    때문이다.
+
+    위의 정보가 존재를 하는데도 불구하고 에러가 발생한다면 일단 아래의 명령을 이
+    용하여 mysql의 socket file의 위치를 알아낸다.
+
+    [oops@oops include]$ netstat -an | grep mysql
+    unix  0   [ ACC ]  STREAM  LISTENING  589 /var/lib/mysql/mysql.sock
+    [oops@oops include]$
+
+    다음 위의 소켓 file의 경로를 이용하여 다음과 같이 file을 만든다.
+
+    <?
+    $mcheck = mysql_connect(":/var/lib/mysql/mysql.sock","root","$passwd");
+
+    if ($mcheck) echo "MySQL 접속에 성공했습니다.";
+    else echo "MySQL 접속에 실패를 했습니다.";
+    ?>
+
+    라는 code를 만들어서 웹상에서 mysql에 접속을 하여 위의 에러 메세지중 어느 것
+    이 나오는지를 확인해 보도록 한다.
+
+    만약 도저히 소켓파일의 위치를 찾지 못하겠다면 소켓 파일의 경로대신 localhost
+    또는 127.0.0.1 을 지정하도록 한다.  그리고 외부 DB 를 사용하는 경우에는 소켓
+    파일의 경로 대신 외부 DB 서버의 ipaddress 를 지정하도록 한다.
+
+  1-3. web server 설정
+
+    jsboard 의 index file 은 index.php 이다.  php3 확장자를 사용 하기를 원한다면
+    DirectoryIndex 지시자에 index.php3 를 추가해 주도록 한다. 또한 .ph file 들의
+    보안을 위해서 httpd.conf 의
+
+    AddType application/x-httpd-php .php .php3 .ph
+
+    와 같이 설정에 .ph 를 추가해 주도록 한다.
+
+2. JSBoard 설치
+
+    JSBoard는 웹상에서 관리를 하도록 되어 있기 때문에 웹서버가 작동하는 nobody의
+    권한으로 쓰기권한을 가지고 있어야만 한다는 것을 명심해야 한다. 즉 permission
+    설정에 주의를 기해야 한다는 것이다!
+
+  2-1 MySQL setting
+
+    MySQL의 처음 셋팅 하는 사람을 기준으로 설명을 한다. 이미 셋팅이 되어 있는 사
+    람들은 적당히 보고선 자신이 이미 되어 있는 부분은 뛰어 넘도록 한다.
+
+    계정 사용자들의 경우에는 이 과정을 생략하며, 서버 관리자에게 MySQL 의 계정과
+    Database만 생성해 달라고 요청을 하면된다. 즉 DB username,DB name,DB password
+    를 알려 달라고 해야 한다.
+
+
+    . 일단 MySQL을 설치를 하도록 한다. MySQL은 RPM 패키지로도 구할수 있다.
+
+      ftp://mirror.opos.org/pub/Linux/Redhat/RPMS
+      ftp://linux.sarang.net/pub/MySQL
+
+      linux 배포본에서 제공하는 php RPM 을 사용하는 사람들의 경우에는 php 를 rpm
+      packaging할때 mysql의 경로가 어디로 지정을 했는냐에 따라 달라질수 있으므로
+      될수 있으면 A+P+M은 같은 곳에서 패키징 한것을 사용한 것이 좋다.
+
+      source compile 의 경우에는 방법을 생략한다.
+
+    . 설치를 마쳤으면 root계정의 패스워드를 지정한다.
+
+      [root@home /public_html]# mysql mysql 
+
+      Reading table information for completion of table and column names You can
+      turn off this feature to get a quicker startup with -A 
+
+      Welcome to the MySQL monitor. Commands end with; or \g. 
+      Your MySQL connection id is 1961 to server version: 3.22.32-log 
+
+      Type 'help' for help. 
+      mysql> use mysql;
+      mysql> update user set password = password('루트패스워드')
+           > where user = 'root';
+      Query OK, 1 row affected (0.00 sec) 
+
+      mysql> flush privileges;
+      Query OK, 0 rows affected (0.00 sec)
+
+      root password 를 지정한 후에 JSBoard 에서 사용할 database 와 사용자 설정을
+      하도록 한다. 등록을 하려는 
+
+      USER이름을		"사용자", 
+      DB이름을			"디비",
+      패스워드를		"패스워드" 
+
+      로 가정을 한다. 적절히 대입을 해 줘라. 단 중요한 것은 이것들을 한글로 하지
+      는 마라. 먼일이 벌어지기를 기대한다면 한글로 해도 상관이 없다. 여기서는 단
+      지 보기 쉽게 하기 위해서 한글로 하는 것 뿐이다.
+
+      mysql> CREATE database 디비;
+      Query OK, 0 rows affected (0.00 sec)
+
+      mysql> insert into user (Host,User,Password)
+           > values('localhost','사용자',password('패스워드'));
+      Query OK, 0 rows affected (0.00 sec)
+
+      mysql> insert into db values
+           > ('localhost','디비','사용자','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
+      Query OK, 0 rows affected (0.00 sec)
+
+      이 명령이 에러가 발생한다면 db table의 컬럼이 아래와 같은지 살펴 보기 바란
+      다.
+
+      mysql> desc db;
+      +-----------------+---------------+------+-----+---------+-------+
+      | Field           | Type          | Null | Key | Default | Extra |
+      +-----------------+---------------+------+-----+---------+-------+
+      | Host            | char(60)      |      | PRI |         |       |
+      | Db              | char(32)      |      | PRI |         |       |
+      | User            | char(16)      |      | PRI |         |       |
+      | Select_priv     | enum('N','Y') |      |     | N       |       |
+      | Insert_priv     | enum('N','Y') |      |     | N       |       |
+      | Update_priv     | enum('N','Y') |      |     | N       |       |
+      | Delete_priv     | enum('N','Y') |      |     | N       |       |
+      | Create_priv     | enum('N','Y') |      |     | N       |       |
+      | Drop_priv       | enum('N','Y') |      |     | N       |       |
+      | Grant_priv      | enum('N','Y') |      |     | N       |       |
+      | References_priv | enum('N','Y') |      |     | N       |       |
+      | Index_priv      | enum('N','Y') |      |     | N       |       |
+      | Alter_priv      | enum('N','Y') |      |     | N       |       |
+      +-----------------+---------------+------+-----+---------+-------+
+      13 rows in set (0.00 sec)
+
+      칼럼row가 위와 같이 13이 아니라면 Host, Db, User를 뺀 나머지 칼럼수와 위의
+      mysql query의 Y 값 수를 맞춰 줘야 한다. 나의 예상으로는 MySQL 3.23.x alpha
+      version들과 3.22.25 이하 버젼들이 틀릴수도 있을 것이다.
+
+      mysql> flush privileges;
+
+      유저 등록을 마쳤으면 다시 mysql database 를 갱신을 해 주도록 한다.
+
+      mysql> quit
+      Bye
+
+      이미 설정이 되어 있는 사람들은 이 단계는 그냥 건너 뛰면 된다.
+
+  2-2 설정 file 셋팅하기
+
+    먼저 다운로드 받은 file의 압축을 설치를 원하는 디렉토리에서 압축을 풀도록 한
+    다.
+
+    $ tar xvfpz jsboard-version.tar.gz
+
+    압축을 풀면 jsboard-version 이라는 디렉토리가 생성이 된다.
+
+    jsboard/Installer/SQL 로 이동을 하여 다음 명령을 실행을 하여 jsboard 에서 사
+    용을 할 table 구조체를 만들도록 한다. 위에서 등록한 MySQL 정보들을 알아야 한
+    다.
+
+    $ cd jsboard-version/Installer/SQL
+    $ mysql -u 사용자 -p 디비 < mysql_ostype.sql
+    Enter password: 패스워드
+
+    Linux 사용자들은 mysql_linux.sql 을 이용하여 FreeBSD 사용자 들은
+    mysql_freebsd.sql 을 이용하도록 한다. FreeBSD 는 현재 3.5 에서만 테스트 되어
+    졌다.
+
+    table 구조체를 만들었으면, 다음 설정 file 들을 위치 시키고 그 file 들의 퍼미
+    션을 조정하도록 한다. jsboard/Installer/script 에서 root 의 권한을 가지고 설
+    치를 할수 있다면
+
+    $ ./root.sh
+    ===================================================
+     Scripted By JoungKyun Kim <admin@oops.org>
+     JSBoard Permission Configurations v1.0
+    ===================================================
+
+    ## Operating System : Redhat
+    ## Httpd Group : nobody
+
+    Is right follow information? [Y/N](default Y) : y <--Enter
+
+    DONE!!!!
+    $
+
+    root.sh를 실행을 하면 같이 수행이 된다. 만약 위에서 HTTPD의 그룹이 nobody 가
+    아니라면 (debian은 보통 www-data로 되어 있다) n 또는 N을 넣고 그룹 이름을 다
+    시 지정하면 된다. 아래와 같은 문구가 나올것이다.
+
+    Input Ur httpd group :
+
+    보통 FreeBSD 는 nobody 일 것이며 Debian 은 www-data, RedHat7 은 apache 일 경
+    우가 많다.
+
+    혹은 계정 사용자라면
+
+    $ ./account.sh
+
+    명령을 실행하도록 한다. 또한 account user의 권한으로 설치를 하려면 먼저 주의
+    할 것이 있다. 즉 db의 password를 가지고 있는 file을 보호해야 한다. 이를 위해
+    서는 root의 권한을 가진 관리자에게 일단 부탁을 해야 할 일이 있다. 바로
+    
+    jsbaord/config/global.ph,
+    jsboard/config/spma_list.ph,
+    jsboard/admin/include/config.ph
+    
+    에 대한 group 소유권을 nobody 로 지정해 달라고 해야 한다 (Debian 사용자 라면
+    www-data로 해야 할것이고 다른 OS는 모르겠다. httpd.conf 의 Group 지시자에 설
+    정되어 있는 값을 확인을 해서 해 달라고 한다) 즉 
+
+    $ chgrp nobody jsboard/config/global.ph (root가 실행해야 하는 명령)
+    $ chgrp nobody jsboard/config/spam_list.txt (root가 실행해야 하는 명령)
+    $ chgrp nobody jsboard/admin/include/config.ph (root가 실행해야 하는 명령)
+
+    명령을 실행해 달라고 해야 한다. 이를 시행하면 아래와 같이 소유권을 가지게 된
+    다. 이것은 account.sh를 실행한 후에 행할 일들이다. (Debian의 경우에는 nobody
+    가 아니라 www-data가 되어야 한다)
+
+    -rx-rx----    accountname    nobody     config/global.ph
+    -rx-rx----    accountname    nobody     config/spam_list.txt
+    -rx-rx----    accountname    nobody     admin/include/config.ph
+
+    만약 root 가 이를 응하지 않거나 또는 불성실한 root 라면 다음과 같이
+
+    $ chmod 606 config/global.ph
+    $ chmod 606 config/spam_list.txt
+    $ chmod 606 admin/include/config.ph
+
+    을 실행하고, 퍼미션은 다음과 같이 된다.
+
+    -rx----rx-    accountname    accountname    config/global.ph
+    -rx----rx-    accountname    accountname    config/spam_list.txt
+    -rx----rx-    accountname    accountname    admin/include/config.ph
+
+    하지만 이렇게 했을 경우 운영은 가능하나 보안상 좋지는 않다.
+
+    그리고 주의 할것은 account user 의 권한으로 설치 시에는 보안의 문제성이 대두
+    될수 있으니 home directory의 권한을 꼭 711로 해야한다.
+
+    위의 두 script file은 간단하게 mv, chown, chmod 등의 shell 명령어로 이루어져
+    있으니 file 을 편집기로 열어서 보면 어느 곳에 어떠한 소유권과 권한 으로 설정
+    file 들이 위치해야 하는지 쉽게 파악할수 있을 것이다.
+
+    위의 명령을 실행을 하면 설정 file들이 각각의 위치로 자리를 잡게 된다.
+
+    다음 jsboard/config/ 로 이동을 하여 global.ph 에서 DB의 정보를 수정을 한다.
+
+    ############################################################################
+    #  데이타베이스 관련 설정
+    ############################################################################
+    $db[server] = ":/var/lib/mysql/mysql.sock";	# 서버 주소
+    $db[user]   = "";				# 사용자
+    $db[pass]   = "";				# 패스워드
+    $db[name]   = "";				# 이름
+
+    위의 부분을 적절하게 수정을해 주면 된다. DB 서버가 외부에 존재를 할 경우에는
+    ":/var/lib/mysql/mysql.sock" 부분을 DB 서버의 ip address 로 대체를 하면 될것
+    이다. 그리고 mysql을 source compile한 사람들도 mysql.sock file의 경로를 적당
+    히 수정해 주면 된다.
+
+    socket file 의 경로는 "netstat -an | grep mysql" 로 알수가 있다.
+
+    socket file 에 대한 이해가 되지 않는 사람은 localhost 또는 127.0.0.1 을 지정
+    하도록 한다.
+
+    다음 스팸등록기의 스팸등록 방지를 위한 설정을 하도록 한다. 이 부분 설정을 하
+    지 않으면 글 등록이 되지를 않는다.
+
+    ##############################################################################
+    #  스팸 방지 설정
+    ##############################################################################
+    $board[antispam] = "@SPAM1@:@SPAM2@:@SPAM3@";
+
+    스팸 방지 설정은 3개의 값을 가져야 한다. @SPAM1@ 에는 5 자리의 수를, @SPAM2@
+    와 @SPAM3@ 에는 각각 2 자리의 임의의 수를 지정하도록 한다.
+
+3. JSBoard 운영
+
+  JSBoard 에는 관리자 기능이 존재를 한다. 이 기능은 JSBoard 와는 별도의 코드로서
+  admin/License 를 읽어 보고 동의할 경우에만 사용이 가능하다.
+
+  설치가 완료 되었다면 이제 웹브라우져에서 접속을 해 보도록 한다. 우선 전체 설정
+  부터 살펴 보도록 한다.
+
+  http://domain.com/jsboard/admin/
+
+  으로 접속을 하도록 한다. 그러면 login 창이 뜰것이다. JSBoard의 기본 패스워드는
+  모두 초기값으로는 "0000" 으로 되어 있으니 이 패스워드로 접속을 하도록 한다.
+
+  OOPS Administration Center v1.7 에서 달라진 기능은 일단 종전에 JSBoard 에서 사
+  용하는 DB에 JSboard 에서 사용하지 않는 table 이 있을 경우 에러메세지가 출력 되
+  는 현상이 있었으나 1.7 이상 버젼에서는 JSBoard 에서 사용하지 않는 table이 존재
+  할 경우 설정버튼 대신 "Not JSBoard table" 이라는 메시지를 출력하게끔 변경이 되
+  어 있다.
+
+4. JSBoard 보안
+
+  보통 CGI방식을 통한 upload에 관련하여 보안문제가 많이 발생을 하고 있다. 하지만
+  단순히 CGI 의 코드만 의존 하여 보안 문제를 방지 한다는 것은 무리라고 생각이 되
+  어 apache의 설정 file 에서 원천적으로 업로드 file 에 대해서 실행이 되지 않도록
+  하는 설정을 적용시켜 보았다. 현재 필자의 개인 서버와 kldp server에서 적용이 되
+  어 있으며 특히 호스팅서버와 같이 여러 계정들이 사용을 하는 경우에 JSBoard를 사
+  용할수도 있기 때문에 이 셋팅을 해 놓는 것을 권장 한다.
+
+  설정은 다음과 같이 할수 있다.
+
+  <DirectoryMatch "^/.*/jsboard/data">
+    AddType application/x-httpd-php3-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
+    AddType application/x-httpd-php-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
+
+    ErrorDocument 403 http://jsboard.kldp.org/ErrorMSG/error_msg.php?l=ko&c=403
+
+    <Files ~ ".*\.ph$">
+      Order allow,deny
+      Deny from all
+    </Files>
+  </DirectoryMatch>
+
+  이 설정의 의미는 jsboard/data 라는 디렉토리 아래에 있는 어떠한 경로의 data라는
+  이름의 디렉토리에서는 .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs
+  .ins 의 확장자를 가지고 있으면 source를 출력하라는 의미이며 주의 할것은 여기에
+  패스워드 같은 것이 들어가 있는 source를 올려 놓으면 안된다는 주의해야 한다. 위
+  의 경로는 게시판 디렉토리 이름을 어떻게 하느냐에 따라 수정을 해 줘야 한다.
+
+  또한 data 라는 이름의 디렉토리 아래로 .ph로 직접 접근할 경우에는
+  http://jsboard.kldp.org/ErrorMSG/error_msg.php?l=ko&c=403 페이지를 출력 하라는
+  의미이다.
+
+  이 설정은 root 의 권한만 가지고 있으면 누구나 다 설정을 해 주는 것이 좋으며 만
+  약 계정 유저들이라고 해도 서버 관리자에게 이 설정을 해 달라고 하는것이 좋다. 이
+  설정을 안해서 좋을것이 하나도 없을테니 아마 다 해줄 것이다. :-)
+
+  새해에는 좀더 안전한 서버 운영이 되기를 바라면서.. 그럼..
+
+5. UPGRADE
+
+  jsboard-1.2 버젼의 가장큰 변화는 확장자의 변화이다. 즉 1.1.x 까지는 .php3 라
+  는 확장자를 사용했지만 jsbaord-1.2 에서 부터는 .php 라는 이름 으로 변경이 되
+  었다. 그래서 source를 덮었씌우는 방법을 하면 안된다.
+
+  jsboard-1.2 사용자들은 source를 덮어 씌우는 방법을 택하면 된다.
+
+  일단 임의의 디렉토리에 jsabord-1.3 버젼의 source 를 풀어놓도록 한다. 그 다음
+  Insatller/script/ 로 이동을 하여 root.sh 를 계정 유저들은 accoutn.sh 를 실행
+  하도록 한다. 그리고 기존 data/ 있는 모든 디렉토리들을 1.3/data 로 copy 를 하
+  도록 하고, admin/include/config.ph 역시 1.3/admin/include 로 복사를 한다.
+
+  복사를 한 후에 다시 Installer/script 로 이동한 후에 root_p.sh 를 실행 하도록
+  한다. (계정 유저들은 root.sh 와 root_p.sh 가 아닌 account.sh 와 account_p.sh
+  를 이용해야 한다.)
+
+  다음 config/global.ph 를 재설정을 해준다. 이 부분은 이전 버젼의 DB 접속 부분
+  만 같게 하고 나머지는 모두 재설정을 하도록 한다. 그리고 각 게시판의 관리자로
+  접속을 하여 한번씩을 재설정을 해 주도록 한다.
+
+
+6. 최신글 출력하기
+
+  6-1. 최신글 보기 구성
+
+   JSBoard의 최신글 목록을 출력하는 기능이다. 이 기능은 include/prelist.ph 에 의
+   해 구동이 되며 어느 file에나 삽입을 하여 사용을 할수가 있다.
+
+  6-2. 최신글 보기 설정
+
+   일단 먼저 jsboard/include/prelist.ph에서 $prlist[path] 와 $prlist[wpath] 변수
+   값을 설정을 해야 한다. $prlist[path] 는 JSBoard 가 설치 되어 있는 절대 경로를
+   적어주며, $prlist[wpath] 는 JSBoard 가 출력되는 웹경로를 적어 줘야 한다. 주의
+   할것은 마지막에 /는 적지 않도록 한다.
+
+   예)
+   $prlist[path] = "/home/httpd/html/PHP/jsboard";
+   $prlist[wpath] = "http://domain.com/PHP/jsboard";
+   
+   일단 사용방법을 설명하자면 우선 최신글을 보여줄 page 의 제일 상단에 다음과 같
+   은 코드를 삽입한다. (중요한 것은 이 기능을 적용시킬 file 은 php가 구동이 될수
+   있는 file이어야 한다. 확장자가 .php3에서만 php를 인식할수 있을 경우에는 .php3
+   file 에서만 이 기능을 사용할수 있다. 또한 위에서 제일 상단 이라는 것은 리스트
+   를 보여줄 부분 보다 상단이면 된다.) 
+
+   <?
+   include "절대경로/prelist.ph";
+   ?>
+
+   다음 리스트 출력을 원하는 부분에 다음과 같은 함수를 적어 주도록 한다.
+
+   <? prelist("a","b","c","d","e","f","g","h","i"); ?>
+
+   prelist() 함수의 값들에 대해서는 아래를 참고하라.
+
+   a 테이블 이름(게시판 이름)
+   b include file 포함 여부 ( 1 - 포함 0 - 포함안함 )
+     이 부분의 값은 주의 해야 한다. 무조건 하나의 게시판만 불러 들일 때는 무조건
+     1의 값을 가져야 한다. 만약 여러개의 게시판의 글을 불러 들일 경우에는 주번째
+     함수 부터는 값이 0이 되어야 한다.
+   c 글 리스트 수
+   d 출력글자수
+   e 이름 출력 여부 ( 1 - 출력  0 - 출력 안함 )
+   f 등록일 출력 여부 ( 1 - 출력  0 - 출력 안함 )
+   g 이메일 출력 여부 ( 1 - 출력  0 - 출력 안함 )
+   h 조회수 출력 여부 ( 1 - 출력  0 - 출력 안함 )
+   i 링크의 옵션 (예: target onClick 등등)
+
+
+   만약 여러개의 게시판을 한 페이지에서 출력 하고 싶다면 위의 코드의 값만 적당히
+   변경 시켜서 여러번 적어 주면 된다.
+
+   예)
+
+   test 게시판 3개 미리보기<br>
+   <? prelist("test",1,3,30,1,1,1,1,""); ?>
+
+   <p>
+   test1 게시판 5개 미리보기<br>
+   <? prelist("test1",0,5,30,1,1,1,1,""); ?>
+
+   여기서 주의 할것은 두번째 게시판을 뿌려 줄때 두번째 필드의 값이 0이 된다는 것
+   을 주의한다. 첫번째 게시판을 출력 할때만 1 이 되어야 하고, 두번째 이후의 게시
+   판에서는 0의 값을 가져야 한다.
+
+   일단, 위와 같이 출력을 하면 현재로서는 아무런 디자인 없이 한줄씩 뿌려 주게 된
+   다. 원하는 디자인을 구성하고 싶다면 jsboard/include/prelist.ph 의 중앙에 있는
+   print_prlist() 함수의 echo문을 수정하면 된다.
+
+   단 table tag를 사용할 경우에는 좀 주의해야 할 일이 있다. 예를 들어보는게 쉬울
+   것이다.
+
+   예>
+
+   <table>
+   <? prelist(......) ?>
+   </table>
+
+   과 같이 출력을 해야 하며 prelist.ph 의 print_prlist() 함수는 아래와 같이 구성
+   이 되어야 한다.
+
+   function print_prlist($p) {
+    echo "<tr>
+          <td>$p[link]</td>
+          <td>$p[name]</td>
+	  <td>$p[date]</td>
+	  <td>$p[count]</td>
+	  </tr>\n";
+   }
+
+   즉, 테이블을 구성할 경우 하나의 글이 하나의 tr 이 되기 때문에 for 문에 의하여
+   print_prlist() 함수가 반복이 되어 출력이 되기 때문에 위와 같이 구성이 되어 져
+   야 하는 것이다. 나머지는 알아서 응용하기 바란다.
+
+
+7. Bug report
+
+  버그를 발견할 경우에는 http://jsboard.kldp.org/bbs/list.php?table=bbs_upgrade
+  에 리포팅을 해 주면 감사하겠다
+
+
