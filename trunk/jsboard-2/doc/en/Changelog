@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.0
 
+Thu, Jun 13 2002 by JoungKyun Kim <http://www.oops.org>
+	- added rutine of except KSX 1001 ranges in comment
+	- added cookie to information of comment sort
+
 Mon, Jun 10 2002 by JoungKyun Kim <http://www.oops.org>
 	- added image link of comment
 
