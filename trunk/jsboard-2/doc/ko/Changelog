@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  3월  2일
+작성일 : 2002년  3월  5일
 버전   : jsboard-2.0pre4
 
 
@@ -84,6 +84,7 @@ If you wnat to see windog's change log, see also
     것 수정
 55. 무단 링크 제어 기능 추가
 56. IP Blocking 기능 추가
+57. magic quotes 설정을 강제로 지정
 
 
 -----------------------------------------------------------------------------

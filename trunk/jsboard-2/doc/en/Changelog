@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Sat, Mar  2 2002
+Date      : Tue, Mar  5 2002
 Version   : jsboard-2.0pre4
 
 
@@ -80,6 +80,7 @@ Version   : jsboard-2.0pre4
 53. fixed full scanning idx field for check of jsboard table in admin/admin.php
 54. added function of control access from hyper link of other site
 55. added function of ip blocking
+56. forced configuration of magic quotes
 
 
 -----------------------------------------------------------------------------
