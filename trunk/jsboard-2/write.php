@@ -4,7 +4,7 @@ include "include/header.ph";
 $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
 $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
 
-if($_SESSION[$jsboard][id] == $board[ad] || $_SESSOIN[$jsboard][pos] == 1)
+if($_SESSION[$jsboard][id] == $board[ad] || $_SESSION[$jsboard][pos] == 1)
   $board[super] = 1;
 
 if(eregi("^(1|3|4|5)$",$board[mode])) { if(!$board[super]) print_error($langs[perm_err],250,150,1); }
