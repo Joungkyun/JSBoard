@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.1
 
+Mon, Jul 29 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed problem of auth fail with $edb[uses] = 0 when use external.ph
+
 Sun, Jul 28 2002
   by JoungKyun Kim <http://www.oops.org>
 	- fixed enable to use php with board administrator permission
