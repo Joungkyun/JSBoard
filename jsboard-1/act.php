@@ -264,13 +264,28 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
         print_error("$langs[act_pww]");
       else $adm = "sadmin";
     } else {
-      if(!check_passwd($table, $atc[no], $passwd) && !$adm)
-        print_error("$langs[act_pw]");
-      else if ($sadmin[passwd] != $spasswd && $adm == "sadmin")
-        print_error("$langs[act_pww]");
-      else if ($sadmin[passwd] != $spasswd && $admin[passwd] != $upasswd && $adm == "admin")
-        print_error("$langs[act_pwa]");
+      if(!check_passwd($table, $atc[no], $passwd)) {
+        if(!$adm) print_error("$langs[act_pw]");
+        else {
+          if($adm == "sadmin") {
+					  if($sadmin[passwd] != $spasswd) print_error("$langs[act_pww]");
+					} elseif($adm == "admin") {
+					  if($admin[passwd] != $upasswd) print_error("$langs[act_pwa]");
+					} else print_error("$langs[act_pw]");
+				}
+      } else {
+			  if($adm) {
+          if ($adm == "admin") {
+            if($sadmin[passwd] != $spasswd && $admin[passwd] != $upasswd) print_error("$langs[act_pwa]");
+          } elseif ($adm == "sadmin") {
+            if($sadmin[passwd] != $spasswd) print_error("$langs[act_pww]");
+          } else print_error("$langs[act_pw]");
+        }
+			}
     }
+
+    echo 1;
+		exit;
 
     if($atc[reyn] && !$adm) # 관리자 모드일 경우 관련글을 함께 삭제함
       print_error("$langs[act_c]");
