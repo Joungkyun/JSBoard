@@ -79,7 +79,7 @@ if ($file_upload == "yes")
   
 </tr><tr>
   <td align="center" colspan="3" bgcolor="<? echo $r2_bg ?>">
-    <textarea name="text" rows="15" cols="<? sform(30) ?>"></textarea>
+    <textarea name="text" rows="15" cols="<? sform(34) ?>"></textarea>
   </td>
 </tr>
 </table>

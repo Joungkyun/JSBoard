@@ -94,7 +94,7 @@ $mailtowriter = "no" ;
 $bbshome = "" ;
 
 // Board version (건들지 마시오)
-$webboard_version = "0.6pre2" ;
+$webboard_version = "0.6.7" ;
 
 // 홈페이지 등록 여부
 $use_url = "yes" ;
