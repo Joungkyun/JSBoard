@@ -463,7 +463,7 @@ function file_upload($fn,$updir) {
     }
 
     # file name에 공백이 있을 경우 공백 삭제
-    $ufile[name] = str_replace(" ","",$ufile[name]);
+    $ufile[name] = str_replace(" ","",urldecode($ufile[name]));
 
     # file name에 특수 문자가 있을 경우 등록 거부
     upload_name_chk($ufile[name]);
@@ -474,7 +474,7 @@ function file_upload($fn,$updir) {
     $f[name] = eregi_replace("(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $f[name]);
 
     mkdir("data/$table/$upload[dir]/$updir",0755);
-    move_uploaded_file($ufile[tmp_name],"data/$table/$upload[dir]/$updir/$ufile[name]");
+    move_uploaded_file($ufile[tmp_name],"data/$table/$upload[dir]/$updir/".$ufile[name]);
     chmod("data/$table/$upload[dir]/$updir/$ufile[name]",0644);
 
     $up = 1;
