@@ -1,0 +1,134 @@
+JSBoard Template 제작 방법
+
+작성 : 김정균 <http://www.oops.org>
+일시 : 2001 12  3
+
+일단 테마를 만들려면 테마의 이름은 대문자언어코드-테마이름 (예를 들어
+KO-default) 의 형식을 가져야 한다. 또한 theme directory의 테마들은 테
+마 이름의 디렉토리를 가지고 있어야 한다.
+
+KO-default theme 에 있는 파일들은 모두 존재해야하며 image는 img 디렉토
+리 아래에 admin.gif 가 꼭 존재해야 한다. 각 html template 에서 <? ?>로
+쌓여져 있는 부분은 게시판에서 꼭 필요한 부분 들이기 때문에 모두 사용을
+해야 한다. 혹시 빠지는 것을 대비 하기 위해 게시판 관리자에서 모든 기능
+을 활성화 한 상태에서 theme 를 만들기 바란다.
+
+admin.gif 는 admin page link 이다. admin page link 는 각 게시판 관리자
+에서 보여주고 안보여줄 수 있도록 옵션화 되어 있으므로 일단은 꼭 존재하
+는 형태로 만드는 것을 권장한다.
+
+또한 메뉴 역시 image 로 만들수 있는데 이때에는 img/ 디렉토리에
+
+prev.gif	- 이전글 또는 이전 페이지
+next.gif	- 다음글 또는 다음 페이지
+list.gif	- 글 목록
+write.gif	- 글 쓰기
+today.gif	 - 최근 12시간내 올라온글
+delete.gif	- 삭제
+edit.gif	- 수정
+reply.gif	- 답장
+conj.gif	- 관련글
+rep.gif		- 댓글의 화살표 이미지
+logout.gif	- login 시 logout 을 위한 이미지 링크
+admin.gif	- admin page 를 위한 이미지 링크
+
+이 존재해야 한다. 그리고 list.template 와 read.template 에서
+list_cmd(0,1) 과 read_cmd(0,1) 을 list_cmd(1,1), read_cmd(1,1) 로 만들
+어 주면 된다.
+
+댓글의 화살표 이미지는 img/ 디렉토리에 rep.gif 라는 이름으로 다른 이미
+지를 사용할 수 있다.
+
+그리고 template 상에서 수정할수 없는 몇몇 색상들과 테이블 길이 같은 것
+들은 theme_name/config.php 에서 지정을 할수 있게 되어 있다.
+
+나머지는 마음대로 하면 된다.
+
+# 참고
+default theme 의 각 파일에 필요한 변수에 대한 주석이 있으니 참조를 하면
+된다. 기본 이미지는 theme/theme_name/img/ 에서 admin.gif, logout.gif 만
+꼭 필요하며 나머지는 옵션이라고 생각을 하면 되겠다.
+
+또한 theme 디렉토리에 위치한 테마들은 자동으로 각 게시판의 관리자에 등
+록이 되니, 게시판 관리자에서 새로 등록된 테마를 선택해서 사용하면 된다.
+
+또한 KO-theme_name/config.php 의 $designer[ver] 와 include/version.php 의
+$theme[ver] 의 값이 동일해야 테마를 사용할 수 있다. 이는 버젼별 테마 사
+용에 혼란이 없도록 하기 위해 표현을 한다.   만약 테마의 수정이 가해지면
+include/version.php 의 $theme[ver] 의 값이 변경이 된다.
+
+
+# Search FORM
+
+검색 폼은 아래의 폼문을 기본으로 가지고 있어야 한다. 이 폼문을 기본으
+로 디자인을 하면 된다.
+
+<FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
+  <SELECT NAME=o[sc]>
+    <OPTION VALUE=t<?=$sform[sc][t]?>>Title
+    <OPTION VALUE=c<?=$sform[sc][c]?>>Contents
+    <OPTION VALUE=n<?=$sform[sc][n]?>>Writer
+    <OPTION VALUE=a<?=$sform[sc][a]?>>All
+  </SELECT>
+  <INPUT TYPE=text NAME=o[ss] SIZE=<?=form_size(8)?> MAXLENGTH=255 VALUE="<?=$sform[ss]?>">
+  <INPUT TYPE=submit VALUE=Search> 
+
+  <SELECT NAME=o[st]>
+    <OPTION VALUE=m<?=$sform[st][m]?>>A Month
+    <OPTION VALUE=w<?=$sform[st][w]?>>A Week
+    <OPTION VALUE=a<?=$sform[st][a]?>>All
+  </SELECT>
+
+  <INPUT TYPE=checkbox NAME=o[er] VALUE=y<?=$sform[er][y]?>> 졍규표현식
+
+  <INPUT TYPE=hidden NAME=o[at] VALUE=s>
+  <INPUT TYPE=hidden NAME=o[go] VALUE=p>
+  <INPUT TYPE=hidden NAME=o[sct] VALUE=s>
+  <INPUT TYPE=hidden NAME=o[stt] VALUE=s>
+</FORM>
+
+주의 할 것은 하단의
+
+  <INPUT TYPE=hidden NAME=o[sct] VALUE=s>
+  <INPUT TYPE=hidden NAME=o[stt] VALUE=s>
+
+부분의 값인데 이 부분은 2개의 select 문에 대한 정의를 해 주는 변수이다.
+즉 처음 title, contents, writer, all 에 관련된 부분을 select 로 처리할
+경우에는 o[sct] 의 값이 s 가 되며 checkbox 또는 radio 로 했을 경우에는
+c 의 값으로 변경해 줘야 한다. 이는 검색후에 검색폼이 검색한 값을 유지시
+키기 위해 필요하다.
+
+검색 기간에 대한 select 역시 o[stt] 의 값에 위와 같이 동일하게 적용시
+키면 된다.
+
+만약 select 문을 checkbox 나 radio button 으로 변경하여 사용할 경우에
+는 서치폼 위에
+
+<?
+if(!$o[at]) {
+  $sform[sc][t] = " CHECKED";
+  $sform[st][m] = " CHECKED";
+}
+?>
+
+코드를 넣어 줘야 한다.
+
+# Page FORM
+
+<FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
+<?=$pform[post]?>
+<SELECT NAME=o[go]>
+<OPTION VALUE=p SELECTED>Page No.
+<OPTION VALUE=n>Article No.
+</SELECT>
+<INPUT TYPE=text NAME=o[no] SIZE=<?=form_size(2)?> MAXLENGTH=6 VALUE='<?=$pform[value]?>'>
+<INPUT TYPE=submit VALUE=Go!>
+</FORM>
+
+을 가지고 디자인을 적용시키면 된다.
+
+# Comment Form
+
+Comment Form 중 SORT link 과 Delete link 는 이미지를 사용할 수 있다. 각 테마 디렉토리의
+img 디렉토리에 cdelete.gif, csortup.gif, csortdn.gif 를 위치 시킴으로서 텍스트 링크를
+image 링크로 변경할 수 있다.
