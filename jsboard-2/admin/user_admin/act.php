@@ -56,6 +56,9 @@ $chg[re_list] = $ua[re_list] ? 1 : 0;
 # Option of print comment function
 $chg[comment] = $ua[comment] ? 1 : 0;
 
+# Option of print emoticon function
+$chg[emoticon] = $ua[emoticon] ? 1 : 0;
+
 # Board Basic Configuration
 if($ua[title] && $ua[title] != $board[title])
   $chg[title] = "$ua[title]";
@@ -192,6 +195,10 @@ $chg_conf = "<?
 # 커멘트 기능 사용여부
 #
 \$enable[comment] = $chg[comment];		# 0 - 보여주지 않음 1 - 보여줌
+
+# 이모티콘 기능 사용여부
+#
+\$enable[emoticon] = $chg[emoticon];		# 0 - 보여주지 않음 1 - 보여줌
 
 
 ###############################################################################

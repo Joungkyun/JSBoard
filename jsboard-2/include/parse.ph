@@ -510,4 +510,41 @@ function unhtmlspecialchars($t) {
   return $t;
 }
 
+# Emoticon 변환 함수
+function conv_emoticon($str, $opt=0) {
+  if (!$opt) return $str;
+
+  $src[] = "/\^\^|\^\.\^/";
+  $con[] = "<IMG SRC=./emoticon/icon1.gif ALT='emoticon'>";
+  $src[] = '/TT|T\.T/i';
+  $con[] = "<IMG SRC=./emoticon/icon2.gif ALT='emoticon'>";
+  $src[] = '/\?\.\?/';
+  $con[] = "<IMG SRC=./emoticon/icon3.gif ALT='emoticon'>";
+  $src[] = '/:-?(\(|<)/';
+  $con[] = "<IMG SRC=./emoticon/icon4.gif ALT='emoticon'>";
+  $src[] = '/:-?(\)|>)/';
+  $con[] = "<IMG SRC=./emoticon/icon5.gif ALT='emoticon'>";
+  $src[] = '/0\.0|O\.O/i';
+  $con[] = "<IMG SRC=./emoticon/icon6.gif ALT='emoticon'>";
+  $src[] = '/-\.?-V/';
+  $con[] = "<IMG SRC=./emoticon/icon7.gif ALT='emoticon'>";
+  $src[] = '/-_-|-\.?-/';
+  $con[] = "<IMG SRC=./emoticon/icon8.gif ALT='emoticon'>";
+  $src[] = '/-0-|^0^|-O-|^O^/';
+  $con[] = "<IMG SRC=./emoticon/icon9.gif ALT='emoticon'>";
+  $src[] = '/:-?D/';
+  $con[] = "<IMG SRC=./emoticon/icon10.gif ALT='emoticon'>";
+  $src[] = '/;-?\)/';
+  $con[] = "<IMG SRC=./emoticon/icon11.gif ALT='emoticon'>";
+  $src[] = '/\^_\^/';
+  $con[] = "<IMG SRC=./emoticon/icon12.gif ALT='emoticon'>";
+  $src[] = '/!/';
+  $con[] = "<IMG SRC=./emoticon/icon13.gif ALT='emoticon'>";
+  $src[] = '/\?/';
+  $con[] = "<IMG SRC=./emoticon/icon14.gif ALT='emoticon'>";
+  
+  $ret = preg_replace($src, $con, $str);
+  return $ret;
+}
+
 ?>

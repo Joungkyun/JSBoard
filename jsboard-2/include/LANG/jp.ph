@@ -163,6 +163,10 @@ $langs[ua_comment]   = "コメント";
 $langs[ua_comment_y] = "使うこと";
 $langs[ua_comment_n] = "使わない";
 
+$langs[ua_emoticon]   = "Emoticon";
+$langs[ua_emoticon_y] = "使うこと";
+$langs[ua_emoticon_n] = "使わない";
+
 $langs[ua_align]   = "掲示板整列";
 $langs[ua_align_c] = "の中";
 $langs[ua_align_l] = "左側";

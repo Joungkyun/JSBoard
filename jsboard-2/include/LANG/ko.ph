@@ -163,6 +163,10 @@ $langs[ua_comment]   = "코멘트";
 $langs[ua_comment_y] = "사용하기";
 $langs[ua_comment_n] = "사용하지 않기";
 
+$langs[ua_emoticon]   = "이모티콘";
+$langs[ua_emoticon_y] = "사용하기";
+$langs[ua_emoticon_n] = "사용하지 않기";
+
 $langs[ua_align]   = "게시판 정렬";
 $langs[ua_align_c] = "가운데";
 $langs[ua_align_l] = "좌측";
