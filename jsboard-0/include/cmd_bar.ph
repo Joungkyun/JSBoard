@@ -60,23 +60,30 @@ function read_cmd_bar ($no, $page, $prev, $next, $r0_bg, $act, $table, $passwd, 
   global $search, $SCRIPT_NAME, $reyn, $writemode, $pn_title ;
   global $link_art, $link_prev, $link_next, $link_write, $link_reply, $link_modify, $link_delete ;
 
+  if($search)
+    $search = eregi_replace("\\\\\"","\"",$search);
+    if (eregi("'",$pn_title[p]) || eregi("'",$pn_title[n])) {
+      $pn_title[p] = eregi_replace("'","\"",$pn_title[p]);
+      $pn_title[n] = eregi_replace("'","\"",$pn_title[n]);
+    }
+
     echo("\n<table width=\"1%\" border=\"0\" cellspacing=\"4\" cellpadding=\"0\"><tr>");
     sepa($r0_bg);
     // 목록
     if($act == "search") {
-	echo("<td align=\"center\" width=\"1%\"><a href=\"list.php3?table=$table$search\"><nobr>$link_art</nobr></a></td>\n");
+	echo("<td align=\"center\" width=\"1%\"><a href='list.php3?table=$table$search'><nobr>$link_art</nobr></a></td>\n");
     } else {
 	echo("<td align=\"center\" width=\"1%\"><a href=\"list.php3?table=$table&page=$page\"><nobr>$link_art</nobr></a></td>\n");
     }
     sepa($r0_bg);
     if($prev) { // 이전글
-	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$prev$search\" title=\"$pn_title[p]\"><nobr>$link_prev</nobr></a></td>\n");
+	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$prev$search\" title='$pn_title[p]'><nobr>$link_prev</nobr></a></td>\n");
     } else {
 	echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>$link_prev</nobr></font></td>\n");
     }
     sepa($r0_bg);
     if($next) { // 다음글
-	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$next$search\" title=\"$pn_title[n]\"><nobr>$link_next</nobr></a></td>\n");
+	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$next$search\" title='$pn_title[n]'><nobr>$link_next</nobr></a></td>\n");
     } else {
 	echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>$link_next</nobr></font></td>\n");
     }

@@ -14,13 +14,18 @@ function qsql($n, $act)
     if ($act == "search") {
 	if (strlen($sc_string) >= 3 || $sc_column == "today") {
 	    $sc_string = addslashes(chop($sc_string));
+            if (eregi("\"",$sc_string) && $sc_column == "text" )
+              $sc[string_quot] = eregi_replace("\"","&quot;",$sc_string);
 
 	    if ($sc_column == "all") {
 		$sc_sql = "title LIKE \"%$sc_string%\" OR text LIKE \"%$sc_string%\" OR name LIKE \"%$sc_string%\"";
 	    } else if ($sc_column == "today") {
 		$sc_sql = "date > $today";
 	    } else {
-		$sc_sql = "$sc_column LIKE \"%$sc_string%\"";
+                if (eregi("\"",$sc_string) && $sc_column == "text" )
+		  $sc_sql = "$sc_column LIKE \"%$sc[string_quot]%\"";
+                else
+		  $sc_sql = "$sc_column LIKE \"%$sc_string%\"";
 	    }
 
 	    $result = dquery("SELECT IF(reto > 0, reto, no) AS no FROM $table WHERE $sc_sql GROUP BY no");
@@ -98,7 +103,9 @@ function plist($n, $act = "normal")
     }
 
     if($act == "search") {
-	$search = "&act=search&sc_column=$sc_column&sc_string=$sc_string";
+        $sc[string] = stripslashes($sc_string);
+        $sc[string] = eregi_replace("\\\\\"","\"",$sc[string]);
+        $search = "&act=search&sc_column=$sc_column&sc_string=$sc[string]";
     }
 
 
@@ -178,8 +185,11 @@ function vlist($no) {
 	}
 
 	if($sc_string) {
-	    $name  = eregi_replace(($sc_string), "<font color=\"darkred\"><b>\\0</b></font>", $name);
-	    $title = eregi_replace(($sc_string), "<font color=\"darkred\"><b>\\0</b></font>", $title);
+            $sc[string] = stripslashes($sc_string);
+            $sc[string] = eregi_replace("(\[|\])","\\\\0",$sc[string]);
+            $sc[string] = eregi_replace("\\\\\\\"","&quot;",$sc[string]);
+            $name  = eregi_replace(($sc[string]), "<font color=\"darkred\"><b>\\0</b></font>", $name);
+            $title = eregi_replace(($sc[string]), "<font color=\"darkred\"><b>\\0</b></font>", $title);
 	}
 	$rede *= 8;
 
@@ -206,6 +216,7 @@ function vlist($no) {
 	if ($agent == "msie") {
 	  $new_text = "Text : ";
 	  $new_text .= cut_string($text,$previewsizen);
+          $new_text = htmlspecialchars($new_text);
 	  if ($lang == "ko") {
 	    $new_text .= "...\n\n($pre)";
 	  }
@@ -216,10 +227,11 @@ function vlist($no) {
 
 	echo("<tr>\n" .
 	     "<td align=\"right\" bgcolor=\"$bg\"><font color=\"$fg\">$num</font></td>\n" .
-	     "<td align=\"left\" bgcolor=\"$bg\"><a href=\"read.php3?table=$table&no=$no&page=$page$search\"");
+	     "<td align=\"left\" bgcolor=\"$bg\"><a href='read.php3?table=$table&no=$no&page=$page$search'");
 
 	if ($previewn == "yes" && $agent == "msie") {
-	  echo(" title='$new_text'>");
+          $new_text = htmlspecialchars($new_text);
+	  echo(" title=\"$new_text\">");
 	}
 	else {
 	  echo(">");
