@@ -426,6 +426,29 @@ else if ($hintname == "writemode") {
 ");
 }
 
+else if ($hintname == "preview") {
+  echo ("
+
+<font id=ac><b>♤ Preview Mode</b></font>
+
+<p>
+게시물 리스트의 게시물 제목에 마우스 커서를 놓으면
+본문의 내용 일부가 보이도록 해주는 기능
+");
+}
+
+else if ($hintname == "previewsize") {
+  echo ("
+
+<font id=ac><b>♤ Preview size</b></font>
+
+<p>
+Preview 기능을 사용할 경우 몇 bytes 까지 미리
+보기할 것인지 결정. no 를 넣으면 사용 안함. yes 를
+넣으면 사용.
+");
+}
+
 else  {
   echo ("
 
