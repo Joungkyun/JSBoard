@@ -30,6 +30,7 @@ If you wnat to see windog's change log, see also
 5. 자바스트립트 지원않는 브라우져 위해 에러 메세지 출력 수정
 6. 메일 발송시 reply link 삭제
 7. getenv() 함수를 $HTTP_SERVER_VARS 변수로 대체
+8. admin 로그인시 페이지 이동을 Header 에서 Meta tag 로 변경
 
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
