@@ -439,6 +439,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
 } elseif ($o[at] == "sm") {
   include "include/version.ph";
   include "config/global.ph";
+  include "include/get.ph";
   include "include/error.ph";
   include "include/check.ph";
   include "include/sendmail.ph";
@@ -465,7 +466,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se") {
   if ($o[se] == "login") {
     if($pcheck != "") SetCookie("pcheck","","0");
     # Cookie 를 등록한다.
-    if($agent[br] = "MSIE") $CookieTime = strftime("%A, %d-%b-%Y %H:%M:%S MST", time()+900);
+    if(eregi("MSIE",$agent[br])) $CookieTime = strftime("%A, %d-%b-%Y %H:%M:%S MST", time()+900);
     else $CookieTime = "time()+900";
     SetCookie("pcheck",$pcheck,$CookieTime);
     if(!$page) $page = 1;

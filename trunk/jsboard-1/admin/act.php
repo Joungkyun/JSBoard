@@ -112,8 +112,8 @@ if( $mode != "manager_config") {
     $br   = stripslashes($glob[brlist]);
 
     file_operate("../config/global.ph","w",0,$vars);
-    file_operate("../config/spam_list.txt","w",0,$vars);
-    file_operate("../config/allow_browser.txt","w",0,$vars);
+    file_operate("../config/spam_list.txt","w",0,$spam);
+    file_operate("../config/allow_browser.txt","w",0,$br);
 
     # 현재 디렉토리를 변경
     chdir("../config");

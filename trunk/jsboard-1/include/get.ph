@@ -60,6 +60,8 @@ function get_agent() {
     } else $agent[os] = "OTHER";
   } else if(ereg("Lynx", $agent_env)) {
     $agent[br] = "LYNX";
+  } else if(ereg("Konqueror",$agent_env)) {
+    $agent[br] = "KONQ";
   } else $agent[br] = "OTHER";
 
   return $agent;
@@ -374,8 +376,8 @@ function viewfile($tail) {
       else
         $p[bo] = "<embed src=$upload_file autostart=true hidden=true mastersound>";
     } elseif (eregi("^(mpeg|mpg|asf|dat|avi)$",$tail)) {
-      if($agent[br] == "MSIE") $p[up] = "<embed src=$upload_file autostart=true>";
-    } elseif ($tail == "mov" && $agent[br] == "MSIE") {
+      if(eregi("MSIE",$agent[br])) $p[up] = "<embed src=$upload_file autostart=true>";
+    } elseif ($tail == "mov" && eregi("MSIE",$agent[br])) {
       $p[up] = "<embed src=$upload_file autostart=true width=300 height=300 align=center>";
     } elseif ($tail == "swf") {
       $flash_size = $board[width] - 10;

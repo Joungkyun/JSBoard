@@ -249,7 +249,7 @@ function auto_link($str) {
   $str = eregi_replace("href=\"($regex[http])\"[^>]*>","HREF=\"\\2_orig://\\3\" TARGET=\"_blank\">", $str);
   $str = eregi_replace("href=\"mailto:($regex[mail])\">","HREF=\"mailto:\\2#-#\\3\">", $str);
   $str = eregi_replace("(background|codebase|src)[ \n]*=[\n\"' ]*($regex[http])[\"']*","\\1=\"\\3_orig://\\4\"",$str);
-  if($agent[br] != "MSIE") $str = eregi_replace("<embed","&lt;embed",$str);
+  if(!eregi("MSIE",$agent[br])) $str = eregi_replace("<embed","&lt;embed",$str);
 
   # 링크가 안된 url및 email address 자동링크
   $str = eregi_replace("($regex[http])","<A HREF=\"\\1\" TARGET=\"_blank\">\\1</a>", $str);
