@@ -193,8 +193,8 @@ function search_form($o) {
     elseif($chkBOpen !== $chkBClos) $s['ss'] .= ")";
   }
 
-  $s['sc'][$o['sc']] = ($o['sct'] != "s") ? " CHECKED" : " SELECTED";
-  $s['st'][$o['st']] = ($o['stt'] != "s") ? " CHECKED" : " SELECTED";
+  $s['sc'][$o['sc']] = ( $o['sct'] && $o['sct'] != "s") ? " CHECKED" : " SELECTED";
+  $s['st'][$o['st']] = ( $o['sct'] && $o['stt'] != "s") ? " CHECKED" : " SELECTED";
   $s['er'][$o['er']] = " CHECKED";
 
   return $s;
