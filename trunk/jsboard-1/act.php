@@ -427,10 +427,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
   function set_cookie($atc) {
     global $board,$agent;
     $month = 60 * 60 * 24 * $board[cookie];
-
-    if($agent[br] == "MSIE5.5")
-      $cookietime = strftime("%A, %d-%b-%Y %H:%M:%S MST", time() + $month);
-    else $cookietime = time() + $month;
+    $cookietime = time() + $month;
 
     setcookie("board_cookie[name]", $atc[name], $cookietime);
     setcookie("board_cookie[email]", $atc[email], $cookietime);
