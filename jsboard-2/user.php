@@ -118,5 +118,4 @@ $p_time[] = microtime();
 $print[pagetime] = get_microtime($p_time[0],$b_time[1]);
 
 include "theme/$print[theme]/ext.template";
-if(!session_is_registered("$jsboard")) session_destroy();
 ?>

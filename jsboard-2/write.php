@@ -63,7 +63,4 @@ if($board[rnname] && eregi("^(2|3|5|7)",$board[mode]) && $_SESSION[$jsboard][pos
   $pre_regist[name] = $_SESSION[$jsboard][name] ? $_SESSION[$jsboard][name] : $pre_regist[name];
 
 include "theme/$print[theme]/write.template";
-
-# 세션이 등록되어 있지 않을 경우 불필요한 세션을 삭제
-if(!session_is_registered("$jsboard")) session_destroy();
 ?>

@@ -1,6 +1,7 @@
 <?
 # sessionÀ» ½ÃÀÛ
 session_start();
+if(!session_is_registered("$jsboard")) session_destroy();
 $sadmin[pern]   = 10;
 
 if($path[type] == "user_admin") {

@@ -103,5 +103,4 @@ mysql_close();
 
 # Template file À» È£Ãâ
 include "theme/$print[theme]/reply.template";
-if(!session_is_registered("$jsboard")) session_destroy();
 ?>

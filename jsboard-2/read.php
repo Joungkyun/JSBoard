@@ -126,5 +126,4 @@ $sform[ss] = preg_replace("/\\\\+/i","\\",$sform[ss]);
 # PAGE DISPLAY
 include "theme/$print[theme]/read.template";
 echo $preview[bo];
-if(!session_is_registered("$jsboard")) session_destroy();
 ?>
