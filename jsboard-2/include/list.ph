@@ -215,7 +215,8 @@ function print_narticle($table, $fg, $bg, $print = 0)
 function get_comment($table,$no,$prints=0) {
   global $lines, $corder, $langs, $page, $print;
 
-  $orderby = $corder ? "DESC" : "ASC";
+  $corder = ($corder != 2) ? 1 : $corder;
+  $orderby = ($corder == 2) ? "DESC" : "ASC";
 
   $sql = "SELECT * FROM {$table}_comm WHERE reno = '$no' ORDER BY no $orderby";
   $r = sql_query($sql);
@@ -225,14 +226,14 @@ function get_comment($table,$no,$prints=0) {
   # check of image exists
   if(file_exists("./theme/$print[theme]/img/cdelete.gif")) $delimgcheck = 1;
 
-  if($corder) {
+  if($corder == 2) {
     $imgfile = "./theme/$print[theme]/img/csortup.gif";
     $sortimg = file_exists($imgfile) ? "<IMG SRC=$imgfile BORDER=0 ALT=''>" : "&#9651;";
-    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=0&page=$page>$sortimg</A>";
+    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=1&page=$page>$sortimg</A>";
   } else {
     $imgfile = "./theme/$print[theme]/img/csortdn.gif";
     $sortimg = file_exists($imgfile) ? "<IMG SRC=$imgfile BORDER=0 ALT=''>" : "&#9661;";
-    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=1&page=$page>$sortimg</A>";
+    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=2&page=$page>$sortimg</A>";
   }
 
   if($comment_no > 0) {
@@ -256,9 +257,11 @@ function get_comment($table,$no,$prints=0) {
 function print_comment_art($table,$list,$prints=0,$delimg) {
   global $jsboard, $board, $page, $no, $delimgcheck, $print;
 
-  $list[name] = htmlspecialchars(trim($list[name]));
+  $list[name] = ugly_han(htmlspecialchars(trim($list[name])));
+  $list[name] = preg_replace("/&amp;(lt|gt)/i","&\\1",$list[name]);
+  $list[text] = ugly_han(htmlspecialchars(trim($list[text])));
+  $list[text] = preg_replace("/&amp;(lt|gt)/i","&\\1",$list[text]);
   $list[date] = date("m/d H:i:s",$list[date]);
-  $list[text] = htmlspecialchars(trim($list[text]));
 
   if(($board[adm] || $board[super] == 1) ||
      (eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id])) {

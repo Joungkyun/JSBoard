@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.0
 
+2002.6.13 by 김정균 <http://www.oops.org>
+	- 커멘트에서 KSX 1001 범위외의 문자 처리
+	- 코멘트 정렬정보를 쿠키로 등록
+
 2002.6 10 by 김정균 <http://www.oops.org>
 	- 커멘트에서 삭제, 소트 링크에 이미지 링크 사용가능 하도록 수정
 

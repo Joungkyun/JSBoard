@@ -16,6 +16,16 @@ if((eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id]) || $board[supe
   $pre_regist[url] = eregi_replace("[\]","",$_COOKIE[board_cookie][url]);
 }
 
+if ($corder && $_COOKIE[cookie_sort] != $corder) {
+  # 코멘트 정렬을 쿠키로 등록
+  $month = 60 * 60 * 24 * $board[cookie];
+  $cookietime = time() + $month;
+
+  setcookie("cookie_sort", $corder, $cookietime);
+} else {
+  $corder = $corder ? $corder : $_COOKIE[cookie_sort];
+}
+
 $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
 $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
 
