@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  2월 19일
+작성일 : 2002년  2월 23일
 버전   : jsboard-2.0pre4
 
 
@@ -73,6 +73,10 @@ If you wnat to see windog's change log, see also
 44. register_globals = Off 상에서 보안 정보 페이지에서 목록 돌아오지 못하던것 수정
 45. register_globals = ON 상태에서 parse_query() 함수 작동하지 않도록 수정
 46. Install 시 mysql 에러 메세지의 경로 잘못 출력되는 것 수정
+47. mail.template 의 오타 수정
+48. 메일발송을 JSBoard 자체적으로 하게 변경 (시스템의 mail daemon 에 의존 안함)
+49. 정규 표현식 버그 수정
+50. 이메일등록시 유효한 이메일인지 체크
 
 
 -----------------------------------------------------------------------------

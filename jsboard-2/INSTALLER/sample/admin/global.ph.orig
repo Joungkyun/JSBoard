@@ -70,14 +70,6 @@ $upload[maxsize] = "2000000";		# upload max size
 #  Mail Configuration
 ##############################################################################
 $rmail[uses]     = 1;
-# MTA type
-# 1 - send mail to use socket connection
-# 0 - used mail() function in php
-#     used over php 4.0.5 Plez, read doc/CODE/README.CONFIG
-$rmail[mta]      = 1;
-# smtp server address
-$rmail[smtp]     = "127.0.0.1";
-# charactor of converted mail address
 $rmail[chars]    = "__at__";
 
 

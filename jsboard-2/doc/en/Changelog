@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Thu, Feb 21 2002
+Date      : Sat, Feb 23 2002
 Version   : jsboard-2.0pre4
 
 
@@ -70,6 +70,10 @@ Version   : jsboard-2.0pre4
 44. fixed return problem in security.php on register_globals = Off
 45. changed parse_query() function that can't parse when register_globals = ON
 46. fix miss path in mysql error with Installer
+47. fix typo in mail.template
+48. changed to use self smtp of JSBoard when send mail
+49. fixed bug of regex
+50. check valid email address
 
 
 -----------------------------------------------------------------------------
