@@ -31,12 +31,10 @@ else {
 }
 
 # Option of include original message in reply
-if($ua[ore]) $chg[ore] = 1;
-else $chg[ore] = 0;
+$chg[ore] = $us[ore] ? 1 : 0;
 
 # Option of print conjunct list when reply
-if($ua[re_list]) $chg[re_list] = 1;
-else $chg[re_list] = 0;
+$chg[re_list] = $ua[re_list] ? 1 : 0;
 
 # Board Basic Configuration
 if($ua[title] && $ua[title] != $board[title])
@@ -69,11 +67,9 @@ else $chg[cookie] = "$board[cookie]";
 
 $ua[wwrap] = !$ua[wwrap] ? "120" : trim($ua[wwrap]);
 
-
 # File Upload Configuration
 if($ua[upload] != $cupload[yesno]) $chg[upload] = "$ua[upload]";
 else $chg[upload] = "$cupload[yesno]";
-
 
 # Mail Configuration
 if($ua[admin] != $rmail[admin]) $chg[admin] = "$ua[admin]";
@@ -101,6 +97,9 @@ else $chg[d_name] = "$ccompare[name]";
 if($ua[d_email] && $ua[d_email] != $ccompare[email])
   $chg[d_email] = "$ua[d_email]";
 else $chg[d_email] = "$ccompare[email]";
+
+$chg[dhyper] = $ua[dhyper] ? 1 : 0;
+$chg[plink] = parse_ipvalue($denylink);
 
 # FORM size Configuration
 $ua[s_name] = !$ua[s_name] ? "14" : $ua[s_name];
@@ -229,6 +228,17 @@ $chg_conf = "<?
 #
 \$ccompare[name]  = \"$chg[d_name]\";
 \$ccompare[email] = \"$chg[d_email]\";
+
+###############################################################################
+#  dhyper : 0 -> 등록된 값만 허락
+#           1 -> 등록된 값만 막음
+#           plink 가 없을 경우에는 작동 안함
+#  plink  : dhyper 가 작동할 ip 주소. ';' 를 구분자로 사용
+#  설정 예) 1.1.1.1;2.2.2.2;3.3.3.3
+###############################################################################
+#
+\$enable[dhyper] = $chg[dhyper];
+\$enable[plink]  = \"$chg[plink]\";
 ?>";
 
 # 변경된 설정 값을 config.ph 에 쓴다.

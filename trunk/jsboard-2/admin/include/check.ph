@@ -132,4 +132,29 @@ function check_invalid($str) {
 
   return $str;
 }
+
+
+function parse_ipvalue($str,$m=0,$r=0) {
+  if(!trim($str)) return;
+
+  if(!$r) {
+    $str = eregi_replace("[\r\n;]"," ",$str);
+    $src[] = "/[^0-9]\./i";
+    $dsc[] = "";
+    $src[] = "/[^0-9. ]/i";
+    $dsc[] = "";
+    $src[] = "/\.\.+/i";
+    $dsc[] = "";
+    $src[] = "/ +/i";
+    $dsc[] = ";";
+    $src[] = "/^;+$/i";
+    $dsc[] = "";
+  } else {
+    $src[] = "/;/i";
+    $dsc[] = "\n";
+  }
+
+  $str = trim(preg_replace($src,$dsc,trim($str)));
+  return $str;
+}
 ?>

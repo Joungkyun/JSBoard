@@ -2,6 +2,7 @@
 if(eregi("(write|edit|reply)\.php",$_SERVER[PHP_SELF]))
   session_cache_limiter('nocache, must-revalidate');
 
+include_once "include/error.ph";
 include_once "include/print.ph";
 # GET/POST 변수를 제어
 parse_query_str();
@@ -51,7 +52,6 @@ include_once "include/lang.ph";
 include_once "include/check.ph";
 if(!check_windows())
   { include_once "include/exec.ph"; }
-include_once "include/error.ph";
 include_once "include/get.ph";
 include_once "include/list.ph";
 include_once "include/parse.ph";
@@ -61,6 +61,9 @@ include_once "include/sendmail.ph";
 
 $agent = get_agent();
 $db = replication_mode($db);
+
+# 외부 hyper link 를 막기 위한 설정
+check_dhyper($enable[dhyper],$enable[plink]);
 
 # write, edit, reply page form size ========================
 $size[name] = !$size[name] ? form_size(14) : form_size($size[name]);
@@ -102,7 +105,4 @@ switch ($designer[license]) {
 if(eregi("(read|list)\.php",$_SERVER[PHP_SELF])) {
   if($theme[ver] != $designer[ver]) print_error($langs[nomatch_theme],250,150,1);
 }
-
-# 로그인 변수 초기화
-$cjsboard = "c$jsboard";
 ?>

@@ -341,4 +341,34 @@ function check_htmltable($str,$rep='') {
          "##  CLOSE IFRAME TAG : $clsif\n\n";
   }
 }
+
+# hyper link 를 통한 접근을 제어
+# m -> 0 : ips 에 등록된 Ip 에서의 링크만 허락
+#      1 : ips 에 등록된 Ip 에서의 링크만 막음
+#
+function check_dhyper($m,$ips) {
+  global $langs;
+  # 레퍼럴이 존재하지 않거나 ips 변수가 없으면 체크 중지
+  if(!trim($ips) || !$_SERVER[HTTP_REFERER]) return;
+
+  # 레퍼럴에서 서버 이름만 추출
+  preg_match("/^(http:\/\/)?([^\/]+)/i",$_SERVER[HTTP_REFERER],$chks);
+  # 추출한 이름의 ip 를 구함
+  $chk = gethostbyname($chks[2]);
+
+  # chk 가 자신과 동일하면 체크 중지
+  if($chk == $_SERVER[SERVER_ADDR]) return;
+
+  for($i=0;$i<sizeof($addr);$i++)
+    if(preg_match("/$addr[$i]/i",$chk)) $val = 1;
+
+  switch($m) {
+    case '1' :
+      if($val) print_error($langs[chk_hy],250,250,1);
+      break;
+    default:
+      if(!$val) print_error($langs[chk_hy],250,250,1);
+      break;
+  }
+}
 ?>

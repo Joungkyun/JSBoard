@@ -1,5 +1,6 @@
 <?php
 $path[type] = "user_admin";
+$langs[code] = "en";
 include "../include/admin_head.ph";
 
 if(!session_is_registered("$jsboard") || ($_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1))
@@ -66,6 +67,9 @@ else $url_no = "checked";
 if($view[email]) $vmail_ok = "checked";
 else $vmail_no = "checked";
 
+if($enable[dhyper]) $dhyper_no = "checked";
+else $dhyper_ok = "checked";
+
 if($board[align] == "left") $align_l = "checked";
 elseif($board[align] == "right") $align_r = "checked";
 else $align_c = "checked";
@@ -73,6 +77,7 @@ else $align_c = "checked";
 if($board[rnname]) $nameck_r = "checked";
 else $nameck_n = "checked";
 
+$denylink = trim($enable[plink]) ? parse_ipvalue($enable[plink],0,1) : $langs[ua_dhyper3];
 
 $board[hls] = eregi_replace("<FONT COLOR=","",$board[hl]);
 $board[hls] = eregi_replace("><B><U>STR</U></B></FONT>","",$board[hls]);
@@ -117,6 +122,9 @@ if(file_exists("../../data/$table/stylesheet.ph")) {
 }
 
 if($langs[code] == "ko") {
+  $dlin_button = "<INPUT TYPE=BUTTON VALUE=\"¢¹\" onClick=\"fresize(1,'d');\" TITLE=\"Left Right\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"¢Ã\" onClick=\"fresize(0,'d');\" TITLE=\"RESET\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"¡ä\" onClick=\"fresize(2,'d');\" TITLE=\"Up Down\">";
   $styl_button = "<INPUT TYPE=BUTTON VALUE=\"¢¹\" onClick=\"fresize(1,'s');\" TITLE=\"Left Right\">".
                  "<INPUT TYPE=BUTTON VALUE=\"¢Ã\" onClick=\"fresize(0,'s');\" TITLE=\"RESET\">".
                  "<INPUT TYPE=BUTTON VALUE=\"¡ä\" onClick=\"fresize(2,'s');\" TITLE=\"Up Down\">";
@@ -127,6 +135,12 @@ if($langs[code] == "ko") {
                  "<INPUT TYPE=BUTTON VALUE=\"¢Ã\" onClick=\"fresize(0,'t');\" TITLE=\"RESET\">".
                  "<INPUT TYPE=BUTTON VALUE=\"¡ä\" onClick=\"fresize(2,'t');\" TITLE=\"Up Down\">";
 } else {
+  $dlin_button = "<A HREF=javascript:fresize(1,'d') TITLE=\"Left Righ\">".
+                 "<IMG SRC=../../images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
+                 "<A HREF=javascript:fresize(0,'d') TITLE=\"RESET\">".
+                 "<IMG SRC=../../images/form_back.gif ALT=\"RESET\" ALIGN=absmiddle BORDER=0></A>\n".
+                 "<A HREF=javascript:fresize(2,'d') TITLE=\"Up Down\">".
+                 "<IMG SRC=../../images/form_height.gif ALT=\"Up Down\" ALIGN=absmiddle BORDER=0></A>\n";
   $styl_button = "<A HREF=javascript:fresize(1,'s') TITLE=\"Left Righ\">".
                  "<IMG SRC=../../images/form_width.gif ALT=\"Left Righ\" ALIGN=absmiddle BORDER=0></A>\n".
                  "<A HREF=javascript:fresize(0,'s') TITLE=\"RESET\">".
@@ -187,10 +201,17 @@ function fresize(value,name) {
   } else if (name == 's') {
     if (value == 0) {
       document.uadmin.uastyle.cols = <?=$tsize?>;
-      document.uadmin.uastyle.rows = 10;
+      document.uadmin.uastyle.rows = 5;
     }
     if (value == 1) document.uadmin.uastyle.cols += 5;
     if (value == 2) document.uadmin.uastyle.rows += 5;
+  } else if (name == 'd') {
+    if (value == 0) {
+      document.uadmin.denylink.cols = <?=$tsize?>;
+      document.uadmin.denylink.rows = 5;
+    }
+    if (value == 1) document.uadmin.denylink.cols += 5;
+    if (value == 2) document.uadmin.denylink.rows += 5;
   } else {
     document.uadmin.uaheader.cols = <?=$tsize?>;
     document.uadmin.uaheader.rows = 10;
@@ -525,6 +546,26 @@ else echo "<CENTER><FONT COLOR=RED><B>$langs[ua_while_wn]</B></FONT></CENTER>";
 <TD><INPUT TYPE=text name=ua[d_email] size=<?=$dsize?> value="<?=$ccompare[email]?>"></TD>
 <TD BGCOLOR=<?=$color[d_bg]?> ALIGN=center>&nbsp;</TD>
 </TR>
+
+<TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>
+
+<TR><TD BGCOLOR=<?=$color[t_bg]?> ALIGN=center COLSPAN=6><font id=TCOLOR>Deny Invalid Hyper Link</font></TD></TR>
+
+<TR>
+<TD COLSPAN=3>
+<?=$langs[ua_dhyper]?>
+<INPUT TYPE=radio name=ua[dhyper] <?=$dhyper_ok?> value="0" id=RADIO><?=$langs[ua_dhyper1]."\n"?>
+<INPUT TYPE=radio name=ua[dhyper] <?=$dhyper_no?> value="1" id=RADIO><?=$langs[ua_dhyper2]?>
+</TD>
+<TD COLSPAN=3 ALIGN=right>
+<font id=MCOLOR>TEXTAREA SIZE OPERATION
+<?=$dlin_button?>
+</font>
+</TD></TR>
+
+<TR><TD ALIGN=center COLSPAN=6>
+<textarea name=denylink cols=<?=$tsize?> rows=5 wrap=off><?=$denylink?></textarea>
+</TD></TR>
 
 <TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>
 

@@ -96,6 +96,7 @@ $langs[chk_th] = "Don't open or close TH tag.";
 $langs[chk_tr] = "Don't open or close TR tag.";
 $langs[chk_td] = "Don't open or close TD tag.";
 $langs[chk_if] = "Don't open or close IFRAME tag.";
+$langs[chk_hy] = "Deny access thorough hyper link of other server";
 
 # get.ph
 $langs[get_v]= " [ View Article ]";
@@ -200,9 +201,13 @@ $langs[ua_etc3]	= "ID to deny";
 $langs[ua_etc4]	= "Email to deny";
 $langs[ua_etc5]	= "Board table";
 
+$langs[ua_dhyper] = "Hyperlink of follow lists :";
+$langs[ua_dhyper1] = "Permit";
+$langs[ua_dhyper2] = "Deny";
+$langs[ua_dhyper3] = "If you want to useless this function, removed all value in here\nValue is registered only one ip address per one line";
+
 $langs[ua_pw_n]	= "Can't access this file without login process!!";
 $langs[ua_pw_c]	= "Invalid password";
-$pang[ua_pw_comp] ="Password didn't change because\ntwo password didn't match";
 
 # admin print.ph
 $langs[p_wa] = "Primary admin Auth";
