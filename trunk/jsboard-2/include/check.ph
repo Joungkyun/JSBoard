@@ -359,6 +359,7 @@ function check_dhyper($m,$ips) {
   # chk 가 자신과 동일하면 체크 중지
   if($chk == $_SERVER[SERVER_ADDR]) return;
 
+  $addr = explode(";",$ips);
   for($i=0;$i<sizeof($addr);$i++)
     if(preg_match("/$addr[$i]/i",$chk)) $val = 1;
 
