@@ -11,11 +11,21 @@ CVS Server administrator	:  Young Min Kim < blhole@hotmail.com >
 
 ## Warning ##
 
-This package turned out to work only in Linux system. 
-Any one who wants install this package on any other platform 
+This package turned out to work only in Linux system.
+Any one who wants install this package on any other platform
 must revise it as needed for himeself/herself.
 
 ******************************************************************************
+
+작성자 : 디망쉬 (dimanche@dimanche.co.kr)
+작성일 : 2000년 4월 26일
+버전   : jsboard-0.7.6 (적수게시판 버전 0.7 정식 버젼)
+
+1. 게시물 리스트 화면에서 게시물 제목에 마우스 커서를 온오버시 게시물의
+   내용 일부 미리 보기 기능 추가 (이용 여부 선택 가능, 미리 볼 내용 분량
+   지정 가능)
+
+-----------------------------------------------------------------------------
 
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 4월 22일
@@ -90,7 +100,7 @@ must revise it as needed for himeself/herself.
 
 1. list에서 name과 subject의 문자열(한글 처리) 자르는 부분 수정
    적수님 패치 적용
-2. html enable 시에 쓸데 없는 tab 사용하는 것 삭제 
+2. html enable 시에 쓸데 없는 tab 사용하는 것 삭제
    예를 들어 <html> <div> <head> <meta> 등
    <table> tag는 사용가능.
 3. table tag 사용시 table tag(table,tr,td) 에만 nl2br()과 들여쓰기 기능이
@@ -431,7 +441,7 @@ bug patch로만 minor version update가 될것임
 
   0.6버젼과 0.5 버젼의 기능상의 차이를 좁힘.
   0.5에 들어 있던 $use_email, $use_url 변수를 추가.
-  
+
   $disp_name $use_write는 어떤 기능인지 파악을 못해서
   추가 안함. 실제로 변수만 존재하는 듯함. 어디서 수정이 됐나??
 
@@ -447,12 +457,12 @@ bug patch로만 minor version update가 될것임
 
    config.ph 에 $webboard_version 함수 등록(메일 정보로)
 
-3. reply.php3 write.php3, edit.php3 delete.php3에서 
+3. reply.php3 write.php3, edit.php3 delete.php3에서
    file_upload가 no 일때 file_upload 보이는 부분 수정
 
 4. $use_url, $use_email 변수 등록(config.ph)
    reply.php3 write.php3, edit.php3 수정해 줌.
-   
+
 5. delete.php3 에서 윈도그용 익스플로러에서 테이블 사이즈가
    엉망이 되는 것 수정 (blank.gif 를 이용하여 고정)
 
@@ -522,7 +532,7 @@ jsboard/admin/include/sample/config.ph
 버전   : jsboard-0.5 (적수게시판 버전 0.5)
 
 다른 분들이 다 해 놓은 것을 제가 덥석 집어 먹은 듯한 느낌이지만, 그래도
-제가 조금 수정한 부분을 적겠습니다. 
+제가 조금 수정한 부분을 적겠습니다.
 
 ㅇ파일이 포함되지 않은 글을 지울때 생기는 버그를 고침
 ㅇ파일이 포함되지 않은 글에 X 표시가 되는 부분을 지움
@@ -542,32 +552,32 @@ o file 업로드시 화일이름에 공백이 있어도 업로드 가능..
 1999년11월30일
 
 실력은 미진하지만 저도 일조하고픈 마음에서 신경을 써서 작업을 했습니다.
-아래는 업데이트 로그 입니다. 방창현님 께서 수정하신 manual.php3부분은 
-너무도 고난이도 기술( -_-;) 이어서 제가 따라가기가 힘들었습니다. 
+아래는 업데이트 로그 입니다. 방창현님 께서 수정하신 manual.php3부분은
+너무도 고난이도 기술( -_-;) 이어서 제가 따라가기가 힘들었습니다.
 그래서 제가 페키지 한것은 방창현님의 manual.php3부분을 제하고 하였읍니다.
 파일은 같이 들어 있지만 실제 사용되지 않도록 설정을 했거든요. 어떻게 사용
-하는지도 잘 모르고요.. -_-;;; 
+하는지도 잘 모르고요.. -_-;;;
 기존에 문태준님이 작성하신 파일 삭제 코드가 제대로 동작하지 않아 약간 수정
 하였습니다.  제가 급하게 하느라고(아침에 셤보는데 이거 수정하고 있네요.. 현재
 새벽 5시) 제대로 되었는지 모르겠습니다. 너무나 실력있는 분들이(적수님, 태준님,
-창현님) 작업해두신거라.. 아무쪼록 잘못된거 있으면 바로 멜좀 부탁 드려요,, 
+창현님) 작업해두신거라.. 아무쪼록 잘못된거 있으면 바로 멜좀 부탁 드려요,,
 
 * 등록된 파일종류별 썸네일 기능 추가
 * 업로드 세팅중 파일 미등록시 "홀" 현상 제거  "X" 볼드체로 변경
 * list.ph 의 함수중에 있는 링크안되어 사용된 include문제 해결(global 선언)
 * read.php3 파일중 정규표현식 에러 교정(실제 에러가 아님, 정규표현 라이브러리상에 차이)
 * 관리자 조회수 증가 방지 IP변수 등록 / 설정 가능. 관리차원에 편리성을 위해서 db.php3에 위치
-* 업로드된 파일 삭제루틴을 filesystem function으로 교채하였습니다. 
+* 업로드된 파일 삭제루틴을 filesystem function으로 교채하였습니다.
 * 작성글 수정과 삭제시 file 참고 부분 첨가
 
-아래 주소로 가시면 수정된 게시판 을 보실수 있습니다. 
+아래 주소로 가시면 수정된 게시판 을 보실수 있습니다.
 
   http://delta.seonam.ac.kr/~jinoos/tmp/jsboard04/
 
 -----------------------------------------------------------------------------
 
 작성자: 방창현 (겨울아이) winchild@kldp.org
-작성일: 1999년11월26일 
+작성일: 1999년11월26일
 버전: jsboard-0.3 (적수게시판 버전 0.3)
 
 적수님의 게시판이 많은 사람들에세 사용되고 있는것 같습니다. 최초의 적수님의
@@ -575,7 +585,7 @@ o file 업로드시 화일이름에 공백이 있어도 업로드 가능..
 문태준님께서 상당히 개선을 해서 처음으로 올리신것 같습니다. 이것을 시작으로
 오픈소스로서 리눅스의 개발체계를 따라가도록 하는것이 좋을것 같아서 문태준님의
 버전에 잘못된점을 수정하여 다시 올립니다. 버전은 적수님이 최초로 배포한 버전
-을 0.1 로 하여 문태준님의 버전을 0.2, 제가 수정하여 올리는 버전을 0.3 으로 
+을 0.1 로 하여 문태준님의 버전을 0.2, 제가 수정하여 올리는 버전을 0.3 으로
 할까 하며 프로그램의 명청도 적수-게시판으로 하여 jsboard 로 하는것이 좋을듯
 합니다. 적수님의 동의를 구합니다.
 
@@ -595,7 +605,7 @@ o file 업로드시 화일이름에 공백이 있어도 업로드 가능..
    따라서 include 디렉토리 밑에 study 내용을 복사하였습니다.
 
 2. desc.ph 에서 header.phtml 및 menu.phtml 파일을 읽어들이는데 include 에
-   phtml 로 확장자가 붙은 파일은 없습니다. 따라서 header.ph 및 menu.ph로 
+   phtml 로 확장자가 붙은 파일은 없습니다. 따라서 header.ph 및 menu.ph로
    변경시켜 주었습니다.
 
 3. desc.ph 에서 header.ph를 읽어들이는데 이미 list.php3 에서 읽어들였기 때문
@@ -608,7 +618,7 @@ o file 업로드시 화일이름에 공백이 있어도 업로드 가능..
    로 하지말고 이전의 적수님 게시판에서 이용한 <메뉴명>.php3 파일을 이용하여
    구동하도록 하여야 합니다.
 
-   즉 
+   즉
 
      <?
      Header("Cache-Control: no-cache, must-revalidate");           // HTTP/1.1
@@ -642,12 +652,12 @@ o file 업로드시 화일이름에 공백이 있어도 업로드 가능..
 -board/include/table이름/config.ph에서 업로드 화면이 나오거나 나오지 않도록 조정가능
 ** .ph 설정파일을 php에서 해석하도록 하는게 보안적인 면에서 좋음. 설정파일을
 남이 보면 좀 그렇죠?
-** 이유는 귀찮아서 안 찾아보았는데 regex 정규표현식에서 에러가 나서 
-이부분은 고쳤음. 
+** 이유는 귀찮아서 안 찾아보았는데 regex 정규표현식에서 에러가 나서
+이부분은 고쳤음.
 
 
-board/ 
--->> 
+board/
+-->>
 act.php3 : 파일 업로드 및 목록에서 보여주기 추가
 delete.php3 : 파일 삭제 기능 추가
 list.php3 : 파일 목록 나오게

@@ -89,6 +89,14 @@ if (!$langs || $langs == $lang) {
   $langs = $lang;
 }
 
+if (!$preview || $preview == $previewn) {
+  $preview == $previewn;
+}
+
+if (!$previewsize || $previewsize == $previewsizen) {
+  $previewsize == $previewsizen;
+}
+
 if (!$uscale || $uscale == $pern) {
   $uscale = $pern;
 }
@@ -212,6 +220,9 @@ if ($useurl == $use_url) {
 /* 변수명 치환 */
 $rwritemode	= '$writemode' ;
 $rwebboard_version	= '$webboard_version' ;
+$rpreviewn = '$previewn' ;
+$rpreviewsizen = '$previewsizen' ;
+
 
 $user_info = "<?
 
@@ -232,6 +243,10 @@ $rwritemode	= \"$writemodes\" ;
 
 // Board version (건들지 마시오)
 $rwebboard_version = \"0.7\" ;
+
+// Preview
+$rpreviewn = \"$preview\" ;
+$rpreviewsizen = \"$previewsize\" ;
 
 ?>" ;
 
@@ -271,7 +286,6 @@ mysql_close() ;
 $fp = fopen( "../../include/$db/config.ph", "w" ) ; 
 fwrite($fp, $user_info); 
 fclose($fp);
-
 
 
 /******************************************

@@ -160,6 +160,24 @@ echo ("
 <td colspan=6 align=center>&nbsp;</td>
 </tr>
 
+<!-- 0.7.6 부터 추가된 부분 -->
+<tr>
+<td colspan=6 align=center bgcolor=#555555><font id=ac>Preview</font></td>
+</tr>
+
+<tr>
+<td bgcolor=#333333>Preview mode</td>
+<td><input type=text name=preview size=14 id=input value=$previewn></td>
+<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=preview')></td>
+<td bgcolor=#333333>Preview size</td>
+<td><input type=text name=previewsize size=14 id=input value=$previewsizen></td>
+<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=previewsize')></td>
+</tr>
+
+<tr>
+<td colspan=6 align=center>&nbsp;</td>
+</tr>
+
 <tr>
 <td colspan=6 align=center bgcolor=#555555><font id=ac>Table Informations</font></td>
 </tr>
