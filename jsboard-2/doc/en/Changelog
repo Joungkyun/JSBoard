@@ -73,7 +73,6 @@ Version   : jsboard-2.0pre4
 47. fix typo in mail.template
 48. changed to use self smtp of JSBoard when send mail
 49. fixed bug of regex
-50. check valid email address
 
 
 -----------------------------------------------------------------------------
