@@ -74,8 +74,8 @@ function plist($n, $act = "normal")
 	echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"$l0_bg\"><tr><td>\n" .
 	     "<table width=\"100%\" border=\"0\" cellspacing=\"2\" cellpadding=\"3\">\n<tr>\n" .
 	     "<td width=\"7%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\"><nobr>번호<nobr></font></td>\n" .
-	     "<td width=\"68%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">제목</font></td>\n" .
-	     "<td width=\"12%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">글쓴이</font></td>\n" );
+	     "<td width=\"63%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">제목</font></td>\n" .
+	     "<td width=\"18%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">글쓴이</font></td>\n" );
 
         if($file_upload == "yes"){
 		echo("<td width=\"5%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">파일</font></td>\n");
@@ -200,9 +200,9 @@ function vlist($no) {
 
 	if ($date2 > $today) {
 	    echo("<td align=\"left\" width=\"1\" bgcolor=\"$t0_bg\"><img src=\"images/n.gif\" width=\"1\" height=\"1\" alt=\"0\" border=\"0\"></td>\n" .
-		 "<td align=\"right\" bgcolor=\"$bg\"><font color=\"$fg\">$refer</font></td>\n");
+		 "<td align=\"center\" bgcolor=\"$bg\"><font color=\"$fg\">$refer</font></td>\n");
 	} else {
-	     echo("<td colspan=\"2\" align=\"right\" bgcolor=\"$bg\"><font color=\"$fg\">$refer</font></td>\n");
+	     echo("<td colspan=\"2\" align=\"center\" bgcolor=\"$bg\"><font color=\"$fg\">$refer</font></td>\n");
 	} 
 	echo("</tr>\n");
 

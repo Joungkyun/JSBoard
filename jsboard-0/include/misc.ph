@@ -230,4 +230,33 @@ function sepa($bg)
     echo("<td width=\"1%\" bgcolor=\"$bg\"><img src=\"images/n.gif\" width=\"2\" height=\"1\" alt=\"\"></td>\n");
 }
 
+// 적수님이 보내주신 파일의 크기를 출력하는 부분이 있어서 사람이 읽기 쉽게 출력하는 모듈
+function human_readable($byte)
+{
+    if($byte >= 1024 * 1024 * 1024) {
+	$byte /= 1024 * 1024 * 1024;
+	$suff = "GB";
+    } else if($byte >= 1024 * 1024) {
+	$byte /= 1024 * 1024;
+	$suff = "MB";
+    } else if($byte >= 1024) {
+	$byte /= 1024;
+	$suff = "KB";
+    } else {
+	$suff = "B";
+    }
+
+    if($byte == 0) {
+	$str = "0";
+    } else if($byte >= 10) {
+	$str = sprintf("%4.0f", $byte);
+    } else {
+	$str = sprintf("%4.1f", $byte);
+    }
+    
+    $str .= sprintf(" %s", $suff);
+
+    return $str;
+}
+
 ?>
