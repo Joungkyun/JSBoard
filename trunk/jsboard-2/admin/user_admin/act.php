@@ -1,11 +1,11 @@
 <?php
+$path[type] = "user_admin";
+include "../include/admin_head.ph";
+
 # header tail 변수를 치환해줌
 $ua[header] = $uaheader;
 $ua[tail]   = $uatail;
 $ua[style]  = $uastyle;
-
-$path[type] = "user_admin";
-include "../include/admin_head.ph";
 
 if(!session_is_registered("$jsboard") || ($_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1))
   print_error($langs[login_err]);
