@@ -76,6 +76,7 @@ if(!$np) {
 <!-  $list[uname]  : name of writer (include homepage url)                -->
 <!-  $list[attach] : attached file                                        -->
 <!-#######################################################################-->
+<? if($enable[dhost]) $list[dhost] = "By ".$list[dhost]; ?>
 <TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0></TD>
@@ -83,7 +84,7 @@ if(!$np) {
 <TD WIDTH=5><IMG SRC=images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0></TD>
 <TD>
 <IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0><BR>
-<FONT Style="font-weight:bold">Date</FONT> <?=$list[date]?> By <?=$list[dhost]?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">Date</FONT> <?=$list[date]?> <?=$list[dhost]?> &nbsp; &nbsp; 
 <FONT Style="font-weight:bold">Read</FONT> <?=$list[refer]?><BR>
 <FONT Style="font-weight:bold">Name</FONT> <?=$list[uname]?> &nbsp; &nbsp;
 <? if($list[attach]) echo "<FONT Style=\"font-weight:bold\">File</FONT> $list[attach]" ?><BR>

@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Jan 16 2002
+Date      : Wed, Jan 18 2002
 Version   : jsboard-2.0pre4
 
 
@@ -41,6 +41,8 @@ Version   : jsboard-2.0pre4
 17. fixed authentication of external user db include uncrypt password field
 18. update theme version to A2 (See also theme/Changelog.theme)
 19. changed password length to 16 charactors
+20. fixed wrong print of name in delete page of article that include valid
+    value of email address field
 
 
 -----------------------------------------------------------------------------
