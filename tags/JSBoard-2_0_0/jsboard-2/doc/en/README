@@ -1,0 +1,61 @@
+JSBoard 2.x README
+------------------
+
+INTRODUCTION
+
+This program has appeared by ByungChan Kim <redhands at linux.sarang.net>
+in Summer of 1999 and, he was announce with GPL2 license.    This project
+make a step forward with batter and conveniently functions.
+
+It is developed by JoungKyun Kim in development version and by Kisu Choi
+in win32 version. Other Contribute is confirmated in CREDIT file
+
+Our project is located in http://jsboard.kldp.org
+
+
+
+REQUIREMENT
+
+OS : RedHat(6.2,7.x),Debian(Woody),FreeBSD 4.x,Windog NT,Windog 2000
+     Other OS is not test. NetBSD and Solaris don't officialy support,
+     but any site is operation with JSBoard as DIY.
+
+PHP: over 4.1.0
+
+Apache: 1.3.x
+
+MySQL: over 3.22.27
+
+I think that enable to use in other os with some of modify, even if officialy
+support restricted OS.
+
+
+
+Language
+
+JSBoard is designed to support i18N. Now, JSBoard support english and korean.
+Seealso README.LANG
+
+
+
+INSTALLATION
+
+JSBoard support INSTALL program to user who have system root user. But account
+user and anyone who want manual installation will install with INSTALL.MANUALY.
+
+
+
+DUTY OF DEVELOPER
+
+Developer help and support problem of skill. But it is not duty.
+Used of this software is without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+LICENSE
+
+JSBoard follows GPL2 License. But OOPS Administartion Center is not GPL License.
+See also admin/License.
+
+Sep  4 2001 JoungKyun Kim <http://www.oops.org>
