@@ -1,0 +1,17 @@
+알려진 버그
+
+작성 2000.7.16
+
+1. 글쓰기, 수정 및 관련글 쓰기 화면에서 <textarea> 에 WRAP을 hard로 설정할
+   시에 auto_link() 함수 - url을 자동으로 링크시키는 함수 - 와 글내용에
+   table tag를 사용할시에 문제점이 발생할 여지가 있다. 
+
+2. 만약 글쓰기에서 '나 "가 들어갈 경우 SQL error가 나는 경우에는 php3.ini
+   (zend에서는 php.ini) 설정 파일이 제위치에 있지 않아서 발생하는 경우이다.
+   phpinfo() 함수를 이용하여 php3.ini 의 위치를 알아낸 다음 php3 source의
+   php3.ini-dist 를 해당 path에 php3.ini라는 이름으로 수동으로 설치를 해 줘야
+   한다.
+
+3. url로 검색을 할경우 link가 여러개가 있을 경우 링크중 하나가 hilighting이
+   되지 않는 버그가 있다.
+
