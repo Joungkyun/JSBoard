@@ -1,6 +1,6 @@
-<table width="<? echo $width ?>" border="0" cellpadding="4" align="center">
+<table width="<? echo $width ?>" border="0" cellpadding="1" align="center">
 <tr>
-  <td>
+  <td rowspan=2>
     <font size="2" color="<? echo $l0_fg ?>">
     <form method="post" action="list.php3?table=<? echo $table ?>">
     <input type="hidden" name="act" value="search">
@@ -15,9 +15,24 @@
     <input type="submit" value="검색">
     <br><img src="images/n.gif" width="10" height="5" alt="" border="0"><br>
     </font>
-  </td><td valign="top" align="right">
+  </td>
+
+  <td valign="top" align="right">
     <font size="2">
-    <? nlist($page) ?>
+<?
+if($act != "reply" && $act != "relate" && $act != "search") {
+  echo "<font size=-1 color=$l0_fg>총 ${acount} 개의 글(오늘 ${tcount} 개) [ $page / $apage ]</font>" ;
+} else if($act == "search") {
+  echo "<font size=-1 color=$l0_fg>${acount}개의 글이 검색 [ $page / $apage ]</font>" ;
+}
+?>
     </font>
   </td>
-</tr></table>
+</tr>
+
+<tr>
+   <td align=right>
+    <? nlist($page) ?><br>
+   </td>
+</tr>
+</table>
