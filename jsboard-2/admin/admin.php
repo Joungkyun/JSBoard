@@ -150,7 +150,7 @@ if($db[name] && !$table) {
   $to_today_t = !$to_today_t ? "0" : $to_today_t;
 
   # 외부 DB 를 사용할 경우 JSBoard 관리자에서 user 관리를 하지 않음
-  $userclick = ${jsboard}[external] ? "window.alert('External user tabel Can\'t be Use')" : 
+  $userclick = ${$jsboard}[external] ? "window.alert('External user table Can\'t be Use')" : 
                             "document.location='./userlist.php?t=a'";
 
   echo "\n<tr align=center bgcolor=$color[d_bg]>\n".

@@ -18,6 +18,19 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
+Date      : Wed, Jan  3 2002
+Version   : jsboard-2.0pre4
+
+
+* 변경된점
+1. fixed userlist administrate with internal user database
+2. fixed sql that get max no field value, When retist reply article
+3. changed file_operate() function
+4. added environment various in get_hostname() function
+
+
+-----------------------------------------------------------------------------
+Writer    : JoungKyun Kim (admin at oops.org)
 Date      : Mon, Dec 31 2001
 Version   : jsboard-2.0pre3
 
