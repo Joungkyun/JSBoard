@@ -204,6 +204,9 @@ $langs[ua_ha9] = "정보검색";
 $langs[ua_ha10] = "WHOIS 검색";
 
 $langs[ua_fp] = "파일업로드";
+$langs[ua_fl] = "첨부파일 링크";
+$langs[ua_flh] = "헤더를 통해";
+$langs[ua_fld] = "파일 경로를 직접";
 
 $langs[ua_mail_p] = "보냄";
 $langs[ua_mail_n] = "안보냄";

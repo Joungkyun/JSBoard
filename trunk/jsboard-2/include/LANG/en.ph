@@ -201,6 +201,9 @@ $langs[ua_ha9] = "Info";
 $langs[ua_ha10] = "WHOIS search";
 
 $langs[ua_fp]	= "File upload";
+$langs[ua_fl] = "Attach Link";
+$langs[ua_flh] = "with unknown mime type header";
+$langs[ua_fld] = "with direct file path";
 
 $langs[ua_mail_p] = "Send";
 $langs[ua_mail_n] = "Don't";

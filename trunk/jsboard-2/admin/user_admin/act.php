@@ -87,8 +87,8 @@ else $chg[cookie] = "$board[cookie]";
 $ua[wwrap] = !$ua[wwrap] ? "120" : trim($ua[wwrap]);
 
 # File Upload Configuration
-if($ua[upload] != $cupload[yesno]) $chg[upload] = "$ua[upload]";
-else $chg[upload] = "$cupload[yesno]";
+$chg[upload] = $ua[upload] ? 1 : 0;
+$chg[uplink] = $ua[uplink] ? 1 : 0;
 
 # Mail Configuration
 if($ua[admin] != $rmail[admin]) $chg[admin] = "$ua[admin]";
@@ -226,6 +226,7 @@ $chg_conf = "<?
 ###############################################################################
 #
 \$cupload[yesno] = $chg[upload];	# upload 사용 여부
+\$cupload[dnlink] = $chg[uplink];	# 0: 헤더를통해 1: 다이렉트 링크
 
 
 ###############################################################################
