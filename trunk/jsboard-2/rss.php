@@ -52,7 +52,7 @@ if ( !$table ) {
   }
 }
 
-$rss['link'] = $board['path'] . "list.php&amp;table=" . $table;	# 게시판 주소
+$rss['link'] = $board['path'] . "list.php?table=" . $table;	# 게시판 주소
 
 if (!$no)
   $no = $rss['default_article_number'];
