@@ -1,4 +1,4 @@
-<table width="<? echo $width ?>" border="0" cellpadding="1" align="center">
+<table width="<? echo $width ?>" border="0" cellpadding="1" bgcolor="<? echo $sch_bg ?>" align="center">
 <tr>
   <td rowspan=2>
     <font size="2" color="<? echo $l0_fg ?>">
@@ -9,6 +9,7 @@
     <option value="title" selected>제목
     <option value="text">내용
     <option value="name">글쓴이
+    <option value="no">글번호
     <option value="all">모두
     </select>
     <input type="text" name="sc_string" size="<? sform(10) ?>" maxlength="50">

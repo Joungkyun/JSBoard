@@ -32,10 +32,10 @@ function send_mail($no, $bbshome, $mailtoadmin, $mailtowriter, $table, $reno, $n
 
 $mail_msg_header
 
-■ JSBOARD $tabel message
+■ Dimanche Board Service(JSBoard),  $tabel message
 
 [ Server Infomation ]------------------------------------------------------
-ServerWare	: JSBoard-$webboard_version
+ServerWare	: JSBOARD-D $webboard_version
 Server Name	: $SERVER_NAME
 DB Name		: $table
 DB Location	: $webboard_address
@@ -59,19 +59,17 @@ HTTP_USER_AGENT : $HTTP_USER_AGENT
 HTTP_ACCEPT_LANGUAGE : $HTTP_ACCEPT_LANGUAGE
 ---------------------------------------------------------------------------
 
-OOPS Form mail service - http://www.oops.org
-Scripted by JoungKyun Kim <admin@oops.org>
 ";
 
   if ($mailtowriter=="yes" && $reply_writer_email != "") {
     $to = $reply_writer_email;
-    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSboard Message <$email>")
+    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: BoardMessage <$email>")
     or die("mail을 보내지 못했습니다");
   }
 
   if ($mailtoadmin!="") {
     $to = "Board Admin<$mailtoadmin>";
-    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSboard Message <$email>")
+    mail($to, $title, $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: BoardMessage <$email>")
     or die("mail을 보내지 못했습니다");
   }
 }
