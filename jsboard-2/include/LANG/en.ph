@@ -297,7 +297,7 @@ $lnags[os_check] ="If OS isn't Linux, change shell command in jsboard/include/ex
 $langs[mcheck] = "Failed MySQL login. Check the MySQL root password in jsbaord/installer/include/passwd.ph. If password is correct, check if PHP was compiled with --with-mysql option.<br>If you use external DB server, refer to doc/en/INSTALL.MANUALY document";
 $langs[echeck] = "exec() function is not working. Checked your path to php3.ini or php.ini configuration file";
 $langs[icheck] = "Add index.php to DirectoryIndex directive in httpd.conf and restart<br>\napache web server.";
-$langs[pcheck] = "Must excute preinstall in jsboard/Installer/script before Installation";
+$langs[pcheck] = "Must excute preinstall in jsboard/INSTALLER/script before Installation";
 $langs[auser] = "If you failed before, you must install manually. See doc/en/INSTALL.MANUALY document";
 
 $langs[inst_r] = "Reset";
