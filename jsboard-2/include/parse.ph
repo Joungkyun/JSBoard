@@ -446,14 +446,30 @@ function url_link($url, $str = "", $no = 0) {
 # move_upload_file -> tmp로 upload되어 있는 파일을 원하는 디레토리에 위치
 # chmod            -> file, direcoty의 권한 변경
 #
-function file_upload($ufile,$updir) {
+function file_upload($fn,$updir) {
   global $upload, $langs, $table;
+
+  $ufile[name] = $_FILES[$fn][name];
+  $ufile[size] = $_FILES[$fn][size];
+  $ufile[type] = $_FILES[$fn][type];
+  $ufile[tmp_name] = $_FILES[$fn][tmp_name];
 
   if(is_uploaded_file($ufile[tmp_name])) {
     if ($ufile[size] > $upload[maxsize]) {
       print_error($langs[act_md],250,150,1);
       exit;
     }
+
+    # file name에 공백이 있을 경우 공백 삭제
+    $ufile[name] = eregi_replace(" ","",$ufile[name]);
+
+    # file name에 특수 문자가 있을 경우 등록 거부
+    upload_name_chk($ufile[name]);
+
+    # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
+    $f[name] = eregi_replace("[\.]*$","",$f[name]);
+    $f[name] = eregi_replace(".(ph|inc|php[0-9a-z]*|phtml)$",".phps", $f[name]);
+    $f[name] = eregi_replace("(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $f[name]);
 
     mkdir("data/$table/$upload[dir]/$updir",0755);
     move_uploaded_file($ufile[tmp_name],"data/$table/$upload[dir]/$updir/$ufile[name]");
@@ -468,7 +484,7 @@ function file_upload($ufile,$updir) {
     }
     exit;
   }
-  return $up;
+  if($up) return $ufile;
 }
 
 # HTML entry를 특수 특수 문자로 변환
