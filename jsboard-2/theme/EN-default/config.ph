@@ -26,6 +26,8 @@ $color[text]  = "#555555";      # TEXT
 $color[n1_fg] = "#999999";      # Can't Use
 
 # Color configuration
+$color[nr_bg] = "#D3DAC3";      # notice background
+$color[nr_fg] = "#000000";      # notice font
 $color[l2_bg] = "#F5FBE6";      # regular article background
 $color[l2_fg] = "#000000";      # regular article text
 $color[l3_bg] = "#D3DAC3";      # reply article background

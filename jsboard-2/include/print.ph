@@ -265,7 +265,7 @@ function list_cmd($img=0,$prt=0) {
 # read page의 상,하단의 페이지 링크란 출력 함수
 function read_cmd($img=0,$prt=0) {
   global $jsboard, $o, $color, $table, $pages, $enable, $board;
-  global $pos, $list, $no, $page, $langs, $print;
+  global $pos, $list, $no, $page, $langs, $print, $alert;
 
   $str[search] = search2url($o);
   #if (!$o[ck]) $str[search] = "";
@@ -352,6 +352,11 @@ function read_cmd($img=0,$prt=0) {
        "$str[edit]\n".
        "$str[dele]\n".
        "$str[rep]\n";
+
+  if($alert) {
+    $t = "<A HREF=\"list.php?table=$table&page=$page$str[search]\">$menu[lists]</A>\n".
+         "$str[write]\n";
+  }
 
   if($prt) echo $t;
   else return $t;

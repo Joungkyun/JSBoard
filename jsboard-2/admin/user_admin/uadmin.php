@@ -152,7 +152,7 @@ if(file_exists("../../data/$table/stylesheet.ph")) {
 }
 
 if($textBrowser) {
-  $ipbl_button = $dlin_button = $styl_button = $head_button = $tail_button = "&nbsp;";
+  $ipbl_button = $dlin_button = $styl_button = $head_button = $tail_button = $noti_button = "&nbsp;";
 } else {
   $ipbl_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'i');\" TITLE=\"Left Right\">".
                  "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'i');\" TITLE=\"RESET\">".
@@ -169,6 +169,9 @@ if($textBrowser) {
   $tail_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'t');\" TITLE=\"Left Right\">".
                  "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'t');\" TITLE=\"RESET\">".
                  "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'t');\" TITLE=\"Up Down\">";
+  $noti_button = "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1,'n');\" TITLE=\"Left Right\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0,'n');\" TITLE=\"RESET\">".
+                 "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2,'n');\" TITLE=\"Up Down\">";
 }
 ?>
 
@@ -229,6 +232,13 @@ function fresize(value,name) {
     }
     if (value == 1) document.uadmin.ipbl.cols += 5;
     if (value == 2) document.uadmin.ipbl.rows += 5;
+  } else if (name == 'n') {
+    if (value == 0) {
+      document.uadmin.noti.cols = <?=$tsize?>;
+      document.uadmin.noti.rows = 5;
+    }
+    if (value == 1) document.uadmin.noti.cols += 5;
+    if (value == 2) document.uadmin.noti.rows += 5;
   } else {
     document.uadmin.uaheader.cols = <?=$tsize?>;
     document.uadmin.uaheader.rows = 10;
@@ -619,6 +629,30 @@ else echo "<CENTER><FONT COLOR=RED><B>$langs[ua_while_wn]</B></FONT></CENTER>";
 
 <TR><TD ALIGN=center COLSPAN=6>
 <textarea name=denylink cols=<?=$tsize.$denylinkro?> rows=5 wrap=off><?=$denylink?></textarea>
+</TD></TR>
+
+<TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>
+
+<TR><TD BGCOLOR=<?=$color[t_bg]?> ALIGN=center COLSPAN=6><font id=TCOLOR>Board Notice <?=$i+1?></font></TD></TR>
+
+<TR>
+<TD BGCOLOR=#D3DAC3><font id=MCOLOR>Subject</font></TD>
+<TD COLSPAN=4>
+<INPUT TYPE=text name=ua[notices] size=55 value="<?=$notice[subject]?>">
+</TD>
+<TD BGCOLOR=#F5FBE6>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR=#D3DAC3><font id=MCOLOR>Contents</font></TD>
+<TD COLSPAN=5 ALIGN=right>
+<font id=MCOLOR>TEXTAREA SIZE OPERATION
+<?=$noti_button?>
+</font>
+</TD></TR>
+
+<TR><TD ALIGN=center COLSPAN=6>
+<textarea name=noti cols=<?=$tsize?> rows=5 wrap=off><?=$notice[contents]?></textarea>
 </TD></TR>
 
 <TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>

@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.0
 
+Thu, Jul 04 2002 by JoungKyun Kim <http://www.oops.org>
+	- added notice article in list
+
 Sun, Jun 30 2002 by JoungKyun Kim <http://www.oops.org>
 	- fixed form size of mozilla v1.0.0 (Linux/Windows)
 

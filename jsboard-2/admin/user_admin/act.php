@@ -130,6 +130,25 @@ $ua[s_titl] = !$ua[s_titl] ? "25" : $ua[s_titl];
 $ua[s_text] = !$ua[s_text] ? "30" : $ua[s_text];
 $ua[s_uplo] = !$ua[s_uplo] ? "19" : $ua[s_uplo];
 
+# Notice check
+$chg[notice_s] = trim($ua[notices]) ? trim($ua[notices]) : "";
+$chg[notice_c] = trim($noti) ? trim(stripslashes($noti)) : "";
+
+$chg[notice_c] = preg_replace("/<([\/]?FONT[^>]*)>/i","#FONT-TAG-OPEN#\\1#FONT-TAG-CLOSE#",$chg[notice_c]);
+$chg[notice_c] = htmlspecialchars($chg[notice_c]);
+
+$src[] = "/&quot;/i";
+$tar[] = "\\\\\"";
+$src[] = "/\r?\n/i";
+$tar[] = "\\n\".\n";
+$src[] = "/^/m";
+$tar[] = "                    \"";
+$src[] = "/$/";
+$tar[] = "\"";
+$chg[notice_c] = trim(preg_replace($src,$tar,$chg[notice_c]));
+$chg[notice_c] = str_replace("#FONT-TAG-OPEN#","<",$chg[notice_c]);
+$chg[notice_c] = str_replace("#FONT-TAG-CLOSE#",">",$chg[notice_c]);
+
 $chg_conf = "<?
 ###############################################################################
 #  게시판 관리 모드
@@ -278,6 +297,18 @@ $chg_conf = "<?
 #
 \$enable[dhyper] = $chg[dhyper];
 \$enable[plink]  = \"$chg[plink]\";
+
+###############################################################################
+# 게시판 공지사항
+#
+# 배열로 하여 여러개를 지정할 수 있음
+# \$notice[subject] -> 공지사항 제목
+# \$notice[body]    -> 공지사항 내용
+# 공지사항 내용이 없을 경우에는 제목 링크가 안되게 출력
+###############################################################################
+#
+\$notice[subject] = \"${chg[notice_s]}\";
+\$notice[contents] = ${chg[notice_c]};
 ?>";
 
 # 변경된 설정 값을 config.ph 에 쓴다.

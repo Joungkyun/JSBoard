@@ -26,6 +26,8 @@ $color[text]  = "#555555";      # TEXT
 $color[n1_fg] = "#999999";      # 사용 불가능
 
 # 색상 설정
+$color[nr_bg] = "#D3DAC3";      # 공지글 배경
+$color[nr_fg] = "#000000";      # 공지글 글자
 $color[l2_bg] = "#F5FBE6";      # 보통글 배경
 $color[l2_fg] = "#000000";      # 보통글 글자
 $color[l3_bg] = "#D3DAC3";      # 답장글 배경
