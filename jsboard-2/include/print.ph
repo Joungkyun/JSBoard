@@ -390,15 +390,15 @@ function article_reply_list($table,$pages,$print=0) {
          "<TABLE WIDTH=100% border=0 CELLSPACING=1 CELLPADDING=$CPADDING>\n";
     $t .= get_list($table,$pages,$o);
     $t .= "<TR>\n".
-          "  <TD WIDTH=$td_width[1] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n".
-          "  <TD WIDTH=$td_width[2] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n".
-          "  <TD WIDTH=$td_width[3] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n";
+          "  <TD WIDTH=$td_width[1] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+          "  <TD WIDTH=$td_width[2] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+          "  <TD WIDTH=$td_width[3] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
 
     if ($upload[yesno] && $cupload[yesno])
-      $t .= "  <TD WIDTH=$td_width[4] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n";
+      $t .= "  <TD WIDTH=$td_width[4] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
 
-    $t .= "<TD WIDTH=$td_width[5] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n".
-            "  <TD COLSPAN=2 WIDTH=$td_width[6] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n".
+    $t .= "<TD WIDTH=$td_width[5] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+            "  <TD COLSPAN=2 WIDTH=$td_width[6] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
             "</TR>\n".
             "</TABLE>\n";
     return $t;
@@ -409,15 +409,15 @@ function article_reply_list($table,$pages,$print=0) {
     get_list($table,$pages,$o,1);
 
     echo "<TR>\n".
-         "  <TD WIDTH=$td_width[1] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n".
-         "  <TD WIDTH=$td_width[2] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n".
-         "  <TD WIDTH=$td_width[3] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n";
+         "  <TD WIDTH=$td_width[1] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+         "  <TD WIDTH=$td_width[2] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+         "  <TD WIDTH=$td_width[3] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
 
     if ($upload[yesno] && $cupload[yesno])
-      echo "  <TD WIDTH=$td_width[4] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n";
+      echo "  <TD WIDTH=$td_width[4] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n";
   
-    echo "<TD WIDTH=$td_width[5] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n".
-         "  <TD COLSPAN=2 WIDTH=$td_width[6] ALIGN=center><img src=images/blank.gif width=100% height=1></TD>\n".
+    echo "<TD WIDTH=$td_width[5] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
+         "  <TD COLSPAN=2 WIDTH=$td_width[6] ALIGN=center><img src=images/blank.gif width=100% height=1 ALT=''></TD>\n".
          "</TR>\n".
          "</TABLE>\n";
   }

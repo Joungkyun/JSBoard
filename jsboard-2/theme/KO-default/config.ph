@@ -59,7 +59,7 @@ $color[d_fg] = "#555555";	# 설명칸 배경
 
 # 글 리스트 tr 의 높이 설정
 # list table 에서는 image 의 height 로 조정. 예를 들어
-# <IMG SRC=img/blank.gif WIDTH=0 HEIGHT=$line_height BORDER=0>
+# <IMG SRC=img/blank.gif WIDTH=0 HEIGHT=$line_height BORDER=0 ALT=''>
 $lines[height] = "25";
 
 # 글 리스트들 사이에 디자인을 넣기위한 코드 이설정은 <TD></TD>

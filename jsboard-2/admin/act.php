@@ -130,7 +130,8 @@ if($mode == "global_chg") {
   $langs[act_complete] = str_replace("'","\'",$langs[act_complete]);
   echo "<script>\n" .
        "alert('$langs[act_complete]')\n" .
-       "window.close()\n</script>";
+       "window.close()\n</script>\n".
+       "<NOSCRIPT>Complete this Job. Click <A HREF=./admin.php>here go to admin page!</A></NOSCRIPT>";
   exit;
 
 }

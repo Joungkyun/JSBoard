@@ -69,6 +69,8 @@ $db = replication_mode($db);
 if(preg_match("/(act|write|edit|reply)\.php/i",$_SERVER[PHP_SELF]))
   $upload[maxsize] = get_upload_value($upload);
 
+if(preg_match("/links|w3m|lynx/i",$agent[br])) $textBrowser = 1;
+
 # 외부 hyper link 를 막기 위한 설정
 check_dhyper($board[usedhyper],$board[endhyper],$board[dhyper],$enable[dhyper],$enable[plink]);
 check_access($board[useipbl],$board[ipbl],$enable[ipbl]);

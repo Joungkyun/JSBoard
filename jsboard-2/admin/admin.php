@@ -25,34 +25,45 @@ $langs[a_t61] = strtolower($langs[a_t6]);
 # MySQL 서버에 연결한다
 $connect=@mysql_connect($db[server],$db[user],$db[pass])  or  
               die($langs[sql_na]); 
-
-echo "<table border=0 width=100% height=100% cellpadding=0 cellspacing=0>\n".
-     "<tr><td align=center valign=center>\n\n".
-     "<table width=$board[width] border=0 cellpadding=0 cellspacing=0>\n<tr><td>\n".
-     "<table border=0 cellpadding=0 cellspacing=0>\n<tr>\n".
-     "<td rowspan=2 valign=center>\n".
-     "<font style=\"font: 40px Tahoma; color:$color[m_bg];font-weight:bold\">J</font></td>\n".
-     "<td valign=bottom><FONT STYLE=\"font: 12px tahoma;font-weight: bold\"> SBoard</FONT></td>\n".
-     "</tr>\n\n<tr>\n".
-     "<td valign=top><font style=\"font: 12px tahoma; font-weight:bold\">Administration Center</font></td>\n".
-     "</tr>\n</table>\n".
-     "</td></tr>\n</table>\n\n";
+if($textBrowser) {
+  echo "JSBoard<BR>\n".
+       "Administration Center\n";
+} else {
+  echo "<table border=0 width=100% height=100% cellpadding=0 cellspacing=0>\n".
+       "<tr><td align=center valign=center>\n\n".
+       "<table width=$board[width] border=0 cellpadding=0 cellspacing=0>\n<tr><td>\n".
+       "<table border=0 cellpadding=0 cellspacing=0>\n<tr>\n".
+       "<td rowspan=2 valign=center>\n".
+       "<font style=\"font: 40px Tahoma; color:$color[m_bg];font-weight:bold\">J</font></td>\n".
+       "<td valign=bottom><FONT STYLE=\"font: 12px tahoma;font-weight: bold\"> SBoard</FONT></td>\n".
+       "</tr>\n\n<tr>\n".
+       "<td valign=top><font style=\"font: 12px tahoma; font-weight:bold\">Administration Center</font></td>\n".
+       "</tr>\n</table>\n".
+       "</td></tr>\n</table>\n\n";
+}
 
 # db_name이 존재하지 않으면 아래를 출력합니다.
 exsit_dbname_check($db[name]);
 
 if($db[name] && !$table) {
   echo "<table border=0 cellpadding=1 cellspacing=1 width=$board[width] align=center>\n".
-       "<tr align=center bgcolor=$color[t_bg]>\n".
-       "<td rowspan=2><font color=$color[t_fg]><b>$langs[a_t1]</b></font></td>\n".
-       "<td colspan=2><font color=$color[t_fg]><b>$langs[a_t2]</b></font></td>\n".
-       "<td rowspan=2><font color=$color[t_fg]><b>$langs[a_t5]</b></font></td>\n".
-       "<td rowspan=2><font color=$color[t_fg]><b>$langs[a_t6]</b></font></td>\n".
-       "</tr>\n\n".
-       "<tr align=center bgcolor=$color[t_bg]>\n".
-       "<td><font color=$color[t_fg]>$langs[a_t3]</font></td>\n".
-       "<td><font color=$color[t_fg]>$langs[a_t4]</font></td>\n".
-       "</tr>";
+       "<tr align=center bgcolor=$color[t_bg]>\n";
+
+  if($textBrowser) {
+    echo "<td><font color=$color[t_fg]><b>$langs[a_t1]</b></font></td>\n".
+         "<td><font color=$color[t_fg]>$langs[a_t3]</font></td>\n".
+         "<td><font color=$color[t_fg]>$langs[a_t4]</font></td>\n".
+         "<td><font color=$color[t_fg]><b>$langs[a_t5]</b></font></td>\n";
+  } else {
+    echo "<td rowspan=2><font color=$color[t_fg]><b>$langs[a_t1]</b></font></td>\n".
+         "<td colspan=2><font color=$color[t_fg]><b>$langs[a_t2]</b></font></td>\n".
+         "<td rowspan=2><font color=$color[t_fg]><b>$langs[a_t5]</b></font></td>\n".
+         "</tr>\n\n".
+         "<tr align=center bgcolor=$color[t_bg]>\n".
+         "<td><font color=$color[t_fg]>$langs[a_t3]</font></td>\n".
+         "<td><font color=$color[t_fg]>$langs[a_t4]</font></td>\n";
+  }
+  echo "</tr>";
 
 
   $table_name = get_tblist($db[name],$ts);
@@ -103,29 +114,38 @@ if($db[name] && !$table) {
              "<td align=right width=15%><font color=$color[m_fg]>$total_count &nbsp;&nbsp;</font></td>\n";
 
         if($chk_result && $table_name[$i] != "userdb") {
-          echo "<form method='POST'><td width=30%>\n".
-               "<input type=button value=$langs[a_t7] onClick=fork('popup','../list.php?table=$table_name[$i]&nd=1')>\n".
-               "<input type=button value=$langs[a_t8] onClick=fork('popup','./user_admin/uadmin.php?table=$table_name[$i]&nd=1')>\n".
-               "<input type=button value=$langs[a_t17] onClick=fork('popup','./stat.php?table=$table_name[$i]')>\n".
-               "</td></form>\n";
+          if($textBrowser) {
+            echo "<td width=40%>\n".
+                 "<A HREF=../list.php?table=$table_name[$i]&nd=1>$langs[a_t7]</A>\n".
+                 "<A HREF=./user_admin/uadmin.php?table=$table_name[$i]&nd=1>$langs[a_t8]</A>\n".
+                 "<A HREF=./stat.php?table=$table_name[$i]>$langs[a_t17]</A>\n".
+                 "<A HREF=./act.php?mode=db_del&table_name=$table_name[$i]&ts=$ts>$langs[a_t9]</A>\n".
+                 "</td>\n</tr>";
+          } else {
+            echo "<form name='delete_db' method='post' action='act.php'><td width=40%>\n".
+                 "<input type=button value=$langs[a_t7] onClick=fork('popup','../list.php?table=$table_name[$i]&nd=1')>\n".
+                 "<input type=button value=$langs[a_t8] onClick=fork('popup','./user_admin/uadmin.php?table=$table_name[$i]&nd=1')>\n".
+                 "<input type=button value=$langs[a_t17] onClick=fork('popup','./stat.php?table=$table_name[$i]')>\n".
+                 "<input type=submit value=$langs[a_t9] onClick=\"return confirm('$langs[a_del_cm]')\">\n".
+                 "<input type='hidden' name='table_name' value='$table_name[$i]'>\n".
+                 "<input type='hidden' name='mode' value='db_del'>\n".
+                 "<input type='hidden' name='ts' value='$ts'>\n".
+                 "</td></form>\n</tr>";
+          }
         } else {
-            echo "<td width=30%>\n".
-                 "<font color=$color[m_fg]>Not JSBoard table</font>\n".
-                 "</td>\n";
+            echo "<form name='delete_db' method='post' action='act.php'><td width=40%>\n".
+                 "<font color=$color[m_fg]>Not JSBoard table</font>&nbsp;&nbsp;\n".
+                 "<input type=submit value=$langs[a_t9] onClick=\"return confirm('$langs[a_del_cm]')\">\n".
+                 "<input type='hidden' name='table_name' value='$table_name[$i]'>\n".
+                 "<input type='hidden' name='mode' value='db_del'>\n".
+                 "<input type='hidden' name='ts' value='$ts'>\n".
+                 "</td></form>\n</tr>";
         }
-
-        echo "<form name='delete_db' method='post' action='act.php'>\n".
-             "<td width=10%>\n".
-             "<input type='hidden' name='table_name' value='$table_name[$i]'>\n".
-             "<input type='hidden' name='mode' value='db_del'>\n".
-             "<input type='hidden' name='ts' value='$ts'>\n".
-             "<input type=submit value=$langs[a_t9] onClick=\"return confirm('$langs[a_del_cm]')\">\n".
-             "</td></form>\n</tr>";
       }
     }
   } else {
     echo "<tr align=center bgcolor=$color[m_bg]>\n".
-         "<td colspan=5 align=center><font size=+2 color=$color[m_fg]><b><br>$langs[n_acc]<br>&nbsp;</b></font></td>\n".
+         "<td colspan=4 align=center><font size=+2 color=$color[m_fg]><b><br>$langs[n_acc]<br>&nbsp;</b></font></td>\n".
          "</tr>";
   }
 
@@ -159,30 +179,58 @@ if($db[name] && !$table) {
        "<td><font color=$color[d_fg]><b>$langs[a_t41] [ $langs[a_t16] ]</b></font></td>\n".
        "<td align=center><font color=$color[d_fg]>$to_today [$to_today_t]</font></td>\n".
        "<td align=center><font color=$color[d_fg]>$to [$to_t]</font></td>\n".
-       "<td colspan=2 bgcolor=$color[m_bg]>\n".
-       "<form><input type=button value=\"$langs[a_t20]\" onClick=\"$userclick\">\n".
-       "<input type=button value=\"$langs[a_t11]\" onClick=logout()>\n".
-       "</td></form>\n</tr>\n\n".
-       "<tr bgcolor=$color[m_bg]><form name='create_db' method='post' action='act.php'>\n".
-       "<td colspan=3>&nbsp;&nbsp;<font color=$color[m_fg]>$langs[a_t12] :</font>\n".
-       "<input type=text name='new_table' size=$size>\n".
-       "<input type='submit' name='submit' value='$langs[a_t13]'>\n".
-       "<input type='hidden' name='mode' value='db_create'>\n".
-       "<input type='hidden' name='ts' value='$ts'>\n".
-       "</td></form>\n\n".
-       "<td colspan=2  rowspan=2 align=center>\n".
-       "<a href=http://jsboard.kldp.org TARGET=_blank>".
-       "<font STYLE=\"font: 12px tahoma; color:$color[m_fg]\">Powered By<BR>JSBoard OPEN PROJECT</font></a>\n".
-       "</td>\n</tr>\n\n".
-       "<tr bgcolor=$color[m_bg]><form name='del_db' method='post' action='act.php'>\n".
-       "<td colspan=3>&nbsp;&nbsp;<font color=$color[m_fg]>$langs[a_t14] :</font>\n".
-       "<input type=text name='table_name' size=$size>\n".
-       "<input type='submit' name='submit' value='$langs[a_t61]' onClick=\"return confirm('$langs[a_del_cm]')\">\n".
-       "<input type='hidden' name='mode' value='db_del'>\n".
-       "<input type='hidden' name='ts' value='$ts'>\n".
-       "</td></form>\n</tr>\n\n".
-       "<tr bgcolor=$color[d_bg]>\n".
-       "<td colspan=3 align=center>\n";
+       "<td bgcolor=$color[m_bg]>\n";
+  if($textBrowser) {
+    $userclick = $_SESSION[$jsboard][external] ? "[ $langs[a_t20] ]" : "<A HREF=./userlist.php?t=a>[ $langs[a_t20] ]</A>";
+    echo "$userclick\n".
+         "<A HREF=../session.php?m=logout>[ $langs[a_t11] ]</A>\n";
+  } else {
+    echo "<input type=button value=\"$langs[a_t20]\" onClick=\"$userclick\">\n".
+         "<input type=button value=\"$langs[a_t11]\" onClick=logout()>\n";
+  }
+
+  if($textBrowser) {
+    echo "</td>\n</tr>\n\n".
+         "<tr bgcolor=$color[m_bg]><form name='create_db' method='post' action='act.php'>\n".
+         "<td colspan=4>&nbsp;&nbsp;<font color=$color[m_fg]>$langs[a_t12] :</font>\n".
+         "<input type=text name='new_table' size=$size>\n".
+         "<input type='submit' name='submit' value='$langs[a_t13]'>\n".
+         "<input type='hidden' name='mode' value='db_create'>\n".
+         "<input type='hidden' name='ts' value='$ts'>\n".
+         "</td></form>\n".
+         "</tr>\n\n".
+         "<tr bgcolor=$color[m_bg]><form name='del_db' method='post' action='act.php'>\n".
+         "<td colspan=4>&nbsp;&nbsp;<font color=$color[m_fg]>$langs[a_t14] :</font>\n".
+         "<input type=text name='table_name' size=$size>\n".
+         "<input type='submit' name='submit' value='$langs[a_t61]'>\n".
+         "<input type='hidden' name='mode' value='db_del'>\n".
+         "<input type='hidden' name='ts' value='$ts'>\n".
+         "</td></form>\n</tr>\n\n".
+         "<tr bgcolor=$color[d_bg]>\n".
+         "<td colspan=3>\n";
+  } else {
+    echo "</td>\n</tr>\n\n".
+         "<tr bgcolor=$color[m_bg]><form name='create_db' method='post' action='act.php'>\n".
+         "<td colspan=3>&nbsp;&nbsp;<font color=$color[m_fg]>$langs[a_t12] :</font>\n".
+         "<input type=text name='new_table' size=$size>\n".
+         "<input type='submit' name='submit' value='$langs[a_t13]'>\n".
+         "<input type='hidden' name='mode' value='db_create'>\n".
+         "<input type='hidden' name='ts' value='$ts'>\n".
+         "</td></form>\n\n".
+         "<td rowspan=2 align=center>\n".
+         "<a href=http://jsboard.kldp.org TARGET=_blank>".
+         "<font STYLE=\"font: 12px tahoma; color:$color[m_fg]\">Powered By<BR>JSBoard OPEN PROJECT</font></a>\n".
+         "</td>\n</tr>\n\n".
+         "<tr bgcolor=$color[m_bg]><form name='del_db' method='post' action='act.php'>\n".
+         "<td colspan=3>&nbsp;&nbsp;<font color=$color[m_fg]>$langs[a_t14] :</font>\n".
+         "<input type=text name='table_name' size=$size>\n".
+         "<input type='submit' name='submit' value='$langs[a_t61]' onClick=\"return confirm('$langs[a_del_cm]')\">\n".
+         "<input type='hidden' name='mode' value='db_del'>\n".
+         "<input type='hidden' name='ts' value='$ts'>\n".
+         "</td></form>\n</tr>\n\n".
+         "<tr bgcolor=$color[d_bg]>\n".
+         "<td colspan=3 align=center>\n";
+  }
 
   $total  = $tbl_num;
   $lastpage_check = $total%$sadmin[pern];
@@ -273,13 +321,16 @@ if($db[name] && !$table) {
     ${$tsname} = " font-weight:bold;";
   } else $langs[ts] = "<font color=$color[m_fg]>$langs[a_t19]</font>";
 
-  echo "</td><form>\n".
-       "<td colspan=2 align=center>\n".
-       "<input type=button value=\"$langs[a_t15]\" onClick=fork('popup','admin_info.php?mode=global')><br>\n".
-       "</td></form>\n".
+  echo "</td>\n".
+       "<td align=center>\n";
+
+  if($textBrowser) echo "<A HREF=./admin_info.php?mode=global>[ $langs[a_t15] ]</A>\n";
+  else echo "<input type=button value=\"$langs[a_t15]\" onClick=fork('popup','admin_info.php?mode=global')><br>\n";
+
+  echo "</td>\n".
        "</tr>\n<tr>\n" .
        "<td bgcolor=$color[m_bg] align=center>$langs[ts]</td>\n" .
-       "<td colspan=4 bgcolor=$color[d_bg] align=center>\n" .
+       "<td colspan=3 bgcolor=$color[d_bg] align=center>\n" .
        "<a href=$_SERVER[PHP_SELF]?ts=a><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$abold\">A</font></A>\n" .
        "<a href=$_SERVER[PHP_SELF]?ts=b><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$bbold\">B</font></A>\n" .
        "<a href=$_SERVER[PHP_SELF]?ts=c><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$cbold\">C</font></A>\n" .
@@ -313,5 +364,7 @@ mysql_close();
 
 echo "<br>";
 echo "\n</td></tr>\n</table>\n";
+if($textBrowser) echo "Powered By <A HREF=http://jsboard.kldp.org/>JSBoard Open Project</A>\n";
+
 htmltail();
 ?>

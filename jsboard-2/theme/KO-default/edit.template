@@ -45,30 +45,30 @@ if(!$np) {
 <TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN=bottom COLSPAN=2>
-<IMG SRC=./theme/KO-default/img/icon_over.gif ALIGN=absmiddle>
+<IMG SRC=./theme/KO-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Edit article</FONT>
 </TD>
 </TR>
 
 <TR BGCOLOR=#FFAE00>
 <TD COLSPAN=2>
-<IMG SRC=./theme/KO-default/img/board_no.gif ALIGN=absmiddle>
+<IMG SRC=./theme/KO-default/img/board_no.gif ALIGN=absmiddle ALT=''>
 <FONT STYLE="color:#FFFFFF"><IMG SRC=theme/KO-default/img/edit_title.gif BORDER=0></FONT>
 </TD>
 </TR>
 
 <TR>
-<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0></TD>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0></TD>
-<TD ROWSPAN=9 WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0></TD>
-<TD ROWSPAN=9 WIDTH=10><IMG SRC=images/blank.gif WIDTH=10 HEIGHT=1 BORDER=0></TD>
-<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0><BR></TD>
-<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=10><IMG SRC=images/blank.gif WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
 </TR>
 
 <!-#######################################################################-->
@@ -166,7 +166,7 @@ if(eregi("^(0|4|6)$",$board[mode]) && !$board[super]) {
   echo "<TD>패스워드</TD>\n".
        "<TD>\n".
        "$passment\n".
-       "<IMG SRC=./images/blank.gif WIDTH=15 HEIGHT=1 BORDER=0>\n".
+       "<IMG SRC=./images/blank.gif WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>\n".
        "TextSize Operation $print[operate]\n".
        "</TD>\n";
 } else {
@@ -178,12 +178,12 @@ if(eregi("^(0|4|6)$",$board[mode]) && !$board[super]) {
 </TR>
 
 <TR>
-<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0><BR></TD>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0></TD></TR>
+<TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
 </TABLE>
 
 <TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
