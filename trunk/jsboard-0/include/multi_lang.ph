@@ -92,7 +92,7 @@ else {
   $serach_act		= "Search" ;
 
   $str			= "Problem in SERVER." ;
-  $sc_error		= "Enable search over 1 charactor\\nin Korean or 2 charactors in English.." ;
+  $sc_error		= "Enable search over 2 charactor\\nin Korean or 3 charactors in English.." ;
   $no_article		= "No Article";
   $err_str		= "Back to the previous page.\\n\\nMake in queries at $admin..." ;
   $sql_alert		= "Problem in SQL.\\n\\nBack to the previous page.";
