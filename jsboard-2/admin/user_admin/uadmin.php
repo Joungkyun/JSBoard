@@ -612,8 +612,8 @@ else echo "<CENTER><FONT COLOR=RED><B>{$langs['ua_while_wn']}</B></FONT></CENTER
 <TR>
 <TD BGCOLOR=<?=$color['m_bg']?>><font id=MCOLOR><?=$langs['ua_rs_ln']?></font></TD>
 <TD ALIGN=center>
-<INPUT TYPE=radio name=ua[rss_align] <?=$rss_align_ok?> value=0 id=RADIO><?=$langs['ua_rs_lf']?>
-<INPUT TYPE=radio name=ua[rss_align] <?=$rss_align_no?> value=1 id=RADIO><?=$langs['ua_rs_rg']?>
+<INPUT TYPE=radio name=ua[rss_align] <?=$rss_align_no?> value=0 id=RADIO><?=$langs['ua_rs_lf']?>
+<INPUT TYPE=radio name=ua[rss_align] <?=$rss_align_ok?> value=1 id=RADIO><?=$langs['ua_rs_rg']?>
 </TD>
 <TD BGCOLOR=<?=$color['d_bg']?>>&nbsp;</TD>
 <TD BGCOLOR=<?=$color['m_bg']?>><font id=MCOLOR><?=$langs['ua_rs_co']?></font></TD>
