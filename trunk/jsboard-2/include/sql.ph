@@ -39,7 +39,7 @@ function sql_query($query,$c='',$noerr='') {
 # mysql_db_query - MySQL에 Database 를 선택해 SQL 질의를 보냄
 #               http://www.php.net/manual/function.mysql-db-query.php
 function sql_db_query($db,$query,$c='',$noerr='') {
-  $return = $c ? mysql_db_query($db,$query,$c) : mysql_query($db,$query);
+  $return = $c ? mysql_db_query($db,$query,$c) : mysql_db_query($db,$query);
   if(!$noerr) sql_error(mysql_errno(), mysql_error());
 
   return $return;
