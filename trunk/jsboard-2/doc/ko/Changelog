@@ -26,6 +26,7 @@ If you wnat to see windog's change log, see also
 
   by 김정균 <http://www.oops.org>
 	- check_iframe 함수 버그 수정
+	- iframe 태그 사용시 parsing 버그 수정
 
 2003.12.03
   by 김정균 <http://www.oops.org>
