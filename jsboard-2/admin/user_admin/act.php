@@ -14,6 +14,22 @@ sql_connect($db[rhost], $db[user], $db[pass]);
 sql_select_db($db[name]);
 # password 비교함수 - admin/include/auth.ph
 compare_pass($_SESSION[$jsboard]);
+
+if($ua[comment] && !get_tblist($db[name],"",$table."_comm")) {
+  $cret_comm = "CREATE TABLE {$table}_comm (\n".
+               "       no int(6) NOT NULL auto_increment,\n".
+               "       reno int(20) NOT NULL default '0',\n".
+               "       rname tinytext,\n".
+               "       name tinytext,\n".
+               "       passwd varchar(56) default NULL,\n".
+               "       text mediumtext,\n".
+               "       host tinytext,\n".
+               "       date int(11) NOT NULL default '0',\n".
+               "       PRIMARY KEY  (no),\n".
+               "       KEY parent (reno))";
+  sql_query($cret_comm);
+}
+
 mysql_close();
 
 # auth value check
@@ -113,7 +129,6 @@ $ua[s_titl] = !$ua[s_titl] ? "25" : $ua[s_titl];
 $ua[s_text] = !$ua[s_text] ? "30" : $ua[s_text];
 $ua[s_uplo] = !$ua[s_uplo] ? "19" : $ua[s_uplo];
 
-
 $chg_conf = "<?
 ###############################################################################
 #  게시판 관리 모드
@@ -153,7 +168,7 @@ $chg_conf = "<?
 
 # 커멘트 기능 사용여부
 #
-\$enable[comment] = $chg[comment];			# 0 - 보여주지 않음 1 - 보여줌
+\$enable[comment] = $chg[comment];		# 0 - 보여주지 않음 1 - 보여줌
 
 
 ###############################################################################
