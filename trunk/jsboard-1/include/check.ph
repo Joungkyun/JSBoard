@@ -108,8 +108,8 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
 # file() - file을 읽어 한줄씩 배열로 받음
 #
 function chk_spam_browser($file = "config/allow_browser.txt") {
-  global $HTTP_SERVER_VARS
-  $agent_env = ,$HTTP_SERVER_VARS["HTTP_USER_AGENT"];
+  global $HTTP_SERVER_VARS;
+  $agent_env = $HTTP_SERVER_VARS["HTTP_USER_AGENT"];
 
   if(@file_exists($file)) {
     $br = file($file);
@@ -370,7 +370,7 @@ function check_phpver($version,$v=0) {
 }
 
 function check_access($c=0,$wips='',$ips='') {
-  global $HTTP_SERVER_VARS,$langs;
+  global $HTTP_SERVER_VARS, $langs;
 
   if($c) {
     # global.ph 에 $board[ipbl] 이 존재하면 함침
