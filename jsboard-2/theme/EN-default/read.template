@@ -49,7 +49,7 @@ if(!$np) {
 <!-                    'n or +' = upper article                           -->
 <!-                    'b or -' = follw article                           -->
 <!-#######################################################################-->
-<?=pirnt_keymenu(1)?>
+<?=print_keymenu(1)?>
 
 <!-#######################################################################-->
 <!-  $board[align] : print align of webboard. It's config in board admin  -->

@@ -896,7 +896,7 @@ function print_comment($table,$no,$print=0) {
   else return $t;
 }
 
-function pirnt_keymenu($type=0) {
+function print_keymenu($type=0) {
   global $table, $pages, $pos, $page, $no, $nolenth;
 
   if(!$type) {
