@@ -13,6 +13,14 @@ file.
 
 ******************************************************************************
 
+Version   : jsboard-2.0.9
+
+Thu, Dec 09 2004
+  by JoungKyun Kim <http://www.oops.org>
+	- protected special charactor in hangul range
+
+
+-----------------------------------------------------------------------------
 Version   : jsboard-2.0.8
 
 Wed, Sep 22 2004
