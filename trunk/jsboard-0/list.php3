@@ -71,7 +71,5 @@ if($sc_column != "today") {
     sepa($l0_bg);
 }
 echo("</tr>\n</table>\n");
-
-include("include/$table/footer.ph");
 ?>
 

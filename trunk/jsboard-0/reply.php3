@@ -17,6 +17,7 @@ $result = dquery("SELECT * FROM $table WHERE no = $no");
 drow_check($result);
 
 while($list = dfetch_row($result)) {
+    $name   = $list[4];  // 이름
     $title  = $list[8];  // 제목
     $text   = $list[9];  // 본문
 
@@ -68,7 +69,8 @@ while($list = dfetch_row($result)) {
 
 </tr><tr>
   <td align="center" colspan="3" bgcolor="<? echo $r2_bg ?>">
-    <textarea name="text" rows="20" cols="<? sform(30) ?>"><? echo $text ?></textarea>
+    <textarea name="text" rows="20" cols="<? sform(30) ?>">
+	<? echo ("\n\n$name wrote.. \n$text"); ?></textarea>
   </td>
 </tr>
 </table>
@@ -88,4 +90,3 @@ while($list = dfetch_row($result)) {
 </center>
 
 </td></tr></table>
-<? include("include/$table/footer.ph"); ?>

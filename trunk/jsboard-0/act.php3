@@ -1,8 +1,4 @@
 <?
-// 파일의 삭제, 등록, 수정
-//
-// $Id: act.php3,v 1.2 2002-04-06 22:32:41 oops Exp $
-//
 include("include/header.ph");
 include("include/$table/config.ph");
 
@@ -86,9 +82,9 @@ if ($act == "post" || $act == "edit") {
 				echo "파일크기가 제한을 초과하였습니다.<p>$maxfilesize 이하로 내려 주세요";
 				exit;
 			}                                     
-			$bfilename=strstr($userfile,"php");
+			$bfilename=strstr("$userfile","php");
 			mkdir("$filesavedir/$bfilename",0755);
-			exec("mv $userfile $filesavedir/$bfilename/$userfile_name");
+			exec("mv \"$userfile\" \"$filesavedir/$bfilename/$userfile_name\"");
 			chmod("$filesavedir/$bfilename/$userfile_name",0755);
 		}                                      
 	}
@@ -100,26 +96,42 @@ if ($act == "post" || $act == "edit") {
 	}
 
 	
-	if (!$reno)
-	{
-		dquery("INSERT INTO $table VALUES ('', $last, $date, '$host', '$name', '$passwd',
-		'$email', '$url', '$title', '$text', 0, 0, 0, 0, 0,'$userfile_name','$bfilename','',$userfile_size)");
+	if (!$reno) {
+	// 글 쓰기
+	    dquery("INSERT INTO $table VALUES ('', $last, $date, '$host', 
+		'$name', '$passwd', '$email', '$url', '$title', '$text', 0, 
+		0, 0, 0, 0,'$userfile_name','$bfilename',$userfile_size)");
 	    $page = 1;
-	}
-	else
-	{
+	} else {
+	// 답장 쓰기
 	    $result = dquery("SELECT rede, reto FROM $table WHERE no = $reno");
 	    $rede   = mysql_result($result, 0, "rede");
 	    $reto   = mysql_result($result, 0, "reto");
 	    if (!$reto) {
 		$reto = $reno;
-    }
+    	    }
 
-	    dquery("INSERT INTO $table VALUES ('', 0, $date, '$host', '$name', '$passwd', '$email', '$url',
-			'$title', '$text', 0, 0, $reno, $rede + 1, $reto, '$userfile_name','$bfilename','',$userfile_size)");
+	    dquery("INSERT INTO $table VALUES ('', 0, $date, '$host', '$name', 
+		'$passwd', '$email', '$url', '$title', '$text', 0, 0, 
+		$reno, $rede + 1, $reto, '$userfile_name','$bfilename',
+		$userfile_size)");
 	    dquery("UPDATE $table SET reyn = 1 WHERE no = $reno");
 	}
-    }
+
+// 관리자나 답장에 대한 원래글쓴이에게 메일 보내기
+		$result = dquery("SELECT no, num, reno FROM $table ORDER BY no DESC");
+		$no   = mysql_result($result, 0, "no");
+		$num   = mysql_result($result, 0, "num");
+		$reno   = mysql_result($result, 0, "reno");
+		$email = "";
+		if ($num == 0) {
+			$result = dquery("SELECT email FROM $table where no = $reno");
+			$email   = mysql_result($result, 0, "email");
+		}
+		send_mail($no, $bbshome, $mailtoadmin, $mailtowriter,
+			$table, $reno, $email);
+
+	}
 } else if ($act == "del") {
     if (check_passwd($passwd, $no) || $passwd == $admin) {
 	if ($reyn) {
@@ -134,11 +146,13 @@ if ($act == "post" || $act == "edit") {
 		dquery("UPDATE $table SET reyn = 0 WHERE no = $reno");
 	    }
 	    dquery("DELETE FROM $table WHERE no = $no");
+	    
 	}
 	// jinoos -- exec() 함수로 인한 오동작 방지 filesystem function 사용
-
-	if ($delete_filename) unlink("$delete_filename");
-	if ($delete_dir) rmdir("$delete_dir");
+	if ($delete_filename) {
+		unlink("$delete_filename");
+		rmdir("$delete_dir");
+	}
     } else {
 	error("비밀번호가 틀립니다.");
     }
