@@ -4,7 +4,7 @@ $sub_title = " [ 게시판 보기 ]";
 
 include("include/header.ph");
 
-if(!$table) { b_error(); }
+if(!$table) { error(); }
 
 include("include/$table/config.ph");
 

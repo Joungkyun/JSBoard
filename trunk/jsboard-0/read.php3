@@ -4,7 +4,7 @@ $sub_title = " [ 게시물 읽기 ]";
 
 include("include/header.ph");
 
-if(!$table) { _error(); }
+if(!$table) { error(); }
 
 include("include/$table/config.ph");
 $title .= $sub_title;
@@ -75,18 +75,12 @@ while($list = dfetch_row($result)) {
             "</td>\n" .
             "<td align=\"right\">\n" ) ;
     read_cmd_bar($no, $page, $prev, $next, $r0_bg, $act, $table, $passwd, $email);
-    echo("</td></tr></table>\n");
-
-
-
-
-    echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"$r0_bg\">\n<tr><td>\n" .
+    echo("</td></tr></table>\n\n" .
+         "<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"$r0_bg\">\n<tr><td>\n" .
 	 "<table width=\"100%\" border=\"0\" cellspacing=\"2\" cellpadding=\"4\"><tr>\n" .
 	 "<td colspan=\"2\" bgcolor=\"$r1_bg\"><font color=\"$r1_fg\">$num $title</font></td>\n" .
-	 "<td colspan=\"1\" bgcolor=\"$r1_bg\" align=left><font color=\"$r1_fg\">IP: $host</font></td></tr>\n");
-
-
-    echo("<tr>\n" .
+	 "<td colspan=\"1\" bgcolor=\"$r1_bg\" align=left><font color=\"$r1_fg\">IP: $host</font></td></tr>\n" .
+         "<tr>\n" .
 	 "<td bgcolor=\"$r2_bg\"><font color=\"$r2_fg\">글쓴이: $name</font>");
     if ($url)
 	echo(" <a href=\"$url\"><font color=\"$r2_fg\">[홈페이지]</font></a>");
@@ -106,48 +100,36 @@ while($list = dfetch_row($result)) {
 
 	// jinoos -- 화일에 확장자를 검사해서 알맞은 아이콘으로 변화 시킨다. 
 
-	if($file_upload == "yes")
-	{
-		if($bofile)
-		{
-			$tail = substr( strrchr($bofile, "."), 1 );
-			if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram || $tail==hwp || $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj || $tail==tar || $tail==avi || $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp))
-			{
-				echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" width=17 height=17 border=0 alt=\"$bofile\" align=texttop> $bofile</a>\n";
-			}else{
-			echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/$tail.gif\" width=17 height=17 border=0 alt=\"$bofile\" align=texttop> $bofile</a>\n";
-			}
-			echo (" <font color=\"$r2_fg\">$bfsize Bytes</font></td></tr>");
-		}
-	}
+    if($file_upload == "yes" && $bofile) {
+      $tail = substr( strrchr($bofile, "."), 1 );
+      if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram || $tail==hwp || $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj || $tail==tar || $tail==avi || $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp)) {
+        echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" width=17 height=17 border=0 alt=\"$bofile\" align=texttop> $bofile</a>\n";
+      }else{
+        echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/$tail.gif\" width=17 height=17 border=0 alt=\"$bofile\" align=texttop> $bofile</a>\n";
+      }
+        echo (" <font color=\"$r2_fg\">$bfsize Bytes</font></td></tr>");
+    }
 
     echo("<tr><td colspan=\"3\" bgcolor=\"$r3_bg\">\n" .
 	 "<font color=\"$r3_fg\">") ;
 
     if ($bofile) {
-
       $tail = substr( strrchr($bofile, "."), 1 );
-
       if ($tail == "gif" || $tail == "jpg") {
         echo ("<img src=$filesavedir/$bcfile/$bofile><p>");
       }
-
     }
 
     echo("\n$text\n") ;
 
     if ($bofile) {
-
       $tail = substr( strrchr($bofile, "."), 1 );
-
       if ($tail == "txt") {
         echo ("<p><br>\n" .
               "---- 첨부 File 내용 -------------------------- \n<p>");
         include("$filesavedir/$bcfile/$bofile");
         echo("\n<br><br>");
-
       }
-
     }
 
     echo("</font>\n</td></tr>\n" .
