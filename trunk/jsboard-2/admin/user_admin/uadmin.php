@@ -29,6 +29,9 @@ elseif($board[mode] == 5) $smode5 = " SELECTED";
 elseif($board[mode] == 6) $smode6 = " SELECTED";
 elseif($board[mode] == 7) $smode7 = " SELECTED";
 
+# check of logout page
+$print[dopage] = trim($print[dopage]) ? $print[dopage] : "http://$board[path]/list.php?table=$table";
+
 # Radio Box check ºÐ·ù
 if($enable[ore]) $ore_no = "checked";
 else $ore_ok = "checked";
@@ -280,6 +283,14 @@ function fresize(value,name) {
 <INPUT TYPE=radio name=ua[rnname] <?=$nameck_r?> value="1" id=RADIO><?=$langs[ua_realname]?>
 <INPUT TYPE=radio name=ua[rnname] <?=$nameck_n?> value="0" id=RADIO><?=$langs[ua_nickname]?>
 <?=$langs[ua_namemt2]?>
+</TD>
+<TD BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR>Logout Page</font></TD>
+<TD COLSPAN=4>
+<INPUT TYPE=text SIZE=<?=$lsize?> NAME=ua[dopage] VALUE="<?=$print[dopage]?>">
 </TD>
 <TD BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
 </TR>

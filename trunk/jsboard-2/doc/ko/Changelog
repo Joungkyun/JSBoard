@@ -20,24 +20,27 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.0
 
-2002.6.15 by 김정균 <http://www.oops.org>
+2002.06.17 by 김정균 <http://www.oops.org>
+	- logout 후의 이동 페이지를 여러곳으로 지정 가능하게 수정
+
+2002.06.15 by 김정균 <http://www.oops.org>
 	- 최신글 미리보기 기능의 디자인 분리
 
-2002.6.13 by 김정균 <http://www.oops.org>
+2002.06.13 by 김정균 <http://www.oops.org>
 	- 커멘트에서 KSX 1001 범위외의 문자 처리
 	- 코멘트 정렬정보를 쿠키로 등록
 
-2002.6 10 by 김정균 <http://www.oops.org>
+2002.06 10 by 김정균 <http://www.oops.org>
 	- 커멘트에서 삭제, 소트 링크에 이미지 링크 사용가능 하도록 수정
 
-2002.6. 8 by 김정균 <http://www.oops.org>
+2002.06.08 by 김정균 <http://www.oops.org>
 	- 게시판 관리자에서 첨부파일 링크 설정 에러 수정
 
-2002.6. 7 by 임은재 <http://kldp.org/~eunjea/>
+2002.06.07 by 임은재 <http://kldp.org/~eunjea/>
 	- 코멘트 등록시 관리자 사칭 설정이 안되어 있을 경우 에러 발생하는 것
 	  수정
 
-2002.6. 7 by 김정균 <http://www.oops.org>
+2002.06.07 by 김정균 <http://www.oops.org>
 	- freeze 2.0.0
 	- 코멘트 입렵창 위치 고정 및 배색 변경
 
@@ -45,96 +48,96 @@ If you wnat to see windog's change log, see also
 -----------------------------------------------------------------------------
 버전   : jsboard-2.0pre4
 
-2002.6. 5 by 김정균 <http://www.oops.org>
+2002.06.05 by 김정균 <http://www.oops.org>
 	- document update
 
-2002.6. 2 by 김정균 <http://www.oops.org>
+2002.06.02 by 김정균 <http://www.oops.org>
 	- Install script 에 FreeBSD 의 httpd.conf 경로 추가 (PORT 사용시)
 
-2002.5.30 by 임은재 <http://kldp.org/~eunjea/>
+2002.05.30 by 임은재 <http://kldp.org/~eunjea/>
 	- 수정시 변경사항 체크에 email 과 url 검사 추가
 
-2002.5.30 by 김정균 <http://www.oops.org>
+2002.05.30 by 김정균 <http://www.oops.org>
 	- 코멘트 테이블이 존재하지 않을 경우, 글 삭제시 에러나던것 수정
 	- 테마에 문서 타입 정의 추가
 
-2002.5.28 by 김정균 <http://www.oops.org>
+2002.05.28 by 김정균 <http://www.oops.org>
 	- 게시판 관리자 이메일 사칭 체크 버그수정
 
-2002.5.27 by 김정균 <http://www.oops.org>
+2002.05.27 by 김정균 <http://www.oops.org>
 	- 코멘트에서 정렬을 유저가 직접 선택할 수 있도록 변경
 
-2002.5.26 by 김정균 <http://www.oops.org>
+2002.05.26 by 김정균 <http://www.oops.org>
 	- 게시판 관리자를 여러명 지정할 수 있게 변경
 	- 첨부파일 링크 방식을 설정할 수 있도록 수정
 
-2002.5.25 by 김정균 <http://www.oops.org>
+2002.05.25 by 김정균 <http://www.oops.org>
 	- comment 기능 추가
 	- act.php 의 check_article 함수의 오타 수정
 
-2002.5.14 by 김정균 <http://www.oops.org>
+2002.05.14 by 김정균 <http://www.oops.org>
 	- license link 수정
 
-2002.5. 6 by 김정균 <http://www.oops.org>
+2002.05. 6 by 김정균 <http://www.oops.org>
 	- html 사용안함에서 &nbsp; 문자가 blank 문자로 출력되는 것 수정
 
-2002.5. 3 by 임은재 <http://kldp.org/~eunjea/>
+2002.05. 3 by 임은재 <http://kldp.org/~eunjea/>
 	- get_agent 함수에 links 와 w3m 추가
 
-2002.5. 1 by 김칠봉 <http://linuxchannel.net>
+2002.05. 1 by 김칠봉 <http://linuxchannel.net>
 	- get_microtim(), human_fsize() 함수 재작성
 
-2002.4.29 by 김정균 <http://www.oops.org>
+2002.04.29 by 김정균 <http://www.oops.org>
 	- php.ini 의 precision 값을 15 로 고정.
 	- get_spam_value 함수 수정 (for php 4.2.0)
 
-2002.4.25 by 임은재 <http://kldp.org/~eunjea/>
+2002.04.25 by 임은재 <http://kldp.org/~eunjea/>
 	- php.ini 에서 allow_call_time_pass_reference 의 값이 off 일 경우
 	  경고 메세지 출력되는 것 수정
 
-2002.4.23 by 김정균 <http://www.oops.org>
+2002.04.23 by 김정균 <http://www.oops.org>
 	- php 4.2.0 에서 spam 등록기 등록 오류 수정
 	  4.2.0 에서의 큰 수의 숫자 연산값 표현방식 변경
 
-2002.4.22 by 김정균 <http://www.oops.org>
+2002.04.22 by 김정균 <http://www.oops.org>
 	- 정규표현식 검색시 [,( 패턴을 제대로 닫지 않을 경우 처리 루틴 추가
 
-2002.4.22 by 임은재 <http://kldp.org/~eunjea/>
+2002.04.22 by 임은재 <http://kldp.org/~eunjea/>
 	- 등록된 글수의 정보를 가져오는 sql 쿼리를 2번에서 1번으로 줄임
 
-2002.4.19 by 김정균 <http://www.oops.org>
+2002.04.19 by 김정균 <http://www.oops.org>
 	- 미리보기 문자열에서 개행문자 때문에 발생하는 에러 수정
 
-2002.4.15 by 임은재 <http://kldp.org/~eunjea/>
+2002.04.15 by 임은재 <http://kldp.org/~eunjea/>
 	- JSBoard 자체 발송의 경우 Date 헤더를 추가
 	- theme 의 html 오류 수정
 
-2002.4.13 by 김정균 <http://www.oops.org>
+2002.04.13 by 김정균 <http://www.oops.org>
 	- 제목이 길 경우 테이블 크기에 맞춰 다음줄로 넘기게 수정
 
-2002.4.12 by 임은재 <http://kldp.org/~eunjea/>
+2002.04.12 by 임은재 <http://kldp.org/~eunjea/>
 	- sendmail.ph 에서 Message-Id 문제 수정
 
-2002.4.11 by 김정균 <http://www.oops.org>
+2002.04.11 by 김정균 <http://www.oops.org>
 	- cut_string() 함수 재작성
 
-2002.4.10 by 김정균 <http://www.oops.org>
+2002.04.10 by 김정균 <http://www.oops.org>
 	- 등록된 글의 메일에서 답장 링크 삭제 (스팸방지 기능과 충돌)
 	- text 브라우져를 위한 기능및 디자인 수정
 	- INSTALLER text 브라우져 지원
 
-2002.4.8 by 임은재 <http://kldp.org/~eunjea/>
+2002.04.08 by 임은재 <http://kldp.org/~eunjea/>
 	- 자바스트립트 지원않는 브라우져 위해 에러 메세지 출력 수정
 
-2002.4.7 by 김정균 < http://www.oops.org>
+2002.04.07 by 김정균 < http://www.oops.org>
 	- 글등록시 이름,제목,본문의 null 체크시 0xA1A1 이 통과되는 것 수정
 	- Changelog 양식 변경
 	- 언어가 한국어가 아닐경우 폼사이즈 버튼이 image 로 출력되던것을 텍스트로 변경
 
-2002.4.7 by 임은재 <http://kldp.org/~eunjea/>
+2002.04.07 by 임은재 <http://kldp.org/~eunjea/>
 	- qmail 에서 maildaemon class 작동 제대로 안되던 것 수정
 
-2002.4.6 by 김정균 < http://www.oops.org>
+2002.04.06 by 김정균 < http://www.oops.org>
 	- 4.1.0 이상의 버젼을 요구
 	- 내부 회원 DB 사용시 유저관리 페이지 뜨지 않는 버그 수정
 	- 답장 등록시 의 최고 no 값 가져오는 SQL 버그 수정
@@ -297,7 +300,7 @@ If you wnat to see windog's change log, see also
 -----------------------------------------------------------------------------
 버전   : jsboard-2.0pre2
 
-2001.11.4 by 김정균 <http://www.oops.org>
+2001.11.04 by 김정균 <http://www.oops.org>
 	- auto_link 함수 수정 (eregi_replace 함수를 preg_replace 로 모두 대체)
 	- no login 모드시에 로그인이 되어 있을경우 글 삭제가 되지 않는것 수정
 	- list.php 의 쓸모없는 </FONT> tag 삭제
@@ -334,7 +337,7 @@ If you wnat to see windog's change log, see also
 -----------------------------------------------------------------------------
 버전   : jsboard-2.0pre1
 
-2001.10.4 by 김정균 <http://www.oops.org>
+2001.10.04 by 김정균 <http://www.oops.org>
 	- skin theme 기능 추가 (기존의 theme 삭제)
 	- language file 정리(skin 에 의해 필요 없는 부분 삭제)
 	- admin center skin 에 맞게 수정

@@ -37,7 +37,7 @@ function print_error($str,$width=250,$height=150,$back='') {
   if(eregi("/user_admin",$_SERVER[PHP_SELF])) $gopage = "../..";
   elseif(eregi("/admin",$_SERVER[PHP_SELF])) {
     $gopage = "..";
-    $var = "&type=admin";
+    $var = "&type=admin&logins=fail";
   } else $gopage = ".";
 
   $var .= $table ? "&table=$table" : "";
