@@ -20,10 +20,13 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
+2002.4.8 by 임은재 <http://kldp.org/~enujea/>
+	- 자바스트립트 지원않는 브라우져 위해 에러 메세지 출력 수정
+
 2002.4.7 by 김정균 < http://www.oops.org>
 	- 글등록시 이름,제목,본문의 null 체크시 0xA1A1 이 통과되는 것 수정
 	- Changelog 양식 변경
-        - 언어가 한국어가 아닐경우 폼사이즈 버튼이 image 로 출력되던것을 텍스트로 변경
+	- 언어가 한국어가 아닐경우 폼사이즈 버튼이 image 로 출력되던것을 텍스트로 변경
 
 2002.4.7 by 임은재 <http://kldp.org/~eunjea/>
 	- qmail 에서 maildaemon class 작동 제대로 안되던 것 수정

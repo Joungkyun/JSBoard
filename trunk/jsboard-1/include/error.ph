@@ -29,7 +29,8 @@ function print_error($str, $width = 250, $height = 100) {
          "remoteWindow();\n";
   }
 
-  echo "history.back();\n//-->\n</SCRIPT>\n";
+  echo "history.back();\n//-->\n</SCRIPT>\n".
+       "<NOSCRIPT>".urldecode($str)."</NOSCRIPT>\n";
   exit;
 }
 
