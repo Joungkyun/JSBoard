@@ -10,11 +10,15 @@ JSBoard v2.0 Upgrade document
 야 한다.
 
 일단 각 게시판 테이블 마다 인증에 필요한 컬럼 1개와 사용하지 않는 moder 칼럼을
-삭제하도록 한다. INSTALLER/script 로 이동을 하여 dbconv_to_20 파일을 열은 다음 필
-요한 변수값을 지정 해 준 다음 해당 파일의 퍼미션을 755 로 수정한 후에 실행하면
-변환을 해 준다.
+삭제하도록 한다. INSTALLER/script 로 이동을 하여 dbconv_to_20 파일을 열은 다음
+필요한 변수값을 지정 해 준 다음 해당 파일의 퍼미션을 755 로 수정한 후에 실행하
+면 변환을 해 준다.
 
 INSTALLER/SQL 로 이동을 하여 userdb table 을 생성하도록 한다.
+
+만약 다른 회원 table 을 사용할 경우에는 userdb table 을 생성할 필요가 없다. 이
+경우는 아래의 명령을 생략하고 doc/ko/README.OPERATE 문서의 5-2,  5-3 항목을 참
+고하도록 한다.
 
 shell> mysql -u USER -p DB_NAME < userdb-OSTYPE.sql
 
