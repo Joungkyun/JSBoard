@@ -157,6 +157,11 @@ echo "<?
 # location of default page after login
 \$print[dpage] = \"http://domain.com/jsboard/list.php?table=test\";
 
+# permition of user registration
+# 1 -> everyone
+# 0 -> admin only
+\$board[regist] = 0;
+
 
 ##############################################################################
 #  Theme Configuration
