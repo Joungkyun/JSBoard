@@ -1,0 +1,417 @@
+##### JSBOARD + OOPS administartion Center #####################################
+#
+#  Original Developer   : ByungChan Kim <redhands at linux.sarang.net>
+#  Source Disturibute   : JoungKyun Kim <admin at oops.org>
+#  Maintainer           : JoungKyun Kim <admin at oops.org>
+#  Windows Version      : Kisoo Choi <choiks at nuri.net>
+#
+#  Support Server	: http://www.adwars.com
+#  Special Thanks       : SunSoon Kwon <http://www.kldp.org>
+#                       : Eunjea Lim <eunjea at kldp.org>
+#                       : KyungMook Cha <dimanche at dimanche.co.kr>
+#                       : ChangHyun Bang <winchild at kldp.org>
+#
+#################################################################################
+#
+#                              Quick Installation in JSBoard 2.0 v0.3
+#
+#################################################################################
+
+
+Writer : JoungKyun Kim <http://www.oops.org>
+Date   : Jul 15 2002
+
+This document is for installation of JSBoard 2.0 On Like Unix Machine.
+All problems for jsboard is install user!
+
+===================================   주의   ===================================
+
+First,
+JSBoard v2.0 is required over php 4.1.0 that compiled with --with-regex=php
+option.
+
+First,
+If install with other OS except Redhat, Debian and FreeBSD, you must read
+README.OTHER.OS document. If you use windows server, you download jsboard windows
+version.
+
+================================================================================
+
+
+**** Contents ****
+
+  1. Check of Environment
+    1-1. test exec() function
+    1-2. test MySQL function
+    1-3. configuration web server
+    1-4. configuration php.ini
+    1-5. modified install script for Solaris or SunOS
+  2. Install JSBoard
+  3. Change passowrd of JSBoard super admin
+  4. Security of JSBoard
+
+***************
+
+
+1. Check of Environment
+
+  [ OS ]
+    Linux(Redhat, Debian)
+    FreeBSD 4.x
+
+   If you have other OS, let's DIY.
+  
+  [ apache ]
+
+    over 1.3.x
+  
+  [ MySQL ]
+
+    over 3.22.30
+
+  [ PHP ]
+
+    over 4.1.0 that compiled with --with-regex=php
+
+
+    Development Environment of JSBoard is follows.
+
+    PHP 4.1 ( developed with follow compile envionment )
+
+    ./configure --prefix=/usr \  
+                --with-apxs=/usr/sbin/apxs \  
+                --with-config-file-path=/usr/lib/php \
+                --disable-debug \
+                --with-exec-dir=/usr/bin \
+                --with-regex=php \
+                --with-mod_charset \
+                --with-gd=shared \
+                --with-mysql=shared \
+                --with-ttf \
+                --enable-sigchild \
+                --enable-socket \
+                --enable-gd-native-ttf \
+                --enable-safe-mode \
+                --enable-inline-optimization \
+                --enable-magic-quotes \
+                --enable-mailparse \
+                --enable-track-vars \
+                --enable-debugger \
+                --enable-mbstring \
+                --enable-mbstr-enc-trans \
+                --enable-mbregex \
+                --enable-sysvsem \
+                --enable-sysvshm
+
+  * Check List *
+
+  Comfirmed support of exec() function and mysql function and config of php.ini
+
+  1-1. test of exec() function
+
+    First, create test.php include follows contents. Follow example only operate
+    on Linux or FreeBSD (or Unix or Like Unix)
+
+    <?php
+    echo "## exec() function test ##<p><br>\n\n";
+    exec("echo \"exec() function check: Success\"", $test);
+
+    echo $test[0];
+    ?>
+
+    and read this file with web browser.
+
+    -------------------------------------------------
+    ## exec() function test ##
+
+    exec() function check : Success
+    -------------------------------------------------
+
+    if don't print upper message, your have any problem on your php system.
+
+  1-2. MySQL function test
+
+    Create info.php include follow contents on your web tree.
+
+    <?php
+    phpinfo();
+    ?>
+
+    After read with web browser this file, check mysql information.
+    And check of follow test.
+
+    <?
+    $mcheck = mysql_connect("localhost","root","$passwd");
+
+    if ($mcheck) echo "Success mysql connect";
+    else echo "Failed mysql connect";
+    ?>
+
+    If you meet "Failed mysql connect" message, check follows on command line.
+
+    shell> mysql -u root -p
+
+    if you use remote db server,
+
+    shell> mysql -u root -p -h DB_server_address
+
+  1-3. configuration of web server
+
+    index file of jsboard is index.php. and need .ph extension. So, you configure
+    .ph extension on you httpd.conf with follow method.
+
+    AddType application/x-httpd-php .php .php3 .ph
+                                               ----
+
+  1-4. configuration of php.ini
+
+    check follow value of directive
+
+    magic_quotes_gpc = ON
+    magic_quotes_runtime = OFF
+    magic_quotes_sybase = OFF
+
+    If you want to upload with over 2Mb, configured follow directive with your
+    value.
+    
+    post_max_size       = 8M
+    max_execution_time  = 30
+    upload_max_filesize = 2M
+
+
+2. Installation JSBoard
+
+    First, uncompress download file.
+
+    $ tar xvfpz jsboard-version.tar.gz
+
+    After uncompress, jsboard-version directory is created.
+
+    Next step, create JSBoard database as follow method.
+
+    1) added mysql user and create database for jsboard
+
+       for example, database name is jsboard, and mysql user is jsboard for jsboard.
+
+       $ mysql -u root -p mysql
+       mysql> CREATE database jsboard
+       Query OK, 0 rows affected (0.00 sec)
+
+       mysql> GRANT all privileges on jsboard.* TO jsboard@localhost
+            > IDENTIFIED BY 'YOUR PASSWORD';
+       Query OK, 0 rows affected (0.00 sec)
+
+       mysql> quit
+       Bye
+
+    2) create user table for jsboard
+
+       $ cd jsboard-version/INSTALLER/SQL
+       $ mysql -u jsboard -p jsboard < userdb-$ostype.sql
+       Enter password: <INPUT YOUR PASSWORD>
+
+    After working of database job, run install script in jsboard-version/INSTALLER/script.
+
+    1) if you have root account ( if you are account user, see next chart. )
+
+        $ ./root
+        ########################################################
+        # JSBoard Config File Installer v2.0                   #
+        # Scripted By JoungKyun Kim < http://www.oops.org >    #
+        ########################################################
+
+        STEP 1 Language Check
+        ---------------------
+        Can you enable to use KOREAN in this console? [Y/N](default Y) : n <--Enter
+
+        ########################################################
+        ## System INFORMATION
+        ########################################################
+        #
+        # System Language	: English
+        # System OS		: Linux
+        # Apache User		: nobody
+        # Apache Group		: nobody
+        #
+        ########################################################
+
+
+        If isn't right upper informations, you types N and appoint new value.
+        Is right upper information? [Y/N](default Y) :
+
+
+      You must comfirme Apache User and Apache Group on upper information.
+      This values are must same in User and Group directive value of httpd.conf.
+      If same, input Y nor input N. If you are input N, you meet next process.
+
+        1. Webserver user configuration
+        Input value of User directive in httpd.conf : apache
+
+        2. Webserver group configuration
+        Input value of Group directive in httpd.conf : apache
+
+        DONE !!!
+        $
+
+      Normally, FreeBSD and Redhat 4.x 5.x 6.x is nobody, and Debian is www-data,
+      and Redhat 7 is apache.
+
+
+    2) if you are account user.
+
+        $ ./account
+        ########################################################
+        # JSBoard Config File Installer v2.0                   #
+        # Scripted By JoungKyun Kim < http://www.oops.org >    #
+        ########################################################
+
+        STEP 1 Language Check
+        ---------------------
+        Can you enable to use KOREAN in this console? [Y/N](default Y) : Y
+
+        Group Owner of "config/global.ph config/allow_browser.txt" must set GROUP
+        value in httpd.conf that is operation group of Web Server. If can't set as
+        value of GROUP directive in httpd.conf, you will set the permission 606.
+
+      Upper message explains to protect global configuration file include db login
+      information. That is to say, This purpose is other account user cat't see upper
+      files. This job is enabled with root account. If you have root account, you
+      must set 606 permission this files.
+    
+      if you have root account,
+
+      $ chgrp nobody jsboard/config/global.ph
+      $ chgrp nobody jsboard/config/spam_list.txt
+
+      and result,
+
+      -rw-rw----    accountname    nobody     config/global.ph
+      -rw-rw----    accountname    nobody     config/spam_list.txt
+
+      But you don't have root accunt,
+
+      $ chmod 606 config/global.ph
+      $ chmod 606 config/spam_list.txt
+      $ chmod 711 ~/accountname
+
+      and result,
+
+      -rw----rw-    accountname    accountname    config/global.ph
+      -rw----rw-    accountname    accountname    config/spam_list.txt
+
+      In this case, enable to operate but not good for security.
+
+
+    Next, move jsboard/config and set global.ph.
+
+    ############################################################################
+    #  DATABASE Configuration
+    ############################################################################
+    $db[server] = "localhost";			# DB address
+    $db[user]   = "jsboard";			# DB login user
+    $db[pass]   = "YOUR PASSWORD";		# DB login pass
+    $db[name]   = "jsboard";			# DB name
+
+    This is mysql login information.
+
+
+    ##############################################################################
+    #  BASIC Configuration
+    ##############################################################################
+    .........
+
+    # web path of installed jsboard
+    $board[path]     = "http://domain.com/jsboard/";
+
+    value of $board[path] is web path of jsboard. This value is closed with slash
+    charactor (/).
+
+
+    ##############################################################################
+    #  Anti Spam Configuration
+    ##############################################################################
+    $board[antispam] = "@SPAM1@:@SPAM2@:@SPAM3@";
+
+    This value is for protection of registration spam article with spam register.
+    This value have 3 parts with devided colon charactor(:). Value of @SPAM1@ part 
+    have 5 digit. and @SPAM2@ and @SPAM3@ have 2 digit. for example:
+
+    $board[antispam] = "94253:14:82";
+
+    With this configuration, registration article is only enable write page.
+
+
+    ##############################################################################
+    #  login mode Configuration
+    ##############################################################################
+    # login variation name (This value must be modified as security problem)
+    $jsboard         = "login";
+
+    This value is name of login variable for jsboard. Changed any one word.
+
+    # location of default page after login
+    $print[dpage] = "http://domain.com/jsboard/list.php?table=test";
+
+    If you use login mode in jsboard, This value is start page after login success.
+    If you want to different start page in each board, connect login page with
+    ?table=$table option with web browser.
+
+
+    ##############################################################################
+    #  Theme Configuration
+    ##############################################################################
+    # Theme Name
+    $print[theme]    = "EN-default";
+
+    setting up theme. Default support is EN-default theme. If you want to get any
+    english theme, connect http://jsboard.kldp.org/gallery/index.php?table=gallery
+    and download EN-themename.tar.gz file. After download, uncompress in jsboard/theme.
+
+
+3. Change passowrd of JSBoard super admin
+
+  After set up global.ph, connect http://domain.com/jsboard/login.php?type=admin
+  with web browser. Default user id and password is "admin" and "0000".
+
+  After login admin center, click User administration and change admin user with
+  click EDIT button.
+
+
+4. JSBoard 보안
+
+  For enforced security of jsboard, set up follow configuration in httpd.conf.
+  If you don't have root account and enable to use .htaccess file, set up in
+  jsboard/.htaccess instead of httpd.conf.
+
+  make jsboard/protecion directory.
+  $ cd jsboard
+  $ make protection
+  $ cd protection
+  $ echo "You don't have any permisstion" > 403.html
+
+  and set up follow configuration in httpd.conf.
+
+  <DirectoryMatch "^/.*/jsboard/data">
+    AddType application/x-httpd-php3-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
+    AddType application/x-httpd-php-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
+
+    ErrorDocument 403 http://domain.com/jsboard/protection/403.html
+
+    <Files ~ ".*\.ph$">
+      Order allow,deny
+      Deny from all
+    </Files>
+  </DirectoryMatch>
+
+  if you cat't set up in httpd.conf, set up in jsboard/.htaccess follow configuration
+
+  AddType application/x-httpd-php3-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
+  AddType application/x-httpd-php-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
+
+  ErrorDocument 403 http://domain.com/jsboard/protection/403.html
+
+  <Files ~ ".*\.ph$">
+    Order allow,deny
+    Deny from all
+  </Files>
+

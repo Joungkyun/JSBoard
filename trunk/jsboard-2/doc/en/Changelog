@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 ¹öÀü   : jsboard-2.0.2
 
+2002.07.31
+  by JoungKyun Kim <http://www.oops.org>
+	- added english install document
+
 2002.07.30
   by JoungKyun Kim <http://www.oops.org>
 	- rewrite prelist() function
