@@ -43,7 +43,7 @@ if ($m == "login") {
     } elseif(!$table) header("Location: $print[dpage]");
     else header("Location: list.php?table=$table");
   } else {
-    move_page("./session.php?m=logout&logins=fail&$opt$var",0);
+    move_page("./session.php?m=logout&logins=fail$opt$var",0);
   }
 } else if ($m == "logout") {
   session_start();
@@ -55,7 +55,11 @@ if ($m == "login") {
   if($logins == "fail") {
     if($type == "admin") $var = "?type=admin";
     elseif($table) $var = "?table=$table";
-    header("Location: ./login.php$var");
+    if(!trim($var) && $print[dopage]) {
+      header("Location: $print[dopage]");
+    } else {
+      header("Location: ./login.php$var");
+    }
   } else {
     $urls = $edb[logout];
     if($url && preg_match("/^http:/i",$url)) {
