@@ -144,7 +144,7 @@ function get_boundary_msg() {
 
 function generate_mail_id($uid) {
   $id = date("YmdHis",time());
-  mt_srand((fload) microtime() * 1000000);
+  mt_srand((float) microtime() * 1000000);
   $randval = mt_rand();
   $id .= $randval."@$uid";
   return $id;
