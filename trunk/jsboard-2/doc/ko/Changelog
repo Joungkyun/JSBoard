@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
+2002.4. 1 by 김칠봉 <http://linuxchannel.net>
+	- get_microtim(), human_fsize() 함수 재작성
+
 2002.4.29 by 김정균 <http://www.oops.org>
 	- php.ini 의 precision 값을 15 로 고정.
 	- get_spam_value 함수 수정 (for php 4.2.0)
