@@ -5,39 +5,52 @@
 function parse_query_str() {
   if(ini_get("register_globals")) return;
 
-  global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
-  global $HTTP_SESSION_VARS, $HTTP_SERVER_VARS;
+  if(substr(PHP_VERSION,0,3) < 4.1) {
+    global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+    global $HTTP_SESSION_VARS, $HTTP_SERVER_VARS;
+    $O_GET  = $HTTP_GET_VARS;
+    $O_POST = $HTTP_POST_VARS;
+    $O_COOKIE = $HTTP_COOKIE_VARS;
+    $O_SESSION = $HTTP_SESSION_VARS;
+    $O_SERVER = $HTTP_SERVER_VARS;
+  } else
+    $O_GET  = $_GET;
+    $O_POST = $_POST;
+    $O_COOKIE = $_COOKIE;
+    $O_SESSION = $_SESSION;
+    $O_SERVER = $_SERVER;
+  }
 
-  if(count($HTTP_GET_VARS)) {
-    foreach($HTTP_GET_VARS as $key => $value) {
+  if(count($O_GET)) {
+    foreach($O_GET as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
 
-  if(count($HTTP_POST_VARS)) {
-    foreach($HTTP_POST_VARS as $key => $value) {
+  if(count($O_POST)) {
+    foreach($O_POST as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
 
-  if(count($HTTP_COOKIE_VARS)) {
-    foreach($HTTP_COOKIE_VARS as $key => $value) {
+  if(count($O_COOKIE)) {
+    foreach($O_COOKIE as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
 
-  if(count($HTTP_SESSION_VARS)) {
-    foreach($HTTP_SESSION_VARS as $key => $value) {
+  if(count($O_SESSION)) {
+    foreach($O_SESSION as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
     
-  if(count($HTTP_SERVER_VARS)) {
-    foreach($HTTP_SERVER_VARS as $key => $value) {
+  if(count($O_SERVER)) {
+    foreach($O_SERVER as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
