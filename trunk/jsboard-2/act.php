@@ -398,8 +398,11 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     if($atc[email]) $atc[email] = check_email($atc[email],1);
 
     # 쓰기,답장 모드에서 html 사용시 table tag 검사
-    if($o[at] == "write" || $o[at] == "reply" || $o[at] == "edit") {
-      if($atc[html]) check_htmltable($atc[text]);
+    if(($o[at] == "write" || $o[at] == "reply" || $o[at] == "edit") && $atc[html]) {
+      check_htmltable($atc[text]);
+      $denyiframe = array("/<(iframe[^>]*)>/i","/<(\/iframe)>/i");
+      $editiframe = array("&lt\\1&gt;","&lt\\1&gt;");
+      $atc[text] = preg_replace($denyiframe,$editiframe,$atc[text]);
     }
 
     $compare[email] = trim($compare[email]) ? $compare[email] : "mail check";
