@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2001년 12월 29일
+작성일 : 2001년 12월 31일
 버전   : jsboard-2.0pre3
 
 
@@ -92,6 +92,7 @@ If you wnat to see windog's change log, see also
     않고 소스를 보여주게 변경
 65. INSTALLER 수정
 66. DOCUMENT 업데이트
+67. 등록화면의 nick name, real name 출력 부분 수정
 
 
 -----------------------------------------------------------------------------

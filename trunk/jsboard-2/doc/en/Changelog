@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Mon, Dec 29 2001
+Date      : Mon, Dec 31 2001
 Version   : jsboard-2.0pre3
 
 
@@ -90,6 +90,7 @@ Version   : jsboard-2.0pre3
 64. changed mothod of preview in list page to don't parse html from parse html
 65. fixed INSTALLER
 66. updated DOCUMENT
+67. modified print of real name or nickname in regist article page
 
 
 -----------------------------------------------------------------------------
