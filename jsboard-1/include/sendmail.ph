@@ -98,7 +98,7 @@ class maildaemon {
   function sockets($option=0) {
     switch($option) {
       case "open" :
-        $this->sock = @fsockopen($this->mx,25,&$this->errno,&$this->errstr,30);
+        $this->sock = @fsockopen($this->mx,25,$this->errno,$this->errstr,30);
         $this->debug($this->sock,1,$this->debug);
         break;
       default :

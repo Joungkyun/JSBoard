@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0pre4
 
+Thu, Apr 25 2002 by Eunjea Im <http://kldp.org/~eunjea/>
+	- fixed warnning message if allow_call_time_pass_reference
+	  of php.ini is off
+
 Tue, Apr 23 2002 by JoungKyun Kim  <http://www.oops.org>
 	- fixed error of spam register check in php 4.2.0
 	  This problem is change of php 4.2.0

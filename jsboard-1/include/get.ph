@@ -409,7 +409,7 @@ function file_operate($p,$m,$msg='',$s='',$t=0) {
 # $type -> socket(1) 방식 또는 fopen(null)
 function get_html_src($url,$size=5000,$file="",$type="") {
   if(!$type) {
-    $p = @fsockopen($url,80,&$errno,&$errstr);
+    $p = @fsockopen($url,80,$errno,$errstr);
     fputs($p,"GET /$file HTTP/1.1\r\nhost: $url\r\n\r\n");
   } else $p = @fopen("http://$url/$file","rb");
   $f = fread($p,$size);

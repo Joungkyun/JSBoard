@@ -97,7 +97,7 @@ class maildaemon {
   function sockets($option=0) {
     switch($option) {
       case "open" :
-        $this->sock = @fsockopen($this->mx,25,&$this->errno,&$this->errstr,30);
+        $this->sock = @fsockopen($this->mx,25,$this->errno,$this->errstr,30);
         $this->debug($this->sock,1,$this->debug);
         break;
       default :
@@ -173,7 +173,7 @@ function html_to_plain_lib($str) {
 function get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm) {
   global $langs,$color;
 
-  if($nofm) $nofm = auto_link(&$nofm);
+  if($nofm) $nofm = auto_link($nofm);
   if($rmail[url]) $homeurl = "HomeURL           : ".auto_link($rmail[url])."\r\n";
   if($rmail[email]) {
     $rmail[pemail] = (eregi("^nobody@",$rmail[email])) ? "" : $rmail[email];
@@ -229,11 +229,11 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
           "\r\n--$boundary\r\n".
           "Content-Type: text/plain; charset=$langs[charset]\r\n".
           "Content-Transfer-Encoding: base64\r\n\r\n".
-          body_encode_lib(&$pbody).
+          body_encode_lib($pbody).
           "\r\n\r\n--$boundary\r\n".
           "Content-Type: text/html; charset=$langs[charset]\r\n".
           "Content-Transfer-Encoding: base64\r\n\r\n".
-          body_encode_lib(&$hbody).
+          body_encode_lib($hbody).
           "\r\n--$boundary--\r\n";
 
   $mails[debug] = 0;
@@ -340,11 +340,11 @@ function sendmail($rmail) {
   $htmltext = get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm);
 
   if ($rmail[user] && $rmail[reply_orig_email] && $rmail[email] != $rmail[toadmin]) {
-    socketmail($rmail[mta],$rmail[reply_orig_email],$rmail[email],$rmail[title],&$message,&$htmltext);
+    socketmail($rmail[mta],$rmail[reply_orig_email],$rmail[email],$rmail[title],$message,$htmltext);
   }
 
   if ($rmail[admin] && $rmail[toadmin] != "" && $rmail[email] != $rmail[toadmin]) {
-    socketmail($rmail[mta],$rmail[toadmin],$rmail[email],$rmail[title],&$message,&$htmltext);
+    socketmail($rmail[mta],$rmail[toadmin],$rmail[email],$rmail[title],$message,$htmltext);
   }
 }
 ?>
