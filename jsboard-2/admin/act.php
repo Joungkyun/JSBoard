@@ -14,6 +14,10 @@ if($mode == "global_chg") {
 if($db['rmode'] == "r") 
   print_error("System Checking NOW !! \n\nSorry, Read only enable.",250,130,1);
 
+###########################################
+#          DB에 접속
+###########################################
+
 $connect = @mysql_connect($db['rhost'],$db['user'],$db['pass']);
 sql_error(mysql_errno(), mysql_error());
 
@@ -29,30 +33,63 @@ exsit_dbname_check($db['name']);
 # 되돌리기 위해 지정
 if($ts) $tslink = "?ts=$ts";
 
-###########################################
-#          DB에 접속
-###########################################
-
-if($mode=='db_del') {
+if ($mode == "csync") {
   table_name_check($table_name);
 
-  # table delete
-  $table_del = "drop table $table_name";
-  mysql_query($table_del,$connect);
-  sql_error(mysql_errno(),mysql_error());
-
-  if(!preg_match("/_comm$/",$table_name)) {
-    $comm_del = "drop table {$table_name}_comm";
-    mysql_query($comm_del,$connect);
-    //sql_error(mysql_errno(),mysql_error());
+  if (!preg_match ("/_comm$/", $table_name)) {
+    print_error("$table_name is not comment table",250,150,1);
   }
 
-  # 게시판 계정에서 사용되는 file 삭제
-  exec("{$exec['rm']} ../data/$table_name");
+  $mother_name = preg_replace("/_comm$/", "", $table_name);
+
+  $tbl_list = mysql_list_tables($db['name']);
+  # 동일한 이름의 게시판이 있는지 확인
+  $chk = same_db_check($tbl_list,$table_name, 1);
+
+  if ($chk) {
+    if ( ! field_exist_check ($mother_name, "comm") ) {
+      # comm field 추가
+      mysql_query ('ALTER TABLE ' . $mother_name . ' add comm int(6) DEFAULT 0', $connect);
+      # comm field key 추가
+      mysql_query ('ALTER TABLE ' . $mother_name . ' add key (comm)', $connect);
+    }
+
+    sync_comment ($table_name, $mother_name);
+
+    mysql_close();
+  } else {
+    mysql_close();
+    print_error("$table_name is not found",250,150,1);
+  }
+}
+
+else if($mode=='db_del') {
+  table_name_check($table_name);
+
+  $tbl_list = mysql_list_tables($db['name']);
+  # 동일한 이름의 게시판이 있는지 확인
+  $chk = same_db_check($tbl_list,$table_name, 1);
+
+  if ($chk) {
+    # table delete
+    $table_del = "drop table $table_name";
+    mysql_query($table_del,$connect);
+    sql_error(mysql_errno(),mysql_error());
+
+    if(!preg_match("/_comm$/",$table_name)) {
+      $comm_del = "drop table {$table_name}_comm";
+      mysql_query($comm_del,$connect);
+      //sql_error(mysql_errno(),mysql_error());
+
+      # 게시판 계정에서 사용되는 file 삭제
+      exec("{$exec['rm']} ../data/$table_name");
+    }
+  }
+
   mysql_close();
 }
 
-if($mode == 'db_create')  {
+else if($mode == 'db_create')  {
   $tbl_list = mysql_list_tables($db['name']);
 
   # 새로만들 계정이름의 존재유무 체크
@@ -138,7 +175,7 @@ if($mode == 'db_create')  {
   mysql_close();
 }
 
-if($mode == "global_chg") {
+else if($mode == "global_chg") {
   mysql_close();
   # quot 변환된 문자를 un quot 한다
 

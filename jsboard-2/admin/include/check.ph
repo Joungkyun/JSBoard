@@ -44,14 +44,21 @@ function table_list_check($db) {
 
 # 게시판 생성시 동일한 이름의 게시판이 이미 존재하는지 여부 조사
 #
-function same_db_check($list, $table) {
+function same_db_check($list, $table, $yn = 0) {
   global $langs;
   $tbl_num=mysql_num_rows($list);
   for($k=0;$k<$tbl_num;$k++) {
     # table list 를 불러 옵니다.
     $table_name = mysql_tablename($list,$k);
-    if ($table == $table_name || $table == "userdb") print_error($langs['a_acc'],250,150,1);
+
+    if ($yn) {
+      if  ($table == $table_name) return 1;
+    } else {
+      if ($table == $table_name || $table == "userdb") print_error($langs['a_acc'],250,150,1);
+    }
   }
+
+  if ($yn) return 0;
 }
 
 # table list 를 구한다.
@@ -172,5 +179,33 @@ function parse_ipvalue($str,$r=0) {
 
   $str = trim(preg_replace($src,$dsc,trim($str)));
   return $str;
+}
+
+function field_exist_check ($t, $compare) {
+  global $db;
+
+  $field = mysql_list_fields ($db['name'], $t);
+  $num = mysql_num_fields ($field);
+
+    for ($i = 0; $i < $num; $i++) {
+    if ( mysql_field_name ($field, $i) == $compare ) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
+
+function sync_comment ($cmt, $mother) {
+  $res = mysql_query ('SELECT reno, count(*) as total FROM ' . $cmt . ' GROUP By reno');
+
+  if(mysql_num_rows($res)) {
+    while($list = mysql_fetch_array($res)) {
+      $sql = 'UPDATE ' . $mother . ' SET comm = \'' . $list['total'] . '\' '.
+             'WHERE no = \'' . $list['reno'] . '\'';
+      mysql_query ($sql);
+    }
+  }
+  mysql_free_result($res);
 }
 ?>

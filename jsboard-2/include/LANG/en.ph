@@ -278,6 +278,7 @@ $langs[a_t17] = "Stat";
 $langs[a_t18] = "WHOLE";
 $langs[a_t19] = "Per alphabat";
 $langs[a_t20] = "User administration";
+$langs[a_t21] = "Sync";
 
 $langs[a_del_cm] = "Are you sure?";
 $langs[a_act_fm] = "Go to first page";

@@ -15,19 +15,30 @@ sql_select_db($db['name']);
 # password 비교함수 - admin/include/auth.ph
 compare_pass($_SESSION[$jsboard]);
 
-if($ua['comment'] && !get_tblist($db['name'],"",$table."_comm")) {
-  $cret_comm = "CREATE TABLE {$table}_comm (\n".
-               "       no int(6) NOT NULL auto_increment,\n".
-               "       reno int(20) NOT NULL default '0',\n".
-               "       rname tinytext,\n".
-               "       name tinytext,\n".
-               "       passwd varchar(56) default NULL,\n".
-               "       text mediumtext,\n".
-               "       host tinytext,\n".
-               "       date int(11) NOT NULL default '0',\n".
-               "       PRIMARY KEY  (no),\n".
-               "       KEY parent (reno))";
-  sql_query($cret_comm);
+if($ua['comment']) {
+  if (!get_tblist($db['name'],"",$table."_comm")) {
+    $cret_comm = "CREATE TABLE {$table}_comm (\n".
+                 "       no int(6) NOT NULL auto_increment,\n".
+                 "       reno int(20) NOT NULL default '0',\n".
+                 "       rname tinytext,\n".
+                 "       name tinytext,\n".
+                 "       passwd varchar(56) default NULL,\n".
+                 "       text mediumtext,\n".
+                 "       host tinytext,\n".
+                 "       date int(11) NOT NULL default '0',\n".
+                 "       PRIMARY KEY  (no),\n".
+                 "       KEY parent (reno))";
+    sql_query($cret_comm);
+  }
+
+  if (!field_exist_check ($table, "comm")) {
+    # comm field 추가
+    sql_query ('ALTER TABLE ' . $table . ' add comm int(6) DEFAULT 0');
+    # comm field key 추가
+    sql_query ('ALTER TABLE ' . $table . ' add key (comm)');
+  }
+
+  sync_comment ($table."_comm", $table);
 }
 
 mysql_close();
