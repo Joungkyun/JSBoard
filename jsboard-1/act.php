@@ -336,7 +336,14 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
     $atc[title] = trim($atc[title]);
     $atc[text]  = chop($atc[text]);
 
-    if(!$atc[name] || !$atc[title] || !$atc[text]) print_error($langs[act_in]);
+    # blank check
+    $blankChk = "[\xA1A1\s]+|(&nbsp;)+";
+    $nameChk = array("name","title","text");
+    for($bc=0;$bc<3;$bc++) {
+      if(!$atc[$nameChk[$bc]] || preg_match("/^$blankChk$/i",$atc[$nameChk[$bc]]))
+        print_error($langs[act_in]);
+    }
+
     if($atc[url]) $atc[url] = check_url($atc[url]);
     if($atc[email]) $atc[email] = check_email($atc[email]);
 
