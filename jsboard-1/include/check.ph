@@ -108,7 +108,8 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
 # file() - file을 읽어 한줄씩 배열로 받음
 #
 function chk_spam_browser($file = "config/allow_browser.txt") {
-  $agent_env = getenv("HTTP_USER_AGENT");
+  global $HTTP_SERVER_VARS
+  $agent_env = ,$HTTP_SERVER_VARS["HTTP_USER_AGENT"];
 
   if(@file_exists($file)) {
     $br = file($file);
@@ -229,7 +230,7 @@ function upload_name_chk($f) {
 # 허락됨
 #
 function check_location($n=0) {
-  global $board, $langs;
+  global $board, $langs, $HTTP_SERVER_VARS;
 
   if($n) {
     $sre[] = "/http[s]?:\/\/([^\/]+)\/.*/i";
@@ -237,7 +238,7 @@ function check_location($n=0) {
     $sre[] = "/:[0-9]+/i";
     $tre[] = "";
 
-    $r = gethostbyname(preg_replace($sre,$tre,getenv("HTTP_REFERER")));
+    $r = gethostbyname(preg_replace($sre,$tre,$HTTP_SERVER_VARS["HTTP_REFERER"]));
     $l = gethostbyname(preg_replace($sre,$tre,$rmail[bbshome]));
 
     if ($r != $l) {

@@ -29,6 +29,7 @@ If you wnat to see windog's change log, see also
 4. 폼사이즈 조정 버튼을 image 에서 text 로 수정(LANG 이 ko 가 아닐 경우)
 5. 자바스트립트 지원않는 브라우져 위해 에러 메세지 출력 수정
 6. 메일 발송시 reply link 삭제
+7. getenv() 함수를 $HTTP_SERVER_VARS 변수로 대체
 
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
