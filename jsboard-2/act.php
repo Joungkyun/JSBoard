@@ -255,7 +255,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
       sql_free_result($result);
     }
 
-    sql_query("DELETE FROM {$table}_comm WHERE reno = '$atc[no]'");
+    mysql_query("DELETE FROM {$table}_comm WHERE reno = '$atc[no]'");
     sql_query("LOCK TABLES $table WRITE");
     sql_query("DELETE FROM $table WHERE no = '$atc[no]'");
     sql_query("UPDATE $table SET idx = idx - 1 WHERE (idx + 0) > '$atc[idx]'");
