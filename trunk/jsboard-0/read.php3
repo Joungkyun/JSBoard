@@ -10,6 +10,10 @@ include("include/$table/config.ph");
 $title .= $sub_title;
 include("include/$table/desc.ph");
 
+if ($menuallow == "yes") {
+    include("include/$table/menu.ph") ;
+}
+
 dconnect($db_server, $db_user, $db_pass);
 dselect_db($db_name);
 
@@ -66,6 +70,9 @@ while($list = dfetch_row($result)) {
 
     $text   = eregi_replace("<br>\n", "<br>", $text);
 
+    // 빈칸을 입력하여 포맷팅을 시켰을 경우에 제대로 나오게 하기위해 삽입
+    $text   = eregi_replace("  ", "&nbsp;&nbsp;", $text);
+
     if ($reto) {
 	$result = dquery("SELECT num FROM $table WHERE no = $reto");
 	$num    = mysql_result($result, 0, "num");
@@ -110,18 +117,45 @@ while($list = dfetch_row($result)) {
 			$tail = substr( strrchr($bofile, "."), 1 );
 			if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram || $tail==hwp || $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj || $tail==tar || $tail==avi || $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp))
 			{
-				echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" border=\"0\" alt=\"$bofile\"> $bofile</a>\n";
+				echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" width=17 height=17 border=0 alt=\"$bofile\" align=texttop> $bofile</a>\n";
 			}else{
-			echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/$tail.gif\" border=\"0\" alt=\"$bofile\"> $bofile</a>\n";
+			echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/$tail.gif\" width=17 height=17 border=0 alt=\"$bofile\" align=texttop> $bofile</a>\n";
 			}
 			echo (" <font color=\"$r2_fg\">$bfsize Bytes</font></td></tr>");
 		}
 	}
 
     echo("<tr><td colspan=\"3\" bgcolor=\"$r3_bg\">\n" .
-	 "<font color=\"$r3_fg\">\n$text\n</font>\n" .
-	 "</td></tr>\n");
-    echo("</table>\n</td></tr></table>\n");
+	 "<font color=\"$r3_fg\">") ;
+
+    if ($bofile) {
+
+      $tail = substr( strrchr($bofile, "."), 1 );
+
+      if ($tail == "gif" || $tail == "jpg") {
+        echo ("<img src=$filesavedir/$bcfile/$bofile><p>");
+      }
+
+    }
+
+    echo("\n$text\n") ;
+
+    if ($bofile) {
+
+      $tail = substr( strrchr($bofile, "."), 1 );
+
+      if ($tail == "txt") {
+        echo ("<p><br>\n" .
+              "---- 첨부 File 내용 -------------------------- \n<p>");
+        include("$filesavedir/$bcfile/$bofile");
+        echo("\n<br><br>");
+
+      }
+
+    }
+
+    echo("</font>\n</td></tr>\n" .
+         "</table>\n</td></tr></table>\n");
 
     $next = get_next($no);
     $prev = get_prev($no);
@@ -155,14 +189,16 @@ while($list = dfetch_row($result)) {
     sepa($r0_bg);
     echo("<td align=\"center\" width=\"1%\"><a href=\"reply.php3?table=$table&no=$no&page=$page\"><nobr>답장쓰기</nobr></a></td>\n");
     sepa($r0_bg);
+
     if($passwd) { // 암호가 있는 경우
 	echo("<td align=\"center\" width=\"1%\"><a href=\"edit.php3?table=$table&no=$no&page=$page\"><nobr>수정</nobr></a></td>\n");
         sepa($r0_bg);
-	if(!$reyn) {
-	    echo("<td align=\"center\" width=\"1%\"><a href=\"delete.php3?table=$table&no=$no&page=$page\"><nobr>삭제</nobr></a></td>\n");
-            sepa($r0_bg);
-	}
-    } else {
+ 	  if(!$reyn) {
+	      echo("<td align=\"center\" width=\"1%\"><a href=\"delete.php3?table=$table&no=$no&page=$page\"><nobr>삭제</nobr></a></td>\n");
+              sepa($r0_bg);
+	  }
+    }
+    else {
 	echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>수정</nobr></font></td>\n");
 
 	echo("<td width=\"1%\" bgcolor=\"$r0_bg\"><a href=\"edit.php3?table=$table&no=$no&page=$page\"><img src=\"images/n.gif\" alt=\"\" width=\"2\" height=\"10\" border=\"0\"></a></td>");
@@ -171,8 +207,12 @@ while($list = dfetch_row($result)) {
 	
 	echo("<td width=\"1%\" bgcolor=\"$r0_bg\"><a href=\"delete.php3?table=$table&no=$no&page=$page\"><img src=\"images/n.gif\" alt=\"\" width=\"2\" height=\"10\" border=\"0\"></a></td>");
     }
+
     echo("</tr>\n</table>\n<br>\n");
 
     dquery("UPDATE $table SET refer = $refer WHERE no = $no");
 }
+
+include("include/$table/tail.ph");
+
 ?>
