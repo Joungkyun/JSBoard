@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.5
 
+Sun, Mar 30 2003
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed bug of edit mode
+
 Wed, Mar 26 2003
   by JoungKyun Kim <http://www.oops.org>
 	- fixed typo in doc/ko/README.OPERATE

@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.5
 
+2003.03.30
+  by 김정균 <http://www.oops.org>
+	- 수정모드 버그 픽스
+
 2003.03.26
   by 김정균 <http://www.oops.org>
 	- README.OPERATE 의 오타 수정
@@ -31,7 +35,7 @@ If you wnat to see windog's change log, see also
 
 2003.03.20
   by 김정균 <http://www.oops.org>
-	- 코멘트 사용시 상세 검새겡서 조건 에러나는 버그 수정
+	- 코멘트 사용시 상세 검색에서 조건 에러나는 버그 수정
 	- 이모티콘 함수 수정
 
 2003.03.18
