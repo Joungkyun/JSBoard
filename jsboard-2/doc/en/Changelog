@@ -49,6 +49,7 @@ Version   : jsboard-2.0pre4
 24. remove copyright in oops administration page
 25. changed method of cookie time
 26. changed method of upload file for register_globals = off
+27. fixed bug of auto_link() function
 
 
 -----------------------------------------------------------------------------
