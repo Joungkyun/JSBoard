@@ -846,11 +846,11 @@ function print_comment($table,$no,$print=0) {
     else $disable = "";
   } else $disable = "";
 
-  $t = "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=1 BGCOLOR=$color[l5_bg]>\n".
+  $t = "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=5 BGCOLOR=$color[l5_bg]>\n".
+       get_comment($table,$no,0).
+       "</TABLE>\n".
+       "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=1 BGCOLOR=$color[l5_bg]>\n".
        "<FORM METHOD=POST ACTION=act.php>\n".
-       "<TR>\n".
-       "<TD COLSPAN=2 BACKGROUND=./images/dotline.gif><IMG SRC=./images/blank.gif WIDTH=1 HEIGHT=4 BORDER=0 ALT=''></TD>\n".
-       "</TR>\n".
        "<TR>\n".
        "<TD ALIGN=right>\n".
        "$langs[c_na] <INPUT TYPE=text$disable NAME=atc[name] SIZE=$size[pass] VALUE=\"$pre_regist[name]\" STYLE=\"font: 11px tahoma;\"><BR>\n".
@@ -869,9 +869,6 @@ function print_comment($table,$no,$print=0) {
        "<INPUT TYPE=hidden NAME=page VALUE=$page>\n".
        "<INPUT TYPE=hidden NAME=o[at] VALUE=\"c_write\">\n".
        "</FORM>\n".
-       "</TABLE>\n".
-       "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=5 BGCOLOR=$color[l5_bg]>\n".
-       get_comment($table,$no,0).
        "</TABLE>\n";
 
   if($print) echo $t;
