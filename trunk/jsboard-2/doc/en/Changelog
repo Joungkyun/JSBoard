@@ -59,6 +59,7 @@ Version   : jsboard-2.0pre4
 33. fixed problem that lost value of table various
 34. removed double quote in -f option of mail() function
 35. fixed miss search during same day
+36. added spam check with article subject
 
 
 -----------------------------------------------------------------------------
