@@ -232,7 +232,7 @@ function page_form($table, $pages, $color, $print = 0) {
          "      <OPTION VALUE=\"p\" SELECTED>$langs[page_no]\n".
          "      <OPTION VALUE=\"n\">$langs[art_no]\n".
          "    </SELECT>\n".
-         "    <INPUT TYPE=\"text\" NAME=\"o[no]\" SIZE=\"{form_size(2)}\" MAXLENGTH=\"6\" VALUE=\"$value\">\n".
+         "    <INPUT TYPE=\"text\" NAME=\"o[no]\" SIZE=\"".form_size(2)."\" MAXLENGTH=\"6\" VALUE=\"$value\">\n".
          "    <INPUT TYPE=\"submit\" VALUE=\"$langs[ln_mv]\">\n".
          "    </FONT>\n".
          "  </TD>\n".
