@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0pre4
 
+Fri, Apr 19 2002 by JoungKyun Kim  <http://www.oops.org>
+	- fixed java script error cause preview string include \n charactor
+
+
 Mon, Apr 15 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- added Date Header on sendmail.ph in case of without mta
 	- fixed html error on KO-default/reply.template

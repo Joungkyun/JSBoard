@@ -67,7 +67,7 @@ function print_list($table, $list, $r=0)
     $list[ptext] = preg_replace("/#|'|\\\\/i","\\\\\\0",$list[ptext]);
     $list[ptext] = htmlspecialchars(htmlspecialchars($list[ptext]));
     $list[ptext] = preg_replace("/\r*\n/i","<BR>",$list[ptext]);
-    $list[ptext] = str_replace("&amp;amp;","&amp;",$list[ptext]);
+    $list[ptext] = trim(str_replace("&amp;amp;","&amp;",$list[ptext]));
     $list[preview] = " onMouseOver=\"drs('$list[ptext]'); return true;\" onMouseOut=\"nd(); return true;\"";
   }
 
