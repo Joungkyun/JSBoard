@@ -23,6 +23,7 @@ If you wnat to see windog's change log, see also
 Sun, Nov 17 2002
   by JoungKyun Kim <http://www.oops.org>
 	- fixed bug of textared tag on edit/write page
+	- fixed parsing bug of original text on reply mode
 
 Sat, Nov 16 2002
   by JoungKyun Kim <http://www.oops.org>
