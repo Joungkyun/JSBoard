@@ -175,7 +175,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
   function article_edit($table, $atc, $passwd) {
     global $HTTP_POST_FILES, $max_file_size, $agent;
     global $enable, $cenable, $board, $adminsession;
-    global $sadmin, $admin, $langs, $upload;
+    global $sadmin, $admin, $langs, $upload, $cupload;
 
     if($adminsession) {
       $passwd = $adminsession;
@@ -216,8 +216,10 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
       sql_free_result($fdelqy);
 
       sql_query("UPDATE $table SET bcfile='', bofile='', bfsize='' WHERE no = '$atc[no]'");
-      unlink("data/$table/files/$fdelinfo[bcfile]/$fdelinfo[bofile]");
-      rmdir("data/$table/files/$fdelinfo[bcfile]");
+      if (file_exists("data/$table/files/$fdelinfo[bcfile]/$fdelinfo[bofile]")) {
+        unlink("data/$table/files/$fdelinfo[bcfile]/$fdelinfo[bofile]");
+        rmdir("data/$table/files/$fdelinfo[bcfile]");
+      }
     }
 
     # file 수정 루틴
@@ -228,7 +230,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
         $fdelqy = sql_query("SELECT bcfile, bofile FROM {$table} WHERE no = '{$atc['no']}'");
         $fdelinfo = sql_fetch_array($fdelqy);
         sql_free_result($fdelqy);
-        if(file_exists("data/$table/files/$fdelinfo[bcfile]/$fdelinfo[bofile]") && $atc[fdelname]) {
+        if(file_exists("data/$table/files/$fdelinfo[bcfile]/$fdelinfo[bofile]") && trim($atc[fdelname])) {
           unlink("data/$table/files/$fdelinfo[bcfile]/$fdelinfo[bofile]");
           rmdir("data/$table/files/$fdelinfo[bcfile]");
         }
