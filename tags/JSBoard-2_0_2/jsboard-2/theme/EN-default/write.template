@@ -1,0 +1,230 @@
+<HTML>
+<HEAD>
+<!-#######################################################################-->
+<!-  $langs[charset] : print charset code                                 -->
+<!-  $board[ver]     : version information in webboard                    -->
+<!-  get_title()     : print header title in webbared                     -->
+<!-  $user_stylesheet : User Defined StyleSheet                           -->
+<!-#######################################################################-->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs[charset]?>">
+<TITLE>Jsboard <?=$board[ver]?> - <?=get_title()?></TITLE>
+
+<STYLE TYPE=text/css>
+<!--
+BODY,TD {font-size:12px;font-family:tahoma;color:#555555;}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+INPUT {border:1x solid #555555;background-Color:silver;font-size:11px;font-family:tahoma;color:#333333}
+TEXTAREA {border:1x solid #555555;background-Color:silver;font-size:13px;font-family:comic;color:#333333}
+
+<?=$user_stylesheet?>
+-->
+</style>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+
+<!-------------------- Start Header Design -------------------->
+<?
+if(!$np) {
+  # Design per user
+  include "$board[headpath]";
+  # Input by whole admin
+  include "html/head.ph";
+}
+?>
+<!-------------------- End Header Design   -------------------->
+
+
+<!-#######################################################################-->
+<!-  $board[align] : print align of webboard. It's config in board admin  -->
+<!-  $board[width] : print width of webboard. It's config in board admin  -->
+<!-  $board[formtype] : print form option to use upload image             -->
+<!-#######################################################################-->
+<DIV ALIGN=<?=$board[align]?>>
+<FORM NAME=writep METHOD=post ACTION=act.php<?=$board[formtype]?>>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN=bottom COLSPAN=2>
+<IMG SRC=./theme/EN-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
+<FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; <B>Write</B> new article</FONT>
+</TD>
+</TR>
+
+<TR BGCOLOR=#FFAE00>
+<TD COLSPAN=2>
+<IMG SRC=./theme/EN-default/img/board_no.gif ALIGN=absmiddle ALT=''>
+<FONT STYLE="color:#FFFFFF"><IMG SRC=theme/EN-default/img/write_title.gif BORDER=0></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=10><IMG SRC=images/blank.gif WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $size[name]         : print size of input of name filed              -->
+<!-  $pre_regist[name]   : print name of registed cookie                  -->
+<!-#######################################################################-->
+<TR>
+<TD WIDTH=80><B>Name</B></TD>
+<TD><INPUT TYPE=text NAME=atc[name] SIZE=<?=$size[name]?> MAXLENGTH=50 VALUE="<?=$pre_regist[name]?>"<?=$disable?>></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $view[email]          : print email field                            -->
+<!-  $pre_regist[email]    : print email of registed cookie               -->
+<!-#######################################################################-->
+<?
+if($view[email]) {
+  echo "
+<TR>
+<TD><B>Email</B></TD>
+<TD><INPUT TYPE=text NAME=atc[email] SIZE=$size[name] MAXLENGTH=255 VALUE=\"$pre_regist[email]\"$disable></TD>
+</TR>\n";
+}
+?>
+
+<!-#######################################################################-->
+<!-  $view[url]             : print url field                             -->
+<!-  $pre_regist[url]       : print homepage of registed cookie            -->
+<!-#######################################################################-->
+<?
+if($view[url]) {
+  echo "
+<TR>
+<TD><B>Homepage</B></TD>
+<TD><INPUT TYPE=text NAME=atc[url] SIZE=$size[name] MAXLENGTH=255 VALUE=\"$pre_regist[url]\"$disable></TD>
+</TR>\n";
+}
+?>
+
+<TR>
+<TD><B>HTML</B></TD>
+<TD>
+<INPUT TYPE=radio NAME=atc[html] VALUE=1> Use
+<INPUT TYPE=radio NAME=atc[html] VALUE=0 CHECKED> Don't Use
+</TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  print upload field                                                   -->
+<!-#######################################################################-->
+<?
+if ($upload[yesno] && $cupload[yesno] && $noup != 1) {
+  echo "<TR>\n".
+       "<TD><B>File</B></TD>\n".
+       "<TD>\n".
+       "<INPUT TYPE=HIDDEN NAME=max_file_size VALUE=$upload[maxsize]>\n".
+       "<INPUT TYPE=file NAME=userfile SIZE=$size[uplo] MAXLENGTH=256>\n".
+       "</TD>\n".
+       "</TR>\n";
+} elseif(!$upload[yesno] && $cupload[yesno]) {
+  echo "<TR>\n".
+       "<TD><B>File</B></TD>\n".
+       "<TD><FONT STYLE=\"color:red;font-weight:bold\">$langs[upload]<FONT></TD>\n".
+       "</TR>\n";
+}
+?>
+
+<!-#######################################################################-->
+<!-  $size[titl]  : size of title input form                              -->
+<!-#######################################################################-->
+<TR>
+<TD><B>Subject</B></TD>
+<TD><INPUT TYPE=text NAME=atc[title] SIZE=<?=$size[titl]?> MAXLENGTH=100></TD>
+</TR>
+
+<TR>
+<!-#######################################################################-->
+<!-  if login admin, don't need password                                  -->
+<!-  if IE and NS6 case, print textarea size operation button             -->
+<!-#######################################################################-->
+<?
+if((!$board[mode] || $board[mode] == 6) && $board[super] != 1) {
+  echo "<TD><B>Password</B></TD>\n".
+       "<TD>\n".
+       "<INPUT TYPE=password NAME=atc[passwd] SIZE=$size[pass] MAXLENGTH=16>\n".
+       "<IMG SRC=./images/blank.gif WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>\n".
+       "TextSize Operation $print[operate]\n".
+       "</TD>\n";
+} else {
+  echo "<TD COLSPAN=2 ALIGN=right>\n".
+       "TextSize Operation $print[operate]\n".
+       "</TD>\n";
+}
+?>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR=<?=$color[l5_bg]?> ALIGN=CENTER>
+
+<!-#######################################################################-->
+<!-  $wrap[op]   : print wrap option of textarea                          -->
+<!-  $size[text] : print size of textarea                                 -->
+<!-#######################################################################-->
+<!-- =============================== Contents =============================== -->
+<TEXTAREA NAME="wpost" <?=$wrap[op]?> ROWS=10 COLS=<?=$size[text]?>></TEXTAREA>
+<!-- =============================== Contents =============================== -->
+
+</TD></TR>
+</TABLE>
+
+
+<!-#######################################################################-->
+<!- $wrap[ment]       : if wrap option isn't hard, print warn message     -->
+<!- $table.$pages      : print link option to back list                   -->
+<!- $print[passform]  : hidden value for regist article                   -->
+<!- $orig_option      : back to original size of textarea                 -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN=right>
+<?=$wrap[ment]?>
+[ <A HREF=list.php?table=<?=$table.$pages?>><FONT STYLE="color=#555555">List</FONT></A> | <A HREF=javascript:history.back()><FONT STYLE="color=#555555">Back</FONT></A> ]
+</TD></TR>
+<TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
+<?=$print[passform]?>
+<INPUT TYPE=submit VALUE="Regist">&nbsp;
+<INPUT TYPE=reset VALUE="Reset"<?=$orig_option?>>&nbsp;
+<INPUT TYPE=button onClick=history.back() VALUE="Cancel">
+</TD></TR>
+</TABLE>
+
+<!-#######################################################################-->
+<!-  print_license()  : Printed Licese table                              -->
+<!-#######################################################################-->
+<?=print_license()?>
+
+</FORM>
+</DIV>
+
+<!-------------------- 꼬리 디자인 시작 -------------------->
+<?
+if(!$np) {
+  # Input by whole admin
+  include "html/tail.ph";
+  # Design per user
+  include "$board[tailpath]";
+}
+?>
+<!-------------------- 꼬리 디자인 끝   -------------------->
+</BODY>
+</HTML>
