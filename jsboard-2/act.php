@@ -24,7 +24,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   # 게시물 작성 함수
   function article_post($table, $atc) {
     global $jsboard, $board, $upload, $cupload, $rmail, $langs, $agent;
-    global $max_file_size;
+    global $print, $max_file_size;
 
     if($board[mode] == 4 && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) print_error($langs[login_err]);
 
@@ -81,11 +81,14 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
         $rmail[noquery] = sql_query("SELECT MAX(no) AS no FROM $table");
         $rmail[no] = sql_result($rmail[noquery], 0, "no"); # 최고 번호
         $rmail[reply_orig_email] = $rmail[origmail];
+        $rmail[theme] = $print[theme];
+        $rmail[html] = $atc[html];
 
         if(sendmail($rmail)) $page[m_err] = 0;
         else $page[m_err] = 1;
       }
     }
+
     set_cookie($atc);
     return $page;
   }
@@ -158,6 +161,8 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
         $rmail[path] = $board[path];
         $rmail[table] = $table;
         $rmail[reply_orig_email] = $rmail[origmail];
+        $rmail[theme] = $print[theme];
+        $rmail[html] = $atc[html];
 
         if(sendmail($rmail)) $gopage[m_err] = 0;
         else $gopage[m_err] = 1;
@@ -435,24 +440,6 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     }
     echo $dn[dl];
   }
-} elseif ($o[at] == "sm") {
-  include "include/header.ph";
-
-  if($rmail[uses]) {
-    check_location(1);
-
-    $rmail[name] = $atc[name];
-    $rmail[text] = $jsmail_text;
-    $rmail[title] = $atc[title];
-    $rmail[email] = $atc[email];
-    $rmail[version] = $board[ver];
-    $rmail[path] = $board[path];
-    $rmail[reply_orig_email] = $atc[to];
-
-    sendmail($rmail,1);
-  }
-
-  echo "<script>window.close()</script>";
 } elseif($o[at] == "ma") {
   include "config/global.ph";
   if(eregi($rmail[chars],$target)) {
