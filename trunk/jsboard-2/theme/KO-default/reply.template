@@ -159,7 +159,7 @@ if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
 if(eregi("^(0|4)$",$board[mode]) && !$board[super]) {
   echo "<TD>패스워드</TD>\n".
        "<TD>\n".
-       "<INPUT TYPE=password NAME=atc[passwd] SIZE=$size[pass] MAXLENGTH=16>\n".
+       "<INPUT TYPE=password NAME=atc[passwd] SIZE=$size[pass] MAXLENGTH=16 STYLE=\"font:10px tahoma;>\n".
        "<IMG SRC=./images/blank.gif WIDTH=15 HEIGHT=1 BORDER=0>\n".
        "TextSize Operation $print[operate]\n".
        "</TD>\n";

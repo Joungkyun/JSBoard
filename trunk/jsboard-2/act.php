@@ -312,7 +312,15 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     if($o[at] == "write" && eregi("^(0|4|6)$",$board[mode]) && $_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1) {
       if(!trim($atc[passwd]) && !trim($passwd)) print_error($langs[act_pwm],250,150,1);
     }
-    if(!$atc[name] || !$atc[title] || !$atc[text]) print_error($langs[act_in],250,150,1);
+
+    # blank check
+    $blankChk = "[\xA1A1\s]+|(&nbsp;)+";
+    $nameChk = array("name","title","text");
+    for($bc=0;$bc<3;$bc++) {
+      if(!$atc[$nameChk[$bc]] || preg_match("/^$blankChk$/i",$atc[$nameChk[$bc]]))
+        print_error($langs[act_in],250,150,1);
+    }
+
     if($atc[url]) $atc[url] = check_url($atc[url]);
     if($atc[email]) $atc[email] = check_email($atc[email],1);
 
