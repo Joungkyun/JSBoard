@@ -188,13 +188,14 @@ function search_hl($list) {
     $strs = str_replace("!minuschar!","-",$strs);
     $strs = explode("!explode!",$strs);
   }
-  $regex = "/(<\/?FONT[^<>]+)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)/i";
-  $regex2 = "/(<\/?)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)/i";
+  $regex1 = "/(<\/?)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)/i";
+  $regex2 = "/(<\/?FONT[^<>]+)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)/i";
+  $regex3 = "/(HREF|SRC)=([^<]*)$hl[0]([^<]*)<\/FONT>([^>]*)/i";
 
   $src = array($regex2,$regex);
   $tar = array("\\1\\2\\3","\\1\\2\\3");
-  $tsrc = array($regex2,$regex,"/<(HREF|SRC)=([^<]*)$hl[0]([^<]*)<\/FONT>([^>]*)/i");
-  $ttar = array("\\1\\2\\3","\\1\\2\\3","<\\1=\\2\\3\\4");
+  $tsrc = array($regex1,$regex2,$regex3);
+  $ttar = array("\\1\\2\\3","\\1\\2\\3","\\1=\\2\\3\\4");
 
   if(!$o[er]) $str = quotemeta($str);
 
@@ -227,7 +228,7 @@ function search_hl($list) {
         $list[name] = preg_replace($src,$tar,$list[name]);
 
         $list[text] = preg_replace("/$strs[$i]/i", "$hl[0]\\0$hl[1]", $list[text]);
-        $list[text] = preg_replace($src,$tar,$list[text]);
+        $list[text] = preg_replace($tsrc,$ttar,$list[text]);
 
         $list[title] = preg_replace("/$strs[$i]/i", "$hl[0]\\0$hl[1]", $list[title]);
         $list[title] = preg_replace($src,$tar,$list[title]);
