@@ -20,7 +20,12 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.1
 
-Teu, Jul 23 2002
+Wed, Jul 24 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- removed $AUCONF on conv_udate script
+	- fixed double quota problem of $ramil[mta] value on conv_udate script
+
+Tue, Jul 23 2002
   by JoungKyun Kim <http://www.oops.org>
 	- fixed mis operation of position of original article on reply mode
 
