@@ -20,6 +20,14 @@ If you wnat to see windog's change log, see also
 
 ¹öÀü   : jsboard-2.0.4
 
+2002.12.01
+  by ±èÁ¤±Õ <http://www.oops.org>
+	- added check_iframe function
+
+2002.12.01
+  by ±èÄ¥ºÀ <http://www.linuxchannel.net>
+	- rewrite check_htmltabel function
+
 2002.11.27
   by ±èÄ¥ºÀ <http://www.linuxchannel.net>
 	- human_fsize, get_hostname ÇÔ¼ö ¼öÁ¤

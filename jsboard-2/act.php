@@ -400,6 +400,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     # 쓰기,답장 모드에서 html 사용시 table tag 검사
     if(($o[at] == "write" || $o[at] == "reply" || $o[at] == "edit") && $atc[html]) {
       check_htmltable($atc[text]);
+      check_iframe($atc[text]);
       $denyiframe = array("/<(iframe[^>]*)>/i","/<(\/iframe)>/i");
       $editiframe = array("&lt\\1&gt;","&lt\\1&gt;");
       $atc[text] = preg_replace($denyiframe,$editiframe,$atc[text]);
