@@ -11,17 +11,12 @@ How to Convert CrazyWWWBoard data to JSBoard v1.2.x
 서버에 PHP가 Binary로 설치가 되어 있어야 한다. (apache module과는 상관이 없다)
 PHP Binary 는
 
-ftp://mirror.oops.org/pub/Linux/Redhat/RPMS/6.x/i386/PHP4/Binary (Pentium Classic 칩 이하)
-ftp://mirror.oops.org/pub/Linux/Redhat/RPMS/6.x/i686/PHP4/Binary (Pentium ll 이상)
+ftp://mirror.oops.org/pub/Linux/Redhat/RPMS/7.2/PHP4/php-binary-version.i686.rpm
+ftp://mirror.oops.org/pub/Linux/Redhat/RPMS/7.2/PHP4/php-gdbm-version.i686.rpm
 
-에서 구할수가 있다. 주의할 것은 Alzza Linux와 같이 php apache module의 이름이
-mod_php가 아니라 php-version 과 같이 가는 경우에는 문제가 좀있으니 이때에는 php
-를 삭제하고 위의 서버에 있는 mod_php4를 설치하기 바란다. PHP binary version은
-php4-version 의 이름을 가지기 때문이다.
-
-(PHP binary의 php.ini는 /usr/lib/php.ini 이다. 여기에 있는 패키지의 php.ini에서
-mysql.so 로 문서 검색을 하여 unix extention 부분은 모두 주석 처리하기 바란다. 약
-간의 패키징 실수로 앞에 +문자가 붙어 있다.)
+을 구해서 설치하면 된다. 만약 convert 할 data 가 gdbm file 이라면 위의  gdbm 모듈
+까지 같이 설치해야 한다. 그리고 /usr/lib/php/cgi/php.ini 에서 gdbm.so 의 주석을 풀
+어줘야 한다.
 
 - Perl package
 
