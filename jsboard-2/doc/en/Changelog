@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Tue, Apr  2 2002
+Date      : Thu, Apr  4 2002
 Version   : jsboard-2.0pre4
 
 
@@ -93,6 +93,7 @@ Version   : jsboard-2.0pre4
 67. enable reconfig php_excution_tim in global.ph
 68. enable to use "," character in URL
 69. fixed charactors of beyond the scope of KSX 1001 in preview of list
+70. fixed meta_char_check() function
 
 
 -----------------------------------------------------------------------------
