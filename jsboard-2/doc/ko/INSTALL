@@ -59,6 +59,7 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
     1-2. MySQL 함수 test
     1-3. web server 설정
     1-4. php.ini 의 설정
+    1-5. shell 확인 작업 (SunOS 또는 Solaris 지원)
   2. JSBoard 설치
   3. JSBoard 운영
   4. JSBoard 보안
@@ -211,6 +212,20 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
     upload_max_filesize = 2M
 
     의 값들을 적절하게 지정해 주어야 한다.
+
+  1-5. shell 확인 작업 (SunOS 또는 Solaris 지원)
+
+    SunOS 와 Solaris 에서는 설치 전,  INSTALLER/script 에 존재하는 스크립트의 제
+    일 첫 라인을 다음과 같이 수정을 한다.
+
+    각 스크립트의 첫라인인
+
+    #!/bin/sh
+
+    를 아래의 2 줄로 변경한다.
+
+    #!/bin/ksh
+    PATH=/usr/ucb:/usr/xpg4/bin:/usr/bin:/usr/sbin
 
 
 2. JSBoard 설치

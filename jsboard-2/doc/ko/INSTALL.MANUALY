@@ -52,6 +52,7 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
     1-2. MySQL 함수 test
     1-3. web server 설정
     1-4. php.ini 의 설정
+    1-5. shell 확인 작업 (SunOS 또는 Solaris 지원)
   2. JSBoard 설치
     2-1. MySQL setting
     2-2. 설정 file 셋팅하기
@@ -228,6 +229,19 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
 
     의 값들을 적절하게 지정해 주어야 한다.
 
+  1-5. shell 확인 작업 (SunOS 또는 Solaris 지원)
+
+    SunOS 와 Solaris 에서는 설치 전,  INSTALLER/script 에 존재하는 스크립트의 제
+    일 첫 라인을 다음과 같이 수정을 한다.
+
+    각 스크립트의 첫라인인
+
+    #!/bin/sh
+
+    를 아래의 2 줄로 변경한다.
+
+    #!/bin/ksh
+    PATH=/usr/ucb:/usr/xpg4/bin:/usr/bin:/usr/sbin
 
 
 2. JSBoard 설치
