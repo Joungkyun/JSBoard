@@ -23,7 +23,7 @@ If you wnat to see windog's change log, see also
 2003.03.31
   by 김정균 <http://www.oops.org>
 	- 수정모드 버그 픽스
-	- 첨부파일 수정시 내용 변경안될 경우 수정안되던 것 수정
+	- 첨부파일만 수정 가능하도록 수정
 
 2003.03.26
   by 김정균 <http://www.oops.org>
