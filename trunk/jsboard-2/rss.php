@@ -1,75 +1,50 @@
 <?php
-# get 등으로 넘겨오는 변수
-# $table - 테이블지정
-# $no - 가져오는 글 갯수
+# JSboard RSS Feed
+#
 
-# table을 지정하지 않았을 경우 대입하는 게시판 이름. 
-# JSBoard 생성시 같이 생성되는 게시판이 test인지라 test라 해둠.
-# 주로 사용하는 게시판(예를들면 free)이 있다면 그것으로 바꿔주는 것이 좋겠지요?
-
-/*
- *---------[db 정보 include]------------------
- *$db['server']      # DB address
- *$db['user']        # DB login user
- *$db['pass']        # DB login pass
- *$db['name']        # DB name
- *
- */
-
-# global 설정 파일 체크
-if (!@file_exists('config/global.ph')) {
-  echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
+# header file 삽입
+#
+if ( ! @file_exists ("include/header.ph") ) {
+  echo "<script>\nalert('Don\'t exist header file');\n" .
        "history.back();\nexit;\n</script>\n";
   exit();
 } else {
-  include_once 'config/global.ph';
+  include 'include/header.ph';
 }
 
-# table 설정 파일 체크
-if (!@file_exists("data/{$table}/config.ph")) {
-  echo "<script>\nalert('Don\'t exist {$table}\\nconfiguration file');\n" .
-       "history.back();\nexit;\n</script>\n";
-  exit();
-} else {
-  include_once "data/{$table}/config.ph";
-}
-
+# RSS 사용 여부 체크 (user config file 로 부터)
+#
 if ( ! $rss['use'] ) {
   echo "Don't rss support on this board\n";
   exit();
 }
 
-$rss['default_table'] = 'test';
-$rss['default_article_number'] = '30'; # no를 지정해주지 않는다면 default 값을 쓰게 됩니다.
+# rss 에서 출력할 리스트의 수를 지정
+#
+$rss['default_article_number'] = '30';
 
-if ( !$table ) {
-  if ($rss['default_table']) {
-    $table = $rss['default_table'];
-  } else {
-    echo "<script>\nalert('no table name');\n" .
-         "history.back();\nexit;\n</script>\n";
-    exit();
-  }
-}
-
-$rss['link'] = $board['path'] . "list.php?table=" . $table;	# 게시판 주소
+# 게시판 주소
+#
+$rss['link'] = $board['path'] . "list.php?table=" . $table;
 
 if (!$no)
   $no = $rss['default_article_number'];
 
-/*----------[db 접속, 쿼리날리기]-------------------------*/
-mysql_connect($db['server'], $db['user'], $db['pass']);
-mysql_select_db($db['name']);
+# DB 정보 가져오기
+#
+sql_connect ($db['server'], $db['user'], $db['pass']);
 
+# Description 정보가 있게 할 것인지 아닌지 여부 체크 (config file 에서 체크)
+#
 if ($rss['is_des'])
   $sql = "select no, date, name, rname, title, text from {$table} order by date DESC limit {$no}";
 else
   $sql = "select no, date, name, rname, title from {$table} order by date DESC limit $no";
 
-$result = mysql_query($sql);
+$result = sql_db_query ($db['name'], $sql);
 $i = 0;
 
-while( $rss_article[$i] = mysql_fetch_array($result) ) {
+while( $rss_article[$i] = sql_fetch_array($result) ) {
   $rss_article[$i]['link'] = "{$board['path']}read.php?table={$table}&no={$rss_article[$i]['no']}";
   $rss_article[$i]['text'] = "<span style=\"font-size:11px;\"><pre>{$rss_article[$i]['text']}</pre></span>";
   $rss_article[$i]['date'] = date("Y-m-d",$rss_article[$i]['date'] ) . 'T' . date("H:i:sO", $rss_article[$i]['date']);
@@ -84,15 +59,8 @@ $rss_article_num = $i;
 unset($result, $i);
 mysql_close();
 
-// 디버깅 코드. 내용 fetch 한 것 뿌려보기.
-//echo "<pre>";
-//print_r($rss_article);
-//echo "</pre>";
-//exit();
-//--------------[이상이 없으면 출력]-----------------------
-
-include ("include/header.ph");
-
+# 여기 까지 이상이 없으면, 실제 RSS 출력
+#
 header ('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
 header ('Expires: ' . gmdate('D, d M Y H:i:s', time()) . ' GMT');
 header ('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
