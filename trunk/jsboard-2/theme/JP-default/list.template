@@ -30,6 +30,7 @@ form { display: inline; }
 <!--                          list page                                   -->
 <!-- ==================================================================== -->
 <? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?=$rss['link']?>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
 <?=$print['preview_script']?>
