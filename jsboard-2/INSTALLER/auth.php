@@ -37,7 +37,7 @@ echo "<HTML>\n".
      "<STYLE TYPE=text/css>\n".
      "<!--\n".
      "A:LINK, A:VISITED, A:ACTIVE { TEXT-DECORATION:NONE; COLOR:#555555; }\n".
-     "A:HOVER { TEXT-DECORATION:UNDERLINE; COLOR:ORANGE; }\n".
+     "A:HOVER { TEXT-DECORATION:UNDERLINE; COLOR: #ffa500; }\n".
      "BODY, TD {FONT: 12px $charfont; COLOR:#555555; }\n".
      "INPUT { border:1x solid #555555;background-Color:silver;font:11px $charfont;color:#333333 }\n".
      "TEXTAREA { border:1x solid #555555;background-Color:silver;font:12px $charfont;color:#333333 }\n".
