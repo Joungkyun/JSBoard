@@ -1,16 +1,26 @@
 <?
 ########################################################################
-# JSBoard Pre List v0.3
-# Scripted By JoungKyun Kim 2002.06.15
+# JSBoard Pre List v0.4
+# Scripted By JoungKyun Kim 2002.07.30
 ########################################################################
 
 # JSBoard가 설치되어 있는 절대 경로
 # 마지막에 /를 붙이면 안됨
-$prlist[path] = "/webroot/jsboard-version";
+$prlist[path] = "/usr/local/www/data/jsboard";
 
 # JSBoard가 설치되어 있는 웹 경로
 # 마지막에 /를 붙이면 안됨
-$prlist[wpath] = "http://domain.com/jsboard-version";
+$prlist[wpath] = "http://10.0.0.1/jsboard";
+
+include "$prlist[path]/config/global.ph";
+include_once "$prlist[path]/include/error.ph";
+include_once "$prlist[path]/include/parse.ph";
+include_once "$prlist[path]/include/check.ph";
+include_once "$prlist[path]/include/sql.ph";
+include_once "$prlist[path]/include/get.ph";
+include_once "$prlist[path]/include/print.ph";
+
+print_preview_src(1);
 
 # 글리스트들을 출력하는 design
 #   echo 문의 "" 사이에서 디자인을 넣으면 됨
@@ -55,29 +65,11 @@ function print_prlist($p) {
 
 # PHP에 대해서 잘 모르신다고 생각하시는 분들은 건드리지 말것!!!
 # table 이름
-# inc include 여부
 # $limit 글수
 # $cut 출력글자수
-# $cn 이름 출력
-# $cd 등록일 출력
-# $ce 이메일 출력
-# $cc 조회수 출력
-# $l 링크의 옵션 (예: target onClick 등등)
 #
-function prelist($t,$inc,$limit=3,$cut=30,$cn=0,$cd=0,$ce=0,$cc=0,$l=0) {
-  global $prlist;
-
-  include "$prlist[path]/config/global.ph";
-  if($inc) {
-    include_once "$prlist[path]/include/error.ph";
-    include_once "$prlist[path]/include/parse.ph";
-    include_once "$prlist[path]/include/check.ph";
-    include_once "$prlist[path]/include/sql.ph";
-    include_once "$prlist[path]/include/get.ph";
-    include_once "$prlist[path]/include/print.ph";
-
-    print_preview_src(1);
-  }
+function prelist($t,$limit=3,$cut=30) {
+  global $prlist, $db;
 
   sql_connect($db[server], $db[user], $db[pass]);
   sql_select_db($db[name]);
@@ -90,27 +82,14 @@ function prelist($t,$inc,$limit=3,$cut=30,$cn=0,$cd=0,$ce=0,$cc=0,$l=0) {
     mysql_data_seek($result,$i);
     $row = mysql_fetch_array($result);
 
-    $p[l] = $l ? " $l" : "";
     $p[no] = $row[no];
     $p[title] = $row[title];
 
-
-    if(!$GLOBALS[prlistTemplate]) {
-      $p[name] = $cn ? $row[name] : "";
-      $p[date] = $cd ? date("y.m.d",$row[date]) : "";
-      $p[date] = $p[date] ? "- $p[date]" : "";
-      $p[email] = $ce ? $row[email] : "";
-      $p[count] = $cc ? $row[refer] : "";
-
-      if($p[email] && $p[name]) 
-        $p[name] = "<a href=mailto:$p[email]>$p[name]</a>";
-    } else {
-      $p[name] = $row[name];
-      $p[date] = date("y.m.d",$row[date]);
-      $p[email] = $row[email];
-      $p[count] = $row[refer];
-      $p[l] = " ".$GLOBALS[prlistOpt];
-    }
+    $p[name] = $row[name];
+    $p[date] = date("y.m.d",$row[date]);
+    $p[email] = $row[email];
+    $p[count] = $row[refer];
+    $p[l] = " ".$GLOBALS[prlistOpt];
 
     $p[preview] = cut_string(htmlspecialchars($row[text]),100);
     $p[preview] = preg_replace("/#|'|\\\\/i","\\\\\\0",$p[preview]);

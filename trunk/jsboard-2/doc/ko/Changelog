@@ -20,9 +20,14 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.2
 
+2002.07.30
+  by 김정균 <http://www.oops.org>
+	- 최신글 보기 기능 재작성
+
 2002.07.29
   by 김정균 <http://www.oops.org>
 	- external.ph 사용시 $edb[uses] = 0 의 경우 인증 실패 수정
+
 
 -----------------------------------------------------------------------------
 버전   : jsboard-2.0.1

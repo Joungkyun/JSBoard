@@ -18,6 +18,18 @@ If you wnat to see windog's change log, see also
 ******************************************************************************
 
 
+¹öÀü   : jsboard-2.0.2
+
+2002.07.30
+  by ±èÁ¤±Õ <http://www.oops.org>
+	- rewrite prelist() function
+
+2002.07.29
+  by ±èÁ¤±Õ <http://www.oops.org>
+	- fixed auth problem with $edb[uses] = 0 when uses external.ph
+
+
+-----------------------------------------------------------------------------
 Version   : jsboard-2.0.1
 
 Mon, Jul 29 2002
