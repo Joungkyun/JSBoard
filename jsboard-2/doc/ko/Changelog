@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  2월  6일
+작성일 : 2002년  2월  7일
 버전   : jsboard-2.0pre4
 
 
@@ -60,6 +60,8 @@ If you wnat to see windog's change log, see also
 32. 스팸체크 수정
 33. 인증 실패시 게시판을 table 변수가 제거 되는것 수정
 34. mail() 함수의 -f 옵션에서 쌍따옴표 제거
+35. 상세 검색에서 동일날자의 글을 검색시 12시 이후에 등록된 글이 검색되지
+    않는것 수정
 
 
 -----------------------------------------------------------------------------
