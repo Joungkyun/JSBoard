@@ -11,11 +11,14 @@
 
    INSTALL.txt 참조
 
-2. 글 리스트에서 2000년도가 00으로 표기 되는 것을
-   Y2K로 표기 되게 수정 - esat egg :-)
+2. 글 리스트에서 2000년이 00년으로 표기 되는 것을
+   Y2K로 표기 되게 수정. - east egg :-)
 
-3. misc.ph의 get_page 함수에서 query문 수정
+3. misc.ph에서 get_page 함수의 SQL query 문 수정
    Count(no) -> Count(*)
+
+4. user_admin page 에서 html bug 수정(네스케이프 사용시
+   테이블이 티나지 않게 헝클어지던 문제)
 
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
