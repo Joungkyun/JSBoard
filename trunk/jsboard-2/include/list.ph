@@ -141,9 +141,9 @@ function print_list($table, $list, $r=0)
 function get_list($table,$pages,$reply=0,$print=0)
 {
   global $color,$board,$lines,$upload,$page;
-  global $o,$enable,$count,$agent,$PHP_SELF;
+  global $o,$enable,$count,$agent;
 
-  $readchk = (eregi("read\.php",$PHP_SELF) && $enable[re_list]) ? 1 : 0;
+  $readchk = (eregi("read\.php",$_SERVER[PHP_SELF]) && $enable[re_list]) ? 1 : 0;
 
   if($reply[ck]) $sql = search2sql($reply);
   else $sql = search2sql($o);

@@ -1,9 +1,9 @@
 <?
 # html head 읽어오기
 function htmlhead() {
-  global $version, $color, $PHP_SELF, $langs, $board, $copy;
+  global $version,$color,$langs,$board,$copy;
 
-  $file_lo = $PHP_SELF;
+  $file_lo = $_SERVER[PHP_SELF];
   $fileself = explode("admin/",$file_lo);
   $fileself = $fileself[1];
 
@@ -69,8 +69,6 @@ function complete_adminpass() {
 # sizeof()  - 배열의 갯수를 구함
 #
 function get_theme_list($pt,$current="") {
-  global $PHP_SELF;
-
   if(!$current) $current = "default";
 
   # 전체 어드민인지 게시판 어드민에서 인지에 따라 경로를 구분
@@ -112,14 +110,14 @@ function print_chgpass($pass) {
 }
 
 function userlist_sortlink($t,$c='') {
-  global $color,$PHP_SELF;
+  global $color;
   if(!$c) {
     for($i=a;$i<=z;$i++) {
       if(strlen($i) == 2) break;
-      if($t != $i) $index .= "<A HREF=$PHP_SELF?t=$i><FONT STYLE=\"color:$color[text]\">".strtoupper($i)."</FONT></A>\n";
+      if($t != $i) $index .= "<A HREF=$_SERVER[PHP_SELF]?t=$i><FONT STYLE=\"color:$color[text]\">".strtoupper($i)."</FONT></A>\n";
       else $index .= "<FONT STYLE=\"color:$color[t_bg];font-weight:bold\">".strtoupper($i)."</FONT>\n";
     }
-    if($t) $index .= "<A HREF=$PHP_SELF><FONT STYLE=\"color:$color[text]\">ALL</FONT></A>\n";
+    if($t) $index .= "<A HREF=$_SERVER[PHP_SELF]><FONT STYLE=\"color:$color[text]\">ALL</FONT></A>\n";
     else $index .= "<FONT STYLE=\"color:$color[t_bg];font-weight:bold\">ALL</FONT>\n";
   } else {
     $p = array("1" => "가", "2" => "나", "3" => "다", "4" => "라",
@@ -127,7 +125,7 @@ function userlist_sortlink($t,$c='') {
                "9" => "자", "10" => "차", "11" => "카", "12" => "타",
                "13" => "파", "14" => "하");
     for($i=1;$i<=14;$i++) {
-      if($t != $p[$i]) $index .= "<A HREF=$PHP_SELF?t=$p[$i]><FONT STYLE=\"color:$color[text]\">$p[$i]</FONT></A>\n";
+      if($t != $p[$i]) $index .= "<A HREF=$_SERVER[PHP_SELF]?t=$p[$i]><FONT STYLE=\"color:$color[text]\">$p[$i]</FONT></A>\n";
       else $index .= "<FONT STYLE=\"color:$color[t_bg];font-weight:bold\">$p[$i]</FONT>\n";
     }
   }

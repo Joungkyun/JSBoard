@@ -5,7 +5,7 @@ include "admin/include/check.ph";
 
 if(!$board[regist]) {
   session_start();
-  if(${$jsboard}[pos] != 1) print_error("ADMIN $langs[login_err]");
+  if($_SESSION[$jsboard][pos] != 1) print_error("ADMIN $langs[login_err]");
 }
 
 $a_time[] = microtime(); # 속도 체크
@@ -75,7 +75,7 @@ function id_check() {
   if( id == \"\" ) {
     alert('Input your ID');
   } else {
-    window.open(\"$PHP_SELF?m=chkid&id=\"+id,\"CheckID\",\"scrollbars=no,resizable=no,width=351,height=225\");
+    window.open(\"$_SERVER[PHP_SELF]?m=chkid&id=\"+id,\"CheckID\",\"scrollbars=no,resizable=no,width=351,height=225\");
   }
 }
 </SCRIPT>
@@ -91,7 +91,7 @@ $langs[reg_attention]
 </TABLE>
 
 <P>
-<FORM NAME=nreg METHOD=post ACTION=$PHP_SELF>
+<FORM NAME=nreg METHOD=post ACTION=$_SERVER[PHP_SELF]>
 <TABLE WIDTH=$board[width] BORDER=0 CELLPADDING=6 CELLSPACING=2>
 <TR>
 <TD WIDTH=15% BGCOLOR=$color[m_bg]><FONT STYLE=\"color:$color[m_fg];font-weight:bold;\">$langs[u_nid]</FONT></TD>
@@ -148,7 +148,7 @@ $langs[reg_attention]
   else $ment = $langs[chk_id_y];
 
   $board[width] = "";
-  $print[body] = "\n<FORM METHOD=post ACTION=$PHP_SELF>\n".
+  $print[body] = "\n<FORM METHOD=post ACTION=$_SERVER[PHP_SELF]>\n".
                  "<TABLE WIDTH=100% HEIGHT=100% BORDER=0 CELLPADDING=6 CELLSPACING=2>\n".
                  "<TR><TD ALIGN=center VALIGN=center>\n\n".
                  "<FONT STYLE=\"font: 15pt Tahoma; font-weight: bold; COLOR:$color[t_bg]\">ID CHECK</FONT>\n\n".

@@ -2,12 +2,12 @@
 # login 정보를 얻어오는 함수
 #
 function get_authinfo($id,$nocry='') {
-  global $PHP_SELF, $edb, $db, ${$jsboard};
-  if(eregi("user_admin",$PHP_SELF)) { $path = "../.."; }
-  elseif(eregi("admin",$PHP_SELF)) { $path = ".."; }
+  global $edb, $db;
+  if(eregi("user_admin",$_SERVER[PHP_SELF])) { $path = "../.."; }
+  elseif(eregi("admin",$_SERVER[PHP_SELF])) { $path = ".."; }
   else { $path = "."; }
 
-  if($edb[uses] || ${$jsboard}[external]) {
+  if($edb[uses] || $_SESSION[$jsboard][external]) {
     $connect = sql_connect($edb[server],$edb[user],$edb[pass]);    
 
     if($edb[sql]) $sql = $edb[sql];
@@ -53,15 +53,15 @@ function get_hostname($reverse = 0,$addr = 0) {
                        "HTTP_FORWARDED");
                        
     for($i=0;$i<sizeof($proxytype);$i++) {
-      if($GLOBALS[$proxytype[$i]]) {
-        $host = $GLOBALS[$proxytype[$i]];
+      if($_SERVER[$proxytype[$i]]) {
+        $host = $_SERVER[$proxytype[$i]];
         break;
       }
     }
 
     # proxy를 통하지 않고 접근 할때 아파치 환경 변수인
     # REMOTE_ADDR에서 접속자의 IP를 가져옴
-    $host = $host ? $host : $GLOBALS[REMOTE_ADDR];
+    $host = $host ? $host : $_SERVER[REMOTE_ADDR];
   } else $host = $addr;
 
   $check = $reverse ? @gethostbyaddr($host) : "";
@@ -76,7 +76,7 @@ function get_hostname($reverse = 0,$addr = 0) {
 # getenv - 환경 변수값을 가져옴
 #          http://www.php.net/manual/function.getenv.php
 function get_agent() {
-  $agent_env = check_iis() ? $GLOBALS[HTTP_USER_AGENT] : getenv("HTTP_USER_AGENT");
+  $agent_env = $_SERVER[HTTP_USER_AGENT];
 
   # $agent 배열 정보 [br] 브라우져 종류
   #                  [os] 운영체제
@@ -324,7 +324,7 @@ function get_title() {
   $title  = $board[title];
 
   # SCRIPT_NAME이라는 아파치 환경 변수를 가져옴 (현재 PHP 파일)
-  $script = check_iis() ? $GLOBALS[SCRIPT_NAME] : getenv("SCRIPT_NAME");
+  $script = $_SERVER[SCRIPT_NAME];
   $script = basename($script);
 
   switch($script) {

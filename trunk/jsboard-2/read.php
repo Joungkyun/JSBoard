@@ -2,7 +2,7 @@
 $p_time[] = microtime(); # 속도 체크
 include "include/header.ph";
 
-if($HTTP_COOKIE_VARS[$cjsboard][id]) { session_start(); }
+if($_COOKIE[$cjsboard][id]) { session_start(); }
 if(eregi("^(2|3|5)$",$board[mode]) && !session_is_registered("$jsboard"))
   print_error("$langs[login_err]");
 
@@ -53,7 +53,7 @@ if($list[url]) {
 }
 
 # Admin Link
-if(${$jsboard}[pos] == 1 || $board[ad] == ${$jsboard}[id]) {
+if($_SESSION[$jsboard][pos] == 1 || $board[ad] == $_SESSION[$jsboard][id]) {
   if(@file_exists("./theme/$print[theme]/img/admin.gif"))
     $print[adpath] = "<IMG SRC=./theme/$print[theme]/img/admin.gif BORDER=0 ALT='$langs[ln_titl]'>";
   else $print[adpath] = "<FONT STYLE=\"font:12px tahoma;color:$color[text]\">[ admin ]</FONT>";
@@ -107,7 +107,7 @@ if($o[at] == "d" || $o[at] == "dp")
   $print[dsearch] = detail_searchform();
 else {
   $page = $page ? $page : "1";
-  $print[dserlink] = "<A HREF=$PHP_SELF?table=$table&no=$no&page=$page&o[at]=dp>[ $langs[detable_search_link] ]</A>";
+  $print[dserlink] = "<A HREF=$_SERVER[PHP_SELF]?table=$table&no=$no&page=$page&o[at]=dp>[ $langs[detable_search_link] ]</A>";
 }
 
 # 검색폼, 페이지폼 관련 변수

@@ -1,7 +1,11 @@
 <?
+include_once "include/print.ph";
+# GET/POST 변수를 제어
+parse_query_str();
+
 if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   include "include/header.ph";
-  if($HTTP_COOKIE_VARS[$cjsboard][id]) { session_start(); }
+  if($_COOKIE[$cjsboard][id]) { session_start(); }
 
   sql_connect($db[rhost],$db[user],$db[pass],$db[rmode]);
   sql_select_db($db[name]);
@@ -9,20 +13,20 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   if($board[mode] && session_is_registered("$jsboard")) {
     # 로그인을 안했을 경우 로그인 화면으로, 했을 경우 패스워드 인증
     if($board[mode] != 1 && !session_is_registered("$jsboard")) print_error($langs[login_err]);
-    else compare_pass($$jsboard);
-    $atc[passwd] = ${$jsboard}[pass];
+    else compare_pass($_SESSION[$jsboard]);
+    $atc[passwd] = $_SESSION[$jsboard][pass];
   }
 
   # admin mode 일 경우 admin mode 를 체크  
   if($board[mode] == 1 || $board[mode] == 3)
-    if(${$jsboard}[id] != $board[ad] && ${$jsboard}[pos] != 1) print_error($langs[login_err]);
+    if($_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1) print_error($langs[login_err]);
 
   # 게시물 작성 함수
   function article_post($table, $atc) {
     global $jsboard, $board, $upload, $cupload, $rmail, $langs, $agent;
-    global $userfile, $userfile_name, $userfile_size, $max_file_size, $$jsboard;
+    global $userfile, $userfile_name, $userfile_size, $max_file_size;
 
-    if($board[mode] == 4 && ${$jsboard}[pos] != 1 && ${$jsboard}[id] != $board[ad]) print_error($langs[login_err]);
+    if($board[mode] == 4 && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) print_error($langs[login_err]);
 
     $atc[date] = time(); # 현재 시각
     $atc[host] = get_hostname(0); # 글쓴이 주소
@@ -167,10 +171,10 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   # 게시물 수정 함수
   function article_edit($table, $atc, $passwd) {
     global $userfile, $userfile_name, $userfile_size, $max_file_size;
-    global $jsboard, $board, $langs, $agent, ${$jsboard}, $rmail;
+    global $jsboard, $board, $langs, $agent, $rmail;
 
     # 어드민 모드가 아닐 경우 패스워드 인증
-    if(!${$jsboard}[pos] && ${$jsboard}[id] != $board[ad]) {
+    if(!$_SESSION[$jsboard][pos] && $_SESSION[$jsboard][id] != $board[ad]) {
       if(!check_passwd($table,$atc[no],trim($passwd))) print_error($langs[act_pw],250,150,1);
     }
 
@@ -225,18 +229,18 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
   # 게시물 삭제 함수
   function article_delete($table, $no, $passwd) {
-    global $jsboard, $o, $langs, ${$jsboard}, $board, $page;
+    global $jsboard, $o, $langs, $board, $page;
     global $delete_filename, $delete_dir, $upload, $agent;
     $atc = get_article($table, $no);
 
     # 어드민 모드가 아닐 경우 패스워드 인증
-    if(!${$jsboard}[pos] && ${$jsboard}[id] != $board[ad]) {
+    if(!$_SESSION[$jsboard][pos] && $_SESSION[$jsboard][id] != $board[ad]) {
       $admchk = check_passwd($table,$atc[no],trim($passwd));
       if(!$admchk) print_error($langs[act_pwm],250,150,1);
     }
 
     # 관리자 모드가 아닐 경우 댓글이 존재하면 에러메세지
-    if($atc[reyn] && (!${$jsboard}[pos] && ${$jsboard}[id] != $board[ad] && $admchk != 2))
+    if($atc[reyn] && (!$_SESSION[$jsboard][pos] && $_SESSION[$jsboard][id] != $board[ad] && $admchk != 2))
       print_error($langs[act_c],250,150,1);
 
     # 부모글의 답장글이 자신 밖에 없을 때 부모글의 reyn을 초기화 (답장글 여부)
@@ -260,7 +264,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     }
 
     # 관련글이 있을 경우 관련글을 모두 삭제함 (관리자 모드)
-    if($atc[reyn] && (${$jsboard}[pos] || ${$jsboard}[id] == $board[ad] || $admchk == 2)) {
+    if($atc[reyn] && ($_SESSION[$jsboard][pos] || $_SESSION[$jsboard][id] == $board[ad] || $admchk == 2)) {
       $result = sql_query("SELECT no,bofile,bcfile FROM $table WHERE reno = $atc[no]");
       while($list = sql_fetch_array($result)) {
         sql_query("UNLOCK TABLES");
@@ -288,7 +292,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
   function article_check($table, $atc) {
     # 검색 등 관련 변수 (CGI 값)
     global $jsboard, $compare, $o, $ccompare, $langs, $ramil;
-    global ${$jsboard}, $board, $passwd, $agent;
+    global $board, $passwd, $agent;
 
     # location check
     check_location(1);
@@ -298,7 +302,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     $atc[title] = trim($atc[title]);
     $atc[text]  = chop($atc[text]);
 
-    if($o[at] == "write" && eregi("^(0|4|6)$",$board[mode]) && ${$jsboard}[id] != $board[ad] && ${$jsboard}[pos] != 1) {
+    if($o[at] == "write" && eregi("^(0|4|6)$",$board[mode]) && $_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1) {
       if(!trim($atc[passwd]) && !trim($passwd)) print_error($langs[act_pwm],250,150,1);
     }
     if(!$atc[name] || !$atc[title] || !$atc[text]) print_error($langs[act_in],250,150,1);
@@ -320,7 +324,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     if (eregi($ccompare[email],$atc[email])) $ccmp[email] = 1;
 
     # 관리자 사칭 체크
-    if((!$board[mode] || $board[mode] == 4) && ${$jsboard}[pos] != 1 && ${$jsboard}[id] != $board[ad]) {
+    if((!$board[mode] || $board[mode] == 4) && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) {
       # 게시판 관리자 패스워드
       $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$board[ad]'");
       $r[ad] = sql_result($result,0,"passwd");

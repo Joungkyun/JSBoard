@@ -88,7 +88,7 @@ function check_email($email) {
 # crpyt - 문자열을 DES로 암호화함
 #         http://www.php.net/manual/function.crypt.php
 function check_passwd($table,$no,$passwd) {
-  global $jsboard, ${$jsboard}, $board;
+  global $jsboard, $board;
   if($board[mode] && session_is_registered("$jsboard")) $sql_field = "name";
   else $sql_field = "passwd";
 
@@ -101,8 +101,8 @@ function check_passwd($table,$no,$passwd) {
   }
 
   if (session_is_registered("$jsboard")) {
-    if(${$jsboard}[id] == $r[chk]) $chk = 1;
-    if(${$jsboard}[pos] == 1) $chk = 2;
+    if($_SESSION[$jsboard][id] == $r[chk]) $chk = 1;
+    if($_SESSION[$jsboard][pos] == 1) $chk = 2;
   }
 
   if(!$chk) {
@@ -231,7 +231,7 @@ function check_location($n=0) {
   global $board, $langs, $agent;
 
   if($n && $agent[br] != "LYNX") {
-    $board[referer] = check_iis() ? $GLOBALS[HTTP_REFERER] : getenv("HTTP_REFERER");
+    $board[referer] = $_SERVER[HTTP_REFERER];
 
     $sre[] = "/http[s]?:\/\/([^\/]+)\/.*/i";
     $tre[] = "\\1";

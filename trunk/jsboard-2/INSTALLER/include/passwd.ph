@@ -15,7 +15,8 @@ $mysqlroot = 1;
 # 위에서 $mysqlroot 의 값을 0 으로 지정했을 경우에는 MySQL
 # root 가 알려준 mysql 계정 패스워드를 지정함.
 #
-$passwd = "MySQL_ROOT_PASSWORD";
+#$passwd = "MySQL_ROOT_PASSWORD";
+$passwd = "aaaaaaaa";
 
 # $mysqlroot = 0 일 경우에는 아래를 설정함
 #

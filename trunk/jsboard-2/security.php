@@ -9,10 +9,10 @@ $form_border = "1x";
 include "include/header.ph";
 include "theme/$print[theme]/config.ph";
 
-if($viewtype || ${$jsboard}[pos] == 1) {
+if($viewtype || $_SESSION[$jsboard][pos] == 1) {
   # 관리자 인증을 통과하면 버그 내용을 알려주며 통과하지 못하면
   # 다시 인증 화면으로 돌아감.
-  if(${$jsboard}[pos] != 1) {
+  if($_SESSION[$jsboard][pos] != 1) {
     # 게시판 관리자 패스워드
     sql_connect($db[server], $db[user], $db[pass]);
     sql_select_db($db[name]);
@@ -36,7 +36,7 @@ if($viewtype || ${$jsboard}[pos] == 1) {
   
   $text = get_html_src("jsboard.kldp.org","50000","SecurityMSG/$open_file",1);
   $body_text = "$text";
-  $body_text .= "\n<BR><CENTER><FORM><input type=button value=\"VEIW LIST\" onClick=\"document.location='$PHP_SELF?table=$table&m=golist'\"></FORM></CENTER>\n";
+  $body_text .= "\n<BR><CENTER><FORM><input type=button value=\"VEIW LIST\" onClick=\"document.location='$_SERVER[PHP_SELF]?table=$table&m=golist'\"></FORM></CENTER>\n";
 
   # print 변수가 있을 경우 print 변수를 0으로 초기화
   if($security[prints]) {
@@ -50,7 +50,7 @@ if($viewtype || ${$jsboard}[pos] == 1) {
     $err_msg = "Don't update security infomation";
     file_operate("./config/security_data.ph","w",$err_msg,$security[content]);
   }
-} else $body_text = "<FORM METHOD=POST ACTION=$PHP_SELF>\n".
+} else $body_text = "<FORM METHOD=POST ACTION=$_SERVER[PHP_SELF]>\n".
                     "<TABLE BORDER=0 CELLPADDING=3 CELLSPACING=0 ALIGN=center>\n".
                     "<TR><TD>\n".
                     "<FONT FACE=Tahoma>Bulletin Whole Admin Password</FONT>\n".
@@ -59,7 +59,7 @@ if($viewtype || ${$jsboard}[pos] == 1) {
                     "<FONT FACE=Tahoma SIZE=-1>PASSWORD : ".
                     "<input type=password name=pcheck id=input size=$size><BR>\n".
                     "</TD></TR>\n<TR><TD ALIGN=right>\n".
-                    "<input type=button value=\"VEIW LIST\" onClick=\"document.location='$PHP_SELF?table=$table&m=golist'\">\n".
+                    "<input type=button value=\"VEIW LIST\" onClick=\"document.location='$_SERVER[PHP_SELF]?table=$table&m=golist'\">\n".
                     "<input type=submit value='ENTER'>\n".
                     "<input type=hidden name=table value=$table>\n".
                     "<input type=hidden name=viewtype value=1></FONT>\n".

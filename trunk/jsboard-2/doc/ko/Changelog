@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  1월 18일
+작성일 : 2002년  1월 21일
 버전   : jsboard-2.0pre4
 
 
@@ -44,6 +44,7 @@ If you wnat to see windog's change log, see also
 18. theme 버젼 A2 로 업데이트 (theme/Changelog.theme 참조)
 19. 패스워드 길이를 16자 까지 가능하게 변경
 20. 삭제 화면에서 이메일 주소를 포함한 글의 이름이 메일 주소로 나오는 것 수정
+21. register_global = Off 지원
 
 
 -----------------------------------------------------------------------------

@@ -1,17 +1,18 @@
 <?php
+include_once "../include/print.ph";
+parse_query_str();
 
 $path[type] = "Install";
 $copydate = time();
 $copydate = date("Y",$copydate);
 
-include "./include/passwd.ph";
+include_once "./include/passwd.ph";
 $langs[code] = ($langss == "ko") ? "ko" : "en";
 
-include "../include/lang.ph";
-include "../include/error.ph";
-include "../include/get.ph";
-include "../include/check.ph";
-include "../include/print.ph";
+include_once "../include/lang.ph";
+include_once "../include/error.ph";
+include_once "../include/get.ph";
+include_once "../include/check.ph";
 
 $agent = get_agent();
 
@@ -44,7 +45,7 @@ echo "<HTML>\n".
      "<tr><td align=center valign=center>\n\n";
 
 if (!$mode) {
-  echo "<form method=POST action=$PHP_SELF>\n\n" .
+  echo "<form method=POST action=$_SERVER[PHP_SELF]>\n\n" .
        "<table width=400 border=0 cellpadding=5>\n" .
        "<tr><td bgcolor=#D3DAC3 align=center>\n" .
        "<font style=\"font: 20px tahoma; font-weight:bold\">JSBoard Installer</font>\n" .
@@ -132,7 +133,7 @@ if (!$mode) {
   else $pcheck = 0;
 
   echo "\n<FONT STYLE=\"color:#555555;font-size:12px;\">$langs[waitm]</FONT>\n" .
-       "<meta http-equiv=\"refresh\" content=\"5;URL=$PHP_SELF?mode=check_conform&mcheck=$mcheck&echeck=$echeck&cindex=$cindex&pcheck=$pcheck&langss=$langs[code]\">" .
+       "<meta http-equiv=\"refresh\" content=\"5;URL=$_SERVER[PHP_SELF]?mode=check_conform&mcheck=$mcheck&echeck=$echeck&cindex=$cindex&pcheck=$pcheck&langss=$langs[code]\">" .
        "</td></tr>\n" .
        "<tr><td bgcolor=#D3DAC3 align=center>\n" .
        "<font style=\"font: 12px $charfont; color:#555555\">$langs[wait]</font>\n" .
@@ -160,7 +161,7 @@ if (!$mode) {
     elseif (file_exists("/etc/debian_version")) $os_type = "Debian";
   } else $os_type = $OSTYPE;
 
-  echo "<form method=POST action=$PHP_SELF>\n\n" .
+  echo "<form method=POST action=$_SERVER[PHP_SELF]>\n\n" .
        "<table width=400 border=0 cellpadding=5>\n" .
        "<tr><td bgcolor=#D3DAC3 align=center>\n" .
        "<font style=\"color:#555555;font: 20px tahoma; font-weight:bold\">JSBoard Enviornment Check Reuslt</font>\n" .

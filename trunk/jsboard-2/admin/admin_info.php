@@ -4,7 +4,7 @@ include "./include/admin_head.ph";
 
 htmlhead();
 # session 이 등록되어 있지 않으면 로그인 화면으로.
-if(!session_is_registered("$jsboard") || ${$jsboard}[pos] != 1)
+if(!session_is_registered("$jsboard") || $_SESSION[$jsboard][pos] != 1)
   print_error($langs[login_err]);
 
 # input 문의 size를 browser별로 맞추기 위한 설정

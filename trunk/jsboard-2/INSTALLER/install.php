@@ -1,4 +1,6 @@
 <?php
+include_once "../include/print.ph";
+parse_query_str();
 session_start(); // session을 시작한다.
 $path[type] = "Install";
 
@@ -13,14 +15,14 @@ if ($langss == "ko") {
 }
 
 #require("./ad_sample/global.ph.orig");
-require "../include/lang.ph";
-require "../include/get.ph";
-require "../html/head.ph";
-require "./include/passwd.ph";
-require "./include/check.ph";
+include_once "../include/lang.ph";
+include_once "../include/get.ph";
+include_once "../html/head.ph";
+include_once "./include/passwd.ph";
+include_once "./include/check.ph";
 
 # Password Check
-inst_pwcheck($passwd,$mysqlpass,$langs[act_pw]);
+inst_pwcheck($passwd,$_SESSION[mysqlpass],$langs[act_pw]);
 
 $disable = $mysqlroot ? "" : " disabled";
 
