@@ -401,7 +401,7 @@ function viewfile($tail) {
       } else {
         $p[up] = "<IMG SRC=\"$wupload_file\" $imginfo[3] BORDER=0>\n<p>\n";
       }
-    } else if (eregi("^(phps|txt|htm|shs)$",$tail)) {
+    } else if (eregi("^(phps|txt|html?|shs)$",$tail)) {
       $view = file_operate($upload_file,"r",0,1200);
       $view = htmlspecialchars(cut_string($view,1000));
       if (filesize($upload_file) > 1000) $view = $view . " <p>\n ......$langs[preview]\n\n";
