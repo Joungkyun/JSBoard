@@ -149,3 +149,13 @@ find ./ -name *.ph.orig -exec rename .ph .php {} \;
 
 이 명령을 실행 한 후에, INSTALLER/script/ 로 이동을 하여 root 권한이 있는 사용
 자는 ./root_p 를, 계정 사용자 권한이라면 ./account_p 를 실행하여 주면 된다.
+
+4. 2.0.7 -> 2.0.10
+
+기존의 jsboard 에서 global/* 과 data/* 을 복사를 한다.
+
+cp -af jsboard.old/global/* jsboard.new/global/
+cp -af jsboard.old/data/* jsboard.new/data/
+
+jsboard.new/INSTALL/scripts 로 이동하여, root_p 나 account_p 를 실행을 한다.
+
