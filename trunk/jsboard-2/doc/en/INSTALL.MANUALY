@@ -18,65 +18,63 @@
 #################################################################################
 
 
-Writer : JoungKyun Kim <http://www.oops.org>
-Date   : Jul 15 2002
+Writer : JoungKyun Kim <http://www.oops.org>, SIGTERM <younman@hanmail.net>
+Date   : Oct 27 2002
 
-This document is for installation of JSBoard 2.0 On Like Unix Machine.
-All problems for jsboard is install user!
+This is an installation manual for JSBoard 2.0 on Unix-Like Machines. jsboard comes 
+with no warranty, use this software at your own risk.
 
-===================================   주의   ===================================
-
-First,
-JSBoard v2.0 is required over php 4.1.0 that compiled with --with-regex=php
-option.
+===================================  Caution   ===================================
 
 First,
-If install with other OS except Redhat, Debian and FreeBSD, you must read
-README.OTHER.OS document. If you use windows server, you download jsboard windows
-version.
+JSBoard v2.0 requires php 4.1.0 compiled with --with-regex=php option.
+
+Second, 
+If you install it on a system other than Redhat, Debian or FreeBSD, you must read
+README.OTHER.OS document. If you use Windows server, please download the jsboard for 
+windows.
 
 ================================================================================
 
 
 **** Contents ****
 
-  1. Check of Environment
-    1-1. test exec() function
-    1-2. test MySQL function
-    1-3. configuration web server
-    1-4. configuration php.ini
+  1. Pre-requisites
+    1-1. testing exec() function
+    1-2. testing MySQL function
+    1-3. Web server configuration
+    1-4. php.ini configuration
     1-5. modified install script for Solaris or SunOS
-  2. Install JSBoard
-  3. Change passowrd of JSBoard super admin
-  4. Security of JSBoard
+  2. Installing JSBoard
+  3. Changign passowrd of JSBoard super admin
+  4. Security in JSBoard
 
 ***************
 
 
-1. Check of Environment
+1. Pre-requisites
 
   [ OS ]
     Linux(Redhat, Debian)
     FreeBSD 4.x
 
-   If you have other OS, let's DIY.
+   Other OS's are not officially supported
   
   [ apache ]
 
-    over 1.3.x
+    1.3.x or later
   
   [ MySQL ]
 
-    over 3.22.30
+    3.22.30 or later
 
   [ PHP ]
 
-    over 4.1.0 that compiled with --with-regex=php
+    4.1.0 or later and compiled with --with-regex=php
 
 
-    Development Environment of JSBoard is follows.
-
-    PHP 4.1 ( developed with follow compile envionment )
+    Following is a configuration example.
+    PHP 4.1 
 
     ./configure --prefix=/usr \  
                 --with-apxs=/usr/sbin/apxs \  
@@ -105,12 +103,13 @@ version.
 
   * Check List *
 
-  Comfirmed support of exec() function and mysql function and config of php.ini
+  Make sure that your PHP installation supports MySQL functions and php.ini satisfies 
+  requirements.
 
-  1-1. test of exec() function
+  1-1. testing exec() function
 
-    First, create test.php include follows contents. Follow example only operate
-    on Linux or FreeBSD (or Unix or Like Unix)
+    First, create test.php with following code. This code will run on Linux systems 
+    or other Unicies.
 
     <?php
     echo "## exec() function test ##<p><br>\n\n";
@@ -119,7 +118,8 @@ version.
     echo $test[0];
     ?>
 
-    and read this file with web browser.
+    Place it on your web server and call it from your browser to see if it prints 
+    following message crrectly.
 
     -------------------------------------------------
     ## exec() function test ##
@@ -127,27 +127,37 @@ version.
     exec() function check : Success
     -------------------------------------------------
 
-    if don't print upper message, your have any problem on your php system.
+    If you didn't get right output then please check your PHP installation. 
 
-  1-2. MySQL function test
+  1-2. Testing MySQL function
 
-    Create info.php include follow contents on your web tree.
+    Create info.php with following code on your web tree.
 
     <?php
     phpinfo();
     ?>
 
-    After read with web browser this file, check mysql information.
-    And check of follow test.
+    Call the page from your browser to see if it prints out about MySQL. Even if 
+    it does print sometimes people get connection errors. This happens when the 
+    PHP has wrong path to the MySQL. If this is the case then try foloowing to 
+    find MySQL socket file.
+
+    [oops@oops include]$ mysql_config --socket
+    /var/lib/mysql/mysql.sock
+    [oops@oops include]$
+ 
+    Now try following code with the path that you've just discovered.
 
     <?
-    $mcheck = mysql_connect("localhost","root","$passwd");
+    $mcheck = mysql_connect(":/var/lib/mysql/mysql.sock","root","$passwd");
 
-    if ($mcheck) echo "Success mysql connect";
-    else echo "Failed mysql connect";
+    if ($mcheck) echo "mysql connect successful";
+    else echo "mysql connect failed";
     ?>
 
-    If you meet "Failed mysql connect" message, check follows on command line.
+    Try that page from the browser to see if it can connect MySQL server. If 
+    you get "ysql connect failed" then you can test your MySQL server with 
+    the following shell command.
 
     shell> mysql -u root -p
 
@@ -155,43 +165,41 @@ version.
 
     shell> mysql -u root -p -h DB_server_address
 
-  1-3. configuration of web server
 
-    index file of jsboard is index.php. and need .ph extension. So, you configure
-    .ph extension on you httpd.conf with follow method.
+  1-3. Web server configuration
+
+    The index file of jsboard is index.php. and files have .ph as their extensions 
+    so you may want to add following in your httpd.conf file. 
 
     AddType application/x-httpd-php .php .php3 .ph
                                                ----
 
-  1-4. configuration of php.ini
+  1-4. php.ini configuration
 
-    check follow value of directive
+    There is a problem with typing ' or " in text area. Set following options to 
+    fix it.
 
     magic_quotes_gpc = ON
     magic_quotes_runtime = OFF
     magic_quotes_sybase = OFF
 
-    If you want to upload with over 2Mb, configured follow directive with your
-    value.
+    Also files bigger than 2M may not be uploaded. To allow uploading big files like 
+    that, make post_max_size bigger (5M?) than upload_max_filesize.
     
     post_max_size       = 8M
     max_execution_time  = 30
     upload_max_filesize = 2M
 
 
-2. Installation JSBoard
+2. Installing JSBoard
 
-    First, uncompress download file.
+    JSBoard was designed to be administrated via its web admin interface therefore 
+    its process (nobody or apache depends on the server setting) should have enough 
+    privileges in order to operate properly. 
 
-    $ tar xvfpz jsboard-version.tar.gz
+  2-1 MySQL setting
 
-    After uncompress, jsboard-version directory is created.
-
-    Next step, create JSBoard database as follow method.
-
-    1) added mysql user and create database for jsboard
-
-       for example, database name is jsboard, and mysql user is jsboard for jsboard.
+    1) adding mysql user and create database for jsboard
 
        $ mysql -u root -p mysql
        mysql> CREATE database jsboard
@@ -210,7 +218,8 @@ version.
        $ mysql -u jsboard -p jsboard < userdb-$ostype.sql
        Enter password: <INPUT YOUR PASSWORD>
 
-    After working of database job, run install script in jsboard-version/INSTALLER/script.
+    Once the database was created successfully, run install script in 
+    jsboard-version/INSTALLER/script.
 
     1) if you have root account ( if you are account user, see next chart. )
 
@@ -240,9 +249,10 @@ version.
         Is right upper information? [Y/N](default Y) :
 
 
-      You must comfirme Apache User and Apache Group on upper information.
-      This values are must same in User and Group directive value of httpd.conf.
-      If same, input Y nor input N. If you are input N, you meet next process.
+      You must comfirm the Apache User and Apache Group from the System INFORMATION 
+      section. These values must match to the ones in User and Group directive value 
+      in httpd.conf.
+      If the given information are not correct then press N and change the valuse.
 
         1. Webserver user configuration
         Input value of User directive in httpd.conf : apache
@@ -253,11 +263,11 @@ version.
         DONE !!!
         $
 
-      Normally, FreeBSD and Redhat 4.x 5.x 6.x is nobody, and Debian is www-data,
-      and Redhat 7 is apache.
+      Normally, FreeBSD and Redhat 4.x 5.x 6.x use nobody, and Debian uses www-data,
+      and Redhat 7 uses apache.
 
 
-    2) if you are account user.
+    2) if you don't have root access execute shell script called account.
 
         $ ./account
         ########################################################
@@ -273,36 +283,36 @@ version.
         value in httpd.conf that is operation group of Web Server. If can't set as
         value of GROUP directive in httpd.conf, you will set the permission 606.
 
-      Upper message explains to protect global configuration file include db login
-      information. That is to say, This purpose is other account user cat't see upper
-      files. This job is enabled with root account. If you have root account, you
-      must set 606 permission this files.
+      Above message explains to protect global configuration file including db login
+      information, the files' group owner must be the nobody or apache depending on 
+      the server configuration. If you cannot change the group owner then the files 
+      should have 606 as its file permission.
     
       if you have root account,
 
       $ chgrp nobody jsboard/config/global.ph
       $ chgrp nobody jsboard/config/spam_list.txt
 
-      and result,
+      and the result,
 
       -rw-rw----    accountname    nobody     config/global.ph
       -rw-rw----    accountname    nobody     config/spam_list.txt
 
-      But you don't have root accunt,
+      if you couldn't give proper ownership,
 
       $ chmod 606 config/global.ph
       $ chmod 606 config/spam_list.txt
       $ chmod 711 ~/accountname
 
-      and result,
+      and the result,
 
       -rw----rw-    accountname    accountname    config/global.ph
       -rw----rw-    accountname    accountname    config/spam_list.txt
 
-      In this case, enable to operate but not good for security.
+      You will probably be able to run the JSBoard with that, but there will be 
+      security issues.
 
-
-    Next, move jsboard/config and set global.ph.
+    Next, move to jsboard/config and configure global.ph.
 
     ############################################################################
     #  DATABASE Configuration
@@ -312,8 +322,7 @@ version.
     $db[pass]   = "YOUR PASSWORD";		# DB login pass
     $db[name]   = "jsboard";			# DB name
 
-    This is mysql login information.
-
+    
 
     ##############################################################################
     #  BASIC Configuration
@@ -323,8 +332,7 @@ version.
     # web path of installed jsboard
     $board[path]     = "http://domain.com/jsboard/";
 
-    value of $board[path] is web path of jsboard. This value is closed with slash
-    charactor (/).
+    value of $board[path] is the path to the jsboard. It must be ended with "/".
 
 
     ##############################################################################
@@ -347,14 +355,15 @@ version.
     # login variation name (This value must be modified as security problem)
     $jsboard         = "login";
 
-    This value is name of login variable for jsboard. Changed any one word.
+    This value is name of login variable for jsboard. You can chage it to any word 
+    in english.
 
     # location of default page after login
     $print[dpage] = "http://domain.com/jsboard/list.php?table=test";
 
-    If you use login mode in jsboard, This value is start page after login success.
-    If you want to different start page in each board, connect login page with
-    ?table=$table option with web browser.
+    If you use login mode in jsboard, this page will be the start page after successfull 
+    login. You can use different start pages for each board by opening the login page with
+    the ?table=$table option.
 
 
     ##############################################################################
@@ -363,25 +372,24 @@ version.
     # Theme Name
     $print[theme]    = "EN-default";
 
-    setting up theme. Default support is EN-default theme. If you want to get any
-    english theme, connect http://jsboard.kldp.org/gallery/index.php?table=gallery
-    and download EN-themename.tar.gz file. After download, uncompress in jsboard/theme.
+    setting up the themes. The default is EN-default. If you want to get more 
+    english themes, visit http://jsboard.kldp.org/gallery/index.php?table=gallery
+    and download EN-themename.tar.gz file. Installl the package by decompressing it 
+    in jsboard/theme directory.
 
 
-3. Change passowrd of JSBoard super admin
+3. Changing JSBoard super admin password
 
-  After set up global.ph, connect http://domain.com/jsboard/login.php?type=admin
-  with web browser. Default user id and password is "admin" and "0000".
+  Once the installation/configuration process have been completed, try admin mode 
+  login via http://domain.com/jsboard/login.php?type=admin. The default user id and 
+  password are "admin" and "0000". To avoid security breach, change the default 
+  administrator password from this page.
 
-  After login admin center, click User administration and change admin user with
-  click EDIT button.
 
+4. Security in JSBoard
 
-4. JSBoard 보안
-
-  For enforced security of jsboard, set up follow configuration in httpd.conf.
-  If you don't have root account and enable to use .htaccess file, set up in
-  jsboard/.htaccess instead of httpd.conf.
+  In order to prevent uploaded files being executed you may want to modify your 
+  server configuration like this;
 
   make jsboard/protecion directory.
   $ cd jsboard
@@ -389,7 +397,7 @@ version.
   $ cd protection
   $ echo "You don't have any permisstion" > 403.html
 
-  and set up follow configuration in httpd.conf.
+  and modify httpd.conf as follows;
 
   <DirectoryMatch "^/.*/jsboard/data">
     AddType application/x-httpd-php3-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
@@ -403,7 +411,8 @@ version.
     </Files>
   </DirectoryMatch>
 
-  if you cat't set up in httpd.conf, set up in jsboard/.htaccess follow configuration
+  if you don't have enough privillige to modify httpd.conf then add followings to your 
+  jsboard/.htaccess.
 
   AddType application/x-httpd-php3-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
   AddType application/x-httpd-php-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
