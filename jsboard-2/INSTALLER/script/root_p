@@ -123,7 +123,6 @@ fi
 chgrp ${Agroup} ../../config
 chgrp -R ${Agroup} ../../data/
 chgrp ${Agroup} ../../config/global.ph
-chgrp ${Agroup} ../../config/security_data.ph
 chgrp ${Agroup} ../../config/spam_list.txt
 
 # permission configuration
@@ -136,7 +135,6 @@ chmod 664 ../../data/*/files/*/*
 chmod 664 ../../data/*/*.*
 chmod 664 ../../config/spam_list.txt
 chmod 660 ../../config/global.ph
-chmod 660 ../../config/security_data.ph
 
 echo
 echo "${ENDMSG}"

@@ -121,7 +121,6 @@ if [ "$INFO" = "N" ] ; then
 fi
 
 cp -Rp ../sample/admin/global.ph.orig ../../config/global.ph
-cp -Rp ../sample/admin/security_data.ph.orig ../../config/security_data.ph
 cp -Rp ../sample/admin/spam_list.txt.orig ../../config/spam_list.txt
 if [ -d "../../data/test" ]; then
   cp -Rp ../sample/data/* ../../data/test/
@@ -133,7 +132,6 @@ fi
 chgrp ${Agroup} ../../config
 chgrp -R ${Agroup} ../../data/
 chgrp ${Agroup} ../../config/global.ph
-chgrp ${Agroup} ../../config/security_data.ph
 chgrp ${Agroup} ../../config/spam_list.txt
 
 # permission configuration
@@ -143,7 +141,6 @@ chmod 775 ../../data/test
 chmod 775 ../../data/test/files
 chmod 664 ../../config/spam_list.txt
 chmod 660 ../../config/global.ph
-chmod 660 ../../config/security_data.ph
 chmod 664 ../../data/test/config.ph
 chmod 664 ../../data/test/html_head.ph
 chmod 664 ../../data/test/html_tail.ph

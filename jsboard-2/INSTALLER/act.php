@@ -138,7 +138,6 @@ if ($indb['check']) {
   copy("sample/data/html_tail.ph","../data/test/html_tail.ph");
   copy("sample/data/stylesheet.ph","../data/test/stylesheet.ph");
   copy("sample/admin/global.ph.orig","../config/global.ph");
-  copy("sample/admin/security_data.ph.orig","../config/security_data.ph");
   copy("sample/admin/spam_list.txt.orig","../config/spam_list.txt");
 
   chmod("../data/test/config.ph",0664);
@@ -146,7 +145,6 @@ if ($indb['check']) {
   chmod("../data/test/html_tail.ph",0664);
   chmod("../data/test/stylesheet.ph",0664);
   chmod("../config/global.ph",0660);
-  chmod("../config/security_data.ph",0660);
   chmod("../config/spam_list.txt",0664);
 
   # 설정 파일에 DB 정보를 입력
