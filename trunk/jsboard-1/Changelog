@@ -28,6 +28,7 @@ If you wnat to see windog's change log, see also
    체크 알고리즘 값 산출 문제 재 수정
 3. html 사용안함에서 &nbsp; blank 문자로 출력되는 것 수정
 4. cookie 등록시 strftime 함수 삭제
+5. 수정 모드시, email, url field 를 검사하도록 수정
 
 
 -----------------------------------------------------------------------------
