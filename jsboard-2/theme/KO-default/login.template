@@ -14,8 +14,8 @@ TD { FONT: 12px tahoma; COLOR:#555555; }
 <!--
 function InputFocus() {
 <? if($mode == "comment") { ?>
-   document.auth.lp.focus(); 
-<? } else { ?> 
+  document.auth.lp.focus();
+<? } else { ?>
   document.auth.lu.focus();
 <? } ?>
   return;
@@ -30,7 +30,7 @@ include "html/head.ph";
 if($table) { include "data/$table/html_head.ph"; }
 
 if($mode == "comment") {
-  $actpage = "./atc.php";
+  $actpage = "./act.php";
   $ment = "Comment Delete";
 } else {
   $actpage = "./session.php";
