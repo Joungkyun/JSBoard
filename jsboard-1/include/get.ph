@@ -210,21 +210,10 @@ function get_pos($table, $idx) {
 # explode - 구분 문자열을 기준으로 문자열을 나눔
 #           http://www.php.net/manual/function.explode.php
 function get_microtime($old, $new) {
-  # 주어진 문자열을 나눔 (sec, msec으로 나누어짐)
-  $old = explode(" ", $old);
-  $new = explode(" ", $new);
+  $start = explode(" ", $old);
+  $end = explode(" ", $new);
 
-  $time[msec] = $new[0] - $old[0];
-  $time[sec]  = $new[1] - $old[1];
-
-  if($time[msec] < 0) {
-    $time[msec] = 1.0 + $time[msec];
-    $time[sec]--;
-  }
-
-  $time = sprintf("%.2f", $time[sec] + $time[msec]);
-
-  return $time;
+  return sprintf("%.2f", ($end[1] + $end[0]) - ($start[1] + $start[0]));
 }
     
 # 알맞은 제목을 가져오기 위해 사용됨 (html/head.ph)
@@ -293,31 +282,21 @@ function get_theme_img($t) {
   return $path;
 }
 
-# 파일 크기 출력 함수 by 김칠봉 <san2@linuxchannel.net>
+# 파일 크기 출력 함수
 # $bfsize 변수는 bytes 단위의 크기임
 #
 # number_formant() - 3자리를 기준으로 컴마를 사용
 function human_fsize($bfsize, $sub = "0") {
-  $bfsize_Bytes = number_format($bfsize);
+  $BYTES = number_format($bfsize) . " Bytes"; // 3자리를 기준으로 컴마
 
-  if ($bfsize >= 1024 && $bfsize < 1048576) { # KBytes 범위 
-    $bfsize_KB = round($bfsize/1024); 
-    $bfsize_KB = number_format($bfsize_KB); 
+  if($bfsize < 1024) return $BYTES; # Bytes 범위
+  elseif($bfsize < 1048576) $bfsize = number_format(round($bfsize/1024)) . " KB"; # KBytes 범위
+  elseif($bfsize < 1073741827) $bfsize = number_format(round($bfsize/1048576)) . " MB"; # MB 범위
+  else $bfsize = number_format(round($bfsize/1073741827)) . " GB"; # GB 범위
 
-    if ($sub) $bfsize = "$bfsize_KB KB($bfsize_Bytes Bytes)"; 
-    else $bfsize = "$bfsize_KB Kb";
+  if($sub) $bfsize .= "($BYTES)";
 
-  } elseif ($bfsize >= 1048576) { # MB 범위 
-    $bfsize_MB = round($bfsize/1048576); 
-    $bfsize_MB = number_format($bfsize_MB); 
-
-    if ($sub) $bfsize = "$bfsize_MB MB($bfsize_Bytes Bytes)";
-    else $bfsize = "$bfsize_MB Mb";
-
-  } else
-    $bfsize = "$bfsize_Bytes Bytes"; 
-
-  return $bfsize; 
+  return $bfsize;
 } 
 
 function viewfile($tail) {
