@@ -15,10 +15,15 @@ if ($mode == "login") {
   $path[type] = "Install";
   include "../include/lang.ph";
   $str = str_replace("\n","\\n",$langs[first_acc]);
+  $nostr = str_replace("\n","<BR>\n",$str);
   echo "<script>\n" .
        "  alert('$str')\n" .
        "  document.location='../login.php?type=admin'\n" .
-       "</script> ";
+       "</script>\n".
+       "<NOSCRIPT>\n".
+       "Message: $nostr<BR>\n".
+       "And If you want to go main administrator's page, <A HREF=../login.php?type=admin>click here</A>!\n".
+       "</NOSCRIPT>\n";
   exit;
 }
 ?>

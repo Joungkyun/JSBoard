@@ -115,13 +115,13 @@ if [ "${me}" = "root" ]; then
     done  
   fi
 
-  chgrp ${AUSER} ../../config > dev/null 2>&1
+  chgrp ${AUSER} ../../config > /dev/null 2>&1
   [ "$?" != "0" ] && EXE=1
-  chgrp ${AUSER} ../../data > dev/null 2>&1
+  chgrp ${AUSER} ../../data > /dev/null 2>&1
   [ "$?" != "0" ] && EXE=1
-  chmod 731 ../../config > dev/null 2>&1
+  chmod 731 ../../config > /dev/null 2>&1
   [ "$?" != "0" ] && EXE=1
-  chmod 775 ../../data > dev/null 2>&1
+  chmod 775 ../../data > /dev/null 2>&1
   [ "$?" != "0" ] && EXE=1
 
   if [ "${EXE}" = "1" ]; then
