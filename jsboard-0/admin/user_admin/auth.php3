@@ -111,8 +111,5 @@ and all right reserved
 
 </body>
 </html>
-
 ");
-}
-
 ?>
