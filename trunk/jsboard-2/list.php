@@ -57,7 +57,32 @@ if($count[all]) {
 $b_time[] = microtime();
 
 # 글 리스트
-$print[lists] = get_list($table, $pages);
+$colspan_no = $upload[yesno] ? "6" : "5";
+
+if(trim($notice[subject])) {
+  $notice_filno = $colspan_no - 1;
+  $notice[subject] = cut_string($notice[subject],$board[tit_l]);
+
+  if($notice[contents]) {
+    $notice[subject] = "<A HREF=read.php?table=$table&alert=1>".
+                        "<FONT STYLE=\"color:$color[nr_fg]; font-weight:bold\">$notice[subject]</FONT></A>";
+  } else {
+    $notice[subject] = "<FONT STYLE=\"color:$color[nr_fg]; font-weight:bold\">$notice[subject]</FONT>";
+  }
+
+
+  $print[lists] = "<TR BGCOLOR=$color[nr_bg]>\n".
+                  "<TD ALIGN=right><IMG SRC=./theme/$print[theme]/img/notice.gif WIDTH=20 HEIGHT=20 BORDER=0>&nbsp;</TD>\n".
+                  "<TD COLSPAN=$notice_filno>$notice[subject]</TD>\n</TR>\n\n";
+
+  # 글 리스트들 사이에 디자인을 넣기 위한 코드
+  if($lines[design]) {
+    $lines[design] = str_replace("=AA","=$colspan_no",$lines[design]);
+    $print[lists] .= "<TR>\n$lines[design]\n</TR>\n";
+  }
+}
+
+$print[lists] .= get_list($table, $pages);
 
 # 게시판 앞뒤 페이지 링크
 $print[p_list] = page_list($table, $pages, $count, $board[plist]);
