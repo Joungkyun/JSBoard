@@ -2,14 +2,12 @@
 <HEAD>
 <META HTTP-EQUIV=Cache-Control CONTENT=No-Cache>
 <META HTTP-EQUIV=Pragma	CONTENT=No-Cache>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs[charset]?>">
 <TITLE>JSBoard <?=$board[ver]?> Login page</TITLE>
 <STYLE TYPE="text/css">
 A:LINK, A:VISITED, A:ACTIVE { TEXT-DECORATION: NONE; COLOR:<?=$color[text]?>; }
 A:HOVER { TEXT-DECORATION:UNDERLINE; COLOR:<?=$color[text]?>; }
 TD { FONT: 12px tahoma; COLOR:#555555; }
-    #IN { FONT: 12px tahoma; BACKGROUND-COLOR:<?=$color[m_bg]?>; COLOR:<?=$color[m_fg]?>; BORDER:1x solid <?=$color[d_bg]?> }
-    #SELECT { FONT: 12px tahoma; BACKGROUND-COLOR:<?=$color[m_bg]?>; COLOR:<?=$color[m_fg]?>; BORDER:1x solid <?=$color[d_bg]?> }
+INPUT {font: 11px tahoma; color:<?=$color[m_fg]?>; border-width:1; border-style:solid; border-color:<?=$color[d_bg]?>; padding-left:1px; padding-right:1px; background-color:<?=$color[m_bg]?>; }
 </STYLE>
 <script language=JavaScript>
 <!--
@@ -57,8 +55,8 @@ if($mode == "comment") {
 <TR>
 <TD ALIGN=CENTER NOWRAP><NOBR>
 Password
-<INPUT TYPE=password NAME=lp SIZE=<?=$size?> ID=IN>
-<INPUT TYPE=SUBMIT VALUE=DELETE ID=IN>
+<INPUT TYPE=password NAME=lp SIZE=<?=$size?>>
+<INPUT TYPE=SUBMIT VALUE=DELETE>
 </NOBR>
 <BR>
 </TD>
@@ -66,18 +64,18 @@ Password
 <? } else { ?>
 <TR>
 <TD ALIGN=CENTER>User</TD>
-<TD ALIGN=CENTER><INPUT TYPE=text NAME=lu SIZE=<?=$size?> ID=IN></TD>
+<TD ALIGN=CENTER><INPUT TYPE=text NAME=lu SIZE=<?=$size?>></TD>
 </TR>
 
 <TR>
 <TD ALIGN=CENTER>Password</TD>
-<TD ALIGN=CENTER><INPUT TYPE=password NAME=lp SIZE=<?=$size?> ID=IN></TD>
+<TD ALIGN=CENTER><INPUT TYPE=password NAME=lp SIZE=<?=$size?>></TD>
 </TR>
 
 <TR>
 <TD ALIGN=CENTER COLSPAN=2>
-Session Reset <INPUT TYPE=BUTTON VALUE=RESET onClick="document.location='./session.php?m=logout<?=$opt?>'" ID=IN>
-<INPUT TYPE=SUBMIT VALUE=LogIn ID=IN>
+Session Reset <INPUT TYPE=BUTTON VALUE=RESET onClick="document.location='./session.php?m=logout<?=$opt?>'">
+<INPUT TYPE=SUBMIT VALUE=LogIn>
 <BR>
 </TD>
 </TR>

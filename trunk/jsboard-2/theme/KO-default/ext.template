@@ -10,9 +10,9 @@
 BODY,TD {font-size:12px;font-family:<?=$langs[font]?>;color:#555555;}
 A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
 A:hover {text-decoration:underline; color:#555555}
-INPUT {font: 9pt <?=$langs[font]?>; BACKGROUND-COLOR: <?=$color[l4_bg]?>; COLOR: <?=$color[l4_fg]?>; BORDER:1x solid <?=$color[l4_gu]?>}
-SELECT {font: 9pt <?=$langs[font]?>; BACKGROUND-COLOR: <?=$color[l4_bg]?>; COLOR: <?=$color[l4_fg]?>; BORDER:1x solid <?=$color[l4_gu]?> }
-TEXTAREA {font: 10pt <?=$langs[font]?>; BACKGROUND-COLOR: <?=$color[l4_bg]?>; COLOR: <?=$color[l4_fg]?>; BORDER:1x solid <?=$color[l4_gu]?> }
+INPUT {font: 11px tahoma; color:<?=$color[l4_fg]?> ; border-width:1; border-style:solid; border-color:<?=$color[l4_gu]?>; padding-left:1px; padding-right:1px; background-color:<?=$color[l4_bg]?>; }
+SELECT {font: 11px tahoma; color:<?=$color[l4_fg]?>; border-width:1; border-style:solid; border-color:<?=$color[l4_gu]?>; background-Color:<?=$color[l4_bg]?> }
+TEXTAREA {font: 13px <?=$langs[font]?>; color:<?=$color[l4_fg]?>; border-width:1; border-style:solid; border-color:<?=$color[l4_gu]?>; padding-left:1px; background-Color:<?=$color[l4_bg]?>;}
  #radio {font: 9pt <?=$langs[font]?>; BACKGROUND-COLOR: <?=$color[bgcol]?>; COLOR: <?=$color[text]?>; BORDER:2x solid <?=$color[bgcol]?> }
  #title {font: 15pt <?=$langs[font]?>; color: <?=$color[n0_fg]?>; font-weight: bold}
  #en {font: 15pt Tahoma; font-weight: bold; COLOR: <?=$color[text]?>}

@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.5
 
+Thu, Jan 23 2003
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed style sheet for mozilla, netscape
+
 Wed, Jan 22 2003
   by JoungKyun Kim <http://www.oops.org>
 	- fixed function name to print_keymenu form pirnt_keymenu

@@ -14,8 +14,8 @@
 BODY,TD {font-size:12px;font-family:±¼¸²Ã¼;color:#555555;}
 A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
 A:hover {text-decoration:underline; color:#555555}
-INPUT {border:1x solid #555555;background-Color:silver;font-size:11px;font-family:±¼¸²Ã¼;color:#333333}
-TEXTAREA {border:1x solid #555555;background-Color:silver;font-size:13px;font-family:±¼¸²Ã¼;color:#333333}
+INPUT {font: 11px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; padding-right:1px; background-color:#FFFFFF; }
+TEXTAREA {font: 13px ±¼¸²Ã¼; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; background-Color:#ffffff;}
 
 <?=$user_stylesheet?>
 -->
@@ -62,7 +62,7 @@ if(!$np) {
 </TR>
 </TABLE>
 
-<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=1 CELLSPACING=0>
 <TR>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>

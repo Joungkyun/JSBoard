@@ -14,8 +14,8 @@
 BODY,TD {font-size:12px;font-family:±¼¸²Ã¼;color:#555555;line-height:15pt}
 A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
 A:hover {text-decoration:underline; color:#555555}
-INPUT {border:1x solid #555555;background-Color:silver;font-size:11px;font-family:±¼¸²Ã¼;color:#333333}
-SELECT {border:1x solid #555555;background-Color:silver;font:11px tahoma;color:#555555}
+INPUT {font: 11px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; padding-right:1px; background-color:#FFFFFF; }
+SELECT {font: 11px tahoma; color:#555555; border-width:1; border-style:solid; border-color:#555555; background-Color: #FFFFFF}
 
 <?=$user_stylesheet?>
 -->
@@ -144,7 +144,7 @@ if(!$np) {
 <FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
 <TR>
 <TD>
-<SELECT NAME=o[sc] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<SELECT NAME=o[sc]>
 <OPTION VALUE=t<?=$sform[sc][t]?>>Title
 <OPTION VALUE=c<?=$sform[sc][c]?>>Contents
 <OPTION VALUE=n<?=$sform[sc][n]?>>Writer
@@ -156,7 +156,7 @@ if(!$np) {
 </TD>
 </TR><TR>
 <TD>
-<SELECT NAME=o[st] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<SELECT NAME=o[st]>
 <OPTION VALUE=m<?=$sform[st][m]?>>A Month
 <OPTION VALUE=w<?=$sform[st][w]?>>A Week
 <OPTION VALUE=a<?=$sform[st][a]?>>All
@@ -182,7 +182,7 @@ if(!$np) {
 <TD ALIGN=right>
 <FONT STYLE="font-size:10px;font-family:tahoma;">
 <?=$pform[post]?>
-<SELECT NAME=o[go] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<SELECT NAME=o[go]>
 <OPTION VALUE=p SELECTED>Page No.
 <OPTION VALUE=n>Article No.
 </SELECT>

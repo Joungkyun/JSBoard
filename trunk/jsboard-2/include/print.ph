@@ -865,9 +865,9 @@ function print_comment($table,$no,$print=0) {
        "<TD ROWSPAN=2 ALIGN=center>".
        "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
        "</TD>\n".
-       "<TD ALIGN=right NOWRAP><nobr>\n".
-       "$langs[c_na] <INPUT TYPE=text$disable NAME=atc[name] MAXLENGTH=30 SIZE=$size[pass] VALUE=\"$pre_regist[name]\" STYLE=\"font: 11px tahoma;\"></nobr><BR>\n".
-       "<nobr>$langs[c_ps] <INPUT TYPE=password$disable NAME=atc[passwd] SIZE=$size[pass] STYLE=\"font: 11px tahoma;\"></nobr>\n".
+       "<TD ALIGN=right>\n".
+       "$langs[c_na] <INPUT TYPE=text$disable NAME=atc[name] MAXLENGTH=30 SIZE=$size[pass] VALUE=\"$pre_regist[name]\"><BR>\n".
+       "$langs[c_ps] <INPUT TYPE=password$disable NAME=atc[passwd] SIZE=$size[pass]>\n".
        "</TD>\n".
        "<TD ROWSPAN=2 ALIGN=center>".
        "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
