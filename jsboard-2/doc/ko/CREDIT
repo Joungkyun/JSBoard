@@ -13,7 +13,7 @@ http://linux.sarang.net/
 
 
 
-Source Distribute	: 김정균 <admin at oops.org>
+Maintainer              : 김정균 <admin at oops.org>
 ------------------------------------------------------------
 
 JSBoard v0.6 부터 코딩을 맡아 왔으며, JSBoard의 관리 프로그램인 OOPS admini-
@@ -124,6 +124,7 @@ http://hacksware.com/
 역대 버젼 개발 참여자
 ------------------------------------------------------------
 
+홍영득 <cyberowl at both.info>		v2.0
 최기수 <choiks at nuri.net>		v1.3, v2.0
 차경묵 <dimanche at dimanche.net>	v0.6, v0.7
 김정균 <admin at oops.org>		v0.6, v0.7, v0.8, v1.0 v1.1
