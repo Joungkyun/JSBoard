@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
+2002.5.26 by 김정균 <http://www.oops.org>
+	- 게시판 관리자를 여러명 지정할 수 있게 변경
+
 2002.5.25 by 김정균 <http://www.oops.org>
 	- comment 기능 추가
 	- act.php 의 check_article 함수의 오타 수정

@@ -1,8 +1,7 @@
 <?
 include "include/header.ph";
 
-if($_SESSION[$jsboard][id] == $board[ad] || $_SESSION[$jsboard][pos] == 1)
-  $board[super] = 1;
+$board[super] = $board[adm] ? 1 : $board[super];
 
 if(eregi("^(1|3)$",$board[mode])) { if(!$board[super]) print_error($langs[perm_err],250,150,1); }
 if(eregi("^(1|3|5)$",$board[mode]) && !$_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);

@@ -113,6 +113,16 @@ switch ($designer[license]) {
     break;
 }
 
+# 관리자 정보
+if (session_is_registered("$jsboard")) {
+  if($_SESSION[$jsboard][pos] == 1) $board[super] = 1;
+  if(strstr($board[ad],";")) {
+    if(preg_match("/{$_SESSION[$jsboard][id]};|;{$_SESSION[$jsboard][id]}/",$board[ad])) $board[adm] = 1;
+  } else {
+    if(preg_match("/^{$_SESSION[$jsboard][id]}$/",$board[ad])) $board[adm] = 1;
+  }
+}
+
 if(preg_match("/(read|list)\.php/i",$_SERVER[PHP_SELF])) {
   if($theme[ver] != $designer[ver]) print_error($langs[nomatch_theme],250,150,1);
 }

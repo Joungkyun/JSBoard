@@ -11,7 +11,7 @@ if(!session_is_registered("$jsboard") && eregi("^(2|3|5|7)$",$board[mode]))
 $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
 $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph"; 
 
-if($_SESSION[$jsboard][pos] == 1 || $_SESSION[$jsboard][id] == $board[ad]) {
+if($board[super] == 1 || $board[adm]) {
   if(@file_exists("./theme/$print[theme]/img/admin.gif"))
     $print[adpath] = "<IMG SRC=./theme/$print[theme]/img/admin.gif BORDER=0 ALT='$langs[ln_titl]'>";
   else $print[adpath] = "<FONT STYLE=\"font:12px tahoma;color:$color[text]\">[ admin ]</FONT>";
@@ -19,7 +19,7 @@ if($_SESSION[$jsboard][pos] == 1 || $_SESSION[$jsboard][id] == $board[ad]) {
                   "$print[adpath]</A>";
 }
 
-if($_SESSION[$jsboard][pos] == 1) {
+if($board[super] == 1) {
   $security_file = "include/security.ph";
   if(file_exists($security_file)) {
     @include "include/security.ph";

@@ -7,7 +7,7 @@ $ua[header] = $uaheader;
 $ua[tail]   = $uatail;
 $ua[style]  = $uastyle;
 
-if(!session_is_registered("$jsboard") || ($_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1))
+if(!session_is_registered("$jsboard") || (!$board[adm] && $board[super] != 1))
   print_error($langs[login_err]);
 
 sql_connect($db[rhost], $db[user], $db[pass]);

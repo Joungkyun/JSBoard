@@ -54,5 +54,15 @@ include_once "$ipath/include/lang.ph";
 include_once "$ipath/include/replicate.ph";
 include_once "$dpath/include/print.ph";
 
+# 관리자 정보
+if (session_is_registered("$jsboard")) {
+  if($_SESSION[$jsboard][pos] == 1) $board[super] = 1;
+  if(strstr($board[ad],";")) {
+    if(preg_match("/{$_SESSION[$jsboard][id]};|;{$_SESSION[$jsboard][id]}/",$board[ad])) $board[adm] = 1;
+  } else {
+    if(preg_match("/^{$_SESSION[$jsboard][id]}$/",$board[ad])) $board[adm] = 1;
+  }
+}
+
 $db = replication_mode($db);
 ?>

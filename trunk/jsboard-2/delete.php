@@ -1,9 +1,9 @@
 <?
 include "./include/header.ph";
 
-if($_SESSION[$jsboard][id] == $board[ad] || $_SESSION[$jsboard][pos] == 1) $board[super] = 1;
+$board[super] = $board[adm] ? 1 : $board[super];
 
-if(eregi("^(1|3)$",$board[mode])) { if(!$board[super]) print_error($langs[perm_err],250,150,1); }
+if(eregi("^(1|3)$",$board[mode])) { if($board[super] != 1) print_error($langs[perm_err],250,150,1); }
 if(eregi("^(2|5)$",$board[mode]) && !session_is_registered("$jsboard")) print_error($langs[perm_err],250,150,1);
 
 # upload[dir] 에 mata character 포함 여부 체크
@@ -16,7 +16,7 @@ sql_connect($db[server], $db[user], $db[pass]);
 sql_select_db($db[name]);
 $list = get_article($table, $no);
 
-if(eregi("^(2|3|5|7)$",$board[mode]) && !$board[super])
+if(eregi("^(2|3|5|7)$",$board[mode]) && $board[super] != 1)
   if($list[name] != $_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);
 
 $size = form_size(4);
@@ -69,7 +69,7 @@ if($list[url]) {
   else $list[uname] .= " [" . url_link("http://$list[url]", "$langs[ln_url]", $color[r3_fg]) . "]";
 }
 
-if(!$board[super] && $_SESSION[$jsboard][id] != $list[name]) { 
+if($board[super] != 1 && $_SESSION[$jsboard][id] != $list[name]) { 
   if(!$board[mode]) {
     $warning = "$langs[d_wa]";
     # 패스워드가 없는 게시물일  경우 관리자 인증을 거침
