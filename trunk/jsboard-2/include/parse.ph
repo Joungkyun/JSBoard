@@ -74,6 +74,11 @@ function search2sql($o, $wh = 1) {
     $strs = str_replace("!pluschar!","+",$strs);
     $strs = str_replace("!minuschar!","-",$strs);
     $strs = explode("!explode",$strs);
+
+    for($i=0;$i<sizeof($strs);$i++) {
+      $lenchk = strlen(trim(preg_replace("/!(m|p)!/i","",$strs[$i])));
+      if($lenchk < 3) print_error($langs[nsearch],250,150,1);
+    }
   }
 
   $sql = $wh ? "WHERE " : "AND ";
@@ -178,17 +183,23 @@ function search_hl($list) {
   $str = trim($str);
   $str = stripslashes($str);
 
+  # regex 에서 충돌되는 문자 escape 처리
+  $dead = array("/\?|\)|\(|\*|\.|\^|\+|\%/i");
+  $live = array("\\\\\\0");
+  $str = preg_replace($dead,$live,$str);
+
   if($o[at] != "d") {
     # %% 검색시 필요 조건
     $strs = explode("%%",str_replace("/","\/",$str));
   } else {
-    $src = array("/\\\\\\\\/i","/\\\\\+/i","/\\\\\-/i","/\+/i","/\-/i");
-    $tar = array("\\","!pluschar!","!minuschar!","!explode!","!explode!");
+    $src = array("/\\\\\\\\/i","/\\\\\+/i","/\\\\\-/i","/\+/i","/\-/i","/\//i");
+    $tar = array("\\","!pluschar!","!minuschar!","!explode!","!explode!","\/");
     $strs = preg_replace($src,$tar,$str);
     $strs = str_replace("!pluschar!","+",$strs);
     $strs = str_replace("!minuschar!","-",$strs);
     $strs = explode("!explode!",$strs);
   }
+
   $regex1 = "/(<\/?)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)/i";
   $regex2 = "/(<\/?FONT[^<>]+)<FONT[^>]+>([^<]+)<\/FONT>([^>]*>)/i";
   $regex3 = "/(HREF|SRC)=([^<]*)$hl[0]([^<]*)<\/FONT>([^>]*)/i";

@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Jan  4 2002
+Date      : Wed, Jan  5 2002
 Version   : jsboard-2.0pre4
 
 
@@ -29,6 +29,9 @@ Version   : jsboard-2.0pre4
 4. added environment various in get_hostname() function
 5. fixed auto_link() function
 6. added table check function when regist article to use html tag
+7. don't send mail when reply for own's article
+8. fixed hilighting bug of search string
+9. fixed fintering bug of under 2 search characters in detail search
 
 
 -----------------------------------------------------------------------------

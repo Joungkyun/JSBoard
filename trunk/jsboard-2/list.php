@@ -102,6 +102,8 @@ $print[pagetime] = "Page Loading [ $print[pagetime] Sec ]";
 
 mysql_close();
 
+$sform[ss] = preg_replace("/\\\\+/i","\\",$sform[ss]);
+
 # PAGE DISPLAY
 include "./theme/$print[theme]/list.template";
 ?>
