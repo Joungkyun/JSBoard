@@ -39,11 +39,10 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
     # 전체 관리자가 허락하였을시에만 upload 기능을 사용할수 있음
     if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
-      $upfile = conv_upload_name("userfile");
       $bfilename = date("YmdHis",$atc[date]);
-      $upchk = file_upload($upfile,$bfilename);
+      $upfile = file_upload("userfile",$bfilename);
 
-      if(!$upchk) {
+      if(!trim($upfile[name])) {
         $bfilename = "";
         $upfile[size] = 0;
         $upfile[name] = "";
@@ -110,10 +109,9 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
     # 답변시 file upload 설정 부분, 전체 관리자가 허락시에만 가능
     if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
-      $upfile = conv_upload_name("userfile");
       $bfilename = date("YmdHis",$atc[date]);
-      $upchk = file_upload($upfile,$bfilename);
-      if(!$upchk) {
+      $upfile = file_upload("userfile",$bfilename);
+      if(!trim($upfile[name])) {
         $bfilename = "";
         $upfile[size] = 0;
         $upfile[name] = "";
@@ -201,11 +199,10 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     }
 
     # file 수정 루틴
-    $upfile = conv_upload_name("userfile");
     $bfilename = date("YmdHis",$atc[date]);
-    $atc[fup] = file_upload($upfile,$bfilename);
+    $upfile = file_upload("userfile",$bfilename);
 
-    if($atc[fup]) {
+    if(trim($upfile[name])) {
       if(file_exists("data/$table/files/$atc[fdeldir]/$atc[fdelname]") && $atc[fdelname]) {
         unlink("data/$table/files/$atc[fdeldir]/$atc[fdelname]");
         rmdir("data/$table/files/$atc[fdeldir]");
