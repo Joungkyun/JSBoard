@@ -410,9 +410,26 @@ function file_upload($fn,$updir) {
     upload_name_chk($ufile[name]);
 
     # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
-    $f[name] = eregi_replace("[.]*$","",$f[name]);
-    $f[name] = eregi_replace(".(ph|inc|php[0-9a-z]*|phtml)$",".phps", $f[name]);
-    $f[name] = eregi_replace("(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $f[name]);
+    $_parseName = explode ('.', $ufile['name']);
+    $_parsePart = count ($_parseName);
+
+    $ufile['name'] = '';
+    for ( $i=0; $i<$_parsePart; $i++ ) {
+      $_sep = ( $i && $i != $_parsePart - 1 ) ? '_' : '.';
+      if ( ! $i ) $_sep = "";
+      $ufile['name'] .= "$_sep{$_parseName[$i]}";
+    }
+
+    $fcname[0] = "/\.*$/";
+    $fvname[0] = "";
+    $fcname[1] = "/\.(ph|inc|php[0-9a-z]*|phtml)$/i";
+    $fvname[1] = ".phps";
+    $fcname[2] = "/(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$/i";
+    $fvname[2] = "\\1_\\2.phps";
+    $fcname[3] = "/(_tar)\.(gz|bz2)$/i";
+    $fvname[3] = ".\\1.\\2";
+
+    $ufile['name'] = preg_replace($fcname, $fvname, $ufile['name']);
 
     mkdir("data/$table/$upload[dir]/$updir",0755);
     move_uploaded_file($ufile[tmp_name],"data/$table/$upload[dir]/$updir/$ufile[name]");
