@@ -1,0 +1,119 @@
+#!/bin/sh
+clear
+echo "########################################################"
+echo "# JSBoard Config File Permissioner v2.0                #"
+echo "# Scripted By JoungKyun Kim < http://www.oops.org >    #"
+echo "########################################################"
+echo
+
+echo "STEP 1 Language Check"
+echo "---------------------"
+echo -n "Can you enable to use KOREAN in this console? [Y/N](default Y) : "
+read langs
+
+case "${langs}" in
+  N*|n*)
+    langs=en ;;
+  *)
+    langs=ko ;;
+esac
+
+# location of apache configuration file
+if [ -f "/etc/httpd/conf/httpd.conf" ] ;then
+  CONF="/etc/httpd/conf/httpd.conf"
+elif [ -f "/etc/www/conf/httpd.conf" ]; then
+  CONF="/etc/www/conf/httpd.conf"
+elif [ -f "/etc/www/httpd.conf" ]; then
+  CONF="/etc/www/httpd.conf"
+else
+  CONF="/usr/local/apache/conf/httpd.conf"
+fi
+
+DIST=`uname -s`
+Auser=$(ps uax | grep -E "apache|httpd" | grep -v ^root | grep -v grep | awk '{print $1}' | uniq)
+Agroup=$(cat ${CONF} | grep -E "^(`echo -ne "\t"`|[ ])*Group " | awk '{print $2}')
+
+if [ "${langs}" = "ko" ]; then
+  . ./LANG/ko.conf
+else
+  . ./LANG/en.conf
+fi
+
+echo
+echo "########################################################"
+echo "${SYSTEM_IN}"
+echo "########################################################"
+echo "#"
+echo "${SYSTEM_LN}"
+echo "${SYSTEM_OS}"
+echo "${SYSTEM_HU}"
+echo "${SYSTEM_HG}"
+echo "#"
+echo "########################################################"
+echo
+echo
+echo "${SYSTEM_MN}"
+echo -n "${SYSTEM_AL}"
+read INFO
+
+case "${INFO}" in
+  N*|n*)
+    INFO=N ;;
+  *)
+    INFO=Y ;;
+esac
+
+if [ "$INFO" = "N" ] ; then
+  echo
+  echo "1. Webserver user configuration"
+  echo -n "${RECONF_HU}"
+  read Auser
+
+  while [ true ]; do
+    if [ ${Auser} ]; then
+      break;
+    else
+      echo -n "${RECONF_HU}"
+      read Auser
+    fi
+  done
+
+  echo
+  echo "2. Webserver group configuration"
+  echo -n "${RECONF_HG}"
+  read Agroup
+
+  while [ true ]; do
+    if [ ${Agroup} ]; then
+      break;
+    else
+      echo -n "${RECONF_HG}"
+      read Agroup
+    fi
+  done
+fi
+
+# owner configuration
+chgrp ${Agroup} ../../config
+chgrp -R ${Agroup} ../../data/
+chgrp ${Agroup} ../../config/global.ph
+chgrp ${Agroup} ../../config/security_data.ph
+chgrp ${Agroup} ../../config/spam_list.txt
+
+# permission configuration
+chmod 731 ../../config
+chmod 775 ../../data
+chmod 775 ../../data/*
+chmod 775 ../../data/*/files
+chmod 775 ../../data/*/files/*
+chmod 664 ../../data/*/files/*/*
+chmod 664 ../../data/*/*.*
+chmod 664 ../../config/spam_list.txt
+chmod 660 ../../config/global.ph
+chmod 660 ../../config/security_data.ph
+
+echo
+echo "${ENDMSG}"
+echo
+
+exit 0
