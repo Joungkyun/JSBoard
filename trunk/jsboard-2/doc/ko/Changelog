@@ -101,7 +101,7 @@ If you wnat to see windog's change log, see also
 69. 리스트에서 글 본문 미리보기시 KSX 1001 범위외의 글자가 NCR 코드 그대로
     보이는 것을 수정
 70. meta_char_check() 함수 수정
-71. insall script 수정
+71. install script 수정
 72. auto_link() 함수 수정
 73. 검색 루틴 수정
 
