@@ -55,8 +55,7 @@ if(file_exists("./config/external.ph")) {
 include_once "include/version.ph";
 include_once "include/lang.ph";
 include_once "include/check.ph";
-if(!check_windows())
-  { include_once "include/exec.ph"; }
+if(!check_windows()) { include_once "include/exec.ph"; }
 include_once "include/get.ph";
 include_once "include/list.ph";
 include_once "include/parse.ph";
@@ -66,6 +65,9 @@ include_once "include/sendmail.ph";
 
 $agent = get_agent();
 $db = replication_mode($db);
+
+if(preg_match("/(act|write|edit|reply)\.php/i",$_SERVER[PHP_SELF]))
+  $upload[maxsize] = get_upload_value($upload);
 
 # 외부 hyper link 를 막기 위한 설정
 check_dhyper($board[usedhyper],$board[endhyper],$board[dhyper],$enable[dhyper],$enable[plink]);
