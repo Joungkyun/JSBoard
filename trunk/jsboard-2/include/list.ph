@@ -213,10 +213,19 @@ function print_narticle($table, $fg, $bg, $print = 0)
 }
 
 function get_comment($table,$no,$print=0) {
-  global $lines;
+  global $lines, $corder, $langs, $page;
 
-  $sql = "SELECT * FROM {$table}_comm WHERE reno = '$no' ORDER BY no DESC";
+  $orderby = $corder ? "ASC" : "DESC";
+
+  $sql = "SELECT * FROM {$table}_comm WHERE reno = '$no' ORDER BY no $orderby";
   $r = sql_query($sql);
+
+  if($corder) {
+    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=0&page=$page>&#9661;</A>";
+  } else {
+    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=1&page=$page>&#9651;</A>";
+  }
+  $lists .= "<TR><TD COLSPAN=4 ALIGN=right>$langs[c_lu] $orlink</TD></TR>\n";
   
   if(sql_num_rows($r) > 0) {
     while ($list = sql_fetch_array($r)) {
