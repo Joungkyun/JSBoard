@@ -1,16 +1,16 @@
 <?php
-include "./include/version.ph";
-include "./include/print.ph";
-include "./include/get.ph";
-include "./include/check.ph";
-include "./include/error.ph";
+include "./include/version.php";
+include "./include/print.php";
+include "./include/get.php";
+include "./include/check.php";
+include "./include/error.php";
 parse_query_str();
 
 $agent = get_agent();
 if(preg_match("/links|w3m|lynx/i",$agent['br'])) $textBrowser = 1;
 
-if($table && file_exists("data/$table/config.ph"))
-  { include "data/$table/config.ph"; }
+if($table && file_exists("data/$table/config.php"))
+  { include "data/$table/config.php"; }
 
 # input 문의 size를 browser별로 맞추기 위한 설정
 $size = form_size(6);
@@ -23,6 +23,6 @@ $print['theme'] = !$print['theme'] ? "KO-default" : $print['theme'];
 
 meta_char_check($print['theme'], 1, 1);
 
-include "./theme/{$print['theme']}/config.ph";
+include "./theme/{$print['theme']}/config.php";
 include "./theme/{$print['theme']}/login.template";
 ?>

@@ -38,7 +38,7 @@ echo "<BODY BGCOLOR=\"{$color['b_bg']}\"$onload>";
 <?php
 if($table) {
   table_name_check($table);
-  if(file_exists("data/$table/html_head.ph")) { include "data/$table/html_head.ph"; }
+  if(file_exists("data/$table/html_head.php")) { include "data/$table/html_head.php"; }
 }
 ?>
 <!-- =============================== A foreword =============================== -->

@@ -122,7 +122,7 @@ fi
 # owner configuration
 chgrp ${Agroup} ../../config
 chgrp -R ${Agroup} ../../data/
-chgrp ${Agroup} ../../config/global.ph
+chgrp ${Agroup} ../../config/global.php
 chgrp ${Agroup} ../../config/spam_list.txt
 
 # permission configuration
@@ -134,7 +134,7 @@ chmod 775 ../../data/*/files/*
 chmod 664 ../../data/*/files/*/*
 chmod 664 ../../data/*/*.*
 chmod 664 ../../config/spam_list.txt
-chmod 660 ../../config/global.ph
+chmod 660 ../../config/global.php
 
 echo
 echo "${ENDMSG}"

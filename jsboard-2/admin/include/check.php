@@ -125,7 +125,7 @@ function check_admin($user) {
   $p = opendir("./data");
   while($i = readdir($p)) {
     if($i != "." && $i != ".." && is_dir("./data/$i")) {
-      $c = fopen("./data/$i/config.ph","rb");
+      $c = fopen("./data/$i/config.php","rb");
       $chk = fread($c,500);
       $chk = preg_replace("/.+board\[ad\][ ]*=[ ]*\"([^\"]*)\".+/i","\\1",$chk);
       if(trim($chk) == trim($user)) {

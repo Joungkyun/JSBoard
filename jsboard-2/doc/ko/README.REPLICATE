@@ -23,7 +23,7 @@ JSBoard 에서의 replication 설정은 간단하다. 일단은 일반적으로 설정을 하는
 것은 동일하다. 다만 서버가 외부에 있을 확률이 높으므로 Installer 를 사용하
 는 것 보다는 수동 설치를 권장한다.
 
-다음 config/global.ph 의 DB 설정 부분이 다음과 같을 것이다.
+다음 config/global.php 의 DB 설정 부분이 다음과 같을 것이다.
 
 $db[server]      = "192.168.10.2";             # DB address
 $db[user]        = "jsboard_user";           # DB login user

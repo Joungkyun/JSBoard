@@ -1,6 +1,6 @@
 <?php
 $path['type'] = "admin";
-include "include/admin_head.ph";
+include "include/admin_head.php";
 
 if(!session_is_registered("$jsboard") || $_SESSION[$jsboard]['pos'] != 1)
   print_error($langs['login_err']);

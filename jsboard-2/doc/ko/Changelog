@@ -16,6 +16,11 @@ file.
 
 버전   : jsboard-2.0.7
 
+2004.03.12
+  by 김정균 <http://www.oops.org>
+	- .ph 파일을 .php 로 변경
+	- theme version A7 으로 올림
+
 2004.03.05
   by 김정균 <http://www.oops.org>
 	- jsboard 의 함수를 재사용하여 rss.php 를 재작성

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# 아래의 정보들은 global.ph 의 DB 정보와 동일하게 입력함.
+# 아래의 정보들은 global.php 의 DB 정보와 동일하게 입력함.
 # jsboard 에 접근할 유저이름
 DB_USER=
 

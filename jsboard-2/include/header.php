@@ -8,15 +8,15 @@ ini_set(magic_quotes_gpc,1);
 ini_set(magic_quotes_sybase,0);
 ini_set(precision,15);
 
-include_once "include/error.ph";
-include_once "include/print.ph";
+include_once "include/error.php";
+include_once "include/print.php";
 # GET/POST 변수를 제어
 parse_query_str();
 
-if (!@file_exists("config/global.ph")) {
+if (!@file_exists("config/global.php")) {
   echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
        "history.back();\nexit;\n</script>\n";
-} else { include_once "config/global.ph"; }
+} else { include_once "config/global.php"; }
 
 session_start();
 if(!session_is_registered("$jsboard") && !preg_match("/session\.php/i",$_SERVER['PHP_SELF']))
@@ -26,11 +26,11 @@ if(!session_is_registered("$jsboard") && !preg_match("/session\.php/i",$_SERVER[
 #  이 정보들은 건들지 말도록 한다!!!!!
 ##############################################################################
 if(trim($table)) {
-  if(@file_exists("data/$table/config.ph") && $board['uconf'])
-    { @include_once "data/$table/config.ph"; }
+  if(@file_exists("data/$table/config.php") && $board['uconf'])
+    { @include_once "data/$table/config.php"; }
 
-  if(@file_exists("data/$table/stylesheet.ph")) {
-    @include_once"data/$table/stylesheet.ph";
+  if(@file_exists("data/$table/stylesheet.php")) {
+    @include_once"data/$table/stylesheet.php";
     if($user_stylesheet) {
        $user_stylesheet = preg_replace("/<[\/]*STYLE[^>]*>/i","",$user_stylesheet);
        $user_stylesheet = "<!-- ======================= User define stylesheet ======================= -->\n".
@@ -44,25 +44,25 @@ if(trim($table)) {
 
   # theme 의 설정 파일을 호출
   if(!$path['type']) {
-    include_once "./theme/{$print['theme']}/config.ph";
+    include_once "./theme/{$print['theme']}/config.php";
   }
-} else include_once "theme/{$print['theme']}/config.ph";
+} else include_once "theme/{$print['theme']}/config.php";
 
-if(file_exists("./config/external.ph")) { 
+if(file_exists("./config/external.php")) { 
   unset($edb);
-  include_once "./config/external.ph";
+  include_once "./config/external.php";
 }
 
-include_once "include/version.ph";
-include_once "include/lang.ph";
-include_once "include/check.ph";
-if(!check_windows()) { include_once "include/exec.ph"; }
-include_once "include/get.ph";
-include_once "include/list.ph";
-include_once "include/parse.ph";
-include_once "include/sql.ph";
-include_once "include/replicate.ph";
-include_once "include/sendmail.ph";
+include_once "include/version.php";
+include_once "include/lang.php";
+include_once "include/check.php";
+if(!check_windows()) { include_once "include/exec.php"; }
+include_once "include/get.php";
+include_once "include/list.php";
+include_once "include/parse.php";
+include_once "include/sql.php";
+include_once "include/replicate.php";
+include_once "include/sendmail.php";
 
 $agent = get_agent();
 $db = replication_mode($db);

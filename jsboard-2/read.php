@@ -1,17 +1,17 @@
 <?php
 $p_time[] = microtime(); # 속도 체크
-include "include/header.ph";
+include "include/header.php";
   
 if(preg_match("/^(2|3|5)$/",$board['mode']) && !session_is_registered("$jsboard"))
   print_error($langs['login_err']);
   
-$board['headpath'] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
-$board['tailpath'] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
+$board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
+$board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php";
 
 if($alert) {
   $list['title'] = $notice['subject'];
   $list['text'] = "<PRE>\n".auto_link($notice['contents'])."\n</PRE>";
-  $list['date'] = filemtime("data/$table/config.ph");
+  $list['date'] = filemtime("data/$table/config.php");
   $list['date'] = date("Y.m.d H:i:s",$list['date']);
   $list['uname'] = "Board Admin";
   $list['refer'] = "Don't Check";

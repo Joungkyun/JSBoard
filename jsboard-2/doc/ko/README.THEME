@@ -32,7 +32,7 @@ rep.gif		- 댓글의 화살표 이미지
 logout.gif	- login 시 logout 을 위한 이미지 링크
 admin.gif	- admin page 를 위한 이미지 링크
 
-이 존재해야 한다. 그리고 list.ph 와 read.ph 에서
+이 존재해야 한다. 그리고 list.template 와 read.template 에서
 list_cmd(0,1) 과 read_cmd(0,1) 을 list_cmd(1,1), read_cmd(1,1) 로 만들
 어 주면 된다.
 
@@ -40,7 +40,7 @@ list_cmd(0,1) 과 read_cmd(0,1) 을 list_cmd(1,1), read_cmd(1,1) 로 만들
 지를 사용할 수 있다.
 
 그리고 template 상에서 수정할수 없는 몇몇 색상들과 테이블 길이 같은 것
-들은 theme_name/config.ph 에서 지정을 할수 있게 되어 있다.
+들은 theme_name/config.php 에서 지정을 할수 있게 되어 있다.
 
 나머지는 마음대로 하면 된다.
 
@@ -52,10 +52,10 @@ default theme 의 각 파일에 필요한 변수에 대한 주석이 있으니 참조를 하면
 또한 theme 디렉토리에 위치한 테마들은 자동으로 각 게시판의 관리자에 등
 록이 되니, 게시판 관리자에서 새로 등록된 테마를 선택해서 사용하면 된다.
 
-또한 KO-theme_name/config.ph 의 $designer[ver] 와 include/version.ph 의
+또한 KO-theme_name/config.php 의 $designer[ver] 와 include/version.php 의
 $theme[ver] 의 값이 동일해야 테마를 사용할 수 있다. 이는 버젼별 테마 사
 용에 혼란이 없도록 하기 위해 표현을 한다.   만약 테마의 수정이 가해지면
-include/version.ph 의 $theme[ver] 의 값이 변경이 된다.
+include/version.php 의 $theme[ver] 의 값이 변경이 된다.
 
 
 # Search FORM

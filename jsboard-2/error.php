@@ -1,5 +1,5 @@
 <?php
-include "include/header.ph";
+include "include/header.php";
 
 $str = urldecode($str);
 $str = stripslashes($str);

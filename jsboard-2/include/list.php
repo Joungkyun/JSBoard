@@ -145,7 +145,7 @@ function print_list($table, $list, $r=0)
   $prints .= "</TR>\n";
 
   # 글 리스트들 사이에 디자인을 넣기 위한 코드
-  # theme 의 config.ph 의 $lines['desing'] 에서 설정
+  # theme 의 config.php 의 $lines['desing'] 에서 설정
   if($lines['design']) $prints .= "###LINE-DESIGN###\n";
 
   return $prints;

@@ -1,10 +1,10 @@
 JSBoard v2.0 Upgrade document
 
-2003.07.28 김정균 <http://www.oops.org>
+2004.03.12 김정균 <http://www.oops.org>
 
 1. v1.3.3 => v2.0.0
 2. v2.0.0 - v2.0.5 => v2.0.6
-
+3. v2.0.6 -> v2.0.7
 
 
 
@@ -132,3 +132,20 @@ http://domain.com/jsboard-2.0/login.php?type=admin
 만약 전체 관리자가 이를 해 주지 않고, 각각의 게시판 관리자에게 맡기려면 각 게
 시판 관리자에게 관리자 페이지를 한번 들어가서 확인을 해 주면 알아서 작동을 한
 다.
+
+
+
+3. v2.0.6 -> v2.0.7
+
+2.0.7 부터는 .ph 를 사용하던 확장자가 .php 로 변경이 되었기 때문에 단순한 변경
+작업이 필요하다.
+
+일단, 2.0.7 의 압축을 풀어 놓은 다음 기존의 jsboard/data/* 와 jsboard/config/*
+의 내용을 jsboard-2.0.7 의 data/config 에 복사를 하도록 한다. 복사를 한 후에,
+jsboard-2.0.7 디렉토리에서 다음의 명령을 실행하도록 한다.
+
+find ./ -name *.ph -exec rename .ph .php {} \;
+find ./ -name *.ph.orig -exec rename .ph .php {} \;
+
+이 명령을 실행 한 후에, INSTALLER/script/ 로 이동을 하여 root 권한이 있는 사용
+자는 ./root_p 를, 계정 사용자 권한이라면 ./account_p 를 실행하여 주면 된다.

@@ -12,13 +12,13 @@ $prlist['path'] = "/webroot/jsboard-version";
 # 마지막에 /를 붙이면 안됨
 $prlist['wpath'] = "http://도메인/jsboard-version";
 
-include_once "{$prlist['path']}/config/global.ph";
-include_once "{$prlist['path']}/include/error.ph";
-include_once "{$prlist['path']}/include/parse.ph";
-include_once "{$prlist['path']}/include/check.ph";
-include_once "{$prlist['path']}/include/sql.ph";
-include_once "{$prlist['path']}/include/get.ph";
-include_once "{$prlist['path']}/include/print.ph";
+include_once "{$prlist['path']}/config/global.php";
+include_once "{$prlist['path']}/include/error.php";
+include_once "{$prlist['path']}/include/parse.php";
+include_once "{$prlist['path']}/include/check.php";
+include_once "{$prlist['path']}/include/sql.php";
+include_once "{$prlist['path']}/include/get.php";
+include_once "{$prlist['path']}/include/print.php";
 
 print_preview_src(1);
 

@@ -1,4 +1,4 @@
 <?php
-$board['ver'] = "2.0.6";
+$board['ver'] = "2.0.7";
 $theme['ver'] = "A7"
 ?>

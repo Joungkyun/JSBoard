@@ -1,7 +1,7 @@
 <?php
 $p_time[] = microtime(); # 속도 체크
-include "include/header.ph";
-include "admin/include/check.ph";
+include "include/header.php";
+include "admin/include/check.php";
 
 if(!session_is_registered("$jsboard")) print_error("{$langs['login_err']}");
 
@@ -40,8 +40,8 @@ if($m == "act") {
   }
 }
 
-$board['headpath'] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
-$board['tailpath'] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
+$board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
+$board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php";
 
 $chjsboard = $_SESSION[$jsboard]['id'];
 $where = ($_SESSION[$jsboard]['pos'] == 1 && $check) ? "no = '$no'" : "nid = '$chjsboard'";

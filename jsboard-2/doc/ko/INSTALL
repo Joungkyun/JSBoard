@@ -178,12 +178,10 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
   1-2. web server 설정
 
     jsboard 의 index file 은 index.php 이다 그러므로 httpd.conf 에서
-    DirectoryIndex 지시자에 index.php를 추가해 주도록 한다. 또한 .ph file들
-    의 보안을 위해서 httpd.conf 의
+    DirectoryIndex 지시자에 index.php 가 지정이 되어 있어야 한다.
 
-    AddType application/x-httpd-php .php .php3
-
-    설정에 .ph 를 추가해 주도록 한다.
+    DirectoryIndex index.php index.html index.htm index.jsp ...
+                   ---------
 
   1-3. php.ini 의 설정
 
@@ -268,7 +266,7 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
 
   계정 유저의 경우에는 약간 다르게 나오는데, 나오는 메세지대로 따라서 하면 된다.
 
-  그리고 다시 jsboard/INSTALLER/include/passwd.ph 를 편집한다.
+  그리고 다시 jsboard/INSTALLER/include/passwd.php 를 편집한다.
 
   <?php
   ######################################################
@@ -320,7 +318,7 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
   ######################################################
   ?>
 
-  위는 passwd.ph 의 내용이며, "MySQL_ROOT_PASSWORD" 부분에 MySQL 의 root
+  위는 passwd.php 의 내용이며, "MySQL_ROOT_PASSWORD" 부분에 MySQL 의 root
   password 를 넣어 준다. 
 
   계정 유저 즉 MySQL 의 root 패스워드를 모르고 시스템 root 의 권한이 없을경
@@ -406,7 +404,7 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
   OS Type			: RedHat
   MySQL check			: Failed 
 
-  MySQL login에 실패를 했습니다. jsboard/INSTALLER/include/passwd.ph 에
+  MySQL login에 실패를 했습니다. jsboard/INSTALLER/include/passwd.php 에
   MySQL의 root password가 정확한지 확인해 주시고 맞으면 PHP의 설치시에
   --with-mysql 옵션이 들어갔는지 확인해 주십시오
   만약 DB server가 독립되어 있다면 INSTALL.MANUALY 문서를 참조하여 설치
@@ -570,7 +568,7 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
     AddType application/x-httpd-php3-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
     AddType application/x-httpd-php-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
 
-    ErrorDocument 403 http://jsboard.kldp.org/ErrorMSG/error_msg.php?l=ko&c=403
+    ErrorDocument 403 http://domain.com/ErrorMSG/error_msg.php?l=ko&c=403
 
     <Files ~ ".*\.ph$">
       Order allow,deny
@@ -586,7 +584,7 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
   따라 수정을 해 줘야 한다.
 
   또한 data 라는 이름의 디렉토리 아래로 .ph로 직접 접근할 경우에는
-  http://jsboard.kldp.org/ErrorMSG/error_msg.php?l=ko&c=403
+  http://domain.com/ErrorMSG/error_msg.php?l=ko&c=403
   페이지를 출력 하라는 의미이다.
 
   이 설정은 root 의 권한만 가지고 있으면 누구나 다 설정을 해 주는 것이 좋으
@@ -598,32 +596,32 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
   부분은 root(서버 관리자) 가 해 주어야 할 부분이다. 만약 이것이 불가능 하다면
   이 파일들의 권한을 606 으로 그냥 두면 된다. 즉,
 
-  jsbaord/config/global.ph,
-  jsboard/config/spma_list.ph,
+  jsbaord/config/global.php,
+  jsboard/config/spma_list.php,
 
   에 대한 group 소유권을 nobody 로 지정해 달라고 해야 한다 (Debian 사용자 라면
   www-data 로 해야 할 것이고, RH 7.x 의 경우에는 apache 이다. 다른 OS는 모르겠
   다. httpd.conf 의 Group 지시자에 설정되어 있는 값을 확인을 해서 해 달라고 한
   다) 즉
 
-  $ chgrp nobody jsboard/config/global.ph (root가 실행해야 하는 명령)
+  $ chgrp nobody jsboard/config/global.php (root가 실행해야 하는 명령)
   $ chgrp nobody jsboard/config/spam_list.txt (root가 실행해야 하는 명령)
 
   명령을 실행해 달라고 해야 한다. 이를 시행하면 아래와 같이 소유권을 가지게 된
   다. 이것은 account 를 실행한 후에 행할 일들이다. (Debian의 경우에는 nobody
   가 아니라 www-data가 되어야 한다. RH 7.x 의 경우에는 apache 이다.)
 
-  -rw-rw----    accountname    nobody     config/global.ph
+  -rw-rw----    accountname    nobody     config/global.php
   -rw-rw----    accountname    nobody     config/spam_list.txt
 
   만약 root 가 이를 응하지 않거나 또는 불성실한 root 라면 다음과 같이
 
-  $ chmod 606 config/global.ph
+  $ chmod 606 config/global.php
   $ chmod 606 config/spam_list.txt
 
   을 실행하고, 퍼미션은 다음과 같이 된다.
 
-  -rw----rw-    accountname    accountname    config/global.ph
+  -rw----rw-    accountname    accountname    config/global.php
   -rw----rw-    accountname    accountname    config/spam_list.txt
 
   하지만 이렇게 했을 경우 운영은 가능하나 보안상 좋지는 않다.
@@ -639,13 +637,13 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
 
   5-1. 최신글 보기 구성
 
-   JSBoard 의 최신글 목록을 출력하는 기능이다. 이 기능은 include/prelist.ph
+   JSBoard 의 최신글 목록을 출력하는 기능이다. 이 기능은 include/prelist.php
    에 의해 구동이 되며 어느 파일에나 삽입을 하여 사용을 할수가 있다.(단 php
    가 구동될수 있는 파일이어야 한다)
 
   5-2. 최신글 보기 설정
 
-   일단 먼저 jsboard/include/prelist.ph에서 $prlist[path] 와 $prlist[wpath]
+   일단 먼저 jsboard/include/prelist.php에서 $prlist[path] 와 $prlist[wpath]
    변수값을 설정을 해야 한다. $prlist[path] 는 JSBoard 가 설치 되어 있는 절
    대 경로를 적어 주며, $prlist[wpath] 는 JSBoard 가 출력되는 웹경로를 적어
    줘야 한다. 주의 할것은 마지막에 / 는 적지 않도록 한다.
@@ -657,10 +655,10 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
    일단 사용방법을 설명하자면 우선 최신글을 보여줄 page 의 <BODY> tag 바로 아래에
    다음과 같은 코드를 삽입한다. (중요한 것은 이 기능을 적용시킬 file 은 php 가 구
    동이 될 수 있는 file 이어야 한다.  확장자가 .php3 에서만 php 를 인식할 수 있을
-   경우에는 .php3 file 에서만 이 기능을 사용할수 있다.  그리고 prelist.ph 를 불러
+   경우에는 .php3 file 에서만 이 기능을 사용할수 있다.  그리고 prelist.php 를 불러
    들이는 위치는 꼭 <body> 와 </body> 태그 사이어야 한다는 것이 아주 중요하다.)
 
-   <? include "절대경로/prelist.ph"; ?>
+   <? include "절대경로/prelist.php"; ?>
 
    다음 리스트 출력을 원하는 부분에 다음과 같은 함수를 적어 주도록 한다.
 

@@ -3,7 +3,7 @@ Multi language를 구현하기 위해서는 LANG directory에 있는 languae file을
 
 예를 들어 일본어를 등록하자고 한다면
 
-cp ko.ph jp.ph
+cp ko.php jp.php
 
 로 copy 를 한다음 각 내용들을 일본어로 수정을 하면 된다.
 

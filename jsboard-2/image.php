@@ -1,7 +1,7 @@
 <?php
-include "include/print.ph";
-include "include/check.ph";
-include "include/error.ph";
+include "include/print.php";
+include "include/check.php";
+include "include/error.php";
 parse_query_str();
 
 $ImgPath = rawurldecode($path);

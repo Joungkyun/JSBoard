@@ -1,6 +1,6 @@
 <!-- =============================== Tail =============================== -->
 
-<?php if(file_exists("data/$table/html_tail.ph")) { include "data/$table/html_tail.ph"; } ?>
+<?php if(file_exists("data/$table/html_tail.php")) { include "data/$table/html_tail.php"; } ?>
 
 </BODY>
 </HTML>

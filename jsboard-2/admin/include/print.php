@@ -12,12 +12,12 @@ function htmlhead() {
   elseif ($fileself == "admin_info.php") $sub_title = "{$langs['p_wv']}";
   elseif ($fileself == "userlist.php") $sub_title = "{$langs['p_ul']}";
 
-  include "./include/html_ahead.ph";
+  include "./include/html_ahead.php";
 }
 
 # html tail 읽어오기
 function htmltail() {
-  include "./include/html_atail.ph";
+  include "./include/html_atail.php";
 }
 
 function java_scr() {

@@ -15,6 +15,11 @@ file.
 
 Version   : jsboard-2.0.7
 
+Fri, Mar 12 2004
+  by JoungKyun Kim <http://www.oops.org>
+	- update theme version A7
+	- changed file extension .ph to .php
+
 Fri, Mar 07 2004
   by JoungKyun Kim <http://www.oops.org>
 	- rewrite rss.php with functon of jsboard

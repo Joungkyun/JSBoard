@@ -1,12 +1,12 @@
 <?php
-include_once "include/print.ph";
+include_once "include/print.php";
 parse_query_str();
 
 $opt = $table ? "&table=$table" : "";
 $opts = $table ? "?table=$table" : "";
 
 if ($m == "login") {
-  include "./include/header.ph";
+  include "./include/header.php";
   $var = ($type == "admin") ? "&type=admin" : "";
 
   if(!$edb['uses']) {
@@ -47,7 +47,7 @@ if ($m == "login") {
   }
 } else if ($m == "logout") {
   session_start();
-  include "./config/global.ph";
+  include "./config/global.php";
 
   # 세션을 삭제
   session_destroy();
@@ -67,7 +67,7 @@ if ($m == "login") {
     }
 
     if(!trim($urls)) {
-      if($table) { include "./data/$table/config.ph"; }
+      if($table) { include "./data/$table/config.php"; }
       $urls = trim($print['dopage']) ? $print['dopage'] : "./login.php$var";
     }
     header("Location: $urls");

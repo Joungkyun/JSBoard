@@ -1,6 +1,6 @@
 <?
 session_start(); // session을 시작한다.
-include_once "../include/print.ph";
+include_once "../include/print.php";
 parse_query_str();
 if ($mode == "login") {
   session_register("mysqlpass"); //세션 등록한다.
@@ -13,7 +13,7 @@ if ($mode == "login") {
   $langs['code'] = ($langss == "ko") ? "ko" : "en";
 
   $path['type'] = "Install";
-  include "../include/lang.ph";
+  include "../include/lang.php";
   $str = str_replace("\n","\\n",$langs['first_acc']);
   $nostr = str_replace("\n","<BR>\n",$str);
   echo "<script>\n" .

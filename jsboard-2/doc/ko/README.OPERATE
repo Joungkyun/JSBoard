@@ -104,7 +104,7 @@ userdb ¿¡¼­ Ã£¾Æ¼­ ºñ±³ÇÏ±â ¶§¹®¿¡ ¿©±â¼­ µî·ÏÀÌ µÇ¾î ÀÖ¾î¾ß ÇÑ´Ù.
 2. °Ô½ÃÆÇ °ü¸®ÀÚ ¸ðµå
 
 ÀüÃ¼ °ü¸®ÀÚ ¶Ç´Â °¢ °Ô½ÃÆÇ °ü¸®ÀÚ ¸ðµå·Î ·Î±×ÀÎÀ» ÇßÀ» °æ¿ì °Ô½ÃÆÇ¿¡ admin ¸µÅ©°¡
-³ªÅ¸³ª°Ô µÈ´Ù. ÀÌ°÷À¸·Î µé¾î°¡ ¼³Á¤À» ÇÏ¸é µÈ´Ù. ¶Ç´Â Á÷Àû data/*/config.ph ¸¦ ¼ö
+³ªÅ¸³ª°Ô µÈ´Ù. ÀÌ°÷À¸·Î µé¾î°¡ ¼³Á¤À» ÇÏ¸é µÈ´Ù. ¶Ç´Â Á÷Àû data/*/config.php¸¦ ¼ö
 Á¤À» ÇÒ¼ö ÀÖ´Ù. ÀÌ¶§¿¡´Â README.CONFIG ¸¦ ÂüÁ¶ÇÏ¸é µÇ°Ú´Ù.
 
 
@@ -209,8 +209,8 @@ JSBoard ÀÇ ·Î±×ÀÎ ¸ðµå´Â ÃÑ 7°¡Áö ´Ü°è¸¦ °¡Áø´Ù. °¢ ´Ü°èÀÇ ¼³Á¤Àº ´ÙÀ½°ú °°´Ù. ¸
     ¸é http://domain.com/jsboard/admin/ À¸·Î ¸µÅ©¸¦ ÇØ ÁÖ¸é µÈ´Ù.
 
     ÀüÃ¼ ¾îµå¹Î ·Î±×ÀÎ »óÅÂ¸¦ ¾Ë°í ½Í´Ù¸é ´ÙÀ½ÀÇ ÄÚµå¸¦ È°¿ëÇÒ ¼ö ÀÖ´Ù. ÀÏ´Ü ÄÚµå
-    ¸¦ Àû±â Àü¿¡ ¾Ë¾ÆµÎ¾î¾ß ÇÒ ºÎºÐÀº config/global.phÀÇ $jsboard º¯¼ö°ªÀ» ¾Ë¾Æ³õ
-    ¾Æ¾ß ÇÑ´Ù.  ÀÌ °ª¿¡ µû¶ó ´Þ¶óÁö±â ¶§¹®ÀÌ´Ù. ¸¸¾à $jsboard = "login" ÀÌ¶ó°í Áö
+    ¸¦ Àû±â Àü¿¡ ¾Ë¾ÆµÎ¾î¾ß ÇÒ ºÎºÐÀº config/global.php ÀÇ $jsboard º¯¼ö°ªÀ» ¾Ë¾Æ
+    ³õ¾Æ¾ß ÇÑ´Ù. ÀÌ°ª¿¡ µû¶ó ´Þ¶óÁö±â ¶§¹®ÀÌ´Ù. ¸¸¾à $jsboard = "login" ÀÌ¶ó°í Áö
     Á¤ÀÌ µÇ¾î ÀÖ´Ù¸é ·Î±×ÀÎ¿¡ °ü·ÃµÈ º¯¼ö¸íÀº login+jsboard Áï $loginjsboard°¡ µÇ
     ´Â °ÍÀÌ´Ù.
 
@@ -272,16 +272,16 @@ JSBoard ÀÇ ·Î±×ÀÎ ¸ðµå´Â ÃÑ 7°¡Áö ´Ü°è¸¦ °¡Áø´Ù. °¢ ´Ü°èÀÇ ¼³Á¤Àº ´ÙÀ½°ú °°´Ù. ¸
     ¿ÜºÎÀÇ È¸¿ø DB ¸¦ »ç¿ëÇÏ±â À§ÇØ¼­´Â »ç¿ë ÇÏ·Á´Â È¸¿ø DB ¿¡ ID, ÀÌ¸§, ÆÐ½º¿öµå
     ÀÌ¸ÞÀÏ, È¨ÆäÀÌÁö ¿Í °°ÀÌ 5°³ÀÇ ÇÊµå°¡ Á¸ÀçÇØ¾ß ÇÑ´Ù. ÀÌ°ÍÀ» ¸í½ÉÇÏ°í ÁøÇàÇÏÀÚ. 
 
-    ¿ÜºÎÈ¸¿ø DB ÀÇ ¼³Á¤Àº jsboard/config/external.ph ¿¡¼­ ÇÏµµ·ÏÇÑ´Ù. ¾øÀ¸¸é »õ·Î
-    ¸¸µé¸é µÇ¸ç ÀÌ ÆÄÀÏÀÇ ¼ÒÀ¯±Ç°ú ÆÛ¹Ì¼ÇÀº global.ph ¿Í µ¿ÀÏÇÏ°Ô ÇÑ´Ù. ÀÌ ÆÄÀÏÀº
+    ¿ÜºÎÈ¸¿ø DB ÀÇ ¼³Á¤Àº jsboard/config/external.php¿¡¼­ ÇÏµµ·ÏÇÑ´Ù. ¾øÀ¸¸é »õ·Î
+    ¸¸µé¸é µÇ¸ç ÀÌ ÆÄÀÏÀÇ ¼ÒÀ¯±Ç°ú ÆÛ¹Ì¼ÇÀº global.php¿Í µ¿ÀÏÇÏ°Ô ÇÑ´Ù. ÀÌ ÆÄÀÏÀº
     ±âº»ÀûÀ¸·Î À§Ä¡°¡ ¾ÈµÇ¾î ÀÖÀ¸´Ï ÇÊ¿äÇÏ¸é 
 
-    jsboard/INSTALLER/sample/admin/external.ph.orig
+    jsboard/INSTALLER/sample/admin/external.php.orig
 
-    ¸¦ jsboard/config/external.ph ·Î º¹»çÇÏ¿© »ç¿ëÀ» ÇÏ¸é µÈ´Ù. ¿ÜºÎ È¸¿ø DB¸¦ »ç
+    ¸¦ jsboard/config/external.php·Î º¹»çÇÏ¿© »ç¿ëÀ» ÇÏ¸é µÈ´Ù. ¿ÜºÎ È¸¿ø DB¸¦ »ç
     ¿ëÇÒ °æ¿ì¿¡´Â °ü¸®ÀÚ ÆäÀÌÁö¿¡¼­ È¸¿ø Á¤º¸¸¦ °ü¸®ÇÒ ¼ö ¾ø°Ô µÈ´Ù.
 
-    ÀÏ´Ü JSBoard ¿¡¼­ ¿ÜºÎ È¸¿ø  DB ¿Í ¿¬µ¿À» ÇÒ¶§ ÇÊ¿äÇÑ external.ph ÀÇ º¯¼öµéÀ»
+    ÀÏ´Ü JSBoard ¿¡¼­ ¿ÜºÎ È¸¿ø  DB ¿Í ¿¬µ¿À» ÇÒ¶§ ÇÊ¿äÇÑ external.phpÀÇ º¯¼öµéÀ»
     ³ª¿­ÇÏ°Ú´Ù
 
     <?
@@ -385,8 +385,8 @@ JSBoard ÀÇ ·Î±×ÀÎ ¸ðµå´Â ÃÑ 7°¡Áö ´Ü°è¸¦ °¡Áø´Ù. °¢ ´Ü°èÀÇ ¼³Á¤Àº ´ÙÀ½°ú °°´Ù. ¸
 
     session_register("$¼¼¼ÇÀÌ¸§");
 
-    ¼¼¼Ç µî·Ï½Ã¿¡ À§ÀÇ ¿¹Á¦¿¡¼­ ¼¼¼ÇÀÌ¸§Àº jsboardÀÇ global.ph ÀÇ  $jsboard ÀÇ º¯
-    ¼ö°ªÀ» ³Ö¾îÁÖµµ·Ï ÇÑ´Ù. Áï global.ph ¿¡
+    ¼¼¼Ç µî·Ï½Ã¿¡ À§ÀÇ ¿¹Á¦¿¡¼­ ¼¼¼ÇÀÌ¸§Àº jsboardÀÇ global.php ÀÇ $jsboard ÀÇ º¯
+    ¼ö°ªÀ» ³Ö¾îÁÖµµ·Ï ÇÑ´Ù. Áï global.php ¿¡
 
     ##############################################################################
     #  login mode Configuration
@@ -405,7 +405,7 @@ JSBoard ÀÇ ·Î±×ÀÎ ¸ðµå´Â ÃÑ 7°¡Áö ´Ü°è¸¦ °¡Áø´Ù. °¢ ´Ü°èÀÇ ¼³Á¤Àº ´ÙÀ½°ú °°´Ù. ¸
 
 5.3 ·Î±×¾Æ¿ô ¿¬µ¿ÇÏ±â
 
-    ·Î±× ¾Æ¿ô½Ã¿¡´Â ÀÏ´Ü global.ph ¿¡¼­ À§¿¡¼­ ¼³¸íÀ» ÇßµíÀÌ $edb[logout] À» ÁöÁ¤
+    ·Î±× ¾Æ¿ô½Ã¿¡´Â ÀÏ´Ü global.php¿¡¼­ À§¿¡¼­ ¼³¸íÀ» ÇßµíÀÌ $edb[logout] À» ÁöÁ¤
     ÇÏ¿© ·Î±×¾Æ¿ôÀ» º¸³»µµ·Ï ÇÑ´Ù. ·Î±×¾Æ¿ô ÇÒ¶§ jsboard ¸¦ À§ÇØ ¿Ã·È´ø ¼¼¼Ç°ú Äí
     Å°´Â ¾Æ·¡¿Í °°ÀÌ »èÁ¦¸¦ ÇÑ´Ù.    
 

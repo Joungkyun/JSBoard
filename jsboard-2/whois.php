@@ -1,5 +1,5 @@
 <?php
-include "include/print.ph";
+include "include/print.php";
 # register_globals 옵션의 영향을 받지 않기 위한 함수
 parse_query_str();
 
@@ -28,11 +28,11 @@ if (!trim($table) || !trim($host)) {
   exit;
 }
 
-include "config/global.ph";
-if(file_exists("data/$table/config.ph")) { include "data/$table/config.ph"; }
-if(file_exists("theme/{$print['theme']}/config.ph")) { include "theme/{$print['theme']}/config.ph"; }
-else { include "theme/KO-default/config.ph"; }
-include "include/lang.ph";
+include "config/global.php";
+if(file_exists("data/$table/config.php")) { include "data/$table/config.php"; }
+if(file_exists("theme/{$print['theme']}/config.php")) { include "theme/{$print['theme']}/config.php"; }
+else { include "theme/KO-default/config.php"; }
+include "include/lang.php";
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

@@ -2,9 +2,9 @@
 PERL_PATH="/usr/bin/perl"
 DEFAULTPATH="../.."
 
-echo "global.ph 변환중.."
+echo "global.php 변환중.."
 echo
-ACONFFILE="${DEFAULTPATH}/config/global.ph"
+ACONFFILE="${DEFAULTPATH}/config/global.php"
 
 rm -rf ${DEFAULTPATH}/config/themes
 rm -f ${DEFAULTPATH}/config/README.THEME
@@ -102,7 +102,7 @@ ASPAM1=$(${PERL_PATH} -e "print int(rand(89999)) + 10001")
 ASPAM2=$(${PERL_PATH} -e "print int(rand(89)) + 11")
 ASPAM3=$(${PERL_PATH} -e "print int(rand(89)) + 11")
 
-cp -af ${DEFAULTPATH}/config/global.ph ${DEFAULTPATH}/config/global.ph.orig
+cp -af ${DEFAULTPATH}/config/global.php ${DEFAULTPATH}/config/global.php.orig
 
 echo "<?
 ##############################################################################
@@ -221,7 +221,7 @@ echo "<?
 ##############################################################################
 \$compare[name]   = \"${ACNAME}\";
 \$compare[email]  = \"${ACMAIL}\";
-?>" > ${DEFAULTPATH}/config/global.ph
+?>" > ${DEFAULTPATH}/config/global.php
 
 
 # 게시판 목록을 구함
@@ -234,7 +234,7 @@ do
 
   # 필요 없는 테마 파일을 삭제
   rm -f "${DEFAULTPATH}/data/${i}/default.themes"
-  CONFFILE="${DEFAULTPATH}/data/${i}/config.ph"
+  CONFFILE="${DEFAULTPATH}/data/${i}/config.php"
 
   # 미리보기 허가 설정값
   PRE=$(sed -n -e '/enable\[pre\]/ s/.*enable\[pre\][^=]*=[^\"0-9]*[\"]*\([0-9 ]*\)[\"]*;.*/\1/p;' ${CONFFILE})
@@ -364,7 +364,7 @@ do
     *) CTHEME="EN-default"
   esac
 
-  cp -af ${DEFAULTPATH}/data/${i}/config.ph ${DEFAULTPATH}/data/${i}/config.ph.old
+  cp -af ${DEFAULTPATH}/data/${i}/config.php ${DEFAULTPATH}/data/${i}/config.php.old
 
   echo "<?
 ###############################################################################
@@ -501,7 +501,7 @@ do
 #
 \$enable[dhyper] = 0;
 \$enable[plink]  = \"\";
-?>" > ${DEFAULTPATH}/data/${i}/config.ph
+?>" > ${DEFAULTPATH}/data/${i}/config.php
 
 done
 

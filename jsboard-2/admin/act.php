@@ -1,7 +1,7 @@
 <?php
 $path['type'] = "admin";
-include "./include/admin_head.ph";
-include "../include/ostype.ph";
+include "./include/admin_head.php";
+include "../include/ostype.php";
 
 if(!session_is_registered("$jsboard") || $_SESSION[$jsboard]['pos'] != 1)
 print_error($langs['login_err']);
@@ -23,7 +23,7 @@ sql_error(mysql_errno(), mysql_error());
 
 mysql_select_db($db['name'],$connect);
 
-# password 비교함수 - admin/include/auth.ph
+# password 비교함수 - admin/include/auth.php
 compare_pass($_SESSION[$jsboard]);
 
 # db_name이 존재하지 않으면 아래를 출력합니다.
@@ -99,7 +99,7 @@ else if($mode == 'db_create')  {
   # 동일한 이름의 게시판이 있는지 확인
   same_db_check($tbl_list,$new_table);
 
-  #include "include/first_reg.ph";
+  #include "include/first_reg.php";
   $create_table = "CREATE TABLE $new_table ( 
                      no int(6) DEFAULT '0' NOT NULL auto_increment,
                      num int(6) DEFAULT '0' NOT NULL,
@@ -163,14 +163,14 @@ else if($mode == 'db_create')  {
   mkdir("../data/$new_table/{$upload['dir']}",0700);
   chmod("../data/$new_table",0755);
   chmod("../data/$new_table/{$upload['dir']}",0755);
-  copy("../INSTALLER/sample/data/config.ph","../data/$new_table/config.ph");
-  chmod("../data/$new_table/config.ph",0644);
-  copy("../INSTALLER/sample/data/html_head.ph","../data/$new_table/html_head.ph");
-  chmod("../data/$new_table/html_head.ph",0644);
-  copy("../INSTALLER/sample/data/html_tail.ph","../data/$new_table/html_tail.ph");
-  chmod("../data/$new_table/html_tail.ph",0644);
-  copy("../INSTALLER/sample/data/stylesheet.ph","../data/$new_table/stylesheet.ph");
-  chmod("../data/$new_table/stylesheet.ph",0644);
+  copy("../INSTALLER/sample/data/config.php","../data/$new_table/config.php");
+  chmod("../data/$new_table/config.php",0644);
+  copy("../INSTALLER/sample/data/html_head.php","../data/$new_table/html_head.php");
+  chmod("../data/$new_table/html_head.php",0644);
+  copy("../INSTALLER/sample/data/html_tail.php","../data/$new_table/html_tail.php");
+  chmod("../data/$new_table/html_tail.php",0644);
+  copy("../INSTALLER/sample/data/stylesheet.php","../data/$new_table/stylesheet.php");
+  chmod("../data/$new_table/stylesheet.php",0644);
 
   mysql_close();
 }
@@ -182,7 +182,7 @@ else if($mode == "global_chg") {
   $vars = "<?\n".stripslashes($glob['vars'])."\n?>";
   $spam = stripslashes($glob['spam']);
 
-  file_operate("../config/global.ph","w",0,$vars);
+  file_operate("../config/global.php","w",0,$vars);
   file_operate("../config/spam_list.txt","w",0,$spam);
 
   $langs['act_complete'] = str_replace("\n","\\n",$langs['act_complete']);

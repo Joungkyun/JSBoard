@@ -96,7 +96,7 @@ function form_wrap($print = 0) {
 
 # 현재 페이지의 앞, 뒤 페이지를 정해준 갯수($num)만큼 출력하는 함수
 function page_list($table, $pages, $count, $num, $print = 0) {
-  global $color; # 게시판 기본 설정 (config/global.ph)
+  global $color; # 게시판 기본 설정 (config/global.php)
   global $o;   # 검색 등 관련 변수
 
   $search = search2url($o);
