@@ -43,11 +43,9 @@ if ($agent[br] == "MSIE" || $agent[br] == "MOZL" || ($agent[br] == "NS" && $agen
   $print[operate] = form_operate("writep","wpost",$size[text]);
 } else $print[operate] = "No support this browser";
 
-$random_value = get_random_value();
-$wkey = get_spam_value($board[antispam],$random_value);
+$wkey = get_spam_value($board[antispam]);
 $print[passform] = "<INPUT TYPE=hidden NAME=o[at] VALUE=write>\n".
                    "<INPUT TYPE=hidden NAME=table VALUE=$table>\n".
-                   "<INPUT TYPE=hidden NAME=atc[ran] VALUE=$random_value>\n".
                    "<INPUT TYPE=hidden NAME=atc[wkey] VALUE=$wkey>\n";
 
 $pre_regist[rname] = !$pre_regist[rname] ? "" : "\n<INPUT TYPE=hidden NAME=atc[rname] VALUE=\"$pre_regist[rname]\">";
