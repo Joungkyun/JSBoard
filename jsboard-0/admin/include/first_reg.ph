@@ -13,7 +13,7 @@
 $date = time();
 $host_ext = "127.0.0.1";
 $name_ext = "bbuwoo";
-$passwd_ext = "0000";
+$passwd_ext = "ooK/oSLfDJOUI";
 $email_ext = "admin@oops.org";
 $url_ext = "http://www.oops.org";
 
@@ -21,7 +21,5 @@ $url_ext = "http://www.oops.org";
 
 $subj_msg = "$title_ext" ;
 $text_msg = "$text_ext" ;
-
-}
 
 ?>

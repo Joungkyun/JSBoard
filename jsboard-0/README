@@ -13,10 +13,18 @@ CVS Server administrator	:  Young Min Kim < blhole@hotmail.com >
 
 This package turned out to work only in Linux system. 
 Any one who wants install this package on any other platform 
-must revise it as needed for himeself/herself. 
+must revise it as needed for himeself/herself.
 
 ******************************************************************************
 
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 4월 13일
+버전   : jsboard-0.7.4 (적수게시판 버전 0.7 정식 버젼)
+
+1. first_regist.ph file에서 에러 유발하는 charactor 제거
+2. PHP4에서 name resolving error patch
+
+-----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 3월 19일
 버전   : jsboard-0.7.3 (적수게시판 버전 0.7 정식 버젼)
@@ -30,7 +38,6 @@ must revise it as needed for himeself/herself.
 
 
 -----------------------------------------------------------------------------
-
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 3월 3일
 버전   : jsboard-0.7.2 (적수게시판 버전 0.7 정식 버젼)
@@ -42,7 +49,6 @@ must revise it as needed for himeself/herself.
 4. 2000년이 Y2K로 표현 되는 것을 다시 2000으로 수정
 
 -----------------------------------------------------------------------------
-
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 2월 23일
 버전   : jsboard-0.7.1 (적수게시판 버전 0.7 정식 버젼)
@@ -54,7 +60,6 @@ must revise it as needed for himeself/herself.
 
 
 -----------------------------------------------------------------------------
-
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 31일
 버전   : jsboard-0.7.0 (적수게시판 버전 0.7 정식 버젼)
@@ -66,7 +71,6 @@ must revise it as needed for himeself/herself.
 2. INSTALL.txt 재작성
 
 -----------------------------------------------------------------------------
-
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 1월 23일
 버전   : jsboard-0.7pre6 (적수게시판 버전 0.7 개발 버젼)
