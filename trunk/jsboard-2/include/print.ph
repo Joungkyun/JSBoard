@@ -768,7 +768,7 @@ function detail_searchform($p='') {
   $form = "<!-------- Detail Search Table ------------>\n".
           "<TABLE WIDTH=$board[width] BORDER=0 CELLPADDING=0 CELLSPACING=0>\n<TR><TD>\n".
           "<FORM METHOD=post ACTION=locate.php?table=$table>\n".
-          "<TABLE BORDER=0 CELLPADDING=10 CELLSPACING=0 ALIGN=center BGCOLOR=$color[l5_bg]>\n".
+          "<TABLE WIDTH=$board[width] BORDER=0 CELLPADDING=10 CELLSPACING=0 ALIGN=center BGCOLOR=$color[l5_bg]>\n".
           "<TR>\n".
           "<TD NOWRAP>$langs[sh_str]</TD>\n".
           "<TD NOWRAP>:</TD>\n".

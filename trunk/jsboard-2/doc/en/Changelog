@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 ¹öÀü   : jsboard-2.0.2
 
+Mon, Oct 14 2002
+  by Junghyun Lee <http://junghyun.pe.kr>
+    - fixed static width problem of detail search form
+
 Thu, Oct 10 2002
   by JoungKyun Kim <http://www.oops.org>
     - fixed wrong number of title charactors when use font tag
