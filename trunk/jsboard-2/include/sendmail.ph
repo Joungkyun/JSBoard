@@ -139,11 +139,11 @@ function get_boundary_msg() {
   $one = strtoupper($uniqchr[0]);
   $two = strtoupper(substr($uniqchr,0,8));
   $three = strtoupper(substr(strrev($uniqchr),0,8));
-  return "---=_NextPart_000_000${one}_${two}.${three}";
+  return "----=_NextPart_000_000${one}_${two}.${three}";
 }
 
 function body_encode_lib($str) {
-  $return = base64_encode($str);
+  $return = base64_encode(trim($str));
   $len = strlen($return);
   $chk = intval($len/60);
 
@@ -153,7 +153,7 @@ function body_encode_lib($str) {
       $pl = $pl + 2;
       $no = $i*60-1+$pl;
     }
-    $return = substr_replace($return,"$return[$no]\r\n",$no,1);
+    $return = substr_replace($return,"$return[$no]\n",$no,1);
   }
 
   return $return;
@@ -196,17 +196,19 @@ function get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm) {
   return $htmltext;
 }
 
-function mail_header($to,$from,$title) {
+function mail_header($to,$from,$title,$mta=0) {
   global $langs,$boundary;
 
   # mail header 를 작성 
   $boundary = get_boundary_msg();
-  $header = "From: JSBoard Message <$from>\r\n".
-            "MIME-Version: 1.0\r\n".
-            "To: $to\r\n".
-            "Subject: $title\n".
-            "Content-Type: multipart/alternative;\r\n".
-            "              boundary=\"$boundary\"\r\n\r\n";
+  $header = "From: JSBoard Message <$from>\n".
+            "MIME-Version: 1.0\n";
+
+  if(!$mta) $header .= "To: $to\n".
+                       "Subject: $title\n";
+
+  $header .= "Content-Type: multipart/alternative;\n".
+             "              boundary=\"$boundary\"\n\n";
 
   return $header;
 }
@@ -221,22 +223,19 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
   $title = eregi_replace("\n[ |\t]*"," ",str_replace("\r\n","\n",$title));
   
   # mail header 를 작성 
-  $mail_header = mail_header($to,$from,$title);
+  $mail_header = mail_header($to,$from,$title,$mta);
 
   # body 를 구성
-  $body = str_replace("\n","\r\n",str_replace("\r","",$pbody));
-  $body = "This is a multi-part message in MIME format.\r\n\r\n".
-          "--$boundary\r\n".
-          "Content-Type: text/plain;\r\n".
-          "              charset=$langs[charset]\r\n".
-          "Content-Transfer-Encoding: base64\r\n\r\n".
+  $body = "This is a multi-part message in MIME format.\n".
+          "\n--$boundary\n".
+          "Content-Type: text/plain; charset=$langs[charset]\n".
+          "Content-Transfer-Encoding: base64\n\n".
           body_encode_lib(&$pbody).
-          "\r\n\r\n--$boundary\r\n".
-          "Content-Type: text/html;\r\n".
-          "              charset=$langs[charset]\r\n".
-          "Content-Transfer-Encoding: base64\r\n\r\n".
+          "\n\n--$boundary\n".
+          "Content-Type: text/html; charset=$langs[charset]\n".
+          "Content-Transfer-Encoding: base64\n\n".
           body_encode_lib(&$hbody).
-          "\r\n\r\n--$boundary--\r\n\r\n";
+          "\n--$boundary--\n";
 
   $mails[debug] = 0;
   $mails[ofhtml] = 0;
