@@ -1,7 +1,13 @@
 <?
 include("include/header.ph");
+
+include("admin/include/info.php3");
 include("include/$table/config.ph");
 
+/* 게시판 관리자와 모든 게시판 관리자의 패스워드 비교를 위해
+   변수를 생성 - 김정균 */
+$user_admin = crypt("$passwd","oo") ;
+$super_admin = crypt("$passwd","oo") ;
 
 if(!$table) { error(); }
 
@@ -45,7 +51,7 @@ if ($act == "post" || $act == "edit") {
     }
     
     if ($act == "edit") {
-	if (check_passwd($passwd, $no) || $passwd == $admin) {
+	if (check_passwd($passwd, $no) || $user_admin == $board_manager || $super_admin == $super_user) {
 	    dquery("UPDATE $table SET date  = $date, host  = '$host', name  = '$name', email = '$email',
 				url   = '$url', title = '$title', text  = '$text' WHERE no = $no");
 	} else {
@@ -74,7 +80,22 @@ if ($act == "post" || $act == "edit") {
 	// 파일 올리는 펑션. 99.11.17. taejun
 
 	if($file_upload =='yes')
-	{	 
+	{
+
+		/* file size 0byte upload 금지 - 1999.12.21 JoungKyun */
+
+	    	if ( $userfile_name ) {
+		  if( $userfile_size == '0' ) {
+			echo("<script>\n" .
+			     "alert(\"file size가 0 byte인\\n file은 upload를 할수 없습니다.\")\n" .
+			     "history.back()\n" .
+			     "</script>") ;
+			exit ;
+		  }
+		}
+		
+		/* file size 0byte upload 금지 끝 */
+
 		if($userfile_size !=0 || $userfile !="none" || $userfile_name !="")
 		{              
 			if($userfile_size > $maxfilesize)
@@ -123,17 +144,18 @@ if ($act == "post" || $act == "edit") {
 		$no   = mysql_result($result, 0, "no");
 		$num   = mysql_result($result, 0, "num");
 		$reno   = mysql_result($result, 0, "reno");
+		$reply_writer_email = $email ;
 		$email = "";
 		if ($num == 0) {
 			$result = dquery("SELECT email FROM $table where no = $reno");
 			$email   = mysql_result($result, 0, "email");
 		}
-		send_mail($no, $bbshome, $mailtoadmin, $mailtowriter,
-			$table, $reno, $email);
+		send_mail($no, $bbshome, $mailtoadmin, $mailtowriter, $table, $reno, $name,
+                          $email, $reply_writer_email, $url, $webboard_version, $text, $title);
 
 	}
 } else if ($act == "del") {
-    if (check_passwd($passwd, $no) || $passwd == $admin) {
+    if (check_passwd($passwd, $no) || $user_admin == $board_manager || $super_admin == $super_user) {
 	if ($reyn) {
 	    error("관련글이 있으므로 삭제할 수 없습니다.");
 	}
