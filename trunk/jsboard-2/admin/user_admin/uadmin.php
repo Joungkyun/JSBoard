@@ -633,18 +633,18 @@ else echo "<CENTER><FONT COLOR=RED><B>$langs[ua_while_wn]</B></FONT></CENTER>";
 
 <TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>
 
-<TR><TD BGCOLOR=<?=$color[t_bg]?> ALIGN=center COLSPAN=6><font id=TCOLOR>Board Notice <?=$i+1?></font></TD></TR>
+<TR><TD BGCOLOR=<?=$color[t_bg]?> ALIGN=center COLSPAN=6><font id=TCOLOR>Board Notice</font></TD></TR>
 
 <TR>
-<TD BGCOLOR=#D3DAC3><font id=MCOLOR>Subject</font></TD>
+<TD BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR>Subject</font></TD>
 <TD COLSPAN=4>
 <INPUT TYPE=text name=ua[notices] size=55 value="<?=$notice[subject]?>">
 </TD>
-<TD BGCOLOR=#F5FBE6>&nbsp;</TD>
+<TD BGCOLOR=<?=$color[m_bg]?>>&nbsp;</TD>
 </TR>
 
 <TR>
-<TD BGCOLOR=#D3DAC3><font id=MCOLOR>Contents</font></TD>
+<TD BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR>Contents</font></TD>
 <TD COLSPAN=5 ALIGN=right>
 <font id=MCOLOR>TEXTAREA SIZE OPERATION
 <?=$noti_button?>
