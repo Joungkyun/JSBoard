@@ -25,7 +25,7 @@ $a_time[] = microtime(); # 속도 체크
 $sqltime1 = get_microtime($a_time[0], $a_time[1]);
 
 # 워드랩이 설정이 안되어 있을 경우 기본값을 지정
-$board[wwrap] = "" ? 120 : $board[wwrap];
+$board[wwrap] = !$board[wwrap] ? 120 : $board[wwrap];
 
 $list[num]  = print_reply($table, $list);
 $list[date] = date("Y-m-d H:i:s", $list[date]);

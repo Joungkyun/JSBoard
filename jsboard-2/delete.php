@@ -22,7 +22,7 @@ if(eregi("^(2|3|5|7)$",$board[mode]) && !$board[super])
 $size = form_size(4);
 
 # 워드랩이 설정이 안되어 있을 경우 기본값을 지정
-$board[wwrap] = "" ? 120 : $board[wwrap];
+$board[wwrap] = !$board[wwrap] ? 120 : $board[wwrap];
 
 $list[date]  = date("Y-m-d H:i:s", $list[date]);
 $list[text]  = text_nl2br($list[text], $list[html]);
