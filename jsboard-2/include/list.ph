@@ -238,7 +238,7 @@ function print_comment_art($table,$list,$print=0) {
   $list[date] = date("m/d H:i:s",$list[date]);
   $list[text] = htmlspecialchars(trim($list[text]));
 
-  if(($_SESSION[$jsboard][id] == $board[ad] || $_SESSION[$jsboard][pos] == 1) ||
+  if(($board[adm] || $board[super] == 1) ||
      (eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id])) {
     $delPath = "./act.php?table=$table&o[at]=c_del&atc[no]=$no&atc[cid]=$list[no]&page=$page";
   } else {
@@ -246,7 +246,7 @@ function print_comment_art($table,$list,$print=0) {
   }
 
   if((eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id] != $list[name]) &&
-     ($_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1)) {
+     (!$board[adm] && $board[super] != 1)) {
      $del_mark = "&nbsp;";
   } else {
      $del_mark = "<A HREF=$delPath TITLE='Comment Delete'>&#9447;</A>";

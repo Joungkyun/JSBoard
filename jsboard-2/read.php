@@ -5,9 +5,6 @@ include "include/header.ph";
 if(eregi("^(2|3|5)$",$board[mode]) && !session_is_registered("$jsboard"))
   print_error("$langs[login_err]");
 
-if($_SESSION[$jsboard][pos] == 1)
-  $board[super] = 1;
-
 if((eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id]) || $board[super]) {
   $pre_regist[name] = $_SESSION[$jsboard][id];
   $pre_regist[rname] = $_SESSION[$jsboard][name];
@@ -71,7 +68,7 @@ if($list[url]) {
 }
 
 # Admin Link
-if($_SESSION[$jsboard][pos] == 1 || $board[ad] == $_SESSION[$jsboard][id]) {
+if($board[super] == 1 || $board[adm]) {
   if(@file_exists("./theme/$print[theme]/img/admin.gif"))
     $print[adpath] = "<IMG SRC=./theme/$print[theme]/img/admin.gif BORDER=0 ALT='$langs[ln_titl]'>";
   else $print[adpath] = "<FONT STYLE=\"font:12px tahoma;color:$color[text]\">[ admin ]</FONT>";

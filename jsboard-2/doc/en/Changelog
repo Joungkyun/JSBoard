@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0pre4
 
+Sun, May 26 2002 by JoungKyun Kim <http://www.oops.org>
+	- added to enable multi administrator for each table
+
 Sat, May 25 2002 by JoungKyun Kim <http://www.oops.org>
 	- added comment function
 	- fixed typo of check_article function in act.php

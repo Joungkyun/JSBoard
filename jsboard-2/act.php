@@ -18,14 +18,14 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
 
   # admin mode 일 경우 admin mode 를 체크  
   if($board[mode] == 1 || $board[mode] == 3)
-    if($_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1) print_error($langs[login_err]);
+    if(!$board[adm] && $board[super] != 1) print_error($langs[login_err]);
 
   # 게시물 작성 함수
   function article_post($table, $atc) {
     global $jsboard, $board, $upload, $cupload, $rmail, $langs, $agent;
     global $print, $max_file_size;
 
-    if($board[mode] == 4 && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) print_error($langs[login_err]);
+    if($board[mode] == 4 && $board[super] != 1 && !$board[adm]) print_error($langs[login_err]);
 
     $atc[date] = time(); # 현재 시각
     $atc[host] = get_hostname(0); # 글쓴이 주소
@@ -178,7 +178,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     global $max_file_size, $jsboard, $board, $langs, $agent, $rmail;
 
     # 어드민 모드가 아닐 경우 패스워드 인증
-    if(!$_SESSION[$jsboard][pos] && $_SESSION[$jsboard][id] != $board[ad]) {
+    if($board[super] != 1 && !$board[adm]) {
       if(!check_passwd($table,$atc[no],trim($passwd))) print_error($langs[act_pw],250,150,1);
     }
 
@@ -238,13 +238,13 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     $atc = get_article($table, $no);
 
     # 어드민 모드가 아닐 경우 패스워드 인증
-    if(!$_SESSION[$jsboard][pos] && $_SESSION[$jsboard][id] != $board[ad]) {
+    if($board[super] != 1 && !$board[adm]) {
       $admchk = check_passwd($table,$atc[no],trim($passwd));
       if(!$admchk) print_error($langs[act_pwm],250,150,1);
     }
 
     # 관리자 모드가 아닐 경우 댓글이 존재하면 에러메세지
-    if($atc[reyn] && (!$_SESSION[$jsboard][pos] && $_SESSION[$jsboard][id] != $board[ad] && $admchk != 2))
+    if($atc[reyn] && ($board[super] != 1 && !$board[adm] && $admchk != 2))
       print_error($langs[act_c],250,150,1);
 
     # 부모글의 답장글이 자신 밖에 없을 때 부모글의 reyn을 초기화 (답장글 여부)
@@ -269,7 +269,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     }
 
     # 관련글이 있을 경우 관련글을 모두 삭제함 (관리자 모드)
-    if($atc[reyn] && ($_SESSION[$jsboard][pos] || $_SESSION[$jsboard][id] == $board[ad] || $admchk == 2)) {
+    if($atc[reyn] && ($board[super] == 1 || $board[adm] || $admchk == 2)) {
       $result = sql_query("SELECT no,bofile,bcfile FROM $table WHERE reno = '$atc[no]'");
       while($list = sql_fetch_array($result)) {
         sql_query("UNLOCK TABLES");
@@ -311,21 +311,30 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     if (eregi($ccompare[name],$atc[name])) $ccmp[name] = 1;
 
     # 관리자 사칭 체크
-    if((!$board[mode] || $board[mode] == 4) && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) {
-      # 게시판 관리자 패스워드
-      $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$board[ad]'");
-      $r[ad] = sql_result($result,0,"passwd");
-      sql_free_result($result);
+    if((!$board[mode] || $board[mode] == 4) && $board[super] != 1 && !$board[adm]) {
 
       # 전체 관리자 패스워드
       $result = sql_query("SELECT passwd FROM userdb WHERE position = 1");
       $r[su] = sql_result($result,0,"passwd");
       sql_free_result($result);
 
+      if($r[su] != crypt($atc[passwd],$r[su])) $notsuper = 1;
+
       if ($cmp[name]) {
-        if($r[su] != crypt($atc[passwd],$r[su])) print_error($langs[act_ad],250,150,1);
-      } else if ($ccmp[name]) {
-        if($r[ad] != crypt($atc[passwd],$r[ad]) && $r[su] != crypt($atc[passwd],$r[su])) print_error($langs[act_d],250,150,1);
+        if($notsuper) print_error($langs[act_ad],250,150,1);
+      }
+
+      if($ccmp[name]) {
+        $arrayadm = explode(";",$board[ad]);
+
+        for($k=0;$k<sizeof($arrayadm);$k++) {
+          # 게시판 관리자 패스워드
+          $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$k]'");
+          $r[ad] = sql_result($result,0,"passwd");
+          sql_free_result($result);
+
+          if($r[ad] != crypt($atc[passwd],$r[ad]) && $notsuper) print_error($langs[act_d],250,150,1);
+        }
       }
     }
 
@@ -342,7 +351,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     global $jsboard, $langs, $board;
 
     # 어드민 모드가 아닐 경우 패스워드 인증
-    if(!$_SESSION[$jsboard][pos] && $_SESSION[$jsboard][id] != $board[ad]) {
+    if($board[super] != 1 && !$board[adm]) {
       $admchk = check_passwd($table,$cid,trim($pass));
       if(!$admchk) print_error($langs[act_pw],250,150,1);
     }
@@ -372,7 +381,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     $atc[title] = trim($atc[title]);
     $atc[text]  = chop($atc[text]);
 
-    if($o[at] == "write" && eregi("^(0|4|6)$",$board[mode]) && $_SESSION[$jsboard][id] != $board[ad] && $_SESSION[$jsboard][pos] != 1) {
+    if($o[at] == "write" && eregi("^(0|4|6)$",$board[mode]) && !$board[adm] && $board[super] != 1) {
       if(!trim($atc[passwd]) && !trim($passwd)) print_error($langs[act_pwm],250,150,1);
     }
 
@@ -403,22 +412,30 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     if (eregi($ccompare[email],$atc[email])) $ccmp[email] = 1;
 
     # 관리자 사칭 체크
-    if((!$board[mode] || $board[mode] == 4) && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) {
-      # 게시판 관리자 패스워드
-      $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$board[ad]'");
-      $r[ad] = sql_result($result,0,"passwd");
-      sql_free_result($result);
+    if((!$board[mode] || $board[mode] == 4) && $board[super] != 1 && !$board[adm]) {
+      if($o[at] == "edit") $atc[passwd] = $passwd;
 
       # 전체 관리자 패스워드
       $result = sql_query("SELECT passwd FROM userdb WHERE position = 1");
       $r[su] = sql_result($result,0,"passwd");
       sql_free_result($result);
 
-      if($o[at] == "edit") $atc[passwd] = $passwd;
+      if ($r[su] != crypt($atc[passwd],$r[su])) $notsuper = 1;
+
       if ($cmp[name] || $cmp[email]) {
-        if($r[su] != crypt($atc[passwd],$r[su])) print_error($langs[act_ad],250,150,1);
-      } else if ($ccmp[name] || $ccmp[email]) {
-        if($r[ad] != crypt($atc[passwd],$r[ad]) && $r[su] != crypt($atc[passwd],$r[su])) print_error($langs[act_d],250,150,1);
+        if($notsuper) print_error($langs[act_ad],250,150,1);
+      }
+
+      if ($ccmp[name] || $ccmp[email]) {
+        $arrayadm = explode(";",$board[ad]);
+        for($k=0;$k=sizeof($arrayadm);$k++) {
+          # 게시판 관리자 패스워드
+          $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$k]'");
+          $r[ad] = sql_result($result,0,"passwd");
+          sql_free_result($result);
+
+          if($r[ad] != crypt($atc[passwd],$r[ad]) && $notsuper) print_error($langs[act_d],250,150,1);
+        }
       }
     }
 

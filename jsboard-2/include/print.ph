@@ -252,7 +252,7 @@ function list_cmd($img=0,$prt=0) {
 
   if($board[mode] != 0 && $board[mode] != 2 && $board[mode] != 6 && $board[mode] != 7) {
     # 어드민이 아니면 쓰기 링크를 제거
-    if($_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) $str[write] = "";
+    if($_SESSION[$jsboard][pos] != 1 && !$board[adm]) $str[write] = "";
   }
 
   # 게시판 목록 상,하단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력함수
@@ -324,14 +324,14 @@ function read_cmd($img=0,$prt=0) {
 
   # 로그인 mode 에서 관리자가 아니고 자신의 글이 아닐경우 수정과 삭제링크를 제거
   if(eregi("^(1|2|3|5|7)$",$board[mode]) && session_is_registered("$jsboard")) {
-    if($_SESSION[$jsboard][id] != $list[name] && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) {
+    if($_SESSION[$jsboard][id] != $list[name] && $_SESSION[$jsboard][pos] != 1 && !$board[adm]) {
       $str[edit] = "";
       $str[dele] = "";
     }
   }
 
   # admin only mode 에서 anonymous 나 관리자가 아닐 경우 쓰기 수정 삭제 링크를 제거
-  if(!eregi("^(0|2|6|7)$",$board[mode]) && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad]) {
+  if(!eregi("^(0|2|6|7)$",$board[mode]) && $_SESSION[$jsboard][pos] != 1 && !$board[adm]) {
     $str[write] = "";
     if($board[mode] != 4 && $board[mode] != 5) {
       $str[reply] = "";
@@ -341,7 +341,7 @@ function read_cmd($img=0,$prt=0) {
   }
 
   # reply 제한 모드일 경우 관리자가 아니면 reply 링크를 삭제
-  if(eregi("^(6|7)$",$board[mode]) && $_SESSION[$jsboard][pos] != 1 && $_SESSION[$jsboard][id] != $board[ad])
+  if(eregi("^(6|7)$",$board[mode]) && $_SESSION[$jsboard][pos] != 1 && !$board[adm])
     $str[reply] = "";
 
   $t = "<A HREF=\"list.php?table=$table&page=$page$str[search]\">$menu[lists]</A>\n".
