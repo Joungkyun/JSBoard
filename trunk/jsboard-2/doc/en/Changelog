@@ -17,7 +17,7 @@ Version   : jsboard-2.0.10
 
 Mon, Dec 20 2004
   by JoungKyun Kim <http://www.oops.org>
-	- fixed hangul filename handleing bug
+	- rewrite code that protected special charactor in hangul range
 	- fixed proxy server ip bug
 
 
