@@ -226,7 +226,7 @@ function upload_name_chk($f) {
   }
 
   # hidden file 이나 multiple dot 허락하지 않음
-  if ( preg_match ("/^\.|\.\.+/", urldecode ($f)) {
+  if ( preg_match ("/^\.|\.\.+/", urldecode ($f)) ) {
     print_error($langs[act_de]);
     exit;
   }
