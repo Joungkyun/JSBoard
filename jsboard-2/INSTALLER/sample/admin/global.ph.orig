@@ -2,41 +2,41 @@
 ##############################################################################
 #  DATABASE Configuration
 ##############################################################################
-$db[server]      = "@DBSERVER@";	# DB address
-$db[user]        = "@DBUSER@";				# DB login user
-$db[pass]        = "@DBPASS@";				# DB login pass
-$db[name]        = "@DBNAME@";				# DB name
+$db['server']      = "@DBSERVER@";	# DB address
+$db['user']        = "@DBUSER@";				# DB login user
+$db['pass']        = "@DBPASS@";				# DB login pass
+$db['name']        = "@DBNAME@";				# DB name
 
 
 ##############################################################################
 #  BASIC Configuration
 ##############################################################################
-$board[title]    = "JSBoard";	# Board title
-$board[width]    = "550";	# Board width
-$board[tit_l]    = 42;		# Max lenth of subject field
-$board[nam_l]    = 8;		# Max lenth of writer field
-$board[perno]    = 10;		# Article number per page
-$board[plist]    = 2;		# Print page link number (x2+1)
-$board[uconf]    = 1;		# Permited to use configuration per user
-$board[date_fmt] = "Y.m.d";	# format of date
+$board['title']    = "JSBoard";	# Board title
+$board['width']    = "550";	# Board width
+$board['tit_l']    = 42;		# Max lenth of subject field
+$board['nam_l']    = 8;		# Max lenth of writer field
+$board['perno']    = 10;		# Article number per page
+$board['plist']    = 2;		# Print page link number (x2+1)
+$board['uconf']    = 1;		# Permited to use configuration per user
+$board['date_fmt'] = "Y.m.d";	# format of date
 
 # period of cookie time (day value)
-$board[cookie]   = 30;
+$board['cookie']   = 30;
 
 # Highlight of search string
-$board[hl] = "<FONT STYLE=\"text-decoration:underline;color;#000000;font-weight:bold;\">STR</FONT>";
+$board['hl'] = "<FONT STYLE=\"text-decoration:underline;color;#000000;font-weight:bold;\">STR</FONT>";
 
 # Table Align of board
-$board[align]    = "center";
+$board['align']    = "center";
 
 # board web path
-$board[path]     = "http://domain.com/jsboard/";
+$board['path']     = "http://domain.com/jsboard/";
 
 
 ##############################################################################
 #  Anti Spam Configuration
 ##############################################################################
-$board[antispam] = "@SPAM1@:@SPAM2@:@SPAM3@";
+$board['antispam'] = "@SPAM1@:@SPAM2@:@SPAM3@";
 
 
 ##############################################################################
@@ -49,69 +49,69 @@ $jsboard         = "login";
 $jsboard         = "jsboard".$jsboard;
 
 # location of default page after login
-$print[dpage] = "http://domain.com/jsboard/list.php?table=test";
+$print['dpage'] = "http://domain.com/jsboard/list.php?table=test";
 
 # location of default page after logout
-$print[dopage] = "http://domain.com/jsboard/login.php?table=test";
+$print['dopage'] = "http://domain.com/jsboard/login.php?table=test";
 
 # permition of user registration
 # 1 -> everyone
 # 0 -> admin only
-$board[regist] = 0;
+$board['regist'] = 0;
 
 ##############################################################################
 #  Theme Configuration
 ##############################################################################
 # Theme Name
-$print[theme]    = "@THEME@";
+$print['theme']    = "@THEME@";
 
 
 ##############################################################################
 #  UPLOAD Configuration
-#  if value of $upload[yesno] is 0, then all board disable upload
+#  if value of $upload['yesno'] is 0, then all board disable upload
 ##############################################################################
-$upload[yesno]   = 1;                   # enable upload
-$upload[dir]     = "files";             # directory name of upload file
-$upload[maxsize] = "2000000";           # upload max size
-$upload[maxtime] = "60";                # max excutiom time of php script
+$upload['yesno']   = 1;                   # enable upload
+$upload['dir']     = "files";             # directory name of upload file
+$upload['maxsize'] = "2000000";           # upload max size
+$upload['maxtime'] = "60";                # max excutiom time of php script
 
 
 ##############################################################################
 #  Config of IP Blocking
-#  if value of $board[useipbl] is 0, then all board disable check ip blocking.
+#  if value of $board['useipbl'] is 0, then all board disable check ip blocking.
 ##############################################################################
-$board[useipbl] = 0;
+$board['useipbl'] = 0;
 
 
 ##############################################################################
 #  Control Access From Remote Hyper Link
-#  if value of $board[usedhyper] is 0, then all board disable check dhyper.
+#  if value of $board['usedhyper'] is 0, then all board disable check dhyper.
 ##############################################################################
-$board[usedhyper] = 0;
+$board['usedhyper'] = 0;
 
 
 ##############################################################################
 #  Mail Configuration
 ##############################################################################
-$rmail[uses]     = 1;
+$rmail['uses']     = 1;
 # MTA configuration
 # no value            -> send mail with self method of JSBoard
 # mail server address -> send mail with selected mail server
 # WARN : windows version can't select self method of JSBoard
-$rmail[mta]      = "127.0.0.1";
-$rmail[chars]    = "__at__";
+$rmail['mta']      = "127.0.0.1";
+$rmail['chars']    = "__at__";
 
 
 ##############################################################################
 #  Preview article contents
 ##############################################################################
-$list[pre]       = 1;	# enable preview
-$list[preren]    = 100;	# if enable preview, lenth of contents
+$list['pre']       = 1;	# enable preview
+$list['preren']    = 100;	# if enable preview, lenth of contents
 
 
 ##############################################################################
 #  If registed article as follow information, requried passwd of super user
 ##############################################################################
-$compare[name]   = "ÁåÀå";
-$compare[email]  = "user@localhost.com";
+$compare['name']   = "ÁåÀå";
+$compare['email']  = "user@localhost.com";
 ?>
