@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 ¹öÀü   : jsboard-2.0.2
 
+Sat, Sep 7 2002
+  by Chilbong Kim <http://www.linuxchannel.net>
+	- fixed get_hostname function
+
 Thu, Sep 5 2002
   by JoungKyun Kim <http://www.oops.org>
 	- fixed get_hostname function
