@@ -30,7 +30,7 @@ elseif($board[mode] == 6) $smode6 = " SELECTED";
 elseif($board[mode] == 7) $smode7 = " SELECTED";
 
 # check of logout page
-$print[dopage] = trim($print[dopage]) ? $print[dopage] : "http://$board[path]list.php?table=$table";
+$print[dopage] = trim($print[dopage]) ? $print[dopage] : "$board[path]list.php?table=$table";
 
 # Radio Box check ºÐ·ù
 if($enable[ore]) $ore_no = "checked";
