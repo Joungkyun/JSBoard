@@ -212,8 +212,8 @@ function print_narticle($table, $fg, $bg, $print = 0)
   return $article;
 }
 
-function get_comment($table,$no,$print=0) {
-  global $lines, $corder, $langs, $page;
+function get_comment($table,$no,$prints=0) {
+  global $lines, $corder, $langs, $page, $print;
 
   $orderby = $corder ? "DESC" : "ASC";
 
@@ -222,12 +222,19 @@ function get_comment($table,$no,$print=0) {
 
   $comment_no = sql_num_rows($r);
 
+  # check of image exists
+  if(file_exists("./theme/$print[theme]/img/cdelete.gif")) $delimgcheck = 1;
+
   if($corder) {
-    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=0&page=$page>&#9651;</A>";
+    $imgfile = "./theme/$print[theme]/img/csortup.gif";
+    $sortimg = file_exists($imgfile) ? "<IMG SRC=$imgfile BORDER=0 ALT=''>" : "&#9651;";
+    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=0&page=$page>$sortimg</A>";
   } else {
-    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=1&page=$page>&#9661;</A>";
+    $imgfile = "./theme/$print[theme]/img/csortdn.gif";
+    $sortimg = file_exists($imgfile) ? "<IMG SRC=$imgfile BORDER=0 ALT=''>" : "&#9661;";
+    $orlink = "<A HREF=read.php?table=$table&no=$no&corder=1&page=$page>$sortimg</A>";
   }
-  
+
   if($comment_no > 0) {
     $lists .= "<TR>\n".
               "<TD COLSPAN=3><FONT STYLE=\"font: 10px tahoma; font-weight:bold;\">Total Comment : $comment_no</FONT></TD>\n".
@@ -236,18 +243,18 @@ function get_comment($table,$no,$print=0) {
 
     while ($list = sql_fetch_array($r)) {
       if($lines[comment_design]) $lists .= $lines[comment_design];
-      $lists .= print_comment_art($table,$list);
+      $lists .= print_comment_art($table,$list,0,$delimgcheck);
     }
   }
 
   if($lines[comment_design]) $lists .= $lines[comment_design];
 
-  if($print) echo $lists;
+  if($prints) echo $lists;
   else return $lists;
 }
 
-function print_comment_art($table,$list,$print=0) {
-  global $jsboard, $board, $page, $no;
+function print_comment_art($table,$list,$prints=0,$delimg) {
+  global $jsboard, $board, $page, $no, $delimgcheck, $print;
 
   $list[name] = htmlspecialchars(trim($list[name]));
   $list[date] = date("m/d H:i:s",$list[date]);
@@ -264,7 +271,8 @@ function print_comment_art($table,$list,$print=0) {
      (!$board[adm] && $board[super] != 1)) {
      $del_mark = "&nbsp;";
   } else {
-     $del_mark = "<A HREF=$delPath TITLE='Comment Delete'>&#9447;</A>";
+     $dmark = $delimg ? "<IMG SRC=./theme/$print[theme]/img/cdelete.gif BORDER=0 ALT=''>" : "&#9447;";
+     $del_mark = "<A HREF=$delPath TITLE='Comment Delete'>$dmark</A>";
   } 
 
   if($board[rnname] && preg_match("/^(2|3|5|7)$/",$board[mode]))
@@ -279,7 +287,7 @@ function print_comment_art($table,$list,$print=0) {
          "<TD WIDTH=20 VALIGN=top NOWRAP><NOBR><FONT STYLE=\"font: 11px tahoma\">$list[date]</FONT></NOBR></TD>\n".
          "</TR>\n";
 
-  if($print) echo $ret;
+  if($prints) echo $ret;
   else return $ret;
 }
 ?>

@@ -125,3 +125,8 @@ if(!$o[at]) {
 
 을 가지고 디자인을 적용시키면 된다.
 
+# Comment Form
+
+Comment Form 중 SORT link 과 Delete link 는 이미지를 사용할 수 있다. 각 테마 디렉토리의
+img 디렉토리에 cdelete.gif, csortup.gif, csortdn.gif 를 위치 시킴으로서 텍스트 링크를
+image 링크로 변경할 수 있다.
