@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2001년 12월 27일
+작성일 : 2001년 12월 28일
 버전   : jsboard-2.0pre3
 
 
@@ -65,29 +65,31 @@ If you wnat to see windog's change log, see also
 39. 유저 등록시 url 에 http:// 가 붙지 않도록 통일
 40. search_hl() 함수의 오타 수정
 41. prelist 의 include bug 수정
-42. auto_link() 함수 수정
-43. whois 검색 기능 사용안할 경우 큰 이미지 원본보기 기능 안되는것 수정
-44. 원본 이미지 보기에서 IE 의 UTF-8(한글 파일 이름) 문제 해결
-45. 게시판 관리자의 include 파일 출력 순서 수정
-46. session_destory() 함수를 session_unregister() 함수로 변경
-47. 오탈자 수정
-48. PHP 4.1.0 에서 패스워드 길이가 변경된것 적용
-49. INSERT query 에서 file 명을 지정
-50. moder 필드 삭제
-51. login mode 시에 이름 출력을 닉네임 또는 리얼네임을 출력하도록 선택을
+42. whois 검색 기능 사용안할 경우 큰 이미지 원본보기 기능 안되는것 수정
+43. 원본 이미지 보기에서 IE 의 UTF-8(한글 파일 이름) 문제 해결
+44. 게시판 관리자의 include 파일 출력 순서 수정
+45. session_destory() 함수를 session_unregister() 함수로 변경
+46. 오탈자 수정
+47. PHP 4.1.0 에서 패스워드 길이가 변경된것 적용
+48. INSERT query 에서 file 명을 지정
+49. moder 필드 삭제
+50. login mode 시에 이름 출력을 닉네임 또는 리얼네임을 출력하도록 선택을
     할 수 있게 수정 (rname field 추가)
-52. IE 6.0 에서 cookie 적용되지 않던것 수정
-53. 외부 회원 DB 연동 가능하게 수정 (README.OPERATE 참고)
-54. 내부 보안버그 패치
-55. parse.ph 의 delete_tag(), nl2br() 함수 수정
-56. 1000,000 건 이상의 레코드를 위해 SQL query 변경
-57. admin center 라이센스를 GPL 로 변경
-58. Form mail header 변경
-59. url link 에서 & 가 &amp; 로 표기되던것 수정
-60. security 정보가 초기화 되는것 수정
-61. 관리자 로그인시 패스워드 묻는것 수정
-62. 보안을 위해 미리보기에서 embed, img tag 를 삭제
-63. db 변환 스크립트 추가
+51. IE 6.0 에서 cookie 적용되지 않던것 수정
+52. 외부 회원 DB 연동 가능하게 수정 (README.OPERATE 참고)
+53. 내부 보안버그 패치
+54. parse.ph 의 delete_tag(), nl2br() 함수 수정
+55. 1,000,000 건 이상의 레코드를 위해 SQL query 변경 (선택)
+56. admin center 라이센스를 GPL 로 변경
+57. Form mail header 변경
+58. url link 에서 & 가 &amp; 로 표기되던것 수정
+59. security 정보가 초기화 되는것 수정
+60. 관리자 로그인시 패스워드 묻는것 수정
+61. 보안을 위해 미리보기에서 embed, img tag 를 삭제
+62. db 변환 스크립트 추가
+63. auto_link() 함수 수정
+64. 미리보기시 html 방식 작성글의 경우 html parsing 을 하던 것을 하지
+    않고 소스를 보여주게 변경
 
 
 -----------------------------------------------------------------------------

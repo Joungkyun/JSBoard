@@ -87,6 +87,7 @@ Version   : jsboard-2.0pre3
 61. fixed ask password when login admin mode
 62. removed embed, img tag in article preview of listing for security problem
 63. added db convert script
+64. changed mothod of preview in list page to don't parse html from parse html
 
 
 -----------------------------------------------------------------------------

@@ -338,58 +338,58 @@ function auto_link($str) {
   # &lt; 로 시작해서 3줄뒤에 &gt; 가 나올 경우와
   # IMG tag 와 A tag 의 경우 링크가 여러줄에 걸쳐 이루어져 있을 경우
   # 이를 한줄로 합침 (합치면서 부가 옵션들은 모두 삭제함)
-  $psrc[0] = "/<([^<>\n]*)\n([^<>\n]+)\n([^<>\n]*)>/i";
-  $ptar[0] = "<\\1\\2\\3>";
-  $psrc[1] = "/<([^<>\n]*)\n([^\n<>]*)>/i";
-  $ptar[1] = "<\\1\\2>";
-  $psrc[2] = "/<(A|IMG)[^>]*(HREF|SRC)[^=]*=[ '\"\n]*($regex[http]|mailto:$regex[mail])[^>]*>/i";
-  $ptar[2] = "<\\1 \\2=\"\\3\">";
+  $psrc[] = "/<([^<>\n]*)\n([^<>\n]+)\n([^<>\n]*)>/i";
+  $ptar[] = "<\\1\\2\\3>";
+  $psrc[] = "/<([^<>\n]*)\n([^\n<>]*)>/i";
+  $ptar[] = "<\\1\\2>";
+  $psrc[] = "/<(A|IMG)[^>]*(HREF|SRC)[^=]*=[ '\"\n]*($regex[http]|mailto:$regex[mail])[^>]*>/i";
+  $ptar[] = "<\\1 \\2=\"\\3\">";
   $str = preg_replace($psrc,$ptar,$str);
 
   # 특수 문자를 치환 및 html사용시 link 보호
-  $src[0] = "/&(quot|gt|lt)/i";
-  $tar[0] = "!\\1";
-  $src[1] = "/href=[\"' ]*($regex[http])[\"']*[^>]*>/i";
-  $tar[1] = "HREF=\"\\2_orig://\\3\" TARGET=\"_blank\">";
-  $src[2] = "/href=[\"' ]*mailto:($regex[mail])[\"']*>/i";
-  $tar[2] = "HREF=\"mailto:\\2#-#\\3\">";
-  $src[3] = "/(background|codebase|src)[ \n]*=[\n\"' ]*($regex[http])[\"']*/i";
-  $tar[3] = "\\1=\"\\3_orig://\\4\"";
+  $src[] = "/&(quot|gt|lt)/i";
+  $tar[] = "!\\1";
+  $src[] = "/<a([^>]*)href=[\"' ]*($regex[http])[\"']*[^>]*>/i";
+  $tar[] = "<A\\1HREF=\"\\3_orig://\\4\" TARGET=\"_blank\">";
+  $src[] = "/href=[\"' ]*mailto:($regex[mail])[\"']*>/i";
+  $tar[] = "HREF=\"mailto:\\2#-#\\3\">";
+  $src[] = "/<([^>]*)(background|codebase|src)[ \n]*=[\n\"' ]*($regex[http])[\"']*/i";
+  $tar[] = "<\\1\\2=\"\\4_orig://\\5\"";
 
   # 링크가 안된 url및 email address 자동링크
-  $src[4] = "/(HREF=|[^=]|^)($regex[http])/i";
-  $tar[4] = "\\1<A HREF=\"\\2\" TARGET=\"_blank\">\\2</a>";
-  $src[5] = "/($regex[mail])/i";
-  $tar[5] = "<A HREF=\"mailto:\\1\">\\1</a>";
-  $src[6] = "/<A HREF=[^>]+>(<A HREF=[^>]+>)/i";
-  $tar[6] = "\\1";
-  $src[7] = "/<\/A><\/A>/i";
-  $tar[7] = "</A>";
+  $src[] = "/(SRC=|HREF=|[^=]|^)($regex[http])/i";
+  $tar[] = "\\1<A HREF=\"\\2\" TARGET=\"_blank\">\\2</a>";
+  $src[] = "/($regex[mail])/i";
+  $tar[] = "<A HREF=\"mailto:\\1\">\\1</a>";
+  $src[] = "/<A HREF=[^>]+>(<A HREF=[^>]+>)/i";
+  $tar[] = "\\1";
+  $src[] = "/<\/A><\/A>/i";
+  $tar[] = "</A>";
 
   # 보호를 위해 치환한 것들을 복구
-  $src[8] = "/!(quot|gt|lt)/i";
-  $tar[8] = "&\\1";
-  $src[9] = "/(http|https|ftp|telnet|news|mms)_orig/i";
-  $tar[9] = "\\1";
-  $src[10] = "'#-#'";
-  $tar[10] = "@";
-  $src[11] = "/$regex[file]/i";
-  $tar[11] = "\\1";
+  $src[] = "/!(quot|gt|lt)/i";
+  $tar[] = "&\\1";
+  $src[] = "/(http|https|ftp|telnet|news|mms)_orig/i";
+  $tar[] = "\\1";
+  $src[] = "'#-#'";
+  $tar[] = "@";
+  $src[] = "/$regex[file]/i";
+  $tar[] = "\\1";
 
   # email 주소를 변형시킴
-  $src[12] = "/$regex[mail]/i";
-  $tar[12] = "\\1 at \\2";
-  $src[13] = "/<A HREF=\"mailto:([^ ]+) at ([^\">]+)/i";
-  $tar[13] = "<A HREF=\"act.php?o[at]=ma&target=\\1$rmail[chars]\\2";
+  $src[] = "/$regex[mail]/i";
+  $tar[] = "\\1 at \\2";
+  $src[] = "/<A HREF=\"mailto:([^ ]+) at ([^\">]+)/i";
+  $tar[] = "<A HREF=\"act.php?o[at]=ma&target=\\1$rmail[chars]\\2";
 
   # 이미지에 보더값 0 을 삽입
-  $src[14] = "/<(IMG SRC=\"[^\"]+\")>/i";
-  $tar[14] = "<\\1 BORDER=0>";
+  $src[] = "/<(IMG SRC=\"[^\"]+\")>/i";
+  $tar[] = "<\\1 BORDER=0>";
 
   # IE 가 아닌 경우 embed tag 를 삭제함
   if($agent[br] != "MSIE") {
-    $src[15] = "/<embed/i";
-    $tar[15] = "&lt;embed";
+    $src[] = "/<embed/i";
+    $tar[] = "&lt;embed";
   }
 
   $str = preg_replace($src,$tar,$str);
