@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  4월  5일
+작성일 : 2002년  4월  6일
 버전   : jsboard-2.0pre4
 
 
@@ -102,6 +102,7 @@ If you wnat to see windog's change log, see also
     보이는 것을 수정
 70. meta_char_check() 함수 수정
 71. insall script 수정
+72. auto_link() 함수 수정
 
 
 -----------------------------------------------------------------------------
