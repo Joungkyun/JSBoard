@@ -142,20 +142,17 @@ function get_boundary_msg() {
   return "----=_NextPart_000_000${one}_${two}.${three}";
 }
 
+function generate_mail_id($uid) {
+  $id = date("YmdHis",time());
+  mt_srand((fload) microtime() * 1000000);
+  $randval = mt_rand();
+  $id .= $randval."@$uid";
+  return $id;
+}
+
 function body_encode_lib($str) {
   $return = base64_encode(trim($str));
-  $len = strlen($return);
-  $chk = intval($len/60);
-
-  for($i=1;$i<$chk+1;$i++) {
-    if($i < 2) $no = $i*60-1;
-    else {
-      $pl = $pl + 2;
-      $no = $i*60-1+$pl;
-    }
-    $return = substr_replace($return,"$return[$no]\n",$no,1);
-  }
-
+  $return = wordwrap($return,60,"\r\n",1);
   return $return;
 }
 
@@ -200,15 +197,16 @@ function mail_header($to,$from,$title,$mta=0) {
   global $langs,$boundary;
 
   # mail header 를 작성 
-  $boundary = get_boundary_msg();
-  $header = "From: JSBoard Message <$from>\n".
-            "MIME-Version: 1.0\n";
+  $boundary = get_boundary_msg(preg_replace("/@.+$/i","",$to));
+  $header = "Message-ID: <".generate_mail_id().">\r\n".
+            "From: JSBoard Message <$from>\r\n".
+            "MIME-Version: 1.0\r\n";
 
-  if(!$mta) $header .= "To: $to\n".
-                       "Subject: $title\n";
+  if(!$mta) $header .= "To: $to\r\n".
+                       "Subject: $title\r\n";
 
-  $header .= "Content-Type: multipart/alternative;\n".
-             "              boundary=\"$boundary\"\n\n";
+  $header .= "Content-Type: multipart/alternative;\r\n".
+             "              boundary=\"$boundary\"\r\n\r\n";
 
   return $header;
 }
@@ -226,16 +224,16 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
   $mail_header = mail_header($to,$from,$title,$mta);
 
   # body 를 구성
-  $body = "This is a multi-part message in MIME format.\n".
-          "\n--$boundary\n".
-          "Content-Type: text/plain; charset=$langs[charset]\n".
-          "Content-Transfer-Encoding: base64\n\n".
+  $body = "This is a multi-part message in MIME format.\r\n".
+          "\r\n--$boundary\r\n".
+          "Content-Type: text/plain; charset=$langs[charset]\r\n".
+          "Content-Transfer-Encoding: base64\r\n\r\n".
           body_encode_lib(&$pbody).
-          "\n\n--$boundary\n".
-          "Content-Type: text/html; charset=$langs[charset]\n".
-          "Content-Transfer-Encoding: base64\n\n".
+          "\r\n\r\n--$boundary\r\n".
+          "Content-Type: text/html; charset=$langs[charset]\r\n".
+          "Content-Transfer-Encoding: base64\r\n\r\n".
           body_encode_lib(&$hbody).
-          "\n--$boundary--\n";
+          "\r\n--$boundary--\r\n";
 
   $mails[debug] = 0;
   $mails[ofhtml] = 0;
@@ -245,6 +243,8 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
 
   if($mta) {
     ini_set("SMTP","$smtp");
+    $body = str_replace("\r\n","\n",$body);
+    $mail_header = str_replace("\r\n","\n",$mail_header);
     mail($mails[to],$title,$body,$mail_header,"-f$mails[from]");
   } else {
     new maildaemon($mails);
@@ -302,7 +302,7 @@ function sendmail($rmail) {
   $dbname  = "DB Name           : $rmail[table]";
   $dbloca  = "DB Location       : $webboard_address";
   #$repart  = "Reply Article     : $reply_article";
-  $nofm    = "\n$dbname\n$dbloca\n$repart";
+  $nofm    = "\r\n$dbname\r\n$dbloca\r\n$repart";
   $mailurl = "Email             : $rmail[pemail]\r\n";
   $homeurl = "HomeURL           : $rmail[url]\r\n";
 
