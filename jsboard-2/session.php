@@ -48,7 +48,7 @@ if ($m == "login") {
   elseif($table) $var = "?table=$table";
 
   # 세션을 삭제
-  session_destroy("$jsboard");
+  session_unregister("$jsboard");
   # admin login 상태를 삭제
   SetCookie("c{$jsboard}[id]","",0,"/");
   SetCookie("c{$jsboard}[name]","",0,"/");

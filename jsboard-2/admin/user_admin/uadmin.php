@@ -546,8 +546,6 @@ else echo "<CENTER><FONT COLOR=RED><B>$langs[ua_while_wn]</B></FONT></CENTER>";
 &lt;/HEAD&gt;<BR>
 &lt;BODY&gt;
 
-<P>
-<?=$top_head?>
 </font></TD></TR>
 
 <TR>
@@ -561,7 +559,15 @@ else echo "<CENTER><FONT COLOR=RED><B>$langs[ua_while_wn]</B></FONT></CENTER>";
 <textarea name=uaheader cols=<?=$tsize?> rows=10 wrap=off><?=$html_head?></textarea>
 </TD></TR>
 
-<TR><TD COLSPAN=6  BGCOLOR=<?=$color[m_bg]?> ALIGN=center><font id=MCOLOR><BR><BR><BR>[ <?=$langs[ua_etc5]?> ]</font><BR><BR><BR></TD></TR>
+<TR><TD COLSPAN=6  BGCOLOR=<?=$color[m_bg]?> ALIGN=center>
+<font id=MCOLOR>
+<?=$top_head?>
+<BR><BR><BR>
+[ <?=$langs[ua_etc5]?> ]
+<BR><BR><BR>
+<?=$bottom_tail?>
+</font>
+</TD></TR>
 
 <TR>
 <TD COLSPAN=6 ALIGN=right>
@@ -575,8 +581,6 @@ else echo "<CENTER><FONT COLOR=RED><B>$langs[ua_while_wn]</B></FONT></CENTER>";
 </TD></TR>
 
 <TR><TD COLSPAN=6  BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR>
-<?=$bottom_tail?>
-
 <P>
 &lt;/BODY&gt;<BR>
 &lt;/HTML&gt;<BR>
