@@ -26,6 +26,7 @@ Sat, Feb  7 2004
   by JoungKyun Kim <http://www.oops.org>
 	- fixed check_iframe function
 	- fixed parse error when use iframe tag
+	- fixed parse error with search word include []
 
 Tue, Dec  3 2003
   by JoungKyun Kim <http://www.oops.org>
