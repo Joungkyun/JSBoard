@@ -258,9 +258,9 @@ function print_comment_art($table,$list,$prints=0,$delimg) {
   global $jsboard, $board, $page, $no, $delimgcheck, $print;
 
   $list[name] = ugly_han(htmlspecialchars(trim($list[name])));
-  $list[name] = preg_replace("/&amp;(lt|gt)/i","&\\1",$list[name]);
+  $list[name] = preg_replace("/&amp;(lt|gt|quot)/i","&\\1",$list[name]);
   $list[text] = ugly_han(htmlspecialchars(trim($list[text])));
-  $list[text] = preg_replace("/&amp;(lt|gt)/i","&\\1",$list[text]);
+  $list[text] = preg_replace("/&amp;(lt|gt|quot)/i","&\\1",$list[text]);
   $list[date] = date("m/d H:i:s",$list[date]);
 
   if(($board[adm] || $board[super] == 1) ||
@@ -287,7 +287,7 @@ function print_comment_art($table,$list,$prints=0,$delimg) {
          "<TD VALIGN=top NOWRAP><NOBR>".
          "<FONT Style=\"font-weight:bold\">$names</FONT></NOBR></TD>\n".
          "<TD><PRE>$list[text]</TD></PRE>\n".
-         "<TD ALIGN=right VALIGN=top NOWRAP><NOBR><FONT STYLE=\"font: 11px tahoma\">$list[date] 1</FONT></NOBR></TD>\n".
+         "<TD ALIGN=right VALIGN=top NOWRAP><NOBR><FONT STYLE=\"font: 11px tahoma\">$list[date] </FONT></NOBR></TD>\n".
          "</TR>\n";
 
   if($prints) echo $ret;
