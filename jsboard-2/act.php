@@ -468,6 +468,8 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     if ($list && $atc[name] == $list[name] &&
       $atc[text] == $list[text] &&
       $atc[title] == $list[title] &&
+      $atc[email] == $list[email] &&
+      $atc[url] == $list[url] &&
       $atc[html] == $list[html]) {
 
       switch ($o[at]) {
