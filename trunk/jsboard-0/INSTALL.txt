@@ -7,153 +7,31 @@
 *************************************************************************
 
 
-Title : JSBoard-0.6
+Title : JSBoard-0.6.2
 
 
-작성	:김정균. <admin@oops.org> http://www.oops.org
-작성일	: 1999.12.24
+작성	: 김정균. <admin@oops.org> http://www.oops.org
+작성일	: 2000.1.2
+
+
+
+
+목차
+====
+
+1. 변경된점
+2. Installation (설치) : root의 권한을 가지고 처음 설치
+3. Installation (설치) : 계정 사용자가 처음 설치
+4. Installation (설치) : 기존 사용자들을 위한 Part
+5. 주의
+
+
+
+
 
 # 변경된점
 
 README file 참조
-
-
-# 주의할 점
-
-웹상에서의 관리 기능이 들어가 있기 때문에 소유권과 퍼미션의 문제가 발생을 한다.
-일단 소스를 원하는 디렉토리에서 압축을 푼다.
-
-shell> tar xvfpz jsboard-0.6.tgz
-
-1. root의 권한을 가지고 있을 경우.
-
-   일단 nobody의 권한을 가지고 있어야 할 file과 directory가 있다.
-   이 경우에는 owner는 그대로 가지고 있고 group만 nobody로 변경한 후에
-   group에 쓰기 권한을 주는 것을 권장한다.
-
-   jsboard-version/include directory는 웹서버의 접근이 가능해야 한다.
-   그러므로 아래의 명령을 실행해 준다.
-
-   jsboard-version> chomod 775 include
-   jsboard-version> chgrp nobody include
-
-
-   [root@oops jsboard-0.6]# ll
-   total 52
-   drwxr-xr-x  6 oops  oops    1024 Dec 17 16:18 ./
-   drwxrwxr-x  7 oops  oops    1024 Dec 15 11:24 ../
-   -rw-r--r--  1 oops  oops    4160 Dec 17 17:02 INSTALL.txt
-   drwxr-xr-x  4 oops  oops    1024 Dec 17 15:59 Install/
-   -rw-r--r--  1 oops  oops    8665 Dec 11 18:12 README
-   -rw-r--r--  1 oops  oops    5468 Dec 16 22:16 act.php3
-   drwxr-xr-x  5 oops  oops    1024 Dec 17 15:27 admin/
-   -rw-r--r--  1 oops  oops    5149 Dec  6 13:45 delete.php3
-   -rw-r--r--  1 oops  oops    4641 Dec  7 16:13 edit.php3
-   drwxr-xr-x  2 oops  oops    1024 Dec  6 13:45 images/
-
-   drwxrwxr-x  3 oops  nobody  1024 Dec 17 16:12 include/  <----- 요거!!!
-
-   -rw-r--r--  1 oops  oops      51 Dec 15 12:36 index.php3
-   -rw-r--r--  1 oops  oops    2621 Dec 17 15:45 list.php3
-   -rw-r--r--  1 oops  oops    7481 Dec  6 13:45 read.php3
-   -rw-r--r--  1 oops  oops    3983 Dec  6 13:45 reply.php3
-   -rw-r--r--  1 oops  oops    3505 Dec  7 17:05 write.php3
-
-   위와 같이 퍼미션과 소유권을 조정한다.
-
-   그 다음 jsboard-version/admin/include/info.php3 도 위와 같이 수정을
-   해 줘야 한다.
-
-   jsboard-version/admin/> chomod 775 include
-   jsboard-version/admin/> chgrp nobody include
-
-   [root@oops jsboard-0.6/admin/]# ll
-   total 26
-   drwxr-xr-x  5 oops  oops    1024 Dec 17 15:27 ./
-   drwxr-xr-x  6 oops  oops    1024 Dec 17 16:51 ../
-   -rw-r--r--  1 oops  oops    2980 Dec 17 15:28 act.php3
-   -rw-r--r--  1 oops  oops   10410 Dec 17 16:11 admin.php3
-   -rw-r--r--  1 oops  oops    3802 Dec 17 15:27 admin_info.php3
-   -rw-r--r--  1 oops  oops    1018 Dec 17 15:32 auth.php3
-   -rw-r--r--  1 oops  oops     926 Dec 17 15:31 cookie.php3
-   drwxr-xr-x  2 oops  oops    1024 Dec 15 15:40 img/
-
-   drwxrwxr-x  3 oops  nobody  1024 Dec 17 17:08 include/   <--- 요거!!!
-
-   -rw-r--r--  1 oops  oops     568 Dec 17 15:32 index.php3
-   drwxr-xr-x  3 oops  oops    1024 Dec 17 15:27 user_admin/
-
-
-
-2. 계정 사용자의 경우
-
-   계정 사용자의 경우에는 좀 보안상 문제가 발생할지도 모르겠다.
-   일단 최대한으로 해 보자면 일단 계정의 홈디렉토리의 권한을 711로 
-   변경하여 다른 유저들이 들어오지 못하게 하며, 웹 서버의 접근만
-   가능하게 한다.
-
-   유저홈이 /home/oops 라면
-
-   ~oops/jsboard-version>chmod 711 /home/oops
-
-   그 다음 root의 권한을 가지고 있을때 group권한을 nobody로 수정하던 것을
-   777로 변경을 한다.
-
-
-   jsboard-version> chomod 707 include
-
-
-   [root@oops jsboard-0.6]# ll
-   total 52
-   drwxr-xr-x  6 oops  oops    1024 Dec 17 16:18 ./
-   drwxrwxr-x  7 oops  oops    1024 Dec 15 11:24 ../
-   -rw-r--r--  1 oops  oops    4160 Dec 17 17:02 INSTALL.txt
-   drwxr-xr-x  4 oops  oops    1024 Dec 17 15:59 Install/
-   -rw-r--r--  1 oops  oops    8665 Dec 11 18:12 README
-   -rw-r--r--  1 oops  oops    5468 Dec 16 22:16 act.php3
-   drwxr-xr-x  5 oops  oops    1024 Dec 17 15:27 admin/
-   -rw-r--r--  1 oops  oops    5149 Dec  6 13:45 delete.php3
-   -rw-r--r--  1 oops  oops    4641 Dec  7 16:13 edit.php3
-   drwxr-xr-x  2 oops  oops    1024 Dec  6 13:45 images/
-
-   drwx---rwx  3 oops  oops    1024 Dec 17 16:12 include/  <----- 요거!!!
-
-   -rw-r--r--  1 oops  oops      51 Dec 15 12:36 index.php3
-   -rw-r--r--  1 oops  oops    2621 Dec 17 15:45 list.php3
-   -rw-r--r--  1 oops  oops    7481 Dec  6 13:45 read.php3
-   -rw-r--r--  1 oops  oops    3983 Dec  6 13:45 reply.php3
-   -rw-r--r--  1 oops  oops    3505 Dec  7 17:05 write.php3
-
-   위와 같이 퍼미션과 소유권을 조정한다.
-
-   그 다음 jsboard-version/admin/include/info.php3 도 위와 같이 수정을
-   해 줘야 한다.
-
-   jsboard-version/admin/> chomod 707 include
-
-   [root@oops jsboard-0.6/admin/]# ll
-   total 26
-   drwxr-xr-x  5 oops  oops    1024 Dec 17 15:27 ./
-   drwxr-xr-x  6 oops  oops    1024 Dec 17 16:51 ../
-   -rw-r--r--  1 oops  oops    2980 Dec 17 15:28 act.php3
-   -rw-r--r--  1 oops  oops   10410 Dec 17 16:11 admin.php3
-   -rw-r--r--  1 oops  oops    3802 Dec 17 15:27 admin_info.php3
-   -rw-r--r--  1 oops  oops    1018 Dec 17 15:32 auth.php3
-   -rw-r--r--  1 oops  oops     926 Dec 17 15:31 cookie.php3
-   drwxr-xr-x  2 oops  oops    1024 Dec 15 15:40 img/
-
-   drwx---rwx  3 oops  oops    1024 Dec 17 17:08 include/   <--- 요거!!!
-
-   -rw-r--r--  1 oops  oops     568 Dec 17 15:32 index.php3
-   drwxr-xr-x  3 oops  oops    1024 Dec 17 15:27 user_admin/
-
-
-
-
-이 외의 모든 file들은 644의 권한을 가지면 되며, directory들은 755를
-가지면 된다. 즉 단 2개의 directory만 퍼미션과 소유권을 수정해 주면 된다.
-
-
 
 
 
@@ -206,7 +84,79 @@ shell> tar xvfpz jsboard-0.6.tgz
 
    shell> tar xvfpz jsboard-0.6.tgz
 
-4. 압축을 푼다음 jsboard-0.6/Install 로 이동을 한다.
+
+4. 압축을 푼다음 jsboard-0.6/Install/Config 로 이동을 한다.
+   이동을 한 다음 root.sh 를 현재 디렉토리에서 실행을 한다.
+
+   shell> ./root.sh
+
+   다음 jsboard-0.7pre1 directory로 다시 돌아와서
+   include directory의 그룹소유권과 퍼미션이 아래와 같이
+   수정이 되어 있는지 확인을 한다.
+
+
+   [root@oops jsboard-0.6]# ll
+   total 52
+   drwxr-xr-x  6 oops  oops    1024 Dec 17 16:18 ./
+   drwxrwxr-x  7 oops  oops    1024 Dec 15 11:24 ../
+   -rw-r--r--  1 oops  oops    4160 Dec 17 17:02 INSTALL.txt
+   drwxr-xr-x  4 oops  oops    1024 Dec 17 15:59 Install/
+   -rw-r--r--  1 oops  oops    8665 Dec 11 18:12 README
+   -rw-r--r--  1 oops  oops    5468 Dec 16 22:16 act.php3
+   drwxr-xr-x  5 oops  oops    1024 Dec 17 15:27 admin/
+   -rw-r--r--  1 oops  oops    5149 Dec  6 13:45 delete.php3
+   -rw-r--r--  1 oops  oops    4641 Dec  7 16:13 edit.php3
+   drwxr-xr-x  2 oops  oops    1024 Dec  6 13:45 images/
+
+   drwxrwxr-x  3 oops  nobody  1024 Dec 17 16:12 include/  <----- 요거!!!
+                       ^^^^^^
+   -rw-r--r--  1 oops  oops      51 Dec 15 12:36 index.php3
+   -rw-r--r--  1 oops  oops    2621 Dec 17 15:45 list.php3
+   -rw-r--r--  1 oops  oops    7481 Dec  6 13:45 read.php3
+   -rw-r--r--  1 oops  oops    3983 Dec  6 13:45 reply.php3
+   -rw-r--r--  1 oops  oops    3505 Dec  7 17:05 write.php3
+
+
+   만약 위와 같이
+
+   drwxrwxr-x  3 oops  nobody  1024 Dec 17 16:12 include/
+
+   되어 있지 않는다면 수동으로 다음과 같은 작업을 한다.
+
+   shell> chgrp nobody ./include
+   shell> chmod 775 ./include
+
+
+   다음 jsboard-0.7pre1/admin/include의 directory의 소유권및 권한 역시
+   아래와 같이 되어 있는지 확인을 한다.
+
+
+   [root@oops jsboard-0.6/admin/]# ll
+   total 26
+   drwxr-xr-x  5 oops  oops    1024 Dec 17 15:27 ./
+   drwxr-xr-x  6 oops  oops    1024 Dec 17 16:51 ../
+   -rw-r--r--  1 oops  oops    2980 Dec 17 15:28 act.php3
+   -rw-r--r--  1 oops  oops   10410 Dec 17 16:11 admin.php3
+   -rw-r--r--  1 oops  oops    3802 Dec 17 15:27 admin_info.php3
+   -rw-r--r--  1 oops  oops    1018 Dec 17 15:32 auth.php3
+   -rw-r--r--  1 oops  oops     926 Dec 17 15:31 cookie.php3
+   drwxr-xr-x  2 oops  oops    1024 Dec 15 15:40 img/
+
+   drwxrwxr-x  3 oops  nobody  1024 Dec 17 17:08 include/   <--- 요거!!!
+   ^^^^^^^^^^          ^^^^^^
+   -rw-r--r--  1 oops  oops     568 Dec 17 15:32 index.php3
+   drwxr-xr-x  3 oops  oops    1024 Dec 17 15:27 user_admin/
+
+   만약 위와 같이
+
+   drwxrwxr-x  3 oops  nobody  1024 Dec 17 17:08 include/
+
+   되어 있지 않다면 수동으로 다음과 같은 작업을 한다.
+
+   shell> chgrp nobody ./include
+   shell> chmod 775 ./include
+
+5. 압축을 푼다음 jsboard-0.6/Install 로 이동을 한다.
    이 디렉토리에서 아까 지정한 mysql의 root password를 기입해 줄
    file들이 있다.
 
@@ -244,7 +194,7 @@ shell> tar xvfpz jsboard-0.6.tgz
 
 
 
-5. 다음 웹에서
+6. 다음 웹에서
 
    http://domain.com/jsboard-0.6/Install
 
@@ -252,7 +202,7 @@ shell> tar xvfpz jsboard-0.6.tgz
    mysql의 password를 물어 올것이다.
    아까 적어준 패스워드를 기입하고 enter를 클릭한다.
 
-6. 다음 페이지로 넘어 오면
+7. 다음 페이지로 넘어 오면
 
    jsboard가 사용할 DB이름과 DB 유저 그리고 DB user password 를 지정해 준다.
    대충 지정해 주고 넘어간다.
@@ -264,7 +214,7 @@ shell> tar xvfpz jsboard-0.6.tgz
     Admin Page의 초기 Password는
     0000 입니다"
 
-7. admin page login page가 나오면 위의 멘트처럼 0000을 넣고선 엔터를 
+8. admin page login page가 나오면 위의 멘트처럼 0000을 넣고선 엔터를 
    친다. 하단에 있는 버튼은 패스워드 리셋을 하는 것이니 이것을
    누르면 로그인이 되지 않는다. 로그인이 실패했을 경우 한번씩
    눌러주면 쿠키에 저장되는 패스워드를 깨끗하게 지워준다.
@@ -273,7 +223,7 @@ shell> tar xvfpz jsboard-0.6.tgz
    에러를 발생하면, 가장 큰 이유는 DB의 password가 맞지 않아서 이니
    이를 다시 확인해 본다.
 
-8. CrayWWWBoard를 사용해 본사람들은 친숙한 페이지가 나올것이다.
+9. CrayWWWBoard를 사용해 본사람들은 친숙한 페이지가 나올것이다.
    일단 관리 페이지에 처음 들어가면 우선 관리자 패스워드 부터
    변경을 해야 한다.
 
@@ -284,14 +234,14 @@ shell> tar xvfpz jsboard-0.6.tgz
    이것을 클릭하여 패스워드를 변경한후에 바로 옆의 logout 버튼을
    눌러서 logout을 한후에 다시 변경된 password로 로그인을 한다.
 
-9  그 다음 부터는 원하는 게시판 이름을 Create DB에 넣어서 등록을
+10. 그 다음 부터는 원하는 게시판 이름을 Create DB에 넣어서 등록을
    해주면 게시판들이 계속 생성이 가능하다.
 
-10. 게시판을 생성했을 경우 게시판 관리자의 비밀번호가 1번글에
+11. 게시판을 생성했을 경우 게시판 관리자의 비밀번호가 1번글에
     자동으로 등록이 되므로 이를 확인한 후에 꼭 게시판 패스워드를
     변경해 주도록 한다.
 
-11. jsboard-0.6pre3/jsboard/db.ph 의 권한을 읽기 모드만 가능하게 변경한다.
+12. jsboard-0.6/jsboard/db.ph 의 권한을 읽기 모드만 가능하게 변경한다.
 
 
 
@@ -308,27 +258,80 @@ shell> tar xvfpz jsboard-0.6.tgz
 
 1. 계정 사용자들은 Install program을 사용하면 안된다.!!!!!!
 
-2. 일단 위의 계정 사용자들을 위한 퍼미션 조정을 맞춘다. 이건 아주중요한
-   일이니 그냥 넘어간 사람들은 다시 잘 보고 행하기 바란다.
-   root의 권한을 가지고 있는 관리자에게 DB를 등록해
-   달라고 한다. 등록후에 DB name과 DB user name, DB password를
-   알아 놓는다.
-
-3. jsboard 의 소스를 설치할 디렉토리에서 압축을 푼다.
+2. jsboard 의 소스를 설치할 디렉토리에서 압축을 푼다.
 
    shell> tar xvfpz jsboard-0.6.tgz
 
-4. 일단 jabord-0.6/Install/admin_sample/db.ph.orig를
-   jsboard/include/ 에 db.ph라는 이름으로 copy를 한다음
-   1번에서 알아 놓은  DB name, DB user name, DB password를
-   알맞게 넣어준다. $db_server는 건드리면 안된다는 것을
-   주의하자.
 
-5. jsboard-0.6/Install/admin_sample/info.php3.orig 를
-   jsboard=0.6/admin/include/info.php3 로 copy를 한다.
-   그리고 이 file의 퍼미션을 707로 해 놓는다.
+3. 계정 사용자의 경우에는 좀 보안상 문제가 발생할지도 모르겠다.
+   일단 최대한으로 해 보자면 일단 계정의 홈디렉토리의 권한을 711로 
+   변경하여 다른 유저들이 들어오지 못하게 하며, 웹 서버의 접근만
+   가능하게 한다.
 
-6. jsboard-0.6/Install/SQL 로 가서
+   유저 ID가 oops 라면
+
+   shell> chmod 711 ~oops
+
+4. jsboard-0.6/Install/Config 로 이동을 하여
+   account.sh 를 실행한다.
+
+   shell> ./account.sh
+
+   그리고 다음과 같이 소유권과 권한이 되어 있는지 확인을 한다.
+
+
+   [root@oops jsboard-0.6]# ll
+   total 52
+   drwxr-xr-x  6 oops  oops    1024 Dec 17 16:18 ./
+   drwxrwxr-x  7 oops  oops    1024 Dec 15 11:24 ../
+   -rw-r--r--  1 oops  oops    4160 Dec 17 17:02 INSTALL.txt
+   drwxr-xr-x  4 oops  oops    1024 Dec 17 15:59 Install/
+   -rw-r--r--  1 oops  oops    8665 Dec 11 18:12 README
+   -rw-r--r--  1 oops  oops    5468 Dec 16 22:16 act.php3
+   drwxr-xr-x  5 oops  oops    1024 Dec 17 15:27 admin/
+   -rw-r--r--  1 oops  oops    5149 Dec  6 13:45 delete.php3
+   -rw-r--r--  1 oops  oops    4641 Dec  7 16:13 edit.php3
+   drwxr-xr-x  2 oops  oops    1024 Dec  6 13:45 images/
+
+   drwx---rwx  3 oops  oops    1024 Dec 17 16:12 include/  <----- 요거!!!
+   ^^^^^^^^^^
+   -rw-r--r--  1 oops  oops      51 Dec 15 12:36 index.php3
+   -rw-r--r--  1 oops  oops    2621 Dec 17 15:45 list.php3
+   -rw-r--r--  1 oops  oops    7481 Dec  6 13:45 read.php3
+   -rw-r--r--  1 oops  oops    3983 Dec  6 13:45 reply.php3
+   -rw-r--r--  1 oops  oops    3505 Dec  7 17:05 write.php3
+
+   그 다음 jsboard-0.6/admin/include/ 역시 확인을 한다.
+
+   [root@oops jsboard-0.6/admin/]# ll
+   total 26
+   drwxr-xr-x  5 oops  oops    1024 Dec 17 15:27 ./
+   drwxr-xr-x  6 oops  oops    1024 Dec 17 16:51 ../
+   -rw-r--r--  1 oops  oops    2980 Dec 17 15:28 act.php3
+   -rw-r--r--  1 oops  oops   10410 Dec 17 16:11 admin.php3
+   -rw-r--r--  1 oops  oops    3802 Dec 17 15:27 admin_info.php3
+   -rw-r--r--  1 oops  oops    1018 Dec 17 15:32 auth.php3
+   -rw-r--r--  1 oops  oops     926 Dec 17 15:31 cookie.php3
+   drwxr-xr-x  2 oops  oops    1024 Dec 15 15:40 img/
+
+   drwx---rwx  3 oops  oops    1024 Dec 17 17:08 include/   <--- 요거!!!
+   ^^^^^^^^^^
+   -rw-r--r--  1 oops  oops     568 Dec 17 15:32 index.php3
+   drwxr-xr-x  3 oops  oops    1024 Dec 17 15:27 user_admin/
+
+
+   그리고 jsboard-0.6/include 에 db.ph가 있는지, jsboard-0.6/admin/include에
+   info.php3 가 있는지를 확인을 한다.
+
+5. root의 권한을 가지고 있는 관리자에게 DB를 등록해
+   달라고 한다. 등록후에 DB name과 DB user name, DB password를
+   알아 놓는다.
+
+6. jsboard-0.6/include 에서 db.ph file을 열여서 1번에서 알아 놓은
+   DB name, DB user name, DB password를 알맞게 넣어준다. 
+   $db_server는 건드리면 안된다는 것을 주의하자.
+
+7. jsboard-0.6/Install/SQL 로 가서
 
    shell> mysql -u DB_USER_NAME -p DB_NAME < mysql.sql
 
@@ -336,7 +339,7 @@ shell> tar xvfpz jsboard-0.6.tgz
    여기서 DB_USER_NAME은 관리자에게 생성을 해 달라고 한 DB user 이름이며,
    DB_NAME은 DB의 이름을 대신 넣어 주면 된다.
 
-7. 이제 쉘에서의 작업은 끝났다. 웹브라우져를 열고
+8. 이제 쉘에서의 작업은 끝났다. 웹브라우져를 열고
    http://domain/~account/jsboard-0.6/admin 으로 접근을 한다.
    admin page login page가 나오면 기본 패스워드인 0000을 넣고선 엔터를
    친다. 하단에 있는 버튼은 패스워드 리셋을 하는 것이니 이것을
@@ -347,7 +350,7 @@ shell> tar xvfpz jsboard-0.6.tgz
    에러를 발생하면, 가장 큰 이유는 DB의 password가 맞지 않아서 이니
    이를 다시 확인해 본다.
 
-8. CrayWWWBoard를 사용해 본사람들은 친숙한 페이지가 나올것이다.
+9. CrayWWWBoard를 사용해 본사람들은 친숙한 페이지가 나올것이다.
    일단 관리 페이지에 처음 들어가면 우선 관리자 패스워드 부터
    변경을 해야 한다.
 
@@ -358,27 +361,24 @@ shell> tar xvfpz jsboard-0.6.tgz
    이것을 클릭하여 패스워드를 변경한후에 바로 옆의 logout 버튼을
    눌러서 logout을 한후에 다시 변경된 password로 로그인을 한다.
 
-8  그 다음 부터는 원하는 게시판 이름을 Create DB에 넣어서 등록을
+10. 그 다음 부터는 원하는 게시판 이름을 Create DB에 넣어서 등록을
    해주면 게시판들이 계속 생성이 가능하다.
 
-9. 게시판을 생성했을 경우 게시판 관리자의 비밀번호가 1번글에
+11. 게시판을 생성했을 경우 게시판 관리자의 비밀번호가 1번글에
    자동으로 등록이 되므로 이를 확인한 후에 꼭 게시판 패스워드를
    변경해 주도록 한다.
-
-10. jsboard-0./jsboard/db.ph 의 권한을 읽기 모드만 가능하게 변경한다.
-
 
 
 
 
 # Installation (설치) : 기존 사용자들을 위한 Part
 
-0.6-oops를 기준으로 설명. 다른 버젼들은 알아서 짜 맞추기 하도록 ^^;
+0.6-pre를 기준으로 설명. 다른 버젼들은 알아서 짜 맞추기 하도록 ^^;
 주의 할것은 위의 퍼미션과 소유권 부분은 분명히 비교를 해 보기 바란다.
 
 1. jsboard 의 소스를 설치할 디렉토리에서 압축을 푼다.
 
-   shell> tar xvfpz jsboard-0.6pre2.tgz
+   shell> tar xvfpz jsboard-0.6.tgz
 
    일단 주의 할것은 이전 버젼을 꼭 백업을 해 두도록 한다.
    위의 file은 jsboard-0.6 이라는 directory로 압축이 풀리니
@@ -400,7 +400,15 @@ shell> tar xvfpz jsboard-0.6.tgz
 3. 기존의 버젼을 다른 이름을 백업을 하고나서 새로 설치할 버젼을
    기존의 버젼에 덮어 씌운다.
 
-4. 퍼미션과 소유권을 위에서 설명한 대로 변경한다.
+4. jsboard/Install/Config 에서 아래와 같이 명령을 실행한다.
+
+   shell> ./root.sh
+
+   계정 사용자들의 경우에는 이것을 실행하면 안된다.
+                          ^^^^^^^^^^^^^^^^^^^^^^
+   계정 사용자들의 경우 계정 사용자 설치 부분에서의 소유권 및
+   퍼미션을 참조하라.
+
    include/db.ph와 admin/include/info.php3가 제대로 있는지
    확인을 한다.
 

@@ -145,13 +145,13 @@ if ($act == "post" || $act == "edit") {
 		$num   = mysql_result($result, 0, "num");
 		$reno   = mysql_result($result, 0, "reno");
 		$reply_writer_email = $email ;
-		$email = "";
+		$email_tmp = "";
 		if ($num == 0) {
 			$result = dquery("SELECT email FROM $table where no = $reno");
-			$email   = mysql_result($result, 0, "email");
+			$email_tmp   = mysql_result($result, 0, "email");
 		}
 		send_mail($no, $bbshome, $mailtoadmin, $mailtowriter, $table, $reno, $name,
-                          $email, $reply_writer_email, $url, $webboard_version, $text, $title);
+                          $email_tmp, $reply_writer_email, $url, $webboard_version, $text, $title);
 
 	}
 } else if ($act == "del") {
