@@ -260,7 +260,7 @@ function upload_name_chk($f) {
   if(!trim($f)) print_error($langs['act_de'],250,150,1);
 
   # file 이름에서 특수문자가 있으면 에러 출력
-  if (preg_match("/[^\xB1-\xFEa-z0-9._\-]|\.\./i",urldecode($f))) {
+  if (preg_match("/[^\xA1-\xFEa-z0-9._\-]|\.\./i",urldecode($f))) {
     print_error($langs['act_de'],250,150,1);
     exit;
   }
