@@ -46,47 +46,39 @@ function plist($n, $act = "normal")
 
     // jinoos -- global 에 변수등록으로 중복 include 제거 
 
-    global $table, $file_upload;  
+    global $table, $file_upload, $prev , $next ;
     global $acount, $tcount, $apage, $pern;
     global $scount, $page, $user_del;
     global $sc_column, $sc_string, $search;
     global $width, $l0_bg, $l0_fg, $l1_bg, $l1_fg, $l2_bg, $l2_fg;
-    
+
+    if ($file_upload == "yes") { $colspan_num = "7" ; }
+    else { $colspan_num = "6" ; }
+
     $result = qsql($n, $act);
 
     if($acount == 0) {
 	$page = 0;
     }
 
-    if($act != "reply" && $act != "relate" && $act != "search") {
-	echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\">\n" .
-             "<tr><td align=\"left\">\n" .
-             "<a href=./admin/user_admin/auth.php3?db=$table>[admin]</a>\n" .
-             "</td>\n" .
-             "<td align=\"right\">\n" .
-	     "<font size=\"-1\">${acount}개의 글(오늘 올라온 글 ${tcount}개)이 있습니다. [ $page / $apage ]</font>\n" .
-	     "</td></tr></table>\n\n");
-    }
-    
-    if($act == "search") {
-	echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\">\n" .
-             "<tr><tr><td align=\"left\">\n" .
-             "<a href=./admin/user_admin/auth.php3?db=$table>[admin]</a>\n" .
-             "</td>\n" .
-             "<td align=\"right\">\n" .
-	     "<font size=\"-1\">${acount}개의 글이 검색되었습니다. [ $page / $apage ]</font>\n" .
-	     "</td></tr></table>\n\n");
-    }
-
+    if($act != "reply" && $act != "relate" ) {
+      echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\">\n" .
+              "<tr><td align=\"left\">\n" .
+              "<a href=./admin/user_admin/auth.php3?db=$table>[admin]</a>\n" .
+              "</td>\n" .
+              "<td align=\"right\">\n" ) ;
+      list_cmd_bar ($page, $l0_bg, $table, $sc_column);
+      echo("</td></tr></table>\n\n");
+    }    
     if($act != "reply") {
 	echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"$l0_bg\"><tr><td>\n" .
 	     "<table width=\"100%\" border=\"0\" cellspacing=\"2\" cellpadding=\"3\">\n<tr>\n" .
-	     "<td width=\"5%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\"><nobr>번호<nobr></font></td>\n" .
+	     "<td width=\"4%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\"><nobr>번호<nobr></font></td>\n" .
 	     "<td width=\"59%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">제목</font></td>\n" .
-	     "<td width=\"10%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">글쓴이</font></td>\n" );
+	     "<td width=\"14%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">글쓴이</font></td>\n" );
 
         if($file_upload == "yes"){
-		echo("<td width=\"8%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">파일</font></td>\n");
+		echo("<td width=\"5%\" align=\"center\" bgcolor=\"$l1_bg\"><font color=\"$l1_fg\">파일</font></td>\n");
         }   	// file upload 시만 나옴(taejun. 99.11.17)
 
 
@@ -102,7 +94,8 @@ function plist($n, $act = "normal")
 
 
     if($acount == 0) {
-	echo("<tr><td colspan=\"6\" align=\"center\" bgcolor=\"$l2_bg\">\n" .
+
+	echo("<tr><td colspan=\"$colspan_num\" align=\"center\" bgcolor=\"$l2_bg\">\n" .
 	     "<br>" .
 	     "<font color=\"$l2_fg\" size=\"4\"><b>글이 없습니다.</b></font>" .
 	     "<br><br>\n" .
@@ -146,9 +139,9 @@ function vlist($no) {
 	$bofile = $list[15]; // 파일이름 . file upload용.
 	$bcfile = $list[16]; // 파일경로 . file upload용.taejun.
 
-	$name   = substr($name, 0, $namel);
+	$name  = cut_string($name,$namel) ; 
 	$titl   = $titll - $rede;
-	$title  = substr($title, 0, $titl);
+	$title  = cut_string($title,$titl) ; 
 	$date2  = $date;
 	$date   = date("y-m-d", $date);
 	// Y2K east egg - JoungKyun Kim :-)
@@ -238,5 +231,7 @@ function nlist($page) {
     }
     echo("<a href=\"$SCRIPT_NAME?table=$table&page=$apage$search\"><font color=\"$l0_fg\">▷</font></a>\n");
 }
+
+
 
 ?>
