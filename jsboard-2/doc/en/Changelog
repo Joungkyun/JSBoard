@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Fri, Feb  2 2002
+Date      : Fri, Feb  4 2002
 Version   : jsboard-2.0pre4
 
 
@@ -53,6 +53,8 @@ Version   : jsboard-2.0pre4
 27. fixed bug of auto_link() function
 28. modified theme
 29. changed encode method of send notice mail to base64 from plain
+30. fixed syntax error of INSTALLER/script/dbconv_to_20
+31. fixed trackvar bug of user admin
 
 
 -----------------------------------------------------------------------------

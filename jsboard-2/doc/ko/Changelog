@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  2월  2일
+작성일 : 2002년  2월  4일
 버전   : jsboard-2.0pre4
 
 
@@ -55,6 +55,8 @@ If you wnat to see windog's change log, see also
 27. auto_link() 함수 버그 수정
 28. 테마 수정
 29. 등록 공지 메일을 plain 에서 base64 로 인코딩하여 발송하게 변경
+30. INSTALLER/script/dbconv_to_20 의 문법 에러 수정
+31. 게시판 관리자 실행시 html header 와 html tail 이 사라지는 것 수정
 
 
 -----------------------------------------------------------------------------
