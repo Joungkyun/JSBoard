@@ -89,7 +89,7 @@ if(!$np) {
 <FONT Style="font-weight:bold">Date</FONT> <?=$list['date']?> <?=$list['dhost']?> &nbsp; &nbsp; 
 <FONT Style="font-weight:bold">Read</FONT> <?=$list['refer']?><BR>
 <FONT Style="font-weight:bold">Name</FONT> <?=$list['uname']?> &nbsp; &nbsp;
-<? if($list['attach']) echo "<FONT Style=\"font-weight:bold\">File</FONT> {$list['attach']]" ?><BR>
+<? if($list['attach']) echo "<FONT Style=\"font-weight:bold\">File</FONT> {$list['attach']}" ?><BR>
 <IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
 </TD>
 <TD WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
