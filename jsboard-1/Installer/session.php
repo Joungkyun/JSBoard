@@ -1,5 +1,8 @@
 <?
 session_start(); // session을 시작한다.
+include_once "../include/print.ph";
+parse_query_str();
+
 if ($mode == "login") {
   session_register("mysqlpass"); //세션 등록한다.
   header("Location: install.php?langss=$langss");

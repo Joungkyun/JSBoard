@@ -1,4 +1,8 @@
 <?
+include "include/print.ph";
+# register_globals 옵션의 영향을 받지 않기 위한 함수
+parse_query_str();
+
 if($m == "golist") {
   echo "<META http-equiv=\"refresh\" content=\"0;URL=list.php?table=$table\">";
   exit;
@@ -9,7 +13,6 @@ include "config/global.ph";
 include "admin/include/config.ph";
 include "include/get.ph";
 include "include/check.ph";
-include "include/print.ph";
 include "include/error.ph";
 include "html/head.ph";
 
@@ -52,7 +55,7 @@ if($viewtype || $adminsession) {
                     "</TD></TR>\n".
                     "<TR><TD ALIGN=right>\n".
                     "<FONT FACE=Tahoma SIZE=-1>PASSWORD : ".
-                    "<input type=password name=pcheck id=input size=$size><BR>\n".
+                    "<input type=password name=pcheck size=$size STYLE=\"font: 10px tahoma\"><BR>\n".
                     "</TD></TR>\n<TR><TD ALIGN=right>\n".
                     "<input type=button value=\"VEIW LIST\" onClick=\"document.location='$PHP_SELF?table=$table&m=golist'\">\n".
                     "<input type=submit value='ENTER'>\n".

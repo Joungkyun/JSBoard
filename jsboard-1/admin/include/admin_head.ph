@@ -2,27 +2,31 @@
 # session을 시작
 session_start();
 
+include_once "../include/print.ph";
+# register_globals 옵션의 영향을 받지 않기 위한 함수
+if(!$parse_query_str_check) parse_query_str();
+
 # Copyright 정보
-$copy[name]     = "JoungKyun Kim";
+$copy[name]     = "JSBoard Open Project";
 $copy[email]    = "";
-$copy[url]      = "http://www.oops.org";
+$copy[url]      = "http://jsboard.kldp.org";
 $copy[version]  = "3.0";
 
-include "./include/config.ph";
-include "../config/global.ph";
+include_once "./include/config.ph";
+include_once "../config/global.ph";
 
 $path[type] = "admin";
 
-include "../include/error.ph";
-include "../include/lang.ph";
-include "../include/exec.ph";
-include "../include/get.ph";
-include "./include/print.ph";
-include "./include/check.ph";
-include "./include/get.ph";
-include "./include/first_reg.ph";
+include_once "../include/error.ph";
+include_once "../include/lang.ph";
+include_once "../include/exec.ph";
+include_once "../include/get.ph";
+include_once "./include/print.ph";
+include_once "./include/check.ph";
+include_once "./include/get.ph";
+include_once "./include/first_reg.ph";
 
 # 기본 설정및 색상 테마 읽기
 if(file_exists("../config/default.themes") && $color[theme])
-  { include "../config/default.themes"; }
+  { include_once "../config/default.themes"; }
 ?>

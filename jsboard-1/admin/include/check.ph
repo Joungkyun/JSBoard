@@ -5,6 +5,7 @@
 #
 function compare_pass($pass,$l,$ck=0) {
   global $langs;
+
   if(!$ck) {
     if (!session_is_registered("login")) print_pwerror($langs[ua_pw_n]);
     if ($l[pass] != $pass[passwd]) print_pwerror($langs[ua_pw_c]);

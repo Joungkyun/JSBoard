@@ -1,6 +1,6 @@
 <?php
-require("./include/header.ph");
-require("./html/head.ph");
+require "./include/header.ph";
+require "./html/head.ph";
 
 # license year
 $lyear = date("Y",time());
@@ -26,7 +26,7 @@ echo "
 <tr align=center><td><p><br><br>
 <form name=auth method=POST action=act.php>
 $langs[au_ment]<br>
-<input type=password name=pcheck id=input size=$size>
+<input type=password name=pcheck id=input size=$size STYLE=\"font: 10px tahoma\">
 <input type=hidden name=table value=$table>
 <input type=hidden name=page value=$page>
 <input type=hidden name=kind value=$kind>

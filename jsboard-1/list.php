@@ -64,8 +64,14 @@ echo "
 if ($board[cmd] == "yes" && $board[img] != "yes") {
   $str[align] = "";
   list_cmd($str);
-} elseif($enable[dhost]) echo "$langs[remote] [ " . get_hostname($enable[dlook]) . " ]$icons[add]";
-  else echo "&nbsp;";
+} elseif($enable[dhost]) {
+  $list[dhost] = get_hostname($enable[dlook]);
+  if($enable[dwho]) 
+    $list[hlinked] = "<a href=javascript:new_windows('./whois.php?table=$table&host=$list[dhost]',0,1,0,600,480)>".
+                      "<font color=$color[text]>$list[dhost]</font></a>";
+  else $list[hlinked] = "<font color=$color[text]>$list[dhost]</font>";
+  echo "$langs[remote] [ $list[hlinked] ]$icons[add]";
+} else echo "&nbsp;";
 
 echo "</TD>
 </TR>

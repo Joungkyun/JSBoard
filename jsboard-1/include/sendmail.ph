@@ -58,7 +58,7 @@ function phpmail($to,$from,$title,$body) {
   mailcheck($to,$from,$title,$body);
 
   $header = mail_header($to,$from,$title,1);
-  mail($to,$title,$body,$header,"-f\"$from\"") or print_notice($langs[mail_send_err]);
+  mail($to,$title,$body,$header,"-f$from") or print_notice($langs[mail_send_err]);
 }
 
 function socketmail($smtp,$to,$from,$title,$body) {
@@ -181,15 +181,14 @@ function sendmail($rmail,$fm=0) {
              "OOPS Form mail service - http://www.oops.org\r\n".
              "Scripted by JoungKyun Kim\r\n";
 
-  if ($rmail[user] == "yes" && $rmail[reply_orig_email]) {
+  if ($rmail[user] == "yes" && $rmail[reply_orig_email] && $rmail[email] != $rmail[reply_orig_email]) {
     if($rmail[mta]) socketmail($rmail[smtp],$rmail[reply_orig_email],$rmail[email],$rmail[title],$message);
     else phpmail($rmail[reply_orig_email],$rmail[email],$rmail[title],$message);
   }
 
-  if ($rmail[admin] == "yes" && $rmail[toadmin] != "") {
+  if ($rmail[admin] == "yes" && $rmail[toadmin] != "" && $rmail[email] != $rmail[toadmin]) {
     if($rmail[mta]) socketmail($rmail[smtp],$rmail[toadmin],$rmail[email],$rmail[title],$message);
     else phpmail($rmail[toadmin],$rmail[email],$rmail[title],$message);
   }
-
 }
 ?>

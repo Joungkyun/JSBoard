@@ -1,19 +1,20 @@
 <?php
+include_once "../include/print.ph";
+parse_query_str();
 
 $path[type] = "Install";
 $copydate = time();
 $copydate = date("Y",$copydate);
 
-require("../config/themes/basic.themes");
-require("./include/passwd.ph");
+require_once "../config/themes/basic.themes";
+require_once "./include/passwd.ph";
 
 if ($langss == "ko") $langs[code] = "ko";
 else $langs[code] = "en";
 
-include "../include/lang.ph";
-include "../include/get.ph";
-include "../include/print.ph";
-include "../html/head.ph";
+include_once "../include/lang.ph";
+include_once "../include/get.ph";
+include_once "../html/head.ph";
 
 $agent = get_agent();
 

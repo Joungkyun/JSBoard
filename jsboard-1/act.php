@@ -1,7 +1,12 @@
 <?
+include_once "include/print.ph";
+# register_globals 옵션의 영향을 받지 않기 위한 함수
+parse_query_str();
+$parse_query_str_check = 1;
+
 if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
-  include "include/header.ph";
-  include "./admin/include/config.ph";
+  include_once "include/header.ph";
+  include_once "./admin/include/config.ph";
 
   $agent = get_agent();
 
@@ -11,7 +16,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
   # 게시물 작성 함수
   function article_post($table, $atc) {
     global $board, $upload, $cupload, $rmail, $langs, $adminsession, $pcheck;
-    global $userfile, $userfile_name, $userfile_size, $max_file_size, $agent;
+    global $HTTP_POST_FILES, $max_file_size, $agent;
 
     $atc[date] = time(); # 현재 시각
     $atc[host] = get_hostname(0); # 글쓴이 주소
@@ -35,30 +40,30 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
     # 전체 관리자가 허락하였을시에만 upload 기능을 사용할수 있음
     if ($upload[yesno] =='yes' && $cupload[yesno] == 'yes' && $agent[br] != "LYNX") {
       $bfilename = date("YmdHis",$atc[date]);
-      $upchk = file_upload($bfilename);
-      if(!$upchk) {
+      $upfile = file_upload("userfile",$bfilename);
+      if(!trim($upfile[name])) {
         $bfilename = "";
-        $userfile_size = 0;
-        $userfile_name = "";
+        $upfile[size] = 0;
+        $upfile[name] = "";
       }
     } else {
       # winchild 99/11/26 fileupload = "no" 일 경우에는 초기화를 시켜주어야 한다.
       $bfilename = "";
-      $userfile_size = 0;
-      $userfile_name = "";
+      $upfile[size] = 0;
+      $upfile[name] = "";
     }
 
-    $result = sql_query("SELECT MAX(num) AS num, MAX(idx) AS idx, MAX(no) AS no FROM $table");
-    $atc[no] = sql_result($result, 0, "no") + 1; # 최고 번호
+    $result = sql_query("SELECT MAX(num) AS num, MAX(idx) AS idx FROM $table");
     $atc[mxnum] = sql_result($result, 0, "num") + 1; # 최고 번호
     $atc[mxidx] = sql_result($result, 0, "idx") + 1; # 최고 인덱스 번호
     sql_free_result($result);
 
     sql_query("
-      INSERT INTO $table VALUES ('', $atc[mxnum], $atc[mxidx],
-      $atc[date], '$atc[host]', '$atc[name]', '$atc[passwd]',
-      '$atc[email]', '$atc[url]', '$atc[title]', '$atc[text]',
-      0, 0, 0, 0, 0, $atc[html], $board[moder],'$userfile_name','$bfilename','$userfile_size')");
+      INSERT INTO $table (no,num,idx,date,host,name,passwd,email,url,title,text,refer,
+                          reyn,reno,rede,reto,html,bofile,bcfile,bfsize)
+           VALUES ('',$atc[mxnum],$atc[mxidx],$atc[date],'$atc[host]','$atc[name]','$atc[passwd]',
+                   '$atc[email]','$atc[url]','$atc[title]','$atc[text]',0,0,0,0,0,$atc[html],
+                   '$upfile[name]','$bfilename','$upfile[size]')");
 
     # mail 보내는 부분
     if ($rmail[uses] == 'yes') {
@@ -70,7 +75,8 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
         $rmail[email] = "$atc[email]";
         $rmail[version] = "$board[ver]";
         $rmail[table] = "$table";
-        $rmail[no] = $atc[no];
+        $rmail[noquery] = sql_query("SELECT MAX(no) AS no FROM $table");
+        $rmail[no] = sql_result($rmail[noquery], 0, "no"); # 최고 번호
         $rmail[reply_orig_email] = "$rmail[origmail]";
 
         if(sendmail($rmail)) $page[m_err] = 0;
@@ -84,7 +90,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
   # 게시물 답장 함수
   function article_reply($table, $atc) {
     global $board, $upload, $cupload, $rmail, $langs, $adminsession, $pcheck;
-    global $userfile, $userfile_name, $userfile_size, $max_file_size, $agent;
+    global $HTTP_POST_FILES, $max_file_size, $agent;
 
     $atc[date] = time(); # 현재 시각
     $atc[host] = get_hostname(0); # 글쓴이 주소
@@ -108,17 +114,17 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
     # 답변시 file upload 설정 부분, 전체 관리자가 허락시에만 가능
     if ($upload[yesno] =='yes' && $cupload[yesno] == 'yes' && $agent[br] != "LYNX") {
       $bfilename = date("YmdHis",$atc[date]);
-      $upchk = file_upload($bfilename);
-      if(!$upchk) {
+      $upfile = file_upload("userfile",$bfilename);
+      if(!trim($upfile[name])) {
         $bfilename = "";
-        $userfile_size = 0;
-        $userfile_name = "";
+        $upfile[size] = 0;
+        $upfile[name] = "";
       }
     } else {
       # winchild 99/11/26 fileupload = "no" 일 경우에는 초기화를 시켜주어야 한다.
       $bfilename = "";
-      $userfile_size = 0;
-      $userfile_name = "";
+      $upfile[size] = 0;
+      $upfile[name] = "";
     }
 
     # 답장글에 대한 정보를 가져옴
@@ -134,16 +140,18 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
     sql_query("UPDATE $table SET idx = idx + 1 WHERE (idx + 0) >= $atc[idx]");
     sql_query("UPDATE $table SET reyn = 1 WHERE no = $atc[reno]");
     sql_query("
-      INSERT INTO $table VALUES ('', 0, $atc[idx], $atc[date],
-      '$atc[host]', '$atc[name]', '$atc[passwd]', '$atc[email]',
-      '$atc[url]', '$atc[title]', '$atc[text]', 0, 0, $atc[reno],
-      $atc[rede], $atc[reto], $atc[html], $board[moder],'$userfile_name','$bfilename','$userfile_size')");
+      INSERT INTO $table (no,num,idx,date,host,name,passwd,email,url,title,text,refer,
+                          reyn,reno,rede,reto,html,bofile,bcfile,bfsize)
+           VALUES ('',0,$atc[idx],$atc[date],
+      '$atc[host]','$atc[name]','$atc[passwd]','$atc[email]','$atc[url]','$atc[title]',
+      '$atc[text]',0,0,$atc[reno],$atc[rede],$atc[reto],$atc[html],'$upfile[name]',
+      '$bfilename','$upfile[size]')");
     sql_query("UNLOCK TABLES");
 
     # mail 보내는 부분
     if ($rmail[uses] == 'yes') {
       if ($rmail[admin] == "yes" || $rmail[user] == "yes") {
-        $result = sql_query("SELECT MAX(no) no FROM $table");
+        $result = sql_query("SELECT MAX(no) AS no FROM $table");
         $rmail[no] = sql_result($result, 0, "no"); # 최고 번호
         $rmail[name] = "$atc[rname]";
         $rmail[text] = "$atc[text]";
@@ -166,7 +174,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
 
   # 게시물 수정 함수
   function article_edit($table, $atc, $passwd) {
-    global $userfile, $userfile_name, $userfile_size, $max_file_size, $agent;
+    global $HTTP_POST_FILES, $max_file_size, $agent;
     global $enable, $cenable, $board, $adminsession;
     global $sadmin, $admin, $langs;
 
@@ -211,9 +219,9 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
 
     # file 수정 루틴
     $bfilename = date("YmdHis",$atc[date]);
-    $atc[fup] = file_upload($bfilename);
+    $upfile = file_upload("userfile",$bfilename);
 
-    if($atc[fup]) {
+    if(trim($upfile[name])) {
       if(file_exists("data/$table/files/$atc[fdeldir]/$atc[fdelname]") && $atc[fdelname]) {
         unlink("data/$table/files/$atc[fdeldir]/$atc[fdelname]");
         rmdir("data/$table/files/$atc[fdeldir]");
@@ -223,7 +231,8 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
         UPDATE $table SET date = $atc[date], host = '$atc[host]',
         name = '$atc[name]', email = '$atc[email]', url = '$atc[url]',
         title = '$atc[title]', text = '$atc[text]', html = $atc[html],
-        bofile = '$userfile_name', bcfile = '$bfilename', bfsize = '$userfile_size'
+        bofile = '$upfile[name]', bcfile = '$bfilename',
+        bfsize = '$upfile[size]'
         WHERE no = $atc[no]");
     } else {
       sql_query("
@@ -349,6 +358,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
 
     # 스팸 체크
     if(check_spam($atc[text])) print_error($langs[act_s]);
+    if(check_spam($atc[title])) print_error($langs[act_s]);
 
     # 등록 가능한 browser check
     if(!chk_spam_browser()) print_error($langs[act_sb]);
@@ -425,10 +435,10 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
       break;
   }
 } elseif ($o[at] == "dn") {
-  include "config/global.ph";
-  include "include/error.ph";
-  include "include/check.ph";
-  include "include/get.ph";
+  include_once "config/global.ph";
+  include_once "include/error.ph";
+  include_once "include/check.ph";
+  include_once "include/get.ph";
 
   $agent = get_agent();
 
@@ -453,13 +463,13 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
     echo $dn[dl];
   }
 } elseif ($o[at] == "sm") {
-  include "include/version.ph";
-  include "config/global.ph";
-  include "include/get.ph";
-  include "include/error.ph";
-  include "include/check.ph";
-  include "include/sendmail.ph";
-  include "include/lang.ph";
+  include_once "include/version.ph";
+  include_once "config/global.ph";
+  include_once "include/get.ph";
+  include_once "include/error.ph";
+  include_once "include/check.ph";
+  include_once "include/sendmail.ph";
+  include_once "include/lang.ph";
 
   if($rmail[uses] == "yes") {
     # 등록 가능한 browser check
@@ -487,7 +497,7 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
   exit;
 } elseif ($o[at] == "se") {
   if ($o[se] == "login") {
-    include "include/get.ph";
+    include_once "include/get.ph";
     $agent = get_agent();
 
     if($pcheck != "") SetCookie("pcheck","","0");

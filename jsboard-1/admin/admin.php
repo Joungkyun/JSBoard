@@ -27,12 +27,16 @@ $connect=@mysql_connect("$db[server]","$db[user]","$db[pass]")  or
 
 echo "<table border=0 width=100% height=100% cellpadding=0 cellspacing=0>\n".
      "<tr><td align=center valign=center>\n\n".
+     "<table width=$board[width] border=0 cellpadding=0 cellspacing=0 border=0>\n<tr>\n".
+     "<tr><td>\n\n".
      "<table border=0 cellpadding=0 cellspacing=0 border=0>\n<tr>\n".
-     "<td rowspan=2 valign=center><font size=+2 color=$color[text]><b>OOPS&nbsp;</b></font></td>\n".
-     "<td valign=bottom> for JS Board</td>\n".
+     "<td rowspan=2 valign=center>".
+     "<font style=\"font: 40px tahoma;color:$color[text]; font-weight:bold\">J</font></td>\n".
+     "<td valign=bottom><font style=\"font: 12px tahoma; font-weight:bold\">SBoard</font></td>\n".
      "</tr>\n\n<tr>\n".
-     "<td valign=top>Administration Center v$copy[version]</td>\n".
-     "</tr>\n</table>\n<p>\n";
+"<td valign=top><font style=\"font: 12px tahoma; font-weight:bold\">Administration Center</font></td>\n".
+     "</tr>\n</table>\n".
+     "</td></tr>\n</table>\n";
 
 # db_name이 존재하지 않으면 아래를 출력합니다.
 exsit_dbname_check($db[name]);
@@ -159,7 +163,7 @@ if($db[name] && !$table) {
        "<input type='hidden' name='ts' value='$ts'>\n".
        "</td></form>\n\n".
        "<td colspan=2  rowspan=2 align=center><font color=white>\n".
-       "<a href=$copy[url]><font color=$color[l0_fg]>OOPS Developoment<br>Organization</font></a>\n".
+       "<a href=$copy[url]><font color=$color[l0_fg]>JSBoard Open Project</font></a>\n".
        "</td>\n</tr>\n\n".
        "<tr bgcolor=$color[l0_bg]><form name='del_db' method='post' action='act.php'>\n".
        "<td colspan=3>&nbsp;&nbsp;<font color=$color[l0_fg]>$langs[a_t14] :</font>\n".

@@ -233,10 +233,6 @@ $langs[ua_b20] = "글내용 길게 늘어지는것 방지";
 $langs[ua_b21] = "워드랩";
 $langs[ua_b22] = "보드랩이 적용안될 경우 강제로 자를 글자수";
 
-$langs[ua_m1] = "메일링크";
-$langs[ua_m2] = "폼메일 사용";
-$langs[ua_m3] = "mailto 사용(변형주소)";
-
 $langs[ua_ha1] = "출력여부";
 $langs[ua_ha2] = "IP 주소를";
 $langs[ua_ha3] = "출력";
