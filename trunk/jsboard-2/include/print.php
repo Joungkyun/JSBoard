@@ -905,12 +905,12 @@ function print_keymenu($type=0) {
   if(!$type) {
     $nextpage = $pages['nex'] ? $pages['nex'] : $pages['all'];
     $prevpage = $pages['pre'] ? $pages['pre'] : 1;
-    $nlink = "./list.php?table=$table&amp;page=$nextpage";
-    $plink = "./list.php?table=$table&amp;page=$prevpage";
+    $nlink = "./list.php?table=$table&page=$nextpage";
+    $plink = "./list.php?table=$table&page=$prevpage";
     $ment = "Page";
 
     $precmd = " if (cc == 13) {\n".
-              "    if(strs.length > 0) self.location = 'read.php?table=$table&amp;num=' + strs + '&amp;page=$page';\n".
+              "    if(strs.length > 0) self.location = 'read.php?table=$table&num=' + strs + '&page=$page';\n".
               "    else strs = \"\";\n".
               "  } else";
 
@@ -923,18 +923,18 @@ function print_keymenu($type=0) {
               "    document.getElementById(\"num\").innerHTML=strs;\n".
               "  }\n";
   } else {
-    $nlink = "./read.php?table=$table&amp;no={$pos['prev']}";
-    $plink = "./read.php?table=$table&amp;no={$pos['next']}";
+    $nlink = "./read.php?table=$table&no={$pos['prev']}";
+    $plink = "./read.php?table=$table&no={$pos['next']}";
     $ment = "Article";
 
     $anycmd = "else if(ch == 'l' || ch == '.' || ch == 'L') {\n".
-              "    self.location = './list.php?table=$table&amp;page=$page';\n".
+              "    self.location = './list.php?table=$table&page=$page';\n".
               "  } else if(ch == 'r' || ch == 'R' || ch == '/') {\n".
-              "    self.location = './reply.php?table=$table&amp;no=$no&amp;page=$page';\n".
+              "    self.location = './reply.php?table=$table&no=$no&page=$page';\n".
               "  } else if(ch == 'e' || ch == 'E') {\n".
-              "    self.location = './edit.php?table=$table&amp;no=$no&amp;page=$page';\n".
+              "    self.location = './edit.php?table=$table&no=$no&page=$page';\n".
               "  } else if(ch == 'd' || ch == 'D') {\n".
-              "    self.location = './delete.php?table=$table&amp;no=$no&amp;page=$page';\n".
+              "    self.location = './delete.php?table=$table&no=$no&page=$page';\n".
               "  } else if(ch == ':' || strs == ':') {\n".
               "    strs = strs + ch;\n".
               "    if(strs == ':q') { self.close(); }\n".
@@ -970,13 +970,13 @@ function print_keymenu($type=0) {
        "  if(e.altKey || e.ctrlKey) return;\n\n".
        
        " ${precmd} if(ch == 'p' || ch == 'P') {\n".
-       "    self.location = './list.php?table=$table&amp;page=1';\n".
+       "    self.location = './list.php?table=$table&page=1';\n".
        "  } else if(ch == 'n' || ch == 'N' || ch == '+') {\n".
        "    self.location = '$nlink';\n".
        "  } else if(ch == 'b' || ch == 'B' || ch == '-') {\n".
        "    self.location = '$plink';\n".
        "  } else if(ch == 'w' || ch == 'W' || ch == '*') {\n".
-       "    self.location = './write.php?table=$table&amp;page=$page';\n".
+       "    self.location = './write.php?table=$table&page=$page';\n".
        "  } $anycmd\n".
        "  return;\n".
        "}\n\n".
