@@ -1,6 +1,5 @@
 <?
 include "./include/header.ph";
-if($_COOKIE[$cjsboard][id]) { session_start(); }
 
 if($mode == "photo") {
   if(eregi("^(2|3|5)$",$board[mode]) && !session_is_registered("$jsboard"))
@@ -27,4 +26,5 @@ if($mode) {
   if(!$print[theme]) $print[theme] = "EN-default";
   include "theme/$print[theme]/ext.template";
 }
+if(!session_is_registered("$jsboard")) session_destroy();
 ?>

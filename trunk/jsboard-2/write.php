@@ -4,22 +4,22 @@ include "include/header.ph";
 $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
 $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
 
-if($_COOKIE[$cjsboard][id] == $board[ad] || $_COOKIE[$cjsboard][super] == 1)
+if($_SESSION[$jsboard][id] == $board[ad] || $_SESSOIN[$jsboard][pos] == 1)
   $board[super] = 1;
 
 if(eregi("^(1|3|4|5)$",$board[mode])) { if(!$board[super]) print_error($langs[perm_err],250,150,1); }
-if(!eregi("^(0|6)",$board[mode]) && !$_COOKIE[$cjsboard][id]) print_error($langs[perm_err],250,150,1);
+if(!eregi("^(0|6)",$board[mode]) && !$_SESSION[$jsboard][id]) print_error($langs[perm_err],250,150,1);
 
-if($board[mode] && $_COOKIE[$cjsboard][id]) {
-  if(!eregi("^(1|4)$",$board[mode]) && $_COOKIE[$cjsboard][super] != 1) $disable = " disabled";
+if($board[mode] && $_SESSION[$jsboard][id]) {
+  if(!eregi("^(1|4)$",$board[mode]) && $_SESSION[$jsboard][pos] != 1) $disable = " disabled";
   else $nodisable = 1;
 } else $nodisable = 1;
 
-if((eregi("^(2|3|5|7)$",$board[mode]) && $_COOKIE[$cjsboard][id]) || $board[super]) {
-  $pre_regist[name] = $_COOKIE[$cjsboard][id];
-  $pre_regist[rname] = $_COOKIE[$cjsboard][name];
-  $pre_regist[email] = $_COOKIE[$cjsboard][email];
-  $pre_regist[url] = $_COOKIE[$cjsboard][url];
+if((eregi("^(2|3|5|7)$",$board[mode]) && $_SESSION[$jsboard][id]) || $board[super]) {
+  $pre_regist[name] = $_SESSION[$jsboard][id];
+  $pre_regist[rname] = $_SESSION[$jsboard][name];
+  $pre_regist[email] = $_SESSION[$jsboard][email];
+  $pre_regist[url] = $_SESSION[$jsboard][url];
 } else {
   $pre_regist[name] = eregi_replace("[\]","",$_COOKIE[board_cookie][name]);
   $pre_regist[email] = eregi_replace("[\]","",$_COOKIE[board_cookie][email]);
@@ -53,14 +53,17 @@ if(!$nodisable) {
                       "$pre_regist[rname]".
                       "\n<INPUT TYPE=hidden NAME=atc[email] VALUE=\"$pre_regist[email]\">".
                       "\n<INPUT TYPE=hidden NAME=atc[url] VALUE=\"$pre_regist[url]\">\n";
-} elseif($_COOKIE[$cjsboard][super] == 1) {
+} elseif($_SESSION[$jsboard][pos] == 1) {
   $print[passform] .= "$pre_regist[rname]\n";
 }
 
 $pages = $page ? "&page=$page" : "";
 
-if($board[rnname] && eregi("^(2|3|5|7)",$board[mode]) && $_COOKIE[$cjsboard][super] != 1) 
-  $pre_regist[name] = $_COOKIE[$cjsboard][name] ? $_COOKIE[$cjsboard][name] : $pre_regist[name];
+if($board[rnname] && eregi("^(2|3|5|7)",$board[mode]) && $_SESSION[$jsboard][pos] != 1) 
+  $pre_regist[name] = $_SESSION[$jsboard][name] ? $_SESSION[$jsboard][name] : $pre_regist[name];
 
 include "theme/$print[theme]/write.template";
+
+# 세션이 등록되어 있지 않을 경우 불필요한 세션을 삭제
+if(!session_is_registered("$jsboard")) session_destroy();
 ?>

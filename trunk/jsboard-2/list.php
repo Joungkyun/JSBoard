@@ -5,8 +5,6 @@ include "include/header.ph";
 
 $page = !$page ? 1 : $page;
 
-if($_COOKIE[$cjsboard][id]) { session_start(); }
-
 if(!session_is_registered("$jsboard") && eregi("^(2|3|5|7)$",$board[mode]))
   print_error("$langs[login_err]");
 
@@ -106,4 +104,5 @@ $sform[ss] = preg_replace("/\\\\+/i","\\",$sform[ss]);
 
 # PAGE DISPLAY
 include "./theme/$print[theme]/list.template";
+if(!session_is_registered("$jsboard")) session_destroy();
 ?>

@@ -74,6 +74,8 @@ Version   : jsboard-2.0pre4
 48. changed to use self smtp of JSBoard when send mail
 49. fixed bug of regex
 50. changed check_mail() function to check valid mail server
+51. removed cookie that used with user auth
+52. fixed problem of creat empty session file
 
 
 -----------------------------------------------------------------------------
