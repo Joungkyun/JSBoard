@@ -104,6 +104,10 @@ function get_agent() {
     $agent[br] = "KONQ";
   } else if(ereg("Lynx", $agent_env)) {
     $agent[br] = "LYNX";
+  } else if(eregi("w3m", $agent_env)) {
+    $agent[br] = "W3M";
+  } else if(eregi("links", $agent_env)) {
+    $agent[br] = "LINKS";
   } else if(ereg("^Mozilla", $agent_env)) {
     $agent[br] = "NS";
     # client OS ±¸ºÐ
