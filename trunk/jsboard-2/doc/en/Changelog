@@ -18,6 +18,14 @@ If you wnat to see windog's change log, see also
 ******************************************************************************
 
 
+Version   : jsboard-2.0.5
+
+Wed, Dec 25 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed display bad http protol by emoticon function
+
+
+-----------------------------------------------------------------------------
 Version   : jsboard-2.0.4
 
 Wed, Dec 25 2002
