@@ -52,7 +52,7 @@ $jsboard         = "jsboard".$jsboard;
 $print[dpage] = "http://domain.com/jsboard/list.php?table=test";
 
 # location of default page after logout
-$print[dopage] = "http://domain.com/jsboard/list.php?table=test";
+$print[dopage] = "http://domain.com/jsboard/login.php?table=test";
 
 # permition of user registration
 # 1 -> everyone
