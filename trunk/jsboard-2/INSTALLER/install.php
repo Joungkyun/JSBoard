@@ -20,6 +20,7 @@ include_once "../include/get.ph";
 include_once "../html/head.ph";
 include_once "./include/passwd.ph";
 include_once "./include/check.ph";
+include_once "../include/version.ph";
 
 # Password Check
 inst_pwcheck($passwd,$_SESSION[mysqlpass],$langs[act_pw]);
@@ -43,7 +44,7 @@ if($mysqlroot) {
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$charset?>">
-<TITLE>Jsboard 2.0pre1 Installation</TITLE>
+<TITLE>Jsboard <?=$board[ver]?> Installation</TITLE>
 <STYLE TYPE=text/css>
 <!--
 BODY, TD {FONT: 12px <?=$charfont?>; COLOR:red; }

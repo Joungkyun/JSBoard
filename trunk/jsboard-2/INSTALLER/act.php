@@ -165,8 +165,6 @@ if ($indb[check]) {
 } else print_error($langs[inst_error],250,150,1);
 
 mysql_close();
-
-echo "<script>\n" .
-     "  document.location='session.php?mode=first&langss=$langss'\n" .
-     "</script>";
 ?>
+<script>document.location='session.php?mode=first&langss=<?=$langss?>';</script>
+<NOSCRIPT><META http-equiv="refresh" content="0;URL=./session.php?mode=first&langss=<?=$langss?>"></NOSCRIPT>

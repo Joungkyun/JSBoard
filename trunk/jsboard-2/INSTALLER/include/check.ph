@@ -6,7 +6,11 @@ function inst_pwcheck($pass,$mypass,$msg) {
     echo "<script>\n" .
          "alert('$msg')\n" .
          "document.location='./session.php?mode=logout&langss=$langs[code]'\n" .
-         "</script>";
+         "</script>".
+         "<NOSCRIPT>\n".
+         "Error: $msg<BR>\n".
+         "If you want to go authentication page, <A HREF=./session.php?mode=logout&langss=$langs[code]>click here</A>!\n";
+         "</NOSCRIPT>\n";
     exit;
   }
 }
