@@ -73,7 +73,7 @@ $size[text] = !$size[text] ? form_size(30) : form_size($size[text]);
 $size[uplo] = !$size[uplo] ? form_size(19) : form_size($size[uplo]);
 
 # table 이 없거나 meta character 존재 유무 체크
-if(!eregi("(user|session|regist|error)\.php",$_SERVER[PHP_SELF])) {
+if(!eregi("(user|session|regist|error|image)\.php",$_SERVER[PHP_SELF])) {
   if($dn[tb]) $table = $dn[tb];
   meta_char_check($table,0,1);
   meta_char_check($print[theme],0,1);
