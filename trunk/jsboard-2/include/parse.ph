@@ -343,7 +343,7 @@ function auto_link($str) {
 
   $regex[file] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
   $regex[file] = "(\.($regex[file])\") TARGET=\"_blank\"";
-  $regex[http] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9:_\-]+\.[\xA1-\xFEa-z0-9:;&#=_~%\[\]\?\/\.\,\+\-]+)(\/|[\.]*[\xA1-\xFEa-z0-9\[\]]))";
+  $regex[http] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9:_\-]+\.[\xA1-\xFEa-z0-9:;&#=_~%\[\]\?\/\.\,\+\-]+)([\.]*[\/a-z0-9\[\]]|=[\xA1-\xFE]+))";
   $regex[mail] = "([\xA1-\xFEa-z0-9_\.\-]+)@([\xA1-\xFEa-z0-9_\-]+\.[\xA1-\xFEa-z0-9\-\._\-]+[\.]*[a-z0-9]\??[\xA1-\xFEa-z0-9=]*)";
 
   # &lt; 로 시작해서 3줄뒤에 &gt; 가 나올 경우와
@@ -371,8 +371,8 @@ function auto_link($str) {
   $tar[] = "<\\1\\2=\"\\4_orig://\\5\"";
 
   # 링크가 안된 url및 email address 자동링크
-  $src[] = "/(SRC=|HREF=|[^=]|^)($regex[http])/i";
-  $tar[] = "\\1<A HREF=\"\\2\" TARGET=\"_blank\">\\2</a>";
+  $src[] = "/((SRC|HREF|BASE|GROUND)[ ]*=[ ]*|[^=]|^)($regex[http])/i";
+  $tar[] = "\\1<A HREF=\"\\3\" TARGET=\"_blank\">\\3</a>";
   $src[] = "/($regex[mail])/i";
   $tar[] = "<A HREF=\"mailto:\\1\">\\1</a>";
   $src[] = "/<A HREF=[^>]+>(<A HREF=[^>]+>)/i";
