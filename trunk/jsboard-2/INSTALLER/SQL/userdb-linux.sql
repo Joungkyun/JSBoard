@@ -4,8 +4,8 @@
 
 CREATE TABLE userdb (
   no int(6) NOT NULL auto_increment,
-  nid varchar(100) NOT NULL default '',
-  name varchar(100) NOT NULL default '',
+  nid varchar(30) NOT NULL default '',
+  name varchar(30) NOT NULL default '',
   email tinytext NOT NULL,
   url tinytext NOT NULL,
   passwd varchar(100) NOT NULL default '',
