@@ -9,7 +9,7 @@ $dbpass = "";
 $dbaddr = "";
 $dbname = "";
 
-$dirs = "Data";
+$dirs = "DATA";
 
 $con = mysql_connect($dbaddr,$dbuser,$dbpass);
 mysql_select_db($dbname,$con);
@@ -53,8 +53,8 @@ $create_table = mysql_query($sql,$con);
 
 $p = opendir($dirs);
 while($i = readdir($p)) {
-  if(eregi("^[0-9]+\.txt",$i)) {
-    $n = eregi_replace("(^[0-9]+)\.txt","\\1",$i);
+  if(preg_match("/^[0-9]+\.txt/i",$i)) {
+    $n = preg_replace("/(^[0-9]+)\.txt/i","\\1",$i);
     $files[] = $i;
   }
 }
@@ -71,7 +71,7 @@ for($i=0;$i<$fno;$i++) {
 
   $fn = "$dirs/$files[$i]";
   $fsize = filesize($fn);
-  $f_no = eregi_replace("^1[0]*([0-9]+)\.txt","\\1",$files[$i]);
+  $f_no = preg_replace("/^1[0]*([0-9]+)\.txt/i","\\1",$files[$i]);
   $p = fopen($fn,"r");
 
   $convno = $f_no;
@@ -80,8 +80,8 @@ for($i=0;$i<$fno;$i++) {
     $fc = fgets($p,$fsize);
 
     # Date
-    if(eregi("$f_no\.Date",$fc)) {
-      $date = trim(eregi_replace("$f_no\.Date=","",$fc));
+    if(preg_match("/^$f_no\.Date/mi",$fc)) {
+      $date = trim(preg_replace("/^$f_no\.Date=/i","",$fc));
       $y = substr($date,0,4);
       $m = substr($date,4,2);
       $d = substr($date,6,2);
@@ -93,49 +93,61 @@ for($i=0;$i<$fno;$i++) {
     }
 
     # host
-    if(eregi("$f_no\.Domain=",$fc)) {
-      $host = trim(eregi_replace("$f_no\.Domain=","",$fc));
+    if(preg_match("/^$f_no\.Domain=/mi",$fc)) {
+      $host = trim(preg_replace("/^$f_no\.Domain=/i","",$fc));
+      $host = str_replace("\'","'",$host);
+      $host = str_replace("'","\'",$host);
     }
 
     # Name
-    if(eregi("$f_no\.Name=",$fc)) {
-      $name = trim(eregi_replace("$f_no\.Name=","",$fc));
+    if(preg_match("/^$f_no\.Name=/mi",$fc)) {
+      $name = trim(preg_replace("/^$f_no\.Name=/i","",$fc));
+      $name = str_replace("\'","'",$name);
+      $name = str_replace("'","\'",$name);
     }
 
     # email
-    if(eregi("$f_no\.Email=",$fc)) {
-      $email = trim(eregi_replace("$f_no\.Email=","",$fc));
+    if(preg_match("/^$f_no\.Email=/mi",$fc)) {
+      $email = trim(preg_replace("/^$f_no\.Email=/i","",$fc));
+      $email = str_replace("\'","'",$email);
+      $email = str_replace("'","\'",$email);
     }
 
     # access
-    if(eregi("$f_no\.Access=",$fc)) {
-      $refer = trim(eregi_replace("$f_no\.Access=","",$fc));
+    if(preg_match("/^$f_no\.Access=/mi",$fc)) {
+      $refer = trim(preg_replace("/^$f_no\.Access=/i","",$fc));
+      $refer = str_replace("\'","'",$refer);
+      $refer = str_replace("'","\'",$refer);
     }
 
     # html
-    if(eregi("$f_no\.ContentType=",$fc)) {
-      $htmls = trim(eregi_replace("$f_no\.ContentType=","",$fc));
+    if(preg_match("/^$f_no\.ContentType=/mi",$fc)) {
+      $htmls = trim(preg_replace("/^$f_no\.ContentType=/i","",$fc));
       if($htmls == "text/html") $html = 1;
       else $html = 0;
     }
 
     # title
-    if(eregi("$f_no\.Subject=",$fc)) {
-      $title = trim(eregi_replace("$f_no\.Subject=","",$fc));
+    if(preg_match("/^$f_no\.Subject=/mi",$fc)) {
+      $title = trim(preg_replace("/^$f_no\.Subject=/i","",$fc));
+      $title = str_replace("\'","'",$title);
+      $title = str_replace("'","\'",$title);
     }
 
     # context
-    if(eregi("$f_no\.Text=",$fc)) {
-      $context = eregi_replace("$f_no\.Text=","",$fc);
-      $context = eregi_replace("<br>","\n",$context);
-      $context = eregi_replace("<p>","\n\n",$context);
-      $context = eregi_replace("%0a","\n",$context);
+    if(preg_match("/^$f_no\.Text=/mi",$fc)) {
+      $context = preg_replace("/^$f_no\.Text=/i","",$fc);
+      $context = str_replace("<br>","\n",$context);
+      $context = str_replace("<p>","\n\n",$context);
+      $context = str_replace("%0a","\n",$context);
+      $context = str_replace("\'","'",$context);
+      $context = str_replace("'","\'",$context);
       $context = chop(wordwrap($context,"80"));
     }
 
     # thread
-    if(eregi("$f_no\.Thread=",$fc)) {
-      $thread = trim(eregi_replace("$f_no\.Thread=","",$fc));
+    if(preg_match("/^$f_no\.Thread=/i",$fc)) {
+      $thread = trim(preg_replace("/^$f_no\.Thread=/i","",$fc));
       if($thread > 0) { 
         $sql = "UPDATE $table set reyn=1 WHERE convno=$thread";      
         $result = mysql_query($sql,$con);
@@ -172,7 +184,7 @@ for($i=0;$i<$fno;$i++) {
   echo "$i : $f_no : $convno\n";
 
 
-  $sql = "INSERT INTO $table VALUES('',$num,$idx,$date,'$host','$name','$passwd',
+  $sql = "INSERT INTO $table VALUES('','$num','$idx','$date','$host','$name','$passwd',
                  '$email','$url','$title','$context','$refer','$reyn','$reno','$rede',
                  '$reto','$html','$moder','','','','$convno')";
   $result = mysql_query($sql,$con);

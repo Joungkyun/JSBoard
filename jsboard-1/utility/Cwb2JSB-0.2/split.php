@@ -66,17 +66,17 @@ if($trans[type] == "gdbm") {
   }
 
   for($i=0;$i<count($handle);$i++) {
-    if(eregi("^[0-9]",$handle[$i])) {
+    if(preg_match("/^[0-9]/",$handle[$i])) {
       # Crazy WWW Board의 글번호를 얻음
-      $no = trim(eregi_replace("(^[0-9]+)\.(.+)","\\1",$handle[$i]));
+      $no = trim(preg_replace("/(^[0-9]+)\.(.+)/i","\\1",$handle[$i]));
 
       # Crazy WWW Board의 key name을 얻음
       $var = trim($handle[$i]);
 
       # 각 key들의 값을 얻음
-      if(eregi("Text",$handle[$i])) {
+      if(preg_match("/Text/i",$handle[$i])) {
         $context = chop(dba_fetch($handle[$i],$dbm));
-        $context = eregi_replace("\r\n","%0a",$context);
+        $context = str_replace("\r\n","%0a",$context);
       } else {
         $context = trim(dba_fetch($handle[$i],$dbm));
       }
@@ -105,13 +105,13 @@ if($trans[type] == "gdbm") {
   $p = fopen($trans[file],"rb");
   while(!feof($p)) {
     $text = fgets($p,30000);
-    if(eregi("^[0-9]",$text)) {
+    if(preg_match("/^[0-9]/",$text)) {
       $context = str_replace("\\'","'",$text);
       $context = str_replace("'","\\'",$text);
       $context = str_replace("\\\"","\"",$context);
       $context = str_replace("\"","\\\"",$context);
       $context = chop($context);
-      $c_no = eregi_replace("(^[0-9]+)\.[a-z]{1}(.*)","\\1",$text);
+      $c_no = preg_replace("/(^[0-9]+)\.[a-z]{1}(.*)/i","\\1",$text);
       $filename = file_name($c_no);
 
       echo "$c_no  :";
