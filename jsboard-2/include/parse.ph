@@ -516,13 +516,13 @@ function conv_emoticon($str, $opt=0) {
 
   $src[] = "/\^\^|\^\.\^/";
   $con[] = "<IMG SRC=./emoticon/icon1.gif BORDER=0 ALT='emoticon'>";
-  $src[] = '/ば\.?ば||T\.T/i';
+  $src[] = '/T\.T/i';
   $con[] = "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/\?\.\?/';
   $con[] = "<IMG SRC=./emoticon/icon3.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/:-?(\(|<)/';
   $con[] = "<IMG SRC=./emoticon/icon4.gif BORDER=0 ALT='emoticon'>";
-  $src[] = '/:-?(\)|>)/';
+  $src[] = '/:-?(\)|>)|n\.n/';
   $con[] = "<IMG SRC=./emoticon/icon5.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/0\.0|O\.O/i';
   $con[] = "<IMG SRC=./emoticon/icon6.gif BORDER=0 ALT='emoticon'>";
@@ -542,8 +542,12 @@ function conv_emoticon($str, $opt=0) {
   $con[] = "<IMG SRC=./emoticon/icon13.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/:-P|:P/';
   $con[] = "<IMG SRC=./emoticon/icon14.gif BORDER=0 ALT='emoticon'>";
-  
+
   $ret = preg_replace($src, $con, $str);
+  $ret = str_replace("ぬ.ぬ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
+  $ret = str_replace("ば.ば", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
+  $ret = str_replace("ぬぬ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
+  $ret = str_replace("ばば", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
   return $ret;
 }
 
