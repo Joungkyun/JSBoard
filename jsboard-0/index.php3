@@ -1,3 +1,3 @@
 <?
-Header("Location: list.php3?table=plaza");
+Header("Location: list.php3?table=jsboard4");
 ?>

@@ -73,9 +73,12 @@ while($list = dfetch_row($result)) {
 			}else{
 			    echo"<td bgcolor=\"$r2_bg\" colspan=\"2\"><img src=\"images/$tail.gif\" border=\"0\" alt=\"$bofile\"> $bofile</a>\n";
 			}
-			    echo (" <font color=\"$r2_fg\">&nbsp;$bfsize Bytes</font></td></tr>");
-		}
-	}
+			echo (" <font color=\"$r2_fg\">&nbsp;$bfsize Bytes</font></td></tr>");
+		} else {
+            	    echo "<td bgcolor=$r2_bg colspan=2><br></td></tr>";
+        	}
+
+	} 
 ?>
 <tr>
   <td bgcolor="<? echo $r1_bg ?>"><font color="<? echo $r1_fg ?>">Á¦¸ñ</font></td>
@@ -103,4 +106,3 @@ while($list = dfetch_row($result)) {
 </center>
 
 </td></tr></table>
-<? include("include/$table/footer.ph"); ?>

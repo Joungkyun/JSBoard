@@ -7,7 +7,7 @@
 #
 # Table structure for table 'plaza'
 #
-CREATE TABLE plaza (
+CREATE TABLE java (
   no int(8) DEFAULT '0' NOT NULL auto_increment,
   num int(8) DEFAULT '0' NOT NULL,
   date int(11) DEFAULT '0' NOT NULL,
