@@ -100,7 +100,7 @@ $langs[reg_attention]
 <INPUT TYPE=button VALUE=\"$langs[reg_dup]\" onClick=\"id_check()\">
 </TD>
 <TD WIDTH=15% BGCOLOR=$color[m_bg]><FONT STYLE=\"color:$color[m_fg];font-weight:bold;\">$langs[u_pass]</FONT></TD>
-<TD WIDTH=35% BGCOLOR=$color[d_bg]><INPUT TYPE=password SIZE=$sform NAME=pass MAXLENGTH=16></TD>
+<TD WIDTH=35% BGCOLOR=$color[d_bg]><INPUT TYPE=password SIZE=$sform NAME=pass MAXLENGTH=16 STYLE=\"font: 10px tahoma;\"></TD>
 </TR>
 
 <TR>
