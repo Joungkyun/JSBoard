@@ -343,7 +343,7 @@ if ($o[at] != "dn" && $o[at] != "sm") {
     // 이름, 제목의 HTML 코드 문자를 치환함
     $atc[name]  = htmlspecialchars($atc[name]);
     $atc[title] = htmlspecialchars($atc[title]);
-    $atc[title] = eregi_replace("&amp;","&",$atc[title]);
+    $atc[title] = eregi_replace("&amp;#","&#",$atc[title]);
 
     // IE 사용시에 한글 깨지는 것을 복원함
     $agent = get_agent();

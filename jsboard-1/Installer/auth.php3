@@ -102,12 +102,12 @@ if (!$mode) {
     $cconf  = 0;
   }
 
-  if(touch("../data/aaa.test")) {
+  if(@touch("../data/aaa.test")) {
     $p1 = 1;
     @unlink("../data/aaa.test");
   }
 
-  if(touch("../config/aaa.test")) {
+  if(@touch("../config/aaa.test")) {
     $p2 = 1;
     @unlink("../config/aaa.test");
   }

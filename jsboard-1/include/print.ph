@@ -2,6 +2,7 @@
 
 // 원하는 페이지로 이동시키는 함수
 function move_page($path,$time = 0) {
+  $path =  str_replace(" ","%20",$path);
   echo "<META http-equiv=\"refresh\" content=\"$time;URL=$path\">";
 }
 
@@ -27,7 +28,7 @@ function form_size($size, $print = 0) {
     if($agent[os] == "NT") {
       if($agent[ln] == "KO") $size *= 1.1; // 한글판
       else {
-        if ($langs[code] == "ko") $size *= 2.3;
+        if ($langs[code] == "ko") $size *= 2.6;
         else $size *= 1.4;
       }
     } else if($agent[os] == "WIN") {

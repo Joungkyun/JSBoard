@@ -49,7 +49,7 @@ chmod 664 ../../config/spam_list.txt
 chmod 664 ../../config/allow_browser.txt
 chmod 660 ../../config/global.ph
 chmod 664 ../../admin/include/config.ph
-if [ -d ../../data/test ]; then
+if [ -d "../../data/test" ]; then
   chmod 775 ../../data/test
   chmod 775 ../../data/test/files
   chmod 664 ../../data/test/config.ph

@@ -153,6 +153,8 @@ function text_nl2br($text, $html) {
     $text = nl2br($text);
     $text = ereg_replace("<br>\n", "<BR>", $text);
     $text = remove_tdbr($text);
+    if(!eregi("<pre>",$text))
+      $text = str_replace("  ", "&nbsp;&nbsp;", $text);
   } else {
     $text = htmlspecialchars($text);
     if ($langs[code] == "ko") $text = ugly_han($text,$html); // 한글 깨지는것 보정
@@ -181,7 +183,7 @@ function delete_tag($text) {
   $text = eregi_replace("<(\/)*(div|layer|body|html|head|meta)[^>]*>","",$text);
   $text = eregi_replace("<(style|script|title)(.*)</(style|script|title)>","",$text);
   $text = eregi_replace("<[/]*(script|style|title)>","",$text);
-  $text = trim($text);
+  $text = chop($text);
 
   return $text;
 }
@@ -254,6 +256,7 @@ function auto_link($str) {
   $str = eregi_replace("<a([ ]+)href=([\"']*)($regex[http])([\"']*)>","<a href=\"\\4_orig://\\5\" target=\"_blank\">", $str);
   $str = eregi_replace("<a([ ]+)href=([\"']*)mailto:($regex[mail])([\"']*)>","<a href=\"mailto:\\4#-#\\5\">", $str);
   $str = eregi_replace("<img([ ]*)src=([\"']*)($regex[http])([\"']*)","<img src=\"\\4_orig://\\5\"",$str);
+  $str = eregi_replace("<embed([ ]*)src=([\"']*)($regex[http])([\"']*)","<embed src=\"\\4_orig://\\5\"",$str);
 
   // 링크가 안된 url및 email address 자동링크
   $str = eregi_replace("($regex[http])","<a href=\"\\1\" target=\"_blank\">\\1</a>", $str);
