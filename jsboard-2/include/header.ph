@@ -126,4 +126,13 @@ if (session_is_registered("$jsboard")) {
 if(preg_match("/(read|list)\.php/i",$_SERVER[PHP_SELF])) {
   if($theme[ver] != $designer[ver]) print_error($langs[nomatch_theme],250,150,1);
 }
+
+# login button Ãâ·Â
+if(session_is_registered("$jsboard")) {
+  if(@file_exists("./theme/$print[theme]/img/logout.gif"))
+    $print[lout] = "<IMG SRC=./theme/$print[theme]/img/logout.gif BORDER=0 ALT='LOGOUT'>";
+  else $print[lout] = "<FONT STYLE=\"font:12px tahoma;color:$color[text]\">&gt;&gt; logout </FONT>";
+
+  $print[lout] = "<A HREF=./session.php?m=logout&table=$table TITLE='LOGOUT'>$print[lout]</A>";
+}
 ?>

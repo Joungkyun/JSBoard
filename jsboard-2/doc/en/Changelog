@@ -22,6 +22,7 @@ Version   : jsboard-2.0.0
 
 Sat, Jun 17 2002 by JoungKyun Kim <http://www.oops.org>
 	- added link option of page after logout
+	- added logout link
 
 Sat, Jun 15 2002 by JoungKyun Kim <http://www.oops.org>
 	- devided design of prelist function

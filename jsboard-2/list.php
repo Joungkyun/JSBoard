@@ -14,7 +14,7 @@ $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_
 if($board[super] == 1 || $board[adm]) {
   if(@file_exists("./theme/$print[theme]/img/admin.gif"))
     $print[adpath] = "<IMG SRC=./theme/$print[theme]/img/admin.gif BORDER=0 ALT='$langs[ln_titl]'>";
-  else $print[adpath] = "<FONT STYLE=\"font:12px tahoma;color:$color[text]\">[ admin ]</FONT>";
+  else $print[adpath] = "<FONT STYLE=\"font:12px tahoma;color:$color[text]\">&gt;&gt; admin </FONT>";
   $print[admin] = "<A HREF=./admin/user_admin/uadmin.php?table=$table TITLE='$langs[ln_titl]'>".
                   "$print[adpath]</A>";
 }
