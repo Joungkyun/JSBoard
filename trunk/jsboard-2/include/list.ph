@@ -2,13 +2,16 @@
 function print_list($table, $list, $r=0)
 {
   global $color, $board, $langs, $enable, $print, $td_array;
-  global $o, $upload, $cupload, $agent, $no, $lines, $page;
+  global $o, $upload, $cupload, $agent, $no, $lines, $page, $nolenth;
 
   $search = search2url($o);
   $pages = $page ? "&page=$page" : "&page=1";
 
-  if($board[rnname] && preg_match("/^(2|3|5|7)/",$board[mode])) 
+  $nolenth = strlen($list[no]) > $nolenth ? strlen($list[no]) : $nolenth;
+
+  if($board[rnname] && preg_match("/^(2|3|5|7)/",$board[mode])) {
     $list[name] = $list[rname] ? $list[rname] : $list[name];
+  }
   $list[name] = unhtmlspecialchars($list[name]);
   $list[name]  = htmlspecialchars(cut_string($list[name],$board[nam_l]));
   $list[name] = trim(ugly_han($list[name]));
