@@ -38,9 +38,26 @@ echo("<table width=\"1%\" border=\"0\" cellspacing=\"4\" cellpadding=\"0\"><tr>\
   echo("</tr>\n</table>\n</form>\n");
 }
 
+
+function pn_listname ($prev,$next) {
+  global $table ;
+
+  if ($prev) {
+    $result_p  = dquery("SELECT title FROM $table WHERE no = '$prev'");
+    $pn_title[p] = mysql_result($result_p, 0, "title");
+  }
+
+  if ($next) {
+    $result_n  = dquery("SELECT title FROM $table WHERE no = '$next'");
+    $pn_title[n] = mysql_result($result_n, 0, "title");
+  }
+
+  return $pn_title ;
+}
+
 function read_cmd_bar ($no, $page, $prev, $next, $r0_bg, $act, $table, $passwd, $email) {
 
-  global $search, $SCRIPT_NAME, $reyn, $writemode ;
+  global $search, $SCRIPT_NAME, $reyn, $writemode, $pn_title ;
   global $link_art, $link_prev, $link_next, $link_write, $link_reply, $link_modify, $link_delete ;
 
     echo("\n<table width=\"1%\" border=\"0\" cellspacing=\"4\" cellpadding=\"0\"><tr>");
@@ -53,17 +70,13 @@ function read_cmd_bar ($no, $page, $prev, $next, $r0_bg, $act, $table, $passwd, 
     }
     sepa($r0_bg);
     if($prev) { // 이전글
-	$result  = dquery("SELECT title FROM $table WHERE no = $prev");
-	$p_title = mysql_result($result, 0, "title");
-	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$prev$search\"><nobr>$link_prev</nobr></a></td>\n");
+	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$prev$search\" title=\"$pn_title[p]\"><nobr>$link_prev</nobr></a></td>\n");
     } else {
 	echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>$link_prev</nobr></font></td>\n");
     }
     sepa($r0_bg);
     if($next) { // 다음글
-	$result  = dquery("SELECT title FROM $table WHERE no = $next");
-	$n_title = mysql_result($result, 0, "title");
-	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$next$search\"><nobr>$link_next</nobr></a></td>\n");
+	echo("<td align=\"center\" width=\"1%\"><a href=\"$SCRIPT_NAME?table=$table&no=$next$search\" title=\"$pn_title[n]\"><nobr>$link_next</nobr></a></td>\n");
     } else {
 	echo("<td align=\"center\" width=\"1%\"><font color=\"acacac\"><nobr>$link_next</nobr></font></td>\n");
     }

@@ -5,6 +5,11 @@ $remotes = getenv("REMOTE_ADDR") ;
 function get_hostname()
 {
     $host  = getenv('REMOTE_ADDR');
+    $hostname = gethostbyaddr($host);
+
+    if ($hostname)
+      $host = $hostname ;
+
     return $host;
 }
 

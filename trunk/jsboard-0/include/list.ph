@@ -48,7 +48,7 @@ function plist($n, $act = "normal")
 
     global $table, $file_upload, $lang;
     global $acount, $tcount, $apage, $pern;
-    global $scount, $page, $user_del;
+    global $scount, $page, $user_del, $wver;
     global $sc_column, $sc_string, $search, $remotes;
     global $width, $l0_bg, $l0_fg, $l1_bg, $l1_fg, $l2_bg, $l2_fg;
     global $select_subj, $select_text, $select_writer, $select_all, $serach_act ;
@@ -67,12 +67,13 @@ function plist($n, $act = "normal")
     if($act != "reply" && $act != "relate") {
       echo("<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\">\n" .
               "<tr><td align=\"left\">\n" .
-              "<a href=./admin/user_admin/auth.php3?db=$table>[admin]</a>\n" .
+              "<a href=./admin/user_admin/auth.php3?db=$table title=\"JSBoard $wver Admin Page\">[admin]</a>\n" .
               "</td>\n" .
               "<td align=\"right\">\n" ) ;
 
+      $hostname = get_hostname() ;
       if ($menuallow == "yes") { list_cmd_bar ($page, $l0_bg, $table, $sc_column); }
-      else { echo "<font color=\"$l2_fg\">$remote_ip_ment [ $remotes ]</font>&nbsp;" ; }
+      else { echo "<font color=\"$l2_fg\">$remote_ip_ment [ $hostname ]</font>&nbsp;" ; }
 
       echo("</td></tr></table>\n\n");
     }
@@ -164,13 +165,9 @@ function vlist($no) {
 	$date2  = $date;
 
 	if ($lang == "ko") {
-	  $date   = date("y.m.d", $date);
-	  // Y2K event - JoungKyun Kim :-)
-	  $date	= eregi_replace("00","Y2K",$date) ;
+	  $date   = date("Y.m.d", $date);
 	} else {
-	  $date   = date("M.d.y", $date);
-	  // Y2K event - JoungKyun Kim :-)
-	  $date	= eregi_replace("00","Y2K",$date) ;
+	  $date   = date("M.d.Y", $date);
 	}
 
 	if($sc_string) {
@@ -212,6 +209,7 @@ function vlist($no) {
 		if($bofile)
 		{
 			$tail = substr( strrchr($bofile, "."), 1 );
+			$tail = strtolower($tail) ;
 			if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram || $tail==hwp || $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj || $tail==tar || $tail==avi || $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp))
 			{
 			    echo"<td align=\"center\" bgcolor=\"$bg\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" width=16 height=16 border=0 \"alt=$bofile\"></a></td>\n";
@@ -224,7 +222,7 @@ function vlist($no) {
 		}
 	}
 	
-	echo("<td align=\"right\" bgcolor=\"$bg\"><font size=\"2\" color=\"$fg\"><nobr>$date</nobr></font></td>\n"); 
+	echo("<td align=\"right\" bgcolor=\"$bg\"><font color=\"$fg\"><nobr>$date</nobr></font></td>\n"); 
 
 
 	if ($date2 > $today) {
