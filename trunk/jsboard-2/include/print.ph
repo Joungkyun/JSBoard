@@ -895,4 +895,69 @@ function print_comment($table,$no,$print=0) {
   if($print) echo $t;
   else return $t;
 }
+
+function pirnt_keymenu($type=0) {
+  global $table, $pages, $pos, $page;
+
+  if(!$type) {
+    $nextpage = $pages[nex] ? $pages[nex] : $pages[all];
+    $prevpage = $pages[pre] ? $pages[pre] : 1;
+    $nlink = "./list.php?table=$table&page=$nextpage";
+    $plink = "./list.php?table=$table&page=$prevpage";
+    $ment = "Page";
+  } else {
+    $nlink = "./read.php?table=$table&no={$pos['prev']}";
+    $plink = "./read.php?table=$table&no={$pos['next']}";
+    $ment = "Article";
+
+    $tolist = " else if(ch == 'l' || ch == 'L') {\n".
+              "    self.location = './list.php?table=$table&page=$page';\n".
+              "}\n";
+  }
+
+  echo " <SCRIPT LANGUAGE=\"javascript\">\n".
+       "<!--//\n".
+       "_dom=0;\n".
+       "strs=\"\";\n".
+       "function keypresshandler(e){\n".
+       "  if(document.all) e=window.event; // for IE\n".
+       "  if(_dom==3) var EventStatus = e.srcElement.tagName;\n".
+       "  else if(_dom==1) var EventStatus = e.target.nodeName; // for Mozilla\n".
+
+       "  if(EventStatus == 'INPUT' || EventStatus == 'TEXTAREA' || _dom == 2) return;\n".
+
+       "  var cc = '';\n".
+       "  var ch = '';\n".
+
+       "  if(_dom==3) {                   // for IE\n".
+       "    if(e.keyCode>0) {\n".
+       "      ch=String.fromCharCode(e.keyCode);\n".
+       "      cc=e.keyCode;\n".
+       "    }\n".
+       "  } else {                       // for Mozilla\n".
+       "    cc=(e.keyCode);\n".
+       "    if(e.charCode>0) {\n".
+       "      ch=String.fromCharCode(e.charCode);\n".
+       "    }\n".
+       "  }\n".
+
+       "  if(e.altKey || e.ctrlKey) return;\n".
+       
+       "  if(ch == \"n\" || ch == \"+\") {				// Next $ment\n".
+       "    self.location = '$nlink';\n".
+       "  } else if(ch == \"b\" || ch == \"-\") {			// Prev $ment\n".
+       "    self.location = '$plink';\n".
+       "  }$tolist\n".
+       "  return;\n".
+       "}\n".
+
+       "function input(){\n".
+       "	_dom=document.all ? 3 : (document.getElementById ? 1 : (document.layers ? 2 : 0));\n".
+       "	document.onkeypress = keypresshandler;\n".
+       "}\n".
+
+       "input();\n".
+       "//-->\n".
+       "</SCRIPT>\n";
+}
 ?>

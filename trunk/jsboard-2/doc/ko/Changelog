@@ -25,6 +25,8 @@ If you wnat to see windog's change log, see also
 	- html tag 의 마지막이 % 로 끝날경우 파싱 에러 수정
 	- iframe tag 를 사용하지 못하게 수정
 	- html 첨부 파일 미리보기 안되던 것 수정
+	- keyborad 제어 코드 추가
+	- 테마 버젼 A4 업데이트
 
 2002.09.07
   by 김칠봉 <http://www.linuxchannel.net>
