@@ -24,11 +24,11 @@ if($m == "act") {
     $query = "UPDATE userdb
                  SET name='$chg[name]', email='$chg[email]',
                      url='$chg[url]', passwd='$chg[pass]'
-               WHERE no = $chg[no]";
+               WHERE no = '$chg[no]'";
   } else {
     $query = "UPDATE userdb
                  SET name='$chg[name]', email='$chg[email]',
-                     url='$chg[url]' WHERE no = $chg[no]";
+                     url='$chg[url]' WHERE no = '$chg[no]'";
   }
 
   sql_query($query);
@@ -44,7 +44,7 @@ $board[headpath] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_
 $board[tailpath] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
 
 $chjsboard = $_SESSION[$jsboard][id];
-$where = ($_SESSION[$jsboard][pos] == 1 && $check) ? "no = $no" : "nid = '$chjsboard'";
+$where = ($_SESSION[$jsboard][pos] == 1 && $check) ? "no = '$no'" : "nid = '$chjsboard'";
 
 $result = sql_query("SELECT * FROM userdb WHERE $where");
 $row = sql_fetch_array($result);

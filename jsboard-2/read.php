@@ -95,7 +95,7 @@ $b_time[] = microtime(); # 속도 체크
 if($enable[re_list] && ($list[reto] || $list[reyn])) $print[rlists] = "\n".article_reply_list($table,$pages,1);
 
 # 글 읽었을 경우 조회수 1 늘림
-#if (get_hostname(0) != $list[host]) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = $no");
+#if (get_hostname(0) != $list[host]) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'");
 replication_addrefer($db);
 
 $b_time[] = microtime(); # 속도 체크

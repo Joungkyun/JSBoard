@@ -37,12 +37,12 @@ function get_stat($table, $interval) {
     else $intv = time() - $interval;
 
     # 전체 글 갯수
-    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > $intv");
+    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$intv'");
     $count[all] = sql_result($result,0,"COUNT(*)");
     sql_free_result($result);
 
     # 답장 글 갯수
-    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > $intv AND reno != 0");
+    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$intv' AND reno != 0");
     $count[rep] = sql_result($result,0,"COUNT(*)");
     sql_free_result($result);
 
@@ -50,12 +50,12 @@ function get_stat($table, $interval) {
     $count[nor] = $count[all] - $count[rep];
 
     # 처음 글
-    $result = sql_query("SELECT * FROM $table WHERE date > $intv ORDER BY no LIMIT 0, 1");
+    $result = sql_query("SELECT * FROM $table WHERE date > '$intv' ORDER BY no LIMIT 0, 1");
     $article[min] = sql_fetch_array($result);
     sql_free_result($result);
 
     # 마지막 글
-    $result = sql_query("SELECT * FROM $table WHERE date > $intv ORDER BY no DESC LIMIT 0, 1");
+    $result = sql_query("SELECT * FROM $table WHERE date > '$intv' ORDER BY no DESC LIMIT 0, 1");
     $article[max] = sql_fetch_array($result);
     sql_free_result($result);
 
@@ -63,24 +63,24 @@ function get_stat($table, $interval) {
     else $article[time] =  $article[max][date] - $article[min][date];
 
     # 최고 조회수
-    $result = sql_query("SELECT MAX(refer) FROM $table WHERE date > $intv");
+    $result = sql_query("SELECT MAX(refer) FROM $table WHERE date > '$intv'");
     $refer[max] = sql_result($result,0,"MAX(refer)");
     sql_free_result($result);
 
     # 최고 조회수 글 번호
     if($refer[max]) {
-	$result = sql_query("SELECT no FROM $table WHERE refer = $refer[max] AND date > $intv");
+	$result = sql_query("SELECT no FROM $table WHERE refer = '$refer[max]' AND date > '$intv'");
 	$refer[mno] = sql_result($result,0,"no");
 	sql_free_result($result);
     }
 
     # 최저 조회수
-    $result = sql_query("SELECT MIN(refer) FROM $table WHERE date > $intv");
+    $result = sql_query("SELECT MIN(refer) FROM $table WHERE date > '$intv'");
     $refer[min] = sql_fetch_array($result,0,"MIN(refer)");
     sql_free_result($result);
 
     # 조회수 합계
-    $result = sql_query("SELECT SUM(refer) FROM $table WHERE date > $intv");
+    $result = sql_query("SELECT SUM(refer) FROM $table WHERE date > '$intv'");
     $refer[total] = sql_result($result,0,"SUM(refer)");
     sql_free_result($result);
     

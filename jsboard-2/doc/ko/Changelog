@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  3월  7일
+작성일 : 2002년  3월  9일
 버전   : jsboard-2.0pre4
 
 
@@ -87,6 +87,7 @@ If you wnat to see windog's change log, see also
 57. magic quotes 설정을 강제로 지정
 58. url 에 검색어가 여러개 존재할 때 검색어 하이라이트 기능이 깨지는 것 수정
 59. mbstring 함수 지원 - check_spam() function
+60. sql 쿼리에 악의적인 공격을 막기위해 쿼리에 사용되는 모든 변수를 '' 처리
 
 
 -----------------------------------------------------------------------------

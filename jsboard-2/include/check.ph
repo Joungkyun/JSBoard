@@ -105,7 +105,7 @@ function check_passwd($table,$no,$passwd) {
   $passwd = !trim($passwd) ? "null passwd" : $passwd;
 
   if ($table && $no) {
-    $result = sql_query("SELECT $sql_field FROM $table WHERE no = $no");
+    $result = sql_query("SELECT $sql_field FROM $table WHERE no = '$no'");
     $r[chk] = sql_result($result,0,"$sql_field");
     sql_free_result($result);
   }
