@@ -1,0 +1,46 @@
+
+JSBoard main table
+
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| no     | int(6)       |      | PRI | 0       | auto_increment |  고유번호
+| num    | int(6)       |      | MUL | 0       |                |  게시판 글 번호
+| idx    | int(6)       |      | MUL | 0       |                |  index 번호
+| date   | int(11)      |      | MUL | 0       |                |  날짜
+| host   | tinytext     | YES  |     | NULL    |                |  글쓴이 주소
+| name   | tinytext     | YES  |     | NULL    |                |  글쓴이 이름
+| passwd | varchar(13)  | YES  |     | NULL    |                |  글쓴이 암호
+| email  | tinytext     | YES  |     | NULL    |                |  글쓴이 메일
+| url    | tinytext     | YES  |     | NULL    |                |  글쓴이 홈페이지
+| title  | tinytext     | YES  |     | NULL    |                |  글 제목
+| text   | mediumtext   | YES  |     | NULL    |                |  글 본문
+| refer  | int(6)       |      |     | 0       |                |  조회수
+| reyn   | int(1)       |      |     | 0       |                |  댓글 존재 여부
+| reno   | int(6)       |      | MUL | 0       |                |  부모글 번호
+| rede   | int(6)       |      |     | 0       |                |  댓글 깊이
+| reto   | int(6)       |      | MUL | 0       |                |  댓글중 최상위 부모글
+| html   | int(1)       |      |     | 1       |                |  HTML tag 사용여부
+| moder  | int(1)       |      |     | 0       |                |  ?
+| bofile | varchar(100) | YES  |     | NULL    |                |  업로드 파일 이름
+| bcfile | varchar(100) | YES  |     | NULL    |                |  업로드 파일 디렉토리
+| bfsize | int(4)       | YES  |     | NULL    |                |  파일 사이즈
++--------+--------------+------+-----+---------+----------------+
+
+moder record 의 의미는 적수<redhand@linux.sarang.net> 님에게 문의해
+보십시오 ^^;
+
+
+JSBoard userdb table
+
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| no       | int(6)       |      | PRI | NULL    | auto_increment | 고유번호
+| nid      | varchar(100) |      | UNI |         |                | 회원 ID(중복 불가능)
+| name     | varchar(100) |      | MUL |         |                | 회원 이름(본명)
+| email    | tinytext     |      |     |         |                | 회원 이메일
+| url      | tinytext     |      |     |         |                | 회원 홈페이지
+| passwd   | varchar(100) |      |     |         |                | 회원 패스워드(암호화)
+| position | int(1)       |      | MUL | 0       |                | 전체 관리자여부
++----------+--------------+------+-----+---------+----------------+
