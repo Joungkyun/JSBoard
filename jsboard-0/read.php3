@@ -49,7 +49,7 @@ while($list = dfetch_row($result)) {
     /* 들여쓰기 기능을 지원. pre tag처럼 완벽하게 지원하지는 못함 */
     $text   = eregi_replace("  ", "&nbsp;&nbsp;", $text);
     /* html 사용시에 table이 있으면 nl2br() 함수를 적용시키지 않음 */
-    $text = eregi_replace("<br([>a-z&\;])+([<\/]+(ta|tr|td))","\\2",$text) ;
+    $text = eregi_replace("<br([>a-z&\;])+([<\/]*(ta|tr|td|ul|ol|li))","\\2",$text) ;
 
 
     if ($reto) {
@@ -75,8 +75,11 @@ while($list = dfetch_row($result)) {
             "</td>\n" .
             "<td align=\"right\">\n" ) ;
 
-    if ($menuallow == "yes") { read_cmd_bar($no, $page, $prev, $next, $r0_bg, $act, $table, $passwd, $email); }
-    else { echo "<font color=\"$l2_fg\">$remote_ip_ment [ $remotes ]</font>&nbsp;" ; }
+    $pn_title = pn_listname($prev,$next) ;
+    $hostname = get_hostname() ;
+    if ($menuallow == "yes")
+      read_cmd_bar($no, $page, $prev, $next, $r0_bg, $act, $table, $passwd, $email); 
+    else echo "<font color=\"$l2_fg\">$remote_ip_ment [ $hostname ]</font>&nbsp;" ;
 
     echo("</td></tr></table>\n" .
          "<table align=\"center\" width=\"$width\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"$r0_bg\"><tr><td>\n" .
@@ -105,6 +108,7 @@ while($list = dfetch_row($result)) {
     if($file_upload == "yes" && $bofile) {
 
         $tail = substr( strrchr($bofile, "."), 1 );
+        $tail = strtolower($tail) ;
         if(!($tail==zip || $tail ==exe || $tail==gz || $tail==mpeg || $tail==ram || $tail==hwp || $tail==mpg || $tail==rar || $tail==lha || $tail==rm || $tail==arj || $tail==tar || $tail==avi || $tail==mp3 || $tail==ra || $tail==rpm || $tail==gif || $tail==jpg || $tail==bmp)) {
           echo"<tr><td bgcolor=\"$r2_bg\" colspan=\"3\"><a href=\"$filesavedir/$bcfile/$bofile\"><img src=\"images/file.gif\" width=16 height=16 border=0 alt=\"$bofile\" align=texttop> $bofile</a>\n";
         }else{
@@ -121,7 +125,7 @@ while($list = dfetch_row($result)) {
     if ($bofile) {
 
       $tail = substr( strrchr($bofile, "."), 1 );
-
+      $tail = strtolower($tail) ;
       if ($tail == "gif" || $tail == "jpg") {
         echo ("<img src=\"$filesavedir/$bcfile/$bofile\"><p>");
       }
@@ -134,8 +138,8 @@ while($list = dfetch_row($result)) {
     if ($bofile) {
 
       $tail = substr( strrchr($bofile, "."), 1 );
-
-      if ($tail == "txt" | $tail == "phps" | $tail == "shs") {
+      $tail = strtolower($tail) ;
+      if ($tail == "txt" || $tail == "phps" || $tail == "shs") {
         echo ("<p><br>\n" .
               "---- $subj_attach -------------------------- \n<p>\n<pre>");
 

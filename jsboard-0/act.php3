@@ -112,8 +112,8 @@ if ($act == "post" || $act == "edit") {
 			$bfilename=strstr("$userfile","php");
 
 			// php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
-			$userfile_name = eregi_replace(".php[0-9a-z]*", ".phps", $userfile_name) ;
-			$userfile_name = eregi_replace(".(cgi|pl|sh)", ".\\1s", $userfile_name) ;
+			$userfile_name = eregi_replace(".(php[0-9a-z]*|phtml)$", ".phps", $userfile_name) ;
+			$userfile_name = eregi_replace("(.*).(cgi|pl|sh)$", "\\1.\\2s", $userfile_name) ;
 
 			mkdir("$filesavedir/$bfilename",0755);
 			exec("mv \"$userfile\" \"$filesavedir/$bfilename/$userfile_name\"");

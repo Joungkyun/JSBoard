@@ -1,6 +1,6 @@
 ***** JSBOARD + OOPS administartion Center *********************************
 
-원 개발자		: 김병찬 < redhands@linux.sarang.net >
+Original Developer	: 김병찬 < redhands@linux.sarang.net >
 
 Maintainer		: 방창현 < winchild@kldp.org >
 개발 version corder	: 김정균 < admin@oops.org >
@@ -61,13 +61,11 @@ Jsboard는 linux system 하에서 apache web server와 php3 module과 MySQL을
 
 예 )
 
-<? php
-
+<?php
 echo("exec() 함수 테스트<p><br>") ; 
 exec("echo \"exec함수가 정상 작동 합니다\"", $test) ; 
 
 echo $test[0] ; 
-
 ?> 
 
 과 같이 test page를 만드신 다음 웹상에서 보셨을때 
@@ -486,7 +484,7 @@ mysql> alter table BoardInformation add lang varchar(5);
                               ^^^^^^^^^^^^^^^^
 
 5. jsboard-0.7.0/Install/SQL/manager.sql을 convert.sql로 copy를 한다.
-   convert.sql을 열어서 하단에 있는
+   convert.sql을 열어서 제일 아래에 있는
 
    ***********************************************************************************
 

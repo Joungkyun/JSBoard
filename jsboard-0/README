@@ -11,12 +11,37 @@ CVS Server administrator	:  Young Min Kim < blhole@hotmail.com >
 
 ## Warning ##
 
-This package used only Linux system.
-And users of any other flatform are must DIY :-)
+This package turned out to work only in Linux system. 
+Any one who wants install this package on any other platform 
+must revise it as needed for himeself/herself. 
 
 ******************************************************************************
 
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 3월 19일
+버전   : jsboard-0.7.3 (적수게시판 버전 0.7 정식 버젼)
 
+1. read.php3에서 조건식 or의 표현이 잘못된것 수정
+2. get_hostname() 함수 수정 (ip address가 resolving이 될 경우 hostname으로
+   표현되게 함.
+3. upload file 중 .phtml 확장자 phps로 변환하여 upload되게함.
+4. upload file 미리 보기 기능에서 파일 확장자가 대문자 일
+   경우 미리 보기 기능이 작동하지 않던 것을 fix
+
+
+-----------------------------------------------------------------------------
+
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 3월 3일
+버전   : jsboard-0.7.2 (적수게시판 버전 0.7 정식 버젼)
+
+1. cgi, sh, pl file upload시에 file name에 위의 문자열이 있을때 file 이름이
+   변형되는 것 수정
+2. read.php3에서 menu bar의 중복된 query 처리
+3. 두자리로 표현되는 연도표시를 네자리로 수정.
+4. 2000년이 Y2K로 표현 되는 것을 다시 2000으로 수정
+
+-----------------------------------------------------------------------------
 
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 2월 23일
@@ -26,6 +51,7 @@ And users of any other flatform are must DIY :-)
 
 1. script file upload시에 실행을 할수 없게 확장자를 변경시킴.
    (php3,php -> phps , cgi -> cgis, pl -> pls, sh -> shs)
+
 
 -----------------------------------------------------------------------------
 
