@@ -1,0 +1,96 @@
+<?
+##############################################################################
+#  DATABASE Configuration
+##############################################################################
+$db[server]      = ":/var/lib/mysql/mysql.sock";	# DB address
+$db[user]        = "@DBUSER@";				# DB login user
+$db[pass]        = "@DBPASS@";				# DB login pass
+$db[name]        = "@DBNAME@";				# DB name
+
+
+##############################################################################
+#  BASIC Configuration
+##############################################################################
+$board[title]    = "JSBoard";	# Board title
+$board[width]    = "550";	# Board width
+$board[tit_l]    = 42;		# Max lenth of subject field
+$board[nam_l]    = 8;		# Max lenth of writer field
+$board[perno]    = 10;		# Article number per page
+$board[plist]    = 2;		# Print page link number (x2+1)
+$board[uconf]    = 1;		# Permited to use configuration per user
+$board[date_fmt] = "Y.m.d";	# format of date
+
+# period of cookie time (day value)
+$board[cookie]   = 30;
+
+# Highlight of search string
+$board[hl] = "<FONT STYLE=\"text-decoration:underline;color;#000000;font-weight:bold;\">STR</FONT>";
+
+# Table Align of board
+$board[align]    = "center";
+
+# board web path
+$board[path]     = "http://domain.com/jsboard/";
+
+
+##############################################################################
+#  login mode Configuration
+##############################################################################
+# login variation name (This value must be modified as security problem)
+$jsboard         = "login";
+
+# Don't touch this line.
+$jsboard         = "jsboard".$jsboard;
+
+# location of default page after login
+$print[dpage] = "http://domain.com/jsboard/list.php?table=test";
+
+# permition of user registration
+# 1 -> everyone
+# 0 -> admin only
+$board[regist] = 0;
+
+##############################################################################
+#  Theme Configuration
+##############################################################################
+# Theme Name
+$print[theme]    = "@THEME@";
+
+
+##############################################################################
+#  UPLOAD Configuration
+#  if value of $upload[yesno] is 0, then all board disable upload
+##############################################################################
+$upload[yesno]   = 1;			# enable upload
+$upload[dir]     = "files";		# directory name of upload file
+$upload[maxsize] = "2000000";		# upload max size
+
+
+##############################################################################
+#  Mail Configuration
+##############################################################################
+$rmail[uses]     = 1;
+# MTA type
+# 1 - send mail to use socket connection
+# 0 - used mail() function in php
+#     used over php 4.0.5 Plez, read doc/CODE/README.CONFIG
+$rmail[mta]      = 1;
+# smtp server address
+$rmail[smtp]     = "127.0.0.1";
+# charactor of converted mail address
+$rmail[chars]    = "__at__";
+
+
+##############################################################################
+#  Preview article contents
+##############################################################################
+$list[pre]       = 1;	# enable preview
+$list[preren]    = 100;	# if enable preview, lenth of contents
+
+
+##############################################################################
+#  If registed article as follow information, requried passwd of super user
+##############################################################################
+$compare[name]   = "ÁåÀå";
+$compare[email]  = "user@localhost.com";
+?>
