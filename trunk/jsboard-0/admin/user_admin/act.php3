@@ -74,6 +74,14 @@ if (!$uscale || $uscale == $pern) {
   $uscale = $pern;
 }
 
+if (!$brdname || $brdname == $boardname) {
+  $brdname = $boardname;
+}
+
+if ($brdnotice == $boardnotice) {
+  $brdnotice = $boardnotice;
+}
+
 if (!$namelenth || $namelenth == $namel) {
   $namelenth = $namel ;
 }
@@ -84,6 +92,10 @@ if (!$titlelenth || $titlelenth == $titll) {
 
 if (!$tablewidth || $tablewidth == $width) {
   $tablewidth = $width ;
+}
+
+if ($shtname_allow == $headname) {
+  $shtname_allow = $headname ;
 }
 
 if (!$listguide || $listguide == $l0_bg) {
@@ -154,6 +166,14 @@ if (!$todayarticlebg || $todayarticlebg == $t0_bg) {
   $todayarticlebg = $t0_bg ;
 }
 
+if (!$mouseoverbg || $mouseoverbg == $mo_bg) {
+  $mouseoverbg = $mo_bg ;
+}
+
+if (!$searchbg || $searchbg == $sch_bg) {
+  $searchbg = $sch_bg;
+}
+
 if ($umailtoadmin == $mailtoadmin) {
   $umailtoadmin = $mailtoadmin ;
 }
@@ -194,6 +214,10 @@ if ($useemail == $usee_mail) {
   $useemail = $backlink ;
 }
 
+if ($shtname_allow == $headname) {
+  $shtname_allow = $headname;
+}
+
 if ($useurl == $use_url) {
   $useurl = $use_url ;
 }
@@ -202,10 +226,13 @@ if ($useurl == $use_url) {
 
 
 $rboard_manager		= '$board_manager' ;
+$rbrdname		= '$boardname' ;
+$rbrdnotice		= '$boardnotice' ;
 $rpern			= '$pern' ;
 $rnamel			= '$namel' ;
 $rtitll			= '$titll' ;
 $rwidth			= '$width' ;
+$rheadname		= '$headname' ;
 $rl0_bg			= '$l0_bg' ;
 $rl0_fg			= '$l0_fg' ;
 $rl1_bg			= '$l1_bg' ;
@@ -223,6 +250,8 @@ $rr2_fg			= '$r2_fg' ;
 $rr3_bg			= '$r3_bg' ;
 $rr3_fg			= '$r3_fg' ;
 $rt0_bg			= '$t0_bg' ;
+$rmo_bg			= '$mo_bg' ;
+$rsch_bg		= '$sch_bg' ;
 $rfile_upload		= '$file_upload' ;
 $rfilesavedir		= '$filesavedir' ;
 $rmaxfilesize		= '$maxfilesize' ;
@@ -263,7 +292,9 @@ $rpern      = \"$uscale\" ;	// 페이지당 게시물
 $rnamel     = \"$namelenth\" ;	// 이름 필드의 최대 길이
 $rtitll     = \"$titlelenth\" ;	// 제목 필드의 최대 길이
 $rwidth     = \"$tablewidth\" ;	// 게시판 너비
-
+$rheadname   = \"$shtname_allow\" ; // 말머리 이용 여부
+$rbrdname  = \"$brdname\" ;  // 게시판 이름
+$rbrdnotice = \"$brdnotice\" ; // 게시판 페이지 공지
 
 /******************************************
          List page 색상            
@@ -293,7 +324,8 @@ $rr3_bg     = \"$viewtextbg\" ; // 글보기 글내용 배경
 $rr3_fg     = \"$viewtextfont\" ; // 글보기 글내용 글자
 
 $rt0_bg     = \"$todayarticlebg\" ; // 오늘 올라온 글 표시
-
+$rmo_bg     = \"$mouseoverbg\" ; // 마우스 커서 지정시 배경색
+$rsch_bg    = \"$searchbg\" ;  // 검색창 배경
 
 /******************************************
          Menu 정보
@@ -342,7 +374,23 @@ $ruse_email   = \"$useemail\" ;
 
 ?>" ;
 
+if ($shtname_allow) { // 말머리 이용할 경우
 
+  $shorthead = "<?\n echo (\"\n    <select name='headtit'>";
+if($headsht1) $shorthead .= "\n      <option value='[$headsht1]'>[$headsht1]</option>";
+if($headsht2) $shorthead .= "\n      <option value='[$headsht2]'>[$headsht2]</option>";
+if($headsht3) $shorthead .= "\n      <option value='[$headsht3]'>[$headsht3]</option>";
+if($headsht4) $shorthead .= "\n      <option value='[$headsht4]'>[$headsht4]</option>";
+if($headsht5) $shorthead .= "\n      <option value='[$headsht5]'>[$headsht5]</option>";
+if($headsht6) $shorthead .= "\n      <option value='[$headsht6]'>[$headsht6]</option>";
+if($headsht7) $shorthead .= "\n      <option value='[$headsht7]'>[$headsht7]</option>";
+if($headsht8) $shorthead .= "\n      <option value='[$headsht8]'>[$headsht8]</option>";
+if($headsht9) $shorthead .= "\n      <option value='[$headsht9]'>[$headsht9]</option>";
+if($headsht10) $shorthead .= "\n      <option value='[$headsht10]'>[$headsht10]</option>";
+if($headsht11) $shorthead .= "\n      <option value='[$headsht11]'>[$headsht11]</option>";
+if($headsht12) $shorthead .= "\n      <option value='[$headsht12]'>[$headsht12]</option>";
+$shorthead .= "\n    </select>\n \");?>";
+}
 
 
 /******************************************
@@ -353,6 +401,11 @@ $fp = fopen( "../../include/$db/config.ph", "w" ) ;
 fwrite($fp, $user_info); 
 fclose($fp);
 
+if (!$oldheadsht) {
+$fp = fopen( "../../include/$db/shorthead.ph", "w" ) ;
+fwrite($fp, $shorthead);
+fclose($fp);
+}
 
 
 /******************************************

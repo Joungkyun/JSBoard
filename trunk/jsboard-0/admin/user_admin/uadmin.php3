@@ -92,6 +92,15 @@ echo("
 </tr>
 
 <tr>
+<td bgcolor=#333333>BoardName</td>
+<td><input type=text name=brdname size=14 maxlength=200 id=input value=$boardname></td>
+<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=brdname')></td>
+<td bgcolor=#333333></td>
+<td bgcolor=#333333></td>
+<td bgcolor=#333333></td>
+</tr>
+
+<tr>
 <td bgcolor=#333333>Scale</td>
 <td><input type=text name=uscale size=14 id=input value=$pern></td>
 <td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=scale')></td>
@@ -107,6 +116,13 @@ echo("
 <td bgcolor=#333333>Size</td>
 <td><input type=text name=tablewidth size=14 id=input value=$width></td>
 <td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=tablewidth')></td>
+</tr>
+<tr>
+<td bgcolor=#333333>Board Notice</td>
+<td colspan=4 align=center><textarea name=brdnotice cols=55 rows=10 wrap=virtual id=input>");
+if ($boardnotice) echo $boardnotice;
+echo ("</textarea></td>
+<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=brdnotice')></td>
 </tr>
 
 <tr>
@@ -205,9 +221,18 @@ echo("
 <td bgcolor=#333333>TodayArticleBG</td>
 <td><input type=text name=todayarticlebg size=14 id=input value=$t0_bg></td>
 <td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=todayarticlebg')></td>
-<td bgcolor=#333333>&nbsp;</td>
-<td bgcolor=#333333>&nbsp;</td>
-<td bgcolor=#333333>&nbsp;</td>
+<td bgcolor=#333333>MouseOverBG</td>
+<td><input type=text name=mouseoverbg size=14 id=input value=$mo_bg></td>
+<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=mouseoverbg')></td>
+</tr>
+
+<tr>
+<td bgcolor=#333333>SearchBG</td>
+<td><input type=text name=searchbg size=14 id=input value=$sch_bg></td>
+<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=searchbg')></td>
+<td bgcolor=#333333></td>
+<td bgcolor=#333333></td>
+<td bgcolor=#333333></td>
 </tr>
 
 
@@ -371,9 +396,38 @@ echo ("
 ");
 }
 
+if ($headname) { $checkingo = "checked"; $checkingx = ""; }
+else { $checkingo = ""; $checkingx = "checked"; }
+
 echo("
 </td>
 <td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=useemail')></td>
+</tr>
+
+<tr>
+<td bgcolor=#333333>Shortname of Title (말머리)</td>
+<td colspan=4 valign=top>
+<font color=red>기존값 적용시 <input type='checkbox' name='oldheadsht' value='1'> 이 박스를 체크하십시오.</font><p>
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr>
+<td width=50% valign=top>말머리 이용<br>
+<input type=radio name=shtname_allow size=14 value=1 $checkingo>이용한다.<p>
+<input type='checkbox' name='headsht1' value='잡담' checked> [잡담]<br>
+<input type='checkbox' name='headsht3' value='참고'> [참고]<br>
+<input type='checkbox' name='headsht5' value='공지'> [공지]<br>
+<input type='checkbox' name='headsht7' value='건의'> [건의]<br>
+<input type='checkbox' name='headsht9' value='추천'> [추천]<br>
+<input type='checkbox' name='headsht11' value='사용기'> [사용기]</td>
+
+<td width=50% valign=top>&nbsp;<br>
+<input type=radio name=shtname_allow size=14 value=0 $checkingx>이용하지 않는다.<p>
+<input type='checkbox' name='headsht2' value='질문'> [질문]<br>
+<input type='checkbox' name='headsht4' value='답변'> [답변]<br>
+<input type='checkbox' name='headsht6' value='정보'> [정보]<br>
+<input type='checkbox' name='headsht8' value='제보'> [제보]<br>
+<input type='checkbox' name='headsht10' value='소감'> [소감]<br>
+<input type='checkbox' name='headsht12' value='테스트'> [테스트]</td></tr></table></td>
+<td><input type=button value=hint id=input onClick=fork('hint','./hint.php3?hintname=headname')></td>
 </tr>
 
 <tr>
