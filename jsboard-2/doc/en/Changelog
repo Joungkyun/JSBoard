@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.5
 
+Thu, Jan 16 2003
+  by JoungKyun Kim <http://www.oops.org>
+	- limit 30 charactors on name of comment
+
 Mon, Jan 13 2003
   by JoungKyun Kim <http://www.oops.org>
 	- fixed emoticon with 0.0
