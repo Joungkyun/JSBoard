@@ -1,7 +1,7 @@
 <?
 function print_error($str, $width = 250, $height = 100) {
-  global $table, $path, $prlist;
-  $agent = get_agent();
+  global $table, $path, $prlist, $agent;
+  if(!$agent[br]) $agent = get_agent();
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
@@ -35,8 +35,8 @@ function print_error($str, $width = 250, $height = 100) {
 }
 
 function print_notice($str, $width = 330, $height = 210) {
-  global $table, $path;
-  $agent = get_agent();
+  global $table, $path, $agent;
+  if(!$agent[br]) $agent = get_agent();
 
   echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
 
@@ -65,8 +65,8 @@ function print_notice($str, $width = 330, $height = 210) {
 }
 
 function print_pwerror($str, $width = 250, $height = 100) {
-  global $table, $path;
-  $agent = get_agent();
+  global $table, $path, $agent;
+  if(!$agent[br]) $agent = get_agent();
   $textBR = preg_match("/links|w3m|lynx/i",$agent[br]) ? 1 : "";
 
   if(!$textBR) {

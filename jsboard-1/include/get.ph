@@ -301,9 +301,9 @@ function human_fsize($bfsize, $sub = "0") {
 
 function viewfile($tail) {
   global $board, $table, $list, $upload;
-  global $langs, $icons;
+  global $langs, $icons, $agent;
 
-  $agent = get_agent();
+  if(!$agent[br]) $agent = get_agent();
   $upload_file = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
   $wupload_file = "./data/$table/$upload[dir]/$list[bcfile]/".urlencode($list[bofile]);
 

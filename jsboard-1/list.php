@@ -18,8 +18,6 @@ if($table == $enable[security]) {
 sql_connect($db[server], $db[user], $db[pass]);
 sql_select_db($db[name]);
 
-$agent = get_agent();
-
 # 게시판의 전체, 보통, 답장, 오늘 올라온 글 수 등을 가져옴
 $count = get_board_info($table);
 # 전체 페이지와 현재 페이지에 관련된 정보를 가져옴

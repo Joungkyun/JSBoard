@@ -31,6 +31,8 @@ If you wnat to see windog's change log, see also
 5. 수정 모드시, email, url field 를 검사하도록 수정
 6. Install script 에 FreeBSD 의 httpd.conf(PORT) 경로 추가
 7. 4.2 의 trackvar 변경사항 적용
+8. mozilla 폼사이즈 변경 (1.0.0 기준)
+9. $agent 변수 정리
 
 
 -----------------------------------------------------------------------------

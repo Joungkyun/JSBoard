@@ -2,8 +2,6 @@
 include "include/header.ph";
 include "html/head.ph";
 
-$agent = get_agent();
-
 sql_connect($db[server], $db[user], $db[pass]);
 sql_select_db($db[name]);
 
