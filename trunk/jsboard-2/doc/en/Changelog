@@ -20,6 +20,14 @@ If you wnat to see windog's change log, see also
 
 ¹öÀü   : jsboard-2.0.2
 
+Thu, Sep 5 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed get_hostname function
+
+Tue, Sep  3 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed english language file
+
 Tue, Aug 27 2002
   by JoungKyun Kim <http://www.oops.org>
 	- modified language file

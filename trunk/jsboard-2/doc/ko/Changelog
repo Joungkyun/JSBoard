@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.2
 
+2002.09.05
+  by 김정균 <http://www.oops.org>
+	- get_hostname 함수 수정
+
 2002.09.03
   by 김정균 <http://www.oops.org>
 	- 영문 언어 설정 파일 수정
