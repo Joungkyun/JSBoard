@@ -21,7 +21,7 @@ Attention : OOPS administration Center is not GPL.
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Wed, Dec 5 2001
+Date      : Wed, Dec 6 2001
 Version   : jsboard-2.0pre3
 
 
@@ -62,6 +62,7 @@ Version   : jsboard-2.0pre3
 34. change form method to GET from POST in first search
 35. fixed password problem in mode 4, 5
 36. updated INSTALLER/script/conv_update file
+37. fixed problem of add new board
 
 
 -----------------------------------------------------------------------------

@@ -50,7 +50,7 @@ function same_db_check($list, $table) {
   for($k=0;$k<$tbl_num;$k++) {
     # table list 를 불러 옵니다.
     $table_name = mysql_tablename($list,$k);
-    if ($table == $table_name || $table = "userdb") print_error($langs[a_acc],250,150,1);
+    if ($table == $table_name || $table == "userdb") print_error($langs[a_acc],250,150,1);
   }
 }
 
