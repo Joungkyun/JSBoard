@@ -13,6 +13,7 @@ table_name_check($table);
 if($path['type'] != "admin") {
   include "../data/$table/config.php";
 }
+table_name_check($print['theme']);
 include "../theme/{$print['theme']}/config.php";
 include "../include/lang.php";
 

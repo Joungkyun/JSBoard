@@ -26,6 +26,7 @@ if($alert) {
   }
 
   # PAGE DISPLAY
+  meta_char_check($print['theme'], 1, 1);
   include "theme/{$print['theme']}/read.template";
 } else{
   if((preg_match("/^(2|3|5|7)$/",$board['mode']) && $_SESSION[$jsboard]['id']) || $board['super']) {
@@ -176,6 +177,7 @@ if($alert) {
   $sform['ss'] = preg_replace("/\\\\+/i","\\",$sform['ss']);
   
   # PAGE DISPLAY
+  meta_char_check($print['theme'], 1, 1);
   include "theme/{$print['theme']}/read.template";
   echo $preview['bo'];
 }

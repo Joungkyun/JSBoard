@@ -578,7 +578,11 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     echo $dn['dl'];
   }
 } elseif($o['at'] == "ma") {
-  include "config/global.php";
+  if ( ! @file_exists("config/global.php") ) {
+    echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
+         "history.back();\nexit;\n</script>\n";
+  } else { include_once "config/global.php"; }
+
   if(preg_match("/{$rmail['chars']}/",$target)) {
     $target = str_replace($rmail['chars'],"@",$target);
     Header("Location: mailto:$target");

@@ -132,6 +132,7 @@ $backbutton
   $p_time[] = microtime();
   $print['pagetime'] = get_microtime($p_time[0],$b_time[1]);
 
+  meta_char_check($print['theme'], 1, 1);
   include "theme/{$print['theme']}/ext.template";
 } else if($m == chkid) {
   if(!trim($id)) print_notice("INPUT UR ID",250,150,1);
@@ -163,6 +164,7 @@ $backbutton
   $p_time[] = microtime();
   $print['pagetime'] = get_microtime($p_time[0],$b_time[1]);
 
+  meta_char_check($print['theme'], 1, 1);
   include "theme/{$print['theme']}/ext.template";
   echo "\n</TD></TR>\n</TABLE>\n";
 }

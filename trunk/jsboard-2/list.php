@@ -135,5 +135,6 @@ mysql_close();
 $sform['ss'] = preg_replace("/\\\\+/i","\\",$sform['ss']);
 
 # PAGE DISPLAY
+meta_char_check($print['theme'], 1, 1);
 include "./theme/{$print['theme']}/list.template";
 ?>

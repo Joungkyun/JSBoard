@@ -8,14 +8,23 @@ ini_set(magic_quotes_gpc,1);
 ini_set(magic_quotes_sybase,0);
 ini_set(precision,15);
 
+# table 변수 체크
+$table = trim ($table);
+if ( preg_match ('!/\.+|%00$!', $table) ) {
+  echo "<script>\nalert('Ugly access with table variable with \'{$table}\'');\n" .
+       "history.back();\nexit;\n</script>\n";
+  exit;
+}
+
 include_once "include/error.php";
 include_once "include/print.php";
 # GET/POST 변수를 제어
 parse_query_str();
 
-if (!@file_exists("config/global.php")) {
+if ( ! @file_exists("config/global.php") ) {
   echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
        "history.back();\nexit;\n</script>\n";
+  exit;
 } else { include_once "config/global.php"; }
 
 session_start();

@@ -118,5 +118,6 @@ $backbutton
 $p_time[] = microtime();
 $print['pagetime'] = get_microtime($p_time[0],$b_time[1]);
 
+meta_char_check($print['theme'], 1, 1);
 include "theme/{$print['theme']}/ext.template";
 ?>
