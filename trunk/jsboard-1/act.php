@@ -530,14 +530,14 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "se" && $o[at] != "ma") {
     include_once "include/get.ph";
     $agent = get_agent();
 
-    if($pcheck != "") SetCookie("pcheck","","0");
+    if($pcheck != "") SetCookie("pcheck","",0);
     # Cookie 를 등록한다.
     $CookieTime = time()+900;
     SetCookie("pcheck",$pcheck,$CookieTime);
     if(!$page) $page = 1;
     header("Location: $kind.php?table=$table&no=$no&page=$page");
   } else if ($o[se] == "logout") {
-    SetCookie("pcheck","","0");
+    SetCookie("pcheck","",0);
     header("Location: auth_ext.php?table=$table&kind=$kind&no=$no");
   } else if ($o[se] == "back") {
     header("Location:list.php?tabel=$table");
