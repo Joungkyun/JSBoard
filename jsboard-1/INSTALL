@@ -11,12 +11,12 @@
 #
 #############################################################################
 #
-#                               Installation in JSBoard 1.1 v0.5
+#                               Installation in JSBoard 1.1 v0.6
 #
 #############################################################################
 
 작성 : 김정균 <admin@oops.org>
-일시 : 2000.9.9
+일시 : 2000.11.1
 
 이 문서는 JSBoard 1.1 version의 설치를 위해 제공을 한다.
 이 문서로 인한 피해나 JSBoard의 사용으로 인한 피해에 대해서는
@@ -31,21 +31,25 @@
 ******* 주의사항 ***********************************************************
 
 하나.
-JSBoard 1.1은 PHP4 기반하에서 정상작동을 하며, Session 기능을
-compile 시에 빼면 절대 안된다.
+JSBoard 1.2 부터는 확장자가 .php3에서 .php로 변경이 된다.
 
 하나.
-계정 유저들과 0.7 이하 버젼에서의 upgrade를 하는 유저들은 QUICK_INSTALL 를
-봐야 한다.
+JSBoard 1.2는 PHP4 기반하에서 정상작동을 하며, compile을 할때 configure
+시에 --disable-session 옵션을 놓으면 절대 안된다.
+ 
 
 하나.
-0.7 이하 버젼과 DB 구조체와 SQL query의 형식이 변경이
-되었으므로 무조건 덮어 씌우지 말기 바란다.
+계정 유저들과 0.7 이하 버젼에서의 upgrade를 하는 유저들은 QUICK_INSTALL
+를 봐야 한다.
+
+하나.
+0.7 이하 버젼과 DB 구조체와 SQL query의 형식이 변경이 되었으므로 무조건
+덮어 씌우지 말기 바란다.
 
 하나.
 !!!!!!!!!!!!!
-Linux, FreeBSD 이외의 OS에서 설치시에는 꼭
-jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
+Linux, FreeBSD 이외의 OS에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
+서를 읽어 보고 설치를 시작 해야 한다.
 
 ****************************************************************************
 
@@ -60,9 +64,12 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
   2. JSBoard 설치
   3. JSBoard 운영
   4. UPGRADE
-    4-1. 0.8 또는 1.0.x version에서의 upgrade
-    4-3. 0.7 이하 버젼에서의 upgrade
-  5. Bug report
+    4-1. 0.8 이상 version에서의 upgrade
+    4-2. 0.7 이하 version에서의 upgrade
+  5. 최신글 출력하기
+    5-1. 최신글 보기 구성
+    5-2. 최신글 보기 설정
+  6. Bug report
 
 ***************
 
@@ -78,7 +85,7 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
 
   1-1. exec() 함수 test
 
-    일단 다음과 같은 파일을 하나 만든다. test.php3라고 칭하겠다.
+    일단 다음과 같은 파일을 하나 만든다. test.php라고 칭하겠다.
 
     <?php
     echo("## exec() 함수 테스트  ##<p><br>\n\n");
@@ -99,7 +106,7 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
 
   1-2. MySQL 함수 test
 
-    info.php3 라는 파일을 아래와 같은 내용으로 생성한다.
+    info.php 라는 파일을 아래와 같은 내용으로 생성한다.
 
     <?php
     phpinfo();
@@ -146,13 +153,13 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
     mysql>
 
     만약 위와 같은 결과가 나오지 않는다면 (즉 column 수가 동일한지 확인을 한
-    다) jsboard/Installer/act.php3 의 37번째 라인의 query에서 컬럼수대로 수정
+    다) jsboard/Installer/act.php 의 37번째 라인의 query에서 컬럼수대로 수정
     을 해 줘야 한다.
 
   1-4. web server 설정
 
-    jsboard의 index file은 index.php3 이다 그러므로 httpd.conf 에서
-    DirectoryIndex 지시자에 index.php3를 추가해 주도록 한다. 또한 ph file
+    jsboard의 index file은 index.php 이다 그러므로 httpd.conf 에서
+    DirectoryIndex 지시자에 index.php를 추가해 주도록 한다. 또한 ph file
     들의 보안을 위해서 httpd.conf 의
 
     AddType application/x-httpd-php .php .php3
@@ -204,7 +211,7 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
   그리고 다시 jsboard/Installer/include/passwd.ph 를 편집한다.
 
   <?php
-  /****************************************************/
+  ######################################################
   # Specify MySQL Root Password
   # mysql을 관리할 root의 password 를 지정
 
@@ -218,14 +225,39 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
 
   $apache_config_file = "/etc/httpd/conf/httpd.conf";
 
-  /****************************************************/
+  # MySQL의 socket file 위치를 지정. socket file이 무엇
+  # 인지 모르겠으면 localhost 나 127.0.0.1 을 적도록 한
+  # 다. DB서버가 외부에 있을 경우에는 해당 DB서버의 ip
+  # address나 domain name을 적어주도록 하며, 이 경우에는
+  # DB서버의 mysql에서 설정한 접근 권한으로 설정을 하여야
+  # 한다.
+  #
+  # socket file의 위치를 알고 싶다면
+  # netsatat -an | grep mysql
+  # 로 알수가 있다.
+  #
+  $mysql_sock = ":/var/lib/mysql/mysql.sock";
+  ######################################################
   ?>
 
   위는 passwd.ph 의 내용이며, "MySQL_ROOT_PASSWORD" 부분에 MySQL의
-  root password를 넣어 준다. 그리고 그 아래에는 apache web server의
-  설정 파일인 httpd.conf가 있는 경로를 적어 주도록 한다.
+  root password를 넣어 준다. 
 
-  다음 웹 브라우져로 http://domain.com/jsboard/Installer 로 접근을 한다.
+  그리고 그 아래에는 apache web server의
+  설정 파일인 httpd.conf가 있는 경로를 적어 주도록 한다. 만약
+  DirectoryIndex 지시자가 srm.conf에서 지정되는 유저들은 srm.conf의
+  위치를 지정하기 바란다.
+
+  마지막으로는 mysql의 sockfile 경로를 지정해 준다. 이것은 보통
+  netstat -an | grep mysql 명령으로 얻을수 있다. 도저히 모르겠는 사람은
+  127.0.0.1 이나 localhost 를 적어주도록 한다. 보통은 tcp/ip 를 사용하
+  는 것보다 unix socket을 이용하는 것이 속도가 빠르기 때문에 sock file
+  의 경로를 알수 있다면 이를 지정해 주는 것이 좋다.
+
+  참고로 주의 할것은 unix socket으로 지정을 할 경우에는 socket file의
+  경로 앞에 : 가 붙어야 합니다. (예 - :/var/lib/mysql/mysql.sock)
+
+  다음 웹 브라우져로 http://domain.com/jsboard/Installer/로 접근을 한다.
 
   -------------------------------------------------------------------------
                              JSBoard Installer
@@ -325,6 +357,18 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
   에러가 발생하면 다시 처음 화면으로 가게 된다. 에러가 발생할 경우에는
   위와 같이 점검할 사항들을 제시해 준다.
 
+  혹시 위와 같이 MySQL login failed error 가 발생하면 임의의 php file을
+  다음과 같은 내용으로 만들고 테스트를 해 보기 바란다.
+
+  <?php
+  $c = mysql_connect("socket file 위치","user name","password");
+  if ($c) echo "OK";
+  else echo "Failed";
+  ?>
+
+  위와 같이 만들어서 실행을 했을 경우 OK가 떨어져야지만 된다. 아마 Installer
+  에서 failed가 나온다면 이것 역시 failed가 나오게 될것이다.
+
 
   -------------------------------------------------------------------------
                              JSBoard Installer
@@ -393,16 +437,26 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
 
 4. UPGRADE
 
-  4-1. 0.8 이상 1.0.x 이하 version에서의 upgrade
+  # 계정 유저들은 QUICK_ISTALL 문서를 참조하도록 한다.
 
-    0.8 이상 1.0.x 이하 version 에서의 upgrade 무척 단순하다. 즉, 1.1의
-    소스를 받아서 덮어 씌어 주기만 하면 된다. 그리고 Installer/ad_sample/OSname
-    에 보면 allow_browser.txt.orig 라는 파일이 있다 이걸 jsbaord/config 에
-    allow_browser.txt 로 copy를 한다. 다음 jsbaord/Installer/script 에서
-    root사용자의 경우에는 root_p.sh 를 실행해 주면 되며, 계정 유저의 경우
-    에는 account_p.sh를 실행해 주기만 하면 된다.
+  4-1. 0.8 이상 version에서의 upgrade
 
-    단 주의 할것은.... PHP3 사용자들은 PHP4로 update를 해 줘야만 한다.!!!!!!
+    jsboard-1.2 버젼의 가장큰 변화는 확장자의 변화이다. 즉 1.1.x까지는
+    .php3 라는 확장자를 사용했지만 jsbaord-1.2에서 부터는 .php 라는 이름
+    으로 변경이 되었다. 그래서 소스를 덮었씌우는 방법을 하면 안된다.
+
+    일단은 임의의 디렉토리에 jsabord-1.2 version을 풀어 놓도록 한다. 그
+    다음 Insatller/script/ 로 이동을 하여 root.sh 를 실행하도록 한다.
+    그리고 기존의 data/ 있는 모든 디렉토리들을 1.2/data 로 copy를 하도록
+    하고, admin/include/config.ph 역시 1.2/admin/include 로 카피를 한다.
+
+    카피를 한 후에 다시 Installer/script 로 이동한 후에 root_p.sh 를 실행
+    하도록 한다. (계정 유저들은 root.sh 와 root_p.sh가 아닌 account.sh
+    와 account_p.sh 를 이용해야 한다.)
+
+    다음 config/global.ph 를 재설정을 해준다. 이 부분은 이전 버젼의 DB
+    접속 부분만 같게 하고 나머지는 모두 재설정을 하도록 한다. 그리고 각
+    게시판의 관리자로 접속을 하여 한번씩을 재설정을 해 주도록 한다.
 
   4-2. 0.7 이하 버젼에서의 upgrade
 
@@ -410,7 +464,101 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작 해야 한다.
     버젼을 사용하는 user들은 최소한 0.6 안정 버젼으로 upgrade를 한후에
     upgrade를 할수가 있다. 자세한 사항은 QUICK_INSTALL 문서에서 다루도록 한다
 
-5. Bug report
+5. 최신글 출력하기
 
-  버그를 발견할 경우에는 http://jsboard.kldp.org/bbs/list.php3?table=bbs_upgrade 에
+  5-1. 최신글 보기 구성
+
+   JSBoard의 최신글 목록을 출력하는 기능이다. 이 기능은 include/prelist.ph 에
+   의해 구동이 되며 어느 파일에나 삽입을 하여 사용을 할수가 있다.(단 php가 구
+   동될수 있는 파일이어야 한다)
+
+  5-2. 최신글 보기 설정
+
+   일단 먼저 jsboard/include/prelist.ph에서 $prlist[path] 와 $prlist[wpath]
+   변수값을 설정을 해야 한다. $prlist[path] 는 JSBoard가 설치 되어 있는 절대
+   경로를 적어주며, $prlist[wpath] 는 JSBoard가 출력되는 웹경로를 적어 줘야
+   한다. 주의 할것은 마지막에 /는 적지 않도록 한다.
+
+   예)
+   $prlist[path] = "/home/httpd/html/PHP/jsboard";
+   $prlist[wpath] = "http://domain.com/PHP/jsboard";
+   
+   일단 사용방법을 설명하자면 우선 최신글을 보여줄 페이지의 제일 상단에 다음
+   과 같은 코드를 삽입한다. (중요한 것은 이 기능을 적용시킬 파일은 php가 구
+   동이 될수 있는 파일이어야 한다. 확장자가 .php3에서만 php를 인식할수 있을
+   경우에는 .php3 file에서만 이 기능을 사용할수 있다. 또한 위에서 제일 상단
+   이라는 것은 리스트를 보여줄 부분 보다 상단이면 된다.) 
+
+   <?
+   include "절대경로/prelist.ph";
+   ?>
+
+   다음 리스트 출력을 원하는 부분에 다음과 같은 함수를 적어 주도록 한다.
+
+   <? prelist("a","b","c","d","e","f","g","h","i"); ?>
+
+   prelist() 함수의 값들에 대해서는 아래를 참고하라.
+
+   a 테이블 이름(게시판 이름)
+   b include file 포함 여부 ( 1 - 포함 0 - 포함안함 )
+     이 부분의 값은 주의해야 한다. 무조건 하나의 게시판만 불러 들일
+     때는 무조건 1의 값을 가져야 한다. 만약 여러개의 게시판의 글을
+     불러 들일 경우에는 주번째 함수 부터는 값이 0이 되어야 한다.
+   c 글 리스트 수
+   d 출력글자수
+   e 이름 출력 여부 ( 1 - 출력  0 - 출력 안함 )
+   f 등록일 출력 여부 ( 1 - 출력  0 - 출력 안함 )
+   g 이메일 출력 여부 ( 1 - 출력  0 - 출력 안함 )
+   h 조회수 출력 여부 ( 1 - 출력  0 - 출력 안함 )
+   i 링크의 옵션 (예: target onClick 등등)
+
+
+   만약 여러개의 게시판을 한페이지에서 출력하고 싶다면 위의 코드의 값
+   만 적당히 변경 시켜서 여러번 적어 주면 된다.
+
+   예)
+
+   test 게시판 3개 미리보기<br>
+   <? prelist("test",1,3,30,1,1,1,1,""); ?>
+
+   <p>
+   test1 게시판 5개 미리보기<br>
+   <? prelist("test1",0,5,30,1,1,1,1,""); ?>
+
+   여기서 주의 할것은 두번째 게시판을 뿌려 줄때 두번째 필드의 값이 0이
+   된다는 것을 주의한다. 첫번째 게시판을 뿌려 줄때만 1이 되어야 하고,
+   두번째 이후의 게시판에서는 0의 값을 가져야 한다.
+
+   일단, 위와 같이 출력을 하면 현재로서는 아무런 디자인 없이 한줄씩
+   뿌려주게 된다. 원하는 디자인을 구성하고 싶다면 jsboard/include/prelist.ph
+   의 중앙에 있는 print_prlist() 함수의 echo문을 수정하면 된다.
+
+   단 table tag를 사용할 경우에는 좀 주의해야 할 일이 있다.
+   예를 들어보는게 쉬울 것이다.
+
+   예>
+
+   <table>
+   <? prelist(......) ?>
+   </table>
+
+   과 같이 출력을 해야 하며 prelist.ph 의 print_prlist() 함수는 아래와 같이
+   구성이 되어야 한다.
+
+   function print_prlist($p) {
+    echo "<tr>
+          <td>$p[link]</td>
+          <td>$p[name]</td>
+	  <td>$p[date]</td>
+	  <td>$p[count]</td>
+	  </tr>\n";
+   }
+
+   즉 테이블을 구성할 경우 하나의 글이 하나의 tr이 되기 때문에 for문에 의하여
+   print_prlist() 함수가 반복이 되어 출력이 되기 때문에 위와 같이 구성이 되어
+   져야 하는 것이다. 나머지는 알아서 응용하기 바란다.
+
+6. Bug report
+
+  버그를 발견할 경우에는 http://jsboard.kldp.org/bbs/list.php?table=bbs_upgrade 에
   리포팅을 해 주면 감사하겠다

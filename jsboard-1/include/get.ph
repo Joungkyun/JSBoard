@@ -1,31 +1,35 @@
 <?
-// 웹 서버 접속자의 IP 주소 혹은 도메인명을 가져오는 함수
-//
-// getenv        - 환경 변수값을 가져옴
-//                 http://www.php.net/manual/function.getenv.php3
-// gethostbyaddr - IP 주소와 일치하는 호스트명을 가져옴
-//                 http://www.php.net/manual/function.gethostbyaddr.php3
-function get_hostname($reverse = 0) {
-  // 아파치 환경 변수인 REMOTE_ADDR에서 접속자의 IP를 가져옴
-  $host = getenv("REMOTE_ADDR");
-  $check = @gethostbyaddr($host);
+# 웹 서버 접속자의 IP 주소 혹은 도메인명을 가져오는 함수
+# license : OOPS_License (http://www.oops.org/OOPS_License)
+# HTTP_X_FORWARDED_FOR - proxy server가 설정하는 환경 변수
+# getenv        - 환경 변수값을 가져옴
+#                 http://www.php.net/manual/function.getenv.php
+# gethostbyaddr - IP 주소와 일치하는 호스트명을 가져옴
+#                 http://www.php.net/manual/function.gethostbyaddr.php
+function get_hostname($reverse = 0,$e = 0) {
+  # proxy 를 통해서 들어올때 원 ip address 추적
+  $host = getenv("HTTP_X_FORWARDED_FOR");
 
-  if($check) $host = $check;
+  # proxy를 통하지 않고 접근 할때 아파치 환경 변수인
+  # REMOTE_ADDR에서 접속자의 IP를 가져옴
+  $host  = $host ? $host : getenv("REMOTE_ADDR");
+  $check = $reverse ? @gethostbyaddr($host) : "";
+  $host = $check ? $check : $host;
+
   return $host;
 }
 
-// 접속한 사람이 사용하는 브라우져를 알기 위해 사용되는 함수, 현재는 FORM
-// 입력창의 크기가 브라우져마다 틀리게 설정되는 것을 보정하기 위해 사용됨
-//
-// getenv - 환경 변수값을 가져옴
-//          http://www.php.net/manual/function.getenv.php3
-function get_agent()
-{
+# 접속한 사람이 사용하는 브라우져를 알기 위해 사용되는 함수, 현재는 FORM
+# 입력창의 크기가 브라우져마다 틀리게 설정되는 것을 보정하기 위해 사용됨
+#
+# getenv - 환경 변수값을 가져옴
+#          http://www.php.net/manual/function.getenv.php
+function get_agent() {
   $agent_env = getenv("HTTP_USER_AGENT");
 
-  // $agent 배열 정보 [br] 브라우져 종류
-  //                  [os] 운영체제
-  //                  [ln] 언어 (넷스케이프)
+  # $agent 배열 정보 [br] 브라우져 종류
+  #                  [os] 운영체제
+  #                  [ln] 언어 (넷스케이프)
   if(ereg("MSIE", $agent_env)) {
     $agent[br] = "MSIE";
     if(ereg("NT", $agent_env)) {
@@ -41,43 +45,49 @@ function get_agent()
     } else if(ereg("Win", $agent_env)) {
       $agent[os] = "WIN";
       if(ereg("\[ko\]", $agent_env)) $agent[ln] = "KO";
+    } else if(ereg("Linux", $agent_env)) {
+      $agent[os] = "LINUX";
+      if(ereg("\[ko\]", $agent_env)) $agent[ln] = "KO";
     } else $agent[os] = "OTHER";
+  } else if(ereg("Lynx", $agent_env)) {
+    $agent[br] = "LYNX";
   } else $agent[br] = "OTHER";
 
   return $agent;
 }
 
-// 오늘 자정을 기준으로 UNIX_TIMESTAMP의 형태로 시각을 뽑아오는 함수
-//
-// time    - 현재 시각의 UNIX TIMESTAMP를 가져옴
-//           http://www.php.net/manual/function.time.php3
-// date    - UNIX TIMESTAMP를 지역 시간에 맞게 지정한 형식으로 출력
-//           http://www.php.net/manual/function.date.php3
-// mktime  - 지정한 시각의 UNIX TIMESTAMP를 가져옴
-//           http://www.php.net/manual/function.mktime.php3
-// explode - 구분 문자열을 기준으로 문자열을 나눔
-//           http://www.php.net/manual/function.explode.php3
+# 오늘 자정을 기준으로 UNIX_TIMESTAMP의 형태로 시각을 뽑아오는 함수
+#
+# time    - 현재 시각의 UNIX TIMESTAMP를 가져옴
+#           http://www.php.net/manual/function.time.php
+# date    - UNIX TIMESTAMP를 지역 시간에 맞게 지정한 형식으로 출력
+#           http://www.php.net/manual/function.date.php
+# mktime  - 지정한 시각의 UNIX TIMESTAMP를 가져옴
+#           http://www.php.net/manual/function.mktime.php
+# explode - 구분 문자열을 기준으로 문자열을 나눔
+#           http://www.php.net/manual/function.explode.php
 function get_date() {
-  // 현재의 시간을 $time에 저장
+  # 현재의 시간을 $time에 저장
   $time  = time();
-  // 년, 월, 일을 각각의 변수에 대입
+  # 년, 월, 일을 각각의 변수에 대입
   $date  = date("m:d:Y", $time);
   $date = explode(":", $date);
 
-  // 오늘 날짜에 자정을 기준으로 UNIX_TIMESTAMP 형식으로 만듬
-  $today = mktime(0, 0, 0, $date[0], $date[1], $date[2]);
+  # 오늘 날짜에 자정을 기준으로 UNIX_TIMESTAMP 형식으로 만듬
+  #$today = mktime(0, 0, 0, $date[0], $date[1], $date[2]);
+  $today = mktime(date("H")-12, 0, 0, date("m"), date("d"), date("Y"));
 
   return $today;
 }
 
-// 기본적인 게시판의 정보를 가져오는 함수
+# 기본적인 게시판의 정보를 가져오는 함수
 function get_board_info($table) {
   global $o;
 
-  // 오늘 자정의 UNIX_TIMESTAMP를 구해옴
+  # 오늘 자정의 UNIX_TIMESTAMP를 구해옴
   $today  = get_date();
 
-  // date 필드를 비교해서 오늘 올라온 글의 갯수를 가져옴
+  # date 필드를 비교해서 오늘 올라온 글의 갯수를 가져옴
   $sql    = search2sql($o, 0);
 
   if(!$sql) {
@@ -86,7 +96,7 @@ function get_board_info($table) {
     sql_free_result($result);
   }
 
-  // 게시판의 전체 글의 갯수를 가져옴
+  # 게시판의 전체 글의 갯수를 가져옴
   $sql    = search2sql($o);
   $result = sql_query("SELECT COUNT(*) FROM $table $sql");
   $acount = sql_result($result, 0, "COUNT(*)");
@@ -98,35 +108,34 @@ function get_board_info($table) {
   return $count;
 }
 
-// 게시판의 전체 페이지 수를 구하는 함수
-function get_page_info($count, $page = 0)
-{
-    global $board; // 게시판 기본 설정 (config/global.ph)
+# 게시판의 전체 페이지 수를 구하는 함수
+function get_page_info($count, $page = 0) {
+    global $board; # 게시판 기본 설정 (config/global.ph)
 
-    // 보통 글 수를 페이지 당 글 수로 나누어 전체 페이지를 구함
-    // 나눈 값은 정수형으로 변환하며 정확히 나누어 떨어지지 않으면 1을 더함
+    # 보통 글 수를 페이지 당 글 수로 나누어 전체 페이지를 구함
+    # 나눈 값은 정수형으로 변환하며 정확히 나누어 떨어지지 않으면 1을 더함
     if($count[all] % $board[perno])
 	$pages[all] = intval($count[all] / $board[perno]) + 1;
     else
 	$pages[all] = intval($count[all] / $board[perno]);
 
-    // $page 값이 있으면 그 값을 $pages[cur] 값으로 대입함
+    # $page 값이 있으면 그 값을 $pages[cur] 값으로 대입함
     if($page)
 	$pages[cur] = $page;
 
-    // $pages[cur] 값이 없으면 1로 대입함
+    # $pages[cur] 값이 없으면 1로 대입함
     if(!$pages[cur])
 	$pages[cur] = 1;
-    // $pages[cur] 값이 전체 페이지 수보다 클 경우 전체 페이지 값을 대입함
+    # $pages[cur] 값이 전체 페이지 수보다 클 경우 전체 페이지 값을 대입함
     if($pages[cur] > $pages[all])
 	$pages[cur] = $pages[all];
 
-    // $pages[no] 값이 없으면 $pages[cur] 값을 참고하여 대입함. 목록에서
-    // 불러올 글의 시작 번호로 사용됨
+    # $pages[no] 값이 없으면 $pages[cur] 값을 참고하여 대입함. 목록에서
+    # 불러올 글의 시작 번호로 사용됨
     if(!$pages[no])
 	$pages[no] = ($pages[cur] - 1) * $board[perno];
 
-    // $pages[cur] 값에 따라 이전(pre), 다음(nex) 페이지 값을 대입함
+    # $pages[cur] 값에 따라 이전(pre), 다음(nex) 페이지 값을 대입함
     if($pages[cur] > 1)
 	$pages[pre] = $pages[cur] - 1;
     if($pages[cur] < $pages[all])
@@ -135,36 +144,36 @@ function get_page_info($count, $page = 0)
     return $pages;
 }
 
-// 글이 글 목록의 어느 페이지에 있는 글인지 알아내기 위한 함수
-//
-// intval - 변수를 정수형으로 변환함
-//          http://www.php.net/manual/function.intval.php3
+# 글이 글 목록의 어느 페이지에 있는 글인지 알아내기 위한 함수
+#
+# intval - 변수를 정수형으로 변환함
+#          http://www.php.net/manual/function.intval.php
 function get_current_page($table, $idx) {
-  global $board; // 게시판 기본 설정 (config/global.ph)
+  global $board; # 게시판 기본 설정 (config/global.ph)
   global $o;
 
   $sql = search2sql($o, 0);
   $count = get_board_info($table);
 
-  // 지정된 글의 idx보다 큰 번호를 가진 글의 갯수를 가져옴
+  # 지정된 글의 idx보다 큰 번호를 가진 글의 갯수를 가져옴
   $result     = sql_query("SELECT COUNT(*) FROM $table WHERE idx > $idx $sql");
   $count[cur] = sql_result($result, 0, "COUNT(*)");
   sql_free_result($result);
 
-  // 가져온 값을 페이지 당 글 수로 나누어 몇 번째 페이지인지 가져옴
-  // (페이지는 1부터 시작하기 때문에 1을 더함)
+  # 가져온 값을 페이지 당 글 수로 나누어 몇 번째 페이지인지 가져옴
+  # (페이지는 1부터 시작하기 때문에 1을 더함)
   $page   = intval($count[cur] / $board[perno]) + 1;
 
   return $page;
 }
 
-// 지정한 글의 다음, 이전글을 가져오는 함수
+# 지정한 글의 다음, 이전글을 가져오는 함수
 function get_pos($table, $idx) {
     global $o;
 
     $sql    = search2sql($o, 0);
     
-    // 지정된 글의 idx보다 작은 번호를 가진 글 중에 idx가 가장 큰 글 (다음글)
+    # 지정된 글의 idx보다 작은 번호를 가진 글 중에 idx가 가장 큰 글 (다음글)
     $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < $idx $sql");
     $pos[next] = sql_result($result, 0, "idx");
     sql_free_result($result);
@@ -172,6 +181,7 @@ function get_pos($table, $idx) {
 	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = $pos[next]");
 	$next   = sql_fetch_array($result);
 	sql_free_result($result);
+        $next[title] = str_replace("&amp;","&",$next[title]);
 
 	$pos[next] = $next[no];
 	if($next[reto]) {
@@ -184,7 +194,7 @@ function get_pos($table, $idx) {
 	}
     }
 
-    // 지정된 글의 idx보다 큰 번호를 가진 글 중에 idx가 가장 작은 글 (이전글)
+    # 지정된 글의 idx보다 큰 번호를 가진 글 중에 idx가 가장 작은 글 (이전글)
     $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > $idx $sql");
     $pos[prev] = sql_result($result, 0, "idx");
     sql_free_result($result);
@@ -192,6 +202,7 @@ function get_pos($table, $idx) {
 	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = $pos[prev]");
 	$prev   = sql_fetch_array($result);
 	sql_free_result($result);
+        $prev[title] = str_replace("&amp;","&",$prev[title]);
 
 	$pos[prev] = $prev[no];
 	if($prev[reto]) {
@@ -207,12 +218,12 @@ function get_pos($table, $idx) {
     return $pos;
 }
 
-// PHP의 microtime 함수로 얻어지는 값을 비교하여 경과 시간을 가져오는 함수
-//
-// explode - 구분 문자열을 기준으로 문자열을 나눔
-//           http://www.php.net/manual/function.explode.php3
+# PHP의 microtime 함수로 얻어지는 값을 비교하여 경과 시간을 가져오는 함수
+#
+# explode - 구분 문자열을 기준으로 문자열을 나눔
+#           http://www.php.net/manual/function.explode.php
 function get_microtime($old, $new) {
-  // 주어진 문자열을 나눔 (sec, msec으로 나누어짐)
+  # 주어진 문자열을 나눔 (sec, msec으로 나누어짐)
   $old = explode(" ", $old);
   $new = explode(" ", $new);
 
@@ -229,38 +240,38 @@ function get_microtime($old, $new) {
   return $time;
 }
     
-// 알맞은 제목을 가져오기 위해 사용됨 (html/head.ph)
-//
-// getenv   - 환경 변수값을 가져옴
-//            http://www.php.net/manual/function.getenv.php3
-// basename - 파일 경로에서 파일명만을 가져옴
-//            http://www.php.net/manual/function.basename.php3
+# 알맞은 제목을 가져오기 위해 사용됨 (html/head.ph)
+#
+# getenv   - 환경 변수값을 가져옴
+#            http://www.php.net/manual/function.getenv.php
+# basename - 파일 경로에서 파일명만을 가져옴
+#            http://www.php.net/manual/function.basename.php
 function get_title() {
-  global $board, $langs; // 게시판 기본 설정 (config/global.ph)
+  global $board, $langs; # 게시판 기본 설정 (config/global.ph)
 
   $title  = $board[title];
 
-  // SCRIPT_NAME이라는 아파치 환경 변수를 가져옴 (현재 PHP 파일)
+  # SCRIPT_NAME이라는 아파치 환경 변수를 가져옴 (현재 PHP 파일)
   $script = getenv("SCRIPT_NAME");
   $script = basename($script);
 
   switch($script) {
-    case "list.php3":
+    case "list.php":
       $title .= " $langs[get_v]";
       break;
-    case "read.php3":
+    case "read.php":
       $title .= " $langs[get_r]";
       break;
-    case "edit.php3":
+    case "edit.php":
       $title .= " $langs[get_e]";
       break;
-    case "write.php3":
+    case "write.php":
       $title .= " $langs[get_w]";
       break;
-    case "reply.php3":
+    case "reply.php":
       $title .= " $langs[get_re]";
       break;
-    case "delete.php3":
+    case "delete.php":
       $title .= " $langs[get_d]";
       break;
   }
@@ -297,10 +308,10 @@ function get_theme_img($t) {
   return $path;
 }
 
-// 파일 크기 출력 함수 by 김칠봉 <san2@linuxchannel.net>
-// $bfsize 변수는 bytes 단위의 크기임
-//
-// number_formant() - 3자리를 기준으로 컴마를 사용
+# 파일 크기 출력 함수 by 김칠봉 <san2@linuxchannel.net>
+# $bfsize 변수는 bytes 단위의 크기임
+#
+# number_formant() - 3자리를 기준으로 컴마를 사용
 function human_fsize($bfsize, $sub = "0") {
   $bfsize_Bytes = number_format($bfsize);
 
@@ -325,7 +336,10 @@ function human_fsize($bfsize, $sub = "0") {
 } 
 
 function viewfile($tail) {
-  global $board, $table, $list, $upload;$langs;
+  global $board, $table, $list, $upload;
+  global $langs, $icons;
+
+  $agent = get_agent();
   $upload_file = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
 
   $source1 = "<p><br>\n---- $list[bofile] $langs[inc_file] -------------------------- \n<p>\n<pre>\n";
@@ -333,8 +347,20 @@ function viewfile($tail) {
   $source3 = "   <font color=red>$list[bofile]</font> file is broken link!!\n\n";
 
   if (@file_exists($upload_file)) {
-    if ($tail == "gif" || $tail == "jpg" || $tail == "png") $p[up] = "<img src=\"$upload_file\">\n<p>\n";
-    else if ($tail == "phps" || $tail == "txt" || $tail == "htmls" || $tail == "htm" || $tail == "shs") {
+    if (eregi("^(gif|jpg|png)$",$tail)) {
+      $imginfo = GetImageSize($upload_file);
+      $uplink_file = "./form.php?mode=photo&table=$table&f[c]=$list[bcfile]&f[n]=$list[bofile]&f[w]=$imginfo[0]&f[h]=$imginfo[1]";
+      if($imginfo[0] > $board[width] - 6 && !eregi("%",$board[width])) {
+        $p[vars] = $imginfo[0]/$board[width];
+        if($board[img] != "yes") $p[width] = $board[width] - 6;
+        else $p[width] = $board[width] - $icons[size] * 2 - 6;
+        $p[height] = intval($imginfo[1]/$p[vars]);
+        $p[up]  = "[ <b>Orizinal Size</b> $imginfo[0] * $imginfo[1] ]<br>\n";
+        $p[up] .= "<a href=javascript:new_windows(\"$uplink_file\",\"photo\",0,0,$imginfo[0],$imginfo[1])><img src=\"$upload_file\" width=$p[width] height=$p[height] border=0></a>\n<p>\n";
+      } else {
+        $p[up] = "<img src=\"$upload_file\" $imginfo[2]>\n<p>\n";
+      }
+    } else if (eregi("^(phps|txt|htmls|htm|shs)$",$tail)) {
       $fsize = filesize($upload_file);
       $fsize_ex = 1000;
       if ($fsize == $fsize_ex) $check = 1;
@@ -347,6 +373,20 @@ function viewfile($tail) {
       if ($fsize == $fsize_ex && !$check) $view = $view . " <p>\n ......$langs[preview]\n\n";
 
       $p[down] = "$source1$view$source2";
+    } elseif (eregi("^(mid|wav|mp3)$",$tail)) {
+      if($tail == "mp3" && $agent[br] == "MOZL")
+        $p[up] = "[ MP3 file은 IE에서만 들으실수 있습니다. ]";
+      elseif($agent[br] == "LYNX")
+        $p[bo] = "";
+      else
+        $p[bo] = "<embed src=$upload_file autostart=true hidden=true mastersound>";
+    } elseif (eregi("^(mpeg|mpg|asf|dat|avi)$",$tail)) {
+      if($agent[br] == "MSIE") $p[up] = "<embed src=$upload_file autostart=true>";
+    } elseif ($tail == "mov" && $agent[br] == "MSIE") {
+      $p[up] = "<embed src=$upload_file autostart=true width=300 height=300 align=center>";
+    } elseif ($tail == "swf") {
+      $flash_size = $board[width] - 10;
+      if($agent[br] == "MSIE") $p[up] = "<embed src=$upload_file width=$flash_size height=$flash_size align=center>";
     }
   } else $p[down] = "$source1$source3$source2";
 

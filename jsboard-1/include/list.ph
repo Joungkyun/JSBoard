@@ -1,15 +1,21 @@
 <?
-function print_list($table, $list)
+function print_list($table, $list, $r=0)
 {
     global $color, $board, $langs, $enable;
     global $o, $upload, $cupload, $agent, $no;
 
     $search = search2url($o);
-    $list[name] = eregi_replace("&quot;","\"",$list[name]);
-    $list[name]  = cut_string($list[name], $board[nam_l]);
-    $list[name] = eregi_replace("\"","&quot;",$list[name]);
-    $list[title] = eregi_replace("&quot;","\"",$list[title]);
-    $list[title] = cut_string($list[title], $board[tit_l] - $list[rede]);
+
+    $list[name] = unhtmlspecialchars($list[name]);
+    $list[name]  = htmlspecialchars(cut_string($list[name],$board[nam_l]));
+    $list[title] = unhtmlspecialchars($list[title]);
+
+    # read시의 관련글 출력시 제목길이 조정
+    if(!$r[ln]) $list[title] = htmlspecialchars(cut_string($list[title],$board[tit_l]-$list[rede]*2));
+    else $list[title] = htmlspecialchars(cut_string($list[title],$board[tit_l]-$r[ln]-$list[rede]*2));
+
+    $list[title] = ugly_han($list[title]);
+
     $list[title] = eregi_replace("\"","&quot;",$list[title]);
     if($enable[re_list])  {
       if($no == $list[no]) $list[title] = str_replace($list[title],"<b><u>$list[title]</u></b>",$list[title]);
@@ -40,27 +46,27 @@ function print_list($table, $list)
 
     $list[refer] = sprintf("%5d", $list[refer]);
     $list[refer] = str_replace(" ", ".", $list[refer]);
-    $list[refer] = ereg_replace("^(\.+)", "<FONT COLOR=\"$bg\">\\1</FONT>", $list[refer]);
+    $list[refer] = ereg_replace("^(\.+)", "<FONT COLOR=\"$bg\" $board[css]>\\1</FONT>", $list[refer]);
 
     if($list[email]) {
 	$list[name] = url_link($list[email], $list[name], $fg, $list[no]);
     } else {
-	$list[name] = "<FONT COLOR=\"$fg\">$list[name]</FONT>";
+	$list[name] = "<FONT COLOR=\"$fg\" $board[css]>$list[name]</FONT>";
     }
 
     // 글 내용 미리 보기 설정
-    if ($enable[pre] && $agent[br] == "MSIE") {
+    if ($enable[pre]) {
       $list[ptext] = cut_string($list[text],$enable[preren]);
       $list[ptext] = htmlspecialchars($list[ptext]);
-      $list[preview] = " title=\"[Text] ";
-      $list[preview] .= $list[ptext];
-      $list[preview] .= "...\n\n- $langs[preview] -\"";
+      $list[ptext] = eregi_replace("(\r*)\n","<BR>",$list[ptext]);
+      $list[ptext] = eregi_replace("#|'","\\\1",$list[ptext]);
+      $list[preview] = " onMouseOver=\"drs('$list[ptext]'); return true;\" onMouseOut=\"nd(); return true;\"";
     }
 
     echo("
 <TR>
-  <TD ALIGN=\"right\" BGCOLOR=\"$bg\"><FONT COLOR=\"$fg\">$list[num]</FONT></TD>
-  <TD BGCOLOR=\"$bg\">\n<A HREF=\"read.php3?table=$table&no=$list[no]$search\"$list[preview]><FONT COLOR=\"$fg\">$list[title]</FONT></A>\n</TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"$bg\"><FONT COLOR=\"$fg\" $board[css]>$list[num]</FONT></TD>
+  <TD BGCOLOR=\"$bg\">\n<A HREF=\"read.php?table=$table&no=$list[no]$search\"$list[preview]><FONT COLOR=\"$fg\" $board[css]>$list[title]</FONT></A>\n</TD>
   <TD ALIGN=\"right\" BGCOLOR=\"$bg\">$list[name]&nbsp;</TD>");
 
   if ($upload[yesno] == "yes") {
@@ -82,15 +88,15 @@ function print_list($table, $list)
     }
   }
 
-   echo("  <TD BGCOLOR=\"$bg\" align=right><FONT SIZE=\"-1\" COLOR=\"$fg\"><NOBR>$date</NOBR></FONT></TD>");
+   echo("  <TD BGCOLOR=\"$bg\" align=right><FONT SIZE=\"-1\" COLOR=\"$fg\" $board[css]><NOBR>$date</NOBR></FONT></TD>");
 
     if(get_date() <= $list[date]) {
 	echo("
   <TD WIDTH=\"1\" BGCOLOR=\"$color[td_co]\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"*\" BORDER=\"0\"></TD>
-  <TD ALIGN=\"right\" BGCOLOR=\"$bg\"><FONT COLOR=\"$fg\">$list[refer]</FONT></TD>");
+  <TD ALIGN=\"right\" BGCOLOR=\"$bg\"><FONT COLOR=\"$fg\" $board[css]>$list[refer]</FONT></TD>");
     } else {
 	echo("
-  <TD ALIGN=\"right\" BGCOLOR=\"$bg\" COLSPAN=\"2\"><FONT COLOR=\"$fg\">$list[refer]</FONT></TD>");
+  <TD ALIGN=\"right\" BGCOLOR=\"$bg\" COLSPAN=\"2\"><FONT COLOR=\"$fg\" $board[css]>$list[refer]</FONT></TD>");
     }
     echo("
 </TR>\n");
@@ -104,13 +110,13 @@ function get_list($table, $pages, $reply = 0)
     if($reply[ck]) $sql = search2sql($reply);
     else $sql = search2sql($o);
 
-    if ($enable[re_list] && eregi("read",$PHP_SELF)) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
+    if ($enable[re_list] && eregi("read.php",$PHP_SELF)) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
     else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT $pages[no], $board[perno]";
 
     $result = sql_query($query);
     if(sql_num_rows($result)) {
 	while($list = sql_fetch_array($result)) {
-	    print_list($table, $list);
+	    print_list($table,$list,$reply);
 	}
     }  else {
 	print_narticle($table, $color[l2_fg], $color[l2_bg], 1);
@@ -128,7 +134,7 @@ function print_narticle($table, $fg, $bg, $print = 0)
     $article = "
 <TR>
   <TD ALIGN=\"center\" BGCOLOR=\"$bg\" COLSPAN=\"$colspan\">
-    <BR><FONT SIZE=\"+2\" COLOR=\"$fg\"><B>$str</B></FONT><BR><BR>
+    <BR><FONT SIZE=\"+2\" COLOR=\"$fg\" $board[css]><B>$str</B></FONT><BR><BR>
   </TD>
 </TR>\n";
 

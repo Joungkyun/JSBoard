@@ -13,7 +13,7 @@ function inst_pwcheck($pass,$mypass,$msg) {
   if ($pass != $mypass) {
     echo "<script>\n" .
          "alert('$msg')\n" .
-         "document.location='./session.php3?mode=logout&langss=$langs[code]'\n" .
+         "document.location='./session.php?mode=logout&langss=$langs[code]'\n" .
          "</script>";
     exit;
   }

@@ -4,9 +4,9 @@ function print_error($str, $width = 250, $height = 100) {
   global $table, $path, $prlist;
   $str = urlencode($str);
 
-  if ($path[type] == "admin") $err_fn = "../error.php3";
-  elseif ($path[type] == "prelist") $err_fn = "$prlist[wpath]/error.php3";
-  else $err_fn = "error.php3";
+  if ($path[type] == "admin") $err_fn = "../error.php";
+  elseif ($path[type] == "prelist") $err_fn = "$prlist[wpath]/error.php";
+  else $err_fn = "error.php";
 
   echo "
 <SCRIPT LANGUAGE = \"Javascript\">
@@ -33,8 +33,8 @@ function print_notice($str, $width = 330, $height = 210) {
   global $table, $path;
   $str = urlencode($str);
 
-  if ($path[type] == "admin") $err_fn = "../error.php3";
-  else $err_fn = "error.php3";
+  if ($path[type] == "admin") $err_fn = "../error.php";
+  else $err_fn = "error.php";
 
   echo "
 <SCRIPT LANGUAGE = \"Javascript\">
@@ -58,8 +58,8 @@ function print_pwerror($str, $width = 250, $height = 100) {
   global $table, $path;
   $str = urlencode($str);
 
-  if ($path[type] == "admin") $err_fn = "../error.php3";
-  else $err_fn = "error.php3";
+  if ($path[type] == "admin") $err_fn = "../error.php";
+  else $err_fn = "error.php";
 
   echo "
 <SCRIPT LANGUAGE = \"Javascript\">
@@ -76,7 +76,7 @@ function remoteWindow() {
 }
 //-->
 remoteWindow();
-document.location='./session.php3?mode=logout'
+document.location='./session.php?mode=logout'
 </SCRIPT>\n";
 
   exit;
@@ -84,7 +84,7 @@ document.location='./session.php3?mode=logout'
 
 // 패스워드 인증 실패시에 보여줄 메세지와 이전 페이지로 돌아가는 함수
 //
-function missmatch_passwd($path = "index.php3",$str = "Password가 맞지않습니다\\n\\n이전 페이지로 다시 돌아갑니다") {
+function missmatch_passwd($path = "index.php",$str = "Password가 맞지않습니다\\n\\n이전 페이지로 다시 돌아갑니다") {
   echo "<script>\nalert('$str')\n" .
        "\n</script>\n";
   move_page($path,$time = 0);

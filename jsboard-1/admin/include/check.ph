@@ -28,6 +28,7 @@ function new_table_check($table) {
   if (!$table)  print_error($langs[n_t_n]);
   if (!eregi("^[a-zA-Z]",$table)) print_error($langs[n_db]);
   if (eregi("\-",$table)) print_error($langs[n_dash]);
+  if (eregi("^as$",$table)) print_error($langs[n_promise]);
 }
 
 // table list 존재 유무 체크

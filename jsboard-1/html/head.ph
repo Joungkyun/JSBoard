@@ -7,11 +7,12 @@
 A:link, A:visited, A:active { TEXT-DECORATION: none; }
 A:hover { TEXT-DECORATION: underline; }
 TD { FONT: 9pt <? echo $langs[font] ?>; }
-INPUT {font: 9pt <? echo $langs[font] ?>; BACKGROUND-COLOR:<? echo $color[bgcol] ?>; COLOR:<? echo $color[text] ?>; BORDER:2x solid <? echo $color[l1_bg] ?>}
-SELECT {font: 9pt <? echo $langs[font] ?>; BACKGROUND-COLOR:<? echo $color[bgcol] ?>; COLOR:<? echo $color[text] ?>; BORDER:1x solid <? echo $color[l1_bg] ?>}
-TEXTAREA {font: 10pt <? echo $langs[font] ?>; BACKGROUND-COLOR:<? echo $color[bgcol] ?>; COLOR:<? echo $color[text] ?>; BORDER:2x solid <? echo $color[l1_bg] ?>}
+INPUT {font: 9pt <? echo $langs[font] ?>; BACKGROUND-COLOR:<? echo $color[n2_bg] ?>; COLOR:<? echo $color[n2_fg] ?>; BORDER:<? echo $form_border ?> solid <? echo $color[l1_bg] ?>}
+SELECT {font: 9pt <? echo $langs[font] ?>; BACKGROUND-COLOR:<? echo $color[n2_bg] ?>; COLOR:<? echo $color[n2_fg] ?>; BORDER:1x solid <? echo $color[l1_bg] ?>}
+TEXTAREA {font: 10pt <? echo $langs[font] ?>; BACKGROUND-COLOR:<? echo $color[n2_bg] ?>; COLOR:<? echo $color[n2_fg] ?>; BORDER:<? echo $form_border ?> solid <? echo $color[l1_bg] ?>}
  #radio {font: 9pt <? echo $langs[font] ?>; BACKGROUND-COLOR:<? echo $color[bgcol] ?>; COLOR:<? echo $color[text] ?>; BORDER:2x solid <? echo $color[bgcol] ?>}
  #title {font:20pt <? echo $langs[font] ?>; color:<? echo $color[n0_bg] ?>}
+ #eng {font:11px tahoma,Verdana,arial; line-height:120%}
 -->
 </STYLE>
 <?
@@ -34,16 +35,16 @@ echo "
   }
 //-->
 </script>\n";
-}
+} 
 ?>
 </HEAD>
 
 <?
-echo ("<BODY BACKGROUND=\"$color[image]\" BGCOLOR=\"$color[bgcol]\" TEXT=\"$color[text]\" LINK=\"$color[link]\" VLINK=\"$color[vlink]\" ALINK=\"$color[alink]\">\n");
+echo "<BODY BACKGROUND=\"$color[image]\" BGCOLOR=\"$color[bgcol]\" TEXT=\"$color[text]\" LINK=\"$color[link]\" VLINK=\"$color[vlink]\" ALINK=\"$color[alink]\">\n";
 
 if(file_exists("data/$table/html_head.ph")) {
-  @include("data/$table/html_head.ph");
+  @include "data/$table/html_head.ph";
 } else if(file_exists("html/head2.ph")) {
-  @include("html/head2.ph");
+  @include "html/head2.ph";
 }
 ?>

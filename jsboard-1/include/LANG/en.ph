@@ -1,19 +1,19 @@
 <?
-// Language Charactor Set
+# Language Charactor Set
 $langs[charset] = "iso-8859-1";
 $langs[font] = "arial";
 
-// Header file Message
+# Header file Message
 $table_err = "Table Name Missing! You must select a table";
 
-// list.php3
+# list.php
 function count_msg() {
   global $pages, $count;
 
   $langs[count1] = "Total $pages[all] page, $count[all] articles ";
   $langs[count2] = "searched. ";
   $langs[count3] = "being. ";
-  $langs[count4] = "$count[today] articles on Today ";
+  $langs[count4] = "$count[today] articles on Last 12Hours";
   $langs[count5] = "No article.";
 
   return $langs;
@@ -30,12 +30,10 @@ $langs[file]	= "File";
 $langs[date]	= "Date";
 $langs[hit]	= "Read";
 
-
-// read.php3
+# read.php
 $langs[ln_url]	= "URL";
 
-
-// write.php3
+# write.php
 $langs[w_name]	= "Name";
 $langs[w_mail]	= "Email";
 $langs[w_pass]	= "Passwd";
@@ -55,19 +53,16 @@ $langs[b_send]	= "Send";
 $langs[b_reset]	= "Reset";
 $langs[b_can]	= "Cancel";
 
-
-// reply.php3
+# reply.php
 $langs[b_re]	= "Reply";
 $langs[conj] = "Related Article";
 
-
-// edit.php3
+# edit.php
 $langs[b_edit]	= "Edit";
 $langs[e_wpw]	= "[Whole Admin] Passwd";
 $langs[b_apw]	= "[Admin] Passwd";
 
-
-// delete.php3
+# delete.php
 $langs[d_no]	= "No";
 $langs[d_ad]	= "Addr";
 $langs[b_del]	= "Delete";
@@ -75,20 +70,17 @@ $langs[d_wa]	= "Input Password. Don't restore delete article";
 $langs[d_waw]	= "Input [Primary Admin] password. Delete all articles that related this article";
 $langs[d_waa]	= "Input [Admin] password. Delete all articles that related this article";
 
-
-// auth_ext.php3
+# auth_ext.php
 $langs[au_ment]		= "Input Primary Admin Password";
 $clangs[au_ment]	= "Input each board Admin or Primary Admin Password";
 $langs[au_ments]	= "Back to Previous page";
 
-
-// error.ph
+# error.ph
 $langs[b_sm]	= "Submit";
 $langs[er_msg]	= "Warnning";
 $langs[er_msgs]	= "Error";
 
-
-// act.php3
+# act.php
 $langs[act_ud]	= "File with size of 0 byte or bigger\\nthan max specified in php.ini can't be uploaded";
 $langs[act_md]	= "File bigger than $upload[maxsize] can\\'t be uploaded";
 $langs[act_de]	= "File that has special characters (#,\$,%, etc) in its filename can\\'t be uploaded";
@@ -105,13 +97,13 @@ $langs[act_same] = "Please don\'t post duplicate article.";
 $langs[act_dc]	= "Nothing is changed";
 $langs[act_complete] = "Updated successfully";
 
-// list.ph message
+# list.ph message
 $langs[ln_re]	= "Reply";
 $langs[no_seacrh] = "No search article";
 $langs[no_art]	= "No article";
 $langs[preview] = "more";
 
-// print.ph message
+# print.ph message
 $langs[page_no]	= "Page";
 $langs[art_no]	= "Article";
 $langs[ln_mv]	= "Go";
@@ -137,7 +129,7 @@ function re_subj($re_no = 0) {
 $langs[cmd_priv]	= "Previous";
 $langs[cmd_next] = "Next";
 $langs[cmd_write] = "Write";
-$langs[cmd_today] = "Today";
+$langs[cmd_today] = "Last 12H";
 $langs[cmd_all]	= "WholeList";
 $langs[cmd_list]	= "List";
 $langs[cmd_upp]	= "Up";
@@ -148,12 +140,11 @@ $langs[cmd_del]	= "Delete";
 $langs[cmd_con]	= "Related";
 $langs[ln_write]	= "Only Admin";
 
-
-// check.ph
+# check.ph
 $lant[chk_a]	= "Primary";
 $langs[chk_wa]	= "$user_m Admin limited $kind function.\\nCheck the $user_m Admin Password.";
 
-// get.ph
+# get.ph
 $langs[get_v]	= " [ Article View ]";
 $langs[get_r]	= " [ Article Read ]";
 $langs[get_e]	= " [ Article Edit ]";
@@ -164,17 +155,14 @@ $langs[get_d]	= " [ Article Delete ]";
 $langs[get_no]	= "Please specify article number.";
 $langs[get_n]	= "No aspecified number";
 
-
-// sql.ph
+# sql.ph
 $langs[sql_m]	= "Problem in SQL system.";
 
-
-// sendmail.ph
+# sendmail.ph
 $langs[sm_dr]	= "Don\\'t reply this mail. This message is sent to\\nnotify you about article posted on JSBoard";
 $langs[sm_ds]	= "Failed to send mail!";
 
-
-// User_admin
+# User_admin
 $langs[ua_ment]	= "Input Password";
 
 $langs[lang_c]	= "Type";
@@ -195,6 +183,11 @@ $langs[ua_re_list]   = "Related Article";
 $langs[ua_re_list_y] = "View";
 $langs[ua_re_list_n] = "Can't view";
 
+$langs[ua_align]   = "Board Align";
+$langs[ua_align_c] = "Center";
+$langs[ua_align_l] = "Left";
+$langs[ua_align_r] = "Right";
+
 $langs[ua_p]	= "Permit";
 $langs[ua_n]	= "Don't";
 
@@ -214,12 +207,17 @@ $langs[ua_b14]	= "Day";
 $langs[ua_b15]	= "Display";
 $langs[ua_b16]	= "Don't Display";
 $langs[ua_b17]	= "Image Menu";
+$langs[ua_b18]  = "";
+$langs[ua_b19]  = "Board Wrap";
+$langs[ua_b20]  = "Protect long text in Read";
 
 $langs[ua_bc1]	= "Use Theme";
 $langs[ua_bc2]	= "Search";
 $langs[ua_bc3]	= "Basic BG";
 $langs[ua_bc4]	= "Basic Font";
 $langs[ua_bc5]	= "UnLink";
+$langs[ua_bc6]	= "Form Font";
+$langs[ua_bc7]	= "Form BG";
 
 $langs[ua_lp1]	= "Guide BG";
 $langs[ua_lp2]	= "Guide Font";
@@ -229,8 +227,10 @@ $langs[ua_lp5]	= "List BG";
 $langs[ua_lp6]	= "List Font";
 $langs[ua_lp7]	= "Reply BG";
 $langs[ua_lp8]	= "Reply Font";
-$langs[ua_lp9]	= "Today's Article";
-$langs[ua_lp10]	= "Current Page";
+$langs[ua_lp9]	= "Search BG";
+$langs[ua_lp10]	= "Search Font";
+$langs[ua_lp11]	= "Last 12H";
+$langs[ua_lp12]	= "Current Page";
 
 $langs[ua_rp1]	= "Regist BG";
 $langs[ua_rp2]	= "Regist Font";
@@ -238,6 +238,8 @@ $langs[ua_rp3]	= "Message BG";
 $langs[ua_rp4]	= "Message Font";
 $langs[ua_rp5]	= "File BG";
 $langs[ua_rp6]	= "File Font";
+$langs[ua_rp7]	= "Search BG";
+$langs[ua_rp8]	= "Search Font";
 
 $langs[ua_fp]	= "File Upload";
 
@@ -254,7 +256,7 @@ $langs[ua_pw_n]	= "Can\\'t access this file without a password!!";
 $langs[ua_pw_c]	= "Invalid Password";
 $pang[ua_pw_comp] ="Password didn\\'t change because\\nnew password and repassword didn\\'t match";
 
-// admin print.ph
+# admin print.ph
 $langs[p_wa]	= "Primary Admin Auth";
 $langs[p_aa]	= "Primary Admin Page";
 $langs[p_wv]	= "Change Global Configuration";
@@ -266,11 +268,12 @@ $langs[p_cp]	= "Password changed.\\nLogout Admin Center and relogin plez!";
 $langs[p_chm]	= "If you don't change PASSWORD \"0000\", You'll see this message continuously";
 $lnags[p_nd]    = "No Theme";
 
-// admin check.ph
+# admin check.ph
 $langs[nodb]	= "Database doesn't exist in SQL server";
 $langs[n_t_n]	= "Please specify table name for new message board";
 $langs[n_db]	= "Board name must start with an alphabet";
 $langs[n_dash]  = "Dash can't be used in board nam";
+$langs[n_promise] = "This name is reserved word in DB";
 $langs[n_acc]	= "Specified unexisted board name";
 $langs[a_acc]	= "The board with this name already exists";
 
@@ -278,11 +281,11 @@ $langs[first1]	= "Distributer";
 $langs[first2]	= "After U read this, must delete this article!";
 $langs[first3]	= "Default password for Admin Mode is set 0000.\nFirst, click [admin] link at left cornner of webboard,\nchange this password!";
 
-// admin admin_info.php3
+# admin admin_info.php
 $langs[spamer_m] = "List prohibited words line by line in SPAMMER LIST. To use this feature, spam_list.txt file must exist under jsboard/config and must have write permission for nobody.<p>No blank line or space at the end of file!";
 $langs[brlist_m] = "List supported browsers in Allow Browser List. Only browsers list here can write an article. To use this feature, allow_browser.txt file must exist under jsboard/config and must have write permission for nobody.<p>No blank line or space at the end of file!";
 
-// ADMIN
+# ADMIN
 $langs[a_reset]	= "Reset Password";
 $langs[sql_na]	= "<p><font color=red><b>Failed connect SQL Server!<p>\nCheck the db server, db user, db password in \"jsboard/config/global.ph\"<br>\nIf your settings are right,<br>excute \"flush privileges\" command as root user under MySQL</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ BACK ]</a><p>\n Copyleft 1999-2000 <a href=http://jsbord.kldp.org>JSBoard Open Project</a>"; 
 
@@ -311,15 +314,15 @@ $langs[a_act_pm]	= "Go to privious page";
 $langs[a_act_nm]	= "Go to next page";
 $langs[a_act_cp]	= "Specify New Password";
 
-// Inatllation
+# Inatllation
 $langs[waitm] = "Checking Environment to use JSBoard<br>\nResult will be displayed after 5 sec.<p>If U use Netscape for Linux or Other UNIX,<br>then U will install manualy by hands<br>that refer to QUICK_INSTALL document";
 $langs[wait] = "[ Wait 5 seconds ]";
 $lnags[os_check] ="If OS isn't Linux, change shell command in jsboard/include/exec.ph to corresponding command in your OS";
 $langs[mcheck] = "Failed MySQL login. Check the MySQL root password in jsbaord/installer/include/passwd.ph. If password is right, check if PHP was compiled with --with-mysql option.<br>If you use external DB server, refer to QUICK_INSTALL document";
-$langs[ccheck] = "Different number of columns for db table in mysql database. U must modify db query at 37th line of jsboard/Installer/act.php3";
+$langs[ccheck] = "Different number of columns for db table in mysql database. U must modify db query at 37th line of jsboard/Installer/act.php";
 $langs[echeck] = "exec() function is not working. Checked your path to php3.ini or php.ini configuration file";
-$langs[icheck] = "Add index.php3 to DirectoryIndex directive in httpd.conf\nand restart apache web server";
-$langs[pcheck] = "Must excute root.sh or account.sh in jsboard/Installer/script before Installation";
+$langs[icheck] = "Add index.php to DirectoryIndex directive in httpd.conf\nand restart apache web server";
+$langs[pcheck] = "Must excute root.sh in jsboard/Installer/script before Installation";
 $langs[auser] = "If U are account user, refer to QUICK_INSTALL document";
 
 $langs[inst_r]	= "Reset";

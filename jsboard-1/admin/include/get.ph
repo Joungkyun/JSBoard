@@ -2,15 +2,14 @@
 // 웹 서버 접속자의 IP 주소 혹은 도메인명을 가져오는 함수
 //
 // getenv        - 환경 변수값을 가져옴
-//                 http://www.php.net/manual/function.getenv.php3
+//                 http://www.php.net/manual/function.getenv.php
 // gethostbyaddr - IP 주소와 일치하는 호스트명을 가져옴
-//                 http://www.php.net/manual/function.gethostbyaddr.php3
-function get_hostname($reverse = 0) {
-  // 아파치 환경 변수인 REMOTE_ADDR에서 접속자의 IP를 가져옴
-  $host = getenv("REMOTE_ADDR");
-  if($reverse)
-    // IP 주소로 호스트명을 찾아옴 (Reverse Lookup)
-    $host = gethostbyaddr($host);
+//                 http://www.php.net/manual/function.gethostbyaddr.php
+function get_hostname($r = 0) {
+  # 아파치 환경 변수인 REMOTE_ADDR에서 접속자의 IP를 가져옴
+  $ip    = getenv("REMOTE_ADDR");
+  $check = $r ? @gethostbyaddr($ip) : "";
+  $host  = $check ? $check : $ip;
 
   return $host;
 }
@@ -19,7 +18,7 @@ function get_hostname($reverse = 0) {
 // 입력창의 크기가 브라우져마다 틀리게 설정되는 것을 보정하기 위해 사용됨
 //
 // getenv - 환경 변수값을 가져옴
-//          http://www.php.net/manual/function.getenv.php3
+//          http://www.php.net/manual/function.getenv.php
 function get_agent() {
   $agent_env = getenv("HTTP_USER_AGENT");
 
@@ -50,13 +49,13 @@ function get_agent() {
 // 오늘 자정을 기준으로 UNIX_TIMESTAMP의 형태로 시각을 뽑아오는 함수
 //
 // time    - 현재 시각의 UNIX TIMESTAMP를 가져옴
-//           http://www.php.net/manual/function.time.php3
+//           http://www.php.net/manual/function.time.php
 // date    - UNIX TIMESTAMP를 지역 시간에 맞게 지정한 형식으로 출력
-//           http://www.php.net/manual/function.date.php3
+//           http://www.php.net/manual/function.date.php
 // mktime  - 지정한 시각의 UNIX TIMESTAMP를 가져옴
-//           http://www.php.net/manual/function.mktime.php3
+//           http://www.php.net/manual/function.mktime.php
 // explode - 구분 문자열을 기준으로 문자열을 나눔
-//           http://www.php.net/manual/function.explode.php3
+//           http://www.php.net/manual/function.explode.php
 function get_date() {
   // 현재의 시간을 $time에 저장
   $time  = time();
@@ -74,7 +73,7 @@ function get_date() {
 // PHP의 microtime 함수로 얻어지는 값을 비교하여 경과 시간을 가져오는 함수
 //
 // explode - 구분 문자열을 기준으로 문자열을 나눔
-//           http://www.php.net/manual/function.explode.php3
+//           http://www.php.net/manual/function.explode.php
 function get_microtime($old, $new) {
   // 주어진 문자열을 나눔 (sec, msec으로 나누어짐)
   $old = explode(" ", $old);
@@ -94,7 +93,7 @@ function get_microtime($old, $new) {
     
 // 넷스케이프와 익스간의 FORM 입력창의 크기 차이를 보정하기 위한 함 수
 // intval - 변수를 정수형으로 변환함
-//          http://www.php.net/manual/function.intval.php3
+//          http://www.php.net/manual/function.intval.php
 function form_size($size, $print = 0) {
   global $langs;
 
