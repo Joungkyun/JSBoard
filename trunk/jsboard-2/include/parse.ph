@@ -42,12 +42,13 @@ function search2url($o, $method = "get") {
 #                http://www.php.net/manual/function.trim.php
 # rawurldecode - 암호화된 URL를 복호화
 #                http://www.php.net/manual/function.rawurldecode.php
-function search2sql($o, $wh = 1) {
+function search2sql($o, $wh = 1, $join = 0) {
   global $langs;
   if($o[at] != "s" && $o[at] != "d") return;
 
   $str = rawurldecode($o[ss]); # 검색 문자열을 복호화
   $str = trim($str);
+  $join = $join ? "tb." : "";
 
   if(strlen(stripslashes($str)) < 3 && !$o[op]) {
     if($o[sc] != "r" && $o[st] != "t")
@@ -101,17 +102,17 @@ function search2sql($o, $wh = 1) {
     $week  = $today - (60 * 60 * 24 * 7);
 
     switch($o[st]) {
-      case 't': $sql .= "(date >= $today)";
+      case 't': $sql .= "({$join}date >= $today)";
         break; # 오늘
-      case 'w': $sql .= "(date >= $week) AND ";
+      case 'w': $sql .= "({$join}date >= $week) AND ";
         break; # 일주일간
-      case 'm': $sql .= "(date >= $month) AND ";
+      case 'm': $sql .= "({$join}date >= $month) AND ";
         break; # 한달간
     }
   } else {
     $startday = mktime(0,0,0,$o[m1],$o[d1],$o[y1]);
     $endday = mktime(23,59,59,$o[m2],$o[d2],$o[y2]);
-    $sql .= "(date BETWEEN $startday AND $endday) AND ";
+    $sql .= "({$join}date BETWEEN $startday AND $endday) AND ";
   }
 
   if($o[at] != "d") {
@@ -119,15 +120,15 @@ function search2sql($o, $wh = 1) {
     else $str = "LIKE \"%$str%\"";
 
     switch($o[sc]) {
-      case 'a': $sql .= "(title $str OR text $str OR name $str)";
+      case 'a': $sql .= "({$join}title $str OR {$join}text $str OR {$join}name $str)";
         break;
-      case 'c': $sql .= "(text $str)";
+      case 'c': $sql .= "({$join}text $str)";
         break;
-      case 'n': $sql .= "(name $str)";
+      case 'n': $sql .= "({$join}name $str)";
         break;
-      case 't': $sql .= "(title $str)";
+      case 't': $sql .= "({$join}title $str)";
         break;
-      case 'r': $sql .= "(no = $o[no] OR reto = $o[no])";
+      case 'r': $sql .= "({$join}no = $o[no] OR {$join}reto = $o[no])";
         break;
     }
   } else {
@@ -137,30 +138,30 @@ function search2sql($o, $wh = 1) {
       case 'a':
         for($i=0;$i<sizeof($strs);$i++) {
           $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
-          $sqltitle .= "title $strs[$i]";
-          $sqltext .= "text $strs[$i]";
-          $sqlname .= "name $strs[$i]";
+          $sqltitle .= "{$join}title $strs[$i]";
+          $sqltext .= "{$join}text $strs[$i]";
+          $sqlname .= "{$join}name $strs[$i]";
         }
         $sql .= "(($sqltitle) OR ($sqltext) OR ($sqlname))";
         break;
       case 'c':
         for($i=0;$i<sizeof($strs);$i++) {
           $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
-          $sqltext .= "text $strs[$i]";
+          $sqltext .= "{$join}text $strs[$i]";
         }
         $sql .= "($sqltext)";
         break;
       case 'n':
         for($i=0;$i<sizeof($strs);$i++) {
           $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
-          $sqlname .= "name $strs[$i]";
+          $sqlname .= "{$join}name $strs[$i]";
         }
         $sql .= "($sqlname)";
         break;
       case 't':
         for($i=0;$i<sizeof($strs);$i++) {
           $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
-          $sqltitle .= "title $strs[$i]";
+          $sqltitle .= "{$join}title $strs[$i]";
         }
         $sql .= "($sqltitle)";
         break;

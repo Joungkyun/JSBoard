@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 Version   : jsboard-2.0.0
 
+Thu, Jun 27 2002 by JoungKyun Kim <http://www.oops.org>
+	- added total number of comment in article list
+
 Sat, Jun 17 2002 by JoungKyun Kim <http://www.oops.org>
 	- added link option of page after logout
 	- added logout link

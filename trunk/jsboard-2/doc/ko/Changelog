@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.0
 
+2002.06.27 by 김정균 <http://www.oops.org>
+	- 글 리스트에 코멘크 갯수 출력
+
 2002.06.17 by 김정균 <http://www.oops.org>
 	- logout 후의 이동 페이지를 여러곳으로 지정 가능하게 수정
 	- logout 링크 추가
