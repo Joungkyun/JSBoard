@@ -123,7 +123,7 @@ if($view[url]) {
 <!-  print upload field                                                   -->
 <!-#######################################################################-->
 <?
-if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
+if ($upload[yesno] && $cupload[yesno] && $noup != 1) {
   echo "<TR>\n".
        "<TD><B>File</B></TD>\n".
        "<TD>\n".
