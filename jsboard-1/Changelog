@@ -1,15 +1,18 @@
 ***** JSBOARD + OOPS administartion Center *********************************
 
-Original Developer              : Byung Chan Kim <redhands@linux.sarang.net>
-Source Disturibute              : Joung Kyun Kim <admin@oops.org>
-Windog Version                  : Ki Soo Choi <choiks@nuri.net>
+Original Developer		: Byung Chan Kim <redhands@linux.sarang.net>
+Source Disturibute		: Joung Kyun Kim <admin@oops.org>
+Windog Version			: Ki Soo Choi <choiks@nuri.net>
 
 ## Warning ##
 
-This package turned out to work in Redhat Debian FreeBSD systems.
-Any one who wants install this package on any other platform
-must revise it as needed for himeself/herself and must read
-jsboard/README.OTHERS.OS file.
+This package turned out to work in Redhat Debian FreeBSD Windows systems.
+Any one who wants install this package on any other platform must revise
+it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
+file.
+
+If you wnat to see windog's change log, see also
+ http://jsboard.kldp.org/download/Changelogwin.txt
 
 Attention : OOPS administration Center is not GPL.
             See also admin/License !
@@ -17,6 +20,99 @@ Attention : OOPS administration Center is not GPL.
 ******************************************************************************
 
 
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2001년  5월 10일
+버전   : jsboard-1.3.0
+
+* 변경된점
+1. PHP4-4.0.3 이상 버젼에서만 사용 가능.
+2. utility directory 추가. (CWB -> jsboard convert program 등록)
+3. 글 수정시 첨부파일 삭제및 변경 기능 추가
+4. 글 입력시 호스트를 ip address로만 insert
+5. IP address 정보를 파악하는 호스트 스크립트의 변경
+6. board wrap 설정을 radio button으로 변경
+7. IP address 출력 여부를 설정할수 있게 변경
+8. DNS lookup 설정 여부 추가
+9. IP address 정보 조회 기능 사용여부 추가
+10. 글쓰기창 사이즈 조정 기능 추가 (IE,NS6,Mozila)
+11. 댓글 처리시 부모글의 html 사용여부를 이어받게 수정
+12. 동시접속이 많을 경우 댓글을 달거나 글 삭제를 할경우 idx가 꼬이는
+    것을 방지 하기 위해 LOCK TABLES $table WRITE 사용
+13. global.ph에서 출력하던 version numbering을 version.ph로 수정
+14. file_upload() 함수 수정
+15. upload file 미리 보기에서 html file을 1000 charactor까지만 출력
+16. WRAP=hard 가 적용되지 않는 리눅스용 NS에서 글등록시 게시판이 옆
+    으로 길게 늘어 지는 것을 방지하기 위해 글 출력시 wordwrap을 사용.
+17. 한글 file upload 가능하게 수정
+18. html 사용을 이용하여 글쓰기를 할때 본문 내용에 <--no-autolink> 가 포함
+    되어 있으면 auto_link 가 적용안되게 수정. (한글 파일 링크시 사용가능)
+19. global.ph 에서 $upload[dir] 변수를 변경시켰을 경우 admin에서 새로운 게
+    시판 추가시 $upload[dir]이 files로 고정되어 생성되는것 수정
+20. 전체 관리자 인증시 세션값에 평문으로 패스워드가 들어가는 것을 암호화
+    되어진 문자열로 들어가게 수정
+21. include/sendamil.ph 에서 get_send_info() 함수의 $db[host] 함수가 잘못
+    지정되어 있는 것 수정 ($db[server] 로 수정)
+22. act.php 로 직접 접근하여 권한 없는 게시판에 글올리는 버그 수정
+23. file download시 fopen후 fclose를 하지 않아 리소스 낭비 되는 현상 수정
+24. 글 내용 미리 보기 기능의 Java Script 수정
+25. 한글 언어 파일에서 오타 수정 (include/LANG/ko.ph)
+26. html/head.ph 에서 새창을 띄우는 자바 스크립트 수정
+27. 왠만한 exec 함수는 모두 삭제. admin 에서 게시판 삭제시
+    게시판 디렉토리 삭제할 때만 사용
+28. 1.2 이하 버젼에서 업데이트를 했을 경우 wordwrap 이 지정이
+    안된 경우 기본값을 가지도록 설정
+29. mail link 를 formmail 과 mailto 선택 방식으로 변경
+30. image size 관련 java script 재수정
+31. admin center 인증 관련 버그 수정
+32. Installer에서 환경 체크시 DirectoryIndex 앞에 공백문자가 있을 경우
+    체크 안되던 현상 수정
+33. 게시판 통계의 오타 수정
+34. 게시판 권한 설정을 관리자 모드로만 사용할수 있을 경우 password check
+    한번만 하면 되도록 수정 (글쓰기시 패스워드는 자동으로 관리자 패스워드
+    가 들어감)
+35. admin center 에 로그인 했을 경우 다른 인증을 생략
+36. 보안상의 약점을 없애기 위해 include/exec.ph 에 지정되어 있는 shell 명령
+    들을 절대 경로로 변경
+37. admin center 에서 alphabat 별로 게시판을 볼수 있도록 수정
+38. write.php 에서 폰트 색상 적용 안되던것 수정
+39. 보안 알림 기능 추가
+40. admin link 를 안보이게 할수 있도록 옵션으로 변경
+41. 검색후 리스트 링크가 검색 리스트로 가지 못하는 버그 수정
+42. html 사용시에 form, input, textarea 등의 tag 삭제
+43. base tag 사용못하게 삭제
+44. Installer 에서 쓸데없이 urlencode 되어진 것 해결
+45. ko.ph 에서 오타 수정
+46. 글 내용 미리보기에서 글 본문에 \ 문자가 있을 경우 java script
+    error 발생 하는 문제 수정
+47. auto_link 함수에서 한글 링크 처리
+48. auto_link 함수에서 hard wrap 이 적용될 경우 html link 가 여러
+    줄이 되어 링크가 깨지는 것을 3줄까지는 합치게 하는 코드 부분 수정
+49. a href=javascript:function() 의 형태로 java script 사용하는 것을
+    막음
+50. 미리보기에서 &lt; 와 같은 문자 오류 나는것 fix
+51. reply 에서 html tag 가 처리 되지 않던것 수정
+52. 글쓰기시 에러창이 뜰 경우 IE 5.01SP1 이상 버젼에서 세션이 초기화
+    되는 현상을 방지 하기 위해 OS가 windowg 일 경우에는 alert 창이 뜨
+    도록 수정(5.01SP1 이상 버젼에서 window.open() 함수가 작동할 경우
+    history.back() 을 해도 세션이 초기화 되는 현상이 있음)
+53. auto_link 에서 applet 사용가능하게 수정.
+54. a link 외에 embed 및 img link 의 경우 여려줄일 경우 link 가 깨지는것
+    보완
+55. auto link 에서 a href tag 를 사용하여 링크한 부분을 처리할때 링크 마
+    지막에 \2 가 붙은 현상 수정
+56. reply 와 edit 에서 원본글의 처리 방식 변경
+57. Exchange Server 로 smtp 가 구성된 메일서버로 메일 보낼 경우 Data Format
+    Error 발생하며 메일이 return 되는 현상 수정. (mail 함수에서 socket 방식
+    으로 변경)
+58. parse.ph 에서 정규표현식들 수정
+59. NOBR 이 적용되지 않는 브라우져를 위해 NOWRAP 을 추가
+60. file_upload() 함수에서 오타 수정
+61. auto_link 에서 .com 들이 file 체크에 걸려 target 이 붙지 않는 현상 수정
+62. 삭제시 html 안한 글에서 wordwrap 이 적용안되는 문제 수정
+63. mail server 를 global.ph 에서 지정할수 있도록 수정
+
+
+-----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2001년  3월  4일
 버전   : jsboard-1.2.3

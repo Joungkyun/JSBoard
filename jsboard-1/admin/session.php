@@ -1,11 +1,20 @@
 <?
-session_start(); // session을 시작한다.
+session_start();
+include "include/config.ph";
+include "include/check.ph";
+
 if ($mode == "login") {
-  $login[pass] = $logins;
-  session_register("login"); //세션 등록한다. 
+  $login[pass] = compare_pass($sadmin,$logins,1);
+  # 세션 등록
+  session_register("login");
+  # admn login 상태를 알리기 위한 cookie 설정
+  SetCookie("adminsession","$login[pass]",time()+900,"/");
   header("Location: admin.php");
 } else if ($mode == "logout") {
-  session_destroy("login"); // 세션을 삭제한다
+  # 세션을 삭제
+  session_destroy("login");
+  # admin login 상태를 삭제
+  SetCookie("adminsession","",0,"/");
   header("Location: auth.php");
 } else if ($mode == "back") {
   header("Location:admin.php");

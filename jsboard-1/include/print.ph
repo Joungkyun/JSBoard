@@ -36,6 +36,18 @@ function form_size($size, $print = 0) {
       else $size *= 1.3;
     } elseif($agent[os] == "LINUX") $size *= 1.0;
   }
+
+  # 네스케이프 6
+  if($agent[br] == "MOZL6") {
+    if($agent[os] == "NT") {
+      if($agent[ln] == "KO") $size *= 1.1; # 한글판
+      else {
+        if ($langs[code] == "ko") $size *= 2.3;
+        else $size *= 1.4;
+      }
+    } else $size *= 1.3;
+  }
+
   # 인터넷 익스플로러
   if($agent[br] == "MSIE") {
     if ($agent[os] == "NT")
@@ -52,21 +64,20 @@ function form_size($size, $print = 0) {
   return $size;
 }
 
-# 넷스케이프와 익스간의 FORM 입력창의 크기 차이를 보정하기 위한 함 수
-# intval - 변수를 정수형으로 변환함
-#          http://www.php.net/manual/function.intval.php
+# 넷스케이프와 익스간의 TEXTAREA WRAP 설정 여부를 결정하는 함수
+#
 function form_wrap($print = 0) {
-  global $board, $langs; 
+  global $board, $langs, $list; 
 
-  // 클라이언트 브라우져 종류를 가져오는 함수 (include/get_info.ph)
+  # 클라이언트 브라우져 종류를 가져오는 함수 (include/get_info.ph)
   $agent = get_agent();
 
-  if ($board[wrap] == "yes" && $agent[os] != "LINUX") {
+  if ($board[wrap] && $agent[os] != "LINUX" && !$list[html]) {
     $wrap[op] = "WRAP=hard";
     $wrap[ment] = "&nbsp;";
   } else {
     $wrap[op] = "WRAP=off";
-    $wrap[ment] = "<FONT COLOR=\"$color[r1_fg]\" SIZE=\"-1\" $board[css]> $langs[w_ment]  </FONT>";
+    $wrap[ment] = "<FONT COLOR=\"$color[r1_fg]\" SIZE=\"-1\" $board[css]> $langs[w_ment] </FONT>";
   }
 
   if($print) echo $wrap;
@@ -99,7 +110,7 @@ function page_list($table, $pages, $count, $num, $print = 0) {
     $num_m = -$num;
   }
 
-  // 처음 페이지 링크
+  # 처음 페이지 링크
   $str .= "\n<!-- ============================ 페이지 목록 폼 ========================== -->\n";
   if ($pages[cur] != "1")
     $str .= "<A HREF=\"list.php?table=$table&page=1$search\" title=\"First Page\"><FONT COLOR=\"$color[l4_fg]\" SIZE=\"-1\">&lt;&lt;</FONT></A>\n";
@@ -267,17 +278,17 @@ function list_cmd($str) {
   if($o[at] == "s")
      $str[all] = "\n<TD WIDTH=\"1%\"><A HREF=\"list.php?table=$table\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_all]</NOBR></FONT></A></TD>\n$str[sepa]";
   if($o[st] != "t")
-     $str[today] = "\n<TD WIDTH=\"1%\"><A HREF=\"list.php?table=$table&o[at]=s&o[st]=t\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_today]</NOBR></FONT></A></TD>\n$str[sepa]";
+     $str[today] = "\n <TD WIDTH=\"1%\" NOWRAP><A HREF=\"list.php?table=$table&o[at]=s&o[st]=t\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_today]</NOBR></FONT></A></TD>\n $str[sepa]";
 
  # 게시판 목록 상,하단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력함수
  echo "\n<TABLE WIDTH=\"1%\" BORDER=\"0\" CELLSPACING=\"4\" CELLPADDING=\"0\" $str[align]>\n" .
       "<TR>\n" .
       " $str[sepa]$str[all]\n" .
-      " <TD WIDTH=\"1%\">$str[prev]</TD>\n" .
+      " <TD WIDTH=\"1%\" NORWAP>$str[prev]</TD>\n" .
       " $str[sepa]\n" .
-      " <TD WIDTH=\"1%\">$str[next]</TD>\n" .
+      " <TD WIDTH=\"1%\" NORWAP>$str[next]</TD>\n" .
       " $str[sepa]\n" .
-      " <TD WIDTH=\"1%\">$str[write]</TD>\n" .
+      " <TD WIDTH=\"1%\" NORWAP>$str[write]</TD>\n" .
       " $str[sepa]$str[today]\n" .
       "</TR>\n</TABLE>";
 }
@@ -289,8 +300,7 @@ function read_cmd($str) {
   global $cenable, $pos, $list, $no, $page, $langs;
 
   $str[search] = search2url($o);
-
-  if (!$o[ck]) $str[search] = "";
+  #if (!$o[ck]) $str[search] = "";
 
   $str[prev]  = "<A HREF=\"read.php?table=$table&no=$pos[prev]$str[search]\" onMouseOut=\"window.status=''; return true;\" onMouseOver=\"window.status='$pos[prev_t]'; return true;\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_upp]</NOBR></FONT></A>";
   $str[next]  = "<A HREF=\"read.php?table=$table&no=$pos[next]$str[search]\" onMouseOut=\"window.status=''; return true;\" onMouseOver=\"window.status='$pos[next_t]'; return true;\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_down]</NOBR></FONT></A>";
@@ -331,21 +341,21 @@ function read_cmd($str) {
   echo "\n<TABLE WIDTH=\"1%\" BORDER=\"0\" CELLSPACING=\"4\" CELLPADDING=\"0\" $str[align]>\n" .
        "<TR>\n" .
        "  $str[sepa]\n" .
-       "  <TD WIDTH=\"1%\"><A HREF=\"list.php?table=$table&page=$page$str[search]\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_list]</NOBR></FONT></A></TD>\n" .
+       "  <TD WIDTH=\"1%\" NOWRAP><A HREF=\"list.php?table=$table&page=$page$str[search]\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_list]</NOBR></FONT></A></TD>\n" .
        "  $str[sepa]\n" .
-       "  <TD WIDTH=\"1%\">$str[prev]</TD>\n" .
+       "  <TD WIDTH=\"1%\" NOWRAP>$str[prev]</TD>\n" .
        "  $str[sepa]\n" .
-       "  <TD WIDTH=\"1%\">$str[next]</TD>\n" .
+       "  <TD WIDTH=\"1%\" NOWRAP>$str[next]</TD>\n" .
        "  $str[sepa]\n" .
-       "  <TD WIDTH=\"1%\">$str[write]</TD>\n" .
+       "  <TD WIDTH=\"1%\" NOWRAP>$str[write]</TD>\n" .
        "  $str[sepa]\n" .
-       "  <TD WIDTH=\"1%\">$str[reply]</A></TD>\n" .
+       "  <TD WIDTH=\"1%\" NOWRAP>$str[reply]</A></TD>\n" .
        "  $str[sepa]\n" .
-       "  <TD WIDTH=\"1%\">$str[edit]</TD>\n" .
+       "  <TD WIDTH=\"1%\" NOWRAP>$str[edit]</TD>\n" .
        "  $str[sepa]\n" .
-       "  <TD WIDTH=\"1%\">$str[dele]</TD>\n" .
+       "  <TD WIDTH=\"1%\" NOWRAP>$str[dele]</TD>\n" .
        "  $str[sepa]\n" .
-       "  <TD WIDTH=\"1%\">$str[rep]</TD>\n" .
+       "  <TD WIDTH=\"1%\" NOWRAP>$str[rep]</TD>\n" .
        "  $str[sepa_rep]\n" .
        "</TR>\n" .
        "</TABLE>";
@@ -474,95 +484,177 @@ function article_reply_list($table,$pages) {
 
 # preview 를 위한 java script 출력
 function print_preview_src() {
-  global $color, $agnet;
+  global $color, $agent;
 
-  if($agent[br] == "MSIE") $border = "0";
-  else $border = "1";
+  if($agent[br] == "MSIE") {
+    $script_for_browser = "  over = overDiv.style;\n".
+                          "  document.onmousemove = mouseMove;\n\n".
 
-  echo "
-<div id=\"overDiv\" style=\"position: absolute; z-index: 50; width: 260; visibility: hidden\"></div>
-<script LANGUAGE=JavaScript>
-  ns4 = (document.layers)? true:false
-  ie4 = (document.all)? true:false
-  var x = 0;
-  var y = 0;
-  var snow = 0;
-  var sw = 0;
-  var cnt = 0;
-  var dir = 1;
-  var offsetx = 3;
-  var offsety = 3;
+                          "  function drs(text, title) { dts(1,text); }\n\n".
 
-  if ( (ns4) || (ie4) ) {
-    if (ns4) over = document.overDiv
-    if (ie4) over = overDiv.style
-    document.onmousemove = mouseMove
-    if (ns4) document.captureEvents(Event.MOUSEMOVE)
+                          "  function nd() {\n".
+                          "    if ( cnt >= 1 ) { sw = 0 };\n".
+                          "    if ( sw == 0 ) { snow = 0; hideObject(over); }\n".
+                          "    else { cnt++; }\n".
+                          "  }\n\n".
+
+                          "  function dts(d,text) {\n".
+                          "    txt = \"<TABLE WIDTH=360 STYLE=\\\"border:1 $color[l1_bg] solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=0><TR><TD BGCOLOR=$color[bgcol]><FONT COLOR=$color[text]>\"+text+\"</FONT></TD></TR></TABLE>\"\n".
+                          "    layerWrite(txt);\n".
+                          "    dir = d;\n".
+                          "    disp();\n".
+                          "  }\n\n".
+
+                          "  function disp() {\n".
+                          "    if (snow == 0) {\n".
+                          "      if (dir == 2) { moveTo(over,x+offsetx-(width/2),y+offsety); } // Center\n".
+                          "      if (dir == 1) { moveTo(over,x+offsetx,y+offsety); } // Right\n".
+                          "      if (dir == 0) { moveTo(over,x-offsetx-width,y+offsety); } // Left\n".
+                          "      showObject(over);\n".
+                          "      snow = 1;\n".
+                          "    }\n".
+                          "  }\n\n".
+
+                          "  function mouseMove(e) {\n".
+                          "    x=event.x + document.body.scrollLeft+10\n".
+                          "    y=event.y + document.body.scrollTop\n".
+                          "    if (x+width-document.body.scrollLeft > document.body.clientWidth) x=x-width-25;\n".
+                          "    if (y+height-document.body.scrollTop > document.body.clientHeight) y=y-height;\n\n".
+
+                          "    if (snow) {\n".
+                          "      if (dir == 2) { moveTo(over,x+offsetx-(width/2),y+offsety); } // Center\n".
+                          "      if (dir == 1) { moveTo(over,x+offsetx,y+offsety); } // Right\n".
+                          "      if (dir == 0) { moveTo(over,x-offsetx-width,y+offsety); } // Left\n".
+                          "    }\n".
+                          "  }\n\n".
+
+                          "  function cClick() { hideObject(over); sw=0; }\n".
+                          "  function layerWrite(txt) { document.all[\"overDiv\"].innerHTML = txt }\n".
+                          "  function showObject(obj) { obj.visibility = \"visible\" }\n".
+                          "  function hideObject(obj) { obj.visibility = \"hidden\" }\n".
+                          "  function moveTo(obj,xL,yL) { obj.left = xL; obj.top = yL; }";
+  } elseif($agent[br] == "MOZL6") {
+    $script_for_browser = "  over = document.getElementById('overDiv');\n".
+                          "  document.onmousemove = mouseMove;\n".
+                          "  document.captureEvents(Event.MOUSEMOVE);\n\n".
+
+                          " function drs(text, title) { dts(1,text); }\n\n".
+
+                          "  function nd() {\n".
+                          "    if ( cnt >= 1 ) { sw = 0 };\n".
+                          "    if ( sw == 0 ) {\n".
+                          "        snow = 0;\n".
+                          "        hideObject(over);\n".
+                          "    } else { cnt++; }\n".
+                          "  }\n\n".
+
+
+                          "  function dts(d,text) {\n".
+                          "    txt = \"<TABLE WIDTH=360 STYLE=\\\"border:1 #e9e9e9 solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=1><TR><TD BGCOLOR=#ffffff><FONT COLOR=#555555>\"+text+\"</FONT></TD></TR></TABLE>\"\n".
+                          "    layerWrite(txt);\n".
+                          "    dir = d;\n".
+                          "    disp();\n".
+                          "  }\n\n".
+
+                          "  function disp() {\n".
+                          "      if (snow == 0) {\n".
+                          "        if (dir == 2) { moveTo(over,x+offsetx-(width/2),y+offsety); } // Center\n".
+                          "        if (dir == 1) { moveTo(over,x+offsetx,y+offsety); } // Right\n".
+                          "        if (dir == 0) { moveTo(over,x-offsetx-width,y+offsety); } // Left\n".
+                          "        showObject(over);\n".
+                          "        snow = 1;\n".
+                          "      }\n".
+                          "  }\n\n".
+
+                          "  function mouseMove(e) {\n".
+                          "        x=( (e.pageX)+width-window.pageXOffset > window.innerWidth ) ? (e.pageX+10)-width-10 : e.pageX+10;\n".
+                          "        y=( (e.pageY)+height-self.pageYOffset > window.innerHeight ) ? (e.pageY)-height+5 : e.pageY;\n\n".
+
+                          "    if (snow) {\n".
+                          "      if (dir == 2) { moveTo(over,x+offsetx-(width/2),y+offsety); } // Center\n".
+                          "      if (dir == 1) { moveTo(over,x+offsetx,y+offsety); } // Right\n".
+                          "      if (dir == 0) { moveTo(over,x-offsetx-width,y+offsety); } // Left\n".
+                          "    }\n".
+                          "  }\n\n".
+
+                          "  function cClick() { hideObject(over); sw=0; }\n".
+                          "  function layerWrite(txt) { over.innerHTML = txt; }\n".
+                          "  function showObject(obj) { obj.style.visibility = \"visible\"; }\n".
+                          "  function hideObject(obj) { obj.style.visibility = \"hidden\"; }\n".
+                          "  function moveTo(obj,xL,yL) {\n".
+                          "    obj.style.left = xL\n".
+                          "    obj.style.top = yL\n".
+                          "  }";
+  } elseif($agent[br] == "MOZL") {
+    $script_for_browser = "  over = document.overDiv;\n".
+                          "  document.onmousemove = mouseMove;\n".
+                          "  document.captureEvents(Event.MOUSEMOVE);\n\n".
+
+                          "  function drs(text, title) { dts(1,text); }\n\n".
+
+                          "  function nd() {\n".
+                          "    if ( cnt >= 1 ) { sw = 0 };\n".
+                          "    if ( sw == 0 ) { snow = 0; hideObject(over); }\n".
+                          "    else { cnt++; }\n".
+                          "  }\n\n".
+
+                          "  function dts(d,text) {\n".
+                          "    txt = \"<TABLE WIDTH=360 STYLE=\\\"border:1 $color[l1_bg] solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=1><TR><TD BGCOLOR=$color[bgcol]><FONT COLOR=$color[text]>\"+text+\"</FONT></TD></TR></TABLE>\"\n".
+                          "    layerWrite(txt);\n".
+                          "    dir = d;\n".
+                          "    disp();\n".
+                          "  }\n\n".
+
+                          "  function disp() {\n".
+                          "    if (snow == 0) {\n".
+                          "      if (dir == 2) { moveTo(over,x+offsetx-(width/2),y+offsety); } // Center\n".
+                          "      if (dir == 1) { moveTo(over,x+offsetx,y+offsety); } // Right\n".
+                          "      if (dir == 0) { moveTo(over,x-offsetx-width,y+offsety); } // Left\n".
+                          "      showObject(over);\n".
+                          "      snow = 1;\n".
+                          "    }\n".
+                          "  }\n\n".
+
+                          "  function mouseMove(e) {\n".
+                          "    x=e.pageX+10;\n".
+                          "    y=e.pageY;\n".
+                          "    if (x+width-self.pageXOffset > window.innerWidth) x=x-width-5;\n".
+                          "    if (y+height-self.pageYOffset > window.innerHeight) y=y-height;\n\n".
+
+                          "    if (snow) {\n".
+                          "      if (dir == 2) { moveTo(over,x+offsetx-(width/2),y+offsety); } // Center\n".
+                          "      if (dir == 1) { moveTo(over,x+offsetx,y+offsety); } // Right\n".
+                          "      if (dir == 0) { moveTo(over,x-offsetx-width,y+offsety); } // Left\n".
+                          "    }\n".
+                          "  }\n\n".
+
+                          "  function cClick() { hideObject(over); sw=0; }\n\n".
+
+                          "  function layerWrite(txt) {\n".
+                          "      var lyr = document.overDiv.document;\n".
+                          "      lyr.write(txt);\n".
+                          "      lyr.close();\n".
+                          "  }\n\n".
+
+                          "  function showObject(obj) { obj.visibility = \"show\" }\n".
+                          "  function hideObject(obj) { obj.visibility = \"hide\" }\n".
+                          "  function moveTo(obj,xL,yL) { obj.left = xL; obj.top = yL; }";
   }
 
-  function drs(text, title) { dts(1,text); }
+  echo "<DIV ID=\"overDiv\" STYLE=\"position: absolute; z-index: 50; width: 260; visibility: hidden\"></DIV>\n".
+       "<SCRIPT LANGUAGE=JavaScript>\n".
+       "  var x = 0;\n".
+       "  var y = 0;\n".
+       "  var snow = 0;\n".
+       "  var sw = 0;\n".
+       "  var cnt = 0;\n".
+       "  var dir = 1;\n".
+       "  var offsetx = 3;\n".
+       "  var offsety = 3;\n".
+       "  var width = 260;\n".
+       "  var height = 50;\n\n".
 
-  function nd() {
-    if ( cnt >= 1 ) { sw = 0 };
-    if ( (ns4) || (ie4) ) {
-      if ( sw == 0 ) {
-        snow = 0;
-        hideObject(over);
-      } else { cnt++; }
-    }
-  }
-
-  function dts(d,text) {
-    txt = \"<TABLE WIDTH=360 STYLE=\\\"border:1 $color[l1_bg] solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=$border><TR><TD BGCOLOR=$color[bgcol]><FONT COLOR=$color[text]>\"+text+\"</FONT></TD></TR></TABLE>\"
-    layerWrite(txt);
-    dir = d;
-    disp();
-  }
-
-function disp() {
-    if ( (ns4) || (ie4) ) {
-      if (snow == 0) 	{
-        if (dir == 2) { moveTo(over,x+offsetx-(width/2),y+offsety); } // Center
-        if (dir == 1) { moveTo(over,x+offsetx,y+offsety); } // Right
-        if (dir == 0) { moveTo(over,x-offsetx-width,y+offsety); }// Left
-        showObject(over);
-        snow = 1;
-      }
-    }
-  }
-  function mouseMove(e) {
-    if (ns4) {x=e.pageX; y=e.pageY}
-    if (ie4) {x=event.x + document.body.scrollLeft; y=event.y + document.body.scrollTop}
-    if (snow) {
-      if (dir == 2) { moveTo(over,x+offsetx-(width/2),y+offsety); } // Center
-      if (dir == 1) { moveTo(over,x+offsetx,y+offsety); } // Right
-      if (dir == 0) { moveTo(over,x-offsetx-width,y+offsety); } // Left
-    }
-  }
-  function cClick() {
-    hideObject(over);
-    sw=0;
-  }
-  function layerWrite(txt) {
-    if (ns4) {
-      var lyr = document.overDiv.document
-      lyr.write(txt)
-      lyr.close()
-    }
-    else if (ie4) document.all[\"overDiv\"].innerHTML = txt
-  }
-  function showObject(obj) {
-    if (ns4) obj.visibility = \"show\"
-    else if (ie4) obj.visibility = \"visible\"
-  }
-  function hideObject(obj) {
-    if (ns4) obj.visibility = \"hide\"
-    else if (ie4) obj.visibility = \"hidden\"
-  }
-  function moveTo(obj,xL,yL) {
-    obj.left = xL
-    obj.top = yL
-  }
-</script>\n";
+       "$script_for_browser\n".
+       "</SCRIPT>\n";
 }
 ?>

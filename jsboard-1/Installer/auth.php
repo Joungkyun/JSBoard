@@ -10,10 +10,10 @@ require("./include/passwd.ph");
 if ($langss == "ko") $langs[code] = "ko";
 else $langs[code] = "en";
 
-include("../include/lang.ph");
-require("../include/get.ph");
-require("../include/print.ph");
-require("../html/head.ph");
+include "../include/lang.ph";
+include "../include/get.ph";
+include "../include/print.ph";
+include "../html/head.ph";
 
 $agent = get_agent();
 
@@ -87,12 +87,13 @@ if (!$mode) {
     $cnum = 0;
   }
 
-  if (exec("echo hellow")) {
+  if (exec("echo hello")) {
     $echeck = 1;
-    exec("cat $apache_config_file | grep ^DirectoryIndex",$array);
+    exec("cat $apache_config_file | grep DirectoryIndex",$array);
 
     for($i=0;$i<sizeof($array);$i++) {
-      if(eregi("index.(php |php$)+",$array[$i])) $cindex = 1;
+      $array[$i] = trim($array[$i]);
+      if(eregi("^Directory",$array[$i]) && eregi("index.(php |php$)",$array[$i])) $cindex = 1;
     }
   } else {
     $echeck = 0;

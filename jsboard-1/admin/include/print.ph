@@ -1,5 +1,5 @@
 <?
-// html head 읽어오기
+# html head 읽어오기
 function htmlhead() {
   global $version, $color, $PHP_SELF, $langs, $board, $copy;
 
@@ -11,12 +11,12 @@ function htmlhead() {
   elseif ($fileself == "admin.php") $sub_title = "$langs[p_aa]";
   elseif ($fileself == "admin_info.php") $sub_title = "$langs[p_wv]";
 
-  @include("./include/html_ahead.ph");
+  include "./include/html_ahead.ph";
 }
 
-// html tail 읽어오기
+# html tail 읽어오기
 function htmltail() {
-  @include("./include/html_atail.ph");
+  include "./include/html_atail.ph";
 }
 
 function java_scr() {
@@ -41,8 +41,8 @@ function java_scr() {
        "}\n\n// -->\n</script>";
 }
 
-// Copyright 정보
-//
+# Copyright 정보
+#
 function copyright($copy) {
   global $langs;
   echo "Scripted by <a href=$copy[url] title='$langs[maker]'>$copy[name]</a><br>\n" .
@@ -50,50 +50,48 @@ function copyright($copy) {
 }
 
 
-//  Admin Center의 패스워드 변경시 두개의 패스워드가 틀릴 경우 출력
-//
+#  Admin Center의 패스워드 변경시 두개의 패스워드가 틀릴 경우 출력
+#
 function admin_pass_error() {
   global $langs;
   print_error($langs[p_dp]);
 }
 
-// Admin Center 변경 완료 메세지
-//
+# Admin Center 변경 완료 메세지
+#
 function complete_adminpass() {
   global $langs;
-  echo "<script>\nalert('$langs[p_cp]')\n" .
+  $str = str_replace("\n","\\n",$langs[p_cp]);
+  echo "<script>\nalert('$str')\n" .
        "window.close()\n</script>";
   exit;
 }
 
-// theme list를 불러오는 함수 for global 변수 수정 화면
-//
-// explode() - 첫번째 인자를 구분자로 변수를 나눠 배열로 저장
-// eregi_replace() - 변수에 들어 있는 모든 첫번째 인자를 두번째 인자로 변경
-// strtoupper() - 문자열의 소문자를 대문자로 변경
+# theme list를 불러오는 함수 for global 변수 수정 화면
+#
+# explode() - 첫번째 인자를 구분자로 변수를 나눠 배열로 저장
+# eregi_replace() - 변수에 들어 있는 모든 첫번째 인자를 두번째 인자로 변경
+# strtoupper() - 문자열의 소문자를 대문자로 변경
 function get_theme_list($name,$num, $path = "../config") {
-  global $table, $color, $PHP_SELF, $langs, $exec;
+  global $table, $color, $PHP_SELF, $langs;
 
-  // link에서 원 파일의 정보를 가져온다.
+  # link에서 원 파일의 정보를 가져온다.
   if (!eregi("uadmin.php",$PHP_SELF)) {
     if (file_exists("$path/default.themes")) { $dtheme = readlink("$path/default.themes"); }
   } else {
     if (file_exists("../../data/$table/default.themes")) { $dtheme = readlink("../../data/$table/default.themes"); }
   }
 
-  // Theme 이름을 얻어온다.
+  # Theme 이름을 얻어온다.
   $dtheme = eregi_replace("(themes|config|\/|\.)","",$dtheme);
 
-  // Theme list를 받아온다.
+  # Theme list를 받아온다.
 
   $p = opendir("$path/themes");
   while($i = readdir($p)) {
     if($i != "." && $i != ".." && $i != "default.themes") $theme[] = $i;
   }
   closedir($p);
-
-//  exec("$exec[ls] $path/themes | $exec[grep] themes",$theme);
-
 
   $until = sizeof($theme);
 
@@ -128,17 +126,20 @@ function get_theme_list($name,$num, $path = "../config") {
 }
 
 function err_msg($str = "Ocourrenct unknown error",$mode = 0) {
+  $str = str_replace("\n","\\n",$str);
+  $str = str_replace("'","\'",$str);
   echo "<script>\nalert('$str')\n";
   if (!$mode) echo "history.back()\n";
   echo "</script>\n";
   if (!$mode) die;
 }
 
-// 원하는 페이지로 이동시키는 함수
+# 원하는 페이지로 이동시키는 함수
 function move_page($path,$time = 0) {
   echo "<META http-equiv=\"refresh\" content=\"$time;URL=$path\">";
 }
 
+# 언어 파일의 리스트를 구하는 함수
 function get_lang_list($code) {
   $p = opendir("../../include/LANG");
   while($i = readdir($p)) {
@@ -157,10 +158,10 @@ function get_lang_list($code) {
   }
 }
 
-// 패스워드 변경을 안하면 변경을 하게끔 귀찮게 메시지 뿌리기 :-)
+# 패스워드 변경을 안하면 변경을 하게끔 귀찮게 메시지 뿌리기 :-)
 function print_chgpass($pass) {
   global $langs;
-  if ($pass == "0000") print_notice($langs[p_chm],250,35);
+  if ($pass == "i32GYg/RuTAs6") print_notice($langs[p_chm],250,35);
 }
 
 ?>

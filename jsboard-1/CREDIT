@@ -18,6 +18,10 @@ OOPS administration Center를 제공했으며 현재는 JSBoard의 개발 버젼의
 개인 홈페이지에서 Daemon에 대한 강좌및 rpm package를 배포하고 있으며
 ProFTPd korean user gruop을 운영하고 있다.
 
+Windog Version Distribute : 최기수 <choiks@nuri.net>
+
+profile은 잘 모르겠음. 메일 주소만 알고 윈도그 버젼을 관리하고 있다.
+
 http://www.oops.org
 
 CVS Server 관리		:  김영민 <blhole@hotmail.com>
@@ -55,26 +59,26 @@ Special Thanks		: 방창현 <winchild@kldp.org>
 
 http://kldp.org/~winchild
 
-Special Thansks         : rOra <ksecurity@iland.co.kr>
+Special Thansks		: rOra <ksecurity@iland.co.kr>
 
 rOra(뢰) 또는 Ksecurity 보안 사이트를 운영하며 JSBoard 의 보안 버그
 및 exploit 을 reporting 해 주시고 계신다.
 
 http://ksecurity.iland.co.kr
 
-Special Thanks          : mat <mat@hacksware.com>
+Special Thanks		: mat <mat@hacksware.com>
 
 hacksware 보안 사이트를 운영하며 JSBoard 의 보안 버그및 exploit 을
 reporting 해 주시고 계신다.
 
 http://hacksware.com
 
-
 역대 버젼 개발 참여자
 
-최기수 <choiks@nuri.net>                v.1.2
+최기수 <choiks@nuri.net>		v1.3
 차경묵 <dimanche@dimanche.net>		v0.6, v0.7
-김정균 <admin@oops.org>			v0.6, v0.7, v0.8, v1.0 v1.1 v1.2
+김정균 <admin@oops.org>			v0.6, v0.7, v0.8, v1.0 v1.1
+                                        v1.2 v1.3
 김영민 <blhole@hotmail.com>		v0.5
 이진우 <jinoos@hanmail.net>		v0.4
 방창현 <winchild@kldp.org>		v0.3, v0.5

@@ -5,7 +5,7 @@ $path[type] = "Install";
 if ($langss == "ko") $langs[code] = "ko";
 else $langs[code] = "en";
 
-//require("./ad_sample/global.ph.orig");
+#require("./ad_sample/global.ph.orig");
 require("../config/themes/basic.themes");
 require("../include/lang.ph");
 require("../include/get.ph");
@@ -13,7 +13,7 @@ require("../html/head.ph");
 require("./include/passwd.ph");
 require("./include/check.ph");
 
-// Password Check
+# Password Check
 inst_pwcheck($passwd,$mysqlpass,$langs[act_pw]);
 
 $dbname = "JSBoard-$version";

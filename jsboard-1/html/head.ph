@@ -23,6 +23,21 @@ echo "
   var child = null;
   var count = 0;
   function new_windows(addr,tag,scroll,resize,wid,hei) {
+    if (self.screen) {
+      width = screen.width
+      height = screen.height
+    } else if (self.java) {
+      var def = java.awt.Toolkit.getDefaultToolkit();
+      var scrsize = def.getScreenSize();
+      width = scrsize.width;
+      height = scrsize.height;
+    }
+
+    if (width < wid) { wid = width - 5
+      hei = height - 60
+      scroll = 'yes'
+    }
+
     var childname = 'JSBoard' + count++;
     // child window가 떠 있을 경우 child window를 닫는다.
     if(child != null) {

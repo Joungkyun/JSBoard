@@ -1,7 +1,7 @@
 <?
-// 넷스케이프와 익스간의 FORM 입력창의 크기 차이를 보정하기 위한 함 수
-// intval - 변수를 정수형으로 변환함
-//          http://www.php.net/manual/function.intval.php
+# 넷스케이프와 익스간의 FORM 입력창의 크기 차이를 보정하기 위한 함 수
+# intval - 변수를 정수형으로 변환함
+#          http://www.php.net/manual/function.intval.php
 function form_size($size, $print = 0) {
   global $langs;
 
@@ -49,13 +49,33 @@ function form_size($size, $print = 0) {
   return $size;
 }
 
-// file의 내용을 변수로 가져오는 함수
-function get_file($filename) {
-  $fp = fopen($filename,"r");
-  $getfile = fread($fp, filesize($filename));
-  fclose($fp);
+# table list 를 구한다.
+function get_tblist($db,$t="") {
+  $list = mysql_list_tables($db);
 
-  return $getfile;
+  # table list 존재 유무 체크
+  table_list_check($db);
+
+  # table 의 총 갯수를 구함
+  $list_num = mysql_num_rows($list);
+  if(!$j) $j = 0;
+
+  for ($i=0;$i<$list_num;$i++) {
+    # table 이름을 구하여 배열에 저장
+    $l[$i] = mysql_tablename($list,$i);
+
+    # 배열에 저장된 이름중 알파벳별 구분 변수가 있으면 소트된
+    # 이름만 다시 배열에 저장
+    if($t) {
+      if(eregi("^$t",$l[$i])) {
+        $ll[$j] = $l[$i];
+        $j++;
+      }
+    }
+  }
+
+  if($t) return $ll;
+  else return $l;
 }
 
 ?>

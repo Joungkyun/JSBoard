@@ -3,114 +3,133 @@ session_start();
 $path[type] = "user_admin";
 
 include "../../include/error.ph";
+include "../../include/get.ph";
 include "../include/check.ph";
 
 # table 이름을 체크한다.
 table_name_check($table);
 
-if (!@file_exists("../../config/global.ph")) {
-  echo"<script>alert('Don't exist Global configuration file')\n" .
+if(!@file_exists("../../config/global.ph")) {
+  echo"<script>alert('Don\'t exist Global configuration file')\n" .
       "history.back()</script>";
   die;
-} else { include("../../config/global.ph"); }
-include("../include/config.ph");
+} else { include "../../config/global.ph"; }
+include "../include/config.ph";
 
-if (file_exists("../../data/$table/config.ph"))
-  { include("../../data/$table/config.ph"); }
+if(file_exists("../../data/$table/config.ph"))
+  { include "../../data/$table/config.ph"; }
 
-if ($color[theme]) {
-  include("../../config/default.themes");
-  if (file_exists("../../data/$table/default.themes"))
-    { include("../../data/$table/default.themes"); }
+if($color[theme]) {
+  include "../../config/default.themes";
+  if(file_exists("../../data/$table/default.themes"))
+    { include "../../data/$table/default.themes"; }
 }
 
-$path[type] = "user_admin";
-
 include "../../include/lang.ph";
-include("../../include/get.ph");
-include("../include/print.ph");
-include("../include/get.ph");
+include "../include/print.ph";
+include "../include/get.ph";
 
-// 전체관리자로 로그인중이면 인증 없이 바로 화면을 출력
-if (crypt($login[pass],$sadmin[passwd]) != $sadmin[passwd]) {
-  if (!$passwd) err_msg("$langs[ua_pw_n]");
+# 전체관리자로 로그인중이면 인증 없이 바로 화면을 출력
+if($login[pass] != $sadmin[passwd]) {
+  if(!$passwd) err_msg("$langs[ua_pw_n]");
   else {
     $loginpass = crypt($passwd,$admin[passwd]);
     $sloginpass = crypt($passwd,$sadmin[passwd]);
   }
 
-  if ($loginpass != $admin[passwd] && $sloginpass != $sadmin[passwd])
+  if($loginpass != $admin[passwd] && $sloginpass != $sadmin[passwd])
     err_msg("$langs[ua_pw_c]");
+} else {
+  if(!session_is_registered("login")) print_pwerror($langs[ua_pw_n]);
 }
 
 $size = form_size(7);
 $lsize = form_size(24);
 
-if ($langs[code] == "ko") $tsize = form_size(30);
+if($langs[code] == "ko") $tsize = form_size(30);
 else $tsize = form_size(33);
 
 $ssize = form_size(3);
 $user = strtoupper($table);
 
-// Radio Box check 분류
-if ($cenable[write]) $wen_ok = "checked";
+# Radio Box check 분류
+if($cenable[write]) $wen_ok = "checked";
 else $wen_no = "checked";
 
-if ($cenable[reply]) $ren_ok = "checked";
+if($cenable[reply]) $ren_ok = "checked";
 else $ren_no = "checked";
 
-if ($cenable[edit]) $een_ok = "checked";
+if($cenable[edit]) $een_ok = "checked";
 else $een_no = "checked";
 
-if ($cenable[delete]) $den_ok = "checked";
+if($cenable[delete]) $den_ok = "checked";
 else $den_no = "checked";
 
-if ($enable[ore]) $ore_no = "checked";
+if($enable[amark]) $amark_ok = "checked";
+else $amark_no = "checked";
+
+if($enable[ore]) $ore_no = "checked";
 else $ore_ok = "checked";
 
-if ($enable[re_list]) $re_list_ok = "checked";
+if($enable[re_list]) $re_list_ok = "checked";
 else $re_list_no = "checked";
 
-if ($enable[pre]) $pview_ok = "checked";
+if($enable[pre]) $pview_ok = "checked";
 else $pview_no = "checked";
 
-if ($board[cmd] == "yes") $bar_ok = "checked";
+if($board[wrap]) $bwrap_ok = "checked";
+else $bwrap_no = "checked";
+
+if($board[cmd] == "yes") $bar_ok = "checked";
 else $bar_no = "checked";
 
-if ($board[img] == "yes") $img_ok = "checked";
+if($board[img] == "yes") $img_ok = "checked";
 else $img_no = "checked";
 
-if ($color[theme]) $theme_ok = "checked";
+if($board[mchk]) $mchk_ok = "checked";
+else $mchk_no = "checked";
+
+if($enable[dhost]) $dhost_ok = "checked";
+else $dhost_no = "checked";
+
+if($enable[dlook]) $dlook_ok = "checked";
+else $dlook_no = "checked";
+
+if($enable[dwho]) $dwho_ok = "checked";
+else $dwho_no = "checked";
+
+if($color[theme]) $theme_ok = "checked";
 else $theme_no = "checked";
 
-if ($cupload[yesno] == "yes") $up_ok = "checked";
+if($cupload[yesno] == "yes") $up_ok = "checked";
 else $up_no = "checked";
 
-if ($rmail[admin] == "yes") $amail_ok = "checked";
+if($rmail[admin] == "yes") $amail_ok = "checked";
 else $amail_no = "checked";
 
-if ($rmail[user] == "yes") $umail_ok = "checked";
+if($rmail[user] == "yes") $umail_ok = "checked";
 else $umail_no = "checked";
 
-if ($view[url] == "yes") $url_ok = "checked";
+if($view[url] == "yes") $url_ok = "checked";
 else $url_no = "checked";
 
-if ($view[email] == "yes") $vmail_ok = "checked";
+if($view[email] == "yes") $vmail_ok = "checked";
 else $vmail_no = "checked";
 
-if ($board[align] == "left") $align_l = "checked";
-elseif ($board[align] == "right") $align_r = "checked";
+if($board[align] == "left") $align_l = "checked";
+elseif($board[align] == "right") $align_r = "checked";
 else $align_c = "checked";
 
-if (!$color[l4_bg]) $color[l4_bg] = "$color[l0_bg]";
-if (!$color[l4_fg]) $color[l4_fg] = "$color[l0_fg]";
-if (!$color[r5_bg]) $color[r5_bg] = "$color[r0_bg]";
-if (!$color[r5_fg]) $color[r5_fg] = "$color[r0_fg]";
+if(!$color[l4_bg]) $color[l4_bg] = "$color[l0_bg]";
+if(!$color[l4_fg]) $color[l4_fg] = "$color[l0_fg]";
+if(!$color[r5_bg]) $color[r5_bg] = "$color[r0_bg]";
+if(!$color[r5_fg]) $color[r5_fg] = "$color[r0_fg]";
+
 
 $board[hls] = eregi_replace("<FONT COLOR=","",$board[hl]);
 $board[hls] = eregi_replace("><B><U>STR</U></B></FONT>","",$board[hls]);
 
-// html header의 정보를 가져 온다
+# html header의 정보를 가져 온다
 $top_head = get_file("../../html/head.ph");
 
 $top_head = htmlspecialchars($top_head);
@@ -136,7 +155,7 @@ $top_head = trim($top_head);
 
 $html_head = get_file("../../data/$table/html_head.ph");
 
-// html tail의 정보를 가져온다
+# html tail의 정보를 가져온다
 $html_tail = get_file("../../data/$table/html_tail.ph");
 $bottom_tail = get_file("../../html/tail.ph");
 $bottom_tail = eregi_replace("<\?(.*)\?>","",$bottom_tail);
@@ -201,7 +220,7 @@ input, textarea {font: 10pt $langs[font]; BACKGROUND-COLOR:$color[bgcol]; COLOR:
 <td bgcolor=$color[l1_bg]><font id=l1fg>$langs[lang_c]</font></td>
 <td colspan=4>$langs[lang_m1] [";
 
-// 언어 코드를 호출
+# 언어 코드를 호출
 get_lang_list($langs[code]);
 
 echo "] $langs[lang_m2]
@@ -245,8 +264,21 @@ echo "] $langs[lang_m2]
 <td bgcolor=$color[r2_bg]>&nbsp;</td>
 </tr>
 
-<tr><td colspan=6><font id=bg>&nbsp;</font>
+<tr><td colspan=6><font id=bg>&nbsp;</font></td></tr>
+
+<tr><td bgcolor=$color[l0_bg] align=center colspan=6><font id=l0fg>Function of Admin link mark</font>
 </td></tr>
+
+<tr>
+<td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_amark]</font></td>
+<td colspan=4> 
+<input type=radio name=ua[amark] $amark_ok value=\"1\" id=radio>$langs[ua_amark_y]
+<input type=radio name=ua[amark] $amark_no value=\"0\" id=radio>$langs[ua_amark_n]
+</td>
+<td bgcolor=$color[r2_bg]>&nbsp;</td>
+</tr>
+
+<tr><td colspan=6><font id=bg>&nbsp;</font></td></tr>
 
 <tr><td bgcolor=$color[l0_bg] align=center colspan=6><font id=l0fg>Option whether include parent article text when reply</font>
 </td></tr>
@@ -325,7 +357,18 @@ echo "] $langs[lang_m2]
 
 <tr>
 <td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_b19]</font></td>
-<td colspan=4>$langs[ua_b20] <input type=text name=ua[wrap] size=$size value=\"$board[wrap]\"></td>
+<td colspan=4>$langs[ua_b20] [
+<input type=radio name=ua[wrap] $bwrap_ok value=1 id=radio> yes
+<input type=radio name=ua[wrap] $bwrap_no value=0 id=radio> no ]
+</td>
+<td bgcolor=$color[r2_bg]>&nbsp;</td>
+</tr>
+
+<tr>
+<td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_b21]</font></td>
+<td colspan=4>$langs[ua_b22] 
+<input type=text name=ua[wwrap] size=$ssize value=\"$board[wwrap]\">
+</td>
 <td bgcolor=$color[r2_bg]>&nbsp;</td>
 </tr>
 
@@ -375,6 +418,57 @@ echo "] $langs[lang_m2]
 <td><input type=text name=ua[cookie] size=$size value=\"$board[cookie]\"></td>
 <td bgcolor=$color[r2_bg] align=center>$langs[ua_b14]</td>
 </tr>
+
+<tr><td colspan=6><font id=bg>&nbsp;</font>
+</td></tr>
+
+<tr><td bgcolor=$color[l0_bg] align=center colspan=6><font id=l0fg>Mail Link Option</font>
+</td></tr>
+
+<tr>
+<td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_m1]</font></td>
+<td colspan=4> [
+<input type=radio name=ua[mchk] $mchk_ok value=1 id=radio> $langs[ua_m2]
+<input type=radio name=ua[mchk] $mchk_no value=0 id=radio> $langs[ua_m3] ]
+</td>
+<td bgcolor=$color[r2_bg]>&nbsp;</td>
+</tr>
+
+<tr><td colspan=6><font id=bg>&nbsp;</font>
+</td></tr>
+
+<tr><td bgcolor=$color[l0_bg] align=center colspan=6><font id=l0fg>Host Address Configuration</font>
+</td></tr>
+
+<tr>
+<td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_ha1]</font></td>
+<td colspan=4> $langs[ua_ha2] [
+<input type=radio name=ua[dhost] $dhost_ok value=1 id=radio> $langs[ua_ha3]
+<input type=radio name=ua[dhost] $dhost_no value=0 id=radio> $langs[ua_ha4] ]
+</td>
+<td bgcolor=$color[r2_bg]>&nbsp;</td>
+</tr>
+
+<tr>
+<td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_ha5]</font></td>
+<td colspan=4>$langs[ua_ha6] [
+<input type=radio name=ua[dlook] $dlook_ok value=1 id=radio> $langs[ua_ha7]
+<input type=radio name=ua[dlook] $dlook_no value=0 id=radio> $langs[ua_ha8]
+]
+</td>
+<td bgcolor=$color[r2_bg]>&nbsp;</td>
+</tr>
+
+<tr>
+<td bgcolor=$color[l1_bg]><font id=l1fg>$langs[ua_ha9]</font></td>
+<td colspan=4>$langs[ua_ha10] [
+<input type=radio name=ua[dwho] $dwho_ok value=1 id=radio> yes
+<input type=radio name=ua[dwho] $dwho_no value=0 id=radio> no
+]
+</td>
+<td bgcolor=$color[r2_bg]>&nbsp;</td>
+</tr>
+
 
 <tr><td colspan=6><font id=bg>&nbsp;</font>
 </td></tr>

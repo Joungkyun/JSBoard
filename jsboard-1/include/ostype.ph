@@ -12,5 +12,4 @@ if(eregi("linux",$OSTYPE)) {
   $ostypes[pfield] = "13";
   $ostypes[name] = "Others";
 }
-
 ?>

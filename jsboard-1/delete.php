@@ -1,7 +1,7 @@
 <?
-@include("include/header.ph");
-@include("./admin/include/config.ph");
-@include("html/head.ph");
+include "include/header.ph";
+include "./admin/include/config.ph";
+include "html/head.ph";
 
 # upload[dir] 에 mata character 포함 여부 체크
 meta_char_check($upload[dir]);
@@ -10,32 +10,47 @@ sql_connect($db[server], $db[user], $db[pass]);
 sql_select_db($db[name]);
 $list = get_article($table, $no);
 
-$warning = "$langs[d_wa]";
-// 패스워드가 없는 게시물일  경우 관리자 인증을 거침
-if(!$list[passwd] || $list[reyn] || !$enable[delete] || !$cenable[delete]) {
-  if (!$enable[delete]) { 
-    $adm = "sadmin";
-    $warning = "$langs[d_waw]";
-  } else if (($enable[delete] && !$cenable[delete]) || $list[reyn] || !$list[passwd]) {
-    $adm = "admin";
-    $warning = "$langs[d_waa]";
+$size = form_size(4);
+if(!$adminsession || $cenable[delete]) {
+  $warning = "$langs[d_wa]";
+  # 패스워드가 없는 게시물일  경우 관리자 인증을 거침
+  if(!$list[passwd] || $list[reyn] || !$enable[delete] || !$cenable[delete]) {
+    if (!$enable[delete]) { 
+      $adm = "sadmin";
+      $warning = "$langs[d_waw]";
+    } else if (($enable[delete] && !$cenable[delete]) || $list[reyn] || !$list[passwd]) {
+      $adm = "admin";
+      $warning = "$langs[d_waa]";
+    }
   }
+  $langs[w_pass] = "$langs[w_pass]: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" MAXLENGTH=\"8\">&nbsp;";
+} else {
+  $warning = "&nbsp;";
+  $langs[w_pass] = "";
 }
+
+# 워드랩이 설정이 안되어 있을 경우 기본값을 지정
+$board[wwrap] = "" ? 120 : $board[wwrap];
 
 $list[date]  = date("Y-m-d H:i:s", $list[date]);
 $list[text]  = text_nl2br($list[text], $list[html]);
+$list[text]  = $list[html] ? $list[text] : wordwrap($list[text],$board[wwrap]);
 $list[num]   = print_reply($table, $list);
-
-$size = form_size(4);
 
 if($list[bofile]) {
   $deldir  = "./data/$table/$upload[dir]/$list[bcfile]";
   $delfile = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
 }
 
-// image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
+# image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
 if ($board[img] == "yes" && !eregi("%",$board[width])) 
   $board[width] = $board[width]-$icons[size]*2;
+
+if($enable[dhost]) {
+  $list[dhost] = get_hostname($enable[dlook],$list[host]);
+  if($enable[dwho]) $list[dhost] = "<a href=javascript:new_windows('./whois.php?table=$table&host=$list[host]',0,1,0,600,480)><FONT COLOR=\"$color[r2_fg]\">$list[dhost]</FONT></a>";
+  else $list[dhost] = "<FONT COLOR=\"$color[r2_fg]\">$list[dhost]</FONT>";
+} else $list[dhost] = "";
 
 echo "
 <DIV ALIGN=\"$board[align]\">
@@ -43,25 +58,25 @@ echo "
 <TABLE WIDTH=\"100%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
 <FORM METHOD=\"post\" ACTION=\"act.php\">
 <TR>
-  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[d_no]</NOBR></FONT></TD>
+  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[d_no]</NOBR></FONT></TD>
   <TD WIDTH=\"64%\" BGCOLOR=\"$color[r2_bg]\"><FONT COLOR=\"$color[r2_fg]\">$list[num]</FONT></TD>
-  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[date]</NOBR></FONT></TD>
+  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[date]</NOBR></FONT></TD>
   <TD WIDTH=\"34%\" BGCOLOR=\"$color[r2_bg]\"><FONT COLOR=\"$color[r2_fg]\">$list[date]</FONT></TD>
 </TR><TR>
-  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[name]</NOBR></FONT></TD>
+  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[name]</NOBR></FONT></TD>
   <TD WIDTH=\"64%\" BGCOLOR=\"$color[r2_bg]\"><FONT COLOR=\"$color[r2_fg]\">$list[name]</FONT></TD>
-  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[d_ad]</NOBR></FONT></TD>
-  <TD WIDTH=\"34%\" BGCOLOR=\"$color[r2_bg]\"><a href=./whois.php?table=$table&host=$list[host]&window=1><FONT COLOR=\"$color[r2_fg]\">$list[host]</FONT></a></TD>\n";
+  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[d_ad]</NOBR></FONT></TD>
+  <TD WIDTH=\"34%\" BGCOLOR=\"$color[r2_bg]\">$list[dhost]</TD>\n";
 
 if ($list[email]) {
   echo "</TR><TR>\n" .
-       "  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[w_mail]</NOBR></FONT></TD>\n" .
+       "  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[w_mail]</NOBR></FONT></TD>\n" .
        "  <TD BGCOLOR=\"$color[r2_bg]\" COLSPAN=\"3\"><FONT COLOR=\"$color[r2_fg]\">$list[email]</FONT></TD>\n";
 }
 
 if ($list[url]) {
   echo "</TR><TR>\n" .
-       "  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[ln_url]</NOBR></FONT></TD>\n" .
+       "  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[ln_url]</NOBR></FONT></TD>\n" .
        "  <TD BGCOLOR=\"$color[r2_bg]\" COLSPAN=\"3\"><FONT COLOR=\"$color[r2_fg]\">$list[url]</FONT></TD>\n";
 }
 
@@ -123,7 +138,7 @@ $list[text]
     <INPUT TYPE=\"hidden\" NAME=\"table\" VALUE=\"$table\">
     <INPUT TYPE=\"hidden\" NAME=\"delete_dir\" VALUE=\"$deldir\">
     <INPUT TYPE=\"hidden\" NAME=\"delete_filename\" VALUE=\"$delfile\">    
-    $langs[w_pass]: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" MAXLENGTH=\"8\">&nbsp;
+    $langs[w_pass]
     <INPUT TYPE=\"submit\" VALUE=\"$langs[b_del]\">&nbsp;
     <INPUT TYPE=\"button\" onClick=\"history.back()\" VALUE=\"$langs[b_can]\">
     </FONT>
@@ -148,13 +163,13 @@ if ($board[img] == "yes") {
 } else {
   echo "
   <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>
-  <TD WIDTH=\"1%\"><A HREF=\"list.php?table=$table\"><FONT COLOR=\"$color[n0_fg]\"><NOBR>$langs[cmd_list]</NOBR></FONT></A></TD>
+  <TD WIDTH=\"1%\" NOWRAP><A HREF=\"list.php?table=$table\"><FONT COLOR=\"$color[n0_fg]\"><NOBR>$langs[cmd_list]</NOBR></FONT></A></TD>
   <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>
-  <TD WIDTH=\"1%\"><A HREF=\"javascript:history.back()\"><FONT COLOR=\"$color[n0_fg]\"><NOBR>$langs[cmd_priv]</NOBR></FONT></A></TD>
+  <TD WIDTH=\"1%\" NOWRAP><A HREF=\"javascript:history.back()\"><FONT COLOR=\"$color[n0_fg]\"><NOBR>$langs[cmd_priv]</NOBR></FONT></A></TD>
   <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>\n";
 }
 
 echo "</TR>\n</TABLE>\n</TD></TR>\n</TABLE>\n</DIV>";
 
-@include("html/tail.ph");
+include "html/tail.ph";
 ?>

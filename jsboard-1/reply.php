@@ -1,6 +1,6 @@
 <?
-@include("include/header.ph");
-@include("./admin/include/config.ph");
+include "include/header.ph";
+include "./admin/include/config.ph";
 
 if ($board_cookie[name])
   $board_cookie[name] = eregi_replace("[\]","",$board_cookie[name]);
@@ -9,7 +9,7 @@ if ($board_cookie[name])
 $kind = "reply";
 enable_write($sadmin[passwd],$admin[passwd],$pcheck,$enable[$kind],$cenable[$kind]);
 
-@include("html/head.ph");
+include "html/head.ph";
 
 if($board[notice]) print_notice($board[notice]);
 
@@ -28,7 +28,10 @@ else $reti = "^$reti";
 $list[text] = eregi_replace("<([^<>\n]+)\n([^\n<>]+)>", "<\\1 \\2>", $list[text]);
 $list[text] = ereg_replace("^", ": ", $list[text]);
 $list[text] = ereg_replace("\n", "\n: ", $list[text]);
-$list[text] = str_replace("<!","&lt;!",$list[text]);
+$list[text] = htmlspecialchars($list[text]);
+
+if($list[html]) $html_chk_ok = " checked";
+else $html_chk_no = " checked";
 
 # Browser가 Lynx일때 multim form 삭제
 $agent = get_agent();
@@ -38,20 +41,20 @@ else $board[formtype] = " ENCTYPE=\"multipart/form-data\"";
 # TEXTAREA에서 wrap option check
 $wrap = form_wrap();
 
-// image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
+# image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
 if ($board[img] == "yes" && !eregi("%",$board[width])) 
   $board[width] = $board[width]-$icons[size]*2;
 else $size[text] += 4;
 
-// 원본글 포함 선택 여부
+# 원본글 포함 선택 여부
 if ($enable[ore]) {
   $list[text] = htmlspecialchars($list[text]);
-  $text_area = "<TEXTAREA NAME=\"text\" $wrap[op] ROWS=\"10\" COLS=\"$size[text]\"></TEXTAREA>";
+  $text_area = "<TEXTAREA NAME=\"rpost\" $wrap[op] ROWS=\"10\" COLS=\"$size[text]\"></TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"hide\" VALUE=\"\n\n$list[name] wrote..\n$list[text]\">\n" .
                  "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=1>\n" .
-                 "    <INPUT TABINDEX=\"100\" TYPE=\"button\" NAME=\"quote\" VALUE=\"원본 포함\" onClick=\"this.form.text.value=this.form.text.value + this.form.hide.value; this.form.hide.value ='';\">";
+                 "    <INPUT TABINDEX=\"100\" TYPE=\"button\" NAME=\"quote\" VALUE=\"원본 포함\" onClick=\"this.form.rpost.value=this.form.rpost.value + this.form.hide.value; this.form.hide.value ='';\">";
 } else {
-  $text_area = "<TEXTAREA NAME=\"atc[text]\" $wrap[op] ROWS=\"10\" COLS=\"$size[text]\">\n\n\n$list[name] wrote..\n$list[text]</TEXTAREA>";
+  $text_area = "<TEXTAREA NAME=\"rpost\" $wrap[op] ROWS=\"10\" COLS=\"$size[text]\">\n\n\n$list[name] wrote..\n$list[text]</TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=0>\n";
 }
 
@@ -59,7 +62,7 @@ echo "
 <DIV ALIGN=\"$board[align]\">
 <TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"0\" BGCOLOR=\"$color[r0_bg]\"><TR><TD>
 <TABLE WIDTH=\"100%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
-<FORM METHOD=\"post\" ACTION=\"act.php\"$board[formtype]>
+<FORM NAME=replyp METHOD=\"post\" ACTION=\"act.php\"$board[formtype]>
 <TR>
   <TD BGCOLOR=\"$color[r1_bg]\" width=13%><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[w_name]</FONT></TD>
   <TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[name]\" SIZE=\"$size[name]\" MAXLENGTH=\"50\" VALUE=\"$board_cookie[name]\"></TD>
@@ -74,22 +77,25 @@ if($view[email] == "yes") {
 
 if($view[url] == "yes") {
   echo "</TR><TR>\n" .
-       "<TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]><NOBR>$langs[ln_url]</NOBR></FONT></TD>\n" .
+       "<TD BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\" $board[css]><NOBR>$langs[ln_url]</NOBR></FONT></TD>\n" .
        "<TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[url]\" SIZE=\"$size[name]\" MAXLENGTH=\"255\" VALUE=\"$board_cookie[url]\"></TD>\n" .
        "<TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_url_m]</FONT></TD>\n";
 }
 
+if(!$pcheck && !$adminsession || $cenable[reply]) {
+echo "</TR><TR>\n".
+     "  <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[w_pass]</FONT></TD>\n".
+     "  <TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"password\" NAME=\"atc[passwd]\" SIZE=\"$size[pass]\" MAXLENGTH=\"8\"></TD>\n".
+     "  <TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_passwd_m]</FONT></TD>\n";
+}
+
 echo "
-</TR><TR>
-  <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[w_pass]</FONT></TD>
-  <TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"password\" NAME=\"atc[passwd]\" SIZE=\"$size[pass]\" MAXLENGTH=\"8\"></TD>
-  <TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_passwd_m]</FONT></TD>
 </TR><TR>
   <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>HTML</FONT></TD>
   <TD BGCOLOR=\"$color[r2_bg]\">
     <FONT COLOR=\"$color[r2_fg]\" $board[css]>
-    <INPUT TYPE=\"radio\" NAME=\"atc[html]\" VALUE=\"1\">$langs[u_html]
-    <INPUT TYPE=\"radio\" NAME=\"atc[html]\" VALUE=\"0\" CHECKED>$langs[un_html]
+    <INPUT TYPE=\"radio\" NAME=\"atc[html]\" VALUE=\"1\"$html_chk_ok>$langs[u_html]
+    <INPUT TYPE=\"radio\" NAME=\"atc[html]\" VALUE=\"0\"$html_chk_no>$langs[un_html]
     </FONT>
   </TD>
   <TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_html_m]</FONT></TD>";
@@ -109,7 +115,33 @@ if ($upload[yesno] == "yes" && $cupload[yesno] == "yes" && $agent[br] != "LYNX")
 echo "
 </TR><TR>
   <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[titl]</FONT></TD>
-  <TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[title]\" SIZE=\"$size[titl]\" MAXLENGTH=\"100\" VALUE=\"Re$reti: $list[title]\"></TD>
+  <TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[title]\" SIZE=\"$size[titl]\" MAXLENGTH=\"100\" VALUE=\"Re$reti: $list[title]\"></TD>";
+
+if ($agent[br] == "MSIE" || $agent[br] == "MOZL6") {
+  $orig_option = " onClick=fresize(0)";
+
+  echo "
+</TR><TR>
+  <TD COLSPAN=\"2\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>Textarea size config</FONT></TD>
+  <TD ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">
+
+<SCRIPT LANGUAGE=JavaScript>
+<!--
+function fresize(value) {
+if (value == 0) {
+  document.replyp.rpost.cols  = $size[text];
+  document.replyp.rpost.rows  = 10;
+}
+if (value == 1) document.replyp.rpost.cols += 5;
+if (value == 2) document.replyp.rpost.rows += 5;
+}
+// -->
+</SCRIPT>
+  <INPUT TYPE=BUTTON VALUE=\"▷\" onClick=\"fresize(1);\"><INPUT TYPE=BUTTON VALUE=\"▣\" onClick=\"fresize(0);\"><INPUT TYPE=BUTTON VALUE=\"▽\" onClick=\"fresize(2);\">
+  </TD>";
+}
+
+echo "
 </TR><TR>
   <TD COLSPAN=\"3\" ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">
 <!-- ---------- 글 내용 ---------- -->
@@ -137,7 +169,7 @@ echo "
     <INPUT TYPE=\"hidden\" NAME=\"rmail[origmail]\" VALUE=\"$list[email]\">
     <INPUT TYPE=\"hidden\" NAME=\"atc[reno]\" VALUE=\"$list[no]\">
     <INPUT TYPE=\"submit\" VALUE=\"$langs[b_re]\">&nbsp;
-    <INPUT TYPE=\"reset\" VALUE=\"$langs[b_reset]\">&nbsp;
+    <INPUT TYPE=\"reset\" VALUE=\"$langs[b_reset]\"$orig_option>&nbsp;
     <INPUT TYPE=\"button\" onClick=\"history.back()\" VALUE=\"$langs[b_can]\">
     $orig_button
     </FONT>
@@ -162,13 +194,13 @@ if ($board[img] == "yes") {
 } else {
   echo "
   <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>
-  <TD WIDTH=\"1%\"><A HREF=\"list.php?table=$table\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_list]</NOBR></FONT></A></TD>
+  <TD WIDTH=\"1%\" NOWRAP><A HREF=\"list.php?table=$table\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_list]</NOBR></FONT></A></TD>
   <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>
-  <TD WIDTH=\"1%\"><A HREF=\"javascript:history.back()\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_priv]</NOBR></FONT></A></TD>
+  <TD WIDTH=\"1%\" NOWRAP><A HREF=\"javascript:history.back()\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_priv]</NOBR></FONT></A></TD>
   <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>\n";
 }
 
 echo "</TR>\n</TABLE>\n</TD></TR>\n</TABLE>\n</DIV>\n";
 
-@include("html/tail.ph");
+include "html/tail.ph";
 ?>

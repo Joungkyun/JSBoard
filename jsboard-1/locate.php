@@ -1,5 +1,5 @@
 <?
-@include("include/header.ph");
+include "include/header.ph";
 
 $url = search2url($o);
 

@@ -39,7 +39,7 @@ echo "<BODY BACKGROUND=\"$color[image]\" BGCOLOR=\"$color[bgcol]\" TEXT=\"$color
 <?
 if($table) {
   table_name_check($table);
-  if(file_exists("data/$table/html_head.ph")) { @include("data/$table/html_head.ph"); }
+  if(file_exists("data/$table/html_head.ph")) { include "data/$table/html_head.ph"; }
 }
 ?>
 <!-- =============================== A foreword =============================== -->

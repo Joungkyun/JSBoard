@@ -1,4 +1,4 @@
-JSBoard 1.0 README
+JSBoard 1.x README
 ------------------
 
 소개
@@ -7,29 +7,33 @@ JSBoard는 김병찬<redhands@linux.sarang.net>님의 공개 게시판을
 토대로 하여 사용자들이 자신만의 기능을 추가한 것을 모아서 새로운
 기능을 추가한 웹상에서 사용을 할수 있는 게시판이다.
 
-JSBoard를 사용하기 위해서는 linux box와 apache, mysql, php4가
-요구되며 시스템 사양은 위의 것들이 돌아갈수만 있으면 누구나 사용을
-할수가 있다.
+JSBoard를 사용하기 위해서는 Redhat, Devian, FreeBSD 3.5, Windog 2K,
+Windog NT box와 apache, mysql, php4가 요구되며 시스템 사양은 위의
+것들이 돌아갈수만 있으면 누구나 사용을 할수가 있다.
 
 Platform
 
-리눅스 박스가 설치되어 있는 모든 서버. 리눅스이외의 OS에서는
-공식적으로 test가 되어진바 없다. 현재 개발자들이 사용을 할수있는
-환경은 Linux밖에 없기 때문에 다른 OS로의 공식 포팅문제는 아직
-언급을 할수 있는 환경이 아니다. 이는 다른 업체및 개인의 후원이
-없이는 아직은 불가능한 것으로 판단이 되어진다.
+RedHat, Debian, FreeBSD 3.5, Windog NT, Windog 2000이 설치되어
+있는 모든 서버. 위의 OS외에서는 공식적으로 test가 되어진바 없다.
+현재 개발자들이 사용을 할수있는 환경은 위의 OS밖에 없기 때문에
+다른 OS로의 공식 포팅문제는 아직 언급을 할수 있는 환경이 아니다.
+이는 다른 업체및 개인의 후원이 없이는 아직은 불가능한 것으로 판
+단이 되어진다.
 
-하지만 Apache와 PHP4, MySQL이 설치되어 있는 서버라면
-(NT에서도 구동이 가능할듯 하다) 약간의 손질만 보면 운영이 가능
-하리라 생각이 되어진다. 단 이 부분은 아직까지는 사용자들의 노력에
-달려 있다고 생각된다. (하지만 다른 OS로의 포팅에 관한 문제에 대해
-서는 최소한의 배려는 하고 있다)
+하지만 Apache와 PHP4, MySQL이 설치되어 있는 서버라면 약간의 손질
+만 보면 운영이 가능 하리라 생각이 되어진다. 단 이 부분은 아직까지
+는 사용자들의 노력에 달려 있다고 생각된다. (하지만 다른 OS로의
+포팅에 관한 문제에 대해 서는 최소한의 배려는 하고 있다)
 
 주의
 
-JSBoard v1.0은 PHP3 기반하에서는 Installer와 admin center를 사용
+JSBoard v1.x는 PHP3 기반하에서는 Installer와 admin center를 사용
 할수가 없다. 이는 Installer와 admin center의 cookie 기능이 PHP4
 에서 부터 지원하는 session 기능으로 바뀌었기 때문이다.
+
+또한 Win32 version은 따로 배포가 된다.
+http://jsboard.kdlp.org/download.php 에서 win32용 버젼을 다운
+받아야 한다.
 
 설치
 
@@ -51,4 +55,4 @@ OOPS Administration의 code의 경우에는 마음대로 사용을 할수도 있고 공개를
 안해도 상관은 없으나 상용화는 금한다. (주의 할것은 JSBoard에 들어가 있는
 OOPS Administration의 code중에는 일부 JSBoard code를 사용한 것이 있음)
 
-2000년 6월 16일 김정균 <admin@oops.org>
+2000년 12월 01일 김정균 <admin@oops.org>
