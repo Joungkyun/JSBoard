@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
+2002.5.30 by 김정균 <http://www.oops.org>
+	- 코멘트 테이블이 존재하지 않을 경우, 글 삭제시 에러나던것 수정
+
 2002.5.28 by 김정균 <http://www.oops.org>
 	- 게시판 관리자 이메일 사칭 체크 버그수정
 
