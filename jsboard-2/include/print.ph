@@ -848,8 +848,8 @@ function print_comment($table,$no,$print=0) {
 
   $t = "<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=5 BGCOLOR=$color[l5_bg]>\n".
        get_comment($table,$no,0).
-       "</TABLE>\n".
-       "<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=1 BGCOLOR=$color[l3_bg] ALIGN=right>\n".
+       "<TR><TD COLSPAN=4 ALIGN=right>\n".
+       "<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=1 BGCOLOR=$color[l3_bg]>\n".
        "<FORM METHOD=POST ACTION=act.php>\n".
        "<TR>\n".
        "<TD ROWSPAN=2 ALIGN=center>".
@@ -878,6 +878,8 @@ function print_comment($table,$no,$print=0) {
        "<INPUT TYPE=hidden NAME=page VALUE=$page>\n".
        "<INPUT TYPE=hidden NAME=o[at] VALUE=\"c_write\">\n".
        "</FORM>\n".
+       "</TABLE>\n".
+       "</TD></TR>\n".
        "</TABLE>\n";
 
   if($print) echo $t;
