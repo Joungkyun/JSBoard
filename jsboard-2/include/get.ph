@@ -48,10 +48,9 @@ function get_authinfo($id,$nocry='') {
 function get_hostname($reverse = 0,$addr = 0) {
   if(!$addr) {
     # proxy 에서 제공하는 원 ip address 의 환경 변수를 제공할때 원 ip address 를 받음
-    $proxytype = array("HTTP_VIA","HTTP_X_COMING_FROM","HTTP_X_FORWARDED_FOR",
-                       "HTTP_X_FORWARDED","HTTP_COMING_FROM","HTTP_FORWARDED_FOR",
-                       "HTTP_FORWARDED");
-                       
+    $proxytype = array("HTTP_X_COMING_FROM","HTTP_X_FORWARDED_FOR", "HTTP_X_FORWARDED",
+                       "HTTP_COMING_FROM","HTTP_FORWARDED_FOR", "HTTP_FORWARDED", "HTTP_VIA");
+
     for($i=0;$i<sizeof($proxytype);$i++) {
       if($_SERVER[$proxytype[$i]]) {
         $host = $_SERVER[$proxytype[$i]];
