@@ -1,0 +1,158 @@
+<HTML>
+<HEAD>
+<!-#######################################################################-->
+<!-  $langs[charset] : 게시판의 언어 타입에 따라 charset 을 가져온다.     -->
+<!-  $board[ver]     : 게시판의 버젼 정보를 가지고 온다.                  -->
+<!-  get_title()     : 게시판의 헤더 타이틀을 가지고 온다.                -->
+<!-  $user_stylesheet : 사용자 정의 스타일 시트                           -->
+<!-#######################################################################-->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=EUC-KR">
+<TITLE>Jsboard <?=$board[ver]?> - <?=get_title()?></TITLE>
+
+<STYLE TYPE=text/css>
+<!--
+BODY,TD {font-size:12px;font-family:굴림체;color:#555555;}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+INPUT {border:1x solid #555555;background-Color:silver;font-size:11px;font-family:굴림체;color:#555555}
+
+<?=$user_stylesheet?>
+-->
+</style>
+
+<!-#######################################################################-->
+<!-  print_newwindow_src()  : jsboard 의 기능에서 필요한 새창을 띄우는    -->
+<!-                           java script 를 출력하게 해 준다.            -->
+<!-#######################################################################-->
+<? print_newwindow_src($upload[yesno],$cupload[yesno],$enable[dwho]) ?>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<!-------------------- 헤더 디자인 시작 -------------------->
+<?
+if(!$np) {
+  # 각 유저별 Design
+  include "$board[headpath]";
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.ph";
+ }
+?>
+<!-------------------- 헤더 디자인 끝   -------------------->
+
+<!-#######################################################################-->
+<!-  $board[align] : 게시판의 align 을 정의한다. 이는 게시판 관리자에서   -->
+<!-                  설정을 할수 있다.                                    -->
+<!-  $board[width] : 게시판의 넓이를 지정한다. 게시판 관리자에서 조정     -->
+<!-  $list[num]    : 좌측 상단의 게시판 글 번호                           -->
+<!-#######################################################################-->
+<DIV ALIGN=<?=$board[align]?>>
+<FORM METHOD=post ACTION=act.php>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN=bottom COLSPAN=2>
+<IMG SRC=./theme/KO-default/img/icon_over.gif ALIGN=absmiddle>
+<FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Delete <?=$list[num]?> article</FONT>
+</TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $list[title]  : 게시판 글 제목                                       -->
+<!-#######################################################################-->
+<TR BGCOLOR=#FFAE00>
+<TD COLSPAN=2>
+<IMG SRC=./theme/KO-default/img/board_no.gif ALIGN=absmiddle>
+<FONT STYLE="color:#FFFFFF"><?=$list[title]?></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0></TD>
+</TR>
+</TABLE>
+
+<!-#######################################################################-->
+<!-  $list[date]   : 글 등록 날짜                                         -->
+<!-  $list[dhost]  : 글 등록지                                            -->
+<!-  $list[refer]  : 글 조회수                                            -->
+<!-  $list[name]   : 글쓴이 이름                                          -->
+<!-  $list[uname]  : 글쓴이 이름 (homepage url 포함)                      -->
+<!-  $list[attach] : 첨부 파일 링크                                       -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0></TD>
+<TD WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0></TD>
+<TD WIDTH=5><IMG SRC=images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0></TD>
+<TD>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0><BR>
+<FONT Style="font-weight:bold">등록</FONT> <?=$list[date]?> by <?=$list[dhost]?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">조회</FONT> <?=$list[refer]?><BR>
+<FONT Style="font-weight:bold">이름</FONT> <?=$list[uname]?> &nbsp; &nbsp;
+<? if($list[attach]) echo "<FONT Style=\"font-weight:bold\">파일</FONT> $list[attach]" ?><BR>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0><BR>
+</TD>
+<TD WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0></TD>
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0></TD></TR>
+</TABLE>
+
+<!-#######################################################################-->
+<!-  $preview[up]   : 첨부된 이미지 파일이 gif/jpg/png 일 경우 출력       -->
+<!-  $list[text]    : 글 본문 출력                                        -->
+<!-  $preview[down] : 첨부된 파일이 ascii 일 경우 출력                    -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR=<?=$color[l5_bg]?>>
+<FONT style="color:<?=$color[l5_fg]?>;font-family:굴림체">
+<?=$preview[up]?>
+<!-- =============================== 글내용 =============================== -->
+<?=$list[text]?>
+
+<!-- =============================== 글내용 =============================== -->
+<?=$preview[down]?>
+</FONT>
+</TD></TR>
+</TABLE>
+
+<!-#######################################################################-->
+<!- $warning          : 삭제시 필요한 경고문 출력                         -->
+<!- $table.$page      : 목록으로 돌아가는 링크에 필요한 변수들            -->
+<!- $print[passform]  : 삭제하는데 필요한 hidden 변수들                   -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN=right>
+<?=$warning?>
+[ <A HREF=list.php?table=<?=$table.$page?>><FONT STYLE="color=#555555">목록</FONT></A> | <A HREF=javascript:history.back()><FONT STYLE="color=#555555">이전</FONT></A> ]
+</TD></TR>
+<TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
+<FONT STYLE="color:#FFFFFF;font-weight:bold">
+<?=$print[passform]?>
+<INPUT TYPE=submit VALUE=삭제>&nbsp;
+<INPUT TYPE=button onClick=history.back() VALUE=취소>
+</FONT>
+</TD></TR>
+</TABLE>
+
+<!-#######################################################################-->
+<!-  print_license()  : 라이센스 출력                                     -->
+<!-#######################################################################-->
+<?=print_license()?>
+
+</FORM>
+</DIV>
+
+<!-------------------- 꼬리 디자인 시작 -------------------->
+<?
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.ph";
+  # 각 유저별 Design
+  include "$board[tailpath]";
+}
+?>
+<!-------------------- 꼬리 디자인 끝   -------------------->
+</BODY>
+</HTML>
