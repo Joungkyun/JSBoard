@@ -5,7 +5,7 @@ function exsit_dbname_check($db) {
   global $langs;
   if(!$db) {
     echo "<table width=100% height=100%>\n<tr>\n" .
-         "<td align=center><b><br><br>$langs[nodb]<br><br><br></b></td>\n" .
+         "<td align=center><b><br><br>{$langs['nodb']}<br><br><br></b></td>\n" .
          "</tr></table>";
     exit;
   }
@@ -17,17 +17,17 @@ function table_name_check($table,$ck=0) {
   global $langs;
   $table = trim($table);
 
-  if(!$langs[n_t_n]) {
-    $langs[n_t_n] = "Table Name Missing! You must select a table";
-    $langs[n_db] = "Board name must start with an alphabet";
-    $langs[n_meta] = "Can't use special characters except alphabat, numberlic, _, - charcters";
-    $langs[n_promise] = "Cat't use table name as &quot;as&quot;";
+  if(!$langs['n_t_n']) {
+    $langs['n_t_n'] = "Table Name Missing! You must select a table";
+    $langs['n_db'] = "Board name must start with an alphabet";
+    $langs['n_meta'] = "Can't use special characters except alphabat, numberlic, _, - charcters";
+    $langs['n_promise'] = "Cat't use table name as &quot;as&quot;";
   }
 
-  if (!$ck && !$table)  print_error($langs[n_t_n],250,150,1);
-  if (!preg_match("/^[a-z]/i",$table)) print_error($langs[n_db],250,150,1);
-  if (preg_match("/[^a-z0-9_\-]/i",$table)) print_error($langs[n_meta],250,150,1);
-  if (preg_match("/^as$/i",$table)) print_error($langs[n_promise],250,150,1);
+  if (!$ck && !$table)  print_error($langs['n_t_n'],250,150,1);
+  if (!preg_match("/^[a-z]/i",$table)) print_error($langs['n_db'],250,150,1);
+  if (preg_match("/[^a-z0-9_\-]/i",$table)) print_error($langs['n_meta'],250,150,1);
+  if (preg_match("/^as$/i",$table)) print_error($langs['n_promise'],250,150,1);
 }
 
 # table list 존재 유무 체크
@@ -36,7 +36,7 @@ function table_list_check($db) {
   global $langs;
   if(!mysql_list_tables($db)) {
     echo "<table width=100% height=100%>\n<tr>\n" .
-         "<td align=center><b><br><br>$langs[n_acc]<br><br><br></b></td>\n" .
+         "<td align=center><b><br><br>{$langs['n_acc']}<br><br><br></b></td>\n" .
          "</tr>\n</table> ";
     exit;
   } else return $tbl_list;
@@ -50,7 +50,7 @@ function same_db_check($list, $table) {
   for($k=0;$k<$tbl_num;$k++) {
     # table list 를 불러 옵니다.
     $table_name = mysql_tablename($list,$k);
-    if ($table == $table_name || $table == "userdb") print_error($langs[a_acc],250,150,1);
+    if ($table == $table_name || $table == "userdb") print_error($langs['a_acc'],250,150,1);
   }
 }
 
@@ -92,25 +92,25 @@ function get_tblist($db,$t="",$chk='') {
 
 function check_userlist_type($t) {
   if(is_hangul($t)) {
-    if($t == "가") $r[like] = "나";
-    if($t == "나") $r[like] = "다";
-    if($t == "다") $r[like] = "라";
-    if($t == "라") $r[like] = "마";
-    if($t == "마") $r[like] = "바";
-    if($t == "바") $r[like] = "사";
-    if($t == "사") $r[like] = "아";
-    if($t == "아") $r[like] = "자";
-    if($t == "자") $r[like] = "차";
-    if($t == "차") $r[like] = "카";
-    if($t == "카") $r[like] = "타";
-    if($t == "타") $r[like] = "파";
-    if($t == "파") $r[like] = "하";
-    if($t == "하") $r[like] = chr(0xfe);
-    $r[like] = "WHERE binary nid BETWEEN binary '$t' AND binary '$r[like]'";
+    if($t == "가") $r['like'] = "나";
+    if($t == "나") $r['like'] = "다";
+    if($t == "다") $r['like'] = "라";
+    if($t == "라") $r['like'] = "마";
+    if($t == "마") $r['like'] = "바";
+    if($t == "바") $r['like'] = "사";
+    if($t == "사") $r['like'] = "아";
+    if($t == "아") $r['like'] = "자";
+    if($t == "자") $r['like'] = "차";
+    if($t == "차") $r['like'] = "카";
+    if($t == "카") $r['like'] = "타";
+    if($t == "타") $r['like'] = "파";
+    if($t == "파") $r['like'] = "하";
+    if($t == "하") $r['like'] = chr(0xfe);
+    $r['like'] = "WHERE binary nid BETWEEN binary '$t' AND binary '{$r['like']}'";
   } else {
-    $r[like] = "WHERE nid LIKE '$t%'";
+    $r['like'] = "WHERE nid LIKE '$t%'";
   }
-  $r[links] = "t=$t&";
+  $r['links'] = "t=$t&";
   return $r;
 }
 

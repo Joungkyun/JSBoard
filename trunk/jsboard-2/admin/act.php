@@ -1,29 +1,29 @@
 <?php
-$path[type] = "admin";
+$path['type'] = "admin";
 include "./include/admin_head.ph";
 include "../include/ostype.ph";
 
-if(!session_is_registered("$jsboard") || $_SESSION[$jsboard][pos] != 1)
-print_error($langs[login_err]);
+if(!session_is_registered("$jsboard") || $_SESSION[$jsboard]['pos'] != 1)
+print_error($langs['login_err']);
 
 if($mode == "global_chg") {
-  $db[rhost] = $db[server];
-  $db[rmode] = "";
+  $db['rhost'] = $db['server'];
+  $db['rmode'] = "";
 }
 
-if($db[rmode] == "r") 
+if($db['rmode'] == "r") 
   print_error("System Checking NOW !! \n\nSorry, Read only enable.",250,130,1);
 
-$connect = @mysql_connect($db[rhost],$db[user],$db[pass]);
+$connect = @mysql_connect($db['rhost'],$db['user'],$db['pass']);
 sql_error(mysql_errno(), mysql_error());
 
-mysql_select_db($db[name],$connect);
+mysql_select_db($db['name'],$connect);
 
 # password 비교함수 - admin/include/auth.ph
 compare_pass($_SESSION[$jsboard]);
 
 # db_name이 존재하지 않으면 아래를 출력합니다.
-exsit_dbname_check($db[name]);
+exsit_dbname_check($db['name']);
 
 # 알파벳 구분된 페이지에서 넘어 왔을 경우 페이지를
 # 되돌리기 위해 지정
@@ -48,17 +48,17 @@ if($mode=='db_del') {
   }
 
   # 게시판 계정에서 사용되는 file 삭제
-  exec("$exec[rm] ../data/$table_name");
+  exec("{$exec['rm']} ../data/$table_name");
   mysql_close();
 }
 
 if($mode == 'db_create')  {
-  $tbl_list = mysql_list_tables($db[name]);
+  $tbl_list = mysql_list_tables($db['name']);
 
   # 새로만들 계정이름의 존재유무 체크
   table_name_check($new_table);
   # table list 존재 유무 체크
-  table_list_check($db[name]);
+  table_list_check($db['name']);
   # 동일한 이름의 게시판이 있는지 확인
   same_db_check($tbl_list,$new_table);
 
@@ -121,9 +121,9 @@ if($mode == 'db_create')  {
 
   # 새로운 게시판에 필요한 파일및 디렉토리 생성
   mkdir("../data/$new_table",0700);
-  mkdir("../data/$new_table/$upload[dir]",0700);
+  mkdir("../data/$new_table/{$upload['dir']}",0700);
   chmod("../data/$new_table",0755);
-  chmod("../data/$new_table/$upload[dir]",0755);
+  chmod("../data/$new_table/{$upload['dir']}",0755);
   copy("../INSTALLER/sample/data/config.ph","../data/$new_table/config.ph");
   chmod("../data/$new_table/config.ph",0644);
   copy("../INSTALLER/sample/data/html_head.ph","../data/$new_table/html_head.ph");
@@ -140,16 +140,16 @@ if($mode == "global_chg") {
   mysql_close();
   # quot 변환된 문자를 un quot 한다
 
-  $vars = "<?\n".stripslashes($glob[vars])."\n?>";
-  $spam = stripslashes($glob[spam]);
+  $vars = "<?\n".stripslashes($glob['vars'])."\n?>";
+  $spam = stripslashes($glob['spam']);
 
   file_operate("../config/global.ph","w",0,$vars);
   file_operate("../config/spam_list.txt","w",0,$spam);
 
-  $langs[act_complete] = str_replace("\n","\\n",$langs[act_complete]);
-  $langs[act_complete] = str_replace("'","\'",$langs[act_complete]);
+  $langs['act_complete'] = str_replace("\n","\\n",$langs['act_complete']);
+  $langs['act_complete'] = str_replace("'","\'",$langs['act_complete']);
   echo "<script>\n" .
-       "alert('$langs[act_complete]')\n" .
+       "alert('{$langs['act_complete']}')\n" .
        "window.close()\n</script>\n".
        "<NOSCRIPT>Complete this Job. Click <A HREF=./admin.php>here go to admin page!</A></NOSCRIPT>";
   exit;
