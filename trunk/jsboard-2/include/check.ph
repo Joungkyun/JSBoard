@@ -181,6 +181,7 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
     # mbstring 을 지원하면 필터링 키워드를 UTF-8 로 변환
     $list[$co] = $mbt ? mb_convert_encoding(trim($list[$co]),"UTF-8") : $list[$co];
 
+    $list[$co] = trim ($list[$co]);
     if(preg_match("/$list[$co]/i", $str)) {
       return 1;
       break;

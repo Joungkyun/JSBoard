@@ -17,6 +17,14 @@ If you wnat to see windog's change log, see also
 
 ******************************************************************************
 
+Version   : jsboard-2.0.7
+
+Tue, Sep  2 2003
+  by JoungKyun Kim <http://www.oops.org>
+	- added remove white space in check_spac function
+
+
+-----------------------------------------------------------------------------
 Version   : jsboard-2.0.6
 
 Mon, Jul 28 2003
