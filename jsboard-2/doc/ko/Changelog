@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.2
 
+2002.08.27
+  by 김정균 <http://www.oops.org>
+	- 첨부파일 이름이 urlencode 되었을 경우 문제 해결
+
 2002.08.17
   by 김정균 <http://www.oops.org>
 	- Installer 에서 Zento Linux 지원
