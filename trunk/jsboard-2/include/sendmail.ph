@@ -187,9 +187,10 @@ function get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm) {
   $servername = strtoupper($_SERVER['SERVER_NAME']);
 
   $themepath = "theme/{$rmail['theme']}/mail.template";
-  $htmltext = addslashes(file_operate("$themepath","r","can't open $themepath",sizeof($themepath)));
+  $htmltext = file_operate("$themepath","r","can't open $themepath",sizeof($themepath));
+  $htmltext = str_replace ("\"", "\\\"", $htmltext);
   eval("\$htmltext = \"$htmltext\";");
-  $htmltext = stripslashes($htmltext);
+
   return $htmltext;
 }
 
