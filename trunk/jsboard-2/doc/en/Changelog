@@ -18,7 +18,16 @@ If you wnat to see windog's change log, see also
 ******************************************************************************
 
 
-¹öÀü   : jsboard-2.0.2
+-----------------------------------------------------------------------------
+Version   : jsboard-2.0.3
+
+Mon, Nov 18 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- released 2.0.3
+	- fixed security bug of file upload
+
+-----------------------------------------------------------------------------
+Version   : jsboard-2.0.2
 
 Mon, Nov 18 2002
   by JoungKyun Kim <http://www.oops.org>
