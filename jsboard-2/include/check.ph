@@ -330,4 +330,25 @@ function check_htmltable($str,$rep='') {
          "##  CLOSE TD    TAG : $clstd\n\n";
   }
 }
+
+# POST 로 넘어온 upload file 을 일반 배열 함수 처리를 함
+function conv_upload_name($fn) {
+  $f[name] = $_FILES[$fn][name];
+  $f[size] = $_FILES[$fn][size];
+  $f[type] = $_FILES[$fn][type];
+  $f[tmp_name] = $_FILES[$fn][tmp_name];
+
+  # file name에 공백이 있을 경우 공백 삭제
+  $f[name] = eregi_replace(" ","",$f[name]);
+
+  # file name에 특수 문자가 있을 경우 등록 거부
+  upload_name_chk($f[name]);
+
+  # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
+  $f[name] = eregi_replace("[\.]*$","",$f[name]);
+  $f[name] = eregi_replace(".(ph|inc|php[0-9a-z]*|phtml)$",".phps",$f[name]);
+  $f[name] = eregi_replace("(.*)\.(cgi|pl|sh|html|htm|shtml|vbs|jsp)$", "\\1_\\2.phps",$f[name]);
+
+  return $f;
+}
 ?>

@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  1월 23일
+작성일 : 2002년  1월 28일
 버전   : jsboard-2.0pre4
 
 
@@ -49,6 +49,8 @@ If you wnat to see windog's change log, see also
     을 덮어 모두 볼 수 없는 현상 수정
 23. 윈도우즈 버젼을 위해 헤더 파일에서 exec 함수 인클루드 하는 것 수정
 24. oops admincenter 타이틀및 하단 copyright 삭제
+25. Cookie 시간 표현 방식 변경
+26. register_globals = off 를 위해 upload file 처리 변경
 
 
 -----------------------------------------------------------------------------
