@@ -1,0 +1,330 @@
+<?
+// 웹 서버 접속자의 IP 주소 혹은 도메인명을 가져오는 함수
+//
+// getenv        - 환경 변수값을 가져옴
+//                 http://www.php.net/manual/function.getenv.php3
+// gethostbyaddr - IP 주소와 일치하는 호스트명을 가져옴
+//                 http://www.php.net/manual/function.gethostbyaddr.php3
+function get_hostname($reverse = 0) {
+  // 아파치 환경 변수인 REMOTE_ADDR에서 접속자의 IP를 가져옴
+  $host = getenv("REMOTE_ADDR");
+
+  // httpd.conf에서 HostnameLookup On 으로 설정했을 경우만 해당됨
+  $check = @gethostbyaddr($host);
+  //$check = getenv("REMOTE_HOST");
+
+  if($check) $host = $check;
+  return $host;
+}
+
+// 접속한 사람이 사용하는 브라우져를 알기 위해 사용되는 함수, 현재는 FORM
+// 입력창의 크기가 브라우져마다 틀리게 설정되는 것을 보정하기 위해 사용됨
+//
+// getenv - 환경 변수값을 가져옴
+//          http://www.php.net/manual/function.getenv.php3
+function get_agent()
+{
+  $agent_env = getenv("HTTP_USER_AGENT");
+
+  // $agent 배열 정보 [br] 브라우져 종류
+  //                  [os] 운영체제
+  //                  [ln] 언어 (넷스케이프)
+  if(ereg("MSIE", $agent_env)) {
+    $agent[br] = "MSIE";
+    if(ereg("NT", $agent_env)) {
+      $agent[os] = "NT";
+    } else if(ereg("Win", $agent_env)) {
+      $agent[os] = "WIN";
+    } else $agent[os] = "OTHER";
+  } else if(ereg("^Mozilla", $agent_env)) {
+    $agent[br] = "MOZL";
+    if(ereg("NT", $agent_env)) {
+      $agent[os] = "NT";
+      if(ereg("\[ko\]", $agent_env)) $agent[ln] = "KO";
+    } else if(ereg("Win", $agent_env)) {
+      $agent[os] = "WIN";
+      if(ereg("\[ko\]", $agent_env)) $agent[ln] = "KO";
+    } else $agent[os] = "OTHER";
+  } else $agent[br] = "OTHER";
+
+  return $agent;
+}
+
+// 오늘 자정을 기준으로 UNIX_TIMESTAMP의 형태로 시각을 뽑아오는 함수
+//
+// time    - 현재 시각의 UNIX TIMESTAMP를 가져옴
+//           http://www.php.net/manual/function.time.php3
+// date    - UNIX TIMESTAMP를 지역 시간에 맞게 지정한 형식으로 출력
+//           http://www.php.net/manual/function.date.php3
+// mktime  - 지정한 시각의 UNIX TIMESTAMP를 가져옴
+//           http://www.php.net/manual/function.mktime.php3
+// explode - 구분 문자열을 기준으로 문자열을 나눔
+//           http://www.php.net/manual/function.explode.php3
+function get_date() {
+  // 현재의 시간을 $time에 저장
+  $time  = time();
+  // 년, 월, 일을 각각의 변수에 대입
+  $date  = date("m:d:Y", $time);
+  $date = explode(":", $date);
+
+  // 오늘 날짜에 자정을 기준으로 UNIX_TIMESTAMP 형식으로 만듬
+  $today = mktime(0, 0, 0, $date[0], $date[1], $date[2]);
+
+  return $today;
+}
+
+// 기본적인 게시판의 정보를 가져오는 함수
+function get_board_info($table) {
+  global $o;
+
+  // 오늘 자정의 UNIX_TIMESTAMP를 구해옴
+  $today  = get_date();
+
+  // date 필드를 비교해서 오늘 올라온 글의 갯수를 가져옴
+  $sql    = search2sql($o, 0);
+
+  if(!$sql) {
+    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > $today");
+    $tcount = sql_result($result, 0, "COUNT(*)");
+    sql_free_result($result);
+  }
+
+  // 게시판의 전체 글의 갯수를 가져옴
+  $sql    = search2sql($o);
+  $result = sql_query("SELECT COUNT(*) FROM $table $sql");
+  $acount = sql_result($result, 0, "COUNT(*)");
+  sql_free_result($result);
+
+  $count[all]    = $acount;	// 전체 글 수
+  $count[today]  = $tcount;	// 오늘 글 수
+    
+  return $count;
+}
+
+// 게시판의 전체 페이지 수를 구하는 함수
+function get_page_info($count, $page = 0)
+{
+    global $board; // 게시판 기본 설정 (config/global.ph)
+
+    // 보통 글 수를 페이지 당 글 수로 나누어 전체 페이지를 구함
+    // 나눈 값은 정수형으로 변환하며 정확히 나누어 떨어지지 않으면 1을 더함
+    if($count[all] % $board[perno])
+	$pages[all] = intval($count[all] / $board[perno]) + 1;
+    else
+	$pages[all] = intval($count[all] / $board[perno]);
+
+    // $page 값이 있으면 그 값을 $pages[cur] 값으로 대입함
+    if($page)
+	$pages[cur] = $page;
+
+    // $pages[cur] 값이 없으면 1로 대입함
+    if(!$pages[cur])
+	$pages[cur] = 1;
+    // $pages[cur] 값이 전체 페이지 수보다 클 경우 전체 페이지 값을 대입함
+    if($pages[cur] > $pages[all])
+	$pages[cur] = $pages[all];
+
+    // $pages[no] 값이 없으면 $pages[cur] 값을 참고하여 대입함. 목록에서
+    // 불러올 글의 시작 번호로 사용됨
+    if(!$pages[no])
+	$pages[no] = ($pages[cur] - 1) * $board[perno];
+
+    // $pages[cur] 값에 따라 이전(pre), 다음(nex) 페이지 값을 대입함
+    if($pages[cur] > 1)
+	$pages[pre] = $pages[cur] - 1;
+    if($pages[cur] < $pages[all])
+	$pages[nex] = $pages[cur] + 1;
+
+    return $pages;
+}
+
+// 글이 글 목록의 어느 페이지에 있는 글인지 알아내기 위한 함수
+//
+// intval - 변수를 정수형으로 변환함
+//          http://www.php.net/manual/function.intval.php3
+function get_current_page($table, $idx) {
+  global $board; // 게시판 기본 설정 (config/global.ph)
+  global $o;
+
+  $sql = search2sql($o, 0);
+  $count = get_board_info($table);
+
+  // 지정된 글의 idx보다 큰 번호를 가진 글의 갯수를 가져옴
+  $result     = sql_query("SELECT COUNT(*) FROM $table WHERE idx > $idx $sql");
+  $count[cur] = sql_result($result, 0, "COUNT(*)");
+  sql_free_result($result);
+
+  // 가져온 값을 페이지 당 글 수로 나누어 몇 번째 페이지인지 가져옴
+  // (페이지는 1부터 시작하기 때문에 1을 더함)
+  $page   = intval($count[cur] / $board[perno]) + 1;
+
+  return $page;
+}
+
+// 지정한 글의 다음, 이전글을 가져오는 함수
+function get_pos($table, $idx) {
+    global $o;
+
+    $sql    = search2sql($o, 0);
+    
+    // 지정된 글의 idx보다 작은 번호를 가진 글 중에 idx가 가장 큰 글 (다음글)
+    $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < $idx $sql");
+    $pos[next] = sql_result($result, 0, "idx");
+    sql_free_result($result);
+    if($pos[next]) { 
+	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = $pos[next]");
+	$next   = sql_fetch_array($result);
+	sql_free_result($result);
+
+	$pos[next] = $next[no];
+	if($next[reto]) {
+	    $result    = sql_query("SELECT num FROM $table WHERE no = $next[reto]");
+	    $next[num] = sql_result($result, 0, "num");
+	    sql_free_result($result);
+	    $pos[next_t] = "Reply of No.$next[num]: $next[title]";
+	} else {
+	    $pos[next_t] = "No.$next[num]: $next[title]";
+	}
+    }
+
+    // 지정된 글의 idx보다 큰 번호를 가진 글 중에 idx가 가장 작은 글 (이전글)
+    $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > $idx $sql");
+    $pos[prev] = sql_result($result, 0, "idx");
+    sql_free_result($result);
+    if($pos[prev]) { 
+	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = $pos[prev]");
+	$prev   = sql_fetch_array($result);
+	sql_free_result($result);
+
+	$pos[prev] = $prev[no];
+	if($prev[reto]) {
+	    $result    = sql_query("SELECT num FROM $table WHERE no = $prev[reto]");
+	    $prev[num] = sql_result($result, 0, "num");
+	    sql_free_result($result);
+	    $pos[prev_t] = "Reply of No.$prev[num]: $prev[title]";
+	} else {
+	    $pos[prev_t] = "No.$prev[num]: $prev[title]";
+	}
+    }
+
+    return $pos;
+}
+
+// PHP의 microtime 함수로 얻어지는 값을 비교하여 경과 시간을 가져오는 함수
+//
+// explode - 구분 문자열을 기준으로 문자열을 나눔
+//           http://www.php.net/manual/function.explode.php3
+function get_microtime($old, $new) {
+  // 주어진 문자열을 나눔 (sec, msec으로 나누어짐)
+  $old = explode(" ", $old);
+  $new = explode(" ", $new);
+
+  $time[msec] = $new[0] - $old[0];
+  $time[sec]  = $new[1] - $old[1];
+
+  if($time[msec] < 0) {
+    $time[msec] = 1.0 + $time[msec];
+    $time[sec]--;
+  }
+
+  $time = sprintf("%.2f", $time[sec] + $time[msec]);
+
+  return $time;
+}
+    
+// 알맞은 제목을 가져오기 위해 사용됨 (html/head.ph)
+//
+// getenv   - 환경 변수값을 가져옴
+//            http://www.php.net/manual/function.getenv.php3
+// basename - 파일 경로에서 파일명만을 가져옴
+//            http://www.php.net/manual/function.basename.php3
+function get_title() {
+  global $board, $langs; // 게시판 기본 설정 (config/global.ph)
+
+  $title  = $board[title];
+
+  // SCRIPT_NAME이라는 아파치 환경 변수를 가져옴 (현재 PHP 파일)
+  $script = getenv("SCRIPT_NAME");
+  $script = basename($script);
+
+  switch($script) {
+    case "list.php3":
+      $title .= " $langs[get_v]";
+      break;
+    case "read.php3":
+      $title .= " $langs[get_r]";
+      break;
+    case "edit.php3":
+      $title .= " $langs[get_e]";
+      break;
+    case "write.php3":
+      $title .= " $langs[get_w]";
+      break;
+    case "reply.php3":
+      $title .= " $langs[get_re]";
+      break;
+    case "delete.php3":
+      $title .= " $langs[get_d]";
+      break;
+  }
+
+  return $title;
+}
+
+function get_article($table, $no, $field0 = "*", $field1 = "no") {
+  global $langs;
+  if(!$no)
+    print_error("$langs[get_no]");
+
+  $result  = sql_query("SELECT $field0 FROM $table WHERE $field1 = $no");
+  $article = sql_fetch_array($result);
+  sql_free_result($result);
+
+  if(!$article)
+    print_error("$langs[get_n]");
+
+  return $article;
+}
+
+function get_theme_img($t) {
+  if (file_exists("./data/$t/default.themes"))
+    $theme = readlink("./data/$t/default.themes");
+  else  
+    $theme = readlink("./config/default.themes");
+  $theme = eregi_replace("(themes|config|\/|\.)","",$theme);
+
+  if (is_dir("images/$theme"))
+    $path = "images/$theme";
+  else $path = "images";
+
+  return $path;
+}
+
+// 파일 크기 출력 함수 by 김칠봉 <san2@linuxchannel.net>
+// $bfsize 변수는 bytes 단위의 크기임
+//
+// number_formant() - 3자리를 기준으로 컴마를 사용
+function human_fsize($bfsize, $sub = "0") {
+  $bfsize_Bytes = number_format($bfsize);
+
+  if ($bfsize >= 1024 && $bfsize < 1048576) { // KBytes 범위 
+    $bfsize_KB = round($bfsize/1024); 
+    $bfsize_KB = number_format($bfsize_KB); 
+
+    if ($sub) $bfsize = "$bfsize_KB KB($bfsize_Bytes Bytes)"; 
+    else $bfsize = "$bfsize_KB Kb";
+
+  } elseif ($bfsize >= 1048576) { // MB 범위 
+    $bfsize_MB = round($bfsize/1048576); 
+    $bfsize_MB = number_format($bfsize_MB); 
+
+    if ($sub) $bfsize = "$bfsize_MB MB($bfsize_Bytes Bytes)";
+    else $bfsize = "$bfsize_MB Mb";
+
+  } else
+    $bfsize = "$bfsize_Bytes Bytes"; 
+
+  return $bfsize; 
+} 
+
+?>
