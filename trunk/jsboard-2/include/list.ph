@@ -227,7 +227,8 @@ function get_comment($table,$no,$print=0) {
   }
   
   if(sql_num_rows($r) > 0) {
-    $lists .= "<TR><TD COLSPAN=4 ALIGN=right>$langs[c_lu] $orlink</TD></TR>\n";
+    $lists .= "<TR>\n<TD COLSPAN=2><FONT STYLE=\"font: 10px tahoma; font-weight:bold;\">Total Comment : ". sql_num_rows($r) ."</FONT></TD>\n".
+              "<TD COLSPAN=2 ALIGN=right>$langs[c_lu] $orlink</TD>\n</TR>\n";
 
     while ($list = sql_fetch_array($r)) {
       if($lines[comment_design]) $lists .= $lines[comment_design];
