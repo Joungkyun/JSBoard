@@ -46,8 +46,7 @@ Server Name       : $servername$nofm
 <PRE><FONT STYLE="color:$color[l2_fg]">
 
 $langs[u_name]              : $rmail[name]
-$mailurl
-$homeurl
+$addressinfo
 $langs[a_t13]              : $year $day $ampm $hms
 </FONT></PRE>
 </TD></TR>
