@@ -187,8 +187,9 @@ if($textBrowser) {
 A:link, A:visited, A:active { text-decoration:none; color:<?=$color[text]?>; }
 A:hover { color:red; }
 TD { font:12px <?=$langs[font]?>; color: <?=$color[text]?> }
-INPUT, TEXTAREA {font: 12px <?=$langs[font]?>; BACKGROUND-COLOR:<?=$color[b_bg]?>; COLOR:<?=$color[text]?>; BORDER:1x solid <?=$color[n1_fg]?>}
-SELECT {font: 12px <?=$langs[font]?>; BACKGROUND-COLOR:<?=$color[b_bg]?>; COLOR:<?=$color[text]?>;}
+INPUT {font: 11px tahoma; color:<?=$color[text]?>; border-width:1; border-style:solid; border-color:<?=$color[n1_fg]?>; padding-left:1px; padding-right:1px; background-color:<?=$color[b_bg]?>; }
+SELECT {font: 11px tahoma; color:<?=$color[text]?>; border-width:1; border-style:solid; border-color:<?=$color[n1_fg]?>; background-Color:<?=$color[b_bg]?>; }
+TEXTAREA {font: 11px ±¼¸²Ã¼; color:<?=$color[text]?>; border-width:1; border-style:solid; border-color:<?=$color[n1_fg]?>; padding-left:1px; background-Color:<?=$color[b_bg]?>;}
  #RADIO {font: 12px <?=$langs[font]?>; BACKGROUND-COLOR:<?=$color[b_bg]?>; COLOR:<?=$color[text]?>; BORDER:2x solid <?=$color[b_bg]?>}
  #RADIO1 {font: 12px <?=$langs[font]?>; BACKGROUND-COLOR:<?=$color[m_bg]?>; COLOR:<?=$color[text]?>; BORDER:2x solid <?=$color[m_bg]?>}
  #BG {font:12px <?=$langs[font]?>; color:<?=$color[bocol]?>}

@@ -14,8 +14,8 @@
 BODY,TD {font-size:12px;font-family:tahoma,arial;color:#555555;}
 A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
 A:hover {text-decoration:underline; color:#555555}
-INPUT {border:1x solid #555555;background-Color:silver;font-size:11px;font-family:±¼¸²Ã¼;color:#333333}
-SELECT {border:1x solid #555555;background-Color:silver;font:11px tahoma;color:#555555}
+INPUT {font: 11px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; padding-right:1px; background-color:#FFFFFF; }
+TEXTAREA {font: 13px comic; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; background-Color:#ffffff;}
 
 <?=$user_stylesheet?>
 -->

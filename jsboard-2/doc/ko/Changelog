@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.5
 
+2003.01.23
+  by 김정균 <http://www.oops.org>
+	- mozilla netscape style sheet 보정
+
 2003.01.22
   by 김정균 <http://www.oops.org>
 	- print_keymenu 함수 이름을 print_keymenu 로 보정
