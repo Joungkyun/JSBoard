@@ -1,0 +1,605 @@
+***** JSBOARD + OOPS administartion Center *********************************
+
+Original Developer	: 김병찬 < redhands@linux.sarang.net >
+
+Maintainer		: 방창현 < winchild@kldp.org >
+개발 version corder	: 김정균 < admin@oops.org >
+안정 version corder	: Dimanche < dimanche@dimanche.co.kr >
+
+CVS Server 관리		:  김영민 < blhole@hotmail.com >
+Homepage 공간 제공	: http://www.kldp.org
+
+******************************************************************************
+
+
+Title : JSBoard-0.7
+
+
+작성	: 김정균. <admin@oops.org> http://www.oops.org
+작성일	: 2000.1.31
+
+
+
+목차
+====
+
+1. 요구 사항
+2. 사용 환경
+3. 변경된점
+4. Installation (설치) : root의 권한을 가지고 처음 설치
+5. Installation (설치) : 계정 사용자가 처음 설치
+6. Installation (설치) : 기존 사용자들을 위한 Part
+7. 주의
+
+
+
+
+1. 요구사항
+===========
+
+  1-1. flatform
+
+   리눅스가 설치된 모든 시스템. 다른 flatform에서는 호환성이 없어 보임.
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   또한 apache 1.3 이상 php3-3.0.7 이상이 요구됨.
+
+  1-2. Hardware
+
+   리눅스가 설치될수 있으면 OK
+
+  1.3. 사용자 요구사항
+
+   MySQL에 대한 약간의 지식이 필요함
+
+
+2. 사용 환경
+============
+
+Jsboard는 linux system 하에서 apache web server와 php3 module과 MySQL을 
+기반으로 하여 작동을 한다. 또한 자신의 system에서 exec() 함수가 제대로 작동을
+하는지를 확인해야 한다.
+
+예 )
+
+<?php
+echo("exec() 함수 테스트<p><br>") ; 
+exec("echo \"exec함수가 정상 작동 합니다\"", $test) ; 
+
+echo $test[0] ; 
+?> 
+
+과 같이 test page를 만드신 다음 웹상에서 보셨을때 
+
+exec() 함수 테스트
+
+exec함수가 정상 작동 합니다 
+
+와 같은 메세지가 떠야지 된다. 또한 php에서 mysql이 지원이 되는지를 확인해야
+한다. 이는
+
+예)
+
+<?php
+phpinfo() ;
+?>
+
+와 같이 test page를 만든후 웹상에서 불러서 MySQL에 대한 정보가 있는지를
+확인해야 한다. 단 주의 할것은 요즘 RPM으로 배포되고 있는 php들중 MySQL
+option이 들어 있는 것들은 MySQL의 경로가 /usr/lib/mysql 이어야만 한다.
+즉, MySQL을 RPM으로 설치를 해 주는 것이 가장 안전하다.
+
+
+3. 변경된점
+===========
+
+README file 참조
+
+
+4. Installation (설치) : root의 권한을 가지고 처음 설치
+=======================================================
+
+  ******** 주의 ********
+
+  계정 사용자들과 기존 사용자들은 각 자신의 항목을 찾아서
+  보도록 한다. 이 부분은 root의 권한을 가지고 있는 유저중
+  처음으로 생성을 하는 경우에 한한다.
+
+  **********************
+
+
+1. 일단 mysql을 설치를 한다. MySQL은 RPM버전으로 구할수 있으며
+
+   ftp://linux.sarang.net/pub/ 
+
+   에서 구할수 있다. REDHAT 5.x를 사용하는 사람들은 
+
+   ftp://ftp.oops.kr.net/pub/Linux/Redhat/RPMS/5.x/i386/MySQL
+
+   에서 구하면 된다.
+
+2. root 계정의 password를 지정한다.
+
+   [root@home /public_html]# mysql mysql 
+
+   Reading table information for completion of table and column names 
+   You can turn off this feature to get a quicker startup with -A 
+
+   Welcome to the MySQL monitor. Commands end with ; or \g. 
+   Your MySQL connection id is 1961 to server version: 3.22.20a-log 
+
+   Type 'help' for help. 
+
+   mysql> update user set password = password('패스워드')
+        > where user = 'root' ;
+   Query OK, 1 row affected (0.00 sec) 
+
+   mysql> flush privileges;
+   Query OK, 0 rows affected (0.00 sec)
+
+   mysql> quit
+   Bye
+
+   이미 설정이 되어 있는 사람들은 이 단계는 그냥 건너 뛰면 된다.
+
+
+3. jsboard 의 소스를 설치할 디렉토리에서 압축을 푼다.
+
+   shell> tar xvfpz jsboard-0.7.0.tar.tz
+
+4. 압축을 푼다음 jsboard-0.7.0/Install/Config 로 이동을 한다.
+   이동을 한 다음 root.sh 를 현재 디렉토리에서 실행을 한다.
+
+   shell> ./root.sh
+
+   다음 jsboard-0.7.0 directory로 다시 돌아와서
+   include directory의 그룹소유권과 퍼미션이 아래와 같이
+   수정이 되어 있는지 확인을 한다.
+
+
+   [root@oops jsboard-0.7.0]# ll
+   total 52
+   drwxr-xr-x  6 oops  oops    1024 Dec 17 16:18 ./
+   drwxrwxr-x  7 oops  oops    1024 Dec 15 11:24 ../
+   -rw-r--r--  1 oops  oops    4160 Dec 17 17:02 INSTALL.txt
+   drwxr-xr-x  4 oops  oops    1024 Dec 17 15:59 Install/
+   -rw-r--r--  1 oops  oops    8665 Dec 11 18:12 README
+   -rw-r--r--  1 oops  oops    5468 Dec 16 22:16 act.php3
+   drwxr-xr-x  5 oops  oops    1024 Dec 17 15:27 admin/
+   -rw-r--r--  1 oops  oops    5149 Dec  6 13:45 delete.php3
+   -rw-r--r--  1 oops  oops    4641 Dec  7 16:13 edit.php3
+   drwxr-xr-x  2 oops  oops    1024 Dec  6 13:45 images/
+
+   drwxrwxr-x  3 oops  nobody  1024 Dec 17 16:12 include/  <----- 요거!!!
+                       ^^^^^^
+   -rw-r--r--  1 oops  oops      51 Dec 15 12:36 index.php3
+   -rw-r--r--  1 oops  oops    2621 Dec 17 15:45 list.php3
+   -rw-r--r--  1 oops  oops    7481 Dec  6 13:45 read.php3
+   -rw-r--r--  1 oops  oops    3983 Dec  6 13:45 reply.php3
+   -rw-r--r--  1 oops  oops    3505 Dec  7 17:05 write.php3
+
+
+   만약 위와 같이
+
+   drwxrwxr-x  3 oops  nobody  1024 Dec 17 16:12 include/
+
+   되어 있지 않는다면 수동으로 다음과 같은 작업을 한다.
+
+   shell> chgrp nobody ./include
+   shell> chmod 775 ./include
+
+
+5. 다시 jsboard-0.7.0/Install 로 이동을 한다.
+
+   주의 할것은 이전 버젼에서 upgrade 하는 사람들이나 계정 설치
+   사용자들은 이 Install program을 사용해서는 안된다.
+
+   이 디렉토리에서 아까 지정한 mysql의 root password를 기입해 줄
+   file들이 있다.
+
+   먼저 mysql_user_regist.php3 를 vi를 이용하여 열은 다음
+
+
+   예: mysql_user_regist.php3 의 변경할 부분
+
+   /****************************************************/
+
+   // mysql을 관리할 root의 password 를 지정
+
+   $passwd = "" ;
+   $passwd = crypt("$passwd","oo") ;
+
+   /****************************************************/
+
+   
+   에서 $passwd = "" 의 ""사이에 mysql root password를 적는다.
+   또한 동일 디렉토리의 act.php3 에도 보면 파일 상단 부분에
+   mysql_user_regis.php3와 동일하게 지정되어 있는 것이 있으므로
+   여기에도 기입을 해 준다.
+
+   예: act.php3 의 변경할 부분
+
+   /****************************************************/
+
+   // mysql을 관리할 root의 password 를 지정
+
+   $passwd = "" ;
+   $passwd = crypt("$passwd","oo") ;
+
+   /****************************************************/
+
+
+6. 다음 웹에서
+
+   http://domain.com/jsboard-0.6/Install
+
+   로 접속을 한다. 대소문자에 주의하자. 일단 접속을 하면
+   mysql의 password를 물어 올것이다.
+   아까 적어준 패스워드를 기입하고 enter를 클릭한다.
+
+7. 다음 페이지로 넘어 오면
+
+   jsboard가 사용할 DB이름과 DB 유저 그리고 DB user password 를 지정해 준다.
+   대충 지정해 주고 넘어간다. 
+
+   여기서 주의 할것은 이미 MySQL에 등록되어 있는 DB name과 DB 유저를
+   지정해서는 안된다.
+
+   등록을 하면 다음과 같은 메세지가 뜨게 된다.
+
+   "등록이 완료되었습니다.
+    Admin Page로 이동을 합니다.
+    Admin Page의 초기 Password는
+    0000 입니다"
+
+8. admin page login page가 나오면 위의 멘트처럼 0000을 넣고선 엔터를 
+   친다. 하단에 있는 버튼은 패스워드 리셋을 하는 것이니 이것을
+   누르면 로그인이 되지 않는다. 로그인이 실패했을 경우 한번씩
+   눌러주면 쿠키에 저장되는 패스워드를 깨끗하게 지워준다.
+
+
+   ** 참고 **
+
+   admin page로 접근을 했을때 Netscape의 경우 검은 화면만 나온다든지
+   또는 아래와 같은 에러 메세지가 나올경우
+
+   Warning: MySQL Connection Failed: Access denied for user: 'root@localhost' (Using password: YES)
+   in /usr/local/apache/htdocs/jsboard-0.7.0/Install/act.php3 on line 46
+   Unable to connect to SQL server
+
+   이때에는 MySQL을 reload를 다시 해주기 바란다. 그래도 안된다면
+   jsboard-0.7.0/include 에 db.ph file이 존재하는지 살펴 보고 있다면
+   파일 내용중 db 이름, db user, db pass 가 정확한지 살펴 보고
+   또한 이 정보들로 mysql에 직접 로그인이 가능한지 test를 해 본다.
+
+
+
+9. CrayWWWBoard를 사용해 본사람들은 친숙한 페이지가 나올것이다.
+   일단 관리 페이지에 처음 들어가면 우선 관리자 패스워드 부터
+   변경을 해야 한다.
+
+   화면 우측 중간 부분에보면 "Admin Info" 를 볼수 있을 것이다.
+   이 부분이 administratin center의 패스워드를 변경하는 부분으로
+   이 패스워드로 막강 권한을 가질수 있다.(먼짓이든 다할수 있다.)
+
+   이것을 클릭하여 패스워드를 변경한후에 바로 옆의 logout 버튼을
+   눌러서 logout을 한후에 다시 변경된 password로 로그인을 한다.
+
+10. 그 다음 부터는 원하는 게시판 이름을 Create DB에 넣어서 등록을
+   해주면 게시판들이 계속 생성이 가능하다.
+
+11. 게시판을 생성했을 경우 게시판 관리자의 비밀번호가 1번글에
+   자동으로 등록이 되므로 이를 확인한 후에 꼭 게시판 패스워드를
+   변경해 주도록 한다.
+
+12. jsboard-0.7.0/jsboard/db.ph 의 권한을 읽기 모드만 가능하게 변경한다.
+
+
+5. Installation (설치) : 계정 사용자가 처음 설치
+================================================
+
+  ******** 주의 ********
+
+  이 부분은 root의 권한이 없는 계정 사용자가
+  처음으로 생성을 하는 경우에 한한다.
+
+  **********************
+
+
+1. jsboard 의 소스를 설치할 디렉토리에서 압축을 푼다.
+
+   shell> tar xvfpz jsboard-0.7.0.tar.gz
+
+2. 계정 소유권자들은 보안에 좀 민감할 필요가 있다.
+   그러므로 이 부분은 신중하게 정확하게 따라 하기 바란다.
+
+   일단 자신의 ID가 oops라면 아래의 명령을 shell 상에서
+   실행을 한다.
+
+   shell> chmod 711 ~oops
+
+   그 다음 jsboard-0.7.0/Install/Config/ 로 이동을 한다.
+   그리고 아래의 명령을 실행한다.
+
+   shell> ./account.sh
+
+   다음 jsboard-0.7.0 directory로 다시 돌아와서
+   include directory의 그룹소유권과 퍼미션이 아래와 같이
+   수정이 되어 있는지 확인을 한다.
+
+   [root@oops jsboard-0.7.0]# ll
+   total 52
+   drwxr-xr-x  6 oops  oops    1024 Dec 17 16:18 ./
+   drwxrwxr-x  7 oops  oops    1024 Dec 15 11:24 ../
+   -rw-r--r--  1 oops  oops    4160 Dec 17 17:02 INSTALL.txt
+   drwxr-xr-x  4 oops  oops    1024 Dec 17 15:59 Install/
+   -rw-r--r--  1 oops  oops    8665 Dec 11 18:12 README
+   -rw-r--r--  1 oops  oops    5468 Dec 16 22:16 act.php3
+   drwxr-xr-x  5 oops  oops    1024 Dec 17 15:27 admin/
+   -rw-r--r--  1 oops  oops    5149 Dec  6 13:45 delete.php3
+   -rw-r--r--  1 oops  oops    4641 Dec  7 16:13 edit.php3
+   drwxr-xr-x  2 oops  oops    1024 Dec  6 13:45 images/
+
+   drwx---rwx  3 oops  oops    1024 Dec 17 16:12 include/  <----- 요거!!!
+   ^^^^^^^^^^
+   -rw-r--r--  1 oops  oops      51 Dec 15 12:36 index.php3
+   -rw-r--r--  1 oops  oops    2621 Dec 17 15:45 list.php3
+   -rw-r--r--  1 oops  oops    7481 Dec  6 13:45 read.php3
+   -rw-r--r--  1 oops  oops    3983 Dec  6 13:45 reply.php3
+   -rw-r--r--  1 oops  oops    3505 Dec  7 17:05 write.php3
+
+   만약 위와 같이
+
+   drwx---rwx  3 oops  oops    1024 Dec 17 16:12 include/
+
+   되어 있지 않는다면 수동으로 다음과 같은 작업을 한다.
+
+   shell> chmod 707 ./include
+
+3. 계정 사용자들은 Install program을 사용하지 않으며
+   수동적인 방법으로 해야 한다.
+
+4. 위의 account.sh를 실행을 하면 jsboard-0.7.0/include directory에
+   db.ph라는 file이 생성이 된다. 이 파일이 없으면 db에 접근을
+   할수가 없으니 만약 이 파일이 jsboard-0.7.0/include directory에
+   없는 사람은 jsboard-0.7.0/Install/admin_sample 에 있는 db.ph.orig를
+   jsboard-0.7/include 에 db.ph라는 file name을 copy를 한다. 그리고
+   1번에서 알아 놓은  DB name, DB user name, DB password를
+   알맞게 넣어준다. $db_server는 건드리면 안된다는 것을
+   주의하자.
+
+   db.ph가 없으면 include/test도 없을 것이다. 이것은 install/sample을
+   test라는 이름으로 copy하고 퍼미션을 707로 만들고 그 안의 files directory를
+   707로 나머지 파일들은 606으로 퍼미션을 주도록 한다.
+
+5. 다음 jsboard-0.7.0/Install/SQL directory로 이동을 해서
+
+   shell#  mysql -u DB_USER_NAME -p DB_NAME < mysql.sql
+   shell#  mysql -u DB_USER_NAME -p DB_NAME < manager.sql
+
+   명령을 실행하여, 게시판 table과 설정 table을 만들도록 한다.
+   여기서 DB_USER_NAME은 관리자에게 생성을 해 달라고 한 DB user 이름이며,
+   DB_NAME은 DB의 이름을 대신 넣어 주면 된다.
+
+
+6. 이제 쉘에서의 작업은 끝났다. 웹브라우져를 열고 
+   http://domain/~account/jsboard-0.7.0/admin 으로 접근을 한다.
+   admin page login page가 나오면 기본 패스워드인 0000을 넣고선 엔터를 
+   친다. 하단에 있는 버튼은 패스워드 리셋을 하는 것이니 이것을
+   누르면 로그인이 되지 않는다. 로그인이 실패했을 경우 한번씩
+   눌러주면 쿠키에 저장되는 패스워드를 깨끗하게 지워준다.
+
+
+
+   ** 참고 **
+
+   admin page로 접근을 했을때 Netscape의 경우 검은 화면만 나온다든지
+   또는 아래와 같은 에러 메세지가 나올경우
+
+   Warning: MySQL Connection Failed: Access denied for user: 'root@localhost' (Using password: YES)
+   in /usr/local/apache/htdocs/jsboard-0.7.0/Install/act.php3 on line 46
+   Unable to connect to SQL server
+
+   이때에는 MySQL을 reload를 다시 해주기 바란다. 그래도 안된다면
+   jsboard-0.7.0/include 에 db.ph file이 존재하는지 살펴 보고 있다면
+   파일 내용중 db 이름, db user, db pass 가 정확한지 살펴 보고
+   또한 이 정보들로 mysql에 직접 로그인이 가능한지 test를 해 본다.
+
+
+
+7. CrayWWWBoard를 사용해 본사람들은 친숙한 페이지가 나올것이다.
+   일단 관리 페이지에 처음 들어가면 우선 관리자 패스워드 부터
+   변경을 해야 한다.
+
+   화면 우측 중간 부분에보면 "Admin Info" 를 볼수 있을 것이다.
+   이 부분이 administratin center의 패스워드를 변경하는 부분으로
+   이 패스워드로 막강 권한을 가질수 있다.(먼짓이든 다할수 있다.)
+
+   이것을 클릭하여 패스워드를 변경한후에 바로 옆의 logout 버튼을
+   눌러서 logout을 한후에 다시 변경된 password로 로그인을 한다.
+
+8  그 다음 부터는 원하는 게시판 이름을 Create DB에 넣어서 등록을
+   해주면 게시판들이 계속 생성이 가능하다.
+
+9. 게시판을 생성했을 경우 게시판 관리자의 비밀번호가 1번글에
+   자동으로 등록이 되므로 이를 확인한 후에 꼭 게시판 패스워드를
+   변경해 주도록 한다.
+
+
+
+
+6. Installation (설치) : 기존 사용자들을 위한 Part
+==================================================
+
+0.6을 기준으로 설명. 다른 버젼들은 알아서 짜 맞추기 하도록 ^^;
+주의 할것은 위의 퍼미션과 소유권 부분은 분명히 비교를 해 보기 바란다.
+0.7pre3 이상의 사용자들은 소스만 엎어 씌우면 된다.
+0.7pre1-pre2 까지의 사용자들은 DB로 접근을 하여 다음의 명령을 실행해
+줘야 한다.
+
+mysql> alter table BoardInformation add lang varchar(5);
+
+
+************ 주의 **************
+
+이 부분에서의 설정은 0.6 버전 이하에서만 적용된다.
+이미 0.7 버젼을 사용하고 있는 사람들은 그냥 파일들만
+덮어 씌우기 바란다. 그외의 할일은 없다.
+
+********************************
+
+
+1. jsboard 의 소스를 설치할 디렉토리에서 압축을 푼다.
+
+   shell# tar xvfpz jsboard-0.7.0.tar.tz
+
+   일단 주의 할것은 이전 버젼을 꼭 백업을 해 두도록 한다.
+   위의 file은 jsboard-0.7.0 이라는 directory로 압축이 풀리니
+   기존의 버젼과 겹치지 않게 주의하라. (그럴일도 없겠지만 ^^:)
+
+
+2. DB는 사용하고 있을테니 그냥 넘어간다.
+   jsboard-0.7.0/Install/SQL directory에 보면 mysql.sql 이라는 
+   파일이 있으니 이 파일과 현재의 table 구조를 비교해 보기 바란다. 
+   0.5대 버젼 이전 버젼은 KEY date (date) 이 빠져 있다. 0.6 부터는
+   date역시 key indexing을 이용하기 때문에 ALTER 명령으로 이 부분을
+   추가하기 바란다. 0.6 이상 버젼을 사용하는 사람들은 이 항목을
+   무시해도 된다.
+
+   ALTER TABLE table_name ADD INDEX (date);
+
+   명령을 실행해 주면 된다. 근데, 이미 되어 있는 사람이 위의
+   명령을 또 실행하면 어케 되는지는 나도 모른다. (SQL 초보의 비애 T.T)
+
+3. 기존의 버젼을 다른 이름을 백업을 하고나서 새로 설치할 버젼을
+   기존의 버젼에 덮어 씌운다.
+
+4. 퍼미션과 소유권을 위에서 설명한 대로 되어 있는지 확인을 한다.
+   그리고 기존의 admin/include/info.ph를 삭제한다.
+   admin/include의 퍼미션이 나이외의 사람에게 쓰기 권한이 되어 있다면
+   이를 없애 버린다. 
+
+   계정 사용자들의 경우에는 계정 사용자 설치 부분의 퍼미션을 참조해야
+   ^^^^^^^^^^^^^^^^^^^^
+   한다는 것을 명심해야 한다. 주의하도록 한다.
+                              ^^^^^^^^^^^^^^^^
+
+5. jsboard-0.7.0/Install/SQL/manager.sql을 convert.sql로 copy를 한다.
+   convert.sql을 열어서 제일 아래에 있는
+
+   ***********************************************************************************
+
+   INSERT INTO BoardInformation VALUES ('','superuser','ooK/oSLfDJOUI','','','',
+       '','','','','','','','','','','','','','','','','',
+       '','','','','','','','','','','','','en');
+
+   INSERT INTO BoardInformation VALUES ('','test','','ooK/oSLfDJOUI','10','8',
+       '40','550','#a5b5c5','#ffffff','#d5b5c5','#ffffff','#ffffff','#555555',
+       '#99aabb','#555555','#a5b5c5','#ffffff','#a5c5c5','#ffffff','#d5b5c5',
+       '#555555','#ffffff','#555555','#778899','yes','no',
+       './include/table_account_name/files','2000000','','no','','yes','yes','127.0.0.1','ko');
+
+   ***********************************************************************************
+
+   insert 문 2개를 제외하고 모두 삭제를 한다.
+
+   만약 oops, bbuwoo, love 라는 이름의 게시판을 기존에 운영하고 
+   있었다면 위의 insert 구문중 두번째 insert문의 두번째 filed에 있는 'test' 를 
+   각각의 이름으로 수정해 준다. 즉 아래와 같이 해야 한다.
+
+   INSERT INTO BoardInformation VALUES ('','oops','','ooK/oSLfDJOUI','10','8',
+       '40','550','#a5b5c5','#ffffff','#d5b5c5','#ffffff','#ffffff','#555555',
+       '#99aabb','#555555','#a5b5c5','#ffffff','#a5c5c5','#ffffff','#d5b5c5',
+       '#555555','#ffffff','#555555','#778899','yes','no',
+       './include/table_account_name/files','2000000','','no','','yes','yes','127.0.0.1','ko');
+
+   INSERT INTO BoardInformation VALUES ('','bbuwoo','','ooK/oSLfDJOUI','10','8',
+       '40','550','#a5b5c5','#ffffff','#d5b5c5','#ffffff','#ffffff','#555555',
+       '#99aabb','#555555','#a5b5c5','#ffffff','#a5c5c5','#ffffff','#d5b5c5',
+       '#555555','#ffffff','#555555','#778899','yes','no',
+       './include/table_account_name/files','2000000','','no','','yes','yes','127.0.0.1','ko');
+
+   INSERT INTO BoardInformation VALUES ('','love','','ooK/oSLfDJOUI','10','8',
+       '40','550','#a5b5c5','#ffffff','#d5b5c5','#ffffff','#ffffff','#555555',
+       '#99aabb','#555555','#a5b5c5','#ffffff','#a5c5c5','#ffffff','#d5b5c5',
+       '#555555','#ffffff','#555555','#778899','yes','no',
+       './include/table_account_name/files','2000000','','no','','yes','yes','127.0.0.1','ko');
+
+   운영하던 게시판이 5개라면 insert 문이 5개가 되어야 할것이다.
+   무슨 말인지 이해가 되리라 믿겠다.
+
+   그 다음 쉘상에서
+
+   shell> mysql -u USER_NAME -d DB_NAME < convert.sql
+
+   을 실행한다.
+
+
+6. 이 작업이 끝나면 일단 각 계정들의 설정 변수들을 초기화 하여
+   DB에 넣은 작업이 끝나게 되며, 각 게시판의 관리 페이지로 가서
+   웹상에서 설정을 다시 해 줘야 한다. 각 게시판들의 패스워드도
+   0000 으로 초기화 된다.
+
+7. 0.6 version 사용자들은 jsboard/admin/include/info.php3를 삭제를
+   한다 그리고 전체 관리자 page의 패스워드는 0000으로 초기화가 되니
+   이를 다시 변경해 주도록 한다.
+
+8. 전체 admin page(http://domain/jsboard/admin/)로 login 해서
+   0000을 넣고선 엔터를 친다. 하단에 있는 버튼은 패스워드 리셋을
+   하는 것이니 이것을 누르면 로그인이 되지 않는다. 로그인이 실패했을
+   경우 한번씩 눌러주면 쿠키에 저장되는 패스워드를 깨끗하게 지워준다.
+
+   ** 참고 **
+
+   admin page로 접근을 했을때 Netscape의 경우 검은 화면만 나온다든지
+   또는 아래와 같은 에러 메세지가 나올경우
+
+   Warning: MySQL Connection Failed: Access denied for user: 'root@localhost' (Using password: YES)
+   in /usr/local/apache/htdocs/jsboard-0.7.0/Install/act.php3 on line 46
+   Unable to connect to SQL server
+
+   이때에는 MySQL을 reload를 다시 해주기 바란다. 그래도 안된다면
+   jsboard-0.7.0/include 에 db.ph file이 존재하는지 살펴 보고 있다면
+   파일 내용중 db 이름, db user, db pass 가 정확한지 살펴 보고
+   또한 이 정보들로 mysql에 직접 로그인이 가능한지 test를 해 본다.
+
+
+
+9. CrayWWWBoard를 사용해 본사람들은 친숙한 페이지가 나올것이다.
+   일단 관리 페이지에 처음 들어가면 우선 관리자 패스워드 부터
+   변경을 해야 한다.
+
+   화면 우측 중간 부분에보면 "Admin Info" 를 볼수 있을 것이다.
+   이 부분이 administratin center의 패스워드를 변경하는 부분으로
+   이 패스워드로 막강 권한을 가질수 있다.(먼짓이든 다할수 있다.)
+
+   이것을 클릭하여 패스워드를 변경한후에 바로 옆의 logout 버튼을
+   눌러서 logout을 한후에 다시 변경된 password로 로그인을 한다.
+
+10. 그 다음 부터는 원하는 게시판 이름을 Create DB에 넣어서 등록을
+   해주면 게시판들이 계속 생성이 가능하다.
+
+   아마 기존 사용자들은 이미 등록되어 있는 $table들을 볼수 있을 것이다.
+
+11. 게시판을 생성했을 경우 게시판 관리자의 비밀번호가 1번글에
+    자동으로 등록이 되므로 이를 확인한 후에 꼭 게시판 패스워드를
+    변경해 주도록 한다.
+
+12. admin page쪽이 작업이 끝났으면, 이제 각 게시판의 admin page로
+    로그인을 하여 한번씩 변경을 해준다. 이 작업으로 기존의 config.ph를
+    새로운 config.ph로 변경을 시킨다. 예전의 config.ph의 대부분의 변수들은
+    DB로 들어가 있으며, config.ph에는 메뉴에 관한 변수만이 남아 있다.
+
+13. jsboard-0.7.0/jsboard/db.ph 의 권한을 읽기 모드만 가능하게 변경한다.
+
+그럼 사용들 잘 하기 바란다 ^^;
+
+
+
+7. 주의
+=======
+
+설치가 끝난후에 Install directory의 퍼미션은 꼭 닫아두록
+하기를 권장한다. 대충 700으로 수정을 하기를 바란다.
+그냥 두면 어떤넘이 허튼짓을 할수도 있다는 얘기이다.
+
+
