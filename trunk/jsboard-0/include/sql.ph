@@ -3,15 +3,16 @@ function derror()
 {
     global $debug;
 
-    if(mysql_error() && !$debug) {
+    $sql_error = mysql_error();
+    if($sql_error && !$debug) {
 	echo("<script language=\"javascript\">\n" .
 	     "<!--\n" .
-	     "alert(\"SQL에 문제가 있습니다.\\n\\n이전 페이지로 돌아갑니다.\");\n" .
+	     "alert(\"$sql_error\\nSQL에 문제가 있습니다.\\n\\n이전 페이지로 돌아갑니다.\");\n" .
 	     "history.back();\n" .
 	     "//-->\n" .
 	     "</script>\n");
 	if($debug)
-	    echo(mysql_error());
+	    echo($sql_error);
 	exit;
     }
 }

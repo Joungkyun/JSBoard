@@ -1,12 +1,12 @@
 <?
-//include("./include/header.phtml");
-//include("./include/menu.phtml");
+//include("include/header.ph");
+//include("include/menu.ph");
 ?>
 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>게시판입니다. <? echo $sub_title ?></title>
+<title>PLAZA<? echo $sub_title ?></title>
 <style type="text/css">
 <!--
 a:link, a:visited, a:active { text-decoration: none; }
@@ -16,10 +16,14 @@ td { font-size: 10pt; }
 </style>
 </head>
 
-<!--
-<body bgcolor="#445566" text="white" link="white" vlink="white">
--->
-<body bgcolor="white" text="black" link="blue" vlink="">
+<body bgcolor="#eeeeee" text="black" link="blue" vlink="">
+
+<br><br>
+<center>
+<font face=돋움 size=+2><b>PLAZA
+</b>
+</font>
+</center>
 
 <? if(!$ndesc) : ?>
 
