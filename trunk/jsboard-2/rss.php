@@ -34,6 +34,11 @@ if (!@file_exists("data/{$table}/config.ph")) {
   include_once "data/{$table}/config.ph";
 }
 
+if ( ! $rss['use'] ) {
+  echo "Don't rss support on this board\n";
+  exit();
+}
+
 $rss['default_table'] = 'test';
 $rss['default_article_number'] = '30'; # no를 지정해주지 않는다면 default 값을 쓰게 됩니다.
 
