@@ -220,15 +220,19 @@ function get_comment($table,$no,$print=0) {
   $sql = "SELECT * FROM {$table}_comm WHERE reno = '$no' ORDER BY no $orderby";
   $r = sql_query($sql);
 
+  $comment_no = sql_num_rows($r);
+
   if($corder) {
     $orlink = "<A HREF=read.php?table=$table&no=$no&corder=0&page=$page>&#9651;</A>";
   } else {
     $orlink = "<A HREF=read.php?table=$table&no=$no&corder=1&page=$page>&#9661;</A>";
   }
   
-  if(sql_num_rows($r) > 0) {
-    $lists .= "<TR>\n<TD COLSPAN=2><FONT STYLE=\"font: 10px tahoma; font-weight:bold;\">Total Comment : ". sql_num_rows($r) ."</FONT></TD>\n".
-              "<TD COLSPAN=2 ALIGN=right>$langs[c_lu] $orlink</TD>\n</TR>\n";
+  if($comment_no > 0) {
+    $lists .= "<TR>\n".
+              "<TD COLSPAN=2><FONT STYLE=\"font: 10px tahoma; font-weight:bold;\">Total Comment : $comment_no</FONT></TD>\n".
+              "<TD COLSPAN=2 ALIGN=right>$langs[c_lu] $orlink</TD>\n".
+              "</TR>\n";
 
     while ($list = sql_fetch_array($r)) {
       if($lines[comment_design]) $lists .= $lines[comment_design];
