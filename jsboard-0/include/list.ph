@@ -12,22 +12,17 @@ function qsql($n, $act)
 	$result = dquery("SELECT no FROM $table WHERE reno = $n ORDER BY no DESC");
     }
     if ($act == "search") {
-	if (strlen($sc_string) >= 3 || $sc_column == "today") {
-	    $sc_string = addslashes(chop($sc_string));
-            if (eregi("\"",$sc_string) && $sc_column == "text" )
-              $sc[string_quot] = eregi_replace("\"","&quot;",$sc_string);
-
-	    if ($sc_column == "all") {
-		$sc_sql = "title LIKE \"%$sc_string%\" OR text LIKE \"%$sc_string%\" OR name LIKE \"%$sc_string%\"";
-	    } else if ($sc_column == "today") {
-		$sc_sql = "date > $today";
-	    } else {
-                if (eregi("\"",$sc_string) && $sc_column == "text" )
-		  $sc_sql = "$sc_column LIKE \"%$sc[string_quot]%\"";
-                else
-		  $sc_sql = "$sc_column LIKE \"%$sc_string%\"";
-	    }
-
+       $sc_string_text = htmlspecialchars($sc_string);
+       if (strlen($sc_string) >= 3 || $sc_column == "today") {
+         if ($sc_column == "all") {
+            $sc_sql = "title LIKE '%$sc_string%' OR text LIKE '%$sc_string_text%' OR name LIKE '%$sc_string%'";
+            } else if ($sc_column == "today") {
+              $sc_sql = "date > $today";
+            } else if ($sc_column == "text") {
+              $sc_sql = "$sc_column LIKE '%$sc_string_text%' ";
+            } else {
+             $sc_sql = "$sc_column LIKE '%$sc_string%' ";
+            }
 	    $result = dquery("SELECT IF(reto > 0, reto, no) AS no FROM $table WHERE $sc_sql GROUP BY no");
 	    $acount = mysql_num_rows($result);
 	    $result = dquery("SELECT IF(reto > 0, reto, no) AS no FROM $table WHERE $sc_sql GROUP BY no ORDER BY no DESC LIMIT $n, $pern");
@@ -103,9 +98,9 @@ function plist($n, $act = "normal")
     }
 
     if($act == "search") {
-        $sc[string] = stripslashes($sc_string);
-        $sc[string] = eregi_replace("\\\\\"","\"",$sc[string]);
-        $search = "&act=search&sc_column=$sc_column&sc_string=$sc[string]";
+	 $sc_string = stripslashes($sc_string);
+    $sc_string = rawurlencode($sc_string);
+    $search = "&act=search&sc_column=$sc_column&sc_string=$sc_string";
     }
 
 
@@ -146,7 +141,7 @@ function vlist($no) {
     // jinoos -- global 에 변수등록으로 중복 include 제거 
 
     global $table, $file_upload, $filesavedir;
-    global $sc_string, $search, $page, $today;
+    global $sc_string, $search, $page, $today, $sc_column;
     global $namel, $titll, $lang;
     global $l2_bg, $l2_fg, $l3_bg, $l3_fg, $t0_bg;
     global $previewn, $previewsizen, $pre;
@@ -184,13 +179,15 @@ function vlist($no) {
 	  $date   = date("M.d.Y", $date);
 	}
 
-	if($sc_string) {
-            $sc[string] = stripslashes($sc_string);
-            $sc[string] = eregi_replace("(\[|\])","\\\\0",$sc[string]);
-            $sc[string] = eregi_replace("\\\\\\\"","&quot;",$sc[string]);
-            $name  = eregi_replace(($sc[string]), "<font color=\"darkred\"><b>\\0</b></font>", $name);
-            $title = eregi_replace(($sc[string]), "<font color=\"darkred\"><b>\\0</b></font>", $title);
-	}
+        if($sc_string) {
+          if($sc_column == "title") $title = high_lighting($title);
+          elseif($sc_column == "name") $name = high_lighting($name);
+          elseif($sc_column == "all" ) {
+            $title = high_lighting($title);
+            $name = high_lighting($name);
+          }
+        }
+	
 	$rede *= 8;
 
 	if($reno) {

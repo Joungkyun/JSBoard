@@ -9,7 +9,7 @@ if( eregi("list.php3",$page_value)) {
 <tr>
 <td<? echo $span ?>>
 <font size="2" color="<? echo $l0_fg ?>">
-<form method="post" action="list.php3?table=<? echo $table ?>">
+<form method="post" action="encode.php3?table=<? echo $table ?>">
 <input type="hidden" name="act" value="search">
 <img src="images/n.gif" width="10" height="5" alt="" border="0"><br>
 <select name="sc_column">

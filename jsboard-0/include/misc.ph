@@ -6,6 +6,7 @@ function get_next($no)
     global $sc_column, $sc_string;
 
     if($sc_string) {
+	 $sc_string = addslashes($sc_string);
 	if ($sc_column == "all") {
 	    $sc_sql = "title LIKE \"%$sc_string%\" OR name LIKE \"%$sc_string%\" OR text LIKE \"%$sc_string%\"";
 	} else {
@@ -221,5 +222,18 @@ function cut_string($str, $length)
 	$str = chop(substr($str, 0, $length - intval($alpha * 0.5)));
 
     return $str;
+}
+
+function high_lighting($strings)
+{
+global $sc_string;
+$sc_string_decode = stripslashes($sc_string);
+$sc_string_decode = rawurldecode($sc_string_decode);
+
+$high_light = "<font color=\"#a52a2a\"><b><u>STR</u></b></font>";
+$hl = explode("STR", $high_light);
+$strings = eregi_replace(quotemeta($sc_string_decode), "$hl[0]\\0$hl[1]", $strings);
+
+return $strings;
 }
 ?>
