@@ -77,6 +77,10 @@ if($board[rnname]) $nameck_r = "checked";
 else $nameck_n = "checked";
 
 $denylink = trim($enable[plink]) ? parse_ipvalue($enable[plink],0,1) : $langs[ua_dhyper3];
+if(!$board[usedhyper]) {
+  $denylink = "Prevent this function by super user!";
+  $denylinkro = " disabled";
+}
 
 $board[hls] = eregi_replace("<FONT COLOR=","",$board[hl]);
 $board[hls] = eregi_replace("><B><U>STR</U></B></FONT>","",$board[hls]);
@@ -563,7 +567,7 @@ else echo "<CENTER><FONT COLOR=RED><B>$langs[ua_while_wn]</B></FONT></CENTER>";
 </TD></TR>
 
 <TR><TD ALIGN=center COLSPAN=6>
-<textarea name=denylink cols=<?=$tsize?> rows=5 wrap=off><?=$denylink?></textarea>
+<textarea name=denylink cols=<?=$tsize.$denylinkro?> rows=5 wrap=off><?=$denylink?></textarea>
 </TD></TR>
 
 <TR><TD COLSPAN=6><font id=BG>&nbsp;</font></TD></TR>
