@@ -1,0 +1,4 @@
+<?
+$sadmin[pern]   = 10; # 전체 관리자 페이지 당 유저 table 수
+$sadmin[passwd] = "lHJTjGW8VhHc."; # 전체 관리자 password
+?>
