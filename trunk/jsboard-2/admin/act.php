@@ -38,7 +38,11 @@ if($mode=='db_del') {
 
   # table delete
   $table_del = "drop table $table_name";
-  $result = mysql_query($table_del,$connect);
+  mysql_query($table_del,$connect);
+  sql_error(mysql_errno(),mysql_error());
+
+  $comm_del = "drop table {$table_name}_comm";
+  mysql_query($comm_del,$connect);
   sql_error(mysql_errno(),mysql_error());
 
   # 게시판 계정에서 사용되는 file 삭제
@@ -58,46 +62,60 @@ if($mode == 'db_create')  {
 
   #include "include/first_reg.ph";
   $create_table = "CREATE TABLE $new_table ( 
-			  no int(6) DEFAULT '0' NOT NULL auto_increment,
-			  num int(6) DEFAULT '0' NOT NULL,
-			  idx int(6) DEFAULT '0' NOT NULL,
-			  date int(11) DEFAULT '0' NOT NULL,
-			  host tinytext,
-			  name tinytext,
-                          rname tinytext,
-			  passwd varchar(56),
-			  email tinytext,
-			  url tinytext,
-			  title tinytext,
-			  text mediumtext,
-			  refer int(6) DEFAULT '0' NOT NULL,
-			  reyn int(1) DEFAULT '0' NOT NULL,
-			  reno int(6) DEFAULT '0' NOT NULL,
-			  rede int(6) DEFAULT '0' NOT NULL,
-			  reto int(6) DEFAULT '0' NOT NULL,
-			  html int(1) DEFAULT '1' NOT NULL,
-			  bofile varchar(100),
-			  bcfile varchar(100),
-			  bfsize int(4),
-			  KEY no (no),
-			  KEY num (num),
-			  KEY idx (idx),
-			  KEY reno (reno),
-			  KEY date (date),
-			  KEY reto (reto),
-			  PRIMARY KEY (no))";
+                     no int(6) DEFAULT '0' NOT NULL auto_increment,
+                     num int(6) DEFAULT '0' NOT NULL,
+                     idx int(6) DEFAULT '0' NOT NULL,
+                     date int(11) DEFAULT '0' NOT NULL,
+                     host tinytext,
+                     name tinytext,
+                     rname tinytext,
+                     passwd varchar(56),
+                     email tinytext,
+                     url tinytext,
+                     title tinytext,
+                     text mediumtext,
+                     refer int(6) DEFAULT '0' NOT NULL,
+                     reyn int(1) DEFAULT '0' NOT NULL,
+                     reno int(6) DEFAULT '0' NOT NULL,
+                     rede int(6) DEFAULT '0' NOT NULL,
+                     reto int(6) DEFAULT '0' NOT NULL,
+                     html int(1) DEFAULT '1' NOT NULL,
+                     bofile varchar(100),
+                     bcfile varchar(100),
+                     bfsize int(4),
+                     KEY no (no),
+                     KEY num (num),
+                     KEY idx (idx),
+                     KEY reno (reno),
+                     KEY date (date),
+                     KEY reto (reto),
+                     PRIMARY KEY (no))";
+
+  $create_comm = "CREATE TABLE {$new_table}_comm (
+                     no int(6) NOT NULL auto_increment,
+                     reno int(20) NOT NULL default '0',
+                     rname tinytext,
+                     name tinytext,
+                     passwd varchar(56) default NULL,
+                     text mediumtext,
+                     host tinytext,
+                     date int(11) NOT NULL default '0',
+                     PRIMARY KEY  (no),
+                     KEY parent (reno))";
 
   $passwd_ext = crypt($passwd_ext);
 
   $insert_data = "INSERT INTO $new_table (no,num,idx,date,host,name,passwd,email,url,title,
-                                      text,refer,reyn,reno,rede,reto,html,bofile,
-                                      bcfile,bfsize)
-                      VALUES ('',1,1,$date,'$host_ext','$name_ext','$passwd_ext','$email_ext',
-                              '$url_ext','$subj_msg','$text_msg',0,0,0,0,0,0,'','','')";
+                         text,refer,reyn,reno,rede,reto,html,bofile,bcfile,bfsize)
+                         VALUES ('',1,1,$date,'$host_ext','$name_ext','$passwd_ext','$email_ext',
+                         '$url_ext','$subj_msg','$text_msg',0,0,0,0,0,0,'','','')";
 
-  $result = mysql_query($create_table, $connect);
+  mysql_query($create_table, $connect);
   sql_error(mysql_errno(),mysql_error());
   #$result_insert = mysql_query($insert_data, $connect);
+
+  mysql_query($create_comm, $connect);
+  sql_error(mysql_errno(),mysql_error());
 
   # 새로운 게시판에 필요한 파일및 디렉토리 생성
   mkdir("../data/$new_table",0700);
