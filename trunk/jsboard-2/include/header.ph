@@ -63,7 +63,7 @@ $agent = get_agent();
 $db = replication_mode($db);
 
 # 외부 hyper link 를 막기 위한 설정
-if(preg_match("/(list|read|form|write)\.php/i",$_SERVER[PHP_SELF]))
+if($board[usedhyper] && preg_match("/(list|read|form|write)\.php/i",$_SERVER[PHP_SELF]))
   check_dhyper($enable[dhyper],$enable[plink]);
 
 # write, edit, reply page form size ========================
