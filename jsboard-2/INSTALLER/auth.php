@@ -114,7 +114,7 @@ if (!$mode) {
     # httpd.conf 의 DirectoryIndex 에 index.php 가 등록되어 있는지 여부
     for($i=0;$i<sizeof($array);$i++) {
       $array[$i] = trim($array[$i]);
-      if(eregi("^Directory",$array[$i]) && eregi("index.(php |php$)",$array[$i])) $cindex = 1;
+      if(preg_match("/^Directory/i",$array[$i]) && preg_match("/index.(php |php$)/i",$array[$i])) $cindex = 1;
     }
   } else {
     $echeck = 0;
@@ -174,7 +174,7 @@ if (!$mode) {
        "<table>\n<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">OS Type</FONT></td>\n".
        "<td>:</td>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">$os_type</FONT></td>\n</tr>\n\n";
 
-  if (!eregi("linux",$_ENV[OSTYPE]))
+  if (!preg_match("/linux/i",$_ENV[OSTYPE]))
     echo "<tr>\n<td colspan=3>\n<font color=red>$langs[os_check]</font>\n</td>\n</tr>\n\n";
 
   echo "<tr>\n<td><FONT STYLE=\"color:#555555;font-size:12px\">MySQL check</FONT></td>\n".

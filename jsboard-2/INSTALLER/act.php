@@ -39,7 +39,7 @@ if ($indb[check]) {
   }
 
   # 외부 DB 일 경우에는 접근 권한을 외부로 지정한다.
-  if($mysql_sock != "127.0.0.1" && $mysql_sock != "localhost" && !eregi("mysql.sock",$mysql_sock))
+  if($mysql_sock != "127.0.0.1" && $mysql_sock != "localhost" && !preg_match("/mysql.sock/i",$mysql_sock))
     $access_permit = $mysql_sock;
   else $access_permit = "localhost";
 
