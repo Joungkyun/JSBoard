@@ -6,13 +6,11 @@
 
 # JSBoard가 설치되어 있는 절대 경로
 # 마지막에 /를 붙이면 안됨
-#$prlist[path] = "/webroot/jsboard-version";
-$prlist[path] = "/home/httpd/html/Devel/jsboard";
+$prlist[path] = "/webroot/jsboard-version";
 
 # JSBoard가 설치되어 있는 웹 경로
 # 마지막에 /를 붙이면 안됨
-#$prlist[wpath] = "http://domain.com/jsboard-version";
-$prlist[wpath] = "http://192.168.1.1/Devel/jsboard";
+$prlist[wpath] = "http://domain.com/jsboard-version";
 
 # 글리스트들을 출력하는 design
 #   echo 문의 "" 사이에서 디자인을 넣으면 됨
@@ -43,16 +41,16 @@ function print_prlist($p) {
 function prelist($t,$inc,$limit=3,$cut=30,$cn=0,$cd=0,$ce=0,$cc=0,$l=0) {
   global $prlist;
 
-  include "$prlist[path]/config/global.ph";
+  include_once "$prlist[path]/config/global.ph";
   if($inc) {
-    include "$prlist[path]/include/error.ph";
-    include "$prlist[path]/include/parse.ph";
-    include "$prlist[path]/include/check.ph";
-    include "$prlist[path]/include/sql.ph";
-    include "$prlist[path]/include/get.ph";
+    include_once "$prlist[path]/include/error.ph";
+    include_once "$prlist[path]/include/parse.ph";
+    include_once "$prlist[path]/include/check.ph";
+    include_once "$prlist[path]/include/sql.ph";
+    include_once "$prlist[path]/include/get.ph";
   }
 
-  sql_connect($db[server], $db[user], $db[passs]);
+  sql_connect($db[server], $db[user], $db[pass]);
   sql_select_db($db[name]);
 
   $sql = "SELECT * FROM $t ORDER BY date DESC LIMIT $limit";
