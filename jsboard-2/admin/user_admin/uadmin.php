@@ -78,7 +78,8 @@ else $nameck_n = "checked";
 
 $denylink = trim($enable[plink]) ? parse_ipvalue($enable[plink],0,1) : $langs[ua_dhyper3];
 if(!$board[usedhyper]) {
-  $denylink = "Prevent this function by super user!";
+  $denylink = "Prevent this function by super user!\n".
+              "If you want to this function, config \"\$board[usedhyer]\" = 1; in global.ph";
   $denylinkro = " disabled";
 }
 
