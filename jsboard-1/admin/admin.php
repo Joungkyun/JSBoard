@@ -63,7 +63,7 @@ if($db[name] && !$table) {
   $priv = $page-1;   
   $next = $page+1;
 
-  # 오늘 날자에 대한 data 값을 구해 오늘 날자에 등록된 값을 구합니다.
+  # 오늘 날짜에 대한 data 값을 구해 오늘 날짜에 등록된 값을 구합니다.
   $current = "SELECT UNIX_TIMESTAMP(CURDATE()) as curdate";
   $result = mysql_query($current,$connect);
   $current_time = mysql_result($result,0,"curdate");

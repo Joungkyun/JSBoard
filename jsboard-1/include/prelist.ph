@@ -27,7 +27,6 @@ function print_prlist($p) {
   global $prlist;
   $p[date] = $p[date] ? "[$p[date]]" : "";
   if($prlist[type] == "main") {
-    $p[link] = eregi_replace("\[Âü°í\]|\[TIP\]","",$p[link]);
     echo "<Li type=disc>$p[link] $p[name] $p[date] $p[count]<br>\n";
   } elseif ($prlist[type] == "proftpd") {
     echo "$p[link] $p[name] $p[date] $p[count]<br>\n";
@@ -57,6 +56,7 @@ function prelist($t,$inc,$limit=3,$cut=30,$cn=0,$cd=0,$ce=0,$cc=0,$l=0) {
     include "$prlist[path]/include/parse.ph";
     include "$prlist[path]/include/check.ph";
     include "$prlist[path]/include/sql.ph";
+    include "$prlist[path]/include/get.ph";
   }
 
   sql_connect($db[server], $db[user], $db[pass]);
