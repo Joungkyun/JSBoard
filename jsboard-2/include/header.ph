@@ -42,7 +42,8 @@ if(file_exists("./config/external.ph")) {
 include_once "include/version.ph";
 include_once "include/lang.ph";
 include_once "include/check.ph";
-if(!check_windows()) { include_once "include/exec.ph"; }
+if(!check_windows())
+  { include_once "include/exec.ph"; }
 include_once "include/error.ph";
 include_once "include/get.ph";
 include_once "include/list.ph";

@@ -1,12 +1,6 @@
 <?
 # session을 시작
 session_start();
-
-# Copyright 정보
-$copy[name]     = "JoungKyun Kim";
-$copy[email]    = "";
-$copy[url]      = "http://www.oops.org";
-$copy[version]  = "4.0";
 $sadmin[pern]   = 10;
 
 if($path[type] == "user_admin") {
@@ -22,7 +16,8 @@ include_once "$ipath/include/check.ph";
 include_once "$ipath/include/get.ph";
 include_once "$ipath/include/print.ph";
 include_once "$ipath/include/sql.ph";
-include_once "$ipath/include/exec.ph";
+if(!check_windows())
+  { include_once "$ipath/include/exec.ph"; }
 include_once "$dpath/include/check.ph";
 include_once "$dpath/include/first_reg.ph";
 

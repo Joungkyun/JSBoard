@@ -18,7 +18,7 @@ If you wnat to see windog's change log, see also
 
 
 작성자 : 김정균 (admin at oops.org)
-작성일 : 2002년  1월 21일
+작성일 : 2002년  1월 23일
 버전   : jsboard-2.0pre4
 
 
@@ -45,6 +45,10 @@ If you wnat to see windog's change log, see also
 19. 패스워드 길이를 16자 까지 가능하게 변경
 20. 삭제 화면에서 이메일 주소를 포함한 글의 이름이 메일 주소로 나오는 것 수정
 21. register_global = Off 지원
+22. 이미지 사이즈가 화면 해상도와 동일하거나 거의 비슷할 경우 이미지 창이 화면
+    을 덮어 모두 볼 수 없는 현상 수정
+23. 윈도우즈 버젼을 위해 헤더 파일에서 exec 함수 인클루드 하는 것 수정
+24. oops admincenter 을 타이틀및 하단 copyright 삭제
 
 
 -----------------------------------------------------------------------------

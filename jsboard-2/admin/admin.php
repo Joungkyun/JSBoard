@@ -28,13 +28,15 @@ $connect=@mysql_connect($db[server],$db[user],$db[pass])  or
 
 echo "<table border=0 width=100% height=100% cellpadding=0 cellspacing=0>\n".
      "<tr><td align=center valign=center>\n\n".
-     "<table border=0 cellpadding=0 cellspacing=0 border=0>\n<tr>\n".
+     "<table width=$board[width] border=0 cellpadding=0 cellspacing=0>\n<tr><td>\n".
+     "<table border=0 cellpadding=0 cellspacing=0>\n<tr>\n".
      "<td rowspan=2 valign=center>\n".
-     "<font style=\"font: 30px Tahoma; color:$color[m_bg];font-weight:bold\"><b>OOPS&nbsp;</b></font></td>\n".
-     "<td valign=bottom> for JS Board</td>\n".
+     "<font style=\"font: 40px Tahoma; color:$color[m_bg];font-weight:bold\">J</font></td>\n".
+     "<td valign=bottom><FONT STYLE=\"font: 12px tahoma;font-weight: bold\"> SBoard</FONT></td>\n".
      "</tr>\n\n<tr>\n".
-     "<td valign=top><font style=\"font-family:tahoma\">Administration Center v$copy[version]</font></td>\n".
-     "</tr>\n</table>\n<p>\n";
+     "<td valign=top><font style=\"font: 12px tahoma; font-weight:bold\">Administration Center</font></td>\n".
+     "</tr>\n</table>\n".
+     "</td></tr>\n</table>\n\n";
 
 # db_name이 존재하지 않으면 아래를 출력합니다.
 exsit_dbname_check($db[name]);
@@ -169,7 +171,8 @@ if($db[name] && !$table) {
        "<input type='hidden' name='ts' value='$ts'>\n".
        "</td></form>\n\n".
        "<td colspan=2  rowspan=2 align=center>\n".
-       "<a href=$copy[url]><font color=$color[m_fg]>OOPS Developoment<br>Organization</font></a>\n".
+       "<a href=http://jsboard.kldp.org TARGET=_blank>".
+       "<font STYLE=\"font: 12px tahoma; color:$color[m_fg]\">Powered By<BR>JSBoard OPEN PROJECT</font></a>\n".
        "</td>\n</tr>\n\n".
        "<tr bgcolor=$color[m_bg]><form name='del_db' method='post' action='act.php'>\n".
        "<td colspan=3>&nbsp;&nbsp;<font color=$color[m_fg]>$langs[a_t14] :</font>\n".
@@ -264,8 +267,11 @@ if($db[name] && !$table) {
     }
   }
 
-  if($ts) $langs[ts] = "<a href=$_SERVER[PHP_SELF]><font color=$color[m_fg]>$langs[a_t18]</font></a>";
-  else $langs[ts] = "<font color=$color[m_fg]>$langs[a_t19]</font>";
+  if($ts) {
+    $langs[ts] = "<a href=$_SERVER[PHP_SELF]><font color=$color[m_fg]>$langs[a_t18]</font></a>";
+    $tsname = $ts."bold";
+    ${$tsname} = " font-weight:bold;";
+  } else $langs[ts] = "<font color=$color[m_fg]>$langs[a_t19]</font>";
 
   echo "</td><form>\n".
        "<td colspan=2 align=center>\n".
@@ -274,39 +280,38 @@ if($db[name] && !$table) {
        "</tr>\n<tr>\n" .
        "<td bgcolor=$color[m_bg] align=center>$langs[ts]</td>\n" .
        "<td colspan=4 bgcolor=$color[d_bg] align=center>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=a><font color=$color[d_fg]>A</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=b><font color=$color[d_fg]>B</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=c><font color=$color[d_fg]>C</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=d><font color=$color[d_fg]>D</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=e><font color=$color[d_fg]>E</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=f><font color=$color[d_fg]>F</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=g><font color=$color[d_fg]>G</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=h><font color=$color[d_fg]>H</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=i><font color=$color[d_fg]>I</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=j><font color=$color[d_fg]>J</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=k><font color=$color[d_fg]>K</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=l><font color=$color[d_fg]>L</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=m><font color=$color[d_fg]>M</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=n><font color=$color[d_fg]>N</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=o><font color=$color[d_fg]>O</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=p><font color=$color[d_fg]>P</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=q><font color=$color[d_fg]>Q</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=r><font color=$color[d_fg]>R</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=s><font color=$color[d_fg]>S</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=t><font color=$color[d_fg]>T</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=u><font color=$color[d_fg]>U</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=v><font color=$color[d_fg]>V</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=w><font color=$color[d_fg]>W</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=x><font color=$color[d_fg]>X</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=y><font color=$color[d_fg]>Y</font></A>\n" .
-       "<a href=$_SERVER[PHP_SELF]?ts=z><font color=$color[d_fg]>Z</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=a><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$abold\">A</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=b><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$bbold\">B</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=c><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$cbold\">C</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=d><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$dbold\">D</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=e><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$ebold\">E</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=f><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$fbold\">F</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=g><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$gbold\">G</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=h><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$hbold\">H</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=i><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$ibold\">I</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=j><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$jbold\">J</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=k><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$kbold\">K</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=l><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$lbold\">L</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=m><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$mbold\">M</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=n><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$nbold\">N</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=o><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$obold\">O</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=p><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$pbold\">P</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=q><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$qbold\">Q</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=r><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$rbold\">R</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=s><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$sbold\">S</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=t><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$tbold\">T</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=u><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$ubold\">U</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=v><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$vbold\">V</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=w><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$wbold\">W</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=x><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$xbold\">X</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=y><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$ybold\">Y</font></A>\n" .
+       "<a href=$_SERVER[PHP_SELF]?ts=z><FONT STYLE=\"font: 12px tahoma; color:$color[d_fg];$zbold\">Z</font></A>\n" .
        "<td></tr>\n</table>\n\n";
 }
 
 mysql_close();
 
 echo "<br>";
-copyright($copy);
 echo "\n</td></tr>\n</table>\n";
 htmltail();
 ?>
