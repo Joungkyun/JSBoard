@@ -45,6 +45,13 @@ if(!$np) {
 <!-------------------- End   Header design -------------------->
 
 <!-#######################################################################-->
+<!-  print_keymenu() : controled board with keyboard                      -->
+<!-                    'n or +' = upper article                           -->
+<!-                    'b or -' = follw article                           -->
+<!-#######################################################################-->
+<?=pirnt_keymenu(1)?>
+
+<!-#######################################################################-->
 <!-  $board[align] : print align of webboard. It's config in board admin  -->
 <!-  $print[dsearch] : print detail search table                          -->
 <!-  $board[width] : print width of webboard. It's config in board admin  -->
