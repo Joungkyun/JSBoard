@@ -20,6 +20,10 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0.5
 
+2003.03.23
+  by 김정균 <http://www.oops.org>
+	- 수정시 임의의 공격자가 웹서버 소유의 파일을 삭제할 수 있는 버그 수정
+
 2003.03.20
   by 김정균 <http://www.oops.org>
 	- 코멘트 사용시 상세 검새겡서 조건 에러나는 버그 수정
