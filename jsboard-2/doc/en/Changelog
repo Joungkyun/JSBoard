@@ -22,6 +22,7 @@ Version   : jsboard-2.0pre4
 
 Mon, Apr 15 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- added Date Header on sendmail.ph in case of without mta
+	- fixed html error on KO-default/reply.template
 
 Sat, Apr 13 2002 by JoungKyun Kim  <http://www.oops.org>
 	- modified to devide several line if subject is longer than table width
