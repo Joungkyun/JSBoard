@@ -134,7 +134,7 @@ function check_invalid($str) {
 }
 
 
-function parse_ipvalue($str,$m=0,$r=0) {
+function parse_ipvalue($str,$r=0) {
   if(!trim($str)) return;
 
   if(!$r) {
@@ -150,6 +150,8 @@ function parse_ipvalue($str,$m=0,$r=0) {
     $src[] = "/^;+$/i";
     $dsc[] = "";
   } else {
+    $src[] = "/ /i";
+    $dsc[] = "";
     $src[] = "/;/i";
     $dsc[] = "\n";
   }
