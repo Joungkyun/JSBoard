@@ -139,5 +139,5 @@ $tail_message		= "Tail의 정보가 비어있어서 \\nHTML header와 tail의 변경을 하지 �
 $headtail_message	= "Header와 Tail의 정보가 비어있어서 \\nHTML header와 tail의 변경을 하지 않습니다" ;
 $complete_message	= "변경이 완료 되었습니다.\\n게시판 보기로 돌아갑니다\\n수정하는라 수고 많았스 ^^;;" ;
 
-$pre				= "후략";
+$pre			= "후략";
 ?>
