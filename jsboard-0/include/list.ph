@@ -142,9 +142,11 @@ function vlist($no) {
     global $sc_string, $search, $page, $today;
     global $namel, $titll, $lang;
     global $l2_bg, $l2_fg, $l3_bg, $l3_fg, $t0_bg;
-	global $previewn, $previewsizen, $pre;
+    global $previewn, $previewsizen, $pre;
 
     $lists = dquery("SELECT * FROM $table WHERE no = $no");
+
+    $agent = g_agent();
 
     while($list = dfetch_row($lists)) {
 	$no     = $list[0];  // 절대 번호
@@ -201,21 +203,23 @@ function vlist($no) {
 	if($email)
 	    $name = "<a href=\"mailto:$email\"><font color=\"$fg\">$name </font> </a>";
 
-    $new_text = "Text : ";
-    $new_text .= cut_string($text,$previewsizen);
-	if ($lang == "ko") {
-	  $new_text .= "...\n\n($pre)";
-	}
-	else {
-	  $new_text .= "...\n\n(omit)";
+	if ($agent == "msie") {
+	  $new_text = "Text : ";
+	  $new_text .= cut_string($text,$previewsizen);
+	  if ($lang == "ko") {
+	    $new_text .= "...\n\n($pre)";
+	  }
+	  else {
+	    $new_text .= "...\n\n(omit)";
+	  }
 	}
 
 	echo("<tr>\n" .
 	     "<td align=\"right\" bgcolor=\"$bg\"><font color=\"$fg\">$num</font></td>\n" .
 	     "<td align=\"left\" bgcolor=\"$bg\"><a href=\"read.php3?table=$table&no=$no&page=$page$search\"");
 
-	if ($previewn == "yes") {
-	  echo(" title=\"$new_text\">");
+	if ($previewn == "yes" && $agent == "msie") {
+	  echo(" title='$new_text'>");
 	}
 	else {
 	  echo(">");
