@@ -16,6 +16,10 @@ file.
 Version   : jsboard-2.0.7
 
 Fri, Mar 07 2004
+  by Eunjea Im <http://kldp.org/~eunjea/>
+	- added xml header in rss.php
+	- added charset problem on other charset mode
+
   by JoungKyun Kim <http://www.oops.org>
 	- fixed rss align bug
 
