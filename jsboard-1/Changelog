@@ -14,12 +14,20 @@ file.
 If you wnat to see windog's change log, see also
  http://jsboard.kldp.org/download/Changelogwin.txt
 
-Attention : OOPS administration Center is not GPL.
-            See also admin/License !
-
 ******************************************************************************
 
 
+작성자 : 김정균 (admin@oops.org)
+작성일 : 2001년  12월 31일
+버전   : jsboard-1.3.6
+
+* 변경된점
+1. 미리보기 기능의 Cookie Sniffing 보안홀 수정
+2. auto_link() 함수 수정
+3. security 정보가 초기화되는 현상 수정
+
+
+-----------------------------------------------------------------------------
 작성자 : 김정균 (admin@oops.org)
 작성일 : 2001년  12월 20일
 버전   : jsboard-1.3.5

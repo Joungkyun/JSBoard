@@ -40,7 +40,7 @@ if($viewtype || $adminsession) {
   if($security[prints]) {
     $security[content] = "<?\n".
                          "\$security[stamp] = ".time().";\n".
-                         "\$security[serial] = $security[serial];\n".
+                         "\$security[serial] = \"$security[serial]\";\n".
                          "\$security[prints] = 0;\n?>";
 
     file_operate("./config/security_data.ph","w","Failed security record update",$security[content]);

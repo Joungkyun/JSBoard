@@ -52,9 +52,9 @@ function print_list($table, $list, $r=0)
     # 글 내용 미리 보기 설정
     if ($enable[pre]) {
       $list[ptext] = cut_string($list[text],$enable[preren]);
-      $list[ptext] = htmlspecialchars($list[ptext]);
-      $list[ptext] = eregi_replace("(\r*)\n","<BR>",$list[ptext]);
-      $list[ptext] = eregi_replace("(#|'|\\\\)","\\\\1",$list[ptext]);
+      $list[ptext] = preg_replace("/#|'|\\\\/i","\\\\\\0",$list[ptext]);
+      $list[ptext] = htmlspecialchars(htmlspecialchars($list[ptext]));
+      $list[ptext] = preg_replace("/\r*\n/i","<BR>",$list[ptext]);
       $list[preview] = " onMouseOver=\"drs('$list[ptext]'); return true;\" onMouseOut=\"nd(); return true;\"";
     }
 
