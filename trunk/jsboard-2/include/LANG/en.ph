@@ -160,6 +160,10 @@ $langs[ua_comment]   = "Comment";
 $langs[ua_comment_y] = "Use";
 $langs[ua_comment_n] = "Don't use";
 
+$langs[ua_emoticon]   = "Emoticon";
+$langs[ua_emoticon_y] = "Use";
+$langs[ua_emoticon_n] = "Don't use";
+
 $langs[ua_align]   = "Board Align";
 $langs[ua_align_c] = "Center";
 $langs[ua_align_l] = "Left";

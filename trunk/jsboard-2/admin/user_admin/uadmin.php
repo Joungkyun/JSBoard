@@ -42,6 +42,9 @@ else $re_list_no = "checked";
 if($enable[comment]) $comment_ok = "checked";
 else $comment_no = "checked";
 
+if($enable[emoticon]) $emoticon_ok = "checked";
+else $emoticon_no = "checked";
+
 if($enable[pre]) $pview_ok = "checked";
 else $pview_no = "checked";
 
@@ -439,6 +442,15 @@ function fresize(value,name) {
 <TD COLSPAN=4>
 <INPUT TYPE=radio name=ua[comment] <?=$comment_ok?> value="1" id=RADIO><?=$langs[ua_comment_y]?>
 <INPUT TYPE=radio name=ua[comment] <?=$comment_no?> value="0" id=RADIO><?=$langs[ua_comment_n]?>
+</TD>
+<TD BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR=<?=$color[m_bg]?>><font id=MCOLOR><?=$langs[ua_emoticon]?></font></TD>
+<TD COLSPAN=4>
+<INPUT TYPE=radio name=ua[emoticon] <?=$emoticon_ok?> value="1" id=RADIO><?=$langs[ua_emoticon_y]?>
+<INPUT TYPE=radio name=ua[emoticon] <?=$emoticon_no?> value="0" id=RADIO><?=$langs[ua_emoticon_n]?>
 </TD>
 <TD BGCOLOR=<?=$color[d_bg]?>>&nbsp;</TD>
 </TR>
