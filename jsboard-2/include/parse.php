@@ -26,7 +26,7 @@ function search2url($o, $method = "get") {
 
     if($method == "get") {
       $value = rawurlencode($value);
-      $url  .= "&o[$key]=$value";
+      $url  .= "&amp;o[$key]=$value";
     } else $url  .= "\n<INPUT TYPE=\"hidden\" NAME=\"o[$key]\" VALUE=\"$value\">";
 
     next($o);
