@@ -77,7 +77,7 @@ if($db[name] && !$table) {
     for($i=$start; $i<$until; $i++) {
       if($i < $tbl_num) {
         # jsboard에서 사용하는 게시판인지를 판단
-        $chk = "select idx from $table_name[$i]";
+        $chk = "select idx from $table_name[$i] where idx = 1";
         $chk_result = mysql_query($chk,$connect);
 
         # 각 table에 등록된 글 수를 check 합니다.
@@ -103,11 +103,19 @@ if($db[name] && !$table) {
              "<td align=right width=15%><font color=$color[l0_fg]>$total_count &nbsp;&nbsp;</font></td>\n";
 
         if($chk_result) {
-          echo "<form method='POST'><td width=30%>\n".
-               "<input type=button value=$langs[a_t7] onClick=fork('popup','../list.php?table=$table_name[$i]')>\n".
-               "<input type=button value=$langs[a_t8] onClick=fork('popup','./user_admin/uadmin.php?table=$table_name[$i]')>\n".
-               "<input type=button value=$langs[a_t17] onClick=fork('popup','./stat.php?table=$table_name[$i]')>\n".
-               "</td></form>\n";
+          if($textBrowser) {
+            echo "<td width=30%>\n".
+                 "<a href=../list.php?table=$table_name[$i]>$langs[a_t7]</a>\n".
+                 "<a href=./user_admin/uadmin.php?table=$table_name[$i]>$langs[a_t8]</a>\n".
+                 "<a href=./stat.php?table=$table_name[$i]>$langs[a_t17]</a>\n".
+                 "</td>\n";
+          } else {
+            echo "<form method='POST'><td width=30%>\n".
+                 "<input type=button value=$langs[a_t7] onClick=fork('popup','../list.php?table=$table_name[$i]')>\n".
+                 "<input type=button value=$langs[a_t8] onClick=fork('popup','./user_admin/uadmin.php?table=$table_name[$i]')>\n".
+                 "<input type=button value=$langs[a_t17] onClick=fork('popup','./stat.php?table=$table_name[$i]')>\n".
+                 "</td></form>\n";
+          }
         } else {
           echo "<td width=30%>\n".
                "<font color=$color[l0_fg]>Not JSBoard table</font>\n".
@@ -147,14 +155,22 @@ if($db[name] && !$table) {
         $to_today_t = $to_today_t + $total_today_t;
   }
 
+  if(!$textBrowser) {
+    $logoutButton = "<form><input type=button value=\"$langs[a_t10]\" onClick=fork('popup1','admin_info.php')>\n".
+                    "<input type=button value=\"$langs[a_t11]\" onClick=logout()>\n".
+                    "</td></form>\n</tr>\n\n";
+  } else {
+    $logoutButton = "<a href=./admin_info.php>$langs[a_t10]</a>\n".
+                    "<a href=./session.php?mode=logout>$langs[a_t11]</a>\n".
+                    "</td>\n</tr>\n\n";
+  }
+
   echo "\n<tr align=center bgcolor=$color[l1_bg]>\n".
        "<td><font color=$color[l1_fg]><b>$langs[a_t41] [ $langs[a_t16] ]</b></font></td>\n".
        "<td align=center><font color=$color[l1_fg]>$to_today [$to_today_t]</font></td>\n".
        "<td align=center><font color=$color[l1_fg]>$to [$to_t]</font></td>\n".
        "<td colspan=2 bgcolor=$color[l0_bg]>\n".
-       "<form><input type=button value=\"$langs[a_t10]\" onClick=fork('popup1','admin_info.php')>\n".
-       "<input type=button value=\"$langs[a_t11]\" onClick=logout()>\n".
-       "</td></form>\n</tr>\n\n".
+       $logoutButton .
        "<tr bgcolor=$color[l0_bg]><form name='create_db' method='post' action='act.php'>\n".
        "<td colspan=3>&nbsp;&nbsp;<font color=$color[l0_fg]>$langs[a_t12] :</font>\n".
        "<input type=text name='new_table' size=$size>\n".
@@ -261,10 +277,12 @@ if($db[name] && !$table) {
   if($ts) $langs[ts] = "<a href=$PHP_SELF><font color=$color[l0_fg]>$langs[a_t18]</font></a>";
   else $langs[ts] = "<font color=$color[l0_fg]>$langs[a_t19]</font>";
 
+  if(!$textBrowser)
+    $globalButton = "<input type=button value=\"$langs[a_t15]\" onClick=fork('popup','admin_info.php?mode=global')><br>\n";
+  else $globalButton = "<a href=admin_info.php?mode=global>$langs[a_t15]</a>\n";
+
   echo "</td><form>\n".
-       "<td colspan=2 align=center><font color=white>\n".
-       "<input type=button value=\"$langs[a_t15]\" onClick=fork('popup','admin_info.php?mode=global')><br>\n".
-       "</td></form>\n".
+       "<td colspan=2 align=center><font color=white>\n$globalButton</td></form>\n".
        "</tr>\n<tr>\n" .
        "<td bgcolor=$color[l0_bg] align=center>$langs[ts]</td>\n" .
        "<td colspan=4 bgcolor=$color[l1_bg] align=center>\n" .

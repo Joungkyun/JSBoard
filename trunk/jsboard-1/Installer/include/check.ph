@@ -17,7 +17,7 @@ function inst_chk_var($db,$msg) {
 }
 
 function inst_chk_numberic($name,$msg) {
-  if (eregi("^[0-9]",$name)) print_error($msg);
+  if (preg_match("/^[0-9]/",$name)) print_error($msg);
 }
 
 function inst_chk_dbname($name,$msg) {

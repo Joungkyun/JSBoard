@@ -3,38 +3,40 @@
 # register_globals 값이 off 일 경우 편리하게 사용
 #
 function parse_query_str() {
+  if(ini_get("register_globals")) return;
+
   global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
   global $HTTP_SESSION_VARS, $HTTP_SERVER_VARS;
 
-  if(is_array($HTTP_GET_VARS)) {
+  if(count($HTTP_GET_VARS)) {
     foreach($HTTP_GET_VARS as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
 
-  if(is_array($HTTP_POST_VARS)) {
+  if(count($HTTP_POST_VARS)) {
     foreach($HTTP_POST_VARS as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
 
-  if(is_array($HTTP_COOKIE_VARS)) {
+  if(count($HTTP_COOKIE_VARS)) {
     foreach($HTTP_COOKIE_VARS as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
 
-  if(is_array($HTTP_SESSION_VARS)) {
+  if(count($HTTP_SESSION_VARS)) {
     foreach($HTTP_SESSION_VARS as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
-
-  if(is_array($HTTP_SERVER_VARS)) {
+    
+  if(count($HTTP_SERVER_VARS)) {
     foreach($HTTP_SERVER_VARS as $key => $value) {
       global ${$key};
       ${$key} = $value;
@@ -205,27 +207,25 @@ function page_form($table, $pages, $color, $print = 0) {
   global $o, $langs;   # 검색 등 관련 변수
 
   $post = search2url($o, "post");
-
   if($pages[cur]) $value = $pages[cur];
 
-  $str = sprintf("
-<!-- ============================== 페이지폼 ============================== -->
-<TABLE WIDTH=\"100%%\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"1\">
-<FORM METHOD=\"post\" ACTION=\"locate.php?table=$table\">
-<TR>
-  <TD ALIGN=\"right\">
-    <FONT SIZE=\"-1\" COLOR=\"$color\">$post
-    <SELECT NAME=\"o[go]\">
-      <OPTION VALUE=\"p\" SELECTED>$langs[page_no]
-      <OPTION VALUE=\"n\">$langs[art_no]
-    </SELECT>
-    <INPUT TYPE=\"text\" NAME=\"o[no]\" SIZE=\"%d\" MAXLENGTH=\"6\" VALUE=\"$value\">
-    <INPUT TYPE=\"submit\" VALUE=\"$langs[ln_mv]\">
-    </FONT>
-  </TD>
-</TR></FORM>
-</TABLE>
-<!-- ============================== 페이지폼 ============================== -->\n", form_size(2));
+  $str = "\n<!-- ============================== 페이지폼 ============================== -->\n".
+         "<TABLE WIDTH=\"100%\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"1\">\n".
+         "<FORM METHOD=\"post\" ACTION=\"locate.php?table=$table\">\n".
+         "<TR>\n".
+         "  <TD ALIGN=\"right\">\n".
+         "    <FONT SIZE=\"-1\" COLOR=\"$color\">$post\n".
+         "    <SELECT NAME=\"o[go]\">\n".
+         "      <OPTION VALUE=\"p\" SELECTED>$langs[page_no]\n".
+         "      <OPTION VALUE=\"n\">$langs[art_no]\n".
+         "    </SELECT>\n".
+         "    <INPUT TYPE=\"text\" NAME=\"o[no]\" SIZE=\"{form_size(2)}\" MAXLENGTH=\"6\" VALUE=\"$value\">\n".
+         "    <INPUT TYPE=\"submit\" VALUE=\"$langs[ln_mv]\">\n".
+         "    </FONT>\n".
+         "  </TD>\n".
+         "</TR></FORM>\n".
+         "</TABLE>\n".
+         "<!-- ============================== 페이지폼 ============================== -->\n";
 
   if($print) echo $str;
   return $str;
@@ -236,7 +236,7 @@ function search_form($table, $pages, $print = 0) {
   global $board, $color; # 게시판 기본 설정 (config/global.ph)
   global $o, $langs, $PHP_SELF;
 
-  if(eregi("read.php",$PHP_SELF)) $col[font] = "$color[r5_fg]";
+  if(preg_match("/read\.php/i",$PHP_SELF)) $col[font] = "$color[r5_fg]";
   else $col[font] = "$color[l4_fg]";
 
   $ss = str_replace("%", "%%", $o[ss]);

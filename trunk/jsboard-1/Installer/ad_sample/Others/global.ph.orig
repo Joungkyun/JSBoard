@@ -70,6 +70,13 @@ $board[css] = "style=\"line-height=120%\"";
 # 기본값으로 사용될 align을 설정
 $board[align] = "center";
 
+
+##############################################################################
+#  스팸 방지 설정
+##############################################################################
+$board[antispam] = "@SPAM1@:@SPAM2@:@SPAM3@";
+
+
 ##############################################################################
 #  게시판 기본 색상 설정 (Theme를 사용할때는 이 설정이 적용되지 않음)
 ##############################################################################
@@ -161,13 +168,18 @@ $color[r3_fg] = "#000000";	# 글내용 글자
 $color[r4_bg] = "#cacaca";      # 파일 배경
 $color[r4_fg] = "#000000";      # 파일 글자
 
+
 ##############################################################################
-#  file upload 관련 설정. 게시판 전체에 대한 허가권을 설정한다. 여기서 no를 하면
-#  게시판 전체에서 file upload 기능을 사용하지 않음을 뜻한다.
+#  file upload 관련 설정. 게시판 전체에 대한 허가권을 설정한다. 여기서 no를
+#  하면 게시판 전체에서 file upload 기능을 사용하지 않음을 뜻한다.
+#  max time 은 php 가 동작할 최대 시간을 의미하며, 대용량 업로드를 할때만 수
+#  정을 하되, 300 초 이상은 잡지 않는 것이 좋다. 300 초 이상의 업로드는 서버
+#  에 막대한 부하를 준다.
 ##############################################################################
-$upload[yesno]	= "yes";	# upload 사용 여부
-$upload[dir]	= "files";	# upload file이 위치할곳
-$upload[maxsize]= "2000000";	# upload max size
+$upload[yesno]  = "yes";        # upload 사용 여부
+$upload[dir]    = "files";      # upload file이 위치할곳
+$upload[maxsize]= "2000000";    # upload max size
+$upload[maxtime]= "60";         # max excutiom time of php script
 
 
 ##############################################################################
@@ -182,11 +194,10 @@ $view[email]	= "yes";
 ##############################################################################
 $rmail[uses]	= "yes";
 # MTA type 을 지정
-# 1 - socket type 으로 발송 (sendmail only)
-# 0 - php 의 mail() 함수 사용 (sendmail 또는 sendmail 이외의 mta 의 경우)
-$rmail[mta]     = 1;
-# 메일을 발송할 서버를 지정
-$rmail[smtp]    = "127.0.0.1";
+# JSBoard 자체 발송 -> 지정안함.
+# mail damon 지정 -> 발송할 메일 주소를 직접 지정
+# windows 버젼의 경우 JSBoard 자체 발송을 사용할 수 없음.
+$rmail[smtp]     = "localhost";
 #jsboard가 설치되어 있는 웹경로
 $rmail[bbshome]	= "http://url.com/jsboard/";
 
@@ -212,13 +223,39 @@ $compare[email]	= "user@localhost.com";
 
 
 ##############################################################################
+#  IP blocking 설정
+#  $board[useipbl] 값을 0 으로 선택하면 모든 게시판에서 ip blocking 을 못함
+#  전체적으로 막고싶을 경우에는 $board[ipbl] 에 "ip1;ip2;ip3" 의 형식으로 지정
+#  $board[ipbl] 은 class 단위로 막을수 있으며 이때에는 1.1.1. 이나 1.1.1 은 동
+#  일하게 취급된다.
+##############################################################################
+$board[useipbl] = 0;
+#$board[ipbl] = "1.1.1.1;2.2.2.2;3.3.3"
+
+
+##############################################################################
+#  Control Access From Remote Hyper Link
+#  외부에서의 링크를 막는 설정
+#  $board[usedhyper] 을 0으로 선택하면 모든 게시판에서 이 기능을 사용못함
+#  전체적으로 적용하고 싶을 경우에는 $board[dhyper] 에 "ip1;ip2;ip3" 의 형식으
+#  로 지정 $board[dhyper] 는 class 단위로 막을 수 있으며, 이때에는 1.1.1. 이나
+#  1.1.1 은 동일하게 취급된다.
+#  $board[endhyper] 는 $board[dyper] 에 지정한 값만 막을 것인지 허락할 것인지
+#  를 결정.  0 -> $board[dhyper] 만 허락  1 -> $board[dhyper] 만 막음
+##############################################################################
+$board[usedhyper] = 1;
+#$board[dhyper]    = "1.1.1.1;2.2.2.2;3.3.3";
+#$board[endhyper]  = 1;
+
+
+##############################################################################
 #  이 정보들은 건들지 말도록 한다!!!!!
 ##############################################################################
 if(file_exists("config/default.themes") && $color[theme])
   { include("config/default.themes"); }
 
 if(trim($table)) {
-  if (eregi("[^a-z0-9_\-]",$table)) {
+  if (preg_match("/[^a-z0-9_-]/i",$table)) {
     echo "<SCRIPT>\n".
         "alert('Can\'t use special characters except\\nalphabat, numberlic , _, - charcters')\n".
         "history.back()\n".

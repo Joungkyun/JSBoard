@@ -33,17 +33,15 @@ if ($indb[check]) {
   $result[dbname] = mysql_query($create[dbname],$connect);
 
     # 외부 DB 일 경우에는 접근 권한을 외부로 지정한다.
-  if($mysql_sock != "127.0.0.1" && $mysql_sock != "localhost" && !eregi("mysql.sock",$mysql_sock))
+  if($mysql_sock != "127.0.0.1" && $mysql_sock != "localhost" && !preg_match("/mysql\.sock/i",$mysql_sock))
     $access_permit = $mysql_sock;
   else $access_permit = "localhost";
 
-  # User를 user table에 등록
-  $create[dbuser] = "insert into user (Host,User,Password) values('$access_permit','$dbinst[user]',password('$dbinst[pass]')) ";
-  $result[dbuser] = mysql_query($create[dbuser], $connect );
-
-  # DB와 User를 db table에 등록
-  $create[dbreg] = "insert into db values('localhost','$dbinst[name]','$dbinst[user]','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y') ";
-  $result[dbreg] = mysql_query($create[dbreg], $connect );
+  # user 및 db 등록(grant 문 이용)
+  $create[regis] = "GRANT all privileges ON $dbinst[name].*
+                       TO $dbinst[user]@$access_permit
+                       IDENTIFIED BY '$dbinst[pass]'";
+  $result[regis] = mysql_db_query("mysql",$create[regis],$connect);
 
   # test 게시판을 생성
   mysql_select_db($dbinst[name],$connect);
@@ -99,6 +97,15 @@ if ($indb[check]) {
   $create[str] = str_replace("DBname",$dbinst[name],$create[str]);
   $create[str] = str_replace("DBpass",$dbinst[pass],$create[str]);
   $create[str] = str_replace("DBuser",$dbinst[user],$create[str]);
+
+  # spam 변수 설정
+  mt_srand((double) microtime() * 1000000);
+  $create[spam1] = mt_rand(10001,99999);
+  $create[spam2] = mt_rand(11,99);
+  $create[spam3] = mt_rand(11,99);
+  $create[str] = str_replace("@SPAM1@",$create[spam1],$create[str]);
+  $create[str] = str_replace("@SPAM2@",$create[spam2],$create[str]);
+  $create[str] = str_replace("@SPAM3@",$create[spam3],$create[str]);
 
   file_operate($create[gfile],"w","Can't update $create[gfile]",$create[str]);
 

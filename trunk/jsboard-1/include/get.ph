@@ -34,7 +34,7 @@ function get_agent() {
   #                  [ln] 언어 (넷스케이프)
   if(ereg("MSIE", $agent_env)) {
     # 5.5 를 경계로 구분
-    if(eregi("5\.5",$agent_env)) $agent[br] = "MSIE5.5";
+    if(preg_match("/5\.5/",$agent_env)) $agent[br] = "MSIE5.5";
     else $agent[br] = "MSIE";
     # OS 별 구분
     if(ereg("NT", $agent_env)) $agent[os] = "NT";
@@ -46,7 +46,7 @@ function get_agent() {
     $agent[br] = "KONQ";
   } else if(ereg("^Mozilla", $agent_env)) {
     # Netscape 6 을 위한 구분
-    if(eregi("Gecko|Galeon",$agent_env)) $agent[br] = "MOZL6";
+    if(preg_match("/Gecko|Galeon/i",$agent_env)) $agent[br] = "MOZL6";
     else $agent[br] = "MOZL";
 
     # client OS 구분
@@ -88,7 +88,7 @@ function get_board_info($table) {
   $sql    = search2sql($o, 0);
 
   if(!$sql) {
-    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > $today");
+    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$today'");
     $tcount = sql_result($result, 0, "COUNT(*)");
     sql_free_result($result);
   }
@@ -153,7 +153,7 @@ function get_current_page($table, $idx) {
   $count = get_board_info($table);
 
   # 지정된 글의 idx보다 큰 번호를 가진 글의 갯수를 가져옴
-  $result     = sql_query("SELECT COUNT(*) FROM $table WHERE idx > $idx $sql");
+  $result     = sql_query("SELECT COUNT(*) FROM $table WHERE idx > '$idx' $sql");
   $count[cur] = sql_result($result, 0, "COUNT(*)");
   sql_free_result($result);
 
@@ -171,11 +171,11 @@ function get_pos($table, $idx) {
     $sql    = search2sql($o, 0);
     
     # 지정된 글의 idx보다 작은 번호를 가진 글 중에 idx가 가장 큰 글 (다음글)
-    $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < $idx $sql");
+    $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < '$idx' $sql");
     $pos[next] = sql_result($result, 0, "idx");
     sql_free_result($result);
     if($pos[next]) { 
-	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = $pos[next]");
+	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '$pos[next]'");
 	$next   = sql_fetch_array($result);
 	sql_free_result($result);
         $next[title] = str_replace("&amp;","&",$next[title]);
@@ -183,7 +183,7 @@ function get_pos($table, $idx) {
 
 	$pos[next] = $next[no];
 	if($next[reto]) {
-	    $result    = sql_query("SELECT num FROM $table WHERE no = $next[reto]");
+	    $result    = sql_query("SELECT num FROM $table WHERE no = '$next[reto]'");
 	    $next[num] = sql_result($result, 0, "num");
 	    sql_free_result($result);
 	    $pos[next_t] = "Reply of No.$next[num]: $next[title]";
@@ -193,11 +193,11 @@ function get_pos($table, $idx) {
     }
 
     # 지정된 글의 idx보다 큰 번호를 가진 글 중에 idx가 가장 작은 글 (이전글)
-    $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > $idx $sql");
+    $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > '$idx' $sql");
     $pos[prev] = sql_result($result, 0, "idx");
     sql_free_result($result);
     if($pos[prev]) { 
-	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = $pos[prev]");
+	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '$pos[prev]'");
 	$prev   = sql_fetch_array($result);
 	sql_free_result($result);
         $prev[title] = str_replace("&amp;","&",$prev[title]);
@@ -205,7 +205,7 @@ function get_pos($table, $idx) {
 
 	$pos[prev] = $prev[no];
 	if($prev[reto]) {
-	    $result    = sql_query("SELECT num FROM $table WHERE no = $prev[reto]");
+	    $result    = sql_query("SELECT num FROM $table WHERE no = '$prev[reto]'");
 	    $prev[num] = sql_result($result, 0, "num");
 	    sql_free_result($result);
 	    $pos[prev_t] = "Reply of No.$prev[num]: $prev[title]";
@@ -283,7 +283,7 @@ function get_article($table, $no, $field0 = "*", $field1 = "no") {
   if(!$no)
     print_error("$langs[get_no]");
 
-  $result  = sql_query("SELECT $field0 FROM $table WHERE $field1 = $no");
+  $result  = sql_query("SELECT $field0 FROM $table WHERE $field1 = '$no'");
   $article = sql_fetch_array($result);
   sql_free_result($result);
 
@@ -347,12 +347,12 @@ function viewfile($tail) {
   $source3 = "   <font color=red>$list[bofile]</font> file is broken link!!\n\n";
 
   if (@file_exists($upload_file)) {
-    if (eregi("^(gif|jpg|png)$",$tail)) {
+    if (preg_match("/^(gif|jpg|png)$/i",$tail)) {
       $imginfo = GetImageSize($upload_file);
-      if(eregi("MOZL",$agent[br])) $list[bofile] = urlencode($list[bofile]);
+      if(preg_match("/MOZL/i",$agent[br])) $list[bofile] = urlencode($list[bofile]);
       $uplink_file = "./form.php?mode=photo&table=$table&f[c]=$list[bcfile]&f[n]=$list[bofile]&f[w]=$imginfo[0]&f[h]=$imginfo[1]";
 
-      if($imginfo[0] > $board[width] - 6 && !eregi("%",$board[width])) {
+      if($imginfo[0] > $board[width] - 6 && !preg_match("/%/",$board[width])) {
         $p[vars] = $imginfo[0]/$board[width];
         if($board[img] != "yes") $p[width] = $board[width] - 6;
         else $p[width] = $board[width] - $icons[size] * 2 - 6;
@@ -363,26 +363,26 @@ function viewfile($tail) {
       } else {
         $p[up] = "<img src=\"$wupload_file\" $imginfo[2]>\n<p>\n";
       }
-    } else if (eregi("^(phps|txt|htm|shs)$",$tail)) {
+    } else if (preg_match("/^(phps|txt|htm|shs)$/i",$tail)) {
       $view = file_operate($upload_file,"r",0,1200);
       $view = htmlspecialchars(cut_string($view,1000));
       if (filesize($upload_file) > 1000) $view = $view . " <p>\n ......$langs[preview]\n\n";
 
       $p[down] = "$source1$view$source2";
-    } elseif (eregi("^(mid|wav|mp3)$",$tail)) {
+    } elseif (preg_match("/^(mid|wav|mp3)$/i",$tail)) {
       if($tail == "mp3" && $agent[br] == "MOZL")
         $p[up] = "[ MP3 file은 IE에서만 들으실수 있습니다. ]";
       elseif($agent[br] == "LYNX")
         $p[bo] = "";
       else
         $p[bo] = "<embed src=$upload_file autostart=true hidden=true mastersound>";
-    } elseif (eregi("^(mpeg|mpg|asf|dat|avi)$",$tail)) {
+    } elseif (preg_match("/^(mpeg|mpg|asf|dat|avi)$/i",$tail)) {
       if($agent[br] == "MSIE") $p[up] = "<embed src=$upload_file autostart=true>";
     } elseif ($tail == "mov" && $agent[br] == "MSIE") {
       $p[up] = "<embed src=$upload_file autostart=true width=300 height=300 align=center>";
     } elseif ($tail == "swf") {
       $flash_size = $board[width] - 10;
-      if(eregi("^(MSIE|MOZL6)$",$agent[br])) $p[up] = "<embed src=$upload_file width=$flash_size height=$flash_size align=center>";
+      if(preg_match("/^(MSIE|MOZL6)$/i",$agent[br])) $p[up] = "<embed src=$upload_file width=$flash_size height=$flash_size align=center>";
     }
   } else $p[down] = "$source1$source3$source2";
 
@@ -433,5 +433,39 @@ function get_html_src($url,$size=5000,$file="",$type="") {
     $s = explode("\n",$f);
     return $s;
   } else return $f;
+}
+
+# upload 관련 변수들을 조정
+#
+function get_upload_value($up) {
+  if($up[yesno] == "yes") {
+    if($up[maxtime]) set_time_limit($up[maxtime]);
+    # JSBoard 에서 조정할 수 있는 업로드 최대 사이즈
+    # 최대값은 POST 데이타를 위해 post_max_size 보다 1M 를 작게 잡는다.
+    $max = ini_get(post_max_size);
+    if(preg_match("/M$/i",$max)) {
+      $max = (preg_replace("/M$/i","",$max) - 1) * 1024 * 1024;
+    } elseif (preg_match("/K$/i",$max)) {
+      $max = (preg_replace("/K$/i","",$max) - 1) * 1024;
+    } else {
+      $max -= 1024;
+    }
+    ini_set(upload_max_filesize,$max);
+    $size = ($up[maxsize] > $max) ? $max : $up[maxsize];
+
+    return $size;
+  } else return 0;
+}
+
+# 스팸 등록기 체크를 위한 알고리즘
+#
+function get_spam_value($v) {
+  global $HTTP_COOKIE_VARS;
+  $chk = explode(":",$v);
+  $ran = preg_replace("/[a-z]/i","",substr($HTTP_COOKIE_VARS[PHPSESSID],0,10));
+  $ran = $ran ? $ran : preg_replace("/[a-z]/i","",substr($HTTP_COOKIE_VARS[PHPSESSID],10));
+  $ret = $chk[0] * $ran - ($chk[1] * $chk[2]);
+
+  return $ret;
 }
 ?>

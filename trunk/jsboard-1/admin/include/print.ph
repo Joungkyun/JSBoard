@@ -53,17 +53,22 @@ function copyright($copy) {
 #  Admin Center의 패스워드 변경시 두개의 패스워드가 틀릴 경우 출력
 #
 function admin_pass_error() {
-  global $langs;
-  print_error($langs[p_dp]);
+  global $langs,$textBrowser;
+  if($textBrowser) { Header("Location: ./admin.php"); }
+  else { print_error($langs[p_dp]); }
 }
 
 # Admin Center 변경 완료 메세지
 #
 function complete_adminpass() {
-  global $langs;
-  $str = str_replace("\n","\\n",$langs[p_cp]);
-  echo "<script>\nalert('$str')\n" .
-       "window.close()\n</script>";
+  global $langs, $textBrowser;
+  if($textBrowser) {
+    Header("Location: ./auth.php");
+  } else {
+    $str = str_replace("\n","\\n",$langs[p_cp]);
+    echo "<script>\nalert('$str')\n" .
+         "window.close()\n</script>";
+  }
   exit;
 }
 
@@ -76,7 +81,7 @@ function get_theme_list($name,$num, $path = "../config") {
   global $table, $color, $PHP_SELF, $langs;
 
   # link에서 원 파일의 정보를 가져온다.
-  if (!eregi("uadmin.php",$PHP_SELF)) {
+  if (!preg_match("/uadmin\.php/i",$PHP_SELF)) {
     if (file_exists("$path/default.themes")) { $dtheme = readlink("$path/default.themes"); }
   } else {
     if (file_exists("../../data/$table/default.themes")) { $dtheme = readlink("../../data/$table/default.themes"); }
@@ -96,7 +101,7 @@ function get_theme_list($name,$num, $path = "../config") {
   $until = sizeof($theme);
 
   for ($i=0; $i < $until; $i++) {
-    $nt[$i] = eregi_replace("(themes|\.)","",$theme[$i]);
+    $nt[$i] = preg_replace("/themes|\./i","",$theme[$i]);
     if ($nt[$i] == $dtheme) {
       $checked = " checked";
       $fc = "<font color=red><b>";
@@ -115,7 +120,7 @@ function get_theme_list($name,$num, $path = "../config") {
     if (!$bt[1]) $brtag = "<br>";
     else $brtag = "";
 
-    if (eregi("uadmin.php",$PHP_SELF)) $radio_c = "radio1";
+    if (preg_match("/uadmin\.php/i",$PHP_SELF)) $radio_c = "radio1";
     else $radio_c = "radio";
 
     if ($themeS && $themeS != "DEFAULT")
@@ -138,7 +143,7 @@ function err_msg($str = "Ocourrenct unknown error",$mode = 0) {
 function get_lang_list($code) {
   $p = opendir("../../include/LANG");
   while($i = readdir($p)) {
-    if(eregi("[a-z]{2}\.ph$",$i)) $langslist[] = $i;
+    if(preg_match("/[a-z]{2}\.ph$/i",$i)) $langslist[] = $i;
   }
   closedir($p);
 

@@ -11,23 +11,55 @@ OS=`uname`
 if [ "$OS" = "Linux" ]; then
   if [ -f /etc/debian_version ]; then
     DIST="Debian"
-    UGROUPS="www-data"
   elif [ -f /etc/redhat-release ]; then
     DIST="Redhat"
-    UGROUPS="nobody"
   else
     DIST="Unknown"
-    UGROUPS="nobody"
   fi
 else
   DIST=$OS
   UGROUPS="nobody"
 fi
 
+# location of apache configuration file
+if [ -f "/etc/httpd/conf/httpd.conf" ] ;then
+  CONF="/etc/httpd/conf/httpd.conf"
+  break
+elif [ -f "/etc/www/conf/httpd.conf" ]; then
+  CONF="/etc/www/conf/httpd.conf"
+  break
+elif [ -f "/etc/www/httpd.conf" ]; then
+  CONF="/etc/www/httpd.conf"
+  break
+elif [ -f "/usr/local/apache/conf/httpd.conf" ]; then
+  CONF="/usr/local/apache/conf/httpd.conf"
+else
+  while [ true ];
+  do
+    echo "ERROR : Can't file httpd.conf"
+    echo -n "Input path of httpd.conf : "
+    read CONF
+
+    if [ -f "${CONF}" ]; then
+      break
+    fi
+  done
+fi
+
+UGROUPS=$(cat ${CONF} | grep -E "^(`echo -ne "\t"`|[ ])*Group " | awk '{print $2}')
+
 echo "## Operating System : ${DIST}"
 echo -e "## Httpd Group : ${UGROUPS}\n\n"
-echo -n "Is right follow information? [Y/N](default Y) : "
-read INFO
+
+if [ "${UGROUPS}" = "#-1" ]; then
+  echo "${UGROUPS} is not system group"
+  echo "Excute again this script, after changed GROUP"
+  echo "directive in httpd.conf that existed group on system"
+  exit 1
+else
+  echo -n "Is right follow information? [Y/N](default Y) : "
+  read INFO
+fi
 
 if [ "$INFO" = "N" ] || [ "$INFO" = "n" ]; then
   echo -n "Input Ur httpd group : "

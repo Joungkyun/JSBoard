@@ -5,6 +5,8 @@ include "../include/ostype.ph";
 # password 비교함수 - admin/include/auth.ph
 compare_pass($sadmin,$login);
 
+if(preg_match("/links|w3m|lynx/i",$agent[br])) $textBrowser = 1;
+
 $connect=mysql_connect($db[server],$db[user] ,$db[pass])  or  
               die("$langs[sql_na]" ); 
 
@@ -107,7 +109,7 @@ if( $mode != "manager_config") {
   if($mode == "global_chg") {
 
     # quot 변환된 문자를 un quot 한다
-    $vars = stripslashes($glob[vars]);
+    $vars = "<?\n".stripslashes($glob[vars])."\n?>";
     $spam = stripslashes($glob[spam]);
     $br   = stripslashes($glob[brlist]);
 
@@ -122,11 +124,13 @@ if( $mode != "manager_config") {
 
     $langs[act_complete] = str_replace("\n","\\n",$langs[act_complete]);
     $langs[act_complete] = str_replace("'","\'",$langs[act_complete]);
-    echo "<script>\n" .
-         "alert('$langs[act_complete]')\n" .
-         "window.close()\n</script>";
-    exit;
 
+    if(!$textBrowser) {
+      echo "<script>\n" .
+           "alert('$langs[act_complete]')\n" .
+           "window.close()\n</script>";
+      exit;
+    }
   }
 
   Header("Location:admin.php$tslink");

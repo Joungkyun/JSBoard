@@ -150,6 +150,16 @@ $langs[ln_write] = "Admin만 :-)";
 $lant[chk_a] = "전체";
 $langs[chk_wa] = "$user_m 관리자가 $kind 기능을 허락하지 않습니다.\n$user_m 관리자 패스워드를 확인해 주십시오";
 $langs[chk_lo] = "비정상적인 접근을 허락하지 않습니다. 만약 정상적인 사용이라고 생각을 한다면 global.ph의 \$rmail[bbshome] 값을 정확하게 지정해 주십시오";
+$langs[chk_ta] = "TABLE 태그를 잘못 사용하였습니다.";
+$langs[chk_tb] = "TABLE 태그가 열리지 않았거나 닫히지 않았습니다.";
+$langs[chk_th] = "TH 태그가 열리지 않았거나 닫히지 않았습니다.";
+$langs[chk_tr] = "TR 태그가 열리지 않았거나 닫히지 않았습니다.";
+$langs[chk_td] = "TD 태그가 열리지 않았거나 닫히지 않았습니다.";
+$langs[chk_if] = "IFRAME 태그가 열리지 않았거나 닫히지 않았습니다.";
+$langs[chk_bl] = "접속하는 IP 가 관리자에 의해 거부되었습니다.";
+$langs[chk_hy] = "Hyper Link 에 의한 접근을 허락하지 않습니다.";
+$langs[chk_an] = "global.ph 에 spam 설정을 해야 합니다.\nREADME.SPAM 을 참고 하십시오";
+$langs[chk_sp] = "SPAM 등록기를 이용하여 글을 등록할 수 없습니다.";
 
 # get.ph
 $langs[get_v] = " [ 게시판 보기 ]";
@@ -290,6 +300,11 @@ $langs[ua_pw_n] = "로그인 과정을 거쳐 주십시오!!";
 $langs[ua_pw_c] = "패스워드가 틀립니다";
 $pang[ua_pw_comp] ="두 패스워드가 동일하지 않아서\n패스워드는 변경되지 않습니다.";
 
+$langs[ua_dhyper] = "등록된 주소의 링크만";
+$langs[ua_dhyper1] = "허락";
+$langs[ua_dhyper2] = "막음";
+$langs[ua_dhyper3] = "등록된 값이 없으면 이 기능은 작동하지 않습니다.\n해당 값은 IP Address 로만 한줄에 하나씩 지정이 가능합니다.";
+
 # admin print.ph
 $langs[p_wa] = "전체 관리자 인증";
 $langs[p_aa] = "전체 관리자 Page";
@@ -355,8 +370,6 @@ $langs[waitm] = "Jsboard를 사용하기 위한 환경 설정을 검사하고 있습니다<br>\n5초 
 $langs[wait] = "[ 5초간 기다려 주세요 ]";
 $lnags[os_check] ="Linux가 아닌 다른 OS의 경우에는 jsboard/include/exec.ph 에서\nshell 명령들의 option 값을 적절히 수정해 주셔야 합니다";
 $langs[mcheck] = "MySQL login에 실패를 했습니다.\njsboard/Installer/include/passwd.ph 에 MySQL의 root\npassword가 정확한지 확인해 주시고 맞으면 PHP의 설치시에\n--with-mysql 옵션이 들어갔는지 확인해 주십시오<br>\n만약 DB server가 독립되어 있다면 QuickInstall문서를 참조\n하여 설치를 하시기 바랍니다";
-$langs[ccheck] = "mysql database의 db table의 컬럼수가 틀립니다.\njabord/Installer/act.php의 37번째 라인의 query에서\n컬럼수를 맞춰 주시기 바랍니다";
-$langs[echeck] = "exec() 함수가 제대로 동작을 하고 있지 않습니다.\nexec() 함수를 사용하기 위해서는 php3.ini 또는 php4에서는\nphp.ini가 제 위치에 있어야 합니다.\nphpinfo() 함수를 사용하여 php,ini의 위치를 파악한\n후에 그 위치에 php.ini가 있는지 확인해 주십시오";
 $langs[icheck] = "httpd.conf의 DirectoryIndex 지시자에 index.php를 추가<br>\n해 주시고 apache를 재실행 하십시오.";
 $langs[pcheck] = "Install을 하기 이전에 먼저 jsboard/Installer/script에서\nroot.sh를 실행해 주셔야 합니다. INSTALL문서를\n참조하십시오";
 $langs[auser] = "계정 설치자는 QUICK_INSTALL 문서를 참고하여 설치하십시오";

@@ -25,7 +25,7 @@ $list[num]  = print_reply($table, $list);
 $list[date] = date("Y-m-d H:i:s", $list[date]);
 $list[text] = text_nl2br($list[text], $list[html]);
 $list[text] = $list[html] ? $list[text] : wordwrap($list[text],$board[wwrap]);
-$list[title] = eregi_replace("&amp;(amp|lt|gt)","&\\1",$list[title]);
+$list[title] = preg_replace("/&amp;(amp|lt|gt)/i","&\\1",$list[title]);
 
 $list = search_hl($list);
 
@@ -35,7 +35,7 @@ if($list[email])
   $list[name] = url_link($list[email], $list[name], $color[r2_fg], $no);
 
 if($list[url]) {
-  if(eregi("^http://", $list[url]))
+  if(preg_match("/^http:\/\//i", $list[url]))
     $list[name] .= " [" . url_link($list[url], "$langs[ln_url]", $color[r2_fg]) . "]";
   else
     $list[name] .= " [" . url_link("http://$list[url]", "$langs[ln_url]", $color[r3_fg]) . "]";
@@ -50,7 +50,7 @@ $time = get_microtime($c_time[0], $c_time[1]);
 
 if ($board[img] == "yes") {
   $icons[add] = "<img src=./images/blank.gif width=$icons[size] border=0>";
-  if (eregi("%",$board[width])) $icons[td]  = "1%";
+  if (preg_match("/%/",$board[width])) $icons[td]  = "1%";
   else $icons[td] = $icons[size];
 }
 
@@ -206,8 +206,7 @@ if ($board[img] != "yes") {
 echo "</TD></TR>\n".
      "</TABLE>\n</DIV>";
 
-if ($remote != $list[host]) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = $no");
-
+if ($remote != $list[host]) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'");
 include "html/tail.ph";
 echo $preview[bo];
 ?>

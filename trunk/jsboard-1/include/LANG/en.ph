@@ -148,6 +148,16 @@ $langs[ln_write]	= "Only Admin";
 $lant[chk_a]	= "Primary";
 $langs[chk_wa]	= "$user_m Admin limited $kind function.\nCheck the $user_m Admin Password.";
 $langs[chk_lo] = "Can't access invailid Access. If this access is valid method, confirmed \$rmail[bbshome] in global.ph";
+$langs[chk_ta] = "Wrong usage of TABEL tag";
+$langs[chk_tb] = "Don't match number of open or close table tag";
+$langs[chk_th] = "Don't open or close TH tag.";
+$langs[chk_tr] = "Don't open or close TR tag.";
+$langs[chk_td] = "Don't open or close TD tag.";
+$langs[chk_if] = "Don't open or close IFRAME tag.";
+$langs[chk_bl] = "Deny access your ip address by administrator";
+$langs[chk_hy] = "Deny access thorough hyper link of other server";
+$langs[chk_an] = "no spam configuration in global.ph.\nSee also README.SPAM document.";
+$langs[chk_sp] = "can't regist article with spam register";
 
 # get.ph
 $langs[get_v]	= " [ Article View ]";
@@ -287,6 +297,11 @@ $langs[ua_pw_n]	= "Can't access this file without login process!!";
 $langs[ua_pw_c]	= "Invalid Password";
 $pang[ua_pw_comp] ="Password didn't change because\nnew password and repassword didn't match";
 
+$langs[ua_dhyper] = "Hyperlink of follow lists :";
+$langs[ua_dhyper1] = "Permit";
+$langs[ua_dhyper2] = "Deny";
+$langs[ua_dhyper3] = "If you want to useless this function, removed all value in here\nValue is registered only one ip address per one line";
+
 # admin print.ph
 $langs[p_wa]	= "Primary Admin Auth";
 $langs[p_aa]	= "Primary Admin Page";
@@ -352,7 +367,6 @@ $langs[waitm] = "Checking Environment to use JSBoard<br>\nResult will be display
 $langs[wait] = "[ Wait 5 seconds ]";
 $lnags[os_check] ="If OS isn't Linux, change shell command in jsboard/include/exec.ph to corresponding command in your OS";
 $langs[mcheck] = "Failed MySQL login. Check the MySQL root password in jsbaord/installer/include/passwd.ph. If password is right, check if PHP was compiled with --with-mysql option.<br>If you use external DB server, refer to QUICK_INSTALL document";
-$langs[ccheck] = "Different number of columns for db table in mysql database. U must modify db query at 37th line of jsboard/Installer/act.php";
 $langs[echeck] = "exec() function is not working. Checked your path to php3.ini or php.ini configuration file";
 $langs[icheck] = "Add index.php to DirectoryIndex directive in httpd.conf and restart<br>\napache web server.";
 $langs[pcheck] = "Must excute root.sh in jsboard/Installer/script before Installation";

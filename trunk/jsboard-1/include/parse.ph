@@ -1,7 +1,7 @@
 <?
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
-  if (!$html) $text = eregi_replace("&amp;(#|amp)","&\\1",$text);
+  if (!$html) $text = preg_replace("/&amp;(#|amp)/i","&\\1",$text);
   $text = str_replace("&amp;","&",$text);
   return $text;
 }
@@ -31,6 +31,7 @@ function search2url($o, $method = "get") {
     next($o);
   }
 
+  $url = preg_replace("/(%5C)%5C/i","\\1",$url);
   return $url;
 }
 
@@ -58,7 +59,7 @@ function search2sql($o, $wh = 1) {
     $str = str_replace("\%\%","%",$str);
     $str = addslashes($str);
 
-    if (eregi("\"",$str))
+    if (preg_match("/\"/",$str))
       print_error("<b>[<font color=darkred>\"'</font>]</b>가 포함된 검색어는 검색하실수 없습니다.");
   }
 
@@ -68,11 +69,11 @@ function search2sql($o, $wh = 1) {
   $week  = $today - (60 * 60 * 24 * 7);
 
   switch($o[st]) {
-    case 't': $sql .= "(date >= $today)";
+    case 't': $sql .= "(date >= '$today')";
       break; # 오늘
-    case 'w': $sql .= "(date >= $week) AND ";
+    case 'w': $sql .= "(date >= '$week') AND ";
       break; # 일주일간
-    case 'm': $sql .= "(date >= $month) AND ";
+    case 'm': $sql .= "(date >= '$month') AND ";
       break; # 한달간
   }
 
@@ -88,7 +89,7 @@ function search2sql($o, $wh = 1) {
       break;
     case 't': $sql .= "(title $str)";
       break;
-    case 'r': $sql .= "(no = $o[no] OR reto = $o[no])";
+    case 'r': $sql .= "(no = '$o[no]' OR reto = '$o[no]')";
       break;
   }
 
@@ -120,25 +121,46 @@ function search_hl($list) {
   $str = stripslashes($str);
 
   if(!$o[er]) $str = quotemeta($str);
+  $str = str_replace("/","\/",$str);
+
+  $hlreg[0] = $hl[0];
+  $hlreg[1] = str_replace("/","\/",str_replace("\/","/",$hl[1]));
+
+  $regex1 = "(<\/?)$hlreg[0]([^<]+)$hlreg[1]([^>]*>)";
+  $regex2 = "(<\/?FONT[^<>]+)$hlreg[0]([^<]+)$hlreg[1]([^>]*>)";
+  $regex3 = "(HREF|SRC)=([^<>]*)$hl[0]([^<]*)<\/U><\/B><\/FONT>([^>]*)";
+
+  $src = array("/$regex1/i","/$regex2/i");
+  $tar = array("\\1\\2\\3","\\1\\2\\3");
+  $tsrc = array("/$regex1/i","/$regex2/i","/$regex3/i");
+  $ttar = array("\\1\\2\\3","\\1\\2\\3","\\1=\\2\\3\\4");
 
   switch($o[sc]) {
     case 'n':
-      $list[name] = eregi_replace($str, "$hl[0]\\0$hl[1]", $list[name]);
+      $list[name] = preg_replace("/$str/i","$hl[0]\\0$hl[1]",$list[name]);
       break;
     case 't':
-      $list[title] = eregi_replace($str, "$hl[0]\\0$hl[1]", $list[title]);
+      $list[title] = preg_replace("/$str/i","$hl[0]\\0$hl[1]",$list[title]);
       break;
     case 'c':
-      $list[text] = eregi_replace($str, "$hl[0]\\0$hl[1]", $list[text]);
-      $list[text] = eregi_replace("<a href=([^<]*)$hl[0]([^<]*)$hl[1]([^>]*)>","<a href=\\1\\2\\3>",$list[text]);
+      $list[text] = preg_replace("/$str/i","$hl[0]\\0$hl[1]",$list[text]);
+      while(true) {
+        if(preg_match("/($regex1)|($regex2)|($regex3)/i",$list[text]))
+          $list[text] = preg_replace($tsrc,$ttar,$list[text]);
+        else break;
+      }
       break;
     case 'a':
-      $list[text] = eregi_replace($str, "$hl[0]\\0$hl[1]", $list[text]);
-      $list[title] = eregi_replace($str, "$hl[0]\\0$hl[1]", $list[title]);
-      $list[text] = eregi_replace("<a href=([^<]*)$hl[0]([^<]*)$hl[1]([^>]*)>","<a href=\\1\\2\\3>",$list[text]);
+      $list[title] = preg_replace("/$str/i","$hl[0]\\0$hl[1]",$list[title]);
+      $list[text] = preg_replace("/$str/i","$hl[0]\\0$hl[1]",$list[text]);
+      while(true) {
+        if(preg_match("/($regex1)|($regex2)|($regex3)/i",$list[text]))
+          $list[text] = preg_replace($tsrc,$ttar,$list[text]);
+        else break;
+      }
       break;
   }
-
+     
   return $list;
 }
 
@@ -149,7 +171,7 @@ function text_nl2br($text, $html) {
                     "/<(\/*(script|style|pre|xmp|base|span|html)[^>]*)>/i");
     $target = array("&lt;\\1","\\1&gt;","deny_\\1","\n","&lt;\\1&gt;");
     $text = preg_replace($source,$target,$text);
-    if(!eregi("<--no-autolink>",$text)) $text = auto_link($text);
+    if(!preg_match("/<--no-autolink>/i",$text)) $text = auto_link($text);
     else $text = chop(str_replace("<--no-autolink>","",$text));
 
     $text = eregi_replace("(\n)?<table","</PRE><TABLE",$text);
@@ -191,7 +213,7 @@ function delete_tag($text) {
 # chop   - 문자열 끝의 공백 문자을 없앰
 #          http://www.php.net/manual/function.chop.php
 function cut_string($s, $l) {
-  if(strlen($s) <= $l && !eregi("^[a-z]+$", $s))
+  if(strlen($s) <= $l && !preg_match("/^[a-z]+$/i", $s))
     return $s;
 
   for($i = $l; $i >=1; $i--) {
@@ -236,8 +258,8 @@ function auto_link($str) {
 
   $regex[file] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
   $regex[file] = "(\.($regex[file])\") TARGET=\"_blank\"";
-  $regex[http] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9:_\-]+\.[\xA1-\xFEa-z0-9:;&#=_~%\[\]\?\/\.\,\+\-]+)([\.]*[\/a-z0-9\[\]]|=[\xA1-\xFE]+))";
-  $regex[mail] = "([\xA1-\xFEa-z0-9_\.\-]+)@([\xA1-\xFEa-z0-9_\-]+\.[\xA1-\xFEa-z0-9\-\._\-]+[\.]*[a-z0-9]\??[\xA1-\xFEa-z0-9=]*)";
+  $regex[http] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9:_\-]+\.[\xA1-\xFEa-z0-9,:;&#=_~%\[\]?\/.,+\-]+)([.]*[\/a-z0-9\[\]]|=[\xA1-\xFE]+))";
+  $regex[mail] = "([\xA1-\xFEa-z0-9_.-]+)@([\xA1-\xFEa-z0-9_-]+\.[\xA1-\xFEa-z0-9._-]*[a-z]{2,3}(\?[\xA1-\xFEa-z0-9=&\?]+)*)";
 
   # &lt; 로 시작해서 3줄뒤에 &gt; 가 나올 경우와
   # IMG tag 와 A tag 의 경우 링크가 여러줄에 걸쳐 이루어져 있을 경우
@@ -280,8 +302,8 @@ function auto_link($str) {
   $tar[] = "\\1";
   $src[] = "'#-#'";
   $tar[] = "@";
-  #$src[] = "/$regex[file]/i";
-  #$tar[] = "\\1";
+  $src[] = "/$regex[file]/i";
+  $tar[] = "\\1";
 
   # email 주소를 변형시킴
   $src[] = "/$regex[mail]/i";
@@ -346,13 +368,13 @@ function file_upload($fn,$updir) {
     }
 
     # file name에 공백이 있을 경우 공백 삭제
-    $ufile[name] = eregi_replace(" ","",$ufile[name]);
+    $ufile[name] = preg_replace("/ /","",$ufile[name]);
 
     # file name에 특수 문자가 있을 경우 등록 거부
     upload_name_chk($ufile[name]);
 
     # php, cgi, pl file을 upload할시에는 실행을 할수없게 phps, cgis, pls로 filename을 수정
-    $f[name] = eregi_replace("[\.]*$","",$f[name]);
+    $f[name] = eregi_replace("[.]*$","",$f[name]);
     $f[name] = eregi_replace(".(ph|inc|php[0-9a-z]*|phtml)$",".phps", $f[name]);
     $f[name] = eregi_replace("(.*)\.(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $f[name]);
 

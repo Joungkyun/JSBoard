@@ -1,6 +1,7 @@
 <?
 # session을 시작
 session_start();
+if(!session_is_registered("login")) session_destroy();
 
 include_once "../include/print.ph";
 # register_globals 옵션의 영향을 받지 않기 위한 함수
@@ -29,4 +30,7 @@ include_once "./include/first_reg.ph";
 # 기본 설정및 색상 테마 읽기
 if(file_exists("../config/default.themes") && $color[theme])
   { include_once "../config/default.themes"; }
+
+$agent = get_agent();
+if(preg_match("/links|w3m|lynx/i",$agent[br])) $textBrowser = 1;
 ?>

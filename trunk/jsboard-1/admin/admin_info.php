@@ -17,12 +17,12 @@ if(!$mode) {
        "<table width=240 border=0 cellpadding=2>\n".
        "<tr bgcolor=$color[l0_bg]><form method=POST action=\"act.php\">\n".
        "<td><font color=$color[l0_fg]>Passwd</font></td>\n".
-       "<td align=center><input type=password name=admincenter_pass size=$size></td>\n".
+       "<td align=center><input type=password name=admincenter_pass size=$size style='font: 12px tahoma'></td>\n".
        "</tr>\n\n".
 
        "<tr bgcolor=$color[l0_bg]>\n".
        "<td><font color=$color[l0_fg]>Re Passwd</font></td>\n".
-       "<td align=center><input type=password name=readmincenter_pass size=$size></td>\n".
+       "<td align=center><input type=password name=readmincenter_pass size=$size style='font: 12px tahoma'></td>\n".
        "</tr>\n\n".
 
        "<tr>\n<td colspan=2 align=center>\n".
@@ -47,6 +47,7 @@ if(!$mode) {
 
   # global 설정 가져오기
   $global_con = file_operate($configfile,"r","Don't open $configfile");
+  $global_con = preg_replace("/<\?|\?>/i","",$global_con);
 
   # spam list 가져오기
   if(file_exists($spamlistfile)) $spamlist = file_operate($spamlistfile,"r");
@@ -66,7 +67,7 @@ if(!$mode) {
        "<table border=0 cellpadding=1 cellspacing=1 width=100%>\n".
        "<tr><td align=center><font color=$color[l0_fg]><b>Global Configuration</b></font></td></tr>\n".
        "<tr><td bgcolor=white align=center>&nbsp;\n".
-       "<textarea name=glob[vars] rows=25 cols=\"$textsize\">$global_con</textarea>\n".
+       "<textarea name=glob[vars] rows=25 cols=\"$textsize\">\n$global_con\n</textarea>\n".
        "</td></tr>\n\n<tr><td align=center><font color=$color[l0_fg]><b>Theme Configuration</b></font></td></tr>\n".
        "\n<tr><td bgcolor=$color[bgcol] align=center>\n";
 

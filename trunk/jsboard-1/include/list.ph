@@ -17,7 +17,7 @@ function print_list($table, $list, $r=0)
 
     $list[title] = ugly_han($list[title]);
 
-    $list[title] = eregi_replace("\"","&quot;",$list[title]);
+    $list[title] = preg_replace("/\"/","&quot;",$list[title]);
     $list = search_hl($list);
 
     if($enable[re_list])  {
@@ -55,6 +55,7 @@ function print_list($table, $list, $r=0)
       $list[ptext] = preg_replace("/#|'|\\\\/i","\\\\\\0",$list[ptext]);
       $list[ptext] = htmlspecialchars(htmlspecialchars($list[ptext]));
       $list[ptext] = preg_replace("/\r*\n/i","<BR>",$list[ptext]);
+      $list[ptext] = str_replace("&amp;amp;","&amp;",$list[ptext]);
       $list[preview] = " onMouseOver=\"drs('$list[ptext]'); return true;\" onMouseOut=\"nd(); return true;\"";
     }
 
@@ -105,7 +106,7 @@ function get_list($table, $pages, $reply = 0)
     if($reply[ck]) $sql = search2sql($reply);
     else $sql = search2sql($o);
 
-    if ($enable[re_list] && eregi("read.php",$PHP_SELF)) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
+    if ($enable[re_list] && preg_match("read\.php",$PHP_SELF)) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
     else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT $pages[no], $board[perno]";
 
     $result = sql_query($query);

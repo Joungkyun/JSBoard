@@ -10,8 +10,6 @@ sql_connect($db[server], $db[user], $db[pass]);
 sql_select_db($db[name]);
 
 $list = get_article($table, $no);
-$list[text] = htmlspecialchars($list[text]);
-
 $passment = $langs[w_pass];
 
 # 패스워드가 없는 게시물이나 수정을 허락치 않을 경우 관리자 패스워드를 사용해야 함
@@ -37,7 +35,7 @@ if($agent[br] == "LYNX") $board[formtype] = "";
 else $board[formtype] = " ENCTYPE=\"multipart/form-data\"";
 
 # image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
-if ($board[img] == "yes" && !eregi("%",$board[width])) 
+if ($board[img] == "yes" && !preg_match("/%/",$board[width])) 
   $board[width] = $board[width]-$icons[size]*2;
 else $size[text] += 4;
 
@@ -109,7 +107,7 @@ echo "
   <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[titl]</FONT></TD>
   <TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[title]\" SIZE=\"$size[titl]\" MAXLENGTH=\"100\" VALUE=\"$list[title]\"></TD>";
 
-if (eregi("MSIE",$agent[br]) || $agent[br] == "MOZL6") {
+if (preg_match("/MSIE/i",$agent[br]) || $agent[br] == "MOZL6") {
   $orig_option = " onClick=fresize(0)";
   echo "
 </TR><TR>
