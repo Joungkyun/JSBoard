@@ -502,8 +502,7 @@ function get_html_src($url,$size=5000,$file="",$type="") {
 #
 function get_spam_value($v) {
   $chk = explode(":",$v);
-  $ran = preg_replace("/[a-z]/i","",substr($_COOKIE[PHPSESSID],0,5));
-  $ran = $ran ? $ran : preg_replace("/[a-z]/i","",substr($_COOKIE[PHPSESSID],5));
+  $ran = preg_replace("/[a-z]/i","",$_COOKIE[PHPSESSID]);
   $ran = ($ran > 99999) ? substr($ran,0,5) : $ran;
   $ret = $chk[0] * $ran - ($chk[1] * $chk[2]);
 
