@@ -18,6 +18,16 @@ If you wnat to see windog's change log, see also
 ******************************************************************************
 
 
+Version   : jsboard-2.0.0
+
+Thu, Jun  7 2002 by Eunjea Im <http://kldp.org/~eunjea/>
+	- fixed comment posting error if unconfigured admin check
+
+Fri, Jun  7 2002 by JoungKyun Kim <http://www.oops.org>
+	- freeze 2.0.0
+
+
+-----------------------------------------------------------------------------
 Version   : jsboard-2.0pre4
 
 Wed, Jun  5 2002 by JoungKyun Kim <http://www.oops.org>
