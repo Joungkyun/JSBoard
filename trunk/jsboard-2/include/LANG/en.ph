@@ -89,9 +89,13 @@ $langs[sh_ment] = "+ Search covers every articles unless otherwise specified.\n"
                   "+ Character + and - should be represented as \+, \-.\n";
 
 # check.ph
-$lant[chk_a] = "Primary";
 $langs[chk_wa] = "MM Admin restricts KK function.\nCheck the MM Admin Password.";
 $langs[chk_lo] = "Can't permit invalid access. If this access was done by valid method, confirm \$board[path] in global.ph";
+$langs[chk_ta] = "Wrong usage of TABEL tag";
+$langs[chk_tb] = "Don't match number of open or close table tag";
+$langs[chk_th] = "Don't open or close TH tag.";
+$langs[chk_tr] = "Don't open or close TR tag.";
+$langs[chk_td] = "Don't open or close TD tag.";
 
 # get.ph
 $langs[get_v]= " [ View Article ]";

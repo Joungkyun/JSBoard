@@ -52,7 +52,7 @@ function get_hostname($reverse = 0,$addr = 0) {
                        "HTTP_X_FORWARDED","HTTP_COMING_FROM","HTTP_FORWARDED_FOR",
                        "HTTP_FORWARDED");
                        
-    for($i=0;$i<$i<$sizeof($proxytype);$i++) {
+    for($i=0;$i<sizeof($proxytype);$i++) {
       if($GLOBALS[$proxytype[$i]]) {
         $host = $GLOBALS[$proxytype[$i]];
         break;
@@ -470,7 +470,7 @@ function file_operate($p,$m,$msg='',$s='',$t=0) {
       if(check_windows()) {
         $src = array("/\n/i","/\r*\n/i");
         $tar = array("\r\n","\r\n");
-      else {
+      } else {
         $src = array("/^M/i","/\r\n/i");
         $tar = array("","\n");
       }

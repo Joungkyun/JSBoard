@@ -305,6 +305,10 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     if($atc[url]) $atc[url] = check_url($atc[url]);
     if($atc[email]) $atc[email] = check_email($atc[email]);
 
+    # 쓰기,답장 모드에서 html 사용시 table tag 검사
+    if($o[at] == "write" || $o[at] == "reply" || $o[at] == "edit")
+      if($atc[html]) check_htmltable($atc[text]);
+
     $compare[email] = trim($compare[email]) ? $compare[email] : "mail check";
     $ccompare[email] = trim($ccompare[email]) ? $ccompare[email] : "mail check";
     $compare[name] = trim($compare[name]) ? $compare[name] : "name check";
