@@ -19,8 +19,8 @@ java_scr();
 
 # input 문의 size를 browser별로 맞추기 위한 설정
 $size = form_size(9);
-$langs[a_t41] = strtoupper($langs[a_t4]);
-$langs[a_t61] = strtolower($langs[a_t6]);
+$langs[a_t41] = ($langs[code] == "en") ? strtoupper($langs[a_t4]) : $langs[a_t4];
+$langs[a_t61] = ($langs[code] == "en") ? strtolower($langs[a_t6]) : $langs[a_t6];
 
 # MySQL 서버에 연결한다
 $connect=@mysql_connect($db[server],$db[user],$db[pass])  or  
