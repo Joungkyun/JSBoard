@@ -19,7 +19,7 @@ If you wnat to see windog's change log, see also
 
 
 Writer    : JoungKyun Kim (admin at oops.org)
-Date      : Sun, Feb 17 2002
+Date      : Mon, Feb 18 2002
 Version   : jsboard-2.0pre4
 
 
@@ -67,6 +67,7 @@ Version   : jsboard-2.0pre4
 41. removed check of $table in error.php
 42. fixed forward agent information when use prelist() function
 43. changed header of download
+44. fixed return problem in security.php on register_globals = Off
 
 
 -----------------------------------------------------------------------------

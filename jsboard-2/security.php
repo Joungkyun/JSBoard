@@ -1,12 +1,13 @@
 <?
+$form_border = "1x";
+include "include/header.ph";
 session_start();
+
 if($m == "golist") {
   echo "<META http-equiv=\"refresh\" content=\"0;URL=list.php?table=$table\">";
   exit;
 }
 
-$form_border = "1x";
-include "include/header.ph";
 include "theme/$print[theme]/config.ph";
 
 if($viewtype || $_SESSION[$jsboard][pos] == 1) {
