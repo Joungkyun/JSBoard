@@ -304,7 +304,7 @@ jsboard/README.OTHERS.OS 문서를 읽어 보고 설치를 시작
 
     -rx-rx----    accountname    nobody     config/global.ph
     -rx-rx----    accountname    nobody     config/spam_list.txt
-    -rx-rx-r--    accountname    nobody     admin/include/config.ph
+    -rx-rx----    accountname    nobody     admin/include/config.ph
 
     단 주의 할것은 account user의 권한으로 설치시에는 보안의 문제성이 대두
     될수 있으니 home directory의 권한을 꼭 711로 해야한다.

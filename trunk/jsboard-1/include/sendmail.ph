@@ -1,5 +1,5 @@
 <?php
-/* mail º¸³»±â ÇÔ¼ö 2000.1.16 ±èÁ¤±Õ */
+/* mail º¸³»±â ÇÔ¼ö 2000.10.4 ±èÁ¤±Õ */
 
 function sendmail($rmail,$fm=0) {
 
@@ -19,6 +19,9 @@ function sendmail($rmail,$fm=0) {
   $ampm=$time[2];
   $hms=$time[3];
 
+  # ¸ÞÀÏ º»¹®ÀÇ ",' Ã³¸®
+  $rmail[text] = eregi_replace("\\\\(\"|')","\\1",$rmail[text]);
+
   if ($langs[code] == "ko") {
     if ($day == "(Mon)") $day="(¿ù)";
     else if ($day == "(Tue)") $day="(È­)";
@@ -37,8 +40,8 @@ function sendmail($rmail,$fm=0) {
     else if ($day == "(Sun)") $day="(ìí)";
   }
 
-  $webboard_address =  sprintf("%s%s",$rmail[bbshome],"read.php3?table=$rmail[table]&no=$rmail[no]");
-  $reply_article    =  sprintf("%s%s",$rmail[bbshome],"reply.php3?table=$rmail[table]&no=$rmail[no]");
+  $webboard_address =  sprintf("%s%s",$rmail[bbshome],"read.php?table=$rmail[table]&no=$rmail[no]");
+  $reply_article    =  sprintf("%s%s",$rmail[bbshome],"reply.php?table=$rmail[table]&no=$rmail[no]");
 
   if (!$fm) {
     $dbname  = "DB Name         : $rmail[table]";
@@ -85,13 +88,15 @@ Scripted by JoungKyun Kim <admin@oops.org>
 
   if ($rmail[user] == "yes" && $rmail[reply_orig_email]) {
     $to = $rmail[reply_orig_email];
-    mail($to, $rmail[title], $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSBoard Message <$rmail[email]>")
+    if(!$rmail[email]) $rmail[email] = "nomail@jsboard.agent"; 
+    mail($to, $rmail[title], $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSBoard Message\r\nReply-To: $rmail[email]")
     or die("$mail_error");
   }
 
   if ($rmail[admin] == "yes" && $rmail[toadmin] != "") {
     $to = $rmail[toadmin];
-    mail($to, $rmail[title], $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSBoard Message <$rmail[email]>")
+    if(!$rmail[email]) $rmail[email] = "nomail@jsboard.agent";
+    mail($to, $rmail[title], $message, "X-Mailer: PHP/" . phpversion(). "\r\nFrom: JSBoard Message\r\nReply-To: $rmail[email]")
     or die("$mail_error");
   }
 

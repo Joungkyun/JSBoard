@@ -16,6 +16,28 @@ Attention : OOPS administration Center is not GPL.
 ******************************************************************************
 
 작성자 : 김정균 (admin@oops.org)
+작성일 : 2000년 10월 4일
+버전   : jsboard-1.1.2 (적수게시판 안정버전)
+
+* 변경된점
+1. cut_string() 함수 버그 수정
+2. 메일 기능 사용시 글쓴이의 메일 주소가 없을 경우 JSBoard message
+    만 나타나도록 수정
+3. 메일 기능 사용시 "' 문자에 escape문자(\)가 붙는 것 수정
+4. 일부 영문 배포판 사용자들을 위해 Lang/ko.ph 에 스케일 설정
+5. vb script file upload시 확장자 변환 (vbs 로 된 virus 방지)
+6. email link시 id에 .가 존재할때 링크 깨지는것 수정
+7. url이나 email link시 마지막이 .로 끝날경우 이를 포함하는것 수정
+8. embed link사용시 NS에서 화면이 출력되지 않는 현상 수정
+9. file upload시에 저장되는 디렉토리명이 겹치는 경우 문제 수정
+10. 수정시 &lt; 같은 특수 문자가 < 로 바뀌어서 나오는것 수정
+
+* OOPS administration center update
+
+1. 통계에서 Syntax error 수정
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin@oops.org)
 작성일 : 2000년 9월 17일
 버전   : jsboard-1.1.1 (적수게시판 안정버전)
 
@@ -30,7 +52,6 @@ Attention : OOPS administration Center is not GPL.
 7. 글읽기시 앞에 몇줄 띄어 쓰기할때 제일 첫줄만 먹지 않는것 수정
 8. account.sh 버그 수정
 9. move_page() 함수에서 공백문자 사용가능하게 수정
-10. user_admin에서 html header 부분 출력이 이상하게 나오는것 수정
 
 * OOPS administration center update
 
