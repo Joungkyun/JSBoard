@@ -20,7 +20,7 @@ compare_pass($sadmin,$login);
 
 if(!$table) print_error($table_err);
 require("../data/$table/config.ph");
-if ($color[theme]) require("../data/$table/default.themes");
+if ($color[theme]) include("../data/$table/default.themes");
 
 require("include/html_ahead.ph");
 

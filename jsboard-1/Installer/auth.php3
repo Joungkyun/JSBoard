@@ -10,7 +10,7 @@ require("./include/passwd.ph");
 if ($langss == "ko") $langs[code] = "ko";
 else $langs[code] = "en";
 
-require("../include/lang.ph");
+include("../include/lang.ph");
 require("../include/get.ph");
 require("../include/print.ph");
 require("../html/head.ph");

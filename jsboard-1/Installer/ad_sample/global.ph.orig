@@ -25,7 +25,7 @@ $db[name]   = "DBname";				// 이름
   게시판 기본 설정
 *****************************************************************************/
 $board[title] = "게시판";	// 게시판 제목
-$board[width] = 530;		// 게시판 너비
+$board[width] = 550;		// 게시판 너비
 $board[tit_l] = 42;		// 제목 필드 최대 길이
 $board[nam_l] = 8;		// 글쓴이 필드 최대 길이
 $board[perno] = 10;		// 페이지 당 게시물 수
@@ -183,6 +183,6 @@ if(file_exists("data/$table/config.ph") && $board[uconf] == "yes")
     include("data/$table/config.ph");
 if(file_exists("data/$table/default.themes") && $color[theme])
     include("data/$table/default.themes");
-$version = "1.0.0";
+$version = "1.0.1";
 
 ?>

@@ -12,6 +12,8 @@ else $filepath = "read.php3?table=$table&no=$no";
 // 문자열의 제일 앞자를 대문자로 만듬
 $kinds = ucfirst($kind);
 
+if ($ena) $langs[au_ment] = $clangs[au_ment];
+
 echo "
 <table width=100% height=100%>
 <tr><td align=center valign=center>

@@ -1,4 +1,7 @@
-***** JSBOARD + OOPS administartion Center *********************************
+***** JSBOARD + OOPS administration Center *********************************
+
+Attention : OOPS administration Center is not GPL.
+            See also admin/License !
 
 Original Developer	: 김병찬 < redhands@linux.sarang.net >
 
@@ -41,10 +44,18 @@ JSBoard v0.5를 개발하셨으며 JSBoard Open Project의 CVS 서버를 제공해
 
 http://network.uos.ac.kr
 
+Special Thanks		: 임은재 < eunjae@kldp.org >
+
+jsboard의 버그리포팅 및 수정을 해 주시고 있으며 가끔 비공인 patch를
+올려 주신다. 비공인 patch 인 이유는 왠만하면 임은재님의 patch를 적용
+하려고는 하나 관리자의 게으름으로 적용이 안되는 경우가 많다.
+
+http://kltp.kldp.org
+
 Homepage 공간 제공	: http://www.kldp.org
 
-한글 리눅스 문서 프로젝트를 운영하시는 권순선님의 서버로서 여러 project의
-후원을 하고 계시다.
+한글 리눅스 문서 프로젝트를 운영하시는 권순선<kss@kldp.org>님의 서버로서
+여러 project의 후원을 하고 계시다.
 
 역대 버젼 개발 참여자
 

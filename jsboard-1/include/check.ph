@@ -94,10 +94,12 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
   // 문자열들과 일치하는 문자열이 $spam_str에 있는지 검사함, 있을 경우
   // 스팸으로 판단하고 정수형 1을 반환함, 없을 경우는 0을 반환함
   for($co = 0; $co < count($list); $co++) {
-    if($list[$co] && ereg($list[$co], $str)) {
+    $list[$co] = eregi_replace("(\r|\n)","",$list[$co]);
+    if($list[$co] && eregi($list[$co], $str)) {
       return 1;
     }
   }
+
   return 0;
 }
 
@@ -125,7 +127,7 @@ function enable_write($super,$user,$check,$ena, $cena = 1) {
 
   if($no) $nom = "&no=$no";
   if ($wcheck) {
-    header("Location: auth_ext.php3?table=$table&kind=$kind$nom");
+    header("Location: auth_ext.php3?table=$table&ena=$ena&cena=$cena&kind=$kind$nom");
     die;
   }
 
@@ -136,10 +138,11 @@ function enable_write($super,$user,$check,$ena, $cena = 1) {
   if (!$ena) $user_m = "$langs[chk_a]";
   $ment = "$langs[chk_wa]";
 
-  if (!$ena)
+  if (!$ena) {
     if($super != $pscheck) missmatch_passwd($selffile,$ment);
-  else if($ena && !$cena)
+  } else if($ena && !$cena) {
     if($super != $pscheck && $user != $pucheck) missmatch_passwd($selffile,$ment);
+  }
 }
 
 // upload file 미리보기를 위한 file type 검사
@@ -154,7 +157,7 @@ function check_filetype($filetype) {
 
 function icon_check($tail,$fn) {
   if ($tail == "rm" || $tail == "doc" || $tail == "exe" || $tail == "hwp" || $tail == "mp3" || $tail == "mov" || $tail == "txt") $icon = "$tail.gif";
-  else if ($tail == "arj" || $tail == "gz" || $tail == "lha" || $tail == "rar" || $tail == "tar" || $tail == "tgz") $icon = "comp.gif";
+  else if ($tail == "zip" || $tail == "arj" || $tail == "gz" || $tail == "lha" || $tail == "rar" || $tail == "tar" || $tail == "tgz") $icon = "comp.gif";
   else if ($tail == "php" || $tail == "php3" || $tail == "phps") {
     if (eregi("(_htm|_cgi|_pl|_shtm|_sh)",$fn)) $icon = "html.gif";
     else $icon = "php.gif";

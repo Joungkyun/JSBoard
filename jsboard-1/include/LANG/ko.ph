@@ -9,7 +9,7 @@ $table_err = "테이블을 지정해야 합니다";
 
 // list.php3 message
 function count_msg() {
-  global $pages, $count
+  global $pages, $count;
 
   $langs[count1] = "총 $pages[all] 페이지, $count[all]개의 글이 ";
   $langs[count2] = "검색되었습니다. ";
@@ -72,12 +72,13 @@ $langs[d_no] = "글번호";
 $langs[d_ad] = "글쓴곳";
 $langs[b_del] = "지우기";
 $langs[d_wa] = "패스워드를 입력해 주십시오. 삭제한 게시물은 복구할 수 없습니다.";
-$langs[d_waw] = "[전체 관리자] 패스워드를 입력해 주십시오. 현재 글의 답장글도 함께 삭제됩니다.";
-$langs[d_waa] = "[관리자] 패스워드를 입력해 주십시오. 현재 글의 답장글도 함께 삭제됩니다.";
+$langs[d_waw] = "[전체 관리자] 패스워드를 입력해 주십시오. 답장글이 존재하면 함께 삭제됩니다.";
+$langs[d_waa] = "[관리자] 패스워드를 입력해 주십시오. 답장글이 존재하면 함께 삭제됩니다.";
 
 
 // auth_ext.php3
-$langs[au_ment] = "관리자 또는 전체 관리자 패스워드를 넣으세요";
+$langs[au_ment] = "전체 관리자 패스워드를 넣으세요";
+$clangs[au_ment] = "게시판 관리자 또는 전체 관리자 패스워드를 넣으세요";
 $langs[au_ments] = "이전 화면으로";
 
 

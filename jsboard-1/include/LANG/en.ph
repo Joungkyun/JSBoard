@@ -8,7 +8,7 @@ $table_err = "Must appoint table name";
 
 // list.php3
 function count_msg() {
-  global $pages, $count
+  global $pages, $count;
 
   $langs[count1] = "Total $pages[all] page, $count[all] articles ";
   $langs[count2] = "searched. ";
@@ -76,7 +76,8 @@ $langs[d_waa]	= "Input [Admin] password. Delete all article that conjuncted this
 
 
 // auth_ext.php3
-$langs[au_ment]	= "Input Admin or Whole Admin Password";
+$langs[au_ment]		= "Input Whole Admin Password";
+$clangs[au_ment]	= "Input each board Admin or Whole Admin Password";
 $langs[au_ments]	= "Back to Previous page";
 
 

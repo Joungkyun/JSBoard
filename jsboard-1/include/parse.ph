@@ -124,10 +124,12 @@ function search_hl($list) {
       break;
     case 'c':
       $list[text] = eregi_replace($str, "$hl[0]\\0$hl[1]", $list[text]);
+      $list[text] = eregi_replace("<a href=([^<]*)<font color=#000000><b><u>([^<]*)</u></b></font>([^>]*)>","<a href=\\1\\2\\3>",$list[text]);
       break;
     case 'a':
       $list[text] = eregi_replace($str, "$hl[0]\\0$hl[1]", $list[text]);
       $list[title] = eregi_replace($str, "$hl[0]\\0$hl[1]", $list[title]);
+      $list[text] = eregi_replace("<a href=([^<]*)<font color=#000000><b><u>([^<]*)</u></b></font>([^>]*)>","<a href=\\1\\2\\3>",$list[text]);
       break;
   }
 

@@ -139,7 +139,7 @@ function page_list($table, $pages, $count, $num, $print = 0) {
 }
 
 function page_form($table, $pages, $color, $print = 0) {
-  global $board // 게시판 기본 설정 (config/global.ph)
+  global $board; // 게시판 기본 설정 (config/global.ph)
   global $o, $langs;   // 검색 등 관련 변수
 
   $post = search2url($o, "post");

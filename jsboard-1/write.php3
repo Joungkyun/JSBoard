@@ -15,6 +15,10 @@ if($board[notice]) print_notice($board[notice]);
 
 $wrap = form_wrap();
 
+// image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
+if ($board[img] && !eregi("%",$board[width])) 
+  $board[width] = $board[width]-$icons[size]*2;
+
 echo "
 <TABLE ALIGN=\"center\" WIDTH=\"$board[width]\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"0\" BGCOLOR=\"$color[r0_bg]\"><TR><TD>
 <TABLE WIDTH=\"100%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
@@ -30,7 +34,6 @@ if($view[email] == "yes") {
        "<TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[email]\" SIZE=\"$size[name]\" MAXLENGTH=\"255\" VALUE=\"$board_cookie[email]\"></TD>\n" .
        "<TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\">$langs[w_mail_m]</FONT></TD>\n";
 }
-
 
 if($view[url] == "yes") {
   echo "</TR><TR>\n" .

@@ -1,0 +1,41 @@
+알려진 버그
+
+작성 2000.7.2
+
+1. 글쓰기, 수정 및 관련글 쓰기 화면에서 <textarea> 에 WRAP을 hard로 설정할
+   시에 auto_link() 함수 - url을 자동으로 링크시키는 함수 - 와 글내용에 table tag를
+   사용할시에 문제점이 발생할 여지가 있다. 
+
+2. 만약 글쓰기에서 '나 "가 들어갈 경우 SQL error가 나는 경우에는 php3.ini
+   (zend에서는 php.ini) 설정 파일이 제위치에 있지 않아서 발생하는 경우이다.
+   phpinfo() 함수를 이용하여 php3.ini 의 위치를 알아낸 다음 php3 source의
+   php3.ini-dist 를 해당 path에 php3.ini라는 이름으로 수동으로 설치를 해 줘야
+   한다.
+
+3. url로 검색을 할경우 link가 여러개가 있을 경우 링크중 하나가 hilighting이
+   되지 않는 버그가 있다.
+
+4. Warning: Unable to resolve 210.178.24.125 ... error가 발생할 경우는
+   php4 beta와 rc 버젼에서만 그런것인지 아니면 compile시의 환경에 따라 달라
+   지는 것인지 확실하지는 않지만 위의 에러 메세지가 나타나는 경우가 있다. 이때에는
+   jsboard/include/get.ph 의 get_hostname() 함수에 보시면 아래의 두 줄을 볼수
+   있다.
+
+   // httpd.conf에서 HostnameLookup On 으로 설정했을 경우만 해당됨
+   $check = gethostbyaddr($host);
+   //$check = getenv("REMOTE_HOST");
+
+   여기서 $check 변수를 서로 바꾸어 주면 된다.
+
+   // httpd.conf에서 HostnameLookup On 으로 설정했을 경우만 해당됨
+   //$check = gethostbyaddr($host);
+   $check = getenv("REMOTE_HOST");
+
+   와 같이 해 주면 된다. 만약 위와 같이 변경을 했을 경우에는 apache에서
+   REMOTE_HOST를 환경 변수로 사용을 할수 있게 설정을 해 줘야 ip address를
+   domain으로 resoving을 해 줄수 있게 된다.
+
+5. OOPS administration center를 사용할 경우 (OOPS administration center는
+   jsboard의 귀속 코드가 아닌 독립 license를 가진 code입니다) JSBoard에서
+   사용하는 Database에 JSBoard에서 사용하지 않는 table이 존재할 경우
+   에러 메세지가 발생할수 있다.
