@@ -176,7 +176,7 @@ function page_form($pages,$o) {
 function search_form($o) {
   $s[ss] = htmlspecialchars(stripslashes($o[ss]));
 
-	if($o[er]) {
+  if($o[er]) {
     # 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
     $chk = preg_replace("/\\\([\]\[()])/i","",$s[ss]);
     $chk = preg_replace("/[^\[\]()]/i","",$chk);
