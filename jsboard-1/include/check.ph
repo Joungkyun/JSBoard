@@ -1,4 +1,16 @@
 <?
+# table 이름에 meta character 가 포함되어 있는지 검사하는 함수
+# $name -> 변수값
+# $i    -> null 이라도 상관없을 경우 1
+# $t    -> table 이름 검사시 1
+#
+function meta_char_check($name,$i=0,$t=0) {
+  if (!$i && !trim($name))  print_error(" $name Value Name Missing! You must specify a value");
+  if ($t && !eregi("^[a-zA-Z]",$name)) print_error("$name Value must start with an alphabet");
+  if (eregi("[^a-z0-9_\-]",$name)) print_error("Can't use special characters except alphabat, numberlic , _, - charcters");
+  if ($t && eregi("^as$",$name)) print_error("Cat't use table name as &quot;as&quot;");
+}
+
 // 문자열에 한글이 포함되어 있는지 검사하는 함수
 //
 // ord    - 문자의 ASCII 값을 가져옴

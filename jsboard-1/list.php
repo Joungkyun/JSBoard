@@ -1,6 +1,6 @@
 <?
-require("include/header.ph");
-require("html/head.ph");
+@include("include/header.ph");
+@include("html/head.ph");
 
 sql_connect($db[server], $db[user], $db[pass]);
 sql_select_db($db[name]);
@@ -142,5 +142,5 @@ if ($board[img] != "yes") {
 echo "</TD></TR>\n".
      "</TABLE>\n</DIV>\n";
 
-require("html/tail.ph");
+@include("html/tail.ph");
 ?>

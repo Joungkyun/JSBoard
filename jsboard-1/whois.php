@@ -16,7 +16,7 @@ if($window) {
   exit;
 }
 
-if (!$table || !$host) {
+if (!trim($table) || !trim($host)) {
   echo "<script>\n".
        "alert('U attempted invalid method in this program!');\n".
        "history.back();\n".
@@ -25,7 +25,6 @@ if (!$table || !$host) {
 }
 
 @include("config/global.ph");
-@include("data/$table/config.ph");
 @include("include/lang.ph");
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -66,7 +65,7 @@ if ($fp) {
       $count++;
   }
   fclose($fp);
-} else echo "whois.krnic.net의 연결에 실패 했습니다.";
+} else echo "$errno $errstr whois.krnic.net의 연결에 실패 했습니다.";
 ?>
 
 </PRE>

@@ -1,24 +1,25 @@
 <?php
 session_start();
-if (!file_exists("../../config/global.ph")) {
+$path[type] = "user_admin";
+include "../../include/error.ph";
+include "../include/check.ph";
+
+# table 이름을 체크한다.
+table_name_check($table);
+
+if (!@file_exists("../../config/global.ph")) {
   echo"<script>alert('Don't exist Global configuration file')\n" .
       "history.back()</script>";
   die;
-} else include("../../config/global.ph");
-include("../include/config.ph");
+} else { @include("../../config/global.ph"); }
+@include("../include/config.ph");
 
-if (file_exists("../../data/$table/config.ph"))
-  include("../../data/$table/config.ph");
+if (@file_exists("../../data/$table/config.ph"))
+  { @include("../../data/$table/config.ph"); }
 
-$path[type] = "user_admin";
-
-include("../../include/exec.ph");
-include("../../include/lang.ph");
-include("../include/print.ph");
-include("../include/get.ph");
-
-if (!$table)
-  err_msg("$table_err");
+@include "../../include/lang.ph";
+@include("../include/print.ph");
+@include("../include/get.ph");
 
 if (crypt($login[pass],$sadmin[passwd]) != $sadmin[passwd]) {
   if (!$passwd) err_msg("$langs[ua_pw_n]");
@@ -522,7 +523,8 @@ fclose($ht);
 
 // theme를 변경한다.
 chdir("../../data/$table/");
-exec("$exec[ln] ../../config/themes/$ua[theme_c].themes default.themes");
+if(file_exists("default.themes")) unlink("default.themes");
+symlink("../../config/themes/$ua[theme_c].themes","default.themes");
 
 echo "<script>\n" .
      "alert('$langs[act_complete]')\n" .

@@ -1,6 +1,5 @@
 <?php
-include("../config/global.ph");
-include("./include/admin_head.ph");
+@include("./include/admin_head.ph");
 
 htmlhead();
 

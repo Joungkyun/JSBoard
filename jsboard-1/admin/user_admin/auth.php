@@ -1,20 +1,27 @@
 <?php
 session_start();
-include("../../config/global.ph");
-if (file_exists("../../data/$table/config.ph"))
-  include("../../data/$table/config.ph");
-
-if ($color[theme]) {
-  include("../../config/default.themes");
-  if (file_exists("../../data/$table/default.themes"))
-    include("../../data/$table/default.themes");
-}
-include("../include/config.ph");
-
 $path[type] = "user_admin";
 
-include("../../include/lang.ph");
-include("../include/get.ph");
+@include "../../include/error.ph";
+@include "../include/check.ph";
+
+# table 이름을 체크한다.
+table_name_check($table);
+
+@include("../../config/global.ph");
+if (@file_exists("../../data/$table/config.ph"))
+  { @include("../../data/$table/config.ph"); }
+
+if ($color[theme]) {
+  @include("../../config/default.themes");
+  if (file_exists("../../data/$table/default.themes"))
+    { @include("../../data/$table/default.themes"); }
+}
+@include("../include/config.ph");
+
+@include "../../include/lang.ph";
+@include "../../include/get.ph";
+@include "../include/get.ph";
 
 // 전체 관리자 로그인 상태에서는 바로 설정 화면으로 넘어간다
 if (crypt($login[pass],$sadmin[passwd]) == $sadmin[passwd])

@@ -1,7 +1,9 @@
 <?php
-
 require("./include/header.ph");
 require("./html/head.ph");
+
+# license year
+$lyear = date("Y",time());
 
 // input 문의 size를 browser별로 맞추기 위한 설정
 $size = form_size(9);
@@ -37,7 +39,7 @@ $langs[au_ment]<br>
 
 <tr align=center><td bgcolor=$color[l1_bg]>
 <font color=$color[l1_fg]>
-Copyleft 1999-2000 Jsboard Open Project<br>
+Copyleft 1999-$lyear Jsboard Open Project<br>
 <a href=http://jsboard.kldp.org target=_blank title=\"Jsboard Open Project\">http://jsboard.kldp.org</a>
 </font>
 </td></tr>

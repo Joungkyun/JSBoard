@@ -17,7 +17,8 @@ include("include/sql.ph");
 include("include/sendmail.ph");
 include("include/tableratio.ph");
 
-if(!$table) print_error("$table_err");
+# table 이 없거나 meta character 존재 유무 체크
+meta_char_check($table,0,1);
 
 if ($upload[yesno] == "yes" && $cupload[yesno] == "yes") $colspan = "7";
 else $colspan = "6";

@@ -1,25 +1,33 @@
 <?php
 session_start();
+$path[type] = "user_admin";
+
+include "../../include/error.ph";
+include "../include/check.ph";
+
+# table 이름을 체크한다.
+table_name_check($table);
+
 if (!@file_exists("../../config/global.ph")) {
   echo"<script>alert('Don't exist Global configuration file')\n" .
       "history.back()</script>";
   die;
-} else include("../../config/global.ph");
+} else { include("../../config/global.ph"); }
 include("../include/config.ph");
 
 if (file_exists("../../data/$table/config.ph"))
-  include("../../data/$table/config.ph");
+  { include("../../data/$table/config.ph"); }
 
 if ($color[theme]) {
   include("../../config/default.themes");
   if (file_exists("../../data/$table/default.themes"))
-    include("../../data/$table/default.themes");
+    { include("../../data/$table/default.themes"); }
 }
 
 $path[type] = "user_admin";
 
-include("../../include/exec.ph");
-include("../../include/lang.ph");
+include "../../include/lang.ph";
+include("../../include/get.ph");
 include("../include/print.ph");
 include("../include/get.ph");
 

@@ -1,7 +1,7 @@
 <?
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
-  if (!$html) $text = eregi_replace("&amp;#","&#",$text);
+  if (!$html) $text = eregi_replace("&amp;(#|amp)","&\\1",$text);
   return $text;
 }
 
@@ -331,6 +331,9 @@ function file_upload($updir) {
     $userfile_name = eregi_replace(".(ph|inc|php[0-9a-z]*|phtml)$", ".phps", $userfile_name);
     $userfile_name = eregi_replace("(.*).(cgi|pl|sh|html|htm|shtml|vbs)$", "\\1_\\2.phps", $userfile_name);
 
+    meta_char_check($table,0,1);
+    meta_char_check($upload[dir]);
+
     mkdir("data/$table/$upload[dir]/$updir",0755);
     exec("$exec[mv]  \"$userfile\" \"data/$table/$upload[dir]/$updir/$userfile_name\"");
     chmod("data/$table/$upload[dir]/$updir/$userfile_name",0644);
@@ -347,6 +350,7 @@ function file_upload($updir) {
 function unhtmlspecialchars($t) {
   $tr = array_flip(get_html_translation_table(HTML_SPECIALCHARS));
   $t = strtr(str_replace("&#039;","'",$t),$tr);
+  $t = strtr(str_replace("&amp;","&",$t),$tr);
 
   return $t;
 }

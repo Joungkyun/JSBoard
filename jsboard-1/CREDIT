@@ -55,9 +55,24 @@ Special Thanks		: 방창현 <winchild@kldp.org>
 
 http://kldp.org/~winchild
 
+Special Thansks         : rOra <ksecurity@iland.co.kr>
+
+rOra(뢰) 또는 Ksecurity 보안 사이트를 운영하며 JSBoard 의 보안 버그
+및 exploit 을 reporting 해 주시고 계신다.
+
+http://ksecurity.iland.co.kr
+
+Special Thanks          : mat <mat@hacksware.com>
+
+hacksware 보안 사이트를 운영하며 JSBoard 의 보안 버그및 exploit 을
+reporting 해 주시고 계신다.
+
+http://hacksware.com
+
 
 역대 버젼 개발 참여자
 
+최기수 <choiks@nuri.net>                v.1.2
 차경묵 <dimanche@dimanche.net>		v0.6, v0.7
 김정균 <admin@oops.org>			v0.6, v0.7, v0.8, v1.0 v1.1 v1.2
 김영민 <blhole@hotmail.com>		v0.5

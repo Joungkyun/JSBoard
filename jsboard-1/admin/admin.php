@@ -1,5 +1,5 @@
 <?php
-include("./include/admin_head.ph");
+@include("./include/admin_head.ph");
 
 // password 비교함수 - admin/include/check.ph
 compare_pass($sadmin,$login);

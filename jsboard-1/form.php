@@ -3,12 +3,13 @@
 if (!@file_exists("config/global.ph")) {
   echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
        "history.back();\nexit;\n</script>\n";
-} else { include("config/global.ph"); }
+} else { @include("config/global.ph"); }
 
-if(!$mode) {
+if(!$mode && trim($table)) {
   @include("include/lang.ph");
   @include("include/get.ph");
   @include("include/print.ph");
+  @include("include/error.ph");
   @include("include/sql.ph");
   @include("include/sendmail.ph");
   @include("include/tableratio.ph");
@@ -22,7 +23,8 @@ if(!$mode) {
   if ($board[img] && !eregi("%",$board[width])) 
     $board[width] = $board[width]-$icons[size]*2;
 
-  $sinfo = get_send_info($table,$no);
+  if(trim($table) && trim($no)) $sinfo = get_send_info($table,$no);
+  else print_error("Some problem in \$table or \$no value");
 
   echo "<HEAD>
 <META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=$langs[charset]\">
@@ -92,6 +94,20 @@ TEXTAREA {font: 10pt $langs[font]; BACKGROUND-COLOR: $color[bgcol]; COLOR: $colo
 </FORM>
 </TABLE>\n";
 } else {
+  @include("include/error.ph");
+  @include("include/check.ph");
+
+  meta_char_check($table,0,1);
+  meta_char_check($f[c]);
+  meta_char_check($upload[dir]);
+  if(!$f[n] || eregi("\.\./",$f[n])) {
+    echo "<script>\n".
+         "alert('U attempted invalid method in this program!');\n".
+         "history.back();\n".
+         "</script>\n";
+    exit;
+  }
+
   echo "<HEAD>\n".
        "<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=$langs[charset]\">\n".
        "<TITLE>JSBoard - VIEW ORIGINAL IMAGE</TITLE>\n".

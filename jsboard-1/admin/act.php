@@ -1,6 +1,6 @@
 <?php
-include("./include/admin_head.ph");
-include("../include/ostype.ph");
+@include("./include/admin_head.ph");
+@include("../include/ostype.ph");
 
 // password 비교함수 - admin/include/auth.ph
 compare_pass($sadmin,$login);
@@ -20,9 +20,7 @@ if ( $mode != "manager_config") {
    *****************************************/
 
   if ($mode=='db_del') {
-    if (!$table_name) {
-      print_error("$table_name $langs[n_acc]");
-    }
+    table_name_check($table_name);
 
     /* table delete */
     $table_del = "drop table $table_name";
@@ -37,7 +35,7 @@ if ( $mode != "manager_config") {
     $tbl_list = mysql_list_tables($db[name]);
 
     /* 새로만들 계정이름의 존재유무 체크 */
-    new_table_check($new_table);
+    table_name_check($new_table);
     /* table list 존재 유무 체크 */
     table_list_check($db[name]);
     /* 동일한 이름의 게시판이 있는지 확인 */
@@ -95,7 +93,8 @@ if ( $mode != "manager_config") {
 
     // 현재 디렉토리를 변경
     chdir("../data/$new_table");
-    exec("$exec[ln] ../../config/themes/basic.themes default.themes");    
+    if(file_exists("default.themes")) unlink("default.themes");
+    symlink("../../config/themes/basic.themes","default.themes");
     chdir("../../admin");
 
     mysql_close();
@@ -122,7 +121,8 @@ if ( $mode != "manager_config") {
 
     // 현재 디렉토리를 변경
     chdir("../config");
-    exec("$exec[ln] themes/$glob[theme].themes default.themes");
+    if(file_exists("default.themes")) unlink("default.themes");
+    symlink("themes/$glob[theme].themes","default.themes");
 
     echo "<script>\n" .
          "alert('$langs[act_complete]')\n" .

@@ -1,6 +1,6 @@
 <?
-require("include/header.ph");
-require("./admin/include/config.ph");
+@include("include/header.ph");
+@include("./admin/include/config.ph");
 
 if ($board_cookie[name])
   $board_cookie[name] = eregi_replace("[\]","",$board_cookie[name]);
@@ -9,7 +9,7 @@ if ($board_cookie[name])
 $kind = "reply";
 enable_write($sadmin[passwd],$admin[passwd],$pcheck,$enable[$kind],$cenable[$kind]);
 
-require("html/head.ph");
+@include("html/head.ph");
 
 if($board[notice]) print_notice($board[notice]);
 
@@ -170,5 +170,5 @@ if ($board[img] == "yes") {
 
 echo "</TR>\n</TABLE>\n</TD></TR>\n</TABLE>\n</DIV>\n";
 
-require("html/tail.ph");
+@include("html/tail.ph");
 ?>

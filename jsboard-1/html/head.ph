@@ -42,6 +42,9 @@ echo "
 <?
 echo "<BODY BACKGROUND=\"$color[image]\" BGCOLOR=\"$color[bgcol]\" TEXT=\"$color[text]\" LINK=\"$color[link]\" VLINK=\"$color[vlink]\" ALINK=\"$color[alink]\">\n";
 
+if (eregi("[^a-z0-9_\-]",$table))
+  print_error("Can't use special characters except alphabat, numberlic , _, - charcters");
+
 if(file_exists("data/$table/html_head.ph")) {
   @include "data/$table/html_head.ph";
 } else if(file_exists("html/head2.ph")) {

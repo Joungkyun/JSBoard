@@ -201,11 +201,20 @@ $compare[email]	= "user@localhost.com";
 ##############################################################################
 if(@file_exists("config/default.themes") && $color[theme])
   { include("config/default.themes"); }
-if(@file_exists("data/$table/config.ph") && $board[uconf] == "yes")
-  { @include("data/$table/config.ph"); }
-if(@file_exists("data/$table/default.themes") && $color[theme])
-  { @include("data/$table/default.themes"); }
 
-$version = "1.2.2";
+if(trim($table)) {
+  if (eregi("[^a-z0-9_\-]",$table)) {
+   echo "<SCRIPT>\n".
+        "alert('Can\'t use special characters except\\nalphabat, numberlic , _, - charcters')\n".
+        "</SCRIPT>\n";
+  }
+
+  if(@file_exists("data/$table/config.ph") && $board[uconf] == "yes")
+    { @include("data/$table/config.ph"); }
+  if(@file_exists("data/$table/default.themes") && $color[theme])
+    { @include("data/$table/default.themes"); }
+}
+
+$version = "1.2.3";
 
 ?>
