@@ -232,7 +232,7 @@ function sendmail($rmail,$fm=0) {
 
   $dbname  = "DB Name           : $rmail[table]";
   $dbloca  = "DB Location       : $webboard_address";
-  $repart  = "Reply Article     : $reply_article";
+  #$repart  = "Reply Article     : $reply_article";
   $nofm    = "\n$dbname\n$dbloca\n$repart";
   $mailurl = "Email             : $rmail[pemail]";
   $homeurl = "HomeURL           : $rmail[url]";

@@ -20,6 +20,9 @@ If you wnat to see windog's change log, see also
 
 버전   : jsboard-2.0pre4
 
+2002.4.10 by 김정균 <http://www.oops.org>
+	- 등록된 글의 메일에서 답장 링크 삭제 (스팸방지 기능과 충돌)
+
 2002.4.8 by 임은재 <http://kldp.org/~enujea/>
 	- 자바스트립트 지원않는 브라우져 위해 에러 메세지 출력 수정
 
