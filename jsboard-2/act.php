@@ -317,8 +317,16 @@ if ($o[at] != "dn" && $o[at] != "sm" && $o[at] != "ma") {
     if($atc[email]) $atc[email] = check_email($atc[email],1);
 
     # 쓰기,답장 모드에서 html 사용시 table tag 검사
-    if($o[at] == "write" || $o[at] == "reply" || $o[at] == "edit")
+    if($o[at] == "write" || $o[at] == "reply" || $o[at] == "edit") {
       if($atc[html]) check_htmltable($atc[text]);
+      #if($langs[code] == "ko" && ($agent[br] != "MSIE" && $agent[br] != "NS")) {
+      #  $strTit = array("text","title","name");
+      #  $range = "/[\x80-\xA0\x41-\x6A\x61-\x7A\x81-\xA0]/";
+      #  for($i=0;$i<3;$i++) {
+      #    if(preg_match($range,$atc[$strTit[$i]])) $atc[$strTit[$i]] = str2uni($atc[$strTit[$i]]);
+      #  }
+      #}
+    }
 
     $compare[email] = trim($compare[email]) ? $compare[email] : "mail check";
     $ccompare[email] = trim($ccompare[email]) ? $ccompare[email] : "mail check";

@@ -65,7 +65,7 @@ function check_url($url) {
   if(!eregi("^(http://|https://|ftp://|telnet://|news://)", $url))
     $url = eregi_replace("^", "http://", $url);
 
-  if(!eregi("(http|https|ftp|telnet|news):\/\/[\xA1-\xFEa-z0-9-]+\.[][\xA1-\xFEa-zA-Z0-9:&#@=_~%?\/.+-]+$", $url))
+  if(!eregi("(http|https|ftp|telnet|news):\/\/[\xA1-\xFEa-z0-9-]+\.[][\xA1-\xFEa-zA-Z0-9,:&#@=_~%?\/.+-]+$", $url))
     return;
     
   return $url;
