@@ -20,16 +20,20 @@ If you wnat to see windog's change log, see also
 
 ¹öÀü   : jsboard-2.0.2
 
-2002.07.31
+Fri, Aug  9 2002
+  by JoungKyun Kim <http://www.oops.org>
+	- fixed typo in sql_db_query() function
+
+Wed, Jul 31 2002
   by JoungKyun Kim <http://www.oops.org>
 	- added english install document
 
-2002.07.30
+Tue, Jul 30 2002
   by JoungKyun Kim <http://www.oops.org>
 	- rewrite prelist() function
 	- supported modify of shell script init on SunOS and Solaris
 
-2002.07.29
+Mon, Jul 29 2002
   by JoungKyun Kim <http://www.oops.org>
 	- fixed auth problem with $edb[uses] = 0 when uses external.ph
 
