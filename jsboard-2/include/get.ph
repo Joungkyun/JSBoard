@@ -45,29 +45,24 @@ function get_authinfo($id,$nocry='') {
 # HTTP_X_FORWARDED_FOR - proxy server가 설정하는 환경 변수
 # gethostbyaddr - IP 주소와 일치하는 호스트명을 가져옴
 #                 http://www.php.net/manual/function.gethostbyaddr.php
-function get_hostname($reverse = 0,$addr = 0) {
-  if(!$addr) {
-    # proxy 에서 제공하는 원 ip address 의 환경 변수를 제공할때 원 ip address 를 받음
-    $proxytype = array("HTTP_X_COMING_FROM","HTTP_X_FORWARDED_FOR", "HTTP_X_FORWARDED",
-                       "HTTP_COMING_FROM","HTTP_FORWARDED_FOR", "HTTP_FORWARDED", "HTTP_VIA");
-
-    for($i=0;$i<sizeof($proxytype);$i++) {
-      if($_SERVER[$proxytype[$i]]) {
-        $host = $_SERVER[$proxytype[$i]];
-        break;
-      }
+function get_hostname($reverse=0, $host=0)
+{
+  if(!$host) {
+    if($_SERVER[HTTP_VIA]) {
+      $tmp = array('HTTP_CLIENT_IP','HTTP_X_FORWARDED_FOR','HTTP_X_COMING_FROM',
+                   'HTTP_X_FORWARDED','HTTP_FORWARDED_FOR','HTTP_FORWARDED',
+                   'HTTP_COMING_FROM','HTTP_PROXY','HTTP_SP_HOST');
+      foreach($tmp AS $v) if($_SERVER[$v] != $_SERVER[REMOTE_ADDR]) break;
+      if($_SERVER[$v]) $host = preg_replace(array('/unknown,/i','/,.*/'),array('',''),$_SERVER[$v]);
+      $host = ($host = trim($host)) ? $host : $_SERVER[REMOTE_ADDR];
     }
+    else $host = $_SERVER[REMOTE_ADDR];
+  }
+  $check = $reverse ? @gethostbyaddr($host) : '';
 
-    # proxy를 통하지 않고 접근 할때 아파치 환경 변수인
-    # REMOTE_ADDR에서 접속자의 IP를 가져옴
-    $host = $host ? $host : $_SERVER[REMOTE_ADDR];
-  } else $host = $addr;
-
-  $check = $reverse ? @gethostbyaddr($host) : "";
-  $host = $check ? $check : $host;
-
-  return $host;
+  return $check ? $check : $host;
 }
+
 
 # 접속한 사람이 사용하는 브라우져를 알기 위해 사용되는 함수, 현재는 FORM
 # 입력창의 크기가 브라우져마다 틀리게 설정되는 것을 보정하기 위해 사용됨
