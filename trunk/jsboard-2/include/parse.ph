@@ -98,7 +98,7 @@ function search2sql($o, $wh = 1) {
     }
   } else {
     $startday = mktime(0,0,0,$o[m1],$o[d1],$o[y1]);
-    $endday = mktime(11,59,59,$o[m2],$o[d2],$o[y2]);
+    $endday = mktime(23,59,59,$o[m2],$o[d2],$o[y2]);
     $sql .= "(date BETWEEN $startday AND $endday) AND ";
   }
 
