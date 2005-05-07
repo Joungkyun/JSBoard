@@ -157,7 +157,8 @@ function get_list($table,$pages,$reply=0,$print=0)
   global $o,$enable,$count,$agent;
 
   $readchk = (preg_match("/read\.php/i",$_SERVER['PHP_SELF']) && $enable['re_list']) ? 1 : 0;
-  $limits = $readchk ? "" : " Limit {$pages['no']}, {$board['perno']}";
+  if ( $pages['no'] > -1 )
+    $limits = $readchk ? "" : " Limit {$pages['no']}, {$board['perno']}";
 
   $sql = $reply['ck'] ? search2sql($reply,1) : search2sql($o);
 
