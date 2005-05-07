@@ -85,7 +85,7 @@ function get_agent() {
     $agent['vr'] = trim(preg_replace("/Mo.+MSIE ([^;]+);.+/i","\\1",$agent_env));
     $agent['vr'] = preg_replace("/[a-z]/i","",$agent['vr']);
   } else if(preg_match("/Gecko|Galeon/i",$agent_env) && !preg_match("/Netscape/i",$agent_env)) {
-    $agent['br'] = "MOZL";
+    $agent['br'] = preg_match ("/Firefox/i", $agent_env) ? 'Firefox' : 'MOZL';
     # client OS 구분
     if(preg_match("/NT/", $agent_env)) $agent['os'] = "NT";
     else if(preg_match("/Win/", $agent_env)) $agent['os'] = "WIN";
@@ -96,8 +96,12 @@ function get_agent() {
     elseif(preg_match("/ko-KR/i",$agent_env)) $agent['ln'] = "KO";
     else $agent['ln'] = "OTHER";
     # version 정보
-    $agent['vr'] = preg_replace("/Mozi[^(]+\([^;]+;[^;]+;[^;]+;[^;]+;([^)]+)\).*/i","\\1",$agent_env);
-    $agent['vr'] = trim(str_replace("rv:","",$agent['vr']));
+    if ( $agent['br'] == 'Firefox' ) {
+      $agent['vr'] = preg_replace("/.*Firefox\/([0-9.]+).*/i", "\\1", $agent_env);
+    } else {
+      $agent['vr'] = preg_replace("/Mozi[^(]+\([^;]+;[^;]+;[^;]+;[^;]+;([^)]+)\).*/i","\\1",$agent_env);
+      $agent['vr'] = trim(str_replace("rv:","",$agent['vr']));
+    }
     # NS 와의 공통 정보
     $agent['co'] = "mozilla";
   } else if(preg_match("/Konqueror/",$agent_env)) {
