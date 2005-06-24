@@ -1,0 +1,17 @@
+#!/bin/sh
+
+#
+# database client configuration
+# set the your database only.
+#
+
+# PostgreSQL config
+pgsql_client="/usr/bin/psql"
+
+# MySQL config
+mysql_client="/usr/bin/mysql"
+mysql_config="/usr/bin/mysql_config"
+
+# SQLIte config
+sqlite_client="/usr/bin/sqlite"
+

@@ -1,0 +1,696 @@
+#!/bin/sh
+
+source ./lib/install-config
+source ./lib/commonlib
+queryReturn="./queryRet.$$"
+sedTemp="./sedTmp.$$"
+t=
+
+clear
+echo -n $yellow
+echo "###############################################################################"
+echo "# JSBoard Installer v2.1                                                      #"
+echo "# Scripted By JSBoard Open Project <http://jsboard.kldp.net>                  #"
+echo "###############################################################################"
+echo -n $end
+echo
+
+printStep "STEP 1. Language Check"
+echo "----------------------"
+echo
+echo "Select your installation language : "
+echo "  1. English"
+echo "  2. Korean"
+echo -n "Choise (Default : 1) : "
+read language
+
+[ -z "${language}" ] && language=1
+
+_lang=
+while [ -z "${_lang}" ]
+do
+	case "${language}" in
+		1) _lang="en" ;;
+		2) _lang="ko" ;;
+	esac
+
+	if [ -z "${_lang}" ]; then
+		echo -n "Choise (Default : 1) : "
+		read language
+	fi
+done
+
+# include language pack
+source ./lib/lang/installation-${_lang}.conf
+
+me=$(whoami)
+
+if [ "${me}" != "root" ]; then
+	echo
+	printf "${S1_MSG_1}" $me
+	read priv
+
+	case "${priv}" in
+		Y|y) priv=y;;
+		N|n) priv=n;;	
+		*) priv=y
+	esac
+
+	if [ "${priv}" = "y" ]; then
+		echo
+		echo "${S1_MSG_2}"
+		exit 0
+	fi
+fi
+echo
+
+
+#
+# STEP 2. Directory Creating
+#
+
+
+printStep "${S2_MSG_1}"
+printColor_n "${S2_LIN_1}" "white"
+echo
+
+res=0
+echo -n "${S2_MSG_2}${mvcol}"
+printDot 3
+[ -z "${t}" ] && createDir "../data"
+res=$?
+[ -n "${t}" ] && res=0
+[ $res -eq 0 ] && onsuccess || onfailure
+
+res=0
+echo -n "${S2_MSG_3}${mvcol}"
+printDot 3
+[ -z "${t}" ] && createDir "../config"
+res=$?
+[ -n "${t}" ] && res=0
+[ $res -eq 0 ] && onsuccess || onfailure
+echo
+
+
+#
+# STEP 3. Database Configuration
+#
+printStep "${S3_MSG_1}"
+printColor_n "${S3_LIN_1}" "white"
+echo
+
+echo "${S3_MSG_2}"
+echo "  1. mysql 3.x"
+echo "  2. mysql 4.x"
+echo "  3. mysql 4.1.x"
+echo "  4. PostgreSQL 7/8"
+echo "  5. SQLIte"
+printf "${MSG_CHOISE}" "2"
+read sdb
+
+[ -z "${sdb}" ] && sdb=2
+
+while [ -z "${database_type}" ]
+do
+	case "${sdb}" in
+		1)
+			database_type="mysql3"
+			database_tname="MySQL"
+			database_troot="root"
+			database_client=${mysql_client}
+			;;
+		2)
+			database_type="mysql4"
+			database_tname="MySQL"
+			database_troot="root"
+			database_client=${mysql_client}
+			;;
+		3)
+			database_type="mysql41"
+			database_tname="MySQL"
+			database_troot="root"
+			database_client=${mysql_client}
+			;;
+		4)
+			database_type="pgsql"
+			database_tname="PostgreSQL"
+			database_troot="pgsql"
+			database_client=${pgsql_client}
+			;;
+		5)
+			database_type="sqlite"
+			database_tname="SQLite"
+			database_client=${sqlite_client}
+			;;
+	esac
+
+	if [ -z "${database_type}" ]; then
+		printf "${MSG_CHOISE}" "2"
+		read sdb
+	fi
+done
+echo
+
+if [ "${database_type}" = "pgsql" ]; then
+	for i in /tmp /var/lib/pgsql/data
+	do
+		if [ -S "${i}/.s.PGSQL.5432" ]; then
+			database_host=${i}
+			break
+		fi
+	done
+elif [ "${database_type}" = "sqlite" ]; then
+	database_host="../config/jsboard.db"
+else
+	for i in /tmp/mysql.sock /var/lib/mysql/mysql.sock
+	do
+		if [ -S "${i}" ]; then
+			database_host=":${i}"
+			break
+		fi
+	done
+fi
+
+[ -z "${database_host}" ] && database_host="127.0.0.1"
+
+if [ "${database_type}" != "sqlite" ]; then
+	echo -n "${S3_MSG_12} "
+	printf "${MSG_CHOISE}" "${database_host}"
+	read _database_host
+
+	if [ -n "${_database_host}" ] ;then
+		database_host=${_database_host}
+	fi
+
+	_ss=$(echo ${database_host} | sed 's!^\(localhost\|127\.0\.0\.1\|:.*\|/.*\)!!g')
+	if [ -n "${_ss}" ]; then
+		database_opthost=" -h${_ss}"
+	fi
+
+	echo -n "${S3_MSG_3} "
+	printf "${MSG_CHOISE}" "N"
+	read _dbroot
+
+	[ -z "${_dbroot}" ] && _dbroot="n"
+
+	while [ -z "${dbroot}" ]
+	do
+		case "${_dbroot}" in
+			Y|y) dbroot="y" ;;
+			N|n) dbroot="n" ;;
+		esac
+
+		if [ -z "${dbroot}" ]; then
+			printf "${MSG_CHOISE}" "N"
+			read _dbroot
+		fi
+	done
+
+	if [ "${dbroot}" = "y" ]; then
+		#
+		# database root name
+		#
+		echo -n "${database_tname} ${S3_MSG_4} "
+		printf "${MSG_CHOISE}" "${database_troot}"
+		read database_root
+		[ -z "${database_root}" ] && database_root="${database_troot}"
+
+		if [ "${database_type}" != "pgsql" ]; then
+			#
+			# database root password
+			#
+			echo -n "${database_tname} ${S3_MSG_5} : "
+			read database_pass
+		fi
+	fi
+
+	# database root user
+	echo -n "${S3_MSG_6} "
+	printf "${MSG_CHOISE}" "jsboard"
+	read jsboard_dbuser
+	[ -z "${jsboard_dbuser}" ] && jsboard_dbuser="jsboard"
+
+	# database password
+	echo -n "${S3_MSG_7} : "
+	read jsboard_dbpass
+
+	# database name
+	echo -n "${S3_MSG_8} "
+	printf "${MSG_CHOISE}" "jsboard"
+	read jsboard_dbname
+	[ -z "${jsboard_dbname}" ] && jsboard_dbname="jsboard"
+
+	if [ "${dbroot}" = "y" ]; then
+		if [ "$database_type" = "pgsql" ]; then
+			_database_client="${database_client} -U ${database_root}${database_opthost} template1"
+		else
+			_database_client="${database_client} -u ${database_root} -p${database_pass}${database_opthost} mysql"
+		fi
+
+		create_db="CREATE DATABASE ${jsboard_dbname};"
+
+		#
+		# create database
+		#
+		echo
+		echo -n "${jsboard_dbname} ${S3_MSG_9}${mvcol}"
+		printDot 3
+
+		res=0
+		if [ "${database_type}" = "pgsql" ]; then
+			[ -z "${t}" ] && ${_database_client} -c "${create_db}" 2> ${queryReturn} 1> /dev/null
+			res=$?
+			[ -n "${t}" ] && res=0
+
+			if [ $res -eq 0 ]; then
+				ress=
+				[ -z "${t}" ] && ress=$(cat ${queryReturn})
+
+				[ -n "${ress}" ] && res=1
+			fi
+		else
+			[ -z "${t}" ] && ${_database_client} -e "${create_db}" &> /dev/null
+			res=$?
+			[ -n "${t}" ] && res=0
+		fi
+		[ -f "${queryReturn}" ] && rm -f ${queryReturn}
+
+		[ $res -eq 0 ] && onsuccess || onfailure
+
+		#
+		# create user
+		#
+		if [ "${database_type}" = "pgsql" ]; then
+			create_user="CREATE USER ${jsboard_dbuser} PASSWORD '${jsboard_dbpass}';"
+		else
+			create_user="GRANT all privileges ON ${jsboard_dbname}.* TO ${jsboard_dbname}@localhost IDENTIFIED by '${jsboard_dbpass}';"
+			[ "${database_type}" = "mysql41" ] && \
+			create_user="${create_user}UPDATE user SET password = old_password('${jsboard_dbpass}') WHERE user = '${jsboard_dbuser}'; flush privileges;"
+		fi
+
+		echo -n "${S3_MSG_10}${mvcol}"
+		printDot 3
+
+		res=0
+		if [ "${database_type}" = "pgsql" ]; then
+			[ -z "${t}" ] && ${_database_client} -c "${create_user}" 2> ${queryReturn} 1> /dev/null
+			res=$?
+			[ -n "${t}" ] && res=0
+
+			if [ $res -eq 0 ]; then
+				ress=
+				[ -z "${t}" ] && ress=$(cat ${queryReturn})
+
+				[ -n "${ress}" ] && ress=1
+			fi
+		else
+			[ -z "${t}" ] && ${_database_client} -e "${create_user}" &> /dev/null
+			res=$?
+			[ -n "${t}" ] && res=0
+		fi
+
+		[ -f "${queryReturn}" ] && rm -f ${queryReturn}
+
+		[ $res -eq 0 ] && onsuccess || onfailure
+	fi
+
+	if [ "$database_type" = "pgsql" ]; then
+		_database_client="${database_client} -U ${jsboard_dbuser}${database_opthost} ${jsboard_dbname}"
+	else
+		_database_client="${database_client} -u ${jsboard_dbuser}${database_opthost} -p${jsboard_dbpass} ${jsboard_dbname}"
+	fi
+
+	echo -n "${S3_MSG_11}${mvcol}"
+	printDot 3
+
+	res=0
+	if [ "${database_type}" = "pgsql" ]; then
+		[ -z "${t}" ] && ${_database_client} < ../SQL/pgsql/userdb.sql 2> ${queryReturn} 1> /dev/null
+		res=$?
+		[ -n "${t}" ] && res=0
+
+		if [ $res -eq 0 ]; then
+			ress=
+			[ -z "${t}" ] && ress=$(cat ${queryReturn})
+			[ -n "${ress}" ] && ress=1
+		fi
+	else
+		[ -z "${t}" ] && ${_database_client} < ../SQL/${database_type}/userdb.sql &> /dev/null
+		res=$?
+		[ -n "${t}" ] && res=0
+	fi
+	[ -f "${queryReturn}" ] && rm -f ${queryReturn}
+
+	# regist jsboard admin user
+	if [ $res -eq 0 ]; then
+		create_admin="INSERT INTO userdb (nid, name, email, url, passwd, position) VALUES ('admin', 'admin', '', '', '\$1\$1LrF.u6w\$FeGXSj2cPGiyPl5MbB74r.', 1)";
+
+		res=0
+		if [ "${database_type}" = "pgsql" ]; then
+			[ -z "${t}" ] && ${_database_client} -c "${create_admin}" 2> ${queryReturn} 1> /dev/null
+			res=$?
+			[ -n "${t}" ] && res=0
+
+			if [ $res -eq 0 ]; then
+				ress=
+				[ -z "${t}" ] && ress=$(cat ${queryReturn})
+				[ -n "${ress}" ] && ress=1
+			fi
+		else
+			[ -z "${t}" ] && ${_database_client} -e "${create_admin}" &> /dev/null
+			res=$?
+			[ -n "${t}" ] && res=0
+		fi
+	fi
+
+	[ -f "${queryReturn}" ] && rm -f ${queryReturn}
+	[ $res -eq 0 ] && onsuccess || onfailure
+
+else
+	res=0
+	echo -n "${S3_MSG_11}${mvcol}"
+	printDot 3
+	[ -z "${t}" ] && ${sqlite_client} ${database_host} < ../SQL/${database_type}/userdb.sql &> /dev/null
+	res=$?
+	[ -n "${t}" ] && res=0
+
+	if [ $res -eq 0 ]; then
+		create_admin="INSERT INTO userdb (nid, name, email, url, passwd, position) VALUES ('admin', 'admin', '', '', '\$1\$1LrF.u6w\$FeGXSj2cPGiyPl5MbB74r.', 1);";
+
+		[ -z "${t}" ] && ${sqlite_client} ${database_host} < ${queryReturn} &> /dev/null
+		res=$?
+		[ -n "${t}" ] && res=0
+
+		[ -f "${queryReturn}" ] && rm -f ${queryReturn}
+	fi
+
+	[ $res -eq 0 ] && onsuccess || onfailure
+fi
+
+
+#
+# STEP 4. Install configuration file
+#
+printStep "${S4_MSG_1}"
+printColor_n "${S4_LIN_1}" "white"
+echo
+
+res=0
+echo -n "${S4_MSG_2}${mvcol}"
+printDot 3
+[ -z "${t}" ] && cp ./sample/admin/global.php.orig ../config/global.php
+res=$?
+[ -n "${t}" ] && res=0
+[ $res -eq 0 ] && onsuccess || onfailure
+
+res=0
+echo -n "${S4_MSG_3}${mvcol}"
+printDot 3
+[ -z "${t}" ] && cp ./sample/admin/spam_list.txt.orig ../config/spam_list.txt
+res=$?
+[ -n "${t}" ] && res=0
+[ $res -eq 0 ] && onsuccess || onfailure
+
+
+#
+# STEP 5. Permission setting
+#
+printStep "${S5_MSG_1}"
+printColor_n "${S5_LIN_1}" "white"
+echo
+
+apache_user=$(ps aux | grep -E "apache|httpd" | grep -v "\(^root\|grep\)" | awk '{print $1}'| uniq)
+echo -n "${S5_MSG_2} "
+printf "${MSG_CHOISE}" "${apache_user}"
+read _auser
+
+[ -n "${_auser}" ] && apache_user="${_auser}"
+
+pwds=$(pwd | sed 's!/utils.*!!g')
+
+echo
+if [ "${me}" = "root" ]; then
+	echo -n "${S5_MSG_3}${mvcol}"
+	printDot 3
+
+	[ -z "${t}" ] && chown ${apache_user} ../config &> /dev/null
+	res=$?
+	[ -n "${t}" ] && res=0
+
+	if [ $res -eq 0 ]; then
+		[ -z "${t}" ] && chmod 370 ../config &> /dev/null
+		res=$?
+		[ -n "${t}" ] && res=0
+	fi
+	[ $res -eq 0 ] && onsuccess || onfailure
+
+	echo -n "${S5_MSG_4}${mvcol}"
+	printDot 3
+	[ -z "${t}" ] && chown ${apache_user} ../data &> /dev/null
+	res=$?
+	[ -n "${t}" ] && res=0
+
+	if [ $res -eq 0 ]; then
+		[ -z "${t}" ] && chmod 370 ../data &> /dev/null
+		res=$?
+		[ -n "${t}" ] && res=0
+	fi
+	[ $res -eq 0 ] && onsuccess || onfailure
+
+	echo -n "${S5_MSG_5}${mvcol}"
+	printDot 3
+	[ -z "${t}" ] && chown ${apache_user} ../config/global.php &> /dev/null
+	res=$?
+	[ -n "${t}" ] && res=0
+
+	if [ $res -eq 0 ]; then
+		[ -z "${t}" ] && chmod 660 ../config/global.php &> /dev/null
+		res=$?
+		[ -n "${t}" ] && res=0
+	fi
+	[ $res -eq 0 ] && onsuccess || onfailure
+
+	echo -n "${S5_MSG_6}${mvcol}"
+	printDot 3
+	[ -z "${t}" ] && chown ${apache_user} ../config/spam_list.txt &> /dev/null
+	res=$?
+	[ -n "${t}" ] && res=0
+
+	if [ $res -eq 0 ]; then
+		[ -z "${t}" ] && chmod 660 ../config/spam_list.txt &> /dev/null
+		res=$?
+		[ -n "${t}" ] && res=0
+	fi
+	[ $res -eq 0 ] && onsuccess || onfailure
+
+	if [ "${database_type}" = "sqlite" ]; then
+		[ -z "${t}" ] && chown ${apache_user} ${database_host} &> /dev/null
+		[ -z "${t}" ] && chmod 660 ${database_host} &> /dev/null
+	fi
+else
+	echo -n "${S5_MSG_3}${mvcol}"
+	printDot 3
+
+	[ -z "${t}" ] && chmod 707 ../config &> /dev/null
+	res=$?
+	[ -n "${t}" ] && res=0
+	[ $res -eq 0 ] && onsuccess || onfailure
+
+	echo -n "${S5_MSG_4}${mvcol}"
+	printDot 3
+	[ -z "${t}" ] && chmod 707 ../data &> /dev/null
+	res=$?
+	[ -n "${t}" ] && res=0
+	[ $res -eq 0 ] && onsuccess || onfailure
+
+	echo -n "${S5_MSG_5}${mvcol}"
+	printDot 3
+	[ -z "${t}" ] && chmod 606 ../config/global.php &> /dev/null
+	res=$?
+	[ -n "${t}" ] && res=0
+	[ $res -eq 0 ] && onsuccess || onfailure
+
+	echo -n "${S5_MSG_6}${mvcol}"
+	printDot 3
+	[ -z "${t}" ] && chmod 606 ../config/spam_list.txt &> /dev/null
+	res=$?
+	[ -n "${t}" ] && res=0
+	[ $res -eq 0 ] && onsuccess || onfailure
+
+	if [ "${database_type}" = "sqlite" ]; then
+		[ -z "${t}" ] && chmod 606 ${database_host} &> /dev/null
+	fi
+fi
+
+
+#
+# STEP 6. Basic setup of global configuration file
+#
+printStep "${S6_MSG_1}"
+printColor_n "${S6_LIN_1}" "white"
+echo
+
+echo -n "${S6_MSG_2} : "
+read jvar_httpd
+
+while [ -z "${jvar_httpd}" ]
+do
+	echo -n "${S6_MSG_2} : "
+	read jvar_httpd
+done
+
+jvar_webpath="${jvar_httpd}"
+jvar_webpath=$(echo "${jvar_httpd}" | sed 's!/[ ]*$!!g')
+
+echo -n "${S6_MSG_3} "
+printf "${MSG_CHOISE}" "login"
+read jvar_login
+
+[ -z "${jvar_login}" ] && jvar_login="login"
+
+echo "${S6_MSG_4}"
+echo "  1. ${S6_MSG_5}"
+echo "  2. ${S6_MSG_6}"
+echo "  3. ${S6_MSG_7}"
+printf "${MSG_CHOISE}" "${language}"
+read jvar_tname
+
+while [ -z "${jvar_theme}" ]
+do
+	case "${jvar_tname}" in
+		1) jvar_theme="EN-default" ;;
+		2) jvar_theme="KO-default" ;;
+		3) jvar_theme="JP-default" ;;
+	esac
+
+	if [ -z "${_lang}" ]; then
+		printf "${MSG_CHOISE}" "${language}"
+		read jvar_tname
+	fi
+done
+
+jvar_s1=$$
+jvar_s2=$(echo ${jvar_s1} | sed 's/^\([0-9]\)\([0-9]\)\([0-9]\).*/\1\3/g')
+jvar_s3=$(echo ${jvar_s1} | sed 's/^\([0-9]\)\([0-9]\)\([0-9]\).*/\2\1/g')
+jvar_spam="${jvar_s1}:${jvar_s2}:${jvar_s3}"
+_config="../config/global.php"
+
+echo -n "${S6_MSG_8}${mvcol}"
+printDot 3
+
+if [ -z "${t}" -a ! -f "${_config}" ]; then
+	onfailure
+fi
+
+if [ -z "${t}" ]; then
+	cat ${_config} | sed "s!@DBTYPE@!${database_type}!g" > ${sedTemp}
+	[ -f "${_config}" ] && rm -f ${_config}
+	[ -f "${sedTemp}" ] && mv ${sedTemp} ${_config}
+
+	cat ${_config} | sed "s!@DBSERVER@!${database_host}!g" > ${sedTemp}
+	[ -f "${_config}" ] && rm -f ${_config}
+	[ -f "${sedTemp}" ] && mv ${sedTemp} ${_config}
+
+	cat ${_config} | sed "s!@DBUSER@!${jsboard_dbuser}!g" > ${sedTemp}
+	[ -f "${_config}" ] && rm -f ${_config}
+	[ -f "${sedTemp}" ] && mv ${sedTemp} ${_config}
+
+	cat ${_config} | sed "s!@DBPASS@!${jsboard_dbpass}!g" > ${sedTemp}
+	[ -f "${_config}" ] && rm -f ${_config}
+	[ -f "${sedTemp}" ] && mv ${sedTemp} ${_config}
+
+	cat ${_config} | sed "s!@DBNAME@!${jsboard_dbname}!g" > ${sedTemp}
+	[ -f "${_config}" ] && rm -f ${_config}
+	[ -f "${sedTemp}" ] && mv ${sedTemp} ${_config}
+
+	jsboard_dbcahr=0
+	if [ "${database_type}" = 'pgsql' ]; then
+		database_dbchar=1
+		${database_client} -c "set client_encoding to uhc" 2> ${queryReturn} 1> /dev/null
+		ress=
+		ress=$(cat ${queryReturn})
+		[ -n "${ress}" ] && database_dbchar=0
+		[ -f "${queryReturn}" ] && rm -f ${queryReturn}
+	elif [ "${database_type}" = "mysql41" ]; then
+		jsboard_dbchar=1
+	fi
+
+	cat ${_config} | sed "s!@DBCHAR@!${jsboard_dbchar}!g" > ${sedTemp}
+	[ -f "${_config}" ] && rm -f ${_config}
+	[ -f "${sedTemp}" ] && mv ${sedTemp} ${_config}
+fi
+
+onsuccess
+
+
+echo -n "${S6_MSG_9}${mvcol}"
+printDot 3
+
+if [ -z "${t}" ]; then
+	cat ${_config} | sed "s!@LOGINNAME@!${jvar_login}!g" > ${sedTemp}
+	[ -f "${_config}" ] && rm -f ${_config}
+	[ -f "${sedTemp}" ] && mv ${sedTemp} ${_config}
+fi
+
+onsuccess
+
+
+echo -n "${S6_MSG_10}${mvcol}"
+printDot 3
+
+if [ -z "${t}" ]; then
+	cat ${_config} | sed "s!@WEBPATH@!${jvar_webpath}!g" > ${sedTemp}
+	[ -f "${_config}" ] && rm -f ${_config}
+	[ -f "${sedTemp}" ] && mv ${sedTemp} ${_config}
+fi
+
+onsuccess
+
+
+echo -n "${S6_MSG_11}${mvcol}"
+printDot 3
+
+if [ -z "${t}" ]; then
+	cat ${_config} | sed "s!@SPAM@!${jvar_spam}!g" > ${sedTemp}
+	[ -f "${_config}" ] && rm -f ${_config}
+	[ -f "${sedTemp}" ] && mv ${sedTemp} ${_config}
+fi
+
+onsuccess
+
+echo -n "${S6_MSG_12}${mvcol}"
+printDot 3
+
+if [ -z "${t}" ]; then
+	cat ${_config} | sed "s!@THEME@!${jvar_theme}!g" > ${sedTemp}
+	[ -f "${_config}" ] && rm -f ${_config}
+	[ -f "${sedTemp}" ] && mv ${sedTemp} ${_config}
+fi
+
+onsuccess
+
+echo -n "${S6_MSG_13}${mvcol}"
+printDot 3
+
+if [ -z "${t}" ]; then
+	cat ${_config} | sed "s!@APATH@!${pwds}!g" > ${sedTemp}
+	[ -f "${_config}" ] && rm -f ${_config}
+	[ -f "${sedTemp}" ] && mv ${sedTemp} ${_config}
+fi
+
+onsuccess
+
+if [ "${me}" = "root" ]; then
+	[ -z "${t}" ] && chown ${apache_user} ${_config} &> /dev/null
+	[ -z "${t}" ] && chmod 660 ${_config} &> /dev/null
+else
+	[ -z "${t}" ] && chmod 606 ${_config} &> /dev/null
+fi
+
+echo
+printStep "Congratulations !!!"
+echo
+printf "${COMPLETE_MSG}" "${jvar_webpath}"
+echo
+
+exit 0

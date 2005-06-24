@@ -1,0 +1,175 @@
+
+<form name="replyp" method="post" action="act.php"<?=$board['formtype']?>>
+<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
+<tr>
+<td valign="bottom" colspan=2 class="counter">
+<img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''>
+&gt;&gt; Write reply article
+</td>
+</tr>
+
+<tr bgcolor="#a0dc10">
+<td colspan=2>
+<img src="./theme/KO-default/img/board_no.gif" align="middle" alt=''>
+<img src="theme/KO-default/img/reply_title.gif" border=0 alt=''>
+</td>
+</tr>
+
+<tr>
+<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td>
+</tr>
+</table>
+
+<table width=<?=$board['width']?> border=0 cellpadding=1 cellspacing=0>
+<tr>
+<td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
+<td rowspan=9 width=4 bgcolor="#6d7bc9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=''></td>
+<td rowspan=9 width=10><img src="images/blank.gif" width=10 height=1 border=0 alt=''></td>
+<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''><br></td>
+<td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
+</tr>
+
+<!-- ==================================================================== -->
+<!-- $size['name']         : input 문의 사이즈 theme config 에서 설정     -->
+<!-- $board_cookie[name] : cookie 에 등록된 이름이 자동 지정되도록        -->
+<!-- ==================================================================== -->
+<tr>
+<td width=80>이름</td>
+<td><input type="text" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist[name]?>"<?=$disable?>></td>
+</tr>
+
+<!-- ==================================================================== -->
+<!-- $view['email']          : email 등록 여부 결정                       -->
+<!-- $board_cookie[email]  : cookie 에 등록된 이 메일이 자동 지정되도록   -->
+<!-- ==================================================================== -->
+<?
+if($view['email']) {
+  echo "
+<tr>
+<td>메일</td>
+<td><input type=\"text\" name=\"atc[email]\" size={$size['name']} maxlength=255 value=\"{$pre_regist['email']}\"$disable></td>
+</tr>\n";
+}
+?>
+
+<!-- ==================================================================== -->
+<!-- $view['url']             : url 등록 여부 결정                        -->
+<!-- $board_cookie['url']     : cookie 에 등록된 url이 자동 지정되도록    -->
+<!-- ==================================================================== -->
+<?
+if($view['url']) {
+  echo "
+<tr>
+<td>홈페이지</td>
+<td><input type=\"text\" name=\"atc[url]\" size={$size['name']} maxlength=255 value=\"{$pre_regist['url']}\"$disable></td>
+</tr>\n";
+}
+?>
+
+<!-- ==================================================================== -->
+<!-- $html_chk_ok  : 부모글이 html 사용함일때 기본 체크 되게함            -->
+<!-- $html_chk_no  : 부모글이 html 사용안함일때 기본 체크 되게함          -->
+<!-- ==================================================================== -->
+<tr>
+<td>HTML</td>
+<td>
+<input type="radio" name="atc[html]" value=1<?=$html_chk_ok?>> 사용함
+<input type="radio" name="atc[html]" value=0<?=$html_chk_no?>> 사용안함
+</td>
+</tr>
+
+<!-- ==================================================================== -->
+<!-- upload 부분 출력여부 설정 (왠만하면 그냥 쓰면 됨)                    -->
+<!-- ==================================================================== -->
+<?
+if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
+  echo "<tr>\n".
+       "<td>파일</td>\n".
+       "<td>\n".
+       "<input type=\"hidden\" name=\"max_file_size\" value=\"{$upload['maxsize']}\">\n".
+       "<input type=\"file\" name=\"userfile\" size={$size['uplo']} maxlength=256>\n".
+       "</td>\n".
+       "</tr>\n";
+} elseif(!$upload['yesno'] && $cupload['yesno']) {
+  echo "<tr>\n".
+       "<td>파일</td>\n".
+       "<td><font class=\"attachfn_m\">" . $_('upload') . "<font></td>\n".
+       "</tr>\n";
+}
+?>
+
+<!-- ==================================================================== -->
+<!-- $size['titl']  : title input 문의 사이즈                             -->
+<!-- $reti        : 몇번째 댓글인지 출력                                  -->
+<!-- $list['title'] : 댓글 제목                                           -->
+<!-- ==================================================================== -->
+<tr>
+<td>제목</td>
+<td><input type="text" name="atc[title]" size=<?=$size['titl']?> maxlength=100 value="<?="Re$reti: {$list['title']}"?>"></td>
+</tr>
+
+<tr>
+<!-- ==================================================================== -->
+<!-- admin login 상태일 경우 패스워드를 안적어도 되게끔 하는 루틴         -->
+<!-- IE, NS6 의 경우에는 textarea 창 사이즈 조정 버튼도 같이 출력         -->
+<!-- ==================================================================== -->
+<?
+if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
+  echo "<td>패스워드</td>\n".
+       "<td>\n".
+       "<input type=\"password\" name=\"atc[passwd]\" size={$size['pass']} maxlength=16 class=\"passwdbox\">\n".
+       "<img src=\"./images/blank.gif\" width=15 height=1 border=0 alt=''>\n".
+       "TextSize Operation {$print['operate']}\n".
+       "</td>\n";
+} else {
+  echo "<td colspan=2 align=right>\n".
+       "TextSize Operation {$print['operate']}\n".
+       "</td>\n";
+}
+?>
+</tr>
+
+<tr>
+<td colspan=2><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
+</tr>
+</table>
+
+<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
+<tr><td><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td></tr>
+</table>
+
+<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
+<tr><td class="rbodybg">
+
+<!-- ==================================================================== -->
+<!-- $text_area  : 댓글의 TEXTAREA를 출력(즉 글쓰는 부분)                 -->
+<!-- ==================================================================== -->
+<!-- =============================== 글내용 =============================== -->
+<?=$text_area?>
+
+<!-- =============================== 글내용 =============================== -->
+
+</td></tr>
+</table>
+
+
+<!-- ==================================================================== -->
+<!-- $wrap['ment']     : textarea 에 wrap 이 hard 가 아닐 경우 경고 메세지-->
+<!-- $table.$pages     : 목록으로 돌아가는 링크에 필요한 변수들           -->
+<!-- $print['passform']: 댓글 등록하는데 필요한 hidden 변수들             -->
+<!-- $orig_option      : 글쓰기 창 조절시 원래 크기로 돌아가는 옵션       -->
+<!-- $orig_button      : 원본글 포함 버튼 사용시 출력                     -->
+<!-- ==================================================================== -->
+<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
+<tr><td align="right"><?=$wrap['ment']?></td></tr>
+<tr><td bgcolor="#a0dc10" align="center">
+<?=$print['passform']?>
+<input type="submit" value="등록">
+<input type="reset" value="다시"<?=$orig_option?>><?=$orig_button?>
+<input type="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" value="목록">
+<input type="button" onClick="history.back()" value="이전">
+</td></tr>
+</table>
+
+</form>
+
