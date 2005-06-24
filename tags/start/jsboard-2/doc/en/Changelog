@@ -1,0 +1,61 @@
+***** JSBOARD + OOPS administartion Center *********************************
+
+Original Developer		: Byung Chan Kim <redhands at linux.sarang.net>
+Source Disturibute		: Joung Kyun Kim <admin at oops.org>
+Windog Version			: Ki Soo Choi <choiks at nuri.net>
+
+## Warning ##
+
+This package turned out to work in Redhat Debian FreeBSD Windows systems.
+Any one who wants install this package on any other platform must revise
+it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
+file.
+
+If you wnat to see windog's change log, see also
+ http://jsboard.kldp.org/download/Changelogwin.txt
+
+Attention : OOPS administration Center is not GPL.
+            See also admin/License !
+
+******************************************************************************
+
+
+Writer    : JoungKyun Kim (admin at oops.org)
+Date      : Mon, Nov 4 2001
+Version   : jsboard-2.0pre2
+
+
+1. modified auto_link function (replace eregi_replace to preg_replace)
+2. In no login mode, fixed delete action
+3. removed useless </FONT> tag
+4. modified unlimited loop problem in login mode.
+5. fixed wrong path of image in login.php
+6. fixed theme that wrong close html tag
+7. changed include order in design of user level and administrator
+8. fixed wrong variable in act.php
+9. modifed to use mail() function if don't exists return path
+10. moved form size config to each board admin page
+11. added to use port number in url check
+12. added mode level 6th and 7th
+    mode 6 -> Reply only admin (No login mode)
+    mode 7 -> Reply only admin (Login mode)
+13. modified miss config Cookie in IE 5.5
+14. added admin variable in login.php
+15. enable modified arrow icon of reply article
+16. removed stylesheet font size of list article
+17. enable choise font in each theme
+18. enable change field order in list page
+19. modified include/sendmail.ph
+20. updated README.CONFIG
+21. modified print of page link in list page
+22. modified reply action When registed reply article, parents article
+    is up to next link
+23. added mms protocol in auto_link() function
+24. fixed function of email and url check
+25. devieded design of search form and move page form to each theme
+26. changed printing of license
+27. modified broken image link When searching
+28. fixed that anybody can edit/delete article that has null password
+
+
+-----------------------------------------------------------------------------
