@@ -1,0 +1,83 @@
+#!/bin/sh
+
+gray="[1;30m";
+red="[1;31m";
+green="[1;32m";
+yellow="[1;33m";
+blue="[1;34m";
+magenta="[1;35m";
+cyan="[1;36m";
+white="[1;37m";
+end="[7;0m";
+mvcol="[60G";
+
+
+printDot() {
+	_max=${1}
+	[ -z "${_max}" ] && _max=0
+
+	i=0
+	while [ ${i} -lt ${_max} ]
+	do
+		echo -n "."
+		i=$[${i} + 1]
+		sleep 0.1
+	done;
+}
+
+printColor() {
+	str=$1
+	_color=$2
+
+	_printColor 0 "$str" "$_color"
+}
+
+printColor_n() {
+    str=$1
+    _color=$2
+
+    _printColor 1 "$str" "$_color"
+}
+
+_printColor() {
+	_type=$1
+	_str=$2
+	_color=$3
+
+	if [ -z "$_color" ]; then
+		_color=$blue
+	else
+		eval "_color=\${$_color}"
+	fi
+
+	if [ $_type -eq 0 ]; then
+		printf "%s%s%s" "${_color}" "${_str}" "${end}"
+	else
+		printf "%s%s%s\n" "${_color}" "${_str}" "${end}"
+	fi
+}
+
+printStep() {
+	echo
+	printColor_n "$1" "blue"
+}
+
+onsuccess() {
+	printColor_n " [ O  K ]" "green"
+}
+
+onfailure() {
+	printColor_n " [ FAIL ]" "red"
+	echo
+	exit 1
+}
+
+createDir() {
+	dir=$1
+	ret=0
+
+	mkdir -p "$dir" &> /dev/null
+	ret=$?
+
+	return $ret
+}
