@@ -1,0 +1,38 @@
+<?
+###############################################################################
+#  Authorization information for external database
+#  Fill up here if you want use external database for JSBoard authorization  
+#
+#  For more details, see the section 5 in doc/ko/README.OPERATE
+###############################################################################
+# Whether using external DB or not
+$edb['uses']       = 1;
+
+# External DB connection information
+$edb['server']     = '';
+$edb['user']       = '';
+$edb['pass']       = '';
+$edb['name']       = '';
+$edb['table']      = '';
+
+# Necessary fields that matches jsboard user table
+$edb['userid']     = '';
+$edb['username']   = '';
+$edb['useremail']  = '';
+$edb['userurl']    = '';
+$edb['userpasswd'] = '';
+
+# Use this variable if you are using your own SQL query for get user information, or
+# you need to use join query
+$edb['sql']        = '';
+
+# ID for super user
+$edb['super']      = '';
+
+# Whether password field encryption or not
+# Set 0 for crypt() encryption, 1 for PLAIN text
+$edb['crypts']     = 0;
+
+# logout page
+$edb['logout']     = '';
+?>
