@@ -1,0 +1,5 @@
+# Filtering Configuration of Article registration
+# enabled to use regular expression
+# disregarded keyword is start hash charactor
+# use over 3 byte
+#
