@@ -89,6 +89,14 @@ printDot 3
 res=$?
 [ -n "${t}" ] && res=0
 [ $res -eq 0 ] && onsuccess || onfailure
+
+res=0
+echo -n "${S2_MSG_4}${mvcol}"
+printDot 3
+[ -z "${t}" ] && createDir "../config/jsSessTMP"
+res=$?
+[ -n "${t}" ] && res=0
+[ $res -eq 0 ] && onsuccess || onfailure
 echo
 
 
@@ -139,6 +147,19 @@ if [ "${me}" = "root" ]; then
 
 	echo -n "${S5_MSG_5}${mvcol}"
 	printDot 3
+    [ -z "${t}" ] && chown ${apache_user} ../config/jsSessTMP &> /dev/null
+    res=$?
+    [ -n "${t}" ] && res=0
+
+    if [ $res -eq 0 ]; then
+        [ -z "${t}" ] && chmod 370 ../config/jsSessTMP &> /dev/null
+        res=$?
+        [ -n "${t}" ] && res=0
+    fi
+    [ $res -eq 0 ] && onsuccess || onfailure
+
+	echo -n "${S5_MSG_6}${mvcol}"
+	printDot 3
 	[ -z "${t}" ] && chown ${apache_user} ../config/global.php &> /dev/null
 	res=$?
 	[ -n "${t}" ] && res=0
@@ -150,7 +171,7 @@ if [ "${me}" = "root" ]; then
 	fi
 	[ $res -eq 0 ] && onsuccess || onfailure
 
-	echo -n "${S5_MSG_6}${mvcol}"
+	echo -n "${S5_MSG_7}${mvcol}"
 	printDot 3
 	[ -z "${t}" ] && chown ${apache_user} ../config/spam_list.txt &> /dev/null
 	res=$?
@@ -183,14 +204,21 @@ else
 	[ -n "${t}" ] && res=0
 	[ $res -eq 0 ] && onsuccess || onfailure
 
-	echo -n "${S5_MSG_5}${mvcol}"
+    echo -n "${S5_MSG_5}${mvcol}"
+    printDot 3
+    [ -z "${t}" ] && chmod 707 ../config/jsSessTMP &> /dev/null
+    res=$?
+    [ -n "${t}" ] && res=0
+    [ $res -eq 0 ] && onsuccess || onfailure
+
+	echo -n "${S5_MSG_6}${mvcol}"
 	printDot 3
 	[ -z "${t}" ] && chmod 606 ../config/global.php &> /dev/null
 	res=$?
 	[ -n "${t}" ] && res=0
 	[ $res -eq 0 ] && onsuccess || onfailure
 
-	echo -n "${S5_MSG_6}${mvcol}"
+	echo -n "${S5_MSG_7}${mvcol}"
 	printDot 3
 	[ -z "${t}" ] && chmod 606 ../config/spam_list.txt &> /dev/null
 	res=$?
