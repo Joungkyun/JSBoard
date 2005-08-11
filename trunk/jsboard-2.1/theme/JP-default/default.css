@@ -216,6 +216,12 @@ form { display: inline; }
   font-size: 9px;
   font-family: 明朝, tahoma, sans-serif;
 }
+.rowcommentbold {
+  color: #000000;
+  font-size: 9px;
+  font-family: 明朝, tahoma, sans-serif;
+  font-weight: bold;
+}
 .rowname { color: #000000; text-align: right; }
 .rowdate {
   color: #000000;
