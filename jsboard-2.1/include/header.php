@@ -29,6 +29,7 @@ if ( ! @file_exists ("config/global.php") ) {
   exit;
 } else { include_once "config/global.php"; }
 
+session_save_path ('config/jsSessTMP');
 session_start ();
 if ( ! session_is_registered ($jsboard) && ! preg_match ('/session\.php/i', $_pself) )
   session_destroy ();

@@ -60,6 +60,7 @@ if ( $m == "login" ) {
     move_page ("./session.php?m=logout&logins=fail{$opt}{$var}",0);
   }
 } else if ( $m == "logout" ) {
+  session_save_path ('config/jsSessTMP');
   session_start ();
   require_once "./config/global.php";
 
