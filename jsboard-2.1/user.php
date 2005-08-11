@@ -100,7 +100,7 @@ $print['body'] = "
 </tr>
 
 <tr>
-<td class=\"ext_field_nb\"" . $_('u_url') . "</td>
+<td class=\"ext_field_nb\">" . $_('u_url') . "</td>
 <td colspan=3 class=\"ext_field_ib\"><input type=\"text\" size=$lform name=\"chg[url]\" value=\"{$row['url']}\"></td>
 </tr>
 
