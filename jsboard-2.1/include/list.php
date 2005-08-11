@@ -78,8 +78,10 @@ function print_list($table, $list, $r=0, $sno = 0)
     $list['preview'] = " onMouseOver=\"drs('{$list['ptext']}'); return true;\" onMouseOut=\"nd(); return true;\"";
   }
 
-  if($enable['comment'] && $list['comm'] > 0)
-    $comment_size = "<span class=\"rowcomment\">[{$list['comm']}]</span>";
+  if($enable['comment'] && $list['comm'] > 0) {
+    $comment_size = $list['recnt_comm'] ? "<span class=\"rowcommentbold\">[{$list['comm']}]</span>" :
+                                          "<span class=\"rowcomment\">[{$list['comm']}]</span>";
+  }
 
   # UPLOAD 관련 설정
   if($upload['yesno']) {
@@ -171,6 +173,13 @@ function get_list($table,$pages,$reply=0,$print=0)
   if ( sql_num_rows ($result) ) {
     $styleno = 0;
     while ( $list = sql_fetch_array ($result) ) {
+      if ($enable['comment']) {
+        $n = time();
+        $b = $n - 43200;    // 최근 12시간내
+        $comm_chk = "SELECT COUNT(*) as cnt FROM {$table}_comm WHERE reno = '{$list['no']}' AND date BETWEEN $b AND $n";
+        $recnt_comm = sql_fetch_array(sql_query($comm_chk, $c));
+        $list['recnt_comm'] = $recnt_comm['cnt'] ? $recnt_comm['cnt'] : 0;
+      }
       if ($print) echo print_list ($table,$list,$reply, $styleno);
       else $lists .= print_list ($table,$list,$reply, $styleno);
       $styleno++;
