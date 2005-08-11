@@ -50,6 +50,7 @@ require_once "$dpath/include/lib.php";
 table_name_check ($print['theme']);
 
 # session¿ª Ω√¿€
+session_save_path ($board['apath'].'config/jsSessTMP');
 session_start ();
 if( ! session_is_registered ($jsboard) )
   session_destroy();
