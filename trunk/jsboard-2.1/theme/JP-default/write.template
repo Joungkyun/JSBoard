@@ -16,7 +16,7 @@
 <tr bgcolor="#a0dc10">
 <td colspan=2>
 <img src="./theme/JP-default/img/board_no.gif" align=middle alt=''>
-<img src="theme/JP-default/img/write_title.gif" border=0 alt=''>
+<span style="color: #ffffff; font-weight: bold;">Write</span>
 </td>
 </tr>
 
