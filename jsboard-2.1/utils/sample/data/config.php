@@ -22,7 +22,7 @@ $board['mode']      = 0;
 $board['rnname']    = 0;
 
 # Go to this page after logout
-$print['dopage']    = '@wpath@/login.php?table=@table@';
+$print['dopage']    = '@wpath@login.php?table=@table@';
 
 ###############################################################################
 #  Board function Configuration
