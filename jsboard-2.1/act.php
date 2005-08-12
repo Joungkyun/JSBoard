@@ -552,6 +552,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     case 'c_write':
       comment_post($table,$atc);
       Header("Location: read.php?table=$table&no={$atc['no']}&page=$page");
+      break;
     case 'c_del':
       comment_del($table,$atc['no'],$atc['cid'],$lp);
       Header("Location: read.php?table=$table&no={$atc['no']}&page=$page");
