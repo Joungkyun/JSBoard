@@ -11,6 +11,7 @@
 By 김정균
 	- changelog 형식 변경
 	- comment 등록시에 comment count 올라가지 않는 버그 수정
+	- print_p 함수 추가
 
 2005.08.11
 By 장현성

@@ -40,4 +40,33 @@ function unlink_r ($dir) {
 
   return 0;
 }
+
+# return 1 => path is none
+#        2 => path is not directory
+#        3 => create failed
+#        0 => success
+function mkdir_p ($path, $mode) {
+  if ( ! trim ($path) ) return 1;
+  $_path = explode ('/', $path);
+  $_no = count ($_path);
+
+  for ( $i=0; $i<$_no; $i++ ) {
+    $mknewpath .= "{$_path[$i]}/";
+    $mkpath = preg_replace ("!/$!", "", $mknewpath);
+
+    if ( is_dir ($mkpath) || ! trim ($mkpath)) {
+      continue;
+    } elseif ( file_exists ($mkpath) ) {
+      $ret = 2;
+      break;
+    } else {
+      $ret = mkdir ($mkpath, $mode);
+      if ( $ret == FALSE ) :
+        $ret = 3;
+        break;
+      }
+    }
+  }
+  return 0;
+}
 ?>
