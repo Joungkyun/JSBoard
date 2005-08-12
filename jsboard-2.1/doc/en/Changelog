@@ -6,12 +6,12 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
-2005.08.13
+Sat Aug 13 2005
 By JoungKyun.Kim
 	- changed form of changelog
 	- fixed don't incresed comment regist number
 
-2005.08.11
+THu Aug 13 2005
 By Jang Hyun Sung
 	- Move session temp directory for jsboard (config/jsSessTMP)
 	- Html tag typo fix in user.php
