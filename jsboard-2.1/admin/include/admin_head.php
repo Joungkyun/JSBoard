@@ -20,7 +20,9 @@ include_once "$ipath/include/error.php";
 include_once "$ipath/include/check.php";
 include_once "$ipath/include/get.php";
 include_once "$ipath/include/print.php";
-include_once "$ipath/include/exec.php";
+if ( ! check_windows () )
+  include_once "$ipath/include/exec.php";
+}
 
 # GET/POST 변수를 제어
 parse_query_str();
