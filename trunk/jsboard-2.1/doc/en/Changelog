@@ -1,8 +1,23 @@
-2005. 8. 11. by Jang Hyun Sung
-- Move session temp directory for jsboard (config/jsSessTMP)
-- Html tag typo fix in user.php
-- Fixed miss parsing after logout url in sample config.php file (util/sample/data/config.php)
-- Fixed image link error in write.theme
-- Add default value check for theme select in installer
-- Use bold charactor for comment count in list.php if article has comments that posted in last 12 hours
-- Created doc directory for documentation
+** JSBoard 2.0 Changelog
+**
+** Maintainer  : Jang Hyun Sung
+** Development : JoungKyun.Kim
+
+-------------------------------------------------------------------------------
+Version 2.1.0
+
+2005.08.13
+By JoungKyun.Kim
+	- changed form of changelog
+
+2005.08.11
+By Jang Hyun Sung
+	- Move session temp directory for jsboard (config/jsSessTMP)
+	- Html tag typo fix in user.php
+	- Fixed miss parsing after logout url in sample config.php file
+	  on util/sample/data/config.php
+	- Fixed image link error in write.theme
+	- Add default value check for theme select in installer
+	- Use bold charactor for comment count in list.php if article has comments
+	   that posted in last 12 hours
+	- Created doc directory for documentation
