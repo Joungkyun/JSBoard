@@ -483,7 +483,7 @@ function print_preview_src($print=0) {
                           "  function showObject(obj) { obj.visibility = \"visible\" }\n".
                           "  function hideObject(obj) { obj.visibility = \"hidden\" }\n".
                           "  function moveTo(obj,xL,yL) { obj.left = xL; obj.top = yL; }";
-  } elseif($agent['br'] == "MOZL" || ($agent['br'] == "NS" && $agent['vr'] == 6)) {
+  } elseif($agent['br'] == "MOZL" || $agent['br'] == 'Firefox' || ($agent['br'] == "NS" && $agent['vr'] == 6)) {
     $script_for_browser = "  over = document.getElementById('overDiv');\n".
                           "  document.onmousemove = mouseMove;\n".
                           "  document.captureEvents(Event.MOUSEMOVE);\n\n".
