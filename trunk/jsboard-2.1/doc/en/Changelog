@@ -6,13 +6,17 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Sun Aug 14 2005
+By Jang Hyun Sung
+	- delete comment count bold function 
+
 Sat Aug 13 2005
 By JoungKyun.Kim
 	- changed form of changelog
 	- fixed don't incresed comment regist number
 	- add print_p function on exec.php
 
-THu Aug 13 2005
+Sat Aug 13 2005
 By Jang Hyun Sung
 	- Move session temp directory for jsboard (config/jsSessTMP)
 	- Html tag typo fix in user.php
