@@ -14,6 +14,8 @@ file.
 ******************************************************************************
 
 Version   : jsboard-2.0.11
+Sat, Aug 13 2005
+	- fixed don't incresed comment regist number
 
 Sat, May  7 2005
   by JoungKyun Kim <http://www.oops.org>
