@@ -32,7 +32,10 @@ $board['align']     = 'center';
 $board['path']      = '@WEBPATH@/';
 
 # baord absolute path
-$board['apath']      = '@APATH@/';
+$board['apath']     = '@APATH@/';
+
+# board Session Temp dir
+$board['sessTmp']   = 'config/jsSessTMP';
 
 
 ##############################################################################
