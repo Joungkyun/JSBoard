@@ -61,7 +61,7 @@ function mkdir_p ($path, $mode) {
       break;
     } else {
       $ret = mkdir ($mkpath, $mode);
-      if ( $ret == FALSE ) :
+      if ( $ret == FALSE ) {
         $ret = 3;
         break;
       }
