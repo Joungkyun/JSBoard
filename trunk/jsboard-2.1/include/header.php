@@ -29,10 +29,6 @@ if ( ! @file_exists ("config/global.php") ) {
   exit;
 } else { include_once "config/global.php"; }
 
-session_save_path ('config/jsSessTMP');
-session_start ();
-if ( ! session_is_registered ($jsboard) && ! preg_match ('/session\.php/i', $_pself) )
-  session_destroy ();
 
 ##############################################################################
 #  이 정보들은 건들지 말도록 한다!!!!!
@@ -83,6 +79,11 @@ include_once "include/parse.php";
 include_once "database/db.php";
 include_once "include/replicate.php";
 include_once "include/sendmail.php";
+
+sessionInit($board['apath'].$board['sessTmp']);
+session_start ();
+if ( ! session_is_registered ($jsboard) && ! preg_match ('/session\.php/i', $_pself) )
+  session_destroy ();
 
 $agent = get_agent ();
 $db = replication_mode ($db);

@@ -454,4 +454,12 @@ function check_spamer($anti,$wkey) {
     if($wkey != get_spam_value($anti)) print_error($_('chk_sp'),250,250,1);
   }
 }
+
+# Session Temp Directory Init
+function sessionInit($dir) {
+  if ( ! is_dir ($dir) )
+    mkdir($dir);
+
+  session_save_path ($dir);
+}
 ?>
