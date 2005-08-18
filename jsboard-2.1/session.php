@@ -60,9 +60,11 @@ if ( $m == "login" ) {
     move_page ("./session.php?m=logout&logins=fail{$opt}{$var}",0);
   }
 } else if ( $m == "logout" ) {
-  session_save_path ('config/jsSessTMP');
+  require_once './config/global.php';
+  require_once './include/check.php';
+
+  sessionInit($board['apath'].$board['sessTmp']);
   session_start ();
-  require_once "./config/global.php";
 
   # 세션을 삭제
   session_destroy ();
@@ -81,7 +83,6 @@ if ( $m == "login" ) {
   } else {
     require_once './include/error.php';
     require_once './include/get.php';
-    require_once './include/check.php';
 
     $urls = $edb['logout'];
 

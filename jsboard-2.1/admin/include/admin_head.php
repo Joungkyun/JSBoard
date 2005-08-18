@@ -20,7 +20,7 @@ include_once "$ipath/include/error.php";
 include_once "$ipath/include/check.php";
 include_once "$ipath/include/get.php";
 include_once "$ipath/include/print.php";
-if ( ! check_windows () )
+if ( ! check_windows () ) {
   include_once "$ipath/include/exec.php";
 }
 
@@ -51,7 +51,7 @@ require_once "$dpath/include/lib.php";
 table_name_check ($print['theme']);
 
 # session¿ª Ω√¿€
-session_save_path ($board['apath'].'config/jsSessTMP');
+sessionInit($board['apath'].$board['sessTmp']);
 session_start ();
 if( ! session_is_registered ($jsboard) )
   session_destroy();
