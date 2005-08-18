@@ -8,6 +8,12 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Thu Aug 18 2005
+By Jang Hyun Sung
+	- Add sessionInit function (check.php)
+	- fix parse error in admin_head.php
+	- fix parse error in mkdir_p function
+
 Sun Aug 14 2005
 By Jang Hyun Sung
 	- delete comment count bold function 
