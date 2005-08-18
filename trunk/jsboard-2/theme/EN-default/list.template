@@ -116,7 +116,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <?
   if($upload['yesno'] && $cupload['yesno'])
-    echo "<TD WIDTH=\"{$td_width['upload']}\" ALIGN=center BGCOLOR="#FFAE00"><FONT STYLE=\"color:#FFFFFF;font-weight:bold\">File</FONT></TD>\n";
+    echo "<TD WIDTH=\"{$td_width['upload']}\" ALIGN=center BGCOLOR=\"#FFAE00\"><FONT STYLE=\"color:#FFFFFF;font-weight:bold\">File</FONT></TD>\n";
 ?>
   <TD WIDTH="<?=$td_width['dates']?>" ALIGN=center BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Date</FONT></TD>
   <TD WIDTH="<?=$td_width['refer']?>" ALIGN=center BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Read</FONT></TD>
