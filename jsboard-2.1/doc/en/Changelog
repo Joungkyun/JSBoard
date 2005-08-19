@@ -35,3 +35,12 @@ By Jang Hyun Sung
 	- Use bold charactor for comment count in list.php if article has comments
 	   that posted in last 12 hours
 	- Created doc directory for documentation
+
+Fri Jun 24 2005
+By JoungKyun.Kim
+	- start jsboard 2.1 tree
+	- changed language pack architecture
+	- changed theme architecture
+	- support sqlite / pgsql / mysql / mysqli
+	- removed web interface installer
+	- added shell script installer
