@@ -10,7 +10,7 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
 <TITLE>Jsboard <?=$board['ver']?> - <?=get_title()?></TITLE>
 
-<STYLE TYPE=text/css>
+<STYLE TYPE="text/css">
 <!--
 body,td {
   font-size: 12px;
@@ -69,7 +69,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <DIV ALIGN=<?=$board['align']?>>
 <FORM NAME="editp" METHOD=post ACTION="act.php"<?=$board['formtype']?>>
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN=bottom COLSPAN=2>
 <IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN=middle ALT=''>
@@ -89,7 +89,7 @@ if(!$np) {
 </TR>
 </TABLE>
 
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN=middle><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -207,11 +207,11 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 </TR>
 </TABLE>
 
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
 </TABLE>
 
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD BGCOLOR="<?=$color['l5_bg']?>" ALIGN=CENTER>
 
 <!-- ==================================================================== -->
@@ -233,7 +233,7 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 <!-- $print['passform']  : hidden value for regist reply article          -->
 <!-- $orig_option      : back to original size of textarea                -->
 <!-- ==================================================================== -->
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD ALIGN=right><?=$wrap['ment']?></TD></TR>
 <TR><TD BGCOLOR="#FFAE00" ALIGN=CENTER>
 <?=$print['passform']?>

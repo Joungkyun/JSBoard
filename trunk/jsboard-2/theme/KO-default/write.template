@@ -10,7 +10,7 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
 <TITLE>Jsboard <?=$board['ver']?> - <?=get_title()?></TITLE>
 
-<STYLE TYPE=text/css>
+<STYLE TYPE="text/css">
 <!--
 BODY,TD {
   font-size: 12px;

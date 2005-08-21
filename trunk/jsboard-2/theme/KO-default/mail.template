@@ -1,10 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET={$langs['charset']}">
 <TITLE>JSBoard Reply Notice</TITLE>
 <STYLE TYPE="text/css">
 <!--
-body,td {
+body {
+  margin: 0 0 0 0;
+  font: 12px GulimChe,sans-serif;
+  color: #555555;
+}
+td {
   font: 12px GulimChe,sans-serif;
   color: #555555;
 }
@@ -25,9 +31,9 @@ td {
 
 </HEAD>
 
-<BODY BGCOLOR="#FFFFFF" LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0>
+<BODY BGCOLOR="#FFFFFF">
 &nbsp;<BR>
-<DIV ALIGN=center>
+<DIV ALIGN="center">
 <TABLE WIDTH="95%" BORDER=0 CELLPADDING=1 CELLSPACING=0>
 <TR><TD BGCOLOR="#FFAE00">
 
@@ -77,8 +83,8 @@ $addressinfo
 </TABLE>
 
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=10 CELLSPACING=0>
-<TR><TD ALIGN=right>
-<A HREF="http://jsboard.kldp.org" TARGET=_blnak>
+<TR><TD ALIGN="right">
+<A HREF="http://jsboard.kldp.net" TARGET="_blnak">
 <FONT STYLE="font: 12px tahoma; font-weight: bold; color: #FFFFFF">Scripted by JSBoard Open Project</FONT>
 </A>
 </TD></TR>
