@@ -3,7 +3,7 @@
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
 <TITLE>Jsboard <?=$board['ver']?> - <?=$print['head']?></TITLE>
-<STYLE TYPE=text/css>
+<STYLE TYPE="text/css">
 <!--
 body {
   font-size: 12px;

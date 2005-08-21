@@ -10,7 +10,7 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
 <TITLE>Jsboard <?=$board['ver']?> - <?=get_title()?></TITLE>
 
-<STYLE TYPE=text/css>
+<STYLE TYPE="text/css">
 <!--
 BODY,TD {
   font-size: 12px;
@@ -71,7 +71,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <DIV ALIGN=<?=$board['align']?>>
 <FORM NAME="replyp" METHOD=post ACTION="act.php"<?=$board['formtype']?>>
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN=bottom COLSPAN=2>
 <IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN=middle ALT=''>
@@ -91,7 +91,7 @@ if(!$np) {
 </TR>
 </TABLE>
 
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
 <TR>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN=middle><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -205,11 +205,11 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 </TR>
 </TABLE>
 
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
 </TABLE>
 
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD BGCOLOR="<?=$color['l5_bg']?>" ALIGN=CENTER>
 
 <!-- ==================================================================== -->
@@ -231,7 +231,7 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <!-- $orig_option      : 글쓰기 창 조절시 원래 크기로 돌아가는 옵션       -->
 <!-- $orig_button      : 원본글 포함 버튼 사용시 출력                     -->
 <!-- ==================================================================== -->
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD ALIGN=right><?=$wrap['ment']?></TD></TR>
 <TR><TD BGCOLOR="#FFAE00" ALIGN=CENTER>
 <?=$print['passform']?>

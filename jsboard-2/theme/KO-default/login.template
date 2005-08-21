@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<META HTTP-EQUIV=Cache-Control CONTENT=No-Cache>
-<META HTTP-EQUIV=Pragma	CONTENT=No-Cache>
+<META HTTP-EQUIV="Cache-Control" CONTENT="No-Cache">
+<META HTTP-EQUIV="Pragma" CONTENT="No-Cache">
 <TITLE>JSBoard <?=$board['ver']?> Login page</TITLE>
 <STYLE TYPE="text/css">
 a:link, a:visited, a:active {

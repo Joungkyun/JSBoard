@@ -6,7 +6,7 @@
 <!-- ==================================================================== -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
 <TITLE>Jsboard <?=$board['ver']?> - <?=$print['head']?></TITLE>
-<STYLE TYPE=text/css>
+<STYLE TYPE="text/css">
 <!--
 BODY,TD {font-size:12px;font-family:<?=$langs['font']?>;color:#555555;}
 A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
