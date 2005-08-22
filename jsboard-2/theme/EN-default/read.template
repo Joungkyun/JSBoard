@@ -100,7 +100,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN=bottom>
-<IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN=middle ALT=''>
+<IMG SRC="./theme/EN-default/img/icon_over.gif" VALIGN="middle" ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Read <?=$list['num']?> article</FONT>
 </TD>
 <TD ALIGN=right VALIGN=bottom><?=$print['lout']?><?=$print['admin']?></TD>
@@ -112,7 +112,7 @@ if(!$np) {
 <? $list['title'] = preg_replace("/<BR>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
 <TR BGCOLOR="#FFAE00">
 <TD COLSPAN=2>
-<IMG SRC="./theme/EN-default/img/board_no.gif" ALIGN=middle ALT='TITLE: '>
+<IMG SRC="./theme/EN-default/img/board_no.gif" VALIGN="middle" ALT='TITLE: '>
 <FONT STYLE="color:#FFFFFF font-weight:bold;"><?=$list['title']?></FONT>
 </TD>
 </TR>
@@ -212,7 +212,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD>
-<FONT style="font-family:tahoma;font-size:11px;"><?=$print['regist']?></FONT><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN=middle ALT=''></TD>
+<FONT style="font-family:tahoma;font-size:11px;"><?=$print['regist']?></FONT><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 VALIGN="middle" ALT=''></TD>
 <TD ALIGN=right><? read_cmd(0,1) ?></TD>
 </TR>
 </TABLE>
