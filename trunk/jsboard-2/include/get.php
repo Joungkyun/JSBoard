@@ -388,7 +388,7 @@ function viewfile($tail) {
     if (preg_match("/^(gif|jpg|png{$bmpchk})$/i",$tail)) {
       $imginfo = GetImageSize($upload_file);
       if($agent['co'] == "mozilla") $list['bofile'] = urlencode($list['bofile']);
-      $uplink_file = "./form.php?mode=photo&table=$table&f[c]={$list['bcfile']}&f[n]={$list['bofile']}&f[w]={$imginfo[0]}&f[h]={$imginfo[1]}";
+      $uplink_file = "./form.php?mode=photo&amp;table=$table&amp;f[c]={$list['bcfile']}&amp;f[n]={$list['bofile']}&amp;f[w]={$imginfo[0]}&amp;f[h]={$imginfo[1]}";
       if($imginfo[0] > $board['width'] - 6 && !preg_match("/%/",$board['width'])) {
         $p['vars'] = $imginfo[0]/$board['width'];
         $p['width'] = $board['width'] - 6;
@@ -401,7 +401,7 @@ function viewfile($tail) {
           $ImgPath = "<IMG SRC=\"$wupload_file\" WIDTH={$p['width']} HEIGHT={$p['height']} BORDER=0 ALT=''>";
 
         $p['up']  = "[ <B>Original Size</B> $imginfo[0] * $imginfo[1] ]<br>\n";
-        $p['up'] .= "<A HREF=\"javascript:new_windows(\"$uplink_file\",\"photo\",0,0,$imginfo[0],$imginfo[1])\">$ImgPath</A>\n<P>\n";
+        $p['up'] .= "<A HREF=\"javascript:new_windows('$uplink_file','photo',0,0,$imginfo[0],$imginfo[1])\">$ImgPath</A>\n<P>\n";
       } else {
         $p['up'] = "<IMG SRC=\"$wupload_file\" $imginfo[3] BORDER=0 ALT=''>\n<p>\n";
       }
