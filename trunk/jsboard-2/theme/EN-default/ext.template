@@ -52,18 +52,18 @@ TEXTAREA {
   padding-left: 1px;
   background-Color: <?=$color['l4_bg']?>;
 }
- #radio {
+ .radio {
   font: 9pt <?=$langs['font']?>;
   background-color: <?=$color['bgcol']?>;
   color: <?=$color['text']?>;
   border: 2px solid <?=$color['bgcol']?>;
 }
- #title {
+ .title {
   font: 15pt <?=$langs['font']?>;
   color: <?=$color['n0_fg']?>;
   font-weight: bold;
 }
- #en {
+ .en {
   font: 15pt Tahoma;
   font-weight: bold;
   color: <?=$color['text']?>;

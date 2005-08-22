@@ -226,11 +226,11 @@ function list_cmd($img=0,$prt=0) {
   $str['search'] = search2url($o);
 
   if($img) {
-    $menu['pre']   = "<img src=./theme/{$print['theme']}/img/prev.gif border=0 alt='" . $_('cmd_priv') . "'>";
-    $menu['nxt']   = "<img src=./theme/{$print['theme']}/img/next.gif border=0 alt='" . $_('cmd_next') . "'>";
-    $menu['all']   = "<img src=./theme/{$print['theme']}/img/list.gif border=0 alt='" . $_('cmd_all') . "'>";
-    $menu['write'] = "<img src=./theme/{$print['theme']}/img/write.gif border=0 alt='" . $_('cmd_write') . "'>";
-    $menu['today'] = "<img src=./theme/{$print['theme']}/img/today.gif border=0 alt='" . $_('cmd_today') . "'>";
+    $menu['pre']   = "<img src=\"./theme/{$print['theme']}/img/prev.gif\" border=0 alt='" . $_('cmd_priv') . "'>";
+    $menu['nxt']   = "<img src=\"./theme/{$print['theme']}/img/next.gif\" border=0 alt='" . $_('cmd_next') . "'>";
+    $menu['all']   = "<img src=\"./theme/{$print['theme']}/img/list.gif\" border=0 alt='" . $_('cmd_all') . "'>";
+    $menu['write'] = "<img src=\"./theme/{$print['theme']}/img/write.gif\" border=0 alt='" . $_('cmd_write') . "'>";
+    $menu['today'] = "<img src=\"./theme/{$print['theme']}/img/today.gif\" border=0 alt='" . $_('cmd_today') . "'>";
   } else {
     $menu['pre']   = '<span class="menus">' . $_('cmd_priv')  . '</span>';
     $menu['nxt']   = '<span class="menus">' . $_('cmd_next')  . '</span>';
@@ -269,14 +269,14 @@ function read_cmd($img=0,$prt=0) {
   #if (!$o['ck']) $str['search'] = "";
 
   if($img) {
-    $menu['pre']   = "<img src=./theme/{$print['theme']}/img/prev.gif border=0 alt='" . $_('cmd_upp') . "'>";
-    $menu['nxt']   = "<img src=./theme/{$print['theme']}/img/next.gif border=0 alt='" . $_('cmd_down') . "'>";
-    $menu['del']   = "<img src=./theme/{$print['theme']}/img/delete.gif border=0 alt='" . $_('cmd_del') . "'>";
-    $menu['edit']  = "<img src=./theme/{$print['theme']}/img/edit.gif border=0 alt='" . $_('cmd_edit') . "'>";
-    $menu['lists'] = "<img src=./theme/{$print['theme']}/img/list.gif border=0 alt='" . $_('cmd_list') . "'>";
-    $menu['reply'] = "<img src=./theme/{$print['theme']}/img/reply.gif border=0 alt='" . $_('cmd_reply') . "'>";
-    $menu['write'] = "<img src=./theme/{$print['theme']}/img/write.gif border=0 alt='" . $_('cmd_write') . "'>";
-    $menu['conj']  = "<img src=./theme/{$print['theme']}/img/conj.gif border=0 alt='" . $_('cmd_con') . "'>";
+    $menu['pre']   = "<img src=\"./theme/{$print['theme']}/img/prev.gif\" border=0 alt='" . $_('cmd_upp') . "'>";
+    $menu['nxt']   = "<img src=\"./theme/{$print['theme']}/img/next.gif\" border=0 alt='" . $_('cmd_down') . "'>";
+    $menu['del']   = "<img src=\"./theme/{$print['theme']}/img/delete.gif\" border=0 alt='" . $_('cmd_del') . "'>";
+    $menu['edit']  = "<img src=\"./theme/{$print['theme']}/img/edit.gif\" border=0 alt='" . $_('cmd_edit') . "'>";
+    $menu['lists'] = "<img src=\"./theme/{$print['theme']}/img/list.gif\" border=0 alt='" . $_('cmd_list') . "'>";
+    $menu['reply'] = "<img src=\"./theme/{$print['theme']}/img/reply.gif\" border=0 alt='" . $_('cmd_reply') . "'>";
+    $menu['write'] = "<img src=\"./theme/{$print['theme']}/img/write.gif\" border=0 alt='" . $_('cmd_write') . "'>";
+    $menu['conj']  = "<img src=\"./theme/{$print['theme']}/img/conj.gif\" border=0 alt='" . $_('cmd_con') . "'>";
   } else {
     $menu['pre']   = '<span class="menus">' . $_('cmd_upp') . '</span>';
     $menu['nxt']   = '<span class="menus">' . $_('cmd_down') . '</span>';
@@ -436,9 +436,9 @@ function form_operate($fn,$in,$x=73,$y=10,$prt=0) {
          "}\n".
          "// -->\n".
          "</script>\n".
-         "<input type=BUTTON value=\"&#9655;\" onClick=\"fresize(1);\" title=\"Left Right\">".
-         "<input type=BUTTON value=\"&#9635;\" onClick=\"fresize(0);\" title=\"RESET\">".
-         "<input type=BUTTON value=\"&#9661;\" onClick=\"fresize(2);\" title=\"Up Down\">\n";
+         "<input type=\"button\" value=\"&#9655;\" onClick=\"fresize(1);\" title=\"Left Right\">".
+         "<input type=\"button\" value=\"&#9635;\" onClick=\"fresize(0);\" title=\"RESET\">".
+         "<input type=\"button\" value=\"&#9661;\" onClick=\"fresize(2);\" title=\"Up Down\">\n";
 
   if($prt) echo $var;
   else return $var;
