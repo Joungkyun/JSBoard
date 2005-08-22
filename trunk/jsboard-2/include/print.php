@@ -127,7 +127,7 @@ function page_list($table, $pages, $count, $num, $print = 0) {
   $str .= "\n<!-- ============================ Page List Form ========================== -->\n";
   if ($pages['cur'] != "1" && $d0 > 0)
     $str .= "<A HREF=\"list.php?table=$table&amp;page=1$search\" title='First Page'>".
-            "<FONT style=\"font-size:10px;font-family:tahoma;color:{$color['text']}\">[F]..</FONT></A>\n";
+            "<FONT style=\"font-size:10px;font-family:tahoma,sans-serif;color:{$color['text']}\">[F]..</FONT></A>\n";
 
   # 지정된 수 만큼 페이지 링크
   if($pages['all'] < $num*2+1) {
@@ -138,8 +138,8 @@ function page_list($table, $pages, $count, $num, $print = 0) {
         if($co) {
           $page = $pages['cur'] + $co;
           $str .= "<A HREF=\"list.php?table=$table&amp;page=$page$search\">".
-                  "<FONT style=\"font-size:10px;font-family:tahoma;color:{$color['text']}\">[$page]</FONT></A>\n";
-        } else $str .= "<FONT style=\"font-size:10px;font-family:tahoma;color:{$color['cp_co']};\"><B>[{$pages['cur']}]</B></FONT>\n";
+                  "<FONT style=\"font-size:10px;font-family:tahoma,sans-serif;color:{$color['text']}\">[$page]</FONT></A>\n";
+        } else $str .= "<FONT style=\"font-size:10px;font-family:tahoma,sans-serif;color:{$color['cp_co']};\"><B>[{$pages['cur']}]</B></FONT>\n";
       }
     }
   } else {
@@ -149,8 +149,8 @@ function page_list($table, $pages, $count, $num, $print = 0) {
         if($co) {
           $page = $pages['cur'] + $co;
           $str .= "<A HREF=\"list.php?table=$table&amp;page=$page$search\">".
-                  "<FONT style=\"font-size:10px;font-family:tahoma;color:{$color['text']}\">[$page]</FONT></A>\n";
-        } else $str .= "<FONT style=\"font-size:10px;font-family:tahoma\"><B>[{$pages['cur']}]</B></FONT>\n";
+                  "<FONT style=\"font-size:10px;font-family:tahoma,sans-serif;color:{$color['text']}\">[$page]</FONT></A>\n";
+        } else $str .= "<FONT style=\"font-size:10px;font-family:tahoma,sans-serif\"><B>[{$pages['cur']}]</B></FONT>\n";
       }
     }
   }
@@ -158,7 +158,7 @@ function page_list($table, $pages, $count, $num, $print = 0) {
   # 마지막 페이지 링크
   if($pages['cur'] != $pages['all'] && $d1 > 0)
       $str .= "<A HREF=\"list.php?table=$table&amp;page={$pages['all']}$search\" title='Last Page'>".
-              "<FONT style=\"font-size:10px;font-family:tahoma;color:{$color['text']}\">".
+              "<FONT style=\"font-size:10px;font-family:tahoma,sans-serif;color:{$color['text']}\">".
               "..[L]</FONT></A>\n";
     
   $str .= "<!-- ============================ Page List Form ========================== -->\n";
@@ -237,11 +237,11 @@ function list_cmd($img=0,$prt=0) {
     $menu['write'] = "<IMG SRC=\"./theme/{$print['theme']}/img/write.gif\" BORDER=0 ALT='{$langs['cmd_write']}'>";
     $menu['today'] = "<IMG SRC=\"./theme/{$print['theme']}/img/today.gif\" BORDER=0 ALT='{$langs['cmd_today']}'>";
   } else {
-    $menu['pre'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_priv']}</FONT>";
-    $menu['nxt'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_next']}</FONT>";
-    $menu['all'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_all']}</FONT>";
-    $menu['write'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_write']}</FONT>";
-    $menu['today'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_today']}</FONT>";
+    $menu['pre'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_priv']}</FONT>";
+    $menu['nxt'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_next']}</FONT>";
+    $menu['all'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_all']}</FONT>";
+    $menu['write'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_write']}</FONT>";
+    $menu['today'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_today']}</FONT>";
   }
 
   $str['prev']  = !$pages['pre'] ? "" : "<A HREF=\"list.php?table=$table&amp;page={$pages['pre']}{$str['search']}\" TITLE=\"{$langs['cmd_priv']}\">{$menu['pre']}</A>\n";
@@ -283,14 +283,14 @@ function read_cmd($img=0,$prt=0) {
     $menu['write'] = "<IMG SRC=\"./theme/{$print['theme']}/img/write.gif\" BORDER=0 ALT='{$langs['cmd_write']}'>";
     $menu['conj'] = "<IMG SRC=\"./theme/{$print['theme']}/img/conj.gif\" BORDER=0 ALT='{$langs['cmd_con']}'>";
   } else {
-    $menu['pre'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_upp']}</FONT>";
-    $menu['nxt'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_down']}</FONT>";
-    $menu['del'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_del']}</FONT>";
-    $menu['edit'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_edit']}</FONT>";
-    $menu['lists'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_list']}</FONT>";
-    $menu['reply'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_reply']}</FONT>";
-    $menu['write'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_write']}</FONT>";
-    $menu['conj'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_con']}</FONT>";
+    $menu['pre'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_upp']}</FONT>";
+    $menu['nxt'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_down']}</FONT>";
+    $menu['del'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_del']}</FONT>";
+    $menu['edit'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_edit']}</FONT>";
+    $menu['lists'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_list']}</FONT>";
+    $menu['reply'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_reply']}</FONT>";
+    $menu['write'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_write']}</FONT>";
+    $menu['conj'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['text']}\">{$langs['cmd_con']}</FONT>";
   }
 
   $str['prev']  = "<A HREF=\"read.php?table=$table&amp;no={$pos['prev']}{$str['search']}\" onMouseOut=\"window.status=''; return true;\" onMouseOver=\"window.status='{$pos['prev_t']}'; return true;\">{$menu['pre']}</A>";
@@ -304,20 +304,20 @@ function read_cmd($img=0,$prt=0) {
 
   $str['edit']  = "<A HREF=\"edit.php?table=$table&amp;no=$no&amp;page=$page\">{$menu['edit']}</A>";
   $str['dele']  = "<A HREF=\"delete.php?table=$table&amp;no=$no&amp;page=$page\">{$menu['del']}</A>";
-  if(!$enable['re_list']) $str['rep'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_con']}</FONT>";
+  if(!$enable['re_list']) $str['rep'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['n1_fg']}\">{$langs['cmd_con']}</FONT>";
 
-  if(!$pos['prev']) $str['prev'] = $img ? "" : "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_upp']}</FONT>";
-  if(!$pos['next']) $str['next'] = $img ? "" : "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_down']}</FONT>";
+  if(!$pos['prev']) $str['prev'] = $img ? "" : "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['n1_fg']}\">{$langs['cmd_upp']}</FONT>";
+  if(!$pos['next']) $str['next'] = $img ? "" : "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['n1_fg']}\">{$langs['cmd_down']}</FONT>";
   if(!session_is_registered("$jsboard") && !$list['passwd']) {
     if(!$img) {
-      $menu['edit'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_edit']}</FONT>";
-      $menu['dele'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_del']}</FONT>";
+      $menu['edit'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['n1_fg']}\">{$langs['cmd_edit']}</FONT>";
+      $menu['dele'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['n1_fg']}\">{$langs['cmd_del']}</FONT>";
     }
     $str['edit'] = "<A HREF=\"edit.php?table=$table&amp;no=$no&amp;page=$page\">{$menu['edit']}</A>";
     $str['dele'] = "<A HREF=\"delete.php?table=$table&amp;no=$no&amp;page=$page\">{$menu['del']}</A>";
   }
   if($list['reyn'] && !$_SESSION[$jsboard]['pos']) {
-    if(!$img) $menu['del'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['n1_fg']}\">{$langs['cmd_del']}</FONT>";
+    if(!$img) $menu['del'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['n1_fg']}\">{$langs['cmd_del']}</FONT>";
     $str['dele'] = "<A HREF=\"delete.php?table=$table&amp;no=$no&amp;page=$page\">{$menu['del']}</A>";
   }
   if(!$enable['re_list'] && ($list['reto'] || $list['reyn'])) {
@@ -786,10 +786,10 @@ function detail_searchform($p='') {
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['sh_pat']}</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
-          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=t$TCHK> <FONT STYLE=\"font-family: tahoma;\">TITLE</FONT>\n".
-          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=c$CCHK> <FONT STYLE=\"font-family: tahoma;\">Contents</FONT>\n".
-          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=n$NCHK> <FONT STYLE=\"font-family: tahoma;\">Writer</FONT>\n".
-          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=a$ACHK> <FONT STYLE=\"font-family: tahoma;\">ALL</FONT>\n".
+          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=t$TCHK> <FONT STYLE=\"font-family: tahoma,sans-serif;\">TITLE</FONT>\n".
+          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=c$CCHK> <FONT STYLE=\"font-family: tahoma,sans-serif;\">Contents</FONT>\n".
+          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=n$NCHK> <FONT STYLE=\"font-family: tahoma,sans-serif;\">Writer</FONT>\n".
+          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=a$ACHK> <FONT STYLE=\"font-family: tahoma,sans-serif;\">ALL</FONT>\n".
           "</TD>\n".
           "</TR>\n\n".
 
