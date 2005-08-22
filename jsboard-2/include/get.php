@@ -388,7 +388,7 @@ function viewfile($tail) {
     if (preg_match("/^(gif|jpg|png{$bmpchk})$/i",$tail)) {
       $imginfo = GetImageSize($upload_file);
       if($agent['co'] == "mozilla") $list['bofile'] = urlencode($list['bofile']);
-      $uplink_file = "./form.php?mode=photo&amp;table=$table&amp;f[c]={$list['bcfile']}&amp;f[n]={$list['bofile']}&amp;f[w]={$imginfo[0]}&amp;f[h]={$imginfo[1]}";
+      $uplink_file = "./form.php?mode=photo&table=$table&f[c]={$list['bcfile']}&f[n]={$list['bofile']}&f[w]={$imginfo[0]}&f[h]={$imginfo[1]}";
       if($imginfo[0] > $board['width'] - 6 && !preg_match("/%/",$board['width'])) {
         $p['vars'] = $imginfo[0]/$board['width'];
         $p['width'] = $board['width'] - 6;
