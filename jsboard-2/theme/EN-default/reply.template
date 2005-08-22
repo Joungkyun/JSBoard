@@ -76,11 +76,11 @@ if(!$np) {
 <!-- $board['width'] : print width of webboard. It's config in board admin-->
 <!-- $board['formtype'] : print form option to use upload image           -->
 <!-- ==================================================================== -->
-<DIV ALIGN=<?=$board['align']?>>
-<FORM NAME="replyp" METHOD=post ACTION="act.php"<?=$board['formtype']?>>
+<DIV ALIGN="<?=$board['align']?>">
+<FORM NAME="replyp" METHOD="post" ACTION="act.php"<?=$board['formtype']?>>
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD VALIGN=bottom COLSPAN=2>
+<TD VALIGN="bottom" COLSPAN=2>
 <IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Write <B>reply</B> article</FONT>
 </TD>
@@ -101,7 +101,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
-<TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN=middle><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=10><IMG SRC="images/blank.gif" WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
@@ -113,7 +113,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <TR>
 <TD WIDTH=80><B>Name</B></TD>
-<TD><INPUT TYPE=text NAME="atc[name]" SIZE=<?=$size['name']?> MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?>></TD>
+<TD><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?>></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -122,11 +122,13 @@ if(!$np) {
 <!-- ==================================================================== -->
 <?
 if($view['email']) {
-  echo "
+  echo <<<EOF
+
 <TR>
 <TD><B>Email</B></TD>
-<TD><INPUT TYPE=text NAME=\"atc[email]\" SIZE={$size['name']} MAXLENGTH=255 VALUE=\"{$pre_regist['email']}\"$disable></TD>
-</TR>\n";
+<TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable></TD>
+</TR>\n
+EOF;
 }
 ?>
 
@@ -136,11 +138,12 @@ if($view['email']) {
 <!-- ==================================================================== -->
 <?
 if($view['url']) {
-  echo "
+  echo <<<EOF
 <TR>
 <TD><B>Homepage</B></TD>
-<TD><INPUT TYPE=text NAME=\"atc[url]\" SIZE={$size['name']} MAXLENGTH=255 VALUE=\"{$pre_regist['url']}\"$disable></TD>
-</TR>\n";
+<TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable></TD>
+</TR>\n
+EOF;
 }
 ?>
 
@@ -151,8 +154,8 @@ if($view['url']) {
 <TR>
 <TD><B>HTML</B></TD>
 <TD>
-<INPUT TYPE=radio NAME="atc[html]" VALUE=1<?=$html_chk_ok?>> Use
-<INPUT TYPE=radio NAME="atc[html]" VALUE=0<?=$html_chk_no?>> Don't Use
+<INPUT TYPE="radio" NAME="atc[html]" VALUE=1<?=$html_chk_ok?>> Use
+<INPUT TYPE="radio" NAME="atc[html]" VALUE=0<?=$html_chk_no?>> Don't Use
 </TD>
 </TR>
 
@@ -161,18 +164,22 @@ if($view['url']) {
 <!-- ==================================================================== -->
 <?
 if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
-  echo "<TR>\n".
-       "<TD><B>File</B></TD>\n".
-       "<TD>\n".
-       "<INPUT TYPE=HIDDEN NAME=max_file_size VALUE={$upload['maxsize']}>\n".
-       "<INPUT TYPE=file NAME=userfile SIZE={$size['uplo']} MAXLENGTH=256>\n".
-       "</TD>\n".
-       "</TR>\n";
+  echo <<<EOF
+<TR>
+<TD><B>File</B></TD>
+<TD>
+<INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
+<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256>
+</TD>
+</TR>\n
+EOF;
 } elseif(!$upload['yesno'] && $cupload['yesno']) {
-  echo "<TR>\n".
-       "<TD><B>File</B></TD>\n".
-       "<TD><FONT STYLE=\"color:red;font-weight:bold\">{$langs['upload']}<FONT></TD>\n".
-       "</TR>\n";
+  echo <<<EOF
+<TR>
+<TD><B>File</B></TD>
+<TD><FONT STYLE="color:red;font-weight:bold">{$langs['upload']}<FONT></TD>
+</TR>\n
+EOF;
 }
 ?>
 
@@ -183,7 +190,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!-- ==================================================================== -->
 <TR>
 <TD><B>Subject</B></TD>
-<TD><INPUT TYPE=text NAME="atc[title]" SIZE=<?=$size['titl']?> MAXLENGTH=100 VALUE="<?="Re$reti: {$list['title']}"?>"></TD>
+<TD><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 VALUE="<?="Re$reti: {$list['title']}"?>"></TD>
 </TR>
 
 <TR>
@@ -193,16 +200,20 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!-- ==================================================================== -->
 <?
 if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
-  echo "<TD><B>Password</B></TD>\n".
-       "<TD>\n".
-       "<INPUT TYPE=password NAME=\"atc[passwd]\" SIZE={$size['pass']} MAXLENGTH=16>\n".
-       "<IMG SRC=\"./images/blank.gif\" WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>\n".
-       "TextSize Operation {$print['operate']}\n".
-       "</TD>\n";
+  echo <<<EOF
+<TD><B>Password</B></TD>
+<TD>
+<INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16>
+<IMG SRC="./images/blank.gif" WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>
+TextSize Operation {$print['operate']}
+</TD>\n
+EOF;
 } else {
-  echo "<TD COLSPAN=2 ALIGN=right>\n".
-       "TextSize Operation {$print['operate']}\n".
-       "</TD>\n";
+  echo <<<EOF
+<TD COLSPAN=2 ALIGN="right">
+TextSize Operation {$print['operate']}
+</TD>\n
+EOF;
 }
 ?>
 </TR>
@@ -217,7 +228,7 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 </TABLE>
 
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD BGCOLOR="<?=$color['l5_bg']?>" ALIGN=CENTER>
+<TR><TD BGCOLOR="<?=$color['l5_bg']?>" ALIGN="CENTER">
 
 <!-- ==================================================================== -->
 <!-- $text_area  : print textared field for reply                         -->
@@ -239,13 +250,13 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <!-- $orig_button      : print button for printed parent contents         -->
 <!-- ==================================================================== -->
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD ALIGN=right><?=$wrap['ment']?></TD></TR>
-<TR><TD BGCOLOR="#FFAE00" ALIGN=CENTER>
+<TR><TD ALIGN="right"><?=$wrap['ment']?></TD></TR>
+<TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <?=$print['passform']?>
-<INPUT TYPE=submit VALUE="Regist">
-<INPUT TYPE=reset VALUE="Reset"<?=$orig_option?>><?=$orig_button?>
-<INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List">
-<INPUT TYPE=button onClick="history.back()" VALUE="Back">
+<INPUT TYPE="submit" VALUE="Regist">
+<INPUT TYPE="reset" VALUE="Reset"<?=$orig_option?>><?=$orig_button?>
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List">
+<INPUT TYPE="button" onClick="history.back()" VALUE="Back">
 </TD></TR>
 </TABLE>
 
