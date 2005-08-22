@@ -69,19 +69,19 @@ if(!$np) {
 <!-- $board['width'] : 게시판의 넓이를 지정한다. 게시판 관리자에서 조정   -->
 <!-- $board['formtype'] : 이미지 업로드를 지원 여부를 위해 꼭 필요        -->
 <!-- ==================================================================== -->
-<DIV ALIGN=<?=$board['align']?>>
-<FORM NAME="editp" METHOD=post ACTION="act.php"<?=$board['formtype']?>>
+<DIV ALIGN="<?=$board['align']?>">
+<FORM NAME="editp" METHOD="post" ACTION="act.php"<?=$board['formtype']?>>
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD VALIGN=bottom COLSPAN=2>
-<IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN=middle ALT=''>
+<TD VALIGN="bottom" COLSPAN=2>
+<IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Edit article</FONT>
 </TD>
 </TR>
 
 <TR BGCOLOR="#FFAE00">
 <TD COLSPAN=2>
-<IMG SRC="./theme/KO-default/img/board_no.gif" ALIGN=middle ALT=''>
+<IMG SRC="./theme/KO-default/img/board_no.gif" ALIGN="middle" ALT=''>
 <FONT STYLE="color:#FFFFFF"><IMG SRC="theme/KO-default/img/edit_title.gif" BORDER=0 ALT=''></FONT>
 </TD>
 </TR>
@@ -94,7 +94,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
 <TR>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
-<TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN=middle><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=10><IMG SRC="images/blank.gif" WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
@@ -106,7 +106,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <TR>
 <TD WIDTH=80>이름</TD>
-<TD><INPUT TYPE=text NAME="atc[name]" SIZE=<?=$size['name']?> MAXLENGTH=50 VALUE="<?=$list['name']?>"<?=$disable?>></TD>
+<TD><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$list['name']?>"<?=$disable?>></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -115,11 +115,12 @@ if(!$np) {
 <!-- ==================================================================== -->
 <?
 if($view['email'] || trim($list['email'])) {
-  echo "
+  echo <<<EOF
 <TR>
 <TD>메일</TD>
-<TD><INPUT TYPE=text NAME=\"atc[email]\" SIZE={$size['name']} MAXLENGTH=255 VALUE=\"{$list['email']}\"$disable></TD>
-</TR>\n";
+<TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['email']}"{$disable}></TD>
+</TR>\n
+EOF;
 }
 ?>
 
@@ -129,11 +130,12 @@ if($view['email'] || trim($list['email'])) {
 <!-- ==================================================================== -->
 <?
 if($view['url'] || trim($list['url'])) {
-  echo "
+  echo <<<EOF
 <TR>
 <TD>홈페이지</TD>
-<TD><INPUT TYPE=text NAME=\"atc[url]\" SIZE={$size['name']} MAXLENGTH=255 VALUE=\"{$list['url']}\"$disable></TD>
-</TR>\n";
+<TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['url']}"{$disable}></TD>
+</TR>\n
+EOF;
 }
 ?>
 
@@ -144,8 +146,8 @@ if($view['url'] || trim($list['url'])) {
 <TR>
 <TD>HTML</TD>
 <TD>
-<INPUT TYPE=radio NAME="atc[html]" VALUE=1<?=$html_chk_ok?>> 사용함
-<INPUT TYPE=radio NAME="atc[html]" VALUE=0<?=$html_chk_no?>> 사용안함
+<INPUT TYPE="radio" NAME="atc[html]" VALUE=1<?=$html_chk_ok?>> 사용함
+<INPUT TYPE="radio" NAME="atc[html]" VALUE=0<?=$html_chk_no?>> 사용안함
 </TD>
 </TR>
 
@@ -154,23 +156,27 @@ if($view['url'] || trim($list['url'])) {
 <!-- ==================================================================== -->
 <?
 if($list['bofile']) {
-  echo "<TR>\n".
-       "<TD>파일</TD>\n".
-       "<TD>\n".
-       "<A HREF=\"$down_link\">\n".
-       "<IMG SRC=\"images/$icon\" width=16 height=16 border=0 alt={$list['bofile']} align=middle>\n".
-       "<FONT style=\"color:{$color['text']}\">{$list['bofile']}</FONT></A> - $hfsize &nbsp; &nbsp;\n".
-       "<INPUT TYPE=CHECKBOX NAME=\"atc[fdel]\" VALUE=1> 파일삭제\n";
+  echo <<<EOF
+<TR>
+<TD>파일</TD>
+<TD>
+<A HREF="$down_link">
+<IMG SRC="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" valign="middle">
+<FONT style="color:{$color['text']}">{$list['bofile']}</FONT></A> - $hfsize &nbsp; &nbsp;
+<INPUT TYPE="CHECKBOX" NAME="atc[fdel]" VALUE=1> 파일삭제\n
+EOF;
 }
 
 if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
-  echo "<TR>\n".
-       "<TD>파일수정</TD>\n".
-       "<TD>\n".
-       "<INPUT TYPE=HIDDEN NAME=max_file_size VALUE=\"{$upload['maxsize']}\">\n".
-       "<INPUT TYPE=file NAME=userfile SIZE={$size['uplo']} MAXLENGTH=256>\n".
-       "</TD>\n".
-       "</TR>\n";
+  echo <<<EOF
+<TR>
+<TD>파일수정</TD>
+<TD>
+<INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
+<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256>
+</TD>
+</TR>\n
+EOF;
 }
 ?>
 
@@ -180,7 +186,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!-- ==================================================================== -->
 <TR>
 <TD>제목</TD>
-<TD><INPUT TYPE=text NAME="atc[title]" SIZE=<?=$size['titl']?> MAXLENGTH=100 VALUE="<?=$list['title']?>"></TD>
+<TD><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 VALUE="<?=$list['title']?>"></TD>
 </TR>
 
 <TR>
@@ -190,16 +196,20 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!-- ==================================================================== -->
 <?
 if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
-  echo "<TD>패스워드</TD>\n".
-       "<TD>\n".
-       "$passment\n".
-       "<IMG SRC=\"./images/blank.gif\" WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>\n".
-       "TextSize Operation {$print['operate']}\n".
-       "</TD>\n";
+  echo <<<EOF
+<TD>패스워드</TD>
+<TD>
+$passment
+<IMG SRC="./images/blank.gif" WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>
+TextSize Operation {$print['operate']}
+</TD>\n
+EOF;
 } else {
-  echo "<TD COLSPAN=2 ALIGN=right>\n".
-       "TextSize Operation {$print['operate']}\n".
-       "</TD>\n";
+  echo <<<EOF
+<TD COLSPAN=2 ALIGN="right">
+TextSize Operation {$print['operate']}
+</TD>\n
+EOF;
 }
 ?>
 </TR>
@@ -214,7 +224,7 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 </TABLE>
 
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD BGCOLOR="<?=$color['l5_bg']?>" ALIGN=CENTER>
+<TR><TD BGCOLOR="<?=$color['l5_bg']?>" ALIGN="CENTER">
 
 <!-- ==================================================================== -->
 <!-- $wrap['op']   : textarea 의 wrap 옵션출력                            -->
@@ -222,7 +232,7 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 <!-- $list['text'] : 수정할 글 본문을 출력                                -->
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
-<TEXTAREA NAME="epost" <?=$wrap['op']?> ROWS=10 COLS=<?=$size['text']?>><?="{$list['text']}\n\n"?></TEXTAREA>
+<TEXTAREA NAME="epost" <?=$wrap['op']?> ROWS=10 COLS="<?=$size['text']?>"><?="{$list['text']}\n\n"?></TEXTAREA>
 <!-- =============================== 글내용 =============================== -->
 
 </TD></TR>
@@ -236,13 +246,13 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 <!-- $orig_option      : 글쓰기 창 조절시 원래 크기로 돌아가는 옵션       -->
 <!-- ==================================================================== -->
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD ALIGN=right><?=$wrap['ment']?></TD></TR>
-<TR><TD BGCOLOR="#FFAE00" ALIGN=CENTER>
+<TR><TD ALIGN="right"><?=$wrap['ment']?></TD></TR>
+<TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <?=$print['passform']?>
-<INPUT TYPE=submit VALUE="등록">
-<INPUT TYPE=reset VALUE="다시"<?=$orig_option?>>
-<INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록">
-<INPUT TYPE=button onClick="history.back()" VALUE="이전">
+<INPUT TYPE="submit" VALUE="등록">
+<INPUT TYPE="reset" VALUE="다시"<?=$orig_option?>>
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록">
+<INPUT TYPE="button" onClick="history.back()" VALUE="이전">
 </TD></TR>
 </TABLE>
 
