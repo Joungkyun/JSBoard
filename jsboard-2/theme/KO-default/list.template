@@ -90,14 +90,14 @@ if(!$np) {
 <!--                 다. 게시판 관리자에서 안보이도록 설정을 할수가있다   -->
 <!-- $print['lout']  : 로그인시 로그아웃 버튼을 출력                      -->
 <!-- ==================================================================== -->
-<DIV ALIGN=<?=$board['align']?>>
+<DIV ALIGN="<?=$board['align']?>">
 <?=$print['dsearch']?>
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD VALIGN=bottom>
-<IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN=middle ALT=''>
+<TD VALIGN="bottom">
+<IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;color:#555555;"> &gt;&gt; <?=$print['count']?></FONT></TD>
-<TD ALIGN=right VALIGN=bottom><?=$print['lout']?><?=$print['admin']?></TD>
+<TD ALIGN="right" VALIGN="bottom"><?=$print['lout']?><?=$print['admin']?></TD>
 </TR>
 
 <TR><TD COLSPAN=3>
@@ -109,20 +109,23 @@ if(!$np) {
 <!--   게시판 메인 테이블 시작    -->
 <TABLE WIDTH="100%" BORDER=0 CELLSPACING=0 CELLPADDING=0>
 <TR>
-  <TD WIDTH="<?=$td_width[no]?>" ALIGN=left BGCOLOR="#FFAE00"><IMG SRC="./theme/KO-default/img/board_no.gif" ALT='No.'></TD>
-  <TD WIDTH="<?=$td_width[title]?>" ALIGN=center BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">제목</FONT></TD>
-  <TD WIDTH="<?=$td_width[name]?>" ALIGN=center BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">이름</FONT></TD>
+  <TD WIDTH="<?=$td_width[no]?>" ALIGN="left" BGCOLOR="#FFAE00"><IMG SRC="./theme/KO-default/img/board_no.gif" ALT='No.'></TD>
+  <TD WIDTH="<?=$td_width[title]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">제목</FONT></TD>
+  <TD WIDTH="<?=$td_width[name]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">이름</FONT></TD>
 
 <!-- ==================================================================== -->
 <!-- if($upload['yesno'] && $cupload['yesno']) : 파일                     -->
 <!--              업로드 기능을 사용할 경우 해당 필드를 출력을 한다.      -->
 <!-- ==================================================================== -->
 <?
-  if($upload['yesno'] && $cupload['yesno'])
-    echo "<TD WIDTH=\"$td_width[upload]\" ALIGN=center BGCOLOR=\"#FFAE00\"><FONT STYLE=\"color:#FFFFFF;font-weight:bold\">파일</FONT></TD>\n";
+  if($upload['yesno'] && $cupload['yesno']) {
+    echo <<<EOF
+  <TD WIDTH="$td_width[upload]" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">파일</FONT></TD>\n
+EOF;
+  }
 ?>
-  <TD WIDTH="<?=$td_width[dates]?>" ALIGN=center BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">날짜</FONT></TD>
-  <TD WIDTH="<?=$td_width[refer]?>" ALIGN=center BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">조회</FONT></TD>
+  <TD WIDTH="<?=$td_width[dates]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">날짜</FONT></TD>
+  <TD WIDTH="<?=$td_width[refer]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">조회</FONT></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -157,8 +160,8 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD><FONT style="font-size:10px;font-family:tahoma;color:#555555">&gt;&gt; Fast Page Link : <?=$print['p_list']?></FONT>
-<IMG SRC="images/blank.gif" WIDTH="1" HEIGHT=25 BORDER=0 ALIGN=middle ALT=''></TD>
-<TD ALIGN=right><? list_cmd(0,1) ?></TD>
+<IMG SRC="images/blank.gif" WIDTH="1" HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
+<TD ALIGN="right"><? list_cmd(0,1) ?></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -169,55 +172,55 @@ if(!$np) {
 <TR>
 <TD>
 <!-- =============================== 검색폼 =============================== -->
-<FORM METHOD=post ACTION="locate.php?table=<?=$table?>">
+<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
 <TR>
 <TD>
 <SELECT NAME="o[sc]">
-<OPTION VALUE=t<?=$sform['sc']['t']?>>Title
-<OPTION VALUE=c<?=$sform['sc']['c']?>>Contents
-<OPTION VALUE=n<?=$sform['sc']['n']?>>Writer
-<OPTION VALUE=a<?=$sform['sc']['a']?>>All
+<OPTION VALUE="t"<?=$sform['sc']['t']?>>Title
+<OPTION VALUE="c"<?=$sform['sc']['c']?>>Contents
+<OPTION VALUE="n"<?=$sform['sc']['n']?>>Writer
+<OPTION VALUE="a"<?=$sform['sc']['a']?>>All
 </SELECT>
-<INPUT TYPE=text NAME="o[ss]" SIZE=<?=form_size(8)?> MAXLENGTH=255 style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font-size:12px;color:<?=$color['l4_fg']?>;" VALUE="<?=$sform['ss']?>"
+<INPUT TYPE="text" NAME="o[ss]" SIZE="<?=form_size(8)?>" MAXLENGTH=255 style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font-size:12px;color:<?=$color['l4_fg']?>;" VALUE="<?=$sform['ss']?>"
 >
-<INPUT TYPE=submit VALUE=Search style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma;color:<?=$color['l4_fg']?>;">
+<INPUT TYPE="submit" VALUE="Search" style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma;color:<?=$color['l4_fg']?>;">
 </TD>
 </TR><TR>
 <TD>
 <SELECT NAME="o[st]">
-<OPTION VALUE=m<?=$sform['st']['m']?>>A Month
-<OPTION VALUE=w<?=$sform['st']['w']?>>A Week
-<OPTION VALUE=a<?=$sform['st']['a']?>>All
+<OPTION VALUE="m"<?=$sform['st']['m']?>>A Month
+<OPTION VALUE="w"<?=$sform['st']['w']?>>A Week
+<OPTION VALUE="a"<?=$sform['st']['a']?>>All
 </SELECT>
-<INPUT TYPE=checkbox NAME="o[er]" VALUE=y<?=$sform['er']['y']?> style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>">
+<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?=$sform['er']['y']?> style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>">
 <FONT STYLE="font-family: GulimChe,sans-serif;color:#555555">정규표현식</FONT> <?=$print['dserlink']?>
 </TD>
 </TR>
 </TABLE>
-<INPUT TYPE=hidden NAME="o[at]" VALUE="s">
-<INPUT TYPE=hidden NAME="o[go]" VALUE="p">
-<INPUT TYPE=hidden NAME="o[sct]" VALUE="s">
-<INPUT TYPE=hidden NAME="o[stt]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[at]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[go]" VALUE="p">
+<INPUT TYPE="hidden" NAME="o[sct]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[stt]" VALUE="s">
 </FORM>
 <!-- =============================== 검색폼 =============================== -->
 </TD>
-<TD ALIGN=right>
+<TD ALIGN="right">
 <FONT style="font-size:11px;font-family:tahoma;color:#555555;"><?=$print['times']?></FONT><BR>
 <!-- ============================== 페이지폼 ============================== -->
-<FORM METHOD=post ACTION="locate.php?table=<?=$table?>">
+<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
 <TR>
-<TD ALIGN=right>
+<TD ALIGN="right">
 <FONT STYLE="font-size:10px;font-family:tahoma;">
 <?=$pform['post']?>
 <SELECT NAME="o[go]">
 <OPTION VALUE="p" SELECTED>Page No.
 <OPTION VALUE="n">Article No.
 </SELECT>
-<INPUT TYPE=text NAME="o[no]" SIZE=<?=form_size(2)?> MAXLENGTH=6 style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font-size:12px;color:<?=$color['l4_fg']?>" VALUE='<?=$pform['value']?>'
+<INPUT TYPE="text" NAME="o[no]" SIZE="<?=form_size(2)?>" MAXLENGTH=6 style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font-size:12px;color:<?=$color['l4_fg']?>" VALUE='<?=$pform['value']?>'
 >
-<INPUT TYPE=submit VALUE="Go!" style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma;color:#555555">
+<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma;color:#555555">
 </FONT>
 </TD>
 </TR>

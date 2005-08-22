@@ -65,12 +65,12 @@ if(!$np) {
 <!-- $board['width'] : 게시판의 넓이를 지정한다. 게시판 관리자에서 조정   -->
 <!-- $list['num']    : 좌측 상단의 게시판 글 번호                         -->
 <!-- ==================================================================== -->
-<DIV ALIGN=<?=$board['align']?>>
-<FORM METHOD=post ACTION=act.php>
+<DIV ALIGN="<?=$board['align']?>">
+<FORM METHOD="post" ACTION="act.php">
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD VALIGN=bottom COLSPAN=2>
-<IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN=middle ALT=''>
+<TD VALIGN="bottom" COLSPAN=2>
+<IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Delete <?=$list['num']?> article</FONT>
 </TD>
 </TR>
@@ -81,7 +81,7 @@ if(!$np) {
 <? $list['title'] = preg_replace("/<br>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
 <TR BGCOLOR="#FFAE00">
 <TD COLSPAN=2>
-<IMG SRC="./theme/KO-default/img/board_no.gif" ALIGN=middle ALT='No.'>
+<IMG SRC="./theme/KO-default/img/board_no.gif" ALIGN="middle" ALT='No.'>
 <FONT STYLE="color:#FFFFFF; font-weight:bold"><?=$list['title']?></FONT>
 </TD>
 </TR>
@@ -103,7 +103,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
-<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN=middle><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD WIDTH=5><IMG SRC="images/blank.gif" WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD>
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
@@ -145,15 +145,15 @@ if(!$np) {
 <!-- $print['passform']  : 삭제하는데 필요한 hidden 변수들                -->
 <!-- ==================================================================== -->
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD ALIGN=right>
+<TR><TD ALIGN="right">
 <?=$warning?>
 [ <A HREF="list.php?table=<?=$table.$page?>"><FONT STYLE="color:#555555">목록</FONT></A> | <A HREF="javascript:history.back()"><FONT STYLE="color:#555555">이전</FONT></A> ]
 </TD></TR>
-<TR><TD BGCOLOR="#FFAE00" ALIGN=CENTER>
+<TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <FONT STYLE="color:#FFFFFF;font-weight:bold">
 <?=$print['passform']?>
-<INPUT TYPE=submit VALUE="삭제">&nbsp;
-<INPUT TYPE=button onClick="history.back()" VALUE="취소">
+<INPUT TYPE="submit" VALUE="삭제">&nbsp;
+<INPUT TYPE="button" onClick="history.back()" VALUE="취소">
 </FONT>
 </TD></TR>
 </TABLE>

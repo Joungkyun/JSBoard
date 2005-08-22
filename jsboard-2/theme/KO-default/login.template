@@ -29,7 +29,7 @@ INPUT {
 }
 form { display: inline; }
 </STYLE>
-<script language=JavaScript>
+<script type="text/javascript">
 <!--
 function InputFocus() {
 <? if($mode == "comment") { ?>
@@ -42,7 +42,7 @@ function InputFocus() {
 //-->
 </script>
 </HEAD>
-<BODY BGCOLOR="<?=$color['b_bg']?>" onLoad=InputFocus()>
+<BODY BGCOLOR="<?=$color['b_bg']?>" onLoad="InputFocus()">
 
 <?
 include "html/head.php";
@@ -57,45 +57,45 @@ if($mode == "comment") {
 }
 ?>
 
-<TABLE WIDTH="100%" HEIGHT=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<TR><TD ALIGN=center VALIGN=middle>
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="height: 100%;">
+<TR><TD ALIGN="center" VALIGN="middle">
 
-<FORM NAME=auth METHOD=POST ACTION=<?=$actpage?>>
+<FORM NAME="auth" METHOD="POST" ACTION="<?=$actpage?>">
 <TABLE WIDTH="200" BORDER=0 CELLPADDING=3 CELLSPACING=0>
 <TR>
-<TD BGCOLOR="<?=$color['t_bg']?>" ALIGN=CENTER><FONT STYLE="FONT: 14px Tahoma; COLOR:<?=$color['t_fg']?>; FONT-WEIGHT:bold"><?=$ment?></FONT></TD>
+<TD BGCOLOR="<?=$color['t_bg']?>" ALIGN="CENTER"><FONT STYLE="FONT: 14px Tahoma; COLOR:<?=$color['t_fg']?>; FONT-WEIGHT:bold"><?=$ment?></FONT></TD>
 </TR>
 
 <TR>
-<TD BGCOLOR="<?=$color['m_bg']?>" ALIGN=CENTER>
+<TD BGCOLOR="<?=$color['m_bg']?>" ALIGN="CENTER">
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=4 ALT=''><BR>
 
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
 <? if($mode == "comment") { ?>
 <TR>
-<TD ALIGN=CENTER STYLE="overflow: hidden; white-space: nowrap"><NOBR>
+<TD ALIGN="CENTER" STYLE="overflow: hidden; white-space: nowrap"><NOBR>
 Password
-<INPUT TYPE=password NAME=lp SIZE=<?=$size?>>
-<INPUT TYPE=SUBMIT VALUE=DELETE>
+<INPUT TYPE="password" NAME="lp" SIZE="<?=$size?>">
+<INPUT TYPE="SUBMIT" VALUE="DELETE">
 </NOBR>
 <BR>
 </TD>
 </TR>
 <? } else { ?>
 <TR>
-<TD ALIGN=CENTER>User</TD>
-<TD ALIGN=CENTER><INPUT TYPE=text NAME=lu SIZE=<?=$size?>></TD>
+<TD ALIGN="CENTER">User</TD>
+<TD ALIGN="CENTER"><INPUT TYPE="text" NAME="lu" SIZE="<?=$size?>"></TD>
 </TR>
 
 <TR>
-<TD ALIGN=CENTER>Password</TD>
-<TD ALIGN=CENTER><INPUT TYPE=password NAME=lp SIZE=<?=$size?>></TD>
+<TD ALIGN="CENTER">Password</TD>
+<TD ALIGN="CENTER"><INPUT TYPE="password" NAME="lp" SIZE="<?=$size?>"></TD>
 </TR>
 
 <TR>
-<TD ALIGN=CENTER COLSPAN=2>
-Session Reset <INPUT TYPE=BUTTON VALUE=RESET onClick="document.location='./session.php?m=logout<?=$opt?>'">
-<INPUT TYPE=SUBMIT VALUE=LogIn>
+<TD ALIGN="CENTER" COLSPAN=2>
+Session Reset <INPUT TYPE="BUTTON" VALUE="RESET" onClick="document.location='./session.php?m=logout<?=$opt?>'">
+<INPUT TYPE="SUBMIT" VALUE="LogIn">
 <BR>
 </TD>
 </TR>
@@ -103,13 +103,13 @@ Session Reset <INPUT TYPE=BUTTON VALUE=RESET onClick="document.location='./sessi
 </TABLE>
 
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=4><BR>
-<INPUT TYPE=HIDDEN NAME=m VALUE=login>
+<INPUT TYPE="HIDDEN" NAME="m" VALUE="login">
 <? if ($mode == "comment") { ?>
-<INPUT TYPE=HIDDEN NAME="table" VALUE=<?=$table?>>
-<INPUT TYPE=HIDDEN NAME="atc[no]" VALUE=<?=$no?>>
-<INPUT TYPE=HIDDEN NAME="atc[cid]" VALUE=<?=$cid?>>
-<INPUT TYPE=HIDDEN NAME="o[at]" VALUE=c_del>
-<INPUT TYPE=HIDDEN NAME="page" VALUE=<?=$page?>>
+<INPUT TYPE="HIDDEN" NAME="table" VALUE="<?=$table?>">
+<INPUT TYPE="HIDDEN" NAME="atc[no]" VALUE="<?=$no?>">
+<INPUT TYPE="HIDDEN" NAME="atc[cid]" VALUE="<?=$cid?>">
+<INPUT TYPE="HIDDEN" NAME="o[at]" VALUE="c_del">
+<INPUT TYPE="HIDDEN" NAME="page" VALUE="<?=$page?>">
 <? } ?>
 
 </TD>
