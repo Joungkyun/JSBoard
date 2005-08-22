@@ -231,11 +231,11 @@ function list_cmd($img=0,$prt=0) {
   $str['search'] = search2url($o);
 
   if($img) {
-    $menu['pre'] = "<IMG SRC=./theme/{$print['theme']}/img/prev.gif BORDER=0 ALT='{$langs['cmd_priv']}'>";
-    $menu['nxt'] = "<IMG SRC=./theme/{$print['theme']}/img/next.gif BORDER=0 ALT='{$langs['cmd_next']}'>";
-    $menu['all'] = "<IMG SRC=./theme/{$print['theme']}/img/list.gif BORDER=0 ALT='{$langs['cmd_all']}'>";
-    $menu['write'] = "<IMG SRC=./theme/{$print['theme']}/img/write.gif BORDER=0 ALT='{$langs['cmd_write']}'>";
-    $menu['today'] = "<IMG SRC=./theme/{$print['theme']}/img/today.gif BORDER=0 ALT='{$langs['cmd_today']}'>";
+    $menu['pre'] = "<IMG SRC=\"./theme/{$print['theme']}/img/prev.gif\" BORDER=0 ALT='{$langs['cmd_priv']}'>";
+    $menu['nxt'] = "<IMG SRC=\"./theme/{$print['theme']}/img/next.gif\" BORDER=0 ALT='{$langs['cmd_next']}'>";
+    $menu['all'] = "<IMG SRC=\"./theme/{$print['theme']}/img/list.gif\" BORDER=0 ALT='{$langs['cmd_all']}'>";
+    $menu['write'] = "<IMG SRC=\"./theme/{$print['theme']}/img/write.gif\" BORDER=0 ALT='{$langs['cmd_write']}'>";
+    $menu['today'] = "<IMG SRC=\"./theme/{$print['theme']}/img/today.gif\" BORDER=0 ALT='{$langs['cmd_today']}'>";
   } else {
     $menu['pre'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_priv']}</FONT>";
     $menu['nxt'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_next']}</FONT>";
@@ -274,14 +274,14 @@ function read_cmd($img=0,$prt=0) {
   #if (!$o['ck']) $str['search'] = "";
 
   if($img) {
-    $menu['pre'] = "<IMG SRC=./theme/{$print['theme']}/img/prev.gif BORDER=0 ALT='{$langs['cmd_upp']}'>";
-    $menu['nxt'] = "<IMG SRC=./theme/{$print['theme']}/img/next.gif BORDER=0 ALT='{$langs['cmd_down']}'>";
-    $menu['del'] = "<IMG SRC=./theme/{$print['theme']}/img/delete.gif BORDER=0 ALT='{$langs['cmd_del']}'>";
-    $menu['edit'] = "<IMG SRC=./theme/{$print['theme']}/img/edit.gif BORDER=0 ALT='{$langs['cmd_edit']}'>";
-    $menu['lists'] = "<IMG SRC=./theme/{$print['theme']}/img/list.gif BORDER=0 ALT='{$langs['cmd_list']}'>";
-    $menu['reply'] = "<IMG SRC=./theme/{$print['theme']}/img/reply.gif BORDER=0 ALT='{$langs['cmd_reply']}'>";
-    $menu['write'] = "<IMG SRC=./theme/{$print['theme']}/img/write.gif BORDER=0 ALT='{$langs['cmd_write']}'>";
-    $menu['conj'] = "<IMG SRC=./theme/{$print['theme']}/img/conj.gif BORDER=0 ALT='{$langs['cmd_con']}'>";
+    $menu['pre'] = "<IMG SRC=\"./theme/{$print['theme']}/img/prev.gif\" BORDER=0 ALT='{$langs['cmd_upp']}'>";
+    $menu['nxt'] = "<IMG SRC=\"./theme/{$print['theme']}/img/next.gif\" BORDER=0 ALT='{$langs['cmd_down']}'>";
+    $menu['del'] = "<IMG SRC=\"./theme/{$print['theme']}/img/delete.gif\" BORDER=0 ALT='{$langs['cmd_del']}'>";
+    $menu['edit'] = "<IMG SRC=\"./theme/{$print['theme']}/img/edit.gif\" BORDER=0 ALT='{$langs['cmd_edit']}'>";
+    $menu['lists'] = "<IMG SRC=\"./theme/{$print['theme']}/img/list.gif\" BORDER=0 ALT='{$langs['cmd_list']}'>";
+    $menu['reply'] = "<IMG SRC=\"./theme/{$print['theme']}/img/reply.gif\" BORDER=0 ALT='{$langs['cmd_reply']}'>";
+    $menu['write'] = "<IMG SRC=\"./theme/{$print['theme']}/img/write.gif\" BORDER=0 ALT='{$langs['cmd_write']}'>";
+    $menu['conj'] = "<IMG SRC=\"./theme/{$print['theme']}/img/conj.gif\" BORDER=0 ALT='{$langs['cmd_con']}'>";
   } else {
     $menu['pre'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_upp']}</FONT>";
     $menu['nxt'] = "<FONT style=\"font-family:{$langs['vfont']};color:{$color['text']}\">{$langs['cmd_down']}</FONT>";
