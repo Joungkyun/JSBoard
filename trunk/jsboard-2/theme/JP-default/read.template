@@ -61,15 +61,15 @@ if(!$np) {
 <!-- $list['num']    : Number of article                                  -->
 <!-- $print['lout']  : print logout link.                                 -->
 <!-- ==================================================================== -->
-<DIV ALIGN=<?=$board['align']?>>
+<DIV ALIGN="<?=$board['align']?>">
 <?=$print['dsearch']?>
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD VALIGN=bottom>
+<TD VALIGN="bottom">
 <IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Read <?=$list['num']?> article</FONT>
 </TD>
-<TD ALIGN=right VALIGN=bottom><?=$print['lout']?><?=$print['admin']?></TD>
+<TD ALIGN="right" VALIGN="bottom"><?=$print['lout']?><?=$print['admin']?></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -99,7 +99,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
-<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN=middle><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD WIDTH=5><IMG SRC="images/blank.gif" WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD>
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
@@ -179,7 +179,7 @@ if(!$np) {
 <TR>
 <TD>
 <FONT style="font-family:tahoma;font-size:11px;"><?=$print['regist']?></FONT><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
-<TD ALIGN=right><? read_cmd(0,1) ?></TD>
+<TD ALIGN="right"><? read_cmd(0,1) ?></TD>
 </TR>
 </TABLE>
 
@@ -193,56 +193,56 @@ if(!$np) {
 <TR>
 <TD>
 <!-- =============================== SEARCH FORM =============================== -->
-<FORM METHOD=post ACTION="locate.php?table=<?=$table?>">
+<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
 <TR>
 <TD>
 <SELECT NAME="o[sc]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
-<OPTION VALUE=t<?=$sform['sc']['t']?>>Title
-<OPTION VALUE=c<?=$sform['sc']['c']?>>Contents
-<OPTION VALUE=n<?=$sform['sc']['n']?>>Writer
-<OPTION VALUE=a<?=$sform['sc']['a']?>>All
+<OPTION VALUE="t"<?=$sform['sc']['t']?>>Title
+<OPTION VALUE="c"<?=$sform['sc']['c']?>>Contents
+<OPTION VALUE="n"<?=$sform['sc']['n']?>>Writer
+<OPTION VALUE="a"<?=$sform['sc']['a']?>>All
 </SELECT>
-<INPUT TYPE=text NAME="o[ss]" SIZE=<?=form_size(8)?> MAXLENGTH=255 style="border:1px solid #555555;background-Color:#ffffff;font:12px;color:#555555;" VALUE="<?=$sform['ss']?>">
-<INPUT TYPE=submit VALUE=Search style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555;">
+<INPUT TYPE="text" NAME="o[ss]" SIZE="<?=form_size(8)?>" MAXLENGTH=255 style="border:1px solid #555555;background-Color:#ffffff;font:12px;color:#555555;" VALUE="<?=$sform['ss']?>">
+<INPUT TYPE="submit" VALUE="Search" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555;">
 </TD>
 </TR><TR>
 <TD>
 <SELECT NAME="o[st]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
-<OPTION VALUE=m<?=$sform['st']['m']?>>A Month
-<OPTION VALUE=w<?=$sform['st']['w']?>>A Week
-<OPTION VALUE=a<?=$sform['st']['a']?>>All
+<OPTION VALUE="m"<?=$sform['st']['m']?>>A Month
+<OPTION VALUE="w"<?=$sform['st']['w']?>>A Week
+<OPTION VALUE="a"<?=$sform['st']['a']?>>All
 </SELECT>
-<INPUT TYPE=checkbox NAME="o[er]" VALUE=y<?=$sform['er']['y']?> style="border:1px solid #555555;background-Color:#ffffff">
+<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?=$sform['er']['y']?> style="border:1px solid #555555;background-Color:#ffffff">
 <FONT STYLE="font-family:tahoma;color:#555555;font-weight:bold">REGEX</FONT> <?=$print['dserlink']?>
 </TD>
 </TR>
 </TABLE>
-<INPUT TYPE=hidden NAME="o[at]" VALUE=s>
-<INPUT TYPE=hidden NAME="o[go]" VALUE=p>
-<INPUT TYPE=hidden NAME="o[sct]" VALUE=s>
-<INPUT TYPE=hidden NAME="o[stt]" VALUE=s>
+<INPUT TYPE="hidden" NAME="o[at]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[go]" VALUE="p">
+<INPUT TYPE="hidden" NAME="o[sct]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[stt]" VALUE="s">
 </FORM>
 <!-- =============================== SEARCH FORM=============================== -->
 </TD>
-<TD ALIGN=right>
+<TD ALIGN="right">
 <FONT style="font-size:11px;font-family:tahoma;">
 Page Loading [ <?=$print['pagetime']?> Sec ]
 SQL Time [ <?=$print['sqltime']?> Sec ]<BR>
 </FONT>
 <!-- ============================== PAGE FORM ============================== -->
-<FORM METHOD=post ACTION="locate.php?table=<?=$table?>">
+<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
 <TR>
-<TD ALIGN=right>
+<TD ALIGN="right">
 <FONT STYLE="font-size:10px;font-family:tahoma;">
 <?=$pform['post']?>
 <SELECT NAME="o[go]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
-<OPTION VALUE=p SELECTED>Page No.
-<OPTION VALUE=n>Article No.
+<OPTION VALUE="p" SELECTED>Page No.
+<OPTION VALUE="n">Article No.
 </SELECT>
-<INPUT TYPE=text NAME="o[no]" SIZE=<?=form_size(2)?> MAXLENGTH=6 style="border:1px solid #555555;background-Color:#ffffff;font:12px;color:#555555" VALUE='<?=$pform['value']?>'>
-<INPUT TYPE=submit VALUE="Go!" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<INPUT TYPE="text" NAME="o[no]" SIZE="<?=form_size(2)?>" MAXLENGTH=6 style="border:1px solid #555555;background-Color:#ffffff;font:12px;color:#555555" VALUE='<?=$pform['value']?>'>
+<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
 </FONT>
 </TD>
 </TR>
