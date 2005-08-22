@@ -688,13 +688,13 @@ function print_license() {
   if($designer['license'] != 2) {
     echo "<BR>\n".
          "<TABLE SUMMARY=\"\" WIDTH=\"{$board['width']}\" BORDER=0 CELLPADDING=0 CELLSPACING=0>\n".
-         "<TR><TD ALIGN=right STYLE=\"overflow: hidden; white-space: nowrap\">\n".
-         "<FONT STYLE=\"font: 12px tahoma;color:{$color['text']}\">\n".
-         "<A STYLE=\"color:{$color['text']}\" HREF=\"$gpl_link\" TARGET=_blank>Copyleft</A> 1999-".date("Y")."\nby ".
-         "<A STYLE=\"color:{$color['text']};font-weight:bold\" HREF=\"http://jsboard.kldp.org\" TARGET=_blank>".
+         "<TR><TD ALIGN=\"right\" STYLE=\"overflow: hidden; white-space: nowrap\">\n".
+         "<FONT STYLE=\"font: 12px tahoma,sans-serif;color:{$color['text']}\">\n".
+         "<A STYLE=\"color:{$color['text']}\" HREF=\"$gpl_link\" TARGET=\"_blank\">Copyleft</A> 1999-".date("Y")."\nby ".
+         "<A STYLE=\"color:{$color['text']};font-weight:bold\" HREF=\"http://jsboard.kldp.org\" TARGET=\"_blank\">".
          "JSBoard Open Project</A><BR>\n".
          "Theme Designed by ".
-         "<A STYLE=\"color:{$color['text']};font-weight:bold\" HREF=\"{$designer['url']}\" TARGET=_blank>".
+         "<A STYLE=\"color:{$color['text']};font-weight:bold\" HREF=\"{$designer['url']}\" TARGET=\"_blank\">".
          "{$designer['name']}</A>{$designer['license']}\n".
          "</FONT>\n".
          "</TD></TR>\n".
