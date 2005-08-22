@@ -46,14 +46,14 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN=bottom COLSPAN=2>
-<IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN=middle ALT=''>
+<IMG SRC="./theme/EN-default/img/icon_over.gif" VALIGN="middle" ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Write <B>reply</B> article</FONT>
 </TD>
 </TR>
 
 <TR BGCOLOR="#FFAE00">
 <TD COLSPAN=2>
-<IMG SRC="./theme/EN-default/img/board_no.gif" ALIGN=middle ALT=''>
+<IMG SRC="./theme/EN-default/img/board_no.gif" VALIGN="middle" ALT=''>
 <FONT STYLE="color:#FFFFFF"><IMG SRC="theme/EN-default/img/reply_title.gif" BORDER=0 ALT=''></FONT>
 </TD>
 </TR>
