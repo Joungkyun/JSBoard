@@ -14,8 +14,8 @@ A:hover { TEXT-DECORATION: underline; color:<? echo $color['text'] ?> }
 TD { FONT: 10pt <? echo $langs['font'] ?>; color:<? echo $color['text'] ?>; }
 INPUT {font: 9pt <? echo $langs['font'] ?>; BACKGROUND-COLOR:<? echo $color['b_bg'] ?>; COLOR:<? echo $color['text'] ?>; BORDER:1x solid <? echo $color['n1_fg'] ?>}
 TEXTAREA {font: 10pt <? echo $langs['font'] ?>; BACKGROUND-COLOR:<? echo $color['l4_bg'] ?>; COLOR:<? echo $color['l4_fg'] ?>; BORDER:1x solid <? echo $color['l4_gu'] ?>}
- #radio {font: 9pt <? echo $langs['font'] ?>; BACKGROUND-COLOR:<? echo $color['bgcol'] ?>; COLOR:<? echo $color['l0_bg'] ?>; BORDER:1x solid <? echo $color['bgcol'] ?>}
- #title {font:20pt <? echo $langs['font'] ?>; color:<? echo $color['n0_bg'] ?>}
+ .radio {font: 9pt <? echo $langs['font'] ?>; BACKGROUND-COLOR:<? echo $color['bgcol'] ?>; COLOR:<? echo $color['l0_bg'] ?>; BORDER:1x solid <? echo $color['bgcol'] ?>}
+ .title {font:20pt <? echo $langs['font'] ?>; color:<? echo $color['n0_bg'] ?>}
 -->
 </STYLE>
 <?php
