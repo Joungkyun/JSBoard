@@ -81,7 +81,7 @@ function print_list($table, $list, $r=0)
   }
 
   if($enable['comment'] && $list['comm'] > 0)
-    $comment_size = "<FONT STYLE=\"font: 9px tahoma;\">[{$list['comm']}]</FONT>";
+    $comment_size = "<FONT STYLE=\"font: 9px tahoma,sans-serif;\">[{$list['comm']}]</FONT>";
 
   # UPLOAD 관련 설정
   if($upload['yesno']) {
@@ -202,7 +202,7 @@ function print_narticle($table, $fg, $bg, $print = 0)
   $article = "\n".
              "<TR>\n".
              "  <TD ALIGN=\"center\" BGCOLOR=\"$bg\" COLSPAN=\"$colspan\">\n".
-             "    <BR><FONT STYLE=\"font-size:22px;font-family:{$langs['vfont']};color:$fg;font-weight:bold\">$str</FONT><BR><BR>\n".
+             "    <BR><FONT STYLE=\"font-size:22px;font-family:{$langs['vfont']},sans-serif;color:$fg;font-weight:bold\">$str</FONT><BR><BR>\n".
              "  </TD>\n".
              "</TR>\n";
 
@@ -237,8 +237,8 @@ function get_comment($table,$no,$prints=0) {
 
   if($comment_no > 0) {
     $lists .= "<TR>\n".
-              "<TD COLSPAN=3><FONT STYLE=\"font: 10px tahoma; font-weight:bold;\">Total Comment : $comment_no</FONT></TD>\n".
-              "<TD ALIGN=right><FONT STYLE=\"font: 10px tahoma; font-weight:bold;\">SORT</FONT> $orlink</TD>\n".
+              "<TD COLSPAN=3><FONT STYLE=\"font: 10px tahoma,sans-serif; font-weight:bold;\">Total Comment : $comment_no</FONT></TD>\n".
+              "<TD ALIGN=right><FONT STYLE=\"font: 10px tahoma,sans-serif; font-weight:bold;\">SORT</FONT> $orlink</TD>\n".
               "</TR>\n";
 
     while ($list = sql_fetch_array($r)) {
@@ -291,7 +291,7 @@ function print_comment_art($table,$list,$prints=0,$delimg) {
          "<TD VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\">".
          "<FONT Style=\"font-weight:bold\">$names</FONT></TD>\n".
          "<TD><PRE>{$list['text']}</TD></PRE>\n".
-         "<TD ALIGN=right VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"font: 11px tahoma\">{$list['date']} </FONT></TD>\n".
+         "<TD ALIGN=right VALIGN=top STYLE=\"overflow: hidden; white-space: nowrap\"><FONT STYLE=\"font: 11px tahoma,sans-serif\">{$list['date']} </FONT></TD>\n".
          "</TR>\n";
 
   if($prints) echo $ret;
