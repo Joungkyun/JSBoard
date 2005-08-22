@@ -66,7 +66,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN=bottom>
-<IMG SRC="./theme/EN-default/img/icon_over.gif" VALIGN="middle" ALT=''>
+<IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''>
 <FONT style="font-size:11px;font-family:tahoma;color:#55555;"> &gt;&gt; <?=$print['count']?></FONT></TD>
 <TD ALIGN=right VALIGN=bottom><?=$print['lout']?><?=$print['admin']?></TD>
 </TR>
@@ -128,7 +128,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD><FONT style="font-size:10px;font-family:tahoma;color:#555555">&gt;&gt; Fast Page Link : <?=$print['p_list']?></FONT>
-<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 VALIGN="middle" ALT=''></TD>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
 <TD ALIGN=right><? list_cmd(0,1) ?></TD>
 </TR>
 
