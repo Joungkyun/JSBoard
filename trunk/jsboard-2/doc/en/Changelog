@@ -15,6 +15,10 @@ file.
 
 Version   : jsboard-2.0.11
 
+Tue, Aug 23 2005
+  by HyunSung Jang
+   - release 2.0.11
+
 Mon, Aug 22 2005
   by JoungKyun Kim <http://www.oops.org>
 	- update line design parser of theme config
