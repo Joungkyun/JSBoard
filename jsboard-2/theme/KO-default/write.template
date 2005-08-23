@@ -122,6 +122,7 @@ if($view['email']) {
 <TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable></TD>
 </TR>\n
 EOF;
+}
 ?>
 
 <!-- ==================================================================== -->
@@ -135,7 +136,7 @@ if($view['url']) {
 <TR>
 <TD>홈페이지</TD>
 <TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable></TD>
-</TR>\n";
+</TR>\n
 EOF;
 }
 ?>
