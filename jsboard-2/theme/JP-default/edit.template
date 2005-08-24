@@ -8,7 +8,7 @@
 <!-- $user_stylesheet : User Defined StyleSheet                           -->
 <!-- ==================================================================== -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
-<TITLE>Jsboard <?=$board['ver']?> - <?=get_title()?></TITLE>
+<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
 
 <STYLE TYPE="text/css">
 <!--
@@ -164,7 +164,9 @@ if($list['bofile']) {
 <A HREF="$down_link">
 <IMG SRC="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" align="middle">
 <FONT style="color:{$color['text']}">{$list['bofile']}</FONT></A> - $hfsize &nbsp; &nbsp;
-<INPUT TYPE="CHECKBOX" NAME="atc[fdel]" VALUE=1> Delete File\n
+<INPUT TYPE="CHECKBOX" NAME="atc[fdel]" VALUE=1> Remove File
+</TD>
+</TR>\n
 EOF;
 }
 
