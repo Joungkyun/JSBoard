@@ -1,11 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- ==================================================================== -->
-<!--   왠만 하면 그냥 사용하기르 :-) 디자인이 별로 필요 없음              -->
-<!-- ==================================================================== -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
-<TITLE>Jsboard <?=$board['ver']?> - <?=$print['head']?></TITLE>
+<TITLE><?=$print['head']?> - Jsboard <?=$board['ver']?></TITLE>
 <STYLE TYPE="text/css">
 <!--
 BODY {

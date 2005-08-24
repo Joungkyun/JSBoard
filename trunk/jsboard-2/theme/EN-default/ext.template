@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
-<TITLE>Jsboard <?=$board['ver']?> - <?=$print['head']?></TITLE>
+<TITLE><?=$print['head']?> - Jsboard <?=$board['ver']?></TITLE>
 <STYLE TYPE="text/css">
 <!--
 body {
