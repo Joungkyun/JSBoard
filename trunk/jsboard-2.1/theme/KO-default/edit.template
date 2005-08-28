@@ -1,15 +1,13 @@
 <form name="editp" method=post action="act.php"<?=$board['formtype']?>>
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
-<td valign="bottom" colspan=2>
-<img src="./theme/KO-default/img/icon_over.gif" align=middle alt=''>
-<span class="counter">&gt;&gt; Edit article</span>
-</td>
+<td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''></td>
+<td class="counter"> &gt;&gt; Edit article</td>
 </tr>
 
 <tr bgcolor="#a0dc10">
 <td colspan=2>
-<img src="./theme/KO-default/img/board_no.gif" align=middle alt=''>
+<img src="./theme/KO-default/img/board_no.gif" align="middle" alt=''>
 <img src="theme/KO-default/img/edit_title.gif" border=0 alt=''>
 </td>
 </tr>
@@ -34,7 +32,7 @@
 <!-- ==================================================================== -->
 <tr>
 <td width=80>이름</td>
-<td><input type="text" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$list['name']?>"<?=$disable?>></td>
+<td><input type="text" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$list['name']?>"<?=$disable?>></td>
 </tr>
 
 <!-- ==================================================================== -->
@@ -43,11 +41,14 @@
 <!-- ==================================================================== -->
 <?
 if($view['email'] || trim($list['email'])) {
-  echo "
+  echo <<<
+
 <tr>
 <td>메일</td>
-<td><input type=\"text\" name=\"atc[email]\" size={$size['name']} maxlength=255 value=\"{$list['email']}\"$disable></td>
-</tr>\n";
+<td><input type="text" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$list['email']}"$disable></td>
+</tr>
+
+EOF;
 }
 ?>
 
@@ -57,11 +58,14 @@ if($view['email'] || trim($list['email'])) {
 <!-- ==================================================================== -->
 <?
 if($view['url'] || trim($list['url'])) {
-  echo "
+  echo <<<EOF
+
 <tr>
 <td>홈페이지</td>
-<td><input type=\"text\" name=\"atc[url]\" size={$size['name']} maxlength=255 value=\"{$list['url']}\"$disable></td>
-</tr>\n";
+<td><input type="text" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$list['url']}"$disable></td>
+</tr>
+
+EOF;
 }
 ?>
 
@@ -72,8 +76,8 @@ if($view['url'] || trim($list['url'])) {
 <tr>
 <td>HTML</td>
 <td>
-<input type=radio name="atc[html]" value=1<?=$html_chk_ok?>> 사용함
-<input type=radio name="atc[html]" value=0<?=$html_chk_no?>> 사용안함
+<input type="radio" name="atc[html]" value=1<?=$html_chk_ok?>> 사용함
+<input type="radio" name="atc[html]" value=0<?=$html_chk_no?>> 사용안함
 </td>
 </tr>
 
@@ -82,23 +86,29 @@ if($view['url'] || trim($list['url'])) {
 <!-- ==================================================================== -->
 <?
 if($list['bofile']) {
-  echo "<tr>\n".
-       "<td>파일</td>\n".
-       "<td>\n".
-       "<a href=\"$down_link\">\n".
-       "<img src=\"images/$icon\" width=16 height=16 border=0 alt={$list['bofile']} align=middle>\n".
-       "<span class=\"attachfn\">{$list['bofile']}</span></a> - $hfsize &nbsp; &nbsp;\n".
-       "<input type=\"checkbox\" name=\"atc[fdel]\" value=1> 파일삭제\n";
+  echo <<<EOF
+<tr>
+<td>파일</td>
+<td>
+<a href="$down_link">
+<img src="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" align="middle">
+<span class="attachfn">{$list['bofile']}</span></a> - $hfsize &nbsp; &nbsp;
+<input type="checkbox" name="atc[fdel]" value=1> 파일삭제
+
+EOF;
 }
 
 if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
-  echo "<tr>\n".
-       "<td>파일수정</td>\n".
-       "<td>\n".
-       "<input type=\"hidden\" name=\"max_file_size\" value=\"{$upload['maxsize']}\">\n".
-       "<input type=\"file\" name=\"userfile\" size=\"{$size['uplo']}\" maxlength=256>\n".
-       "</td>\n".
-       "</tr>\n";
+  echo <<<EOF
+<tr>
+<td>파일수정</td>
+<td>
+<input type="hidden" name="max_file_size" value="{$upload['maxsize']}">
+<input type="file" name="userfile" size="{$size['uplo']}" maxlength=256>
+</td>
+</tr>
+
+EOF;
 }
 ?>
 
@@ -108,7 +118,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!-- ==================================================================== -->
 <tr>
 <td>제목</td>
-<td><input type="text" name="atc[title]" size=<?=$size['titl']?> maxlength=100 value="<?=$list['title']?>"></td>
+<td><input type="text" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 value="<?=$list['title']?>"></td>
 </tr>
 
 <tr>
@@ -118,16 +128,22 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!-- ==================================================================== -->
 <?
 if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
-  echo "<td>패스워드</td>\n".
-       "<td>\n".
-       "$passment\n".
-       "<img src=\"./images/blank.gif\" width=15 height=1 border=0 alt=''>\n".
-       "TextSize Operation {$print['operate']}\n".
-       "</td>\n";
+  echo <<<EOF
+<td>패스워드</td>
+<td>
+$passment
+<img src="./images/blank.gif" width=15 height=1 border=0 alt=''>
+TextSize Operation {$print['operate']}
+</td>
+
+EOF;
 } else {
-  echo "<td colspan=2 align=right>\n".
-       "TextSize Operation {$print['operate']}\n".
-       "</td>\n";
+  echo <<<EOF
+<td colspan=2 align="right">
+TextSize Operation {$print['operate']}
+</td>
+
+EOF;
 }
 ?>
 </tr>
@@ -150,7 +166,7 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 <!-- $list['text'] : 수정할 글 본문을 출력                                -->
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
-<textarea name="epost" <?=$wrap['op']?> rows=10 cols=<?=$size['text']?>><?="{$list['text']}\n\n"?></TEXTAREa>
+<textarea name="epost" <?=$wrap['op']?> rows=10 cols="<?=$size['text']?>"><?="{$list['text']}\n\n"?></TEXTAREa>
 <!-- =============================== 글내용 =============================== -->
 
 </td></tr>
