@@ -183,7 +183,7 @@ function get_list($table,$pages,$reply=0,$print=0)
   # 글 리스트들 사이에 디자인을 넣기 위한 코드
   if($lines['design'] && !$print) {
     $colspan_no = $upload['yesno'] ? "6" : "5";
-    $lines['design'] = str_replace("=AA","=$colspan_no",$lines['design']);
+    $lines['design'] = preg_replace("=[\"']?AA[\"']?","=\"$colspan_no\"",$lines['design']);
     $lists = preg_replace("/###LINE-DESIGN###\\\n$/i","",$lists);
     $lists = str_replace("###LINE-DESIGN###","\n<tr>\n{$lines['design']}\n</tr>\n",$lists);
   }
