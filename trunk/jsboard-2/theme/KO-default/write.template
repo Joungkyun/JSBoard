@@ -14,7 +14,7 @@
 <!--
 BODY,TD {
   font-size: 12px;
-  font-family: GulimChe, sans-serif;
+  font-family: <?=$langs['font']?>, sans-serif;
   color: #555555;
 }
 A:LINK, A:VISITED, A:ACTIVE {
@@ -36,7 +36,7 @@ INPUT {
   background-color: #FFFFFF;
 }
 TEXTAREA {
-  font: 13px GulimChe, sans-serif;
+  font: 13px <?=$langs['font']?>, sans-serif;
   color: #333333;
   border-width: 1px;
   border-style: solid;
@@ -73,10 +73,8 @@ if(!$np) {
 <FORM NAME="writep" METHOD="post" ACTION="act.php"<?=$board['formtype']?>>
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD VALIGN="bottom" COLSPAN=2>
-<IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''>
-<FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Write new article</FONT>
-</TD>
+<TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Write new article</FONT></TD>
 </TR>
 
 <TR BGCOLOR="#FFAE00">
@@ -191,7 +189,7 @@ if((!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1) {
   echo <<<EOF
 <TD>패스워드</TD>
 <TD>
-<INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16 STYLE="font:10px tahoma;">
+<INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16 STYLE="font:10px tahoma,sans-serif;">
 <IMG SRC="./images/blank.gif" WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>
 TextSize Operation {$print['operate']}
 </TD>\n

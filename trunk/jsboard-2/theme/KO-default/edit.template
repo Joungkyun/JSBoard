@@ -14,7 +14,7 @@
 <!--
 BODY,TD {
   font-size: 12px;
-  font-family: GulimChe, sans-serif;
+  font-family: <?=$langs['vfont']?>, sans-serif;
   color: #555555;
 }
 A:LINK, A:VISITED, A:ACTIVE {
@@ -26,7 +26,7 @@ A:hover {
   color: #555555;
 }
 INPUT {
-  font: 11px tahoma;
+  font: 11px tahoma,sans-serif;
   color: #333333;
   border-width: 1px;
   border-style: solid;
@@ -36,7 +36,7 @@ INPUT {
   background-color: #FFFFFF;
 }
 TEXTAREA {
-  font: 13px GulimChe, sans-serif;
+  font: 13px <?=$langs['vfont']?>, sans-serif;
   color: #333333;
   border-width: 1px;
   border-style: solid;
@@ -73,9 +73,8 @@ if(!$np) {
 <FORM NAME="editp" METHOD="post" ACTION="act.php"<?=$board['formtype']?>>
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD VALIGN="bottom" COLSPAN=2>
-<IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''>
-<FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Edit article</FONT>
+<TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Edit article</FONT></TD>
 </TD>
 </TR>
 

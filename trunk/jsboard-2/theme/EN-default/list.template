@@ -91,10 +91,9 @@ if(!$np) {
 <?=$print['dsearch']?>
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD VALIGN="bottom">
-<IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''>
-<FONT style="font-size:11px;font-family:tahoma;color:#55555;"> &gt;&gt; <?=$print['count']?></FONT></TD>
-<TD ALIGN="right" VALIGN="bottom"><?=$print['lout']?><?=$print['admin']?></TD>
+<TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''>
+<TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#55555;"> &gt;&gt; <?=$print['count']?></FONT></TD>
+<TD ALIGN="right" VALIGN="bottom">&nbsp;<?=$print['lout']?><?=$print['admin']?></TD>
 </TR>
 
 <TR><TD COLSPAN=3>
@@ -156,7 +155,7 @@ EOF;
 <!-- ==================================================================== -->
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD><FONT style="font-size:10px;font-family:tahoma;color:#555555">&gt;&gt; Fast Page Link : <?=$print['p_list']?></FONT>
+<TD><FONT style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?=$print['p_list']?></FONT>
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
 <TD ALIGN="right"><? list_cmd(0,1) ?></TD>
 </TR>
@@ -173,24 +172,24 @@ EOF;
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
 <TR>
 <TD>
-<SELECT NAME="o[sc]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<SELECT NAME="o[sc]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
 <OPTION VALUE="t"<?=$sform['sc']['t']?>>Title
 <OPTION VALUE="c"<?=$sform['sc']['c']?>>Contents
 <OPTION VALUE="n"<?=$sform['sc']['n']?>>Writer
 <OPTION VALUE="a"<?=$sform['sc']['a']?>>All
 </SELECT>
-<INPUT TYPE="text" NAME="o[ss]" SIZE="<?=form_size(8)?>" MAXLENGTH=255 style="border:1px solid #555555;background-Color:#ffffff;font:12px;color:#555555;" VALUE="<?=$sform['ss']?>">
-<INPUT TYPE="submit" VALUE="Search" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555;">
+<INPUT TYPE="text" NAME="o[ss]" SIZE="<?=form_size(8)?>" MAXLENGTH=255 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555;" VALUE="<?=$sform['ss']?>">
+<INPUT TYPE="submit" VALUE="Search" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555;">
 </TD>
 </TR><TR>
 <TD>
-<SELECT NAME="o[st]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<SELECT NAME="o[st]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
 <OPTION VALUE="m"<?=$sform['st']['m']?>>A Month
 <OPTION VALUE="w"<?=$sform['st']['w']?>>A Week
 <OPTION VALUE="a"<?=$sform['st']['a']?>>All
 </SELECT>
 <INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?=$sform['er']['y']?> style="border:1px solid #555555;background-Color:#ffffff">
-<FONT STYLE="font-family:tahoma;color:#555555;font-weight:bold">REGEX</FONT> <?=$print['dserlink']?>
+<FONT STYLE="font-family:tahoma,sans-serif;color:#555555;font-weight:bold">REGEX</FONT> <?=$print['dserlink']?>
 </TD>
 </TR>
 </TABLE>
@@ -202,20 +201,20 @@ EOF;
 <!-- =============================== SEARCH FORM=============================== -->
 </TD>
 <TD ALIGN="right">
-<FONT style="font-size:11px;font-family:tahoma;color:#555555;"><?=$print['times']?></FONT><BR>
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"><?=$print['times']?></FONT><BR>
 <!-- ============================== PAGE FORM ============================== -->
 <FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
 <TR>
 <TD ALIGN="right">
-<FONT STYLE="font-size:10px;font-family:tahoma;">
+<FONT STYLE="font-size:10px;font-family:tahoma,sans-serif;">
 <?=$pform['post']?>
-<SELECT NAME="o[go]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<SELECT NAME="o[go]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
 <OPTION VALUE="p" SELECTED>Page No.
 <OPTION VALUE="n">Article No.
 </SELECT>
-<INPUT TYPE="text" NAME="o[no]" SIZE="<?=form_size(2)?>" MAXLENGTH=6 style="border:1px solid #555555;background-Color:#ffffff;font:12px;color:#555555" VALUE='<?=$pform['value']?>'>
-<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<INPUT TYPE="text" NAME="o[no]" SIZE="<?=form_size(2)?>" MAXLENGTH=6 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555" VALUE='<?=$pform['value']?>'>
+<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
 </FONT>
 </TD>
 </TR>
