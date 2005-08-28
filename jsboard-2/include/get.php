@@ -104,6 +104,7 @@ function get_agent() {
     }
     # NS 와의 공통 정보
     $agent['co'] = "mozilla";
+    $agent['nco'] = "moz";
   } else if(preg_match("/Konqueror/",$agent_env)) {
     $agent['br'] = "KONQ";
   } else if(preg_match("/Lynx/", $agent_env)) {
@@ -130,6 +131,8 @@ function get_agent() {
     else $agent['vr'] = "4";
     # Mozilla 와의 공통 정보
     $agent['co'] = "mozilla";
+
+	if ( $agent['vr'] == 6 ) $agent['nco'] = 'moz';
   } else $agent['br'] = "OTHER";
 
   return $agent;
@@ -424,7 +427,8 @@ function viewfile($tail) {
       $p['up'] = "<embed src=\"$upload_file\" autostart=\"true\" width=300 height=300 align=\"center\">";
     } elseif ($tail == "swf") {
       $flash_size = $board['width'] - 10;
-      if($agent['br'] == "MSIE" || $agent['br'] == "MOZL" || ($agent['br'] == "NS" && $agent['vr'] == 6)) $p['up'] = "<embed src=\"$upload_file\" width=\"$flash_size\" height=\"$flash_size\" align=\"center\">";
+      if($agent['br'] == "MSIE" || $agent['nco'] == "moz")
+        $p['up'] = "<embed src=\"$upload_file\" width=\"$flash_size\" height=\"$flash_size\" align=\"center\">";
     }
   } else $p['down'] = "$source1$source3$source2";
 

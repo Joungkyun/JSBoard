@@ -64,7 +64,7 @@ else $board['formtype'] = " ENCTYPE=\"multipart/form-data\"";
 $wrap = form_wrap();
 
 # Form size 조정을 위한 설정
-if ($agent['br'] == "MSIE" || $agent['br'] == "MOZL" || ($agent['br'] == "NS" && $agent['vr'] == 6)) {
+if ($agent['br'] == "MSIE" || $agent['nco'] == "moz") {
   $orig_option = " onClick=fresize(0)";
   $print['operate'] = form_operate("replyp","rpost",$size['text']);
 } else $print['operate'] = "No support this browser";
