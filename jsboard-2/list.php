@@ -87,7 +87,7 @@ if(trim($notice['subject'])) {
 
   # 글 리스트들 사이에 디자인을 넣기 위한 코드
   if($lines['design']) {
-    $lines['design'] = str_replace("=AA","=$colspan_no",$lines['design']);
+    $lines['design'] = preg_replace("=[\"']?AA[\"']?","=\"$colspan_no\"",$lines['design']);
     $print['lists'] .= "<TR>\n{$lines['design']}\n</TR>\n";
   }
 }
