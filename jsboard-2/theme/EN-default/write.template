@@ -44,7 +44,7 @@ SELECT {
   background-Color: #FFFFFF;
 }
 TEXTAREA {
-  font: 13px comic,sans-serif;
+  font: 13px tahoma,sans-serif;
   color: #333333;
   border-width: 1px;
   border-style: solid;
@@ -81,10 +81,8 @@ if(!$np) {
 <FORM NAME="writep" METHOD="post" ACTION="act.php"<?=$board['formtype']?>>
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD VALIGN="bottom" COLSPAN=2>
-<IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''>
-<FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; <B>Write</B> new article</FONT>
-</TD>
+<TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; <B>Write</B> new article</FONT></TD>
 </TR>
 
 <TR BGCOLOR="#FFAE00">

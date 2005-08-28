@@ -44,6 +44,7 @@ SELECT {
   background-Color: #FFFFFF;
 }
 form { display: inline; }
+pre { font-family: tahoma, sans-serif; }
 
 <?=$user_stylesheet?>
 -->
@@ -76,10 +77,8 @@ if(!$np) {
 <FORM METHOD="post" ACTION="act.php">
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD VALIGN="bottom" COLSPAN=2>
-<IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''>
-<FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; <B>Delete</B> <?=$list['num']?> article</FONT>
-</TD>
+<TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; <B>Delete</B> <?=$list['num']?> article</FONT></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -135,7 +134,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD BGCOLOR="<?=$color['l5_bg']?>">
-<DIV style="color:<?=$color['l5_fg']?>;font-family:comic">
+<DIV style="color:<?=$color['l5_fg']?>;font-family:thoam,sans-serif">
 <?=$preview['up']?>
 <!-- =============================== Content =============================== -->
 <?=$list['text']?>
