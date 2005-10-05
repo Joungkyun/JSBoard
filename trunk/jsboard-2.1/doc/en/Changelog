@@ -8,6 +8,10 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Wed, Oct  5 2005
+By JoungKyun.Kim
+	- added notify filtered string by spam check
+
 Mon, Aug 29 2005
 By JoungKyun.Kim
 	- update line design parser of theme config
