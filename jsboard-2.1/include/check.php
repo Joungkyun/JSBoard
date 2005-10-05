@@ -154,14 +154,32 @@ function check_auth($user,$chk) {
 # 스팸 검사 함수
 #
 function check_spam($str, $spam_list = "config/spam_list.txt") {
+  global $_;
+  $mbext = 0;
+
   $open_fail = "Don't open spam list file";
   $list = readfile_r ($spam_list, 1);
+
+  # php versin check
+  if ( function_exists ("version_compare") ) {
+    if ( version_compare ("4.3.0", phpversion(), '<=') ) {
+      $mbext = 1;
+    }
+  }
 
   # PHP 4.1 에서 제공하는 mbstring 함수 지원 여부를 체크한다.
   if(extension_loaded("mbstring")) $mbt = 1;
 
   # mbstring 함수를 지원하면 문자열을 UTF-8 로 변환한다.
-  $str = $mbt ? mb_convert_encoding ($str, "UTF-8") : $str;
+  if ( $mbt ) {
+    if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $_('charset')) ) {
+      if ( $mbext ) {
+        $str = mb_convert_encoding ($str, "UTF-8", $_('charset'));
+      } else {
+        $str = mb_convert_encoding ($str, "UTF-8");
+      }
+    }
+  }
 
   # $list 배열의 갯수 만큼 for문을 돌려 $spam_list 파일에 지정되어 있던
   # 문자열들과 일치하는 문자열이 $spam_str에 있는지 검사함, 있을 경우
@@ -177,13 +195,33 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
     if(preg_match("/^#|^$/i",trim($list[$co]))) continue;
 
     # preg 함수를 사용하기 위해 / 문자를 \/ 로 치환
-    $list[$co] = str_replace("/","\/",$list[$co]);
+    $list[$co] = trim (str_replace("/","\/",$list[$co]));
 
     # mbstring 을 지원하면 필터링 키워드를 UTF-8 로 변환
-    $list[$co] = $mbt ? mb_convert_encoding (trim($list[$co]),"UTF-8") : $list[$co];
+    if ( $mbt ) {
+      if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $_('charset')) ) {
+        if ( $mbext ) {
+          $list[$co] = mb_convert_encoding ($list[$co], "UTF-8", $_('charset'));
+        } else {
+          $list[$co] = mb_convert_encoding ($list[$co], "UTF-8");
+        }
+      }
+    }
 
-    $list[$co] = trim ($list[$co]);
-    if(preg_match("/$list[$co]/i", $str)) {
+    if(preg_match("/$list[$co]/i", $str, $spam_string)) {
+      if ( $mbt ) {
+        if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $_('charset')) ) {
+          if ( $mbext ) {
+            $spamstr_t = mb_convert_encoding ($spam_string[0], $_('charset'), "UTF-8");
+          } else {
+            $spamstr_t = "Unsupported";
+          }
+        } else $spamstr_t = $spam_string[0];
+      } else {
+        $spamstr_t = $spam_string[0];
+      }
+
+      $GLOBALS['spamstr'] = "\nDetected: {$spamstr_t}";
       return 1;
       break;
     }
