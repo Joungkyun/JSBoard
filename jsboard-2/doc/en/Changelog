@@ -18,6 +18,10 @@ file.
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.12
 
+Wed, Oct  5 2005
+  by JoungKyun.Kim
+    - added notify filtered string by spam filter (backport from 2.1 tree)
+
 Mon, Aug 29 2005
   by JoungKyun.Kim
     - fixed problem that don't print textarea form size on firefox

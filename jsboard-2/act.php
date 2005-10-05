@@ -459,8 +459,8 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     }
 
     # 스팸 체크
-    if(check_spam($atc['text'])) print_error($langs['act_s'],250,150,1);
-    if(check_spam($atc['title'])) print_error($langs['act_s'],250,150,1);
+    if(check_spam($atc['text'])) print_error($langs['act_s'] . $GLOBALS['spamstr'],250,150,1);
+    if(check_spam($atc['title'])) print_error($langs['act_s'] . $GLOBALS['spamstr'],250,150,1);
 
     # 메일로 보낼 변수 받음
     $atc['rtname'] = $atc['name'];
