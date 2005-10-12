@@ -73,7 +73,7 @@ if($board['super'] != 1 && $_SESSION[$jsboard]['id'] != $list['name']) {
     $warning = $_('d_wa');
     # 패스워드가 없는 게시물일  경우 관리자 인증을 거침
     if(!$list['passwd'] || $list['reyn']) $warning = $_('d_waa');
-    $print['passform'] = $_('w_pass') . ": <input type=\"password\" name=\"passwd\" size=\"$size\" maxlength=\"16\" class=\"passbox\">&nbsp;\n";
+    $print['passform'] = $_('w_pass') . ": <input type=\"password\" id=\"passwd\" name=\"passwd\" size=\"$size\" maxlength=\"16\" class=\"passbox\">&nbsp;\n";
   } else $warning = "&nbsp;";
 } else $warning = "&nbsp;";
 
@@ -97,5 +97,7 @@ sql_close($c);
 # Template file 을 호출
 meta_char_check($print['theme'], 1, 1);
 $bodyType = 'delete';
+
+$_focus = "  onLoad=\"InputFocus('passwd')\"";
 include "theme/{$print['theme']}/index.template";
 ?>

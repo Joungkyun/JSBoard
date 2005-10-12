@@ -12,6 +12,7 @@ Wed, Oct 12 2005
 By JoungKyun.Kim
 	- check null nor not null in name/subject/passwd of article
 	  when regist article
+	- mouse focus is defaultly located in password field
 Wed, Oct  5 2005
 By JoungKyun.Kim
 	- added notify filtered string by spam check

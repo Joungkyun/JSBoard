@@ -16,7 +16,7 @@
 <?=$rss['link']?>
 </head>
 
-<body>
+<body<?=$_focus?>>
 <div id="overDiv" class="preview"></div>
 <!-- ==================================================================== -->
 <!-- $print['preview_script'] : 미리보기를 위한 java script 를 출력.      -->
