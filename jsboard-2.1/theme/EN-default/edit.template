@@ -168,7 +168,7 @@ EOF;
 <!-- $list['text'] : print content of original content for modified       -->
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
-<textarea id="epost" name="epost" <?=$wrap['op']?> rows=10 cols=<?=$size['text']?>><?="{$list['text']}\n\n"?></textarea>
+<textarea id="epost" name="atc[text]" <?=$wrap['op']?> rows=10 cols=<?=$size['text']?>><?="{$list['text']}\n\n"?></textarea>
 <!-- =============================== 글내용 =============================== -->
 
 </td></tr>
