@@ -23,7 +23,7 @@ if(preg_match("/^(2|3|5|7)$/",$board['mode']) && !$board['super'])
   if($list['name'] != $_SESSION[$jsboard]['id']) print_error($_('perm_err'),250,150,1);
 
 if(!$board['super'])
-  $passment = "$passment <input type=\"password\" name=\"passwd\" size=\"{$size['pass']}\" maxlength=16 class=\"passbox\">&nbsp;";
+  $passment = "$passment <input type=\"password\" id=\"passwd\" name=\"passwd\" size=\"{$size['pass']}\" maxlength=16 class=\"passbox\">&nbsp;";
 else $passment = "";
 
 if($board['notice']) print_notice($board['notice']);
@@ -40,7 +40,7 @@ else $board['formtype'] = " enctype=\"multipart/form-data\"";
 # Form size 조정을 위한 설정
 if ($agent['br'] == "MSIE" || $agent['nco'] == 'moz') {
   $orig_option = " onClick=fresize(0)";
-  $print['operate'] = form_operate("editp","epost",$size['text']);
+  $print['operate'] = form_operate('epost',$size['text']);
 } else $print['operate'] = "No support this browser";
 
 if($list['bofile']) {

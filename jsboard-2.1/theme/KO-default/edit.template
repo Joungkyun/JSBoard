@@ -1,4 +1,4 @@
-<form name="editp" method=post action="act.php"<?=$board['formtype']?>>
+<form name="editp" method=post action="act.php"<?=$board['formtype']?> onsubmit="return registCheck();">
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
 <td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''></td>
@@ -32,7 +32,7 @@
 <!-- ==================================================================== -->
 <tr>
 <td width=80>이름</td>
-<td><input type="text" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$list['name']?>"<?=$disable?>></td>
+<td><input type="text" id="name" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$list['name']?>"<?=$disable?>></td>
 </tr>
 
 <!-- ==================================================================== -->
@@ -45,7 +45,7 @@ if($view['email'] || trim($list['email'])) {
 
 <tr>
 <td>메일</td>
-<td><input type="text" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$list['email']}"$disable></td>
+<td><input type="text" id="email" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$list['email']}"$disable></td>
 </tr>
 
 EOF;
@@ -62,7 +62,7 @@ if($view['url'] || trim($list['url'])) {
 
 <tr>
 <td>홈페이지</td>
-<td><input type="text" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$list['url']}"$disable></td>
+<td><input type="text" id="url" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$list['url']}"$disable></td>
 </tr>
 
 EOF;
@@ -118,7 +118,7 @@ EOF;
 <!-- ==================================================================== -->
 <tr>
 <td>제목</td>
-<td><input type="text" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 value="<?=$list['title']?>"></td>
+<td><input type="text" id="title" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 value="<?=$list['title']?>"></td>
 </tr>
 
 <tr>
@@ -166,7 +166,7 @@ EOF;
 <!-- $list['text'] : 수정할 글 본문을 출력                                -->
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
-<textarea name="epost" <?=$wrap['op']?> rows=10 cols="<?=$size['text']?>"><?="{$list['text']}\n\n"?></TEXTAREa>
+<textarea id="epost" name="epost" <?=$wrap['op']?> rows=10 cols="<?=$size['text']?>"><?="{$list['text']}\n\n"?></TEXTAREa>
 <!-- =============================== 글내용 =============================== -->
 
 </td></tr>

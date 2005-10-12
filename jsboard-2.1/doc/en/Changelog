@@ -8,6 +8,10 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Wed, Oct 12 2005
+By JoungKyun.Kim
+	- check null nor not null in name/subject/passwd of article
+	  when regist article
 Wed, Oct  5 2005
 By JoungKyun.Kim
 	- added notify filtered string by spam check

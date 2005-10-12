@@ -423,16 +423,16 @@ function article_reply_list($table,$pages,$print=0) {
 
 # FORM size 를 동적으로 조정하기 위한 스크립트 출력함수
 #
-function form_operate($fn,$in,$x=73,$y=10,$prt=0) {
+function form_operate($id,$x=73,$y=10,$prt=0) {
   $var = "<script type=\"text/javascript\">\n".
          "<!--\n".
          "function fresize(value) {\n".
          "  if (value == 0) {\n".
-         "    document.$fn.$in.cols  = $x;\n".
-         "    document.$fn.$in.rows  = $y;\n".
+         "    document.getElementById('{$id}').cols = $x;\n".
+         "    document.getElementById('{$id}').rows = $y;\n".
          "  }\n".
-         "  if (value == 1) document.$fn.$in.cols += 5;\n".
-         "  if (value == 2) document.$fn.$in.rows += 5;\n".
+         "  if (value == 1) document.getElementById('{$id}').cols += 5;\n".
+         "  if (value == 2) document.getElementById('{$id}').rows += 5;\n".
          "}\n".
          "// -->\n".
          "</script>\n".
