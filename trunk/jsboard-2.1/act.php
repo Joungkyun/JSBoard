@@ -529,19 +529,16 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
 
   switch($o['at']) {
     case 'write':
-      $atc['text'] = $wpost;
       $page = article_post($table, $atc);
       if(!$page['m_err']) Header("Location: list.php?table=$table");
       else move_page("list.php?table=$table");
       break;
     case 'reply':
-      $atc['text'] = $rpost;
       $gopage = article_reply($table, $atc);
       if(!$gopage['m_err']) Header("Location: list.php?table=$table&page={$gopage['no']}");
       else move_page("list.php?table=$table&page={$gopage['no']}");
       break;
     case 'edit':
-      $atc['text'] = $epost;
       $no = article_edit($table, $atc, $passwd);
       Header("Location: read.php?table=$table&no=$no");
       break;

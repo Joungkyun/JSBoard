@@ -151,7 +151,7 @@ END;
 <!-- $size['text'] : print size of textarea                               -->
 <!-- ==================================================================== -->
 <!-- =============================== Contents =========================== -->
-<textarea id="wpost" name="wpost" <?=$wrap['op']?> rows=10 cols=<?=$size['text']?>></textarea>
+<textarea id="wpost" name="atc[text]" <?=$wrap['op']?> rows=10 cols=<?=$size['text']?>></textarea>
 <!-- =============================== Contents =========================== -->
 
 </td></tr>
