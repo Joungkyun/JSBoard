@@ -67,17 +67,17 @@ $wrap = form_wrap();
 # Form size 조정을 위한 설정
 if ($agent['br'] == "MSIE" || $agent['nco'] == 'moz') {
   $orig_option = " onClick=fresize(0)";
-  $print['operate'] = form_operate("replyp","rpost",$size['text']);
+  $print['operate'] = form_operate('rpost',$size['text']);
 } else $print['operate'] = "No support this browser";
 
 # 원본글 포함 선택 여부
 if ($enable['ore']) {
-  $text_area = "<textarea name=\"rpost\" {$wrap['op']} rows=\"10\" cols=\"{$size['text']}\"></TEXTAREa>";
+  $text_area = "<textarea id=\"rpost\" name=\"rpost\" {$wrap['op']} rows=\"10\" cols=\"{$size['text']}\"></TEXTAREa>";
   $orig_button = "<input type=\"hidden\" name=\"hide\" value=\"\n\n{$list['name']} wrote..\n{$list['text']}\">\n" .
                  "<input type=\"hidden\" name=\"cenable[ore]\" value=1>\n" .
                  "<input tabindex=\"100\" type=\"button\" name=\"quote\" value=\"원본 포함\" onClick=\"this.form.rpost.value=this.form.rpost.value + this.form.hide.value; this.form.hide.value ='';\">\n";
 } else {
-  $text_area = "<textarea name=\"rpost\" {$wrap['op']} rows=\"10\" cols=\"{$size['text']}\">\n\n\n{$list['name']} wrote..\n{$list['text']}</TEXTAREa>";
+  $text_area = "<textarea id=\"rpost\" name=\"rpost\" {$wrap['op']} rows=\"10\" cols=\"{$size['text']}\">\n\n\n{$list['name']} wrote..\n{$list['text']}</TEXTAREa>";
   $orig_button = "<input type=\"hidden\" name=\"cenable[ore]\" value=0>\n";
 }
 

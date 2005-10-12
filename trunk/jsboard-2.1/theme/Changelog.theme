@@ -1,5 +1,6 @@
 Version: A9
 - new type
+- <input> tag 에 id 추가
 
 Version: A8
 - rss <link> tag 추가 (list.template)

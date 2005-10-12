@@ -43,7 +43,7 @@ $wrap = form_wrap();
 # Form size 조정을 위한 설정
 if ($agent['br'] == "MSIE" || $agent['nco'] == 'moz') {
   $orig_option = " onClick=fresize(0)";
-  $print['operate'] = form_operate("writep","wpost",$size['text']);
+  $print['operate'] = form_operate('wpost',$size['text']);
 } else $print['operate'] = "No support this browser";
 
 $wkey = get_spam_value($board['antispam']);

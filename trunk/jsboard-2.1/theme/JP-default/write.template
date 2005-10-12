@@ -4,7 +4,7 @@
 <!--  $board['formtype'] : イメージ アップロードを 支援 可否を ために 必ず 必要         -->
 <!--  ====================================================================  -->
 
-<form name="writep" method="post" target=_top action='act.php'<?=$board['formtype']?>>
+<form name="writep" method="post" target=_top action='act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
 <td valign=bottom colspan=2 class="counter">
@@ -40,7 +40,7 @@
 <!--  ====================================================================  -->
 <tr>
 <td width=80>名前</td>
-<td><input type=text name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist['name']?>"<?=$disable?>></td>
+<td><input type=text id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist['name']?>"<?=$disable?>></td>
 </tr>
 
 <!--  ====================================================================  -->
@@ -52,7 +52,7 @@ if ( $view['email'] ) {
   echo <<<END
 <tr>
 <td>メール</td>
-<td><input type=text name="atc[email]" size={$size['name']} maxlength=255 value="{$pre_regist['email']}"{$disable}></td>
+<td><input type=text id="email" name="atc[email]" size={$size['name']} maxlength=255 value="{$pre_regist['email']}"{$disable}></td>
 </tr>
 END;
 }
@@ -67,7 +67,7 @@ if ( $view['url'] ) {
   echo <<<END
 <tr>
 <td>ホームページ</td>
-<td><input type=text name="atc[url]" size={$size['name']} maxlength=255 value="{$pre_regist['url']}"{$disable}></td>
+<td><input type=text id="url" name="atc[url]" size={$size['name']} maxlength=255 value="{$pre_regist['url']}"{$disable}></td>
 </tr>
 END;
 }
@@ -106,7 +106,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!--  ====================================================================  -->
 <tr>
 <td>題目</td>
-<td><input type=text name="atc[title]" size=<?=$size['titl']?> maxlength=100></td>
+<td><input type=text id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100></td>
 </tr>
 
 <tr>
@@ -119,7 +119,7 @@ if ( (!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1 ) {
   echo <<<END
 <td>パスワード</td>
 <td>
-<input type="password" name="atc[passwd]" size={$size['pass']} maxlength=16 class="passwdbox;">
+<input type="password" id="passwd" name="atc[passwd]" size={$size['pass']} maxlength=16 class="passwdbox;">
 <img src="./images/blank.gif" width=15 height=1 border=0 alt=''>
 TextSize Operation {$print['operate']}
 </td>
@@ -151,7 +151,7 @@ END;
 <!--  $size['text'] : textarea 義 size 出力                                 -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
-<textarea name="wpost" <?=$wrap['op']?> rows=10 cols=<?=$size['text']?>></textarea>
+<textarea id="wpost" name="wpost" <?=$wrap['op']?> rows=10 cols=<?=$size['text']?>></textarea>
 <!--  =============================== 文内容 ===============================  -->
 
 </td></tr>

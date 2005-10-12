@@ -129,3 +129,40 @@ function onMouseColor(id,classname) {
 function InputFocus(id) {
   document.getElementById(id).focus();
 }
+
+function trim(_str) {
+  var result;
+
+  if ( ! _str ) {
+    return("");
+  }
+
+  result = _str.replace(/^\s+/g, '');
+  result = _str.replace(/\s+$/g, '');
+
+  return(result);
+}
+
+function registCheck() {
+  doc = document;
+
+  id = trim(doc.getElementById('name').value);
+
+  if ( id.length < 1 ) {
+    alert('Please writer\'s name is required');
+    return false;
+  }
+
+  title  = trim(doc.getElementById('title').value);
+  if ( title.length < 1 ) {
+    alert('Please subject of article is required');
+    return false;
+  }
+  passwd = trim(doc.getElementById('passwd').value);
+  if ( passwd.length < 1 ) {
+    alert('Please password of article is required');
+    return false
+  }
+
+  return true;
+}
