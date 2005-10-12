@@ -15,7 +15,7 @@
 <?=$rss['link']?>
 </head>
 
-<body>
+<body<?=$_focus?>>
 <div id="overDiv" class="preview"></div>
 <!-- ==================================================================== -->
 <!-- $print['preview_script'] : print jsva script for preview function in -->
