@@ -1,6 +1,6 @@
 <?php
 $_pself = $_SERVER['PHP_SELF'];
-if ( preg_match ('/(write|edit|reply|read)\.php/i',$_self) )
+if ( preg_match ('/(write|edit|reply|read)\.php/i',$_pself) )
   session_cache_limiter ('nocache, must-revalidate');
 
 # config of magic quotes
