@@ -8,6 +8,10 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Wed, Oct 26 2005
+By JoungKyun.Kim
+	- fixed wrong value of session limit for keep in POST data
+
 Wed, Oct 12 2005
 By JoungKyun.Kim
 	- check null nor not null in name/subject/passwd of article
