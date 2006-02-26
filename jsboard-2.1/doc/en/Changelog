@@ -8,6 +8,10 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Mon, Feb 27 2006
+By JoungKyun.Kim
+	- fixed regular expression delimiter bug
+
 Wed, Oct 26 2005
 By JoungKyun.Kim
 	- fixed wrong value of session limit for keep in POST data

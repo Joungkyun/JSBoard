@@ -18,6 +18,10 @@ file.
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.12
 
+Mon, Feb 27 2006
+  by JoungKyun.Kim
+	- fixed regular expression delimiter bug
+
 Wed, Oct 26 2005
   by JoungKyun.Kim
 	- fixed wrong value of session limit for keep in POST data
