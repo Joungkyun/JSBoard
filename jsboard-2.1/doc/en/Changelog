@@ -8,6 +8,9 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Wed, Apr 18 2006
+By JoungKyun.Kim
+	- fixed print bug with only forcing jpeg format on image.php
 Mon, Feb 27 2006
 By JoungKyun.Kim
 	- fixed regular expression delimiter bug
