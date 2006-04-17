@@ -58,7 +58,7 @@ switch($ImgType) {
 }
 Header("Content-type: image/$type_header");
 
-switch($type) {
+switch($ImgType) {
   case "png" :
     ImagePNG($newimg);
     break;
