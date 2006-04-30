@@ -17,6 +17,10 @@ file.
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.12
 
+Sun, Apr 30 2006
+  by JoungKyun.Kim
+	- fixed XSS attack security problems on login.php with $table variables
+
 Wed, Apr 18 2006
   by JoungKyun.Kim
 	- fixed print bug with only forcing jpeg format
