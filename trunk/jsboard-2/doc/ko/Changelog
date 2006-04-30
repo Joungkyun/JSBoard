@@ -19,6 +19,10 @@ file.
 버전   : jsboard 2.0.12
 
 2006.04.30
+ by 장현성
+	- release 2.0.12
+
+2006.04.30
   by 김정균
 	- login.php 의 $table 변수가 XSS attack 가능성을 가지고 있는 버그 수정
 
