@@ -18,6 +18,10 @@ file.
 Version   : jsboard 2.0.12
 
 Sun, Apr 30 2006
+ by HyunSung.Jang
+	- release 2.0.12
+
+Sun, Apr 30 2006
   by JoungKyun.Kim
 	- fixed XSS attack security problems on login.php with $table variables
 
