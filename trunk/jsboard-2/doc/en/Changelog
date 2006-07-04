@@ -20,6 +20,7 @@ Version   : jsboard 2.0.12
 Tue, Jul  4 2006
   by JoungKyun.Kim
 	- fixed write error that jsboard is recognized spamer
+	- fixed unit error of javascript
 
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.12
