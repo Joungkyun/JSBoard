@@ -1,4 +1,4 @@
-
+<!--
 function previewInit() {
   this.x = 0;
   this.y = 0;
@@ -100,11 +100,11 @@ function hideObject(obj) {
 }
 function moveTo(obj,xL,yL) {
   if ( nav.core == 'Netscape' ) {
-    obj.left = xL;
-    obj.top = yL;
+    obj.left = xL + 'px';
+    obj.top = yL + 'px';
   } else {
-    obj.style.left = xL
-    obj.style.top = yL
+    obj.style.left = xL + 'px';
+    obj.style.top = yL + 'px';
   }
 }
-
+-->
