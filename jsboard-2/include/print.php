@@ -449,7 +449,7 @@ function print_preview_src($print=0) {
                           "  }\n\n".
 
                           "  function dts(d,text) {\n".
-                          "    txt = \"<TABLE SUMMARY=\\\"\\\" WIDTH=360 STYLE=\\\"border:1 {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=0><TR><TD BGCOLOR=\\\"{$color['p_bg']}\\\"><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"<\\/FONT><\\/TD><\\/TR><\\/TABLE>\"\n".
+                          "    txt = \"<TABLE SUMMARY=\\\"\\\" WIDTH=360 STYLE=\\\"border:1px {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=0><TR><TD BGCOLOR=\\\"{$color['p_bg']}\\\"><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"<\\/FONT><\\/TD><\\/TR><\\/TABLE>\"\n".
                           "    layerWrite(txt);\n".
                           "    dir = d;\n".
                           "    disp();\n".
@@ -500,7 +500,7 @@ function print_preview_src($print=0) {
 
 
                           "  function dts(d,text) {\n".
-                          "    txt = \"<TABLE SUMMARY=\\\"\\\" WIDTH=360 STYLE=\\\"border:1 {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=1><TR><TD BGCOLOR=\\\"{$color['p_bg']}\\\"><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"<\\/FONT><\\/TD><\\/TR><\\/TABLE>\"\n".
+                          "    txt = \"<TABLE SUMMARY=\\\"\\\" WIDTH=360 STYLE=\\\"border:1px {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=1><TR><TD BGCOLOR=\\\"{$color['p_bg']}\\\"><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"<\\/FONT><\\/TD><\\/TR><\\/TABLE>\"\n".
                           "    layerWrite(txt);\n".
                           "    dir = d;\n".
                           "    disp();\n".
@@ -532,8 +532,8 @@ function print_preview_src($print=0) {
                           "  function showObject(obj) { obj.style.visibility = \"visible\"; }\n".
                           "  function hideObject(obj) { obj.style.visibility = \"hidden\"; }\n".
                           "  function moveTo(obj,xL,yL) {\n".
-                          "    obj.style.left = xL\n".
-                          "    obj.style.top = yL\n".
+                          "    obj.style.left = xL + 'px'\n".
+                          "    obj.style.top = yL + 'px'\n".
                           "  }";
   } elseif($agent['br'] == "NS") {
     $script_for_browser = "  over = document.overDiv;\n".
@@ -549,7 +549,7 @@ function print_preview_src($print=0) {
                           "  }\n\n".
 
                           "  function dts(d,text) {\n".
-                          "    txt = \"<TABLE SUMMARY=\\\"\\\" WIDTH=360 STYLE=\\\"border:1 {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=1><TR><TD BGCOLOR=\\\"{$color['p_bg']}\\\"><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"<\\/FONT><\\/TD><\\/TR><\\/TABLE>\"\n".
+                          "    txt = \"<TABLE SUMMARY=\\\"\\\" WIDTH=360 STYLE=\\\"border:1px {$color['p_gu']} solid\\\" CELLPADDING=5 CELLSPACING=0 BORDER=1><TR><TD BGCOLOR=\\\"{$color['p_bg']}\\\"><FONT style=\\\"color:{$color['p_fg']}\\\">\"+text+\"<\\/FONT><\\/TD><\\/TR><\\/TABLE>\"\n".
                           "    layerWrite(txt);\n".
                           "    dir = d;\n".
                           "    disp();\n".
