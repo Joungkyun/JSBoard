@@ -10,6 +10,17 @@ $agent = get_agent ();
 if( preg_match ("/links|lynx/i", $agent['br']) )
   $textBrowser = 1;
 
+$table = trim ($table);
+
+if ($table) {
+  if (!preg_match("/^[a-z]/i", $table))
+    print_error("$name Value must start with an alphabet",250,150,1);
+  if (preg_match("/[^a-z0-9_-]/i",$table))
+    print_error("Can't use special characters except alphabat, numberlic , _, - charcters",250,150,1);
+  if (preg_match("/^as$/i",$name))
+    print_error("Cat't use table name as &quot;as&quot;",250,150,1);
+}
+
 if($table && file_exists("data/$table/config.php")) {
   require_once "data/{$table}/config.php";
 }

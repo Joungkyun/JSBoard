@@ -1,4 +1,4 @@
-** JSBoard 2.0 Changelog
+** JSBoard 2.1 Changelog
 **
 ** Maintainer  : Jang Hyun Sung
 **               http://jsboard.kldp.net/cgi-bin/s.cgi?usr=dont&adr=orzz.org
@@ -7,6 +7,15 @@
 
 -------------------------------------------------------------------------------
 Version 2.1.0
+
+Tue, Jul  4 2006
+By JoungKyun.Kim
+	- fixed write error that jaboard is recognized spamer
+
+Sun, Apr 30 2006
+By JoungKyun.Kim
+	- fixed XSS attack security problems on login.php with $table variables
+	  thanks Alexander
 
 Wed, Apr 18 2006
 By JoungKyun.Kim
