@@ -17,8 +17,15 @@ file.
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.12
 
+Tue, Jul  4 2006
+  by JoungKyun.Kim
+	- fixed write error that jsboard is recognized spamer
+
+-----------------------------------------------------------------------------
+Version   : jsboard 2.0.12
+
 Sun, Apr 30 2006
- by HyunSung.Jang
+  by HyunSung.Jang
 	- release 2.0.12
 
 Sun, Apr 30 2006
