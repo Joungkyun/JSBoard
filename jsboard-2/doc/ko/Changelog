@@ -1,8 +1,8 @@
 ***** JSBOARD + OOPS administartion Center *********************************
 
 Original Developer              : Byung Chan Kim <redhands at linux.sarang.net>
-Maintainer                      : Joung Kyun Kim <admin at oops.org>
-Windog Version                  : Ki Soo Choi <choiks at nuri.net>
+Maintainer                      : Hyun Sung Jang <siche at siche.org>
+Developer                       : Joung Kyun Kim <admin at oops.org>
 
 ## Warning ##
 
@@ -13,6 +13,14 @@ file.
 
 ******************************************************************************
 
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard 2.0.13
+
+2006.07.04
+  by 김정균
+	- 글 등록시에 스팸 등록기 사용 메세지 에러 수정
 
 
 -----------------------------------------------------------------------------
