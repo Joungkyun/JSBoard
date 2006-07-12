@@ -21,6 +21,7 @@ Tue, Jul 13 2006
   by JoungKyun.Kim
 	- added check mimetype of download file with fileinfo extensoin.
 	  backport from 2.1 tree
+	- fixed download attach file that file name include white space
 
 
 -----------------------------------------------------------------------------

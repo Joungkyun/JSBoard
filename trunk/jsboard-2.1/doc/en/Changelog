@@ -11,6 +11,7 @@ Version 2.1.0
 Thu, Jul 13 2006
 By JoungKyun.Kim
 	- added check mimetype of download file with fileinfo extensoin
+	- fixed download attach file that file name include white space
 
 Tue, Jul  4 2006
 By JoungKyun.Kim
