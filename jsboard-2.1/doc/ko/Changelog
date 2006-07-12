@@ -13,7 +13,6 @@
 By 김정균
 	- php stream 을 이용한 다운로드시, fileinfo extension 이용하여 mime type 결정
 	- 첨부 파일 다운로드시 파일에 공백문자가 있을 경우 문제 수정
-	- 첨부파일 이름에 RFC1738 인코딩 적용
 
 2006.07.04
 By 김정균
