@@ -22,6 +22,7 @@ Tue, Jul 13 2006
 	- added check mimetype of download file with fileinfo extensoin.
 	  backport from 2.1 tree
 	- fixed download attach file that file name include white space
+	- encoding download file name with RFC1738
 
 
 -----------------------------------------------------------------------------

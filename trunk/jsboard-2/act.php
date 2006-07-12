@@ -580,7 +580,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     }
     header('Content-Type: '.$mimes);
     header('Content-Length: '.filesize("{$dn['path']}"));
-    header('Content-Disposition: attachment; filename="'.$dn['name'].'"');
+    header('Content-Disposition: attachment; filename="'.rawurlencode($dn['name']).'"');
     Header('Pragma: no-cache');
     Header('Expires: 0');
 
