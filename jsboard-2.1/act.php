@@ -576,17 +576,14 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     }
     if($agent['br'] == "MSIE" && $agent['vr'] == 5.5) {
       $mimes = $mimes ? $mimes : 'doesn/matter';
-      header("Content-Type: $mimes");
-      header("Content-Length: ".filesize("{$dn['path']}"));
-      header("Content-Disposition: attachment; filename=".$dn['name']);
       header("Content-Transfer-Encoding: binary");
     } else {
       $mimes = $mimes ? $mimes : 'file/unknown';
-      Header("Content-type: $mimes");
-      header("Content-Length: ".filesize("{$dn['path']}"));
-      Header("Content-Disposition: attachment; filename=".$dn['name']);
       Header("Content-Description: PHP Generated Data");
     }
+    Header("Content-type: $mimes");
+    header("Content-Length: ".filesize("{$dn['path']}"));
+    Header("Content-Disposition: attachment; filename=".$dn['name']);
     Header("Pragma: no-cache");
     Header("Expires: 0");
 
