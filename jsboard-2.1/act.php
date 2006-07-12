@@ -581,11 +581,11 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       $mimes = $mimes ? $mimes : 'file/unknown';
       Header("Content-Description: PHP Generated Data");
     }
-    Header("Content-type: $mimes");
-    header("Content-Length: ".filesize("{$dn['path']}"));
-    Header("Content-Disposition: attachment; filename=".$dn['name']);
-    Header("Pragma: no-cache");
-    Header("Expires: 0");
+    Header('Content-type: '.$mimes);
+    header('Content-Length: '.filesize("{$dn['path']}"));
+    Header('Content-Disposition: attachment; filename="'.$dn['name'].'"');
+    Header('Pragma: no-cache');
+    Header('Expires: 0');
 
     echo $dn['dl'];
   }
