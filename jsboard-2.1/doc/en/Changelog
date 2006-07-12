@@ -8,6 +8,10 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Thu, Jul 13 2006
+By JoungKyun.Kim
+	- added check mimetype of download file with fileinfo extensoin
+
 Tue, Jul  4 2006
 By JoungKyun.Kim
 	- fixed write error that jaboard is recognized spamer
