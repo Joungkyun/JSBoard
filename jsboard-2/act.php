@@ -562,17 +562,25 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
   $dn['path'] = "data/{$dn['tb']}/{$upload['dir']}/{$dn['cd']}/{$dn['name']}";
 
   if($dn['dl'] = file_operate($dn['path'],"r","Don't open {$dn['name']}")) {
+    if(extension_loaded('fileinfo')) {
+      $finfo = finfo_open(FILEINFO_MIME);
+      if(is_resource($finfo)) {
+        $mimes = finfo_file($finfo, $dn['path']);
+        $mimes = preg_replace('!^([^/]+/[a-z0-9+.-]+).*!i', '\\1', $mimes);
+        finfo_close($finfo);
+      }
+    }
+
     if($agent['br'] == "MSIE" && $agent['vr'] == 5.5) {
-      header("Content-Type: doesn/matter");
-      header("Content-Length: ".filesize("{$dn['path']}"));
-      header("Content-Disposition: attachment; filename=".$dn['name']);
+      $mimes = $mimes ? $mimes : 'doesn/matter';
       header("Content-Transfer-Encoding: binary");
     } else {
-      Header("Content-type: file/unknown");
-      header("Content-Length: ".filesize("{$dn['path']}"));
-      Header("Content-Disposition: attachment; filename=".$dn['name']);
+      $mimes = $mimes ? $mimes : 'file/unknown';
       Header("Content-Description: PHP Generated Data");
     }
+    header("Content-Type: $mimes");
+    header("Content-Length: ".filesize("{$dn['path']}"));
+    header("Content-Disposition: attachment; filename=".$dn['name']);
     Header("Pragma: no-cache");
     Header("Expires: 0");
 

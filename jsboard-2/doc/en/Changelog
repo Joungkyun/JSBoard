@@ -15,7 +15,16 @@ file.
 
 
 -----------------------------------------------------------------------------
-Version   : jsboard 2.0.12
+Version   : jsboard 2.0.14
+
+Tue, Jul 13 2006
+  by JoungKyun.Kim
+	- added check mimetype of download file with fileinfo extensoin.
+	  backport from 2.1 tree
+
+
+-----------------------------------------------------------------------------
+Version   : jsboard 2.0.13
 
 Tue, Jul  4 2006
   by HyunSung.Jang
@@ -25,6 +34,7 @@ Tue, Jul  4 2006
   by JoungKyun.Kim
 	- fixed write error that jsboard is recognized spamer
 	- fixed unit error of javascript
+
 
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.12
