@@ -94,6 +94,7 @@ function get_agent() {
     # ¾ð¾îÆÑ
     if(preg_match('/en-US/i',$agent_env)) $agent['ln'] = 'EN';
     elseif(preg_match('/ko-KR/i',$agent_env)) $agent['ln'] = 'KO';
+    elseif(preg_match('/ja-JP/i',$agent_env)) $agent['ln'] = 'JA';
     else $agent['ln'] = 'OTHER';
     # version Á¤º¸
     if ( $agent['br'] == 'Firefox' ) {
