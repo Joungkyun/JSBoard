@@ -80,65 +80,83 @@ function get_agent() {
   #                  [ln] 언어 (넷스케이프)
   #                  [vr] 브라우져 버젼
   #                  [co] 예외 정보
-  if(preg_match("/MSIE/", $agent_env)) {
-    $agent['br'] = "MSIE";
+  if(preg_match('/MSIE/', $agent_env)) {
+    $agent['br'] = 'MSIE';
     # OS 별 구분
-    if(preg_match("/NT/", $agent_env)) $agent['os'] = "NT";
-    else if(preg_match("/Win/", $agent_env)) $agent['os'] = "WIN";
-    else $agent['os'] = "OTHER";
+    if(preg_match('/NT/', $agent_env)) $agent['os'] = 'NT';
+    else if(preg_match('/Win/', $agent_env)) $agent['os'] = 'WIN';
+    else $agent['os'] = 'OTHER';
     # version 정보
-    $agent['vr'] = trim(preg_replace("/Mo.+MSIE ([^;]+);.+/i","\\1",$agent_env));
-    $agent['vr'] = preg_replace("/[a-z]/i","",$agent['vr']);
-  } else if(preg_match("/Gecko|Galeon/i",$agent_env) && !preg_match("/Netscape/i",$agent_env)) {
-	$agent['br'] = preg_match ("/Firefox/i", $agent_env) ? 'Firefox' : 'MOZL';
+    $agent['vr'] = trim(preg_replace('/Mo.+MSIE ([^;]+);.+/i','\\1',$agent_env));
+    $agent['vr'] = preg_replace('/[a-z]/i','',$agent['vr']);
+  } else if(preg_match('/Gecko|Galeon/i',$agent_env) && !preg_match('/Netscape/i',$agent_env)) {
+    $agent['br'] = preg_match ('/Firefox/i', $agent_env) ? 'Firefox' : 'MOZL';
     # client OS 구분
-    if(preg_match("/NT/", $agent_env)) $agent['os'] = "NT";
-    else if(preg_match("/Win/", $agent_env)) $agent['os'] = "WIN";
-    else if(preg_match("/Linux/", $agent_env)) $agent['os'] = "LINUX";
-    else $agent['os'] = "OTHER";
+    if(preg_match('/NT/', $agent_env)) $agent['os'] = 'NT';
+    else if(preg_match('/Win/', $agent_env)) $agent['os'] = 'WIN';
+    else if(preg_match('/Linux/', $agent_env)) $agent['os'] = 'LINUX';
+    else $agent['os'] = 'OTHER';
     # 언어팩
-    if(preg_match("/en-US/i",$agent_env)) $agent['ln'] = "EN";
-    elseif(preg_match("/ko-KR/i",$agent_env)) $agent['ln'] = "KO";
-    else $agent['ln'] = "OTHER";
+    if(preg_match('/en-US/i',$agent_env)) $agent['ln'] = 'EN';
+    elseif(preg_match('/ko-KR/i',$agent_env)) $agent['ln'] = 'KO';
+    else $agent['ln'] = 'OTHER';
     # version 정보
-	if ( $agent['br'] == 'Firefox' ) {
-      $agent['vr'] = preg_replace("/.*Firefox\/([0-9.]+).*/i", "\\1", $agent_env);
+    if ( $agent['br'] == 'Firefox' ) {
+      $agent['vr'] = preg_replace('/.*Firefox\/([0-9.]+).*/i', '\\1', $agent_env);
     } else {
-      $agent['vr'] = preg_replace("/Mozi[^(]+\([^;]+;[^;]+;[^;]+;[^;]+;([^)]+)\).*/i","\\1",$agent_env);
-      $agent['vr'] = trim(str_replace("rv:","",$agent['vr']));
+      $agent['vr'] = preg_replace('/Mozi[^(]+\([^;]+;[^;]+;[^;]+;[^;]+;([^)]+)\).*/i','\\1',$agent_env);
+      $agent['vr'] = trim(str_replace('rv:','',$agent['vr']));
     }
     # NS 와의 공통 정보
     $agent['co'] = 'mozilla';
     $agent['nco'] = 'moz';
-  } else if(preg_match("/Konqueror/",$agent_env)) {
-    $agent['br'] = "KONQ";
-  } else if(preg_match("/Lynx/", $agent_env)) {
-    $agent['br'] = "LYNX";
-  } else if(preg_match("/w3m/i", $agent_env)) {
-    $agent['br'] = "W3M";
-  } else if(preg_match("/links/i", $agent_env)) {
-    $agent['br'] = "LINKS";
+  } else if(preg_match('/Konqueror/',$agent_env)) {
+    $agent['br'] = 'KONQ';
+  } else if(preg_match('/Lynx/', $agent_env)) {
+    $agent['br'] = 'LYNX';
+  } else if(preg_match('/w3m/i', $agent_env)) {
+    $agent['br'] = 'W3M';
+  } else if(preg_match('/links/i', $agent_env)) {
+    $agent['br'] = 'LINKS';
   } else if(preg_match("/^Mozilla/", $agent_env)) {
-    $agent['br'] = "NS";
+    $agent['br'] = 'NS';
     # client OS 구분
-    if(preg_match("/NT/", $agent_env)) {
-      $agent['os'] = "NT";
-      if(preg_match("/\[ko\]/", $agent_env)) $agent['ln'] = "KO";
-    } else if(preg_match("/Win/", $agent_env)) {
-      $agent['os'] = "WIN";
-      if(preg_match("/\[ko\]/", $agent_env)) $agent['ln'] = "KO";
-    } else if(preg_match("/Linux/", $agent_env)) {
-      $agent['os'] = "LINUX";
-      if(preg_match("/\[ko\]/", $agent_env)) $agent['ln'] = "KO";
-    } else $agent['os'] = "OTHER";
+    if(preg_match('/NT/', $agent_env)) $agent['os'] = 'NT';
+    else if(preg_match('/Win/', $agent_env)) $agent['os'] = 'WIN';
+    else if(preg_match('/Linux/', $agent_env)) $agent['os'] = 'LINUX';
+    else $agent['os'] = 'OTHER';
+    if(preg_match('/\[ko\]/', $agent_env)) $agent['ln'] = 'KO';
     # version 정보
-    if(preg_match("/Gecko/i",$agent_env)) $agent['vr'] = "6";
-    else $agent['vr'] = "4";
+    if(preg_match('/Gecko/i',$agent_env)) $agent['vr'] = 6;
+    else $agent['vr'] = 4;
     # Mozilla 와의 공통 정보
-    $agent['co'] = "mozilla";
+    $agent['co'] = 'mozilla';
 
-    if ( $agent['vr'] == 6 )
-      $agent['nco'] = 'moz';
+    if ( $agent['vr'] == 6 ) $agent['nco'] = 'moz';
+  } else if(preg_match('/^Opera/', $agent_env)) {
+    $agent['br'] = 'OPERA';
+    # 언어 정보
+    if(preg_match('/\[([^]]+)\]/', $agent_env, $_m))
+      $agent['ln'] = strtoupper ($_m[1]);
+    else if(preg_match('/;[ ]*([a-z]{2})\)/i', $agent_env, $_m))
+      $agent['ln'] = strtoupper ($_m[1]);
+    else $agent['ln'] = "OTHER";
+
+    # OS 구분
+    if (preg_match('/Windows (NT|2000)/i', $agent_env))
+      $agent['os'] = 'NT';
+    else if (preg_match('/Windows/i', $agent_env))
+      $agent['os'] = 'WIN';
+    else if (preg_match('/Linux/i', $agent_env))
+      $agent['os'] = 'LINUX';
+    else
+      $agent['os'] = 'OTHER';
+
+    # Mozilla 와의 공통 정보
+    $agent['co'] = 'mozilla';
+
+    # version 정보
+    $agent['vr'] = preg_replace ('/^Opera\/([0-9]+(\.[0-9]+)?) .*/', '\\1', $agent_env);
   } else $agent['br'] = "OTHER";
 
   return $agent;

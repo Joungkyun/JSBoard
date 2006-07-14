@@ -17,7 +17,11 @@ file.
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.14
 
-Tue, Jul 13 2006
+Fri, Jul 14 2006
+  by JoungKyun.Kim
+	- add Opera browser information
+
+Thu, Jul 13 2006
   by JoungKyun.Kim
 	- added check mimetype of download file with fileinfo extensoin.
 	  backport from 2.1 tree
