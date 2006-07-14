@@ -560,4 +560,27 @@ function writefile_r ($_file, $_text, $attach = 0) {
   fwrite ($p, $s);
   fclose ($p);
 }
+
+function content_disposition ($n) {
+  global $agent, $_, $_code;
+
+  switch ($n) {
+    case 'Firefox' :
+      # RFC 2231
+      $r = 'filename*0*' . $_code . '*' . $_('charset') . '*=' . rawurlencode ($dn['name']);
+      break;
+    case 'Opera' ;
+      if ($agent['vr'] > 6)
+       $r = 'filename*0*' . $_code . '*' . $_('charset') . '*=' . rawurlencode ($dn['name']);
+      else
+        $r = 'filename="' . $n . '"';
+      break;
+    default:
+      # RFC 2047
+      #$r = '=?'.$_('charset').'?B?'.base64_encode($dn['name']).'?=';
+      $r = 'filename="' . $n . '"';
+  }
+
+  return $r;
+}
 ?>
