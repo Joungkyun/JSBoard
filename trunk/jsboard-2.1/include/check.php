@@ -278,6 +278,7 @@ function icon_check($t,$fn) {
 function check_dnlink($table,$list) {
   global $upload, $cupload;
 
+  $list['bofile'] = rawurlencode ($list['bofile']);
   if(!$cupload['dnlink']) {
     if (preg_match("/(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs|\.ppt|\.xls)$/i",$list['bofile'])) {
       $dn = "act.php?o[at]=dn&amp;dn[tb]=$table&amp;dn[cd]={$list['bcfile']}&amp;dn[name]={$list['bofile']}";
