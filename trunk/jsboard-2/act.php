@@ -571,6 +571,8 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       }
     }
 
+    $dn['encode'] = content_disposition($dn['name']);
+
     if($agent['br'] == "MSIE" && $agent['vr'] == 5.5) {
       $mimes = $mimes ? $mimes : 'doesn/matter';
       header('Content-Transfer-Encoding: binary');
@@ -580,7 +582,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     }
     header('Content-Type: '.$mimes);
     header('Content-Length: '.filesize("{$dn['path']}"));
-    header('Content-Disposition: attachment; filename="'.$dn['name'].'"');
+    Header('Content-Disposition: attachment; '.$dn['encode']);
     Header('Pragma: no-cache');
     Header('Expires: 0');
 
