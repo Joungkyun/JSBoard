@@ -541,4 +541,27 @@ function get_upload_value($up) {
     return $size;
   } else return 0;
 }
+
+function content_disposition ($n) {
+  global $agent, $langs;
+
+  switch ($n) {
+    case 'Firefox' :
+      # RFC 2231
+      $r = 'filename*0*' . $langs['code'] . '*' . $langs['charset'] . '*=' . rawurlencode ($dn['name']);
+      break;
+    case 'Opera' ;
+      if ($agent['vr'] > 6)
+       $r = 'filename*0*' . $langs['code'] . '*' . $langs['charset'] . '*=' . rawurlencode ($dn['name']);
+      else
+        $r = 'filename="' . $n . '"';
+      break;
+    default:
+      # RFC 2047
+      #$r = '=?'.$langs['charset'].'?B?'.base64_encode($dn['name']).'?=';
+      $r = 'filename="' . $n . '"';
+  }
+
+  return $r;
+}
 ?>
