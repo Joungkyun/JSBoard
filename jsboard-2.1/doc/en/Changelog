@@ -11,6 +11,7 @@ Version 2.1.0
 Fri, Jul 14 2006
 By JoungKyun.Kim
 	- add Opera browser information
+	- support attach file encoding with RFC2311, RFC2047, RAW per browser
 
 Thu, Jul 13 2006
 By JoungKyun.Kim
