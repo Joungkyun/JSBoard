@@ -8,6 +8,10 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Fri, Jul 14 2006
+By JoungKyun.Kim
+	- add Opera browser information
+
 Thu, Jul 13 2006
 By JoungKyun.Kim
 	- added check mimetype of download file with fileinfo extensoin
