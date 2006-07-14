@@ -22,6 +22,7 @@ file.
   by 김정균
 	- Opera browser 정보 추가
 	- 첨부 파일 스트리밍시 브라우저별 encoding 지원 (RFC2231,RFC2047,RAW)
+	- 첨부파일 inline link encoding
 
 2006.07.13
   by 김정균
