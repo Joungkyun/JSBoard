@@ -51,7 +51,7 @@ while( $rss_article[$i] = sql_fetch_array($result) ) {
   #$rss_article[$i]['date'] = date("Y-m-d",$rss_article[$i]['date'] ) . 'T' . date("H:i:sO", $rss_article[$i]['date']);
 
   if ( $rss['is_des'] ) {
-    $rss_article[$i]['text'] = preg_replace ("!\n!", "<br />\n", $rss_article[$i]['text']);
+    #$rss_article[$i]['text'] = preg_replace ("!\n!", "<br />\n", $rss_article[$i]['text']);
     $rss_article[$i]['text'] = auto_link ($rss_article[$i]['text']);
 
     $_body = "<table width=\"100%\" border=0 cellpadding=0 cellspacing=1>\n" .
@@ -102,7 +102,7 @@ header ('Content-Type: text/xml');
 
 echo "<?xml version=\"1.0\" encoding=\"{$_charset}\"?>\n";
 ?>
-<rss version="2.0">
+<rss version="2.0" xml:base="<?=$board['path']?>" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title><?=$rss['channel']?></title>
     <link><?=$rss['link']?></link>
@@ -122,8 +122,9 @@ for ( $i=0; $i<$rss_article_num; $i++ ) {
     echo "  <description>{$rss_article[$i]['text']}</description>\n";
   }
 
-  echo "  <pubDate>{$rss_article[$i]['date']}</pubDate>\n" .
-       "  <author>{$rss_article[$i]['name']}</author>\n" .
+  echo "  <guid>{$rss_article[$i]['link']}</guid>\n" .
+       "  <pubDate>{$rss_article[$i]['date']}</pubDate>\n" .
+       "  <dc:creator>{$rss_article[$i]['name']}</dc:creator>\n" .
        "</item>\n";
 }
 ?>

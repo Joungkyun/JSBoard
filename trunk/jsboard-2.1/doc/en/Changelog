@@ -8,6 +8,10 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Mon, Feb  5 2006
+by JoungKyun.Kim
+	- support guid tag in rss feed
+
 Fri, Jul 14 2006
 By JoungKyun.Kim
 	- add Opera browser information
