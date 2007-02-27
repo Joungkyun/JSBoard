@@ -440,7 +440,7 @@ function viewfile($tail) {
     } elseif (preg_match("/^(mid|wav|mp3)$/i",$tail)) {
       if($tail == "mp3" && $agent['co'] == "mozilla")
         $p['up'] = "[ MP3 file은 IE에서만 들으실수 있습니다. ]";
-      elseif($agent['br'] == "LYNX")
+      elseif($agent['tx'])
         $p['bo'] = "";
       else
         $p['bo'] = "<embed src=\"$upload_file\" autostart=\"true\" hidden=\"true\" mastersound>";

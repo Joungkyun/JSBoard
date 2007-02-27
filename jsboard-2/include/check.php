@@ -319,7 +319,7 @@ function upload_name_chk($f) {
 function check_location($n=0) {
   global $board, $langs, $agent;
 
-  if($n && $agent['br'] != "LYNX") {
+  if($n && !$agent['tx']) {
     $board['referer'] = $_SERVER['HTTP_REFERER'];
 
     $sre[] = "/http[s]?:\/\/([^\/]+)\/.*/i";
