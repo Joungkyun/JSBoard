@@ -16,7 +16,7 @@ include_once "../include/check.php";
 include_once "../include/version.php";
 
 $agent = get_agent();
-if(preg_match("/links|w3m|lynx/i",$agent['br']))
+if($agent['tx']))
   $submitButton = "<INPUT TYPE=submit VALUE='ENTER'>\n";
 
 

@@ -40,7 +40,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if(preg_match("/^0|4|6$/",$board['mode'])) $atc['passwd'] = crypt($atc['passwd']);
 
     # 전체 관리자가 허락하였을시에만 upload 기능을 사용할수 있음
-    if ($upload['yesno'] && $cupload['yesno'] && $agent['br'] != "LYNX") {
+    if ($upload['yesno'] && $cupload['yesno'] && !$agent['tx']) {
       $bfilename = date("YmdHis",$atc['date']);
       $upfile = file_upload("userfile",$bfilename);
 
@@ -113,7 +113,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if(preg_match("/^(0|4)$/",$board['mode']) || !session_is_registered("$jsboard")) $atc['passwd'] = crypt($atc['passwd']);
 
     # 답변시 file upload 설정 부분, 전체 관리자가 허락시에만 가능
-    if ($upload['yesno'] && $cupload['yesno'] && $agent['br'] != "LYNX") {
+    if ($upload['yesno'] && $cupload['yesno'] && !$agent['tx']) {
       $bfilename = date("YmdHis",$atc['date']);
       $upfile = file_upload("userfile",$bfilename);
       if(!trim($upfile['name'])) {
@@ -211,7 +211,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     }
 
     # file 수정 루틴
-    if($upload['yesno'] && $cupload['yesno'] && $agent['br'] != "LYNX") {
+    if($upload['yesno'] && $cupload['yesno'] && !$agent['tx']) {
       # file 수정 루틴
       $bfilename = date("YmdHis",$atc['date']);
       $upfile = file_upload("userfile",$bfilename);
