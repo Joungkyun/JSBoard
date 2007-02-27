@@ -17,7 +17,12 @@ file.
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.14
 
-Mon, Feb  5 2006
+Tue, Feb 27 2007
+  by JoungKyun.Kim
+    - changed spam check algorithm
+    - update theme version to A9
+
+Mon, Feb  5 2007
   by JoungKyun.Kim
 	- support guid tag in rss feed
 
