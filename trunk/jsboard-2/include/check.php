@@ -483,11 +483,11 @@ function check_access($c=0,$wips='',$ips='') {
 }
 
 # spam 등록기 체크 함수
-function check_spamer($anti,$wkey) {
+function check_spamer($v) {
   global $langs,$o;
   if($o['at'] == "write" || $o['at'] == "reply") {
-    if(!$anti || !preg_match("/^[0-9]+:[0-9]+:[0-9]+$/i",$anti)) print_error($langs['chk_an'],250,250,1);
-    if($wkey != get_spam_value($anti)) print_error($langs['chk_sp'],250,250,1);
+    if($v['goaway'])
+      print_error($langs['chk_sp'],250,250,1);
   }
 }
 ?>
