@@ -153,7 +153,7 @@ $html_head = readfile_r ("../../data/$table/html_head.php");
 # html tail의 정보를 가져온다
 $html_tail = readfile_r ("../../data/$table/html_tail.php");
 
-if($textBrowser) {
+if($agent['tx']) {
   $html_head = str_replace('<', '&lt;', $html_head);
   $html_head = str_replace('>', '&gt;', $html_head);
   $html_tail = str_replace('<', '&lt;', $html_tail);
@@ -171,7 +171,7 @@ if ( file_exists ("../../data/$table/stylesheet.php") ) {
   include "../../data/$table/stylesheet.php";
 }
 
-if($textBrowser) {
+if($agent['tx']) {
   $ipbl_button = $dlin_button = $styl_button = $head_button = $tail_button = $noti_button = "&nbsp;";
 } else {
   $ipbl_button = "<input type=\"button\" value=\"&#9655;\" onClick=\"fresize(1,'i');\" title=\"Left Right\">".

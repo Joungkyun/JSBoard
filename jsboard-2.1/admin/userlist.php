@@ -42,7 +42,7 @@ if( sql_num_rows ($result) ) {
                   "</a>";
     } else $del_link = "&nbsp;";
 
-    if($textBrowser) $editLink = "../user.php?no={$row['no']}";
+    if($agent['tx']) $editLink = "../user.php?no={$row['no']}";
     else $editLink = "javascript:fork('popup','../user.php?no={$row['no']}&amp;check=1')";
 
     $_email = $row['email'] ? "<a href=\"mailto:{$row['email']}\"><span class=\"{$_class}\">{$row['email']}</span></a>" : '&nbsp;';
@@ -137,7 +137,7 @@ if ( $_code == 'ko' )
 else
   $han_index = "<img alt=\"\" SRC=\"../images/blank.gif\" width=1 height=1 border=0>";
 
-if($textBrowser) $registLink = "../regist.php?check=1";
+if($agent['tx']) $registLink = "../regist.php?check=1";
 else $registLink = "javascript:fork('popup','../regist.php?check=1')";
 
 htmlhead ();

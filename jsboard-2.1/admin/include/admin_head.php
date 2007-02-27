@@ -28,8 +28,6 @@ if ( ! check_windows () ) {
 parse_query_str();
 
 $agent = get_agent();
-if ( preg_match ("/links|lynx/i", $agent['br']) )
-  $textBrowser = 1;
 
 if ( ! @file_exists ("{$ipath}/config/global.php") ) {
   echo "<script type=\"text/javascript\">alert('Don\'t exist Global configuration file')\n" .

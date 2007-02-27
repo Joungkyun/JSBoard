@@ -76,7 +76,7 @@ function form_size($size, $print = 0) {
     else $size *= 2.3;
   }
 
-  else if($agent['br'] == 'LYNX') $size *= 2;
+  else if($agent['tx']) $size *= 2;
   else if($agent['br'] == 'KONQ') $size *= 2.6;
 
   $size = intval($size);

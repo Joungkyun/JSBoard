@@ -24,7 +24,7 @@ $_lang['a_t61'] = ( $_('code') == 'en' ) ? strtolower($_('a_t6')) : $_('a_t6');
 # MySQL 서버에 연결한다
 $c = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
 
-if ( $textBrowser ) {
+if ( $agent['tx'] ) {
   echo "JSBoard<BR>\n".
        "Administration Center\n";
 } else {
@@ -48,7 +48,7 @@ if( $db['name'] && ! $table ) {
   echo "<table border=0 cellpadding=1 cellspacing=1 width=\"{$board['width']}\" align=\"center\">\n".
        "<tr>\n";
 
-  if ( $textBrowser ) {
+  if ( $agent['tx'] ) {
     echo '<td><b>' . $_('a_t1') . "</b></td>\n".
          '<td>' . $_('a_t3') . "</td>\n".
          '<td>' . $_('a_t4') . "</td>\n".
@@ -111,7 +111,7 @@ if( $db['name'] && ! $table ) {
              "<td align=\"right\" width=\"15%\" class=\"rowtype1\">{$total_count} &nbsp;&nbsp;</td>\n";
 
         if ( $chk_result && $table_name[$i] != "userdb" ) {
-          if ( $textBrowser ) {
+          if ( $agent['tx'] ) {
             echo "<td width=\"40%\">\n".
                  "<a href=\"../list.php?table={$table_name[$i]}&amp;nd=1\">" . $_('a_t7') . "</A>\n".
                  "<a href=\"./user_admin/uadmin.php?table={$table_name[$i]}&amp;nd=1\">" . $_('a_t8') . "</A>\n".
@@ -189,7 +189,7 @@ if( $db['name'] && ! $table ) {
        "<td class=\"rowtype2\">{$to_today} [{$to_today_t}]</td>\n".
        "<td class=\"rowtype2\" style=\"white-space: nowrap\">{$to} [{$to_t}]</td>\n".
        "<td class=\"rowtype1\" align=\"center\">\n";
-  if($textBrowser) {
+  if($agent['tx']) {
     $userclick = $_SESSION[$jsboard]['external'] ? "[ " . $_('a_t20') . " ]" : "<a href=\"./userlist.php?t=a\">[ " . $_('a_t20') . " ]</a>";
     echo "$userclick\n".
          "<a href=\"../session.php?m=logout\">[ " . $_('a_t11') . " ]</A>\n";
@@ -199,7 +199,7 @@ if( $db['name'] && ! $table ) {
   }
   echo "</td>\n</tr>\n\n";
 
-  if ( $textBrowser ) {
+  if ( $agent['tx'] ) {
     echo "<tr><td colspan=4>\n" .
          "<form name='create_db' method='post' action='act.php'>\n".
          "&nbsp;&nbsp;" . $_('a_t12') . " :\n".
@@ -339,7 +339,7 @@ if( $db['name'] && ! $table ) {
   echo "</td>\n".
        "<td class=\"rowtype2\">\n";
 
-  if ( $textBrowser ) echo "<a href=\"./admin_info.php?mode=global\">[ " . $_('a_t15') . " ]</A>\n";
+  if ( $agent['tx'] ) echo "<a href=\"./admin_info.php?mode=global\">[ " . $_('a_t15') . " ]</A>\n";
   else echo "<input type=\"button\" value=\"" . $_('a_t15') . "\" onClick=\"fork('popup','admin_info.php?mode=global')\"><br>\n";
 
   echo "</td>\n".
@@ -359,7 +359,7 @@ if( $db['name'] && ! $table ) {
 echo "<br>";
 echo "\n</td></tr>\n</table>\n";
 
-if ( $textBrowser )
+if ( $agent['tx'] )
   echo "Powered By <a href=\"http://jsboard.kldp.net/\">JSBoard Open Project</a>\n";
 
 htmltail();

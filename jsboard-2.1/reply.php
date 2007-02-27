@@ -57,7 +57,7 @@ $list['text'] = htmlspecialchars($list['text']);
 if($list['html']) $html_chk_ok = " checked";
 else $html_chk_no = " checked";
 
-# Browser가 Lynx일때 multim form 삭제
+# Browser가 text browser 일때 multim form 삭제
 if($noup == 1) $board['formtype'] = "";
 else $board['formtype'] = " enctype=\"multipart/form-data\"";
 

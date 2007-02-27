@@ -115,10 +115,13 @@ function get_agent() {
     $agent['br'] = 'KONQ';
   } else if(preg_match('/Lynx/', $agent_env)) {
     $agent['br'] = 'LYNX';
+    $agent['tx'] = 1;
   } else if(preg_match('/w3m/i', $agent_env)) {
     $agent['br'] = 'W3M';
+    $agent['tx'] = 1;
   } else if(preg_match('/links/i', $agent_env)) {
     $agent['br'] = 'LINKS';
+    $agent['tx'] = 1;
   } else if(preg_match("/^Mozilla/", $agent_env)) {
     $agent['br'] = 'NS';
     # client OS 구분
@@ -450,7 +453,7 @@ function viewfile($tail) {
     } elseif (preg_match("/^(mid|wav|mp3)$/i",$tail)) {
       if($tail == "mp3" && $agent['co'] == "mozilla")
         $p['up'] = "[ MP3 file은 IE에서만 들으실수 있습니다. ]";
-      elseif($agent['br'] == "LYNX")
+      elseif($agent['tx'])
         $p['bo'] = "";
       else
         $p['bo'] = "<embed src=\"$upload_file\" autostart=\"true\" hidden=\"true\" mastersound>";
