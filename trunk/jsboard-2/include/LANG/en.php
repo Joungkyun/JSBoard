@@ -100,7 +100,7 @@ $langs['chk_sp'] = "Your ip address is Invalid IP range";
 $langs['chk_bl'] = "Deny access your ip address by administrator";
 $langs['chk_hy'] = "Deny access thorough hyper link of other server";
 $langs['chk_an'] = "no spam configuration in global.ph.\nSee also Anti Spam document in\ndoc/en/README.CONFIG.";
-$langs['chk_sp'] = "can't regist article with spam register";
+$langs['chk_rp'] = "can't regist article with spam register";
 
 # get.ph
 $langs['get_v'] = " [ View Article ]";

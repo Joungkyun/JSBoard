@@ -102,7 +102,7 @@ $langs['chk_sp'] = "Ú‘±‚·‚é IP ‘‚¦‚½‘¶Ý‚µ‚È‚¢—Ìˆæ‚Å‚·.";
 $langs['chk_bl'] = "Ú‘±‚·‚é IP ŠXŠÇ—ŽÒ‚É‚æ‚Á‚Ä‹‘”Û‚³‚ê‚Ü‚µ‚½.";
 $langs['chk_hy'] = "Hyper Link ‚É‚æ‚éÚ‹ß‚ð³‘ø‚µ‚È‚¢‚Å‚·.";
 $langs['chk_an'] = "global.ph ‚É spam Ý’è‚ð‚µ‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñ.\ndoc/ko/README.CONFIG ‚Å Anti Spam\n€–Ú‚ðŽQl‚µ‚Ä‚­‚¾‚³‚¢";
-$langs['chk_sp'] = "SPAM “o˜^Šú‚ð—˜—p‚µ‚Ä•¶‚ð“o˜^‚·‚é‚±‚Æ‚ª‚Å‚«‚È‚¢‚Å‚·.";
+$langs['chk_rp'] = "SPAM “o˜^Šú‚ð—˜—p‚µ‚Ä•¶‚ð“o˜^‚·‚é‚±‚Æ‚ª‚Å‚«‚È‚¢‚Å‚·.";
 
 # get.ph
 $langs['get_v'] = " [ ŒfŽ¦”Â•\Ž¦ ]";

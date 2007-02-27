@@ -16,6 +16,9 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     $atc['passwd'] = $_SESSION[$jsboard]['pass'];
   }
 
+  $atc['table']  = $table;
+  $atc['agent']  = $agent;
+
   # admin mode 일 경우 admin mode 를 체크  
   if($board['mode'] == 1 || $board['mode'] == 3)
     if(!$board['adm'] && $board['super'] != 1) print_error($langs['login_err']);
@@ -23,7 +26,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
   # 게시물 작성 함수
   function article_post($table, $atc) {
     global $jsboard, $board, $upload, $cupload, $rmail, $langs, $agent;
-    global $print, $max_file_size;
+    global $print, $max_file_size, $o;
 
     if($board['mode'] == 4 && $board['super'] != 1 && !$board['adm']) print_error($langs['login_err']);
 
@@ -95,7 +98,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
   # 게시물 답장 함수
   function article_reply($table, $atc) {
     global $board,$upload,$cupload,$rmail,$langs,$agent,$jsboard,$page;
-    global $print, $max_file_size;
+    global $print, $max_file_size, $o;
 
     $atc['date'] = time(); # 현재 시각
     $atc['host'] = get_hostname(0); # 글쓴이 주소
