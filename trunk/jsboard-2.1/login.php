@@ -7,8 +7,6 @@ require_once "./include/error.php";
 parse_query_str ();
 
 $agent = get_agent ();
-if( preg_match ("/links|lynx/i", $agent['br']) )
-  $textBrowser = 1;
 
 $table = trim ($table);
 

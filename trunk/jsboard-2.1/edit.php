@@ -33,7 +33,7 @@ $wrap = form_wrap();
 if($list['html']) $html_chk_ok = " CHECKED";
 else $html_chk_no = " CHECKED";
 
-# Browser가 Lynx일때 multim form 삭제
+# Browser가 text browser 일때 multim form 삭제
 if($noup == 1) $board['formtype'] = "";
 else $board['formtype'] = " enctype=\"multipart/form-data\"";
 

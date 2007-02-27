@@ -68,7 +68,7 @@ $sform = form_size (10);
 $lform = form_size (25);
 
 if ( ! $check ) $backbutton = "<input type=\"button\" value=\"BACK\" onClick=\"history.back()\">";
-if ( $textBrowser ) $backbutton = "";
+if ( $agent['tx'] ) $backbutton = "";
 
 $print['head'] = get_title();
 

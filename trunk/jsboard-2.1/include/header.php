@@ -88,12 +88,10 @@ if ( ! session_is_registered ($jsboard) && ! preg_match ('/session\.php/i', $_ps
 $agent = get_agent ();
 $db = replication_mode ($db);
 
-if ( ! ini_get ('file_uploads') || $agent['br'] == 'LYNX' ) $noup = 1;
+if ( ! ini_get ('file_uploads') || $agent['tx'] ) $noup = 1;
 
 if ( preg_match ('/(act|write|edit|reply)\.php/i', $_pself))
   $upload['maxsize'] = get_upload_value ($upload);
-
-if ( preg_match ('/links|lynx/i', $agent['br'])) $textBrowser = 1;
 
 # 외부 hyper link 를 막기 위한 설정
 check_dhyper ($board['usedhyper'], $board['endhyper'], $board['dhyper'], $enable['dhyper'], $enable['plink']);

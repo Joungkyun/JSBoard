@@ -58,7 +58,7 @@ $_lang['reg_attention'] = str_replace ('__',' ', $_lang['reg_attention']);
 
 $print['head'] = get_title ();
 
-if ( $textBrowser ) $backbutton = "";
+if ( $agent['tx'] ) $backbutton = "";
 else $backbutton = "<input type=\"button\" value=\"" . $_('back') . "\" onClick=\"history.back()\">\n";
 
 if ( ! $m ) {

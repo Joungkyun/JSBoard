@@ -33,7 +33,7 @@ if ( (preg_match ('/^(2|3|5|7)$/',$board['mode']) && $_SESSION[$jsboard]['id']) 
 $kind = "write";
 if($board['notice']) print_notice($board['notice']);
 
-# Browser가 Lynx일때 multim form 삭제
+# Browser가 text browser 일때 multim form 삭제
 if($noup == 1) $board['formtype'] = "";
 else $board['formtype'] = " enctype=\"multipart/form-data\"";
 
