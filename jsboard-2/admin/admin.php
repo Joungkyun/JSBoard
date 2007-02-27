@@ -25,7 +25,7 @@ $langs['a_t61'] = ($langs['code'] == "en") ? strtolower($langs['a_t6']) : $langs
 # MySQL 서버에 연결한다
 $connect=@mysql_connect($db['server'],$db['user'],$db['pass'])  or  
               die($langs['sql_na']); 
-if($textBrowser) {
+if($agent['tx']) {
   echo "JSBoard<BR>\n".
        "Administration Center\n";
 } else {
@@ -49,7 +49,7 @@ if($db['name'] && !$table) {
   echo "<table border=0 cellpadding=1 cellspacing=1 width={$board['width']} align=center>\n".
        "<tr align=center bgcolor={$color['t_bg']}>\n";
 
-  if($textBrowser) {
+  if($agent['tx']) {
     echo "<td><font color={$color['t_fg']}><b>{$langs['a_t1']}</b></font></td>\n".
          "<td><font color={$color['t_fg']}>{$langs['a_t3']}</font></td>\n".
          "<td><font color={$color['t_fg']}>{$langs['a_t4']}</font></td>\n".
@@ -114,7 +114,7 @@ if($db['name'] && !$table) {
              "<td align=right width=15%><font color={$color['m_fg']}>$total_count &nbsp;&nbsp;</font></td>\n";
 
         if($chk_result && $table_name[$i] != "userdb") {
-          if($textBrowser) {
+          if($agent['tx']) {
             echo "<td width=40%>\n".
                  "<A HREF=../list.php?table={$table_name[$i]}&nd=1>{$langs['a_t7']}</A>\n".
                  "<A HREF=./user_admin/uadmin.php?table={$table_name[$i]}&nd=1>{$langs['a_t8']}</A>\n".
@@ -185,7 +185,7 @@ if($db['name'] && !$table) {
        "<td align=center><font color={$color['d_fg']}>$to_today [$to_today_t]</font></td>\n".
        "<td align=center><font color={$color['d_fg']}>$to [$to_t]</font></td>\n".
        "<td bgcolor={$color['m_bg']}>\n";
-  if($textBrowser) {
+  if($agent['tx']) {
     $userclick = $_SESSION[$jsboard]['external'] ? "[ {$langs['a_t20']} ]" : "<A HREF=./userlist.php?t=a>[ {$langs['a_t20']} ]</A>";
     echo "$userclick\n".
          "<A HREF=../session.php?m=logout>[ {$langs['a_t11']} ]</A>\n";
@@ -194,7 +194,7 @@ if($db['name'] && !$table) {
          "<input type=button value=\"{$langs['a_t11']}\" onClick=logout()>\n";
   }
 
-  if($textBrowser) {
+  if($agent['tx']) {
     echo "</td>\n</tr>\n\n".
          "<tr bgcolor={$color['m_bg']}><form name='create_db' method='post' action='act.php'>\n".
          "<td colspan=4>&nbsp;&nbsp;<font color={$color['m_fg']}>{$langs['a_t12']} :</font>\n".
@@ -329,7 +329,7 @@ if($db['name'] && !$table) {
   echo "</td>\n".
        "<td align=center>\n";
 
-  if($textBrowser) echo "<A HREF=./admin_info.php?mode=global>[ {$langs['a_t15']} ]</A>\n";
+  if($agent['tx']) echo "<A HREF=./admin_info.php?mode=global>[ {$langs['a_t15']} ]</A>\n";
   else echo "<input type=button value=\"{$langs['a_t15']}\" onClick=fork('popup','admin_info.php?mode=global')><br>\n";
 
   echo "</td>\n".
@@ -369,7 +369,7 @@ mysql_close();
 
 echo "<br>";
 echo "\n</td></tr>\n</table>\n";
-if($textBrowser) echo "Powered By <A HREF=http://jsboard.kldp.org/>JSBoard Open Project</A>\n";
+if($agent['tx']) echo "Powered By <A HREF=http://jsboard.kldp.org/>JSBoard Open Project</A>\n";
 
 htmltail();
 ?>

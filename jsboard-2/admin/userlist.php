@@ -46,7 +46,7 @@ if(sql_num_rows($result)) {
                   "</A>";
     } else $del_link = "&nbsp;";
 
-    if($textBrowser) $editLink = "../user.php?no={$row['no']}";
+    if($agent['tx']) $editLink = "../user.php?no={$row['no']}";
     else $editLink = "javascript:fork('popup','../user.php?no={$row['no']}&check=1')";
 
     $ulist .= "<TR>\n".
@@ -136,7 +136,7 @@ $al_index = userlist_sortlink($t);
 if($langs['code'] == ko) $han_index = userlist_sortlink($t,1);
 else $han_index = "<IMG SRC=../images/blank.gif WIDTH=1 HEIGHT=1 BORDER=0>";
 
-if($textBrowser) $registLink = "../regist.php?check=1";
+if($agent['tx']) $registLink = "../regist.php?check=1";
 else $registLink = "javascript:fork('popup','../regist.php?check=1')";
 
 htmlhead();

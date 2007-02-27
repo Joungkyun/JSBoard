@@ -110,10 +110,13 @@ function get_agent() {
     $agent['br'] = 'KONQ';
   } else if(preg_match('/Lynx/', $agent_env)) {
     $agent['br'] = 'LYNX';
+    $agent['tx'] = 1;
   } else if(preg_match('/w3m/i', $agent_env)) {
     $agent['br'] = 'W3M';
+    $agent['tx'] = 1;
   } else if(preg_match('/links/i', $agent_env)) {
     $agent['br'] = 'LINKS';
+    $agent['tx'] = 1;
   } else if(preg_match("/^Mozilla/", $agent_env)) {
     $agent['br'] = 'NS';
     # client OS ±¸ºÐ
