@@ -98,10 +98,6 @@ ACNAME=$(sed -n -e '/compare\[name\]/ s/.*compare\[name\][^=]*=[^\"a-zA-Z\xA1-\x
 ACMAIL=$(sed -n -e '/compare\[email\]/ s/.*compare\[email\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
 [ "${ACMAIL}" = "" ] && ACMAIL=""
 
-ASPAM1=$(${PERL_PATH} -e "print int(rand(89999)) + 10001")
-ASPAM2=$(${PERL_PATH} -e "print int(rand(89)) + 11")
-ASPAM3=$(${PERL_PATH} -e "print int(rand(89)) + 11")
-
 cp -af ${DEFAULTPATH}/config/global.php ${DEFAULTPATH}/config/global.php.orig
 
 echo "<?
@@ -137,12 +133,6 @@ echo "<?
 
 # web path of installed jsboard
 \$board[path]  = \"${ABBS}\";
-
-
-##############################################################################
-#  Anti Spam Configuration
-##############################################################################
-\$board[antispam] = \"${ASPAM1}:${ASPAM2}:${ASPAM3}\";
 
 
 ##############################################################################

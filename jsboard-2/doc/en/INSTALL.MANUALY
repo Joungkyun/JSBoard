@@ -339,20 +339,6 @@ windows.
 
 
     ##############################################################################
-    #  Anti Spam Configuration
-    ##############################################################################
-    $board[antispam] = "@SPAM1@:@SPAM2@:@SPAM3@";
-
-    This value is for protection of registration spam article with spam register.
-    This value have 3 parts with devided colon charactor(:). Value of @SPAM1@ part 
-    have 5 digit. and @SPAM2@ and @SPAM3@ have 2 digit. for example:
-
-    $board[antispam] = "94253:14:82";
-
-    With this configuration, registration article is only enable write page.
-
-
-    ##############################################################################
     #  login mode Configuration
     ##############################################################################
     # login variation name (This value must be modified as security problem)

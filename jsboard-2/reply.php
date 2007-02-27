@@ -81,11 +81,9 @@ if ($enable['ore']) {
 }
 
 $page = $page ? $page : 1;
-$wkey = get_spam_value($board['antispam']);
 $print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=\"reply\">\n".
                    "<INPUT TYPE=hidden NAME=\"page\" VALUE=\"$page\">\n".
                    "<INPUT TYPE=hidden NAME=\"table\" VALUE=\"$table\">\n".
-                   "<INPUT TYPE=hidden NAME=\"atc[wkey]\" VALUE=\"$wkey\">\n".
                    "<INPUT TYPE=hidden NAME=\"rmail[origmail]\" VALUE=\"{$list['email']}\">\n".
                    "<INPUT TYPE=hidden NAME=\"atc[reno]\" VALUE=\"{$list['no']}\">";
 
