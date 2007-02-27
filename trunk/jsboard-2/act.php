@@ -16,6 +16,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     $atc['passwd'] = $_SESSION[$jsboard]['pass'];
   }
 
+  $atc['goaway'] = $_POST['goaway'];
   $atc['table']  = $table;
   $atc['agent']  = $agent;
 
