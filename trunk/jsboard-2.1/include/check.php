@@ -486,12 +486,75 @@ function check_access($c=0,$wips='',$ips='') {
 }
 
 # spam 등록기 체크 함수
-function check_spamer($anti,$wkey) {
-  global $_, $o;
-  if($o['at'] == "write" || $o['at'] == "reply") {
-    if(!$anti || !preg_match("/^[0-9]+:[0-9]+:[0-9]+$/i",$anti)) print_error($_('chk_an'),250,250,1);
-    if($wkey != get_spam_value($anti)) print_error($_('chk_sp'),250,250,1);
+function check_rw_referer ($referer, $type) {
+  #if ($type != 'reply' && $type != 'write')
+  #  return 0;
+
+  if (preg_match("!{$type}\.php!", $referer))
+    return 0;
+
+  return 1;
+}
+
+function check_proxy() {
+  foreach($_POST as $k => $v) {
+    switch($k) {
+      case 'HTTP_VIA':
+      case 'HTTP_CLIENT_IP':
+      case 'HTTP_PROXY':
+      case 'HTTP_SP_HOST':
+      case 'HTTP_COMING_FROM':
+      case 'HTTP_X_COMING_FROM':
+      case 'HTTP_FORWARDED':
+      case 'HTTP_X_FORWARDED':
+      case 'HTTP_FORWARDED_FOR':
+      case 'HTTP_X_FORWARDED_FOR':
+        return 1;
+        break;
+    }
   }
+  return 0;
+}
+
+function check_rw_method ($agent) {
+  global $textBrowser;
+
+  # if text browser, pass
+  if($textBrowser)
+    return 0;
+
+  # only accept POST method
+  if($_SERVER['REQUEST_METHOD'] != 'POST')
+    return 1;
+ 
+  # only accept HTTP/1.1 protocol
+  if($_SERVER['SERVER_PROTOCOL'] != 'HTTP/1.1') {
+    # if case proxy server, accept
+    if(check_proxy())
+      return 0;
+    return 2;
+  }
+
+  return 0;
+}
+
+function check_spamer($anti,$v) {
+  global $_, $o;
+
+  if($o['at'] != 'write' && $o['at'] != 'reply')
+    return;
+
+  if ( $v['goaway'] )
+    print_error($_('chk_rp'),250,250,1);
+
+  if (check_rw_referer($_SERVER['HTTP_REFERER'],$o['at']))
+    print_error($_('chk_rp'),250,250,1);
+
+  if ( ! preg_match ('!^http://(www\.)?oops.org!', $_SERVER['HTTP_REFERER']) )
+    print_error($_('chk_rp'),250,250,1);
+
+  if (check_rw_method ($v['agent']))
+    print_error($_('chk_rp'),250,250,1);
 }
 
 # Session Temp Directory Init

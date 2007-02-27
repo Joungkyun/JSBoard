@@ -733,4 +733,10 @@ function print_keymenu($type=0) {
        "//-->\n".
        "</script>\n";
 }
+
+function print_spam_trap() {
+  echo "<form method=\"POST\" action=\"{$_SERVER['PHP_SELF']}\">\n" .
+       "<input type=\"hidden\" name=\"goaway\" value=\"1\">\n" .
+       "</form>\n";
+}
 ?>
