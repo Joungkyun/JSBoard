@@ -489,17 +489,6 @@ function get_html_src($url,$size=5000,$file="",$type="") {
   } else return $f;
 }
 
-# 스팸 등록기 체크를 위한 알고리즘
-#
-function get_spam_value($v) {
-  $chk = explode(":",$v);
-  $ran = preg_replace("/[^1-9]/i","",$_COOKIE['PHPSESSID']);
-  $ran = ($ran > 99999) ? substr($ran,0,5) : $ran;
-  $ret = $chk[0] * $ran - ($chk[1] * $chk[2]);
-
-  return $ret;
-}
-
 # upload 관련 변수들을 조정
 #
 function get_upload_value($up) {

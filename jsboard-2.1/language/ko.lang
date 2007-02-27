@@ -102,7 +102,7 @@ $ko['chk_sp'] = "접속하는 IP 는 존재하지 않는 영역입니다.";
 $ko['chk_bl'] = "접속하는 IP 가 관리자에 의해 거부되었습니다.";
 $ko['chk_hy'] = "Hyper Link 에 의한 접근을 허락하지 않습니다.";
 $ko['chk_an'] = "global.php  에 spam 설정을 해야 합니다.\ndoc/ko/README.CONFIG 에서 Anti Spam\n항목을 참고 하십시오";
-$ko['chk_sp'] = "SPAM 등록기를 이용하여 글을 등록할 수 없습니다.";
+$ko['chk_rp'] = "SPAM 등록기를 이용하여 글을 등록할 수 없습니다.";
 
 # get.ph
 $ko['get_v'] = " [ 게시판 보기 ]";

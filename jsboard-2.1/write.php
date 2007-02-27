@@ -46,10 +46,8 @@ if ($agent['br'] == "MSIE" || $agent['nco'] == 'moz') {
   $print['operate'] = form_operate('wpost',$size['text']);
 } else $print['operate'] = "No support this browser";
 
-$wkey = get_spam_value($board['antispam']);
 $print['passform'] = "<input type=\"hidden\" name=\"o[at]\" value=\"write\">\n".
-                   "<input type=\"hidden\" name=\"table\" value=\"$table\">\n".
-                   "<input type=\"hidden\" name=\"atc[wkey]\" value=\"$wkey\">\n";
+                   "<input type=\"hidden\" name=\"table\" value=\"$table\">\n";
 
 $pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<input type=\"hidden\" name=\"atc[rname]\" value=\"{$pre_regist['rname']}\">";
 

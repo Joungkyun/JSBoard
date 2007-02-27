@@ -8,7 +8,11 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
-Mon, Feb  5 2006
+Tue, Feb 27 2007
+by JoungKyun.Kim
+	- changed spam check algorithm
+
+Mon, Feb  5 2007
 by JoungKyun.Kim
 	- support guid tag in rss feed
 
