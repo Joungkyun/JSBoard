@@ -17,6 +17,10 @@ file.
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.14
 
+Thu, Jul 19 2007
+  by JoungKyun.Kim
+    - fixed rss print on IE7
+
 Tue, Feb 27 2007
   by JoungKyun.Kim
     - changed spam check algorithm
