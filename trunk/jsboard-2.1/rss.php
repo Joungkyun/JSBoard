@@ -117,13 +117,13 @@ for ( $i=0; $i<$rss_article_num; $i++ ) {
   echo "<item>\n" .
        "  <title>{$rss_article[$i]['title']}</title>\n" .
        "  <link>{$rss_article[$i]['link']}</link>\n";
+       "  <guid>{$rss_article[$i]['link']}</guid>\n";
 
   if ( $rss['is_des'] ) {
     echo "  <description>{$rss_article[$i]['text']}</description>\n";
   }
 
-  echo "  <guid>{$rss_article[$i]['link']}</guid>\n" .
-       "  <pubDate>{$rss_article[$i]['date']}</pubDate>\n" .
+  echo "  <pubDate>{$rss_article[$i]['date']}</pubDate>\n" .
        "  <dc:creator>{$rss_article[$i]['name']}</dc:creator>\n" .
        "</item>\n";
 }
