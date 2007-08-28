@@ -95,7 +95,7 @@ $_charset = strtolower ($langs['charset']);
 
 # 여기 까지 이상이 없으면, 실제 RSS 출력
 #
-header ('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
+header ('Cache-Control: no-cache, pre-check=0, post-check=0, max-age=0');
 header ('Expires: ' . gmdate('D, d M Y H:i:s', time()) . ' GMT');
 header ('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 header ('Content-Type: text/xml');
