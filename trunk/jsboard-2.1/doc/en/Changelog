@@ -9,6 +9,10 @@
 Version 2.1.0
 
 
+Tue, Mar  4 2008
+by JoungKyun.Kim
+	- fixed rss wrong operation with ansi code or escape character
+
 Thu, Jul 19 2007
 by JoungKyun.Kim
 	- fixed rss print on IE7
@@ -46,6 +50,7 @@ By JoungKyun.Kim
 Wed, Apr 18 2006
 By JoungKyun.Kim
 	- fixed print bug with only forcing jpeg format on image.php
+
 Mon, Feb 27 2006
 By JoungKyun.Kim
 	- fixed regular expression delimiter bug
