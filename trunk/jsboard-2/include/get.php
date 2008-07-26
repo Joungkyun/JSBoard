@@ -438,9 +438,24 @@ function viewfile($tail) {
 
       $p['down'] = "$source1$view$source2";
     } elseif (preg_match("/^(mid|wav|mp3)$/i",$tail)) {
-      if($tail == "mp3" && $agent['co'] == "mozilla")
-        $p['up'] = "[ MP3 file은 IE에서만 들으실수 있습니다. ]";
-      elseif($agent['tx'])
+      if($tail == 'mp3') {
+        $p['up'] = <<<EOF
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+        codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0"
+        width="240" height="20" id="dewplayer" align="middle">
+  <param name="wmode" value="transparent" />
+  <param name="allowScriptAccess" value="sameDomain" />
+  <param name="movie" value="theme/player/dewplayer-vol.swf?mp3={$upload_file}&amp;autostart=1&amp;autoreplay=0&amp;showtime=1&amp;randomplay=0&amp;nopointer=0" />
+  <param name="quality" value="high" />
+  <param name="bgcolor" value="ffffff" />
+  <embed src="theme/player/dewplayer-vol.swf?mp3={$upload_file}&amp;autostart=1&amp;autoreplay=0&amp;showtime=1&amp;randomplay=0&amp;nopointer=0"
+         quality="high" bgcolor="ffffff" width="240" height="20" name="dewplayer"
+         wmode="transparent" align="middle" allowScriptAccess="sameDomain"
+         type="application/x-shockwave-flash"
+         pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>
+</object>
+EOF;
+	  } elseif($agent['tx'])
         $p['bo'] = "";
       else
         $p['bo'] = "<embed src=\"$upload_file\" autostart=\"true\" hidden=\"true\" mastersound>";
