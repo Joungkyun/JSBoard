@@ -17,6 +17,11 @@ file.
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.14
 
+Tue, Aug 26 2008
+  by JoungKyun.Kim
+	- block replay when article number of referer and number of parent
+	  article is different.
+
 Sun, Jul 27 2008
   by JoungKyun.Kim
 	- support auto play attached mp3 file on Firefox
