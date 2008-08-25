@@ -570,4 +570,19 @@ function checkquote ( $str ) {
 
   return $str;
 }
+
+function parse_referer () {
+  $referer = parse_url ($_SERVER['HTTP_REFERER']);
+  $referer['basename'] = basename ($referer['path']);
+
+  if ( ! is_array ($referer) )
+    return;
+
+  parse_str ($referer['query'], $ref);
+
+  if ( ! is_array ($ref) )
+    return;
+
+  return array_merge ($ref, $referer);
+}
 ?>

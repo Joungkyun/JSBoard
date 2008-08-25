@@ -101,7 +101,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
   # 게시물 답장 함수
   function article_reply($table, $atc) {
     global $board,$upload,$cupload,$rmail,$_,$agent,$jsboard,$page;
-    global $print, $max_file_size, $c, $db, $o;
+    global $print, $max_file_size, $c, $db, $o, $referer;
 
     $atc['date'] = time(); # 현재 시각
     $atc['host'] = get_hostname(0); # 글쓴이 주소
@@ -130,6 +130,10 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       $upfile['size'] = 0;
       $upfile['name'] = "";
     }
+
+    # referer 의 글 번호와 부모글의 번호가 다를 경우 스팸 처리
+    if ( $atc['reno'] != $referer['no'] )
+      print_error($_('act_s'),250,150,1);
 
     # 답장글에 대한 정보를 가져옴
     table_lock ($c, $table, 1);

@@ -92,6 +92,8 @@ $size['titl'] = !$size['titl'] ? form_size(25) : form_size($size['titl']);
 $size['text'] = !$size['text'] ? form_size(30) : form_size($size['text']);
 $size['uplo'] = !$size['uplo'] ? form_size(19) : form_size($size['uplo']);
 
+$referer = parse_referer ();
+
 # table 이 없거나 meta character 존재 유무 체크
 if(!preg_match("/(user|session|regist|error|image)\.php/i",$_SERVER['PHP_SELF'])) {
   if($dn['tb']) $table = $dn['tb'];
