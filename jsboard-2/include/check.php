@@ -542,12 +542,12 @@ function check_spamer($v) {
     print_error($langs['chk_rp'],250,250,1);
 
   if (check_rw_referer($_SERVER['HTTP_REFERER'],$o['at']))
-    print_error($_('chk_rp'),250,250,1);
+    print_error($langs['chk_rp'],250,250,1);
 
   if ( ! preg_match ('!^http://(www\.)?oops.org!', $_SERVER['HTTP_REFERER']) )
-    print_error($_('chk_rp'),250,250,1);
+    print_error($langs['chk_rp'],250,250,1);
 
   if (check_rw_method ($v['agent']))
-    print_error($_('chk_rp'),250,250,1);
+    print_error($langs['chk_rp'],250,250,1);
 }
 ?>
