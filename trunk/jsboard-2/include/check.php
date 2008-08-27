@@ -534,7 +534,7 @@ function check_rw_method ($agent) {
 }
 
 function check_spamer($v) {
-  global $langs,$o;
+  global $langs,$o, $board;
   if($o['at'] != 'write' && $o['at'] != 'reply')
     return;
 
@@ -544,7 +544,15 @@ function check_spamer($v) {
   if (check_rw_referer($_SERVER['HTTP_REFERER'],$o['at']))
     print_error($langs['chk_rp'],250,250,1);
 
-  if ( ! preg_match ('!^http://(www\.)?oops.org!', $_SERVER['HTTP_REFERER']) )
+  $url = parse_url ($board['path']);
+  $reg = preg_quote ($url['host']);
+  if ( preg_match ('!www\x5c\.!', $reg) )
+	  $reg = preg_replace ('!www\x5c\.!', '(\0)?', $reg);
+  else
+	  $reg = '(www\.)?' . $reg;
+  $reg = '!^http://' . $reg . '!';
+
+  if ( ! preg_match ($reg, $_SERVER['HTTP_REFERER']) )
     print_error($langs['chk_rp'],250,250,1);
 
   if (check_rw_method ($v['agent']))
