@@ -101,5 +101,6 @@ mysql_close();
 
 # Template file À» È£Ãâ
 meta_char_check($print['theme'], 1, 1);
+require_once 'captcha/captchacommon.php';
 include "theme/{$print['theme']}/reply.template";
 ?>

@@ -109,7 +109,7 @@ if(!$np) {
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=10><IMG SRC="images/blank.gif" WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
-<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
+<TD COLSPAN=4><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
 </TR>
 
@@ -119,7 +119,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <TR>
 <TD WIDTH=80>이름</TD>
-<TD><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?>></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?>></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -132,7 +132,7 @@ if($view['email']) {
 
 <TR>
 <TD>메일</TD>
-<TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable></TD>
 </TR>\n
 EOF;
 }
@@ -148,7 +148,7 @@ if($view['url']) {
 
 <TR>
 <TD>홈페이지</TD>
-<TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable></TD>
 </TR>\n
 EOF;
 }
@@ -156,7 +156,7 @@ EOF;
 
 <TR>
 <TD>HTML</TD>
-<TD>
+<TD COLSPAN=3>
 <INPUT TYPE="radio" NAME="atc[html]" VALUE=1> 사용함
 <INPUT TYPE="radio" NAME="atc[html]" VALUE=0 CHECKED> 사용안함
 </TD>
@@ -170,7 +170,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
   echo <<<EOF
 <TR>
 <TD>파일</TD>
-<TD>
+<TD COLSPAN=3>
 <INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
 <INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256>
 </TD>
@@ -180,7 +180,7 @@ EOF;
   echo <<<EOF
 <TR>
 <TD>파일</TD>
-<TD><FONT STYLE="color:red;font-weight:bold">{$langs['upload']}<FONT></TD>
+<TD COLSPAN=3><FONT STYLE="color:red;font-weight:bold">{$langs['upload']}<FONT></TD>
 </TR>
 EOF;
 }
@@ -191,7 +191,7 @@ EOF;
 <!-- ==================================================================== -->
 <TR>
 <TD>제목</TD>
-<TD><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100></TD>
 </TR>
 
 <TR>
@@ -202,9 +202,10 @@ EOF;
 <?
 if((!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1) {
   echo <<<EOF
-<TD>패스워드</TD>
-<TD>
+<TD VALIGN="top">패스워드</TD>
+<TD VALIGN="top"{$pcaptcharcolspan}>
 <INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16 STYLE="font:10px tahoma,sans-serif;">
+{$pcaptcha}
 </TD>\n
 EOF;
 }
@@ -212,7 +213,7 @@ EOF;
 </TR>
 
 <TR>
-<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+<TD COLSPAN=4><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
 </TR>
 </TABLE>
 

@@ -116,7 +116,7 @@ if(!$np) {
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=10><IMG SRC="images/blank.gif" WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
-<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
+<TD COLSPAN=4><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
 </TR>
 
@@ -126,7 +126,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <TR>
 <TD WIDTH=80><B>Name</B></TD>
-<TD><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?>></TD>
+<TD COLSPAN="3"><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?>></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -139,7 +139,7 @@ if($view['email']) {
 
 <TR>
 <TD><B>Email</B></TD>
-<TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable></TD>
+<TD COLSPAN="3"><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable></TD>
 </TR>\n
 EOF;
 }
@@ -154,7 +154,7 @@ if($view['url']) {
   echo <<<EOF
 <TR>
 <TD><B>Homepage</B></TD>
-<TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable></TD>
+<TD COLSPAN="3"><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable></TD>
 </TR>\n
 EOF;
 }
@@ -166,7 +166,7 @@ EOF;
 <!-- ==================================================================== -->
 <TR>
 <TD><B>HTML</B></TD>
-<TD>
+<TD COLSPAN="3">
 <INPUT TYPE="radio" NAME="atc[html]" VALUE=1<?=$html_chk_ok?>> Use
 <INPUT TYPE="radio" NAME="atc[html]" VALUE=0<?=$html_chk_no?>> Don't Use
 </TD>
@@ -180,7 +180,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
   echo <<<EOF
 <TR>
 <TD><B>File</B></TD>
-<TD>
+<TD COLSPAN="3">
 <INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
 <INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256>
 </TD>
@@ -190,7 +190,7 @@ EOF;
   echo <<<EOF
 <TR>
 <TD><B>File</B></TD>
-<TD><FONT STYLE="color:red;font-weight:bold">{$langs['upload']}<FONT></TD>
+<TD COLSPAN="3"><FONT STYLE="color:red;font-weight:bold">{$langs['upload']}<FONT></TD>
 </TR>\n
 EOF;
 }
@@ -203,7 +203,7 @@ EOF;
 <!-- ==================================================================== -->
 <TR>
 <TD><B>Subject</B></TD>
-<TD><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 VALUE="<?="Re$reti: {$list['title']}"?>"></TD>
+<TD COLSPAN="3"><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 VALUE="<?="Re$reti: {$list['title']}"?>"></TD>
 </TR>
 
 <TR>
@@ -212,11 +212,12 @@ EOF;
 <!-- if IE and NS6 case, print textarea size operation button             -->
 <!-- ==================================================================== -->
 <?
-if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
+if(preg_match("/^[04]$/",$board['mode']) && !$board['super']) {
   echo <<<EOF
-<TD><B>Password</B></TD>
-<TD>
+<TD VALIGN="top"><B>Password</B></TD>
+<TD VALIGN="top"{$pcaptcharcolspan}>
 <INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16>
+{$pcaptcha}
 </TD>
 EOF;
 }
@@ -224,7 +225,7 @@ EOF;
 </TR>
 
 <TR>
-<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+<TD COLSPAN=4><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
 </TR>
 </TABLE>
 

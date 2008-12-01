@@ -21,6 +21,7 @@ file.
 2008.12.02
   by 김정균
 	- textarea 크기 변환 기능 변경
+	- captcha 지원. doc/ko/README.CAPTCHA 파일 참조
 
 2008.08.26
   by 김정균
