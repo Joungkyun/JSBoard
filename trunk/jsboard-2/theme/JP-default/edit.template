@@ -213,7 +213,7 @@ EOF;
 <!-- if IE and NS6 case, print textarea size operation button             -->
 <!-- ==================================================================== -->
 <?
-if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
+if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
   echo <<<EOF
 <TD><B>Password</B></TD>
 <TD>
