@@ -23,6 +23,31 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
   if($board['mode'] == 1 || $board['mode'] == 3)
     if(!$board['adm'] && $board['super'] != 1) print_error($_('login_err'));
 
+  # captcha authenication
+  function check_captcha ($atc) {
+    global $board, $_;
+
+    if ( $board['super'] || $board['adm'] )
+      return;
+
+    if ( preg_match ('/^[24-7]$/', $board['mode']) )
+      return;
+
+    if ( ! $board['captcha'] || ! file_exists ('captcha/' . $board['captcha']) )
+      return;
+
+    require_once ('captcha/captcha.php');
+    $capt = new Captcha ($board['captcha']);
+    if ( $capt->disable === true )
+      return;
+
+    if ( ! $atc['ckey'] || ! $atc['ckeyv'] )
+      print_error ($_('captnokey'),250,150,1);
+
+    if ( $capt->check ($atc['ckey'], $atc['ckeyv']) === false )
+      print_error ($_('captinvalid'),250,150,1);
+  }
+
   # 게시물 작성 함수
   function article_post($table, $atc) {
     global $jsboard, $board, $upload, $cupload, $rmail, $_, $agent;
@@ -473,6 +498,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     }
 
     # 스팸 체크
+    if($o['at'] == "write" || $o['at'] == "reply") check_captcha ($atc);
     if(check_spam($atc['text'])) print_error($_('act_s') . $GLOBALS['spamstr'],250,150,1);
     if(check_spam($atc['title'])) print_error($_('act_s') . $GLOBALS['spamstr'],250,150,1);
 

@@ -30,7 +30,7 @@
 <td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
 <td rowspan=9 width=4 bgcolor="#6d7bc9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=''></td>
 <td rowspan=9 width=10><img src="images/blank.gif" width=10 height=1 border=0 alt=''></td>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''><br></td>
+<td colspan=4><img src="images/blank.gif" width=1 height=3 border=0 alt=''><br></td>
 <td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
 </tr>
 
@@ -40,7 +40,7 @@
 <!-- ==================================================================== -->
 <tr>
 <td width=80>Name</td>
-<td><input type=text id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist['name']?>"<?=$disable?>></td>
+<td colspan=3><input type=text id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist['name']?>"<?=$disable?>></td>
 </tr>
 
 <!-- ==================================================================== -->
@@ -52,7 +52,7 @@ if ( $view['email'] ) {
   echo <<<END
 <tr>
 <td>Email</td>
-<td><input type=text id="email" name="atc[email]" size={$size['name']} maxlength=255 value="{$pre_regist['email']}"{$disable}></td>
+<td colspan=3><input type=text id="email" name="atc[email]" size={$size['name']} maxlength=255 value="{$pre_regist['email']}"{$disable}></td>
 </tr>
 END;
 }
@@ -67,7 +67,7 @@ if ( $view['url'] ) {
   echo <<<END
 <tr>
 <td>Homepage</td>
-<td><input type=text id="url" name="atc[url]" size={$size['name']} maxlength=255 value="{$pre_regist['url']}"{$disable}></td>
+<td colspan=3><input type=text id="url" name="atc[url]" size={$size['name']} maxlength=255 value="{$pre_regist['url']}"{$disable}></td>
 </tr>
 END;
 }
@@ -75,7 +75,7 @@ END;
 
 <tr>
 <td>HTML</td>
-<td>
+<td colspan=3>
 <input type=radio name="atc[html]" value=1> Yes
 <input type=radio name="atc[html]" value=0 checked="checked"> No
 </td>
@@ -88,7 +88,7 @@ END;
 if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
   echo "<tr>\n".
        "<td>File</td>\n".
-       "<td>\n".
+       "<td colspan=3>\n".
        "<input type=\"hidden\" name=\"max_file_size\" value=\"{$upload['maxsize']}\">\n".
        "<input type=\"file\" name=\"userfile\" size={$size['uplo']} maxlength=256>\n".
        "</td>\n".
@@ -96,7 +96,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 } elseif(!$upload['yesno'] && $cupload['yesno']) {
   echo "<tr>\n".
        "<td>File</td>\n".
-       "<td><span class=\"attachfn_m\">" . $_('upload') . "</span></td>\n".
+       "<td colspan=3><span class=\"attachfn_m\">" . $_('upload') . "</span></td>\n".
        "</tr>\n";
 }
 ?>
@@ -106,7 +106,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!-- ==================================================================== -->
 <tr>
 <td>Subject</td>
-<td><input type=text id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100></td>
+<td colspan=3><input type=text id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100></td>
 </tr>
 
 <tr>
@@ -117,17 +117,16 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <?
 if ( (!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1 ) {
   echo <<<END
-<td>Password</td>
-<td>
+<td valign="top">Password</td>
+<td valign="top"{$pcaptcharcolspan}>
 <input type="password" id="passwd" name="atc[passwd]" size={$size['pass']} maxlength=16 class="passwdbox;">
+{$pcaptcha}
 </td>
-END;
-}
 ?>
 </tr>
 
 <tr>
-<td colspan=2><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
+<td colspan=4><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
 </tr>
 </table>
 
@@ -162,7 +161,7 @@ END;
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="Regist">
-<input type="button" value="Reset" onclick="document.location.reload(); return false;">
+<input type="button" value="Reset" onclick="document.location.reload(); return true;">
 <input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="List">
 <input type="button" onclick="history.back()" value="Back">
 </td></tr>

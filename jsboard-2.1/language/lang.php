@@ -23,6 +23,8 @@ function _lang ($_m, $_code = '') {
     case 'en' :
       return $GLOBALS['en'][$_m];
       break;
+    case 'ja' :
+      return $GLOBALS['ja'][$_m];
     default :
       if ( ! $GLOBALS[$_code][$_m] )
          return $GLOBALS['en'][$_m];

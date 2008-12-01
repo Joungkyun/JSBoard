@@ -7,6 +7,8 @@ Version: A9
 - include textarea.js
 - write/edit/reply 에서 reset button 을 button type 으로 변경
 - password field 의 textarea 조절 함수 삭제
+- write/reply td colspan 변경
+- write/reply captcha image 추가 (passwd 필드 옆에..)
 
 Version: A8
 - rss <link> tag 추가 (list.template)

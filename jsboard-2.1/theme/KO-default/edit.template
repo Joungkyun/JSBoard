@@ -8,7 +8,7 @@
 <tr bgcolor="#a0dc10">
 <td colspan=2>
 <img src="./theme/KO-default/img/board_no.gif" align="middle" alt=''>
-<img src="theme/KO-default/img/edit_title.gif" border=0 alt=''>
+<span style="color: #ffffff; font-weight: bold;">글 수정</span>
 </td>
 </tr>
 
@@ -94,6 +94,8 @@ if($list['bofile']) {
 <img src="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" align="middle">
 <span class="attachfn">{$list['bofile']}</span></a> - $hfsize &nbsp; &nbsp;
 <input type="checkbox" name="atc[fdel]" value=1> 파일삭제
+</td>
+</tr>
 
 EOF;
 }
@@ -127,11 +129,12 @@ EOF;
 <!-- IE, NS6 의 경우에는 textarea 창 사이즈 조정 버튼도 같이 출력         -->
 <!-- ==================================================================== -->
 <?
-if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
+if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
   echo <<<EOF
 <td>패스워드</td>
 <td>
 $passment
+<img src="./images/blank.gif" width=15 height=1 border=0 alt=''>
 </td>
 EOF;
 }
@@ -157,7 +160,7 @@ EOF;
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<textarea id="epost" class="resizable" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></TEXTAREa>
+<textarea id="epost" class="resizable" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></textarea>
 <!-- =============================== 글내용 =============================== -->
 
 </td></tr>
@@ -175,9 +178,9 @@ EOF;
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="등록">
-<input type="button" value="다시" onclick="document.location.reload(); return false;">
-<input type="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" value="목록">
-<input type="button" onClick="history.back()" value="이전">
+<input type="button" value="다시" onclick="document.location.reload(); return true;">
+<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="목록">
+<input type="button" onclick="history.back()" value="이전">
 </td></tr>
 </table>
 </form>

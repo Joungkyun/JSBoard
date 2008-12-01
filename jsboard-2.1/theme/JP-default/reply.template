@@ -1,17 +1,15 @@
 
-<form name="replyp" method="post" target=_top action='act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
+<form id="replyp" name="replyp" method="post" target=_top action='http://j2k.naver.com/k2j_frame.php/korean/oops.org/z/act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
-<td valign="bottom" colspan=2 class="counter">
-<img src="./theme/JP-default/img/icon_over.gif" align="middle" alt=''>
-&gt;&gt; Write reply article
-</td>
+<td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''></td>
+<td class="counter"> &gt;&gt; Write reply article</td>
 </tr>
 
 <tr bgcolor="#a0dc10">
 <td colspan=2>
-<img src="./theme/JP-default/img/board_no.gif" align="middle" alt=''>
-<img src="theme/JP-default/img/reply_title.gif" border=0 alt=''>
+<img src="./theme/KO-default/img/board_no.gif" align="middle" alt=''>
+<span style="color: #ffffff; font-weight: bold;">デッグル 書き取り</span>
 </td>
 </tr>
 
@@ -20,12 +18,12 @@
 </tr>
 </table>
 
-<table width=<?=$board['width']?> border=0 cellpadding=1 cellspacing=0>
+<table width="<?=$board['width']?>" border=0 cellpadding=1 cellspacing=0>
 <tr>
 <td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
 <td rowspan=9 width=4 bgcolor="#6d7bc9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=''></td>
 <td rowspan=9 width=10><img src="images/blank.gif" width=10 height=1 border=0 alt=''></td>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''><br></td>
+<td colspan=4><img src="images/blank.gif" width=1 height=3 border=0 alt=''><br></td>
 <td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
 </tr>
 
@@ -35,7 +33,7 @@
 <!--  ====================================================================  -->
 <tr>
 <td width=80>名前</td>
-<td><input type="text" id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist[name]?>"<?=$disable?>></td>
+<td colspan="3"><input type="text" id="name" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$pre_regist[name]?>"<?=$disable?>></td>
 </tr>
 
 <!--  ====================================================================  -->
@@ -44,11 +42,14 @@
 <!--  ====================================================================  -->
 <?
 if($view['email']) {
-  echo "
+  echo <<<EOF
+
 <tr>
 <td>メール</td>
-<td><input type=\"text\" id=\"email\" name=\"atc[email]\" size={$size['name']} maxlength=255 value=\"{$pre_regist['email']}\"$disable></td>
-</tr>\n";
+<td colspan="3"><input type="text" id="email" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$pre_regist['email']}"$disable></td>
+</tr>
+
+EOF;
 }
 ?>
 
@@ -58,43 +59,52 @@ if($view['email']) {
 <!--  ====================================================================  -->
 <?
 if($view['url']) {
-  echo "
+  echo <<<EOF
+
 <tr>
 <td>ホームページ</td>
-<td><input type=\"text\" id=\"url\" name=\"atc[url]\" size={$size['name']} maxlength=255 value=\"{$pre_regist['url']}\"$disable></td>
-</tr>\n";
+<td colspan="3"><input type="text" id="url" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$pre_regist['url']}"$disable></td>
+</tr>
+
+EOF;
 }
 ?>
 
 <!--  ====================================================================  -->
-<!--  $html_chk_ok  : 親文が html サヨングハムイルテ 基本 チェック になるようにする             -->
-<!--  $html_chk_no  : 親文が html サヨングアンハムイルテ 基本 チェック になるようにする           -->
+<!--  $html_chk_ok  : 親文が html サヨングハムイルテ 基本 チェック なるようにする             -->
+<!--  $html_chk_no  : 親文が html サヨングアンハムイルテ 基本 チェック なるようにする           -->
 <!--  ====================================================================  -->
 <tr>
 <td>HTML</td>
-<td>
+<td colspan="3">
 <input type="radio" name="atc[html]" value=1<?=$html_chk_ok?>> 使い
 <input type="radio" name="atc[html]" value=0<?=$html_chk_no?>> 使用の中し
 </td>
 </tr>
 
 <!--  ====================================================================  -->
-<!--  upload 部分 出力可否 設定 (まあまあの程ならば そのまま 書けば でき)                     -->
+<!--  upload 部分 出力可否 設定 (まあまあの程ならば そのまま 使えば なり)                     -->
 <!--  ====================================================================  -->
 <?
 if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
-  echo "<tr>\n".
-       "<td>File</td>\n".
-       "<td>\n".
-       "<input type=\"hidden\" name=\"max_file_size\" value=\"{$upload['maxsize']}\">\n".
-       "<input type=\"file\" name=\"userfile\" size={$size['uplo']} maxlength=256>\n".
-       "</td>\n".
-       "</tr>\n";
+  echo <<<EOF
+<tr>
+<td>ファイル</td>
+<td colspan="3">
+<input type="hidden" name="max_file_size" value="{$upload['maxsize']}">
+<input type="file" name="userfile" size="{$size['uplo']}" maxlength=256>
+</td>
+</tr>
+
+EOF;
 } elseif(!$upload['yesno'] && $cupload['yesno']) {
-  echo "<tr>\n".
-       "<td>File</td>\n".
-       "<td><font class=\"attachfn_m\">" . $_('upload') . "<font></td>\n".
-       "</tr>\n";
+  echo <<<EOF
+<tr>
+<td>ファイル</td>
+<td colspan="3"><font class="attachfn_m">" . $_('upload') . "<font></td>
+</tr>
+
+EOF;
 }
 ?>
 
@@ -105,26 +115,29 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!--  ====================================================================  -->
 <tr>
 <td>題目</td>
-<td><input type="text" id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100 value="<?="Re$reti: {$list['title']}"?>"></td>
+<td colspan="3"><input type="text" id="title" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 value="<?="Re$reti: {$list['title']}"?>"></td>
 </tr>
 
 <tr>
 <!--  ====================================================================  -->
-<!--  admin login 状態である 場合 パスワードを 書かなくても なるように する ルチン          -->
+<!--  admin login 状態である 場合 パスワードを 少なくなくても なるように する ルチン          -->
 <!--  IE, NS6 義 場合には textarea 窓 サイズ 調整 ボタンも 一緒に 出力          -->
 <!--  ====================================================================  -->
 <?
-if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
-  echo "<td>パスワード</td>\n".
-       "<td>\n".
-       "<input type=\"password\" id=\"passwd\" name=\"atc[passwd]\" size={$size['pass']} maxlength=16 class=\"passwdbox\">\n".
-       "</td>\n";
+if(preg_match("/^[04]$/",$board['mode']) && !$board['super']) {
+  echo <<<EOF
+<td valign="top">パスワード</td>
+<td valign="top"{$pcaptcharcolspan}>
+<input type="password" id="passwd" name="atc[passwd]" size="{$size['pass']}" maxlength=16 class="passwdbox">
+{$pcaptcha}
+</td>
+EOF;
 }
 ?>
 </tr>
 
 <tr>
-<td colspan=2><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
+<td colspan=4><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
 </tr>
 </table>
 
@@ -139,7 +152,7 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <!--  $text_area  : デッグルの TEXTAREAを 出力(すなわち 書き物をする 部分)                  -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
-<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<script type="text/javascript" src="http://j2k.naver.com/j2k_script.php/korean/EUC-KR/oops.org/z/theme/common/textarea.js"></script>
 <?=$text_area?>
 
 <!--  =============================== 文内容 ===============================  -->
@@ -150,7 +163,7 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 
 <!--  ====================================================================  -->
 <!--  $wrap['ment']     : textarea に wrap これ hard 街 ない 場合 警告 メッセージ -->
-<!--  $table.$pages     : リストに 帰る リンクに 必要な 変数たち            -->
+<!--  $table.$pages     : リストで 帰る リンクに 必要な 変数たち            -->
 <!--  $print['passform']: デッグル 登録するのに 必要な hidden 変数たち              -->
 <!--  $orig_option      : 書き込み 窓 調節の時 元々 大きさで 帰る オプション        -->
 <!--  $orig_button      : 原本文 含み ボタン 使用の時 出力                      -->
@@ -160,9 +173,11 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="登録">
-<input type="button" value="再び" onclick="document.location.reload(); return true;"><?=$orig_button?>
+<input type="reset" value="再び" onclick="document.location.reload(); return false;"><?=$orig_button?>
 <input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト">
 <input type="button" onclick="history.back()" value="以前">
 </td></tr>
 </table>
+
+</form>
 

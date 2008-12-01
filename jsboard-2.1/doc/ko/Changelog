@@ -12,6 +12,7 @@
 2008.12.02
 By 김정균
 	- textarea 크기 조절 기능 변경
+	- captcha 지원. doc/ko/README.CAPTCHA 참조
 
 2008.08.26
 By 김정균
