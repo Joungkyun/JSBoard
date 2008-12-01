@@ -146,7 +146,7 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 <!--  ====================================================================  -->
 <!--  =============================== •¶“à—e ===============================  -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<textarea id="epost" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></TEXTAREa>
+<textarea id="epost" class="resizable" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></TEXTAREa>
 <!--  =============================== •¶“à—e ===============================  -->
 
 </td></tr>

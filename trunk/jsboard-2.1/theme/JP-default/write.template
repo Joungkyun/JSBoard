@@ -144,7 +144,7 @@ E
 <!--  ====================================================================  -->
 <!--  =============================== •¶“à—e ===============================  -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<textarea id="wpost" name="atc[text]" <?=$wrap['op']?>></textarea>
+<textarea id="wpost" class="resizable" name="atc[text]" <?=$wrap['op']?>></textarea>
 <!--  =============================== •¶“à—e ===============================  -->
 
 </td></tr>

@@ -161,7 +161,7 @@ EOF;
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<textarea id="epost" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></textarea>
+<textarea id="epost" class="resizable" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></textarea>
 <!-- =============================== 글내용 =============================== -->
 
 </td></tr>
