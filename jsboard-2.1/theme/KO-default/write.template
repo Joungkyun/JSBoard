@@ -124,15 +124,6 @@ if ( (!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1 ) {
 <td>패스워드</td>
 <td>
 <input type="password" id="passwd" name="atc[passwd]" size="{$size['pass']}" maxlength=16 class="passwdbox;">
-<img src="./images/blank.gif" width=15 height=1 border=0 alt=''>
-TextSize Operation {$print['operate']}
-</td>
-END;
-} else {
-  echo <<<END
-<td colspan=2 align="right">
-TextSize Operation {$print['operate']}
-</td>
 END;
 }
 ?>
@@ -155,7 +146,8 @@ END;
 <!-- $size['text'] : textarea 의 size 출력                                -->
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
-<textarea id="wpost" name="atc[text]" <?=$wrap['op']?> rows=10 cols="<?=$size['text']?>"></textarea>
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<textarea id="wpost" name="atc[text]" <?=$wrap['op']?>></textarea>
 <!-- =============================== 글내용 =============================== -->
 
 </td></tr>
@@ -173,7 +165,7 @@ END;
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="등록">
-<input type="reset" value="다시"<?=$orig_option?>>
+<input type="button" value="다시" onclick="document.location.reload(); return false;">
 <input type="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" value="목록">
 <input type="button" onClick="history.back()" value="이전">
 </td></tr>

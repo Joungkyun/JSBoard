@@ -8,6 +8,10 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Tue, Dec  2 2008
+by JoungKyun.Kim
+	- changed resize function of textarea
+
 Tue, Aug 26 2008
 by JoungKyun.Kim
 	- block replay when article number of referer and number of parent

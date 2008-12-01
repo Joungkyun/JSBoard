@@ -40,7 +40,7 @@
 <!--  ====================================================================  -->
 <tr>
 <td width=80>名前</td>
-<td><input type=text id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist['name']?>"<?=$disable?>></td>
+<td><input type="text" id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist['name']?>"<?=$disable?>></td>
 </tr>
 
 <!--  ====================================================================  -->
@@ -52,7 +52,7 @@ if ( $view['email'] ) {
   echo <<<END
 <tr>
 <td>メール</td>
-<td><input type=text id="email" name="atc[email]" size={$size['name']} maxlength=255 value="{$pre_regist['email']}"{$disable}></td>
+<td><input type="text" id="email" name="atc[email]" size={$size['name']} maxlength=255 value="{$pre_regist['email']}"{$disable}></td>
 </tr>
 END;
 }
@@ -67,7 +67,7 @@ if ( $view['url'] ) {
   echo <<<END
 <tr>
 <td>ホームページ</td>
-<td><input type=text id="url" name="atc[url]" size={$size['name']} maxlength=255 value="{$pre_regist['url']}"{$disable}></td>
+<td><input type="text" id="url" name="atc[url]" size={$size['name']} maxlength=255 value="{$pre_regist['url']}"{$disable}></td>
 </tr>
 END;
 }
@@ -106,7 +106,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!--  ====================================================================  -->
 <tr>
 <td>題目</td>
-<td><input type=text id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100></td>
+<td><input type="text" id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100></td>
 </tr>
 
 <tr>
@@ -119,17 +119,9 @@ if ( (!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1 ) {
   echo <<<END
 <td>パスワード</td>
 <td>
-<input type="password" id="passwd" name="atc[passwd]" size={$size['pass']} maxlength=16 class="passwdbox;">
-<img src="./images/blank.gif" width=15 height=1 border=0 alt=''>
 TextSize Operation {$print['operate']}
 </td>
-END;
-} else {
-  echo <<<END
-<td colspan=2 align="right">
-TextSize Operation {$print['operate']}
-</td>
-END;
+E
 }
 ?>
 </tr>
@@ -151,7 +143,8 @@ END;
 <!--  $size['text'] : textarea 義 size 出力                                 -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
-<textarea id="wpost" name="atc[text]" <?=$wrap['op']?> rows=10 cols=<?=$size['text']?>></textarea>
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<textarea id="wpost" name="atc[text]" <?=$wrap['op']?>></textarea>
 <!--  =============================== 文内容 ===============================  -->
 
 </td></tr>
@@ -169,8 +162,8 @@ END;
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="登録">
-<input type="reset" value="再び"<?=$orig_option?>>
-<input type="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト">
-<input type="button" onClick="history.back()" value="以前">
+<input type="button" value="再び" onclick="document.location.reload(); return true;">
+<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト">
+<input type="button" onclick="history.back()" value="以前">
 </td></tr>
 </table>

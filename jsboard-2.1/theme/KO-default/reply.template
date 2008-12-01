@@ -129,17 +129,7 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <td>패스워드</td>
 <td>
 <input type="password" id="passwd" name="atc[passwd]" size="{$size['pass']}" maxlength=16 class="passwdbox">
-<img src="./images/blank.gif" width=15 height=1 border=0 alt=''>
-TextSize Operation {$print['operate']}
 </td>
-
-EOF;
-} else {
-  echo <<<EOF
-<td colspan=2 align="right">
-TextSize Operation {$print['operate']}
-</td>
-
 EOF;
 }
 ?>
@@ -161,6 +151,7 @@ EOF;
 <!-- $text_area  : 댓글의 TEXTAREA를 출력(즉 글쓰는 부분)                 -->
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
 <?=$text_area?>
 
 <!-- =============================== 글내용 =============================== -->
@@ -181,7 +172,7 @@ EOF;
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="등록">
-<input type="reset" value="다시"<?=$orig_option?>><?=$orig_button?>
+<input type="button" value="다시" onclick="document.location.reload(); return false;"><?=$orig_button?>
 <input type="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" value="목록">
 <input type="button" onClick="history.back()" value="이전">
 </td></tr>

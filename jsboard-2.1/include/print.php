@@ -421,29 +421,6 @@ function article_reply_list($table,$pages,$print=0) {
   else return $t;
 }
 
-# FORM size 를 동적으로 조정하기 위한 스크립트 출력함수
-#
-function form_operate($id,$x=73,$y=10,$prt=0) {
-  $var = "<script type=\"text/javascript\">\n".
-         "<!--\n".
-         "function fresize(value) {\n".
-         "  if (value == 0) {\n".
-         "    document.getElementById('{$id}').cols = $x;\n".
-         "    document.getElementById('{$id}').rows = $y;\n".
-         "  }\n".
-         "  if (value == 1) document.getElementById('{$id}').cols += 5;\n".
-         "  if (value == 2) document.getElementById('{$id}').rows += 5;\n".
-         "}\n".
-         "// -->\n".
-         "</script>\n".
-         "<input type=\"button\" value=\"&#9655;\" onClick=\"fresize(1);\" title=\"Left Right\">".
-         "<input type=\"button\" value=\"&#9635;\" onClick=\"fresize(0);\" title=\"RESET\">".
-         "<input type=\"button\" value=\"&#9661;\" onClick=\"fresize(2);\" title=\"Up Down\">\n";
-
-  if($prt) echo $var;
-  else return $var;
-}
-
 function detail_searchform($p='') {
   global $table,$board,$_,$o;
   global $c, $db;

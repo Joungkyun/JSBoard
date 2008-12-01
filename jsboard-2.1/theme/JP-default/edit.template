@@ -122,12 +122,6 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
   echo "<td>パスワード</td>\n".
        "<td>\n".
        "$passment\n".
-       "<img src=\"./images/blank.gif\" width=15 height=1 border=0 alt=''>\n".
-       "TextSize Operation {$print['operate']}\n".
-       "</td>\n";
-} else {
-  echo "<td colspan=2 align=right>\n".
-       "TextSize Operation {$print['operate']}\n".
        "</td>\n";
 }
 ?>
@@ -151,7 +145,8 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 <!--  $list['text'] : 修正する 文 本文を 出力                                 -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
-<textarea id="epost" name="atc[text]" <?=$wrap['op']?> rows=10 cols=<?=$size['text']?>><?="{$list['text']}\n\n"?></TEXTAREa>
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<textarea id="epost" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></TEXTAREa>
 <!--  =============================== 文内容 ===============================  -->
 
 </td></tr>
@@ -169,8 +164,8 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="登録">
-<input type="reset" value="再び"<?=$orig_option?>>
-<input type="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト">
-<input type="button" onClick="history.back()" value="以前">
+<input type="button" value="再び" onclick="document.location.reload(); return true;">
+<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト">
+<input type="button" onclick="history.back()" value="以前">
 </td></tr>
 </table>

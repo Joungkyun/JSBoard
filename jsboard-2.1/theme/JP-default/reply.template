@@ -118,12 +118,6 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
   echo "<td>パスワード</td>\n".
        "<td>\n".
        "<input type=\"password\" id=\"passwd\" name=\"atc[passwd]\" size={$size['pass']} maxlength=16 class=\"passwdbox\">\n".
-       "<img src=\"./images/blank.gif\" width=15 height=1 border=0 alt=''>\n".
-       "TextSize Operation {$print['operate']}\n".
-       "</td>\n";
-} else {
-  echo "<td colspan=2 align=right>\n".
-       "TextSize Operation {$print['operate']}\n".
        "</td>\n";
 }
 ?>
@@ -145,6 +139,7 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <!--  $text_area  : デッグルの TEXTAREAを 出力(すなわち 書き物をする 部分)                  -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
 <?=$text_area?>
 
 <!--  =============================== 文内容 ===============================  -->
@@ -165,9 +160,9 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="登録">
-<input type="reset" value="再び"<?=$orig_option?>><?=$orig_button?>
-<input type="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト">
-<input type="button" onClick="history.back()" value="以前">
+<input type="button" value="再び" onclick="document.location.reload(); return true;"><?=$orig_button?>
+<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト">
+<input type="button" onclick="history.back()" value="以前">
 </td></tr>
 </table>
 
