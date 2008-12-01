@@ -40,12 +40,6 @@ else $board['formtype'] = " enctype=\"multipart/form-data\"";
 # TEXTAREA의 wrap option check
 $wrap = form_wrap();
 
-# Form size 조정을 위한 설정
-if ($agent['br'] == "MSIE" || $agent['nco'] == 'moz') {
-  $orig_option = " onClick=fresize(0)";
-  $print['operate'] = form_operate('wpost',$size['text']);
-} else $print['operate'] = "No support this browser";
-
 $print['passform'] = "<input type=\"hidden\" name=\"o[at]\" value=\"write\">\n".
                    "<input type=\"hidden\" name=\"table\" value=\"$table\">\n";
 

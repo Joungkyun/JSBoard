@@ -124,12 +124,6 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
   echo "<td>Password</td>\n".
        "<td>\n".
        "<input type=\"password\" id=\"passwd\" name=\"atc[passwd]\" size={$size['pass']} maxlength=16 class=\"passwdbox\">\n".
-       "<img src=\"./images/blank.gif\" width=15 height=1 border=0 alt=''>\n".
-       "TextSize Operation {$print['operate']}\n".
-       "</td>\n";
-} else {
-  echo "<td colspan=2 align=right>\n".
-       "TextSize Operation {$print['operate']}\n".
        "</td>\n";
 }
 ?>
@@ -151,6 +145,7 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <!-- $text_area  : print textared field for reply                         -->
 <!-- ==================================================================== -->
 <!-- ============================= Contents ============================= -->
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
 <?=$text_area?>
 
 <!-- ============================= Contents ============================= -->
@@ -171,9 +166,9 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="Regist">
-<input type="reset" value="Reset"<?=$orig_option?>><?=$orig_button?>
-<input type="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" value="List">
-<input type="button" onClick="history.back()" value="Back">
+<input type="button" value="Reset" onclick="document.location.reload(); return false;"><?=$orig_button?>
+<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="List">
+<input type="button" onclick="history.back()" value="Back">
 </td></tr>
 </table>
 

@@ -3,6 +3,10 @@ Version: A9
 - <input> tag 에 id 추가
 - <body> tag 에 $_focus 변수 추가
 - write.php/reply.php 에 <?=print_spam_trap()?> 추가
+- textarea tag 에 class="resizable" 추가
+- include textarea.js
+- write/edit/reply 에서 reset button 을 button type 으로 변경
+- password field 의 textarea 조절 함수 삭제
 
 Version: A8
 - rss <link> tag 추가 (list.template)

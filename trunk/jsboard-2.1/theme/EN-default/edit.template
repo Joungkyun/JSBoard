@@ -136,15 +136,7 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 $passment
 <img src="./images/blank.gif" width=15 height=1 border=0 alt=''>
 TextSize Operation {$print['operate']}
-</td>\n";
-
-EOF;
-} else {
-  echo <<<EOF
-<td colspan=2 align="right">
-TextSize Operation {$print['operate']}
 </td>
-
 EOF;
 }
 ?>
@@ -168,7 +160,8 @@ EOF;
 <!-- $list['text'] : print content of original content for modified       -->
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
-<textarea id="epost" name="atc[text]" <?=$wrap['op']?> rows=10 cols=<?=$size['text']?>><?="{$list['text']}\n\n"?></textarea>
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<textarea id="epost" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></textarea>
 <!-- =============================== 글내용 =============================== -->
 
 </td></tr>
@@ -186,9 +179,9 @@ EOF;
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="Modify">
-<input type="reset" value="Reset"<?=$orig_option?>>
-<input type="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" value="List">
-<input type="button" onClick="history.back()" value="Back">
+<input type="button" value="Reset" onclick="document.location.reload(); return false;">
+<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="List">
+<input type="button" onclick="history.back()" value="Back">
 </td></tr>
 </table>
 </form>
