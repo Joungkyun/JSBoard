@@ -63,20 +63,14 @@ else $board['formtype'] = " ENCTYPE=\"multipart/form-data\"";
 # TEXTAREA에서 wrap option check
 $wrap = form_wrap();
 
-# Form size 조정을 위한 설정
-if ($agent['br'] == "MSIE" || $agent['nco'] == "moz") {
-  $orig_option = " onClick=fresize(0)";
-  $print['operate'] = form_operate("replyp","rpost",$size['text']);
-} else $print['operate'] = "No support this browser";
-
 # 원본글 포함 선택 여부
 if ($enable['ore']) {
-  $text_area = "<TEXTAREA NAME=\"rpost\" {$wrap['op']} ROWS=\"10\" COLS=\"{$size['text']}\"></TEXTAREA>";
+  $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\" {$wrap['op']}></TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"hide\" VALUE=\"\n\n{$list['name']} wrote..\n{$list['text']}\">\n" .
                  "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=1>\n" .
                  "<INPUT TABINDEX=\"100\" TYPE=\"button\" NAME=\"quote\" VALUE=\"원본 포함\" onClick=\"this.form.rpost.value=this.form.rpost.value + this.form.hide.value; this.form.hide.value ='';\">\n";
 } else {
-  $text_area = "<TEXTAREA NAME=\"rpost\" {$wrap['op']} ROWS=\"10\" COLS=\"{$size['text']}\">\n\n\n{$list['name']} wrote..\n{$list['text']}</TEXTAREA>";
+  $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\" {$wrap['op']}>\n\n\n{$list['name']} wrote..\n{$list['text']}</TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=0>\n";
 }
 

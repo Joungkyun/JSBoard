@@ -658,29 +658,6 @@ function print_newwindow_src($upload,$cupload,$dwho) {
   }
 }
 
-# FORM size 를 동적으로 조정하기 위한 스크립트 출력함수
-#
-function form_operate($fn,$in,$x=73,$y=10,$prt=0) {
-  $var = "<SCRIPT TYPE=\"text/javascript\">\n".
-         "<!--\n".
-         "function fresize(value) {\n".
-         "  if (value == 0) {\n".
-         "    document.$fn.$in.cols  = $x;\n".
-         "    document.$fn.$in.rows  = $y;\n".
-         "  }\n".
-         "  if (value == 1) document.$fn.$in.cols += 5;\n".
-         "  if (value == 2) document.$fn.$in.rows += 5;\n".
-         "}\n".
-         "// -->\n".
-         "</SCRIPT>\n".
-         "<INPUT TYPE=BUTTON VALUE=\"&#9655;\" onClick=\"fresize(1);\" TITLE=\"Left Right\">".
-         "<INPUT TYPE=BUTTON VALUE=\"&#9635;\" onClick=\"fresize(0);\" TITLE=\"RESET\">".
-         "<INPUT TYPE=BUTTON VALUE=\"&#9661;\" onClick=\"fresize(2);\" TITLE=\"Up Down\">\n";
-
-  if($prt) echo $var;
-  else return $var;
-}
-
 # 라이센스 관련 출력
 function print_license() {
   global $board, $color, $gpl_link, $designer;

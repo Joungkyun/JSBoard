@@ -43,6 +43,21 @@ TEXTAREA {
   border-color: #555555;
   padding-left: 1px;
   background-Color: #ffffff;
+  width: 100%;
+  height: 150px;
+}
+
+.resizable-textarea .grippie {
+  height: 14px;
+  background: #ECE9D6 url(img/grippie.png) no-repeat 100% 100%;
+  border: 1px solid #DFDBCA;
+  border-top-width: 0;
+  cursor: se-resize;
+}
+
+.resizable-textarea {
+  width: 100% !important;
+  width: 98%; /* for IE */
 }
 form { display: inline; }
 
@@ -190,14 +205,6 @@ if((!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1) {
 <TD>패스워드</TD>
 <TD>
 <INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16 STYLE="font:10px tahoma,sans-serif;">
-<IMG SRC="./images/blank.gif" WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>
-TextSize Operation {$print['operate']}
-</TD>\n
-EOF;
-} else {
-  echo <<<EOF
-<TD COLSPAN=2 ALIGN="right">
-TextSize Operation {$print['operate']}
 </TD>\n
 EOF;
 }
@@ -221,7 +228,8 @@ EOF;
 <!-- $size['text'] : textarea 의 size 출력                                -->
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
-<TEXTAREA NAME="wpost" <?=$wrap['op']?> ROWS=10 COLS="<?=$size['text']?>"></TEXTAREA>
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<TEXTAREA NAME="wpost" CLASS="resizable" <?=$wrap['op']?>></TEXTAREA>
 <!-- =============================== 글내용 =============================== -->
 
 </TD></TR>
@@ -239,7 +247,7 @@ EOF;
 <TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <?=$print['passform']?>
 <INPUT TYPE="submit" VALUE="등록">
-<INPUT TYPE="reset" VALUE="다시"<?=$orig_option?>>
+<INPUT TYPE="button" VALUE="다시" onClick="document.location.reload(); return false;">
 <INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록">
 <INPUT TYPE="button" onClick="history.back()" VALUE="이전">
 </TD></TR>
