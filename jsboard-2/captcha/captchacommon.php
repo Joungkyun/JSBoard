@@ -33,7 +33,7 @@ function captcha_insert() {
 </script>
 <img src="./captcha/captchaimg.php?{$ckey}" alt="Input {$capt->captchadata($ckey)}" onclick="captcha_insert(); return false;"></td>
 <td valign="top">
-{$_('captstr')}<br />
+{$langs['captstr']}<br />
 <input type="text" size="{$captsize}" name="atc[ckeyv]" id="id_ckeyv" onclick="captcha_insert(); return false;">
 <input type="hidden" name="atc[ckey]" value="{$ckey}">
 EOF;
