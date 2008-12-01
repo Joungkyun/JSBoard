@@ -21,6 +21,7 @@ Version   : jsboard 2.0.14
 Tue, Dec 02 2008
   by JoungKyun.Kim
 	- change resize funtion of textarea
+	- support captcha. See also doc/en/README.CAPTCHA
 
 Tue, Aug 26 2008
   by JoungKyun.Kim
