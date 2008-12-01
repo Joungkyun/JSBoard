@@ -1,4 +1,4 @@
-<!--
+
 function previewInit() {
   this.x = 0;
   this.y = 0;
@@ -10,6 +10,12 @@ function previewInit() {
   this.offsety = 3;
   this.width = 260;
   this.height = 50;
+
+  try {
+    if ( ! nav ) { nav = browserType (); }
+  } catch (e) {
+    nav = browserType ();
+  }
 }
 
 pv = new previewInit;
@@ -100,11 +106,11 @@ function hideObject(obj) {
 }
 function moveTo(obj,xL,yL) {
   if ( nav.core == 'Netscape' ) {
-    obj.left = xL + 'px';
-    obj.top = yL + 'px';
+    obj.left = xL;
+    obj.top = yL;
   } else {
-    obj.style.left = xL + 'px';
-    obj.style.top = yL + 'px';
+    obj.style.left = xL;
+    obj.style.top = yL;
   }
 }
--->
+

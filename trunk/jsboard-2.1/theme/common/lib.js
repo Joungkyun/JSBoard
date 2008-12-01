@@ -65,8 +65,9 @@ function browserType() {
   }
 
   nav.version = navsver.replace(/[ ]+\([^)]+\)$/g,"");
+  return nav;
 }
-browserType();
+var nav = browserType();
 
 function newwinInit() {
   this.child = null;
