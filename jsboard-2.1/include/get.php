@@ -576,7 +576,7 @@ function content_disposition ($n) {
       # RFC 2231
       $r = 'filename*0*' . $_code . '*' . $_('charset') . '*=' . rawurlencode ($n);
       break;
-    case 'Opera' ;
+    case 'Opera' :
       if ($agent['vr'] > 6)
         $r = 'filename*0*' . $_code . '*' . $_('charset') . '*=' . rawurlencode ($n);
       else
