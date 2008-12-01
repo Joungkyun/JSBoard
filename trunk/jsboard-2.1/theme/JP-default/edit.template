@@ -1,17 +1,14 @@
-
-<form name="editp" method=post target=_top action='act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
+<form name="editp" method=post target=_top action='http://j2k.naver.com/k2j_frame.php/korean/oops.org/z/act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
-<td valign="bottom" colspan=2>
-<img src="./theme/JP-default/img/icon_over.gif" align="middle" alt=''>
-<span class="counter">&gt;&gt; Edit article</span>
-</td>
+<td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''></td>
+<td class="counter"> &gt;&gt; Edit article</td>
 </tr>
 
 <tr bgcolor="#a0dc10">
 <td colspan=2>
-<img src="./theme/JP-default/img/board_no.gif" align=middle alt=''>
-<img src="theme/JP-default/img/edit_title.gif" border=0 alt=''>
+<img src="./theme/KO-default/img/board_no.gif" align="middle" alt=''>
+<img src="theme/KO-default/img/edit_title.gif" border=0 alt=''>
 </td>
 </tr>
 
@@ -35,7 +32,7 @@
 <!--  ====================================================================  -->
 <tr>
 <td width=80>名前</td>
-<td><input type="text" id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$list['name']?>"<?=$disable?>></td>
+<td><input type="text" id="name" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$list['name']?>"<?=$disable?>></td>
 </tr>
 
 <!--  ====================================================================  -->
@@ -44,11 +41,14 @@
 <!--  ====================================================================  -->
 <?
 if($view['email'] || trim($list['email'])) {
-  echo "
+  echo <<<EOF
+
 <tr>
 <td>メール</td>
-<td><input type=\"text\" id=\"email\" name=\"atc[email]\" size={$size['name']} maxlength=255 value=\"{$list['email']}\"$disable></td>
-</tr>\n";
+<td><input type="text" id="email" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$list['email']}"$disable></td>
+</tr>
+
+EOF;
 }
 ?>
 
@@ -58,48 +58,57 @@ if($view['email'] || trim($list['email'])) {
 <!--  ====================================================================  -->
 <?
 if($view['url'] || trim($list['url'])) {
-  echo "
+  echo <<<EOF
+
 <tr>
 <td>ホームページ</td>
-<td><input type=\"text\" id=\"url\" name=\"atc[url]\" size={$size['name']} maxlength=255 value=\"{$list['url']}\"$disable></td>
-</tr>\n";
+<td><input type="text" id="url" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$list['url']}"$disable></td>
+</tr>
+
+EOF;
 }
 ?>
 
 <!--  ====================================================================  -->
-<!--  $html_chk_ok  : 親文が html サヨングハムイルテ 基本 チェック になるようにする             -->
-<!--  $html_chk_no  : 親文が html サヨングアンハムイルテ 基本 チェック になるようにする           -->
+<!--  $html_chk_ok  : 親文が html サヨングハムイルテ 基本 チェック なるようにする             -->
+<!--  $html_chk_no  : 親文が html サヨングアンハムイルテ 基本 チェック なるようにする           -->
 <!--  ====================================================================  -->
 <tr>
 <td>HTML</td>
 <td>
-<input type=radio name="atc[html]" value=1<?=$html_chk_ok?>> 使い
-<input type=radio name="atc[html]" value=0<?=$html_chk_no?>> 使用の中し
+<input type="radio" name="atc[html]" value=1<?=$html_chk_ok?>> 使い
+<input type="radio" name="atc[html]" value=0<?=$html_chk_no?>> 使用の中し
 </td>
 </tr>
 
 <!--  ====================================================================  -->
-<!--  upload 部分 出力可否 設定 (まあまあの程ならば そのまま 使えば でき)                     -->
+<!--  upload 部分 出力可否 設定 (まあまあの程ならば そのまま 使えば なり)                     -->
 <!--  ====================================================================  -->
 <?
 if($list['bofile']) {
-  echo "<tr>\n".
-       "<td>File</td>\n".
-       "<td>\n".
-       "<a target=_top href='http://j2k.naver.com/j2k_frame.php/korean/work.oops.org/jsboard/theme/JP-default/$down_link'>\n".
-       "<img src=\"images/$icon\" width=16 height=16 border=0 alt={$list['bofile']} align=middle>\n".
-       "<span class=\"attachfn\">{$list['bofile']}</span></a> - $hfsize &nbsp; &nbsp;\n".
-       "<input type=\"checkbox\" name=\"atc[fdel]\" value=1> File 削除\n";
+  echo <<<EOF
+<tr>
+<td>ファイル</td>
+<td>
+<a target=_top href='http://j2k.naver.com/k2j_frame.php/korean/oops.org/z/$down_link'>
+<img src="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" align="middle">
+<span class="attachfn">{$list['bofile']}</span></a> - $hfsize &nbsp; &nbsp;
+<input type="checkbox" name="atc[fdel]" value=1> ファイル削除
+
+EOF;
 }
 
 if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
-  echo "<tr>\n".
-       "<td>File 修正</td>\n".
-       "<td>\n".
-       "<input type=\"hidden\" name=\"max_file_size\" value=\"{$upload['maxsize']}\">\n".
-       "<input type=\"file\" name=\"userfile\" size=\"{$size['uplo']}\" maxlength=256>\n".
-       "</td>\n".
-       "</tr>\n";
+  echo <<<EOF
+<tr>
+<td>ファイル修正</td>
+<td>
+<input type="hidden" name="max_file_size" value="{$upload['maxsize']}">
+<input type="file" name="userfile" size="{$size['uplo']}" maxlength=256>
+</td>
+</tr>
+
+EOF;
 }
 ?>
 
@@ -109,20 +118,22 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!--  ====================================================================  -->
 <tr>
 <td>題目</td>
-<td><input type="text" id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100 value="<?=$list['title']?>"></td>
+<td><input type="text" id="title" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 value="<?=$list['title']?>"></td>
 </tr>
 
 <tr>
 <!--  ====================================================================  -->
-<!--  admin login 状態である 場合 パスワードを 書かなくても なるように する ルチン          -->
+<!--  admin login 状態である 場合 パスワードを 少なくなくても なるように する ルチン          -->
 <!--  IE, NS6 義 場合には textarea 窓 サイズ 調整 ボタンも 一緒に 出力          -->
 <!--  ====================================================================  -->
 <?
-if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
-  echo "<td>パスワード</td>\n".
-       "<td>\n".
-       "$passment\n".
-       "</td>\n";
+if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
+  echo <<<EOF
+<td>パスワード</td>
+<td>
+$passment
+</td>
+EOF;
 }
 ?>
 </tr>
@@ -145,7 +156,7 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 <!--  $list['text'] : 修正する 文 本文を 出力                                 -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
-<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<script type="text/javascript" src="http://j2k.naver.com/j2k_script.php/korean/EUC-KR/oops.org/z/theme/common/textarea.js"></script>
 <textarea id="epost" class="resizable" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></TEXTAREa>
 <!--  =============================== 文内容 ===============================  -->
 
@@ -155,7 +166,7 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 
 <!--  ====================================================================  -->
 <!--  $wrap['ment']     : textarea に wrap これ hard 街 ない 場合 警告 メッセージ -->
-<!--  $table.$page      : リストに 帰る リンクに 必要な 変数たち            -->
+<!--  $table.$page      : リストで 帰る リンクに 必要な 変数たち            -->
 <!--  $print['passform']: 修正した 文 登録するのに 必要な hidden 変数たち         -->
 <!--  $orig_option      : 書き込み 窓 調節の時 元々 大きさで 帰る オプション        -->
 <!--  ====================================================================  -->
@@ -164,8 +175,9 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="登録">
-<input type="button" value="再び" onclick="document.location.reload(); return true;">
-<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト">
-<input type="button" onclick="history.back()" value="以前">
+<input type="button" value="再び" onclick="document.location.reload(); return false;">
+<input type="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト">
+<input type="button" onClick="history.back()" value="以前">
 </td></tr>
 </table>
+</form>

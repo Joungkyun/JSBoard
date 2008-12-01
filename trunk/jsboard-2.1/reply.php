@@ -104,5 +104,6 @@ sql_close($c);
 # Template file À» È£Ãâ
 meta_char_check($print['theme'], 1, 1);
 $bodyType = 'reply';
+require_once 'captcha/captchacommon.php';
 include "theme/{$print['theme']}/index.template";
 ?>

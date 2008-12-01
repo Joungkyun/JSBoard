@@ -11,6 +11,7 @@ Version 2.1.0
 Tue, Dec  2 2008
 by JoungKyun.Kim
 	- changed resize function of textarea
+	- support captcha. See also doc/en/README.CAPTCHA
 
 Tue, Aug 26 2008
 by JoungKyun.Kim

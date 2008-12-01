@@ -61,5 +61,6 @@ if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode']) && $_SESSION[$j
 
 meta_char_check($print['theme'], 1, 1);
 $bodyType = 'write';
+require_once 'captcha/captchacommon.php';
 require_once "theme/{$print['theme']}/index.template";
 ?>

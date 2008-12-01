@@ -25,7 +25,7 @@
 <td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
 <td rowspan=9 width=4 bgcolor="#6d7bc9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=''></td>
 <td rowspan=9 width=10><img src="images/blank.gif" width=10 height=1 border=0 alt=''></td>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''><br></td>
+<td colspan=4><img src="images/blank.gif" width=1 height=3 border=0 alt=''><br></td>
 <td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
 </tr>
 
@@ -35,7 +35,7 @@
 <!-- ==================================================================== -->
 <tr>
 <td width=80>Name</td>
-<td><input type="text" id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist[name]?>"<?=$disable?>></td>
+<td colspan=3><input type="text" id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist[name]?>"<?=$disable?>></td>
 </tr>
 
 <!-- ==================================================================== -->
@@ -44,14 +44,11 @@
 <!-- ==================================================================== -->
 <?
 if($view['email']) {
-  echo <<<EOF
-
+  echo "
 <tr>
 <td>Email</td>
-<td><input type="text" name="email" name="atc[email]" size={$size['name']} maxlength=255 value="{$pre_regist['email']}"$disable></td>
-</tr>
-
-EOF;
+<td colspan=3><input type=\"text\" id=\"email\" name=\"atc[email]\" size={$size['name']} maxlength=255 value=\"{$pre_regist['email']}\"$disable></td>
+</tr>\n";
 }
 ?>
 
@@ -61,14 +58,11 @@ EOF;
 <!-- ==================================================================== -->
 <?
 if($view['url']) {
-  echo <<<EOF
-
+  echo "
 <tr>
 <td>Homepage</td>
-<td><input type="text" id="url" name="atc[url]" size={$size['name']} maxlength=255 value="{$pre_regist['url']}"$disable></td>
-</tr>
-
-EOF;
+<td colspan=3><input type=\"text\" id=\"url\" name=\"atc[url]\" size={$size['name']} maxlength=255 value=\"{$pre_regist['url']}\"$disable></td>
+</tr>\n";
 }
 ?>
 
@@ -78,7 +72,7 @@ EOF;
 <!-- ==================================================================== -->
 <tr>
 <td>HTML</td>
-<td>
+<td colspan=3>
 <input type="radio" name="atc[html]" value=1<?=$html_chk_ok?>> Yes
 <input type="radio" name="atc[html]" value=0<?=$html_chk_no?>> No
 </td>
@@ -91,7 +85,7 @@ EOF;
 if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
   echo "<tr>\n".
        "<td>파일</td>\n".
-       "<td>\n".
+       "<td colspan=3>\n".
        "<input type=\"hidden\" name=\"max_file_size\" value=\"{$upload['maxsize']}\">\n".
        "<input type=\"file\" name=\"userfile\" size={$size['uplo']} maxlength=256>\n".
        "</td>\n".
@@ -99,7 +93,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 } elseif(!$upload['yesno'] && $cupload['yesno']) {
   echo "<tr>\n".
        "<td>파일</td>\n".
-       "<td><font class=\"attachfn_m\">" . $_('upload') . "<font></td>\n".
+       "<td colspan=3><font class=\"attachfn_m\">" . $_('upload') . "<font></td>\n".
        "</tr>\n";
 }
 ?>
@@ -111,7 +105,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!-- ==================================================================== -->
 <tr>
 <td>Subject</td>
-<td><input type="text" id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100 value="<?="Re$reti: {$list['title']}"?>"></td>
+<td colspan=3><input type="text" id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100 value="<?="Re$reti: {$list['title']}"?>"></td>
 </tr>
 
 <tr>
@@ -120,17 +114,18 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!-- if IE and NS6 case, print textarea size operation button             -->
 <!-- ==================================================================== -->
 <?
-if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
-  echo "<td>Password</td>\n".
-       "<td>\n".
+if(preg_match("/^[04]$/",$board['mode']) && !$board['super']) {
+  echo "<td valign=\"top\">Password</td>\n".
+       "<td valign=\"top\"{$pcaptcharcolspan}>\n".
        "<input type=\"password\" id=\"passwd\" name=\"atc[passwd]\" size={$size['pass']} maxlength=16 class=\"passwdbox\">\n".
+       "{$pcaptcha}\n" .
        "</td>\n";
 }
 ?>
 </tr>
 
 <tr>
-<td colspan=2><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
+<td colspan=4><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
 </tr>
 </table>
 
@@ -166,7 +161,7 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="Regist">
-<input type="button" value="Reset" onclick="document.location.reload(); return false;"><?=$orig_button?>
+<input type="button" value="Reset" onclick="document.location.reload(); return true;"><?=$orig_button?>
 <input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="List">
 <input type="button" onclick="history.back()" value="Back">
 </td></tr>
