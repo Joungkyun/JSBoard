@@ -16,7 +16,19 @@ BODY,TD {font-size:12px;font-family:tahoma;color:#555555;}
 A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
 A:hover {text-decoration:underline; color:#555555}
 INPUT {font: 11px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; padding-right:1px; background-color:#FFFFFF; }
-TEXTAREA {font: 13px comic; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; background-Color:#ffffff;}
+TEXTAREA {font: 13px comic; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; background-Color:#ffffff; width: 100%; height: 150px;}
+.resizable-textarea .grippie {
+  height: 14px;
+  background: #ECE9D6 url(img/grippie.png) no-repeat 100% 100%;
+  border: 1px solid #DFDBCA;
+  border-top-width: 0;
+  cursor: se-resize;
+}
+
+.resizable-textarea {
+  width: 100% !important;
+  width: 98%; /* for IE */
+}
 form { display: inline; }
 
 <?=$user_stylesheet?>
@@ -170,15 +182,7 @@ if(eregi("^(0|4)$",$board['mode']) && !$board['super']) {
 <TD><B>Password</B></TD>
 <TD>
 <INPUT TYPE=password NAME="atc[passwd]" SIZE={$size['pass']} MAXLENGTH=16>
-<IMG SRC="./images/blank.gif" WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>
-TextSize Operation {$print['operate']}
-</TD>\n
-EOF;
-} else {
-  echo <<<EOF
-<TD COLSPAN=2 ALIGN=right>
-TextSize Operation {$print['operate']}
-</TD>\n
+</TD>
 EOF;
 }
 ?>
@@ -200,6 +204,7 @@ EOF;
 <!-- $text_area  : print textared field for reply                         -->
 <!-- ==================================================================== -->
 <!-- =============================== Contents =============================== -->
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
 <?=$text_area?>
 
 <!-- =============================== Contents =============================== -->
@@ -219,10 +224,10 @@ EOF;
 <TR><TD ALIGN=right><?=$wrap['ment']?></TD></TR>
 <TR><TD BGCOLOR="#FFAE00" ALIGN=CENTER>
 <?=$print['passform']?>
-<INPUT TYPE=submit VALUE="Regist">
-<INPUT TYPE=reset VALUE="Reset"<?=$orig_option?>><?=$orig_button?>
-<INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List">
-<INPUT TYPE=button onClick="history.back()" VALUE="Back">
+<INPUT TYPE="submit" VALUE="Regist">
+<INPUT TYPE="button" VALUE="Reset"onClick="document.location.reload(); return false;"><?=$orig_button?>
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List">
+<INPUT TYPE="button" onClick="history.back()" VALUE="Back">
 </TD></TR>
 </TABLE>
 

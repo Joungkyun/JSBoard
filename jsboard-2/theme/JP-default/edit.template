@@ -43,6 +43,21 @@ textarea {
   border-color: #555555;
   padding-left: 1px;
   background-Color: #ffffff;
+  width: 100%;
+  height: 150px;
+}
+
+.resizable-textarea .grippie {
+  height: 14px;
+  background: #ECE9D6 url(img/grippie.png) no-repeat 100% 100%;
+  border: 1px solid #DFDBCA;
+  border-top-width: 0;
+  cursor: se-resize;
+}
+
+.resizable-textarea {
+  width: 100% !important;
+  width: 98%; /* for IE */
 }
 form { display: inline; }
 
@@ -203,15 +218,7 @@ if(eregi("^(0|4|6)$",$board['mode']) && !$board['super']) {
 <TD><B>Password</B></TD>
 <TD>
 $passment
-<IMG SRC="./images/blank.gif" WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>
-TextSize Operation {$print['operate']}
-</TD>\n
-EOF;
-} else {
-  echo <<<EOF
-<TD COLSPAN=2 ALIGN="right">
-TextSize Operation {$print['operate']}
-</TD>\n
+</TD>
 EOF;
 }
 ?>
@@ -235,7 +242,8 @@ EOF;
 <!-- $list['text'] : print content of original content for modified       -->
 <!-- ==================================================================== -->
 <!-- =============================== Contents =============================== -->
-<TEXTAREA NAME="epost" <?=$wrap['op']?> ROWS=10 COLS="<?=$size['text']?>"><?="{$list['text']}\n\n"?></TEXTAREA>
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<TEXTAREA NAME="epost" CLASS="resizable" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></TEXTAREA>
 <!-- =============================== Contents =============================== -->
 
 </TD></TR>
@@ -253,7 +261,7 @@ EOF;
 <TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <?=$print['passform']?>
 <INPUT TYPE="submit" VALUE="Modify">
-<INPUT TYPE="reset" VALUE="Reset"<?=$orig_option?>>
+<INPUT TYPE="button" VALUE="Reset"onClick="document.location.reload(); return false;">
 <INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List">
 <INPUT TYPE="button" onClick="history.back()" VALUE="Back">
 </TD></TR>
