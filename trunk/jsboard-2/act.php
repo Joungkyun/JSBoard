@@ -26,7 +26,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
 
   # captcha authenication
   function check_captcha ($atc) {
-    global $board, $_;
+    global $board, $langs;
 
     if ( $board['super'] || $board['adm'] )
       return;
@@ -43,10 +43,10 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       return;
 
     if ( ! $atc['ckey'] || ! $atc['ckeyv'] )
-      print_error ($_('captnokey'),250,150,1);
+      print_error ($langs['captnokey'],250,150,1);
 
     if ( $capt->check ($atc['ckey'], $atc['ckeyv']) === false )
-      print_error ($_('captinvalid'),250,150,1);
+      print_error ($langs['captinvalid'],250,150,1);
   }
 
   # 게시물 작성 함수
@@ -156,7 +156,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
 
     # referer 의 글 번호와 부모글의 번호가 다를 경우 스팸 처리
     if ( $atc['reno'] != $referer['no'] )
-      print_error($_('act_s'),250,150,1);
+      print_error($langs['act_s'],250,150,1);
 
     # 답장글에 대한 정보를 가져옴
     sql_query("LOCK TABLES $table WRITE");
