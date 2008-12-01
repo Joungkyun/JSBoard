@@ -202,31 +202,31 @@ function get_page_info($count, $page = 0) {
     # 보통 글 수를 페이지 당 글 수로 나누어 전체 페이지를 구함
     # 나눈 값은 정수형으로 변환하며 정확히 나누어 떨어지지 않으면 1을 더함
     if($count['all'] % $board['perno'])
-	$pages['all'] = intval($count['all'] / $board['perno']) + 1;
+      $pages['all'] = intval($count['all'] / $board['perno']) + 1;
     else
-	$pages['all'] = intval($count['all'] / $board['perno']);
+      $pages['all'] = intval($count['all'] / $board['perno']);
 
     # $page 값이 있으면 그 값을 $pages['cur'] 값으로 대입함
     if($page)
-	$pages['cur'] = $page;
+      $pages['cur'] = $page;
 
     # $pages['cur'] 값이 없으면 1로 대입함
     if(!$pages['cur'])
-	$pages['cur'] = 1;
+      $pages['cur'] = 1;
     # $pages['cur'] 값이 전체 페이지 수보다 클 경우 전체 페이지 값을 대입함
     if($pages['cur'] > $pages['all'])
-	$pages['cur'] = $pages['all'];
+      $pages['cur'] = $pages['all'];
 
     # $pages['no'] 값이 없으면 $pages['cur'] 값을 참고하여 대입함. 목록에서
     # 불러올 글의 시작 번호로 사용됨
     if(!$pages['no'])
-	$pages['no'] = ($pages['cur'] - 1) * $board['perno'];
+      $pages['no'] = ($pages['cur'] - 1) * $board['perno'];
 
     # $pages['cur'] 값에 따라 이전(pre), 다음(nex) 페이지 값을 대입함
     if($pages['cur'] > 1)
-	$pages['pre'] = $pages['cur'] - 1;
+      $pages['pre'] = $pages['cur'] - 1;
     if($pages['cur'] < $pages['all'])
-	$pages['nex'] = $pages['cur'] + 1;
+      $pages['nex'] = $pages['cur'] + 1;
 
     return $pages;
 }
@@ -451,7 +451,7 @@ function viewfile($tail) {
 
       $p['down'] = "$source1$view$source2";
     } elseif (preg_match("/^(mid|wav|mp3)$/i",$tail)) {
-      if($tail == "mp3") {
+      if($tail == 'mp3') {
         $p['up'] = <<<EOF
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
         codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0"
@@ -468,8 +468,8 @@ function viewfile($tail) {
          pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>
 </object>
 EOF;
-	  } elseif($agent['tx'])
-        $p['bo'] = "";
+      } elseif($agent['tx'])
+        $p['bo'] = '';
       else
         $p['bo'] = "<embed src=\"$upload_file\" autostart=\"true\" hidden=\"true\" mastersound>";
     } elseif (preg_match("/^(mpeg|mpg|asf|dat|avi|wmv)$/i",$tail)) {
@@ -578,7 +578,7 @@ function content_disposition ($n) {
       break;
     case 'Opera' ;
       if ($agent['vr'] > 6)
-       $r = 'filename*0*' . $_code . '*' . $_('charset') . '*=' . rawurlencode ($n);
+        $r = 'filename*0*' . $_code . '*' . $_('charset') . '*=' . rawurlencode ($n);
       else
         $r = 'filename="' . $n . '"';
       break;
