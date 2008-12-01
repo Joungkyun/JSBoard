@@ -131,7 +131,7 @@ function get_agent() {
     # Mozilla 와의 공통 정보
     $agent['co'] = 'mozilla';
 
-	if ( $agent['vr'] == 6 ) $agent['nco'] = 'moz';
+    if ( $agent['vr'] == 6 ) $agent['nco'] = 'moz';
   } else if(preg_match('/^Opera/', $agent_env)) {
     $agent['br'] = 'OPERA';
     # 언어 정보
@@ -198,31 +198,31 @@ function get_page_info($count, $page = 0) {
     # 보통 글 수를 페이지 당 글 수로 나누어 전체 페이지를 구함
     # 나눈 값은 정수형으로 변환하며 정확히 나누어 떨어지지 않으면 1을 더함
     if($count['all'] % $board['perno'])
-	$pages['all'] = intval($count['all'] / $board['perno']) + 1;
+      $pages['all'] = intval($count['all'] / $board['perno']) + 1;
     else
-	$pages['all'] = intval($count['all'] / $board['perno']);
+      $pages['all'] = intval($count['all'] / $board['perno']);
 
     # $page 값이 있으면 그 값을 $pages['cur'] 값으로 대입함
     if($page)
-	$pages['cur'] = $page;
+      $pages['cur'] = $page;
 
     # $pages['cur'] 값이 없으면 1로 대입함
     if(!$pages['cur'])
-	$pages['cur'] = 1;
+      $pages['cur'] = 1;
     # $pages['cur'] 값이 전체 페이지 수보다 클 경우 전체 페이지 값을 대입함
     if($pages['cur'] > $pages['all'])
-	$pages['cur'] = $pages['all'];
+      $pages['cur'] = $pages['all'];
 
     # $pages['no'] 값이 없으면 $pages['cur'] 값을 참고하여 대입함. 목록에서
     # 불러올 글의 시작 번호로 사용됨
     if(!$pages['no'])
-	$pages['no'] = ($pages['cur'] - 1) * $board['perno'];
+      $pages['no'] = ($pages['cur'] - 1) * $board['perno'];
 
     # $pages['cur'] 값에 따라 이전(pre), 다음(nex) 페이지 값을 대입함
     if($pages['cur'] > 1)
-	$pages['pre'] = $pages['cur'] - 1;
+      $pages['pre'] = $pages['cur'] - 1;
     if($pages['cur'] < $pages['all'])
-	$pages['nex'] = $pages['cur'] + 1;
+      $pages['nex'] = $pages['cur'] + 1;
 
     return $pages;
 }
@@ -267,21 +267,21 @@ function get_pos($table, $idx) {
     $pos['next'] = sql_result($result, 0, "idx");
     sql_free_result($result);
     if($pos['next']) { 
-	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['next']}'");
-	$next   = sql_fetch_array($result);
-	sql_free_result($result);
+      $result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['next']}'");
+      $next   = sql_fetch_array($result);
+      sql_free_result($result);
         $next['title'] = str_replace("&amp;","&",$next['title']);
-	$next['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($next['title']));
+      $next['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($next['title']));
 
-	$pos['next'] = $next['no'];
-	if($next['reto']) {
-	    $result    = sql_query("SELECT num FROM $table WHERE no = '{$next['reto']}'");
-	    $next['num'] = sql_result($result, 0, "num");
-	    sql_free_result($result);
-	    $pos['next_t'] = "Reply of No.{$next['num']}: {$next['title']}";
-	} else {
-	    $pos['next_t'] = "No.{$next['num']}: {$next['title']}";
-	}
+      $pos['next'] = $next['no'];
+      if($next['reto']) {
+        $result    = sql_query("SELECT num FROM $table WHERE no = '{$next['reto']}'");
+        $next['num'] = sql_result($result, 0, "num");
+        sql_free_result($result);
+        $pos['next_t'] = "Reply of No.{$next['num']}: {$next['title']}";
+      } else {
+        $pos['next_t'] = "No.{$next['num']}: {$next['title']}";
+      }
     }
 
     # 지정된 글의 idx보다 큰 번호를 가진 글 중에 idx가 가장 작은 글 (이전글)
@@ -290,21 +290,21 @@ function get_pos($table, $idx) {
     $pos['prev'] = sql_result($result, 0, "idx");
     sql_free_result($result);
     if($pos['prev']) { 
-	$result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['prev']}'");
-	$prev   = sql_fetch_array($result);
-	sql_free_result($result);
+      $result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['prev']}'");
+      $prev   = sql_fetch_array($result);
+      sql_free_result($result);
         $prev['title'] = str_replace("&amp;","&",$prev['title']);
-	$prev['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($prev['title']));
+      $prev['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($prev['title']));
 
-	$pos['prev'] = $prev['no'];
-	if($prev['reto']) {
-	    $result    = sql_query("SELECT num FROM $table WHERE no = '{$prev['reto']}'");
-	    $prev['num'] = sql_result($result, 0, "num");
-	    sql_free_result($result);
-	    $pos['prev_t'] = "Reply of No.{$prev['num']}: {$prev['title']}";
-	} else {
-	    $pos['prev_t'] = "No.{$prev['num']}: {$prev['title']}";
-	}
+      $pos['prev'] = $prev['no'];
+      if($prev['reto']) {
+        $result    = sql_query("SELECT num FROM $table WHERE no = '{$prev['reto']}'");
+        $prev['num'] = sql_result($result, 0, "num");
+        sql_free_result($result);
+        $pos['prev_t'] = "Reply of No.{$prev['num']}: {$prev['title']}";
+      } else {
+        $pos['prev_t'] = "No.{$prev['num']}: {$prev['title']}";
+      }
     }
 
     return $pos;
@@ -455,8 +455,8 @@ function viewfile($tail) {
          pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>
 </object>
 EOF;
-	  } elseif($agent['tx'])
-        $p['bo'] = "";
+      } elseif($agent['tx'])
+        $p['bo'] = '';
       else
         $p['bo'] = "<embed src=\"$upload_file\" autostart=\"true\" hidden=\"true\" mastersound>";
     } elseif (preg_match("/^(mpeg|mpg|asf|dat|avi|wmv)$/i",$tail)) {
@@ -559,7 +559,7 @@ function content_disposition ($n) {
       break;
     case 'Opera' ;
       if ($agent['vr'] > 6)
-       $r = 'filename*0*' . $langs['code'] . '*' . $langs['charset'] . '*=' . rawurlencode ($n);
+        $r = 'filename*0*' . $langs['code'] . '*' . $langs['charset'] . '*=' . rawurlencode ($n);
       else
         $r = 'filename="' . $n . '"';
       break;
