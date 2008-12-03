@@ -206,7 +206,7 @@ if((!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1) {
 <TD VALIGN="top"{$pcaptcharcolspan}>
 <INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16 STYLE="font:10px tahoma,sans-serif;">
 {$pcaptcha}
-</TD>\n
+</TD>
 EOF;
 }
 ?>
