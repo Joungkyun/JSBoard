@@ -268,7 +268,7 @@ $langs['spamer_m'] = "SPAMMER LISTには 文内容中 入って あれば 拒否する 単語を た
 
 # ADMIN
 $langs['a_reset'] = "パスワード 初期化";
-$langs['sql_na'] = "<p><font color=\"#ff0000\"><b>DB 連結に 失敗しました!<p>\njsboard/config/global.phで db server, db user, db passwordを<br>\n確認して ください\n 以上が なければ MySQL路 root義 権限で ログインを<br>\n真書 flush privileges 命令を 行ってください</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 帰ること ]</a><p>\n Copyleft 1999-2001 <a target=_top href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.org/'>JSBoard Open Project</a>";
+$langs['sql_na'] = "<p><font color=\"#ff0000\"><b>DB 連結に 失敗しました!<p>\njsboard/config/global.phで db server, db user, db passwordを<br>\n確認して ください\n 以上が なければ MySQL路 root義 権限で ログインを<br>\n真書 flush privileges 命令を 行ってください</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 帰ること ]</a><p>\n Copyleft 1999-2001 <a target=_top href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.net/'>JSBoard Open Project</a>";
 
 $langs['a_t1'] = "掲示板 名前";
 $langs['a_t2'] = "掲示物 登録数";
@@ -332,7 +332,7 @@ $langs['pcheck'] = "設置を 夏期 前に 先に jsboard/INSTALLER/scriptで\npreinstall
 $langs['auser'] = "設置に 一度 失敗したら doc/ko/INSTALL.MANUALY を 見て 受動で 設置すると します.";
 
 $langs['inst_r'] = "初期化";
-$langs['inst_sql_err'] = "<p><font color=\"#ff0000\"><b>DB 連結に 失敗しました!<p>\nMySQL Root passwordを<br>\n確認して ください\n</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 帰ること ]</a><p>\n Copyleft 1999-2001 <a href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.org/' target=_blank>JSBoard Open Project</a>"; 
+$langs['inst_sql_err'] = "<p><font color=\"#ff0000\"><b>DB 連結に 失敗しました!<p>\nMySQL Root passwordを<br>\n確認して ください\n</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 帰ること ]</a><p>\n Copyleft 1999-2001 <a href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.net/' target=_blank>JSBoard Open Project</a>"; 
 $langs['inst_chk_varp'] = "DBで 使う パスワードを 指定するの なかったです.";
 $langs['inst_chk_varn'] = "DBで DB 名前を 指定するの なかったです.";
 $langs['inst_chk_varu'] = "DBで DB userを 指定するの なかったです.";

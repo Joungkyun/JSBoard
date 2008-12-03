@@ -222,8 +222,8 @@ if($db['name'] && !$table) {
          "<input type='hidden' name='mode' value='db_create'>\n".
          "<input type='hidden' name='ts' value='$ts'>\n".
          "</td></form>\n\n".
-         "<td rowspan=2 align=center>\n".
-         "<a href=http://jsboard.kldp.org TARGET=_blank>".
+         "<td rowspan=2 align=\"center\">\n".
+         "<a href=\"http://jsboard.kldp.net\" TARGET=\"_blank\">".
          "<font STYLE=\"font: 12px tahoma; color:{$color['m_fg']}\">Powered By<BR>JSBoard OPEN PROJECT</font></a>\n".
          "</td>\n</tr>\n\n".
          "<tr bgcolor={$color['m_bg']}><form name='del_db' method='post' action='act.php'>\n".
@@ -234,7 +234,7 @@ if($db['name'] && !$table) {
          "<input type='hidden' name='ts' value='$ts'>\n".
          "</td></form>\n</tr>\n\n".
          "<tr bgcolor={$color['d_bg']}>\n".
-         "<td colspan=3 align=center>\n";
+         "<td colspan=3 align=\"center\">\n";
   }
 
   $total  = $tbl_num;
@@ -369,7 +369,7 @@ mysql_close();
 
 echo "<br>";
 echo "\n</td></tr>\n</table>\n";
-if($agent['tx']) echo "Powered By <A HREF=http://jsboard.kldp.org/>JSBoard Open Project</A>\n";
+if($agent['tx']) echo "Powered By <A HREF=\"http://jsboard.kldp.net/\">JSBoard Open Project</A>\n";
 
 htmltail();
 ?>

@@ -66,7 +66,7 @@ if (!$mode) {
   if ($langs['code'] == "ko") $agreefile = "../COPYING.ko";
   else $agreefile = "../COPYING";
 
-  $agree_ment = preg_replace("/(http:\/\/jsboard.kldp.org)/i","<a href=\\1 target=_blank>\\1</a>",$agree_ment);
+  $agree_ment = preg_replace("/(http:\/\/jsboard.kldp.net)/i","<a href=\\1 target=_blank>\\1</a>",$agree_ment);
 
   echo "<form name=auth method=POST action=auth.php>\n" .
        "<table width=500 border=0 cellpadding=5>\n" .
@@ -230,7 +230,7 @@ if (!$mode) {
 } else echo "<font size=+4><b> ^0^ </b></font>\n\n";
 
 echo "\n<p>\n<FONT STYLE=\"color:#555555;font: 12px tahoma;\">Copyleft 1999-$copydate by " .
-     "<a href=http://jsboard.kldp.org target=_blank>JSBoard Open Project<a/></FONT>\n" .
+     "<a href=\"http://jsboard.kldp.net\" target=\"_blank\">JSBoard Open Project<a/></FONT>\n" .
      "\n</td></tr>\n</table>\n\n".
      "</BODY>\n</HTML>";
 ?>

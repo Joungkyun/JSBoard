@@ -668,7 +668,7 @@ function print_license() {
          "<TR><TD ALIGN=\"right\" STYLE=\"overflow: hidden; white-space: nowrap\">\n".
          "<FONT STYLE=\"font: 12px tahoma,sans-serif;color:{$color['text']}\">\n".
          "<A STYLE=\"color:{$color['text']}\" HREF=\"$gpl_link\" TARGET=\"_blank\">Copyleft</A> 1999-".date("Y")."\nby ".
-         "<A STYLE=\"color:{$color['text']};font-weight:bold\" HREF=\"http://jsboard.kldp.org\" TARGET=\"_blank\">".
+         "<A STYLE=\"color:{$color['text']};font-weight:bold\" HREF=\"http://jsboard.kldp.net\" TARGET=\"_blank\">".
          "JSBoard Open Project</A><BR>\n".
          "Theme Designed by ".
          "<A STYLE=\"color:{$color['text']};font-weight:bold\" HREF=\"{$designer['url']}\" TARGET=\"_blank\">".

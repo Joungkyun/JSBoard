@@ -362,7 +362,7 @@ windows.
     $print[theme]    = "EN-default";
 
     setting up the themes. The default is EN-default. If you want to get more 
-    english themes, visit http://jsboard.kldp.org/gallery/index.php?table=gallery
+    english themes, visit http://kldp.net/frs/?group_id=148
     and download EN-themename.tar.gz file. Installl the package by decompressing it 
     in jsboard/theme directory.
 

@@ -853,7 +853,7 @@ else echo "<CENTER><FONT COLOR=RED><B>{$langs['ua_while_wn']}</B></FONT></CENTER
 </TD></TR>
 
 <TR><TD BGCOLOR=<?=$color['t_bg']?> ALIGN=center COLSPAN=6>
-<font class=TCOLOR>Scripted by <a href=http://jsboard.kldp.org TARGET=_blank>JSBoard Open Project</a><BR>
+<font class=TCOLOR>Scripted by <a href=http://jsboard.kldp.net TARGET=_blank>JSBoard Open Project</a><BR>
 and all rights follow GPL2 License</font>
 </TD></TR>
 
