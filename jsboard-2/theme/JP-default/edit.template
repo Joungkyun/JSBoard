@@ -49,7 +49,7 @@ textarea {
 
 .resizable-textarea .grippie {
   height: 14px;
-  background: #ECE9D6 url(img/grippie.png) no-repeat 100% 100%;
+  background: #ECE9D6 url(theme/EN-default/img/grippie.png) no-repeat 100% 100%;
   border: 1px solid #DFDBCA;
   border-top-width: 0;
   cursor: se-resize;
