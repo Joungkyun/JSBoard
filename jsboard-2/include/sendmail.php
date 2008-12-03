@@ -336,7 +336,7 @@ function sendmail($rmail) {
              "HTTP_ACCEPT_LANGUAGE : {$_SERVER['HTTP_ACCEPT_LANGUAGE']}\r\n".
              "---------------------------------------------------------------------------\r\n".
              "\r\n".
-             "JSBoard Form mail service - http://jsboard.kldp.org\r\n";
+             "JSBoard Form mail service - http://jsboard.kldp.net\r\n";
 
   $htmltext = get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm);
 

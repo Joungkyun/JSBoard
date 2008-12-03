@@ -231,7 +231,7 @@ display_stat($stat,$langs['st_ltot']);
 
 echo "\n<br>\n</td></tr>\n\n".
      "<tr align=center><td bgcolor={$color['t_bg']}>\n<font color={$color['t_fg']}>\n".
-     "Copyright by <a href=http://jsboard.kldp.org><font color={$color['t_fg']}>JSBoard Open Project</font></a><br>\n".
+     "Copyright by <a href=http://jsboard.kldp.net><font color={$color['t_fg']}>JSBoard Open Project</font></a><br>\n".
      "and all right reserved\n</font>\n</td></tr>\n</table>\n";
 
 require("include/html_atail.php");

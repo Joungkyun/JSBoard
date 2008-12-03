@@ -7,7 +7,7 @@
 #  Windows Version      : 최기수 <choiks at nuri.net>
 #
 #  서버및 회선 제공     : http://www.adwars.com
-#  Special Thanks       : 권순선 <http://www.kldp.org>
+#  Special Thanks       : 권순선 <http://kldp.org>
 #                       : 임은재 <eunjea at kldp.org>
 #                       : 차경묵 <dimanche at dimanche.co.kr>
 #                       : 방창현 <winchild at kldp.org>
@@ -681,6 +681,6 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
 
 6. Bug report
 
-  버그를 발견할 경우에는 http://jsboard.kldp.org/bbs/list.php?table=bbs_upgrade
+  버그를 발견할 경우에는 http://kldp.net/tracker/?atid=100148&group_id=148&func=browse
   에 리포팅을 해 주면 감사하겠다
 

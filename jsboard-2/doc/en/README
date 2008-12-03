@@ -8,7 +8,7 @@ GPL2. Joungkyun Kim is maintaining its development version and Unix-like system
 versions and Kisu Choi is the maintainer of its win32 version. Other contributers
 are listed in CREDIT file.
 
-Our project is located in http://jsboard.kldp.org
+Our project is located in http://jsboard.kldp.net
 
 
 
@@ -42,9 +42,6 @@ NOTES
 JSBoard v2.x requires PHP 4.1.x or later since it uses codes that available 
 on PHP 4.1.0. 
 
-Win32 version of the board is distributed separately. You can obtain it from 
-http://jsboard.kldp.org/download.php.
-
 
 
 INSTALLATION
@@ -64,7 +61,6 @@ from developers.
 
 LICENSE
 
-JSBoard follows GPL2 License. But OOPS Administartion Center is not GPL License.
-See also admin/License.
+JSBoard follows GPL2 License.
 
-Sep  4 2001 JoungKyun Kim <http://www.oops.org>
+Sep  4 2001 JoungKyun Kim <http://oops.org>

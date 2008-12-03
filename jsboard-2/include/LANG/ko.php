@@ -268,7 +268,7 @@ $langs['spamer_m'] = "SPAMMER LIST에는 글내용중 들어 있으면 거부할 단어를 한 줄�
 
 # ADMIN
 $langs['a_reset'] = "패스워드 초기화";
-$langs['sql_na'] = "<p><font color=\"#ff0000\"><b>DB 연결에 실패했습니다!<p>\njsboard/config/global.ph에서 db server, db user, db password를<br>\n확인해 주십시오\n 이상이 없다면 MySQL로 root의 권한으로 로그인을<br>\n해서 flush privileges 명령을 실행하십시오</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 돌아가기 ]</a><p>\n Copyleft 1999-2001 <a href=\"http://jsboard.kldp.org/\">JSBoard Open Project</a>";
+$langs['sql_na'] = "<p><font color=\"#ff0000\"><b>DB 연결에 실패했습니다!<p>\njsboard/config/global.ph에서 db server, db user, db password를<br>\n확인해 주십시오\n 이상이 없다면 MySQL로 root의 권한으로 로그인을<br>\n해서 flush privileges 명령을 실행하십시오</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 돌아가기 ]</a><p>\n Copyleft 1999-2008 <a href=\"http://jsboard.kldp.net/\">JSBoard Open Project</a>";
 
 $langs['a_t1'] = "게시판 이름";
 $langs['a_t2'] = "게시물 등록수";
@@ -332,7 +332,7 @@ $langs['pcheck'] = "설치를 하기 전에 먼저 jsboard/INSTALLER/script에서\npreinsta
 $langs['auser'] = "설치에 한번 실패하셨다면 doc/ko/INSTALL.MANUALY 를 보시고 수동으로 설치하셔야 합니다.";
 
 $langs['inst_r'] = "초기화";
-$langs['inst_sql_err'] = "<p><font color=\"#ff0000\"><b>DB 연결에 실패했습니다!<p>\nMySQL Root password를<br>\n확인해 주십시오\n</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 돌아가기 ]</a><p>\n Copyleft 1999-2001 <a href=\"http://jsboard.kldp.org/\" target=_blank>JSBoard Open Project</a>"; 
+$langs['inst_sql_err'] = "<p><font color=\"#ff0000\"><b>DB 연결에 실패했습니다!<p>\nMySQL Root password를<br>\n확인해 주십시오\n</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 돌아가기 ]</a><p>\n Copyleft 1999-2008 <a href=\"http://jsboard.kldp.net/\" target=_blank>JSBoard Open Project</a>"; 
 $langs['inst_chk_varp'] = "DB에서 사용할 패스워드를 지정하지 않았습니다.";
 $langs['inst_chk_varn'] = "DB에서 DB 이름을 지정하지 않았습니다.";
 $langs['inst_chk_varu'] = "DB에서 DB user를 지정하지 않았습니다.";
