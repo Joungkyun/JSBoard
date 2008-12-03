@@ -114,10 +114,10 @@ if(strtoupper($color['bgcol']) == strtoupper($color['l4_bg']) && preg_match("/li
 $rmail['chars'] = !$rmail['chars'] ? "__at__" : $rmail['chars'];
 
 # 라이센스 출력 관련 설정
-$gpl_link = "http://jsboard.kldp.org/ext.php?l=gpl2_en";
+$gpl_link = "http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt";
 switch ($designer['license']) {
   case '0' :
-    $designer['license'] = " And follow <A HREF=$gpl_link TARGET=_blank>GPL2</A>";
+    $designer['license'] = " And follow <A HREF=\"$gpl_link\" TARGET=\"_blank\">GPL2</A>";
     break;
   case '1' :
     $designer['license'] = " All right reserved";
