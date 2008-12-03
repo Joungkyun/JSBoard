@@ -133,7 +133,7 @@ if($view['email']) {
 <TR>
 <TD>메일</TD>
 <TD COLSPAN=3><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable></TD>
-</TR>\n
+</TR>
 EOF;
 }
 ?>
@@ -149,7 +149,7 @@ if($view['url']) {
 <TR>
 <TD>홈페이지</TD>
 <TD COLSPAN=3><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable></TD>
-</TR>\n
+</TR>
 EOF;
 }
 ?>
@@ -174,7 +174,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
 <INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256>
 </TD>
-</TR>\n
+</TR>
 EOF;
 } elseif(!$upload['yesno'] && $cupload['yesno']) {
   echo <<<EOF
