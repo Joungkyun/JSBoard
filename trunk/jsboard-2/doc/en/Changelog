@@ -18,6 +18,10 @@ file.
 Version   : jsboard 2.0.14
 
 
+Thu, Dec 04 2008
+  by JoungKyun.Kim
+  	- prevent access without referer
+
 Tue, Dec 02 2008
   by JoungKyun.Kim
 	- change resize funtion of textarea
