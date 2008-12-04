@@ -167,3 +167,14 @@ function registCheck() {
 
   return true;
 }
+
+function location_ref(url) {
+  var fakeLink = document.createElement ("a");
+  if (typeof(fakeLink.click) == 'undefined') {
+    location.href = url;  // sends referrer in FF, not in IE
+  } else {
+    fakeLink.href = url;
+    document.body.appendChild(fakeLink);
+    fakeLink.click();   // click() method defined in IE only
+  }
+}

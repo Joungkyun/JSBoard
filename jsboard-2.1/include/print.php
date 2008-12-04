@@ -630,7 +630,7 @@ function print_keymenu($type=0) {
     $ment = "Page";
 
     $precmd = " if (cc == 13) {\n".
-              "    if(strs.length > 0) self.location = 'read.php?table={$table}&num=' + strs + '&page={$page}';\n".
+              "    if(strs.length > 0) location_ref('read.php?table={$table}&num=' + strs + '&page={$page}');\n".
               "    else strs = \"\";\n".
               "  } else";
 
@@ -648,13 +648,13 @@ function print_keymenu($type=0) {
     $ment = "Article";
 
     $anycmd = "else if(ch == 'l' || ch == '.' || ch == 'L') {\n".
-              "    self.location = './list.php?table={$table}&page={$page}';\n".
+              "    location_ref('./list.php?table={$table}&page={$page}');\n".
               "  } else if(ch == 'r' || ch == 'R' || ch == '/') {\n".
-              "    self.location = './reply.php?table={$table}&no={$no}&page={$page}';\n".
+              "    location_ref('./reply.php?table={$table}&no={$no}&page={$page}');\n".
               "  } else if(ch == 'e' || ch == 'E') {\n".
-              "    self.location = './edit.php?table={$table}&no={$no}&page={$page}';\n".
+              "    location_ref('./edit.php?table={$table}&no={$no}&page={$page}');\n".
               "  } else if(ch == 'd' || ch == 'D') {\n".
-              "    self.location = './delete.php?table={$table}&no={$no}&page={$page}';\n".
+              "    location_ref('./delete.php?table={$table}&no={$no}&page={$page}');\n".
               "  } else if(ch == ':' || strs == ':') {\n".
               "    strs = strs + ch;\n".
               "    if(strs == ':q') { self.close(); }\n".
@@ -690,13 +690,13 @@ function print_keymenu($type=0) {
        "  if(e.altKey || e.ctrlKey) return;\n\n".
        
        " ${precmd} if(ch == 'p' || ch == 'P') {\n".
-       "    self.location = './list.php?table=$table&page=1';\n".
+       "    location_ref('./list.php?table=$table&page=1');\n".
        "  } else if(ch == 'n' || ch == 'N' || ch == '+') {\n".
-       "    self.location = '$nlink';\n".
+       "    location_ref('$nlink');\n".
        "  } else if(ch == 'b' || ch == 'B' || ch == '-') {\n".
-       "    self.location = '$plink';\n".
+       "    location_ref('$plink');\n".
        "  } else if(ch == 'w' || ch == 'W' || ch == '*') {\n".
-       "    self.location = './write.php?table=$table&page=$page';\n".
+       "    location_ref('./write.php?table=$table&page=$page');\n".
        "  } $anycmd\n".
        "  return;\n".
        "}\n\n".
