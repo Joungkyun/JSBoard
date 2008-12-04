@@ -103,7 +103,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
-<TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Read <?=$list['num']?> article</FONT></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Read <?=$list['num']?> article</FONT></TD>
 <TD ALIGN="right" VALIGN="bottom"><?=$print['lout']?>&nbsp;<?=$print['admin']?></TD>
 </TR>
 
@@ -199,7 +199,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD>
-<FONT style="font-family:tahoma,sans-serif;font-size:11px;"><?=$print['regist']?></FONT><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
+<FONT style="font-family:tahoma,sans-serif;font-size:11px;"><?=$print['regist']?>&nbsp;</FONT><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
 <TD ALIGN="right"><? read_cmd(0,1) ?></TD>
 </TR>
 </TABLE>

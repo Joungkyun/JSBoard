@@ -34,6 +34,7 @@ input {
   padding-left: 1px;
   padding-right: 1px;
   background-color: #FFFFFF;
+  margin: 1px 1px;
 }
 select {
   font: 11px tahoma,sans-serif;

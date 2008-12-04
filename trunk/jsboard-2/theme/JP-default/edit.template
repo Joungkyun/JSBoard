@@ -34,6 +34,7 @@ input {
   padding-left: 1px;
   padding-right: 1px;
   background-color: #FFFFFF;
+  margin: 1px 1px;
 }
 textarea {
   font: 13px tahoma,sans-serif;
