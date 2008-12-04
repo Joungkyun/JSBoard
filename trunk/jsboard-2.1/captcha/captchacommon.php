@@ -14,7 +14,12 @@ if ( $board['captcha'] ) {
 		return;
     }
 
-	if ( preg_match ('/^[24-7]$/', $board['mode']) ) {
+	if ( preg_match ('/reply\.php$/', $_SERVER['PHP_SELF']) )
+		$pattern = '/^[25-7]$/';
+	else
+		$pattern = '/^[24-7]$/';
+
+	if ( preg_match ($pattern, $board['mode']) ) {
 		$pcaptcharcolspan = ' colspan=3';
 		$capt->disable = true;
 		return;
