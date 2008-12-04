@@ -21,6 +21,7 @@ Version   : jsboard 2.0.14
 Thu, Dec 04 2008
   by JoungKyun.Kim
   	- prevent access without referer
+	- if case board['width'] has '%', fixed broken title on delete page
 
 Tue, Dec 02 2008
   by JoungKyun.Kim
