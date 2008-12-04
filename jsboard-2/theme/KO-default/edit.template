@@ -89,7 +89,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
-<TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Edit article</FONT></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Edit article</FONT></TD>
 </TD>
 </TR>
 
@@ -133,7 +133,7 @@ if($view['email'] || trim($list['email'])) {
 <TR>
 <TD>皋老</TD>
 <TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['email']}"{$disable}></TD>
-</TR>\n
+</TR>
 EOF;
 }
 ?>
@@ -148,7 +148,7 @@ if($view['url'] || trim($list['url'])) {
 <TR>
 <TD>权其捞瘤</TD>
 <TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['url']}"{$disable}></TD>
-</TR>\n
+</TR>
 EOF;
 }
 ?>
@@ -179,7 +179,7 @@ if($list['bofile']) {
 <FONT style="color:{$color['text']}">{$list['bofile']}</FONT></A> - $hfsize &nbsp; &nbsp;
 <INPUT TYPE="CHECKBOX" NAME="atc[fdel]" VALUE=1> 颇老昏力
 </TD>
-</TR>\n
+</TR>
 EOF;
 }
 
@@ -191,7 +191,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
 <INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256>
 </TD>
-</TR>\n
+</TR>
 EOF;
 }
 ?>

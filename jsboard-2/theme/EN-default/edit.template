@@ -34,6 +34,7 @@ input {
   padding-left: 1px;
   padding-right:  1px;
   background-color: #FFFFFF;
+  margin: 1px 1px;
 }
 textarea {
   font: 13px comic,sans-serif;
@@ -88,7 +89,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
-<TD><FONT style="font-size:11px;">&gt;&gt; <B>Edit</B> article</FONT></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;">&gt;&gt; <B>Edit</B> article</FONT></TD>
 </TR>
 
 <TR BGCOLOR="#FFAE00">

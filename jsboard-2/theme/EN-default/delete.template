@@ -78,7 +78,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
-<TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; <B>Delete</B> <?=$list['num']?> article</FONT></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; <B>Delete</B> <?=$list['num']?> article</FONT></TD>
 </TR>
 
 <!-- ==================================================================== -->

@@ -104,7 +104,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
-<TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Read <?=$list['num']?> article</FONT></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Read <?=$list['num']?> article</FONT></TD>
 <TD ALIGN="right" VALIGN="bottom"><?=$print['lout']?>&nbsp;<?=$print['admin']?></TD>
 </TR>
 

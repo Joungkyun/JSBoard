@@ -92,7 +92,7 @@ if(!$np) {
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''>
-<TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#55555;"> &gt;&gt; <?=$print['count']?></FONT></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#55555;"> &gt;&gt; <?=$print['count']?></FONT></TD>
 <TD ALIGN="right" VALIGN="bottom">&nbsp;<?=$print['lout']?><?=$print['admin']?></TD>
 </TR>
 
