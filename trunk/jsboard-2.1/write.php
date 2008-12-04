@@ -1,6 +1,11 @@
 <?php
 include "include/header.php";
 
+if ( ! $_SERVER['HTTP_REFERER'] ) { 
+  header('HTTP/1.1 403 Forbidden');
+  exit;
+}
+
 $board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
 $board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php";
 

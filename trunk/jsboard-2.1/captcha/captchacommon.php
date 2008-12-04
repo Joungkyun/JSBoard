@@ -20,6 +20,7 @@ if ( $board['captcha'] ) {
 		return;
 	}
 
+	$pcaptcharcolspan = ' style="width: 80px;"';
 	$ckey = $capt->captchakey ();
 	$captsize = $size['pass'] * 2;
 

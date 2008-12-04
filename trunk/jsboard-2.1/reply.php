@@ -1,6 +1,11 @@
 <?php
 include "include/header.php";
 
+if ( ! $_SERVER['HTTP_REFERER'] ) { 
+  header('HTTP/1.1 403 Forbidden');
+  exit;
+}
+
 $board['super'] = $board['adm'] ? 1 : $board['super'];
 
 if ( preg_match ('/^(1|3|6|7)$/', $board['mode']) )
