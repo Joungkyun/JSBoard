@@ -25,12 +25,13 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
 
   # captcha authenication
   function check_captcha ($atc) {
-    global $board, $_;
+    global $board, $_, $o;
 
     if ( $board['super'] || $board['adm'] )
       return;
 
-    if ( preg_match ('/^[24-7]$/', $board['mode']) )
+    $pattern = ( $o['at'] == 'reply' ) ? '/^[25-7]/' : '/^[24-7]/';
+    if ( preg_match ($pattern, $board['mode']) )
       return;
 
     if ( ! $board['captcha'] || ! file_exists ('captcha/' . $board['captcha']) )
