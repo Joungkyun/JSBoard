@@ -383,7 +383,7 @@ $langs['reg_attention'] = "<FONT__STYLE=\"font:__20px__tahoma;color:$color[t_bg]
 $langs['nomatch_theme'] = "Theme version conflicts. Check the version information\n".
                         "at doc/en/README.THEME";
 $langs['detable_search_link'] = "Detailed search";
-$langs['captstr'] = "Click right image!";
+$langs['captstr'] = "Click left image!";
 $langs['captnokey'] = "No key for regist article";
 $langs['captinvalid'] = "Invalid access!";
 ?>

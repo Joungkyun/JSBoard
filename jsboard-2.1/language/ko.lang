@@ -174,7 +174,7 @@ $ko['reg_attention'] = "다음은 가입하실 때 주의할 점입니다.\n\n".
 $ko['nomatch_theme'] = "테마 버전이 맞지 않습니다. doc/ko/README.THEME\n".
                        "파일에서 버전에 관한 부분을 참조 하십시오";
 $ko['detable_search_link'] = "상세 검색";
-$ko['captstr'] = "우측의 이미지를 클릭 하십시오";
+$ko['captstr'] = "좌측의 이미지를 클릭 하십시오";
 $ko['captnokey'] = "글 등록을 위한 키가 없습니다.";
 $ko['captinvalid'] = "부정적인 접근입니다.";
 ?>
