@@ -12,6 +12,7 @@
 2008.12.04
 By 김정균
 	- IE 에서 document.location 에서 referer 남지 않는 문제 수정
+	- write/reply 에 referer 없는 접근 막음
 
 2008.12.02
 By 김정균
