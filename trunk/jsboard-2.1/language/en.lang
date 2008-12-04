@@ -170,7 +170,7 @@ $en['reg_attention'] = "<FONT__STYLE=\"font:__20px__tahoma;color:$color[t_bg];fo
 $en['nomatch_theme'] = "Theme version conflicts. Check the version information\n".
                        "at doc/en/README.THEME";
 $en['detable_search_link'] = "Detailed search";
-$en['captstr'] = "Click right image!";
+$en['captstr'] = "Click left image!";
 $en['captnokey'] = "No key for regist article";
 $en['captinvalid'] = "Invalid access!";
 ?>
