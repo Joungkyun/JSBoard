@@ -116,7 +116,7 @@ if(!$np) {
 <?
   if($upload['yesno'] && $cupload['yesno']) {
     echo <<<EOF
-  <TD WIDTH="{$td_width['upload']}" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">File</FONT></TD>\n
+  <TD WIDTH="{$td_width['upload']}" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">File</FONT></TD>
 EOF;
   }
 ?>
