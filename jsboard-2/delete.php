@@ -30,7 +30,8 @@ $list['text']  = $list['html'] ? $list['text'] : wordwrap($list['text'],$board['
 $list['num']   = print_reply($table, $list);
 
 # 제목을 테이블 크기에 맞춰 다음줄로 넘김
-$title_width = $board['width'] / 8;
+$_width = preg_match ('/%/', $board['width']) ? '550' : $board['width'];
+$title_width = $_width / 8;
 settype($title_width,"integer");
 $list['title'] = wordwrap($list['title'],$title_width,"<br>\n",1);
 
