@@ -241,7 +241,7 @@ EOF;
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<TEXTAREA NAME="epost" CLASS="resizable" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></TEXTAREA>
+<TEXTAREA NAME="epost" CLASS="resizable" cols="<?=$size['text']?>" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></TEXTAREA>
 <!-- =============================== 글내용 =============================== -->
 
 </TD></TR>

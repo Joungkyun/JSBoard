@@ -1,4 +1,4 @@
-// $Id: textarea.js,v 1.1 2008-12-01 15:50:14 oops Exp $
+// $Id: textarea.js,v 1.2 2008-12-05 22:27:55 oops Exp $
 // $origId: textarea.js,v 1.9 2006/04/14 13:48:56 killes Exp $
 // from drupal
 // many functions are imported from drupal.js to eliminate dependency
@@ -10,6 +10,49 @@ if (document.jsEnabled == undefined) {
    !document.createElement        ||
    !document.createTextNode       ||
    !document.getElementById);
+}
+
+function browserSize (type) {
+  if (typeof(window.innerWidth) == 'number') {
+    //Non-IE
+    width = window.innerWidth;
+    height = window.innerHeight;
+  } else if (document.documentElement && 
+            (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
+    //IE 6+ in 'standards compliant mode'
+    width = document.documentElement.clientWidth;
+    height = document.documentElement.clientHeight;
+  } else if( document.body && (document.body.clientWidth || document.body.clientHeight)) {
+    //IE 4 compatible
+    width = document.body.clientWidth;
+    height = document.body.clientHeight;
+  }
+
+  return (type == 'width') ? width : height;
+}
+
+function textarea_cols(obj) {
+  /*
+   * cols default value
+   * IE : 20
+   * FF : -1
+   */
+  if (obj.cols == -1 || obj.cols == 20) {
+    if ( ! obj.style.width ) {
+      obj.cols = 70;
+      return true;
+    }
+
+    if ( /%$/.test(obj.style.width) ) {
+      width = browserSize('width');
+      obj.cols = width / 20;
+    } else {
+      width = obj.style.width.replace(/[ ]*px/g, "");
+      obj.cols = obj.style.width / 20;
+    }
+  }
+
+  return true;
 }
 
 /**
@@ -204,6 +247,8 @@ textArea.prototype.handleDrag = function (event) {
   var width = x + 4;
   this.wrapper.style.width = width + 1 + 'px';
   this.element.style.width = width + 'px';
+
+  //textarea_cols(this.element);
 
   // Set new height
   var height = Math.max(32, y - this.dragOffset - this.heightOffset);
