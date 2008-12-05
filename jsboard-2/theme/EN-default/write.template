@@ -239,7 +239,7 @@ EOF;
 <!-- ==================================================================== -->
 <!-- =============================== Contents =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<TEXTAREA NAME="wpost" CLASS="resizable" <?=$wrap['op']?>></TEXTAREA>
+<TEXTAREA NAME="wpost" CLASS="resizable" cols="<?=$size['text']?>" <?=$wrap['op']?>></TEXTAREA>
 <!-- =============================== Contents =============================== -->
 
 </TD></TR>

@@ -18,9 +18,13 @@ file.
 Version   : jsboard 2.0.14
 
 
+Sat, Dec 06 2008
+  by JoungKyun.Kim
+	- fixed textarea col problem when wrap="hard"
+
 Thu, Dec 04 2008
   by JoungKyun.Kim
-  	- prevent access without referer
+	- prevent access without referer
 	- if case board['width'] has '%', fixed broken title on delete page
 
 Tue, Dec 02 2008
