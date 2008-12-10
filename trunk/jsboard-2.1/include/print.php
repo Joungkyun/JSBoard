@@ -716,4 +716,13 @@ function print_spam_trap() {
        "<input type=\"hidden\" name=\"goaway\" value=\"1\">\n" .
        "</form>\n";
 }
+
+function debug_block ($ipaddr, $var) {
+  if($_SERVER['REMOTE_ADDR'] === $ipaddr) {
+     echo "<pre>\n";
+     print_r($var);
+     echo "</pre>\n";
+     exit;
+  }
+}
 ?>
