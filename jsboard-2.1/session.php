@@ -63,7 +63,7 @@ if ( $m == "login" ) {
   require_once './config/global.php';
   require_once './include/check.php';
 
-  sessionInit($board['apath'].$board['sessTmp']);
+  sessionInit($board['sessTmp']);
   session_start ();
 
   # 세션을 삭제

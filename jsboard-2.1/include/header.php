@@ -80,7 +80,7 @@ include_once "database/db.php";
 include_once "include/replicate.php";
 include_once "include/sendmail.php";
 
-sessionInit($board['apath'].$board['sessTmp']);
+sessionInit($board['sessTmp']);
 session_start ();
 if ( ! session_is_registered ($jsboard) && ! preg_match ('/session\.php/i', $_pself) )
   session_destroy ();
