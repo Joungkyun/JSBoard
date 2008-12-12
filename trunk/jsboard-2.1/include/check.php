@@ -536,7 +536,7 @@ function check_rw_method ($agent) {
   return 0;
 }
 
-function check_spamer($anti,$v) {
+function check_spamer($v) {
   global $_, $o, $board;
 
   if($o['at'] != 'write' && $o['at'] != 'reply')
