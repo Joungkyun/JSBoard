@@ -49,7 +49,7 @@ require_once "$dpath/include/lib.php";
 table_name_check ($print['theme']);
 
 # session¿ª Ω√¿€
-sessionInit($board['sessTmp']);
+sessionInit($ipath . '/' . $board['sessTmp']);
 session_start ();
 if( ! session_is_registered ($jsboard) )
   session_destroy();
