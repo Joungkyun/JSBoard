@@ -66,18 +66,15 @@ else $html_chk_no = " checked";
 if($noup == 1) $board['formtype'] = "";
 else $board['formtype'] = " enctype=\"multipart/form-data\"";
 
-# TEXTAREA에서 wrap option check
-$wrap = form_wrap();
-
 # 원본글 포함 선택 여부
 if ($enable['ore']) {
-  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\" {$wrap['op']} rows=\"10\" cols=\"{$size['text']}\"></textarea>";
+  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\"></textarea>";
   $orig_button = "<input type=\"hidden\" id=\"hidev\" name=\"hidev\" value=\"\n\n{$list['name']} wrote..\n{$list['text']}\">\n" .
                  "<input type=\"hidden\" name=\"cenable[ore]\" value=1>\n" .
                  "<input tabindex=\"100\" type=\"button\" name=\"quote\" value=\"원본 포함\" ".
                  "onClick=\"document.getElementById('rpost').value=document.getElementById('rpost').value + document.getElementById('hidev').value; document.getElementById('hidev').value ='';\">\n";
 } else {
-  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\" {$wrap['op']} rows=\"10\" cols=\"{$size['text']}\">\n\n\n{$list['name']} wrote..\n{$list['text']}</textarea>";
+  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\">\n\n\n{$list['name']} wrote..\n{$list['text']}</textarea>";
   $orig_button = "<input type=\"hidden\" name=\"cenable[ore]\" value=0>\n";
 }
 
@@ -86,7 +83,8 @@ $print['passform'] = "<input type=\"hidden\" name=\"o[at]\" value=\"reply\">\n".
                    "<input type=\"hidden\" name=\"page\" value=\"$page\">\n".
                    "<input type=\"hidden\" name=\"table\" value=\"$table\">\n".
                    "<input type=\"hidden\" name=\"rmail[origmail]\" value=\"{$list['email']}\">\n".
-                   "<input type=\"hidden\" name=\"atc[reno]\" value=\"{$list['no']}\">";
+                   "<input type=\"hidden\" name=\"atc[reno]\" value=\"{$list['no']}\">".
+                   "<input type=\"hidden\" name=\"atc[html]\" value=\"{$list['html']}\">";
 
 $pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<input type=\"hidden\" name=\"atc[rname]\" value=\"{$pre_regist['rname']}\">";
 
@@ -105,6 +103,13 @@ if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode']) && $_SESSION[$j
 $pages = "&amp;page=$page";
 
 sql_close($c);
+
+$print['preview_script'] = <<<EOF
+<script type="text/javascript">
+  var tarea_width = '{$board['width']}';
+  var tarea_cols  = '{$size['text']}';
+</script>
+EOF;
 
 # Template file 을 호출
 meta_char_check($print['theme'], 1, 1);

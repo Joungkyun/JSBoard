@@ -151,13 +151,12 @@ EOF;
 <tr><td class="rbodybg">
 
 <!--  ====================================================================  -->
-<!--  $wrap['op']   : textarea 義 wrap オプション出力                             -->
 <!--  $size['text'] : textarea 義 size 出力                                 -->
 <!--  $list['text'] : 修正する 文 本文を 出力                                 -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
 <script type="text/javascript" src="theme/common/textarea.js"></script>
-<textarea id="epost" class="resizable" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></TEXTAREa>
+<textarea id="epost" class="resizable" name="atc[text]"><?="{$list['text']}\n\n"?></TEXTAREa>
 <!--  =============================== 文内容 ===============================  -->
 
 </td></tr>
@@ -165,13 +164,11 @@ EOF;
 
 
 <!--  ====================================================================  -->
-<!--  $wrap['ment']     : textarea に wrap これ hard 街 ない 場合 警告 メッセージ -->
 <!--  $table.$page      : リストで 帰る リンクに 必要な 変数たち            -->
 <!--  $print['passform']: 修正した 文 登録するのに 必要な hidden 変数たち         -->
 <!--  $orig_option      : 書き込み 窓 調節の時 元々 大きさで 帰る オプション        -->
 <!--  ====================================================================  -->
 <table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td align="right"><?=$wrap['ment']?></td></tr>
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="登録">

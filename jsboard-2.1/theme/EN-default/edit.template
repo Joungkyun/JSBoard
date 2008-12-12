@@ -141,13 +141,12 @@ if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
 <tr><td class="rbodybg">
 
 <!-- ==================================================================== -->
-<!-- $wrap['op']   : print wrap option of textarea                        -->
 <!-- $size['text'] : print size of textarea                               -->
 <!-- $list['text'] : print content of original content for modified       -->
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<textarea id="epost" class="resizable" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></textarea>
+<textarea id="epost" class="resizable" name="atc[text]"><?="{$list['text']}\n\n"?></textarea>
 <!-- =============================== 글내용 =============================== -->
 
 </td></tr>
@@ -155,13 +154,11 @@ if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
 
 
 <!-- ==================================================================== -->
-<!-- $wrap['ment'] : if wrap option isn't hard, print warn message        -->
 <!-- $table.$page      : print link option to back list                   -->
 <!-- $print['passform']  : hidden value for regist reply article          -->
 <!-- $orig_option      : back to original size of textarea                -->
 <!-- ==================================================================== -->
 <table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td align="right"><?=$wrap['ment']?></td></tr>
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="Modify">

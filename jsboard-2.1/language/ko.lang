@@ -17,7 +17,6 @@ $ko['c_ps'] = "암호";
 $ko['c_en'] = "입력";
 
 # write.php
-$ko['w_ment'] = "띄어쓰기 없이 쓰거나 HTML 미사용 시 한줄을 너무 길게 쓰지 마십시오.";
 $ko['upload'] = "File upload 기능을 전체 관리자가 제한하고 있습니다.";
 
 # edit.php

@@ -49,13 +49,14 @@ $emoticon_ok = $emoticon_no = '';
 if ( $enable['emoticon'] ) $emoticon_ok = 'checked="checked"';
 else $emoticon_no = 'checked="checked"';
 
+if ( ! trim ($enable['tag']) )
+  $htmltag = 'b,i,u,ul,ol,li,span,font,table,tr,td';
+else
+  $htmltag = $enable['tag'];
+
 $pview_ok = $pview_no = '';
 if ( $enable['pre'] ) $pview_ok = 'checked="checked"';
 else $pview_no = 'checked="checked"';
-
-$bwrap_ok = $bwrap_no = '';
-if ( $board['wrap'] ) $bwrap_ok = 'checked="checked"';
-else $bwrap_no = 'checked="checked"';
 
 $dhost_ok = $dhost_no = '';
 if( $enable['dhost'] ) $dhost_ok = 'checked="checked"';
@@ -336,15 +337,6 @@ function fresize(value,name) {
 </tr>
 
 <tr>
-<td class="mcolor"><?=$_('ua_b19')?></td>
-<td colspan=4><?=$_('ua_b20')?> [
-<input type="radio" name="ua[wrap]" <?=$bwrap_ok?> value=1> yes
-<input type="radio" name="ua[wrap]" <?=$bwrap_no?> value=0> no ]
-</td>
-<td class="dcolor">&nbsp;</td>
-</tr>
-
-<tr>
 <td class="mcolor"><?=$_('ua_b21')?></td>
 <td colspan=4><?=$_('ua_b22')?> 
 <input type="text" name="ua[wwrap]" size=<?=$ssize?> value="<?=$board['wwrap']?>">
@@ -449,6 +441,19 @@ function fresize(value,name) {
 </td>
 <td class="dcolor">&nbsp;</td>
 </tr>
+
+<tr><td colspan=6 class="bg">&nbsp;</td></tr>
+
+<tr><td align="center" colspan=6 class="tcolor">Allow HTML Code</td></tr>
+
+<tr>
+<td colspan=6>
+<?=$_('ua_html_tag')?>
+</td></tr>
+
+<tr><td align="center" colspan=6>
+<textarea name="ua[tag]" cols=<?=$tsize?> rows=5><?=$htmltag?></textarea>
+</td></tr>
 
 <tr><td colspan=6 class="bg">&nbsp;</td></tr>
 

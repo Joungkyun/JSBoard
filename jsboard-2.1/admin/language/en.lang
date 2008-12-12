@@ -40,6 +40,8 @@ $en['ua_emoticon']   = "Emoticon";
 $en['ua_emoticon_y'] = "Use";
 $en['ua_emoticon_n'] = "Don't use";
 
+$en['ua_html_tag'] = 'Input HTML tag to allow with delimiter \',\'';
+
 $en['ua_align']   = "Board Align";
 $en['ua_align_c'] = "Center";
 $en['ua_align_l'] = "Left";
@@ -61,10 +63,8 @@ $en['ua_b13'] = "Cookie";
 $en['ua_b14'] = "Day";
 $en['ua_b15'] = "Shwo";
 $en['ua_b16'] = "Hide";
-$en['ua_b19'] = "Board wrap";
-$en['ua_b20'] = "Avoid long text in content";
 $en['ua_b21'] = "Word wrap";
-$en['ua_b22'] = "Limit of the number of characters if board wrap isn't applied.";
+$en['ua_b22'] = "Limit of the number of characters per line on Read article.";
 
 $en['ua_ha1'] = "Show";
 $en['ua_ha2'] = "IP address";

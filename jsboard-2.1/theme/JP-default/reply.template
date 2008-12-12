@@ -152,7 +152,7 @@ EOF;
 <!--  $text_area  : デッグルの TEXTAREAを 出力(すなわち 書き物をする 部分)                  -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
-<script type="text/javascript" src="theme/common/textarea.js"></script>
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
 <?=$text_area?>
 
 <!--  =============================== 文内容 ===============================  -->
@@ -162,14 +162,12 @@ EOF;
 
 
 <!--  ====================================================================  -->
-<!--  $wrap['ment']     : textarea に wrap これ hard 街 ない 場合 警告 メッセージ -->
 <!--  $table.$pages     : リストで 帰る リンクに 必要な 変数たち            -->
 <!--  $print['passform']: デッグル 登録するのに 必要な hidden 変数たち              -->
 <!--  $orig_option      : 書き込み 窓 調節の時 元々 大きさで 帰る オプション        -->
 <!--  $orig_button      : 原本文 含み ボタン 使用の時 出力                      -->
 <!--  ====================================================================  -->
 <table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td align="right"><?=$wrap['ment']?></td></tr>
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="登録">
