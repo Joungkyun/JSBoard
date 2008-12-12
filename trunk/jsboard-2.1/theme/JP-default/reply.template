@@ -1,5 +1,5 @@
 
-<form id="replyp" name="replyp" method="post" target=_top action='http://j2k.naver.com/k2j_frame.php/korean/oops.org/z/act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
+<form id="replyp" name="replyp" method="post" target=_top action='act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
 <td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''></td>
@@ -152,7 +152,7 @@ EOF;
 <!--  $text_area  : デッグルの TEXTAREAを 出力(すなわち 書き物をする 部分)                  -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
-<script type="text/javascript" src="http://j2k.naver.com/j2k_script.php/korean/EUC-KR/oops.org/z/theme/common/textarea.js"></script>
+<script type="text/javascript" src="theme/common/textarea.js"></script>
 <?=$text_area?>
 
 <!--  =============================== 文内容 ===============================  -->

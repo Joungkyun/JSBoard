@@ -4,7 +4,7 @@
 <!--  $board['formtype'] : イメージ アップロードを 支援 可否を のために 必ず 必要         -->
 <!--  ====================================================================  -->
 
-<form name="writep" method="post" target=_top action='http://j2k.naver.com/k2j_frame.php/korean/oops.org/z/act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
+<form name="writep" method="post" target=_top action='act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
 <td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''></td>
@@ -148,7 +148,7 @@ END;
 <!--  $size['text'] : textarea 義 size 出力                                 -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
-<script type="text/javascript" src="http://j2k.naver.com/j2k_script.php/korean/EUC-KR/oops.org/z/theme/common/textarea.js"></script>
+<script type="text/javascript" src="theme/common/textarea.js"></script>
 <textarea id="wpost" class="resizable" name="atc[text]" <?=$wrap['op']?>></textarea>
 <!--  =============================== 文内容 ===============================  -->
 

@@ -1,4 +1,4 @@
-<form name="editp" method=post target=_top action='http://j2k.naver.com/k2j_frame.php/korean/oops.org/z/act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
+<form name="editp" method=post target=_top action='act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
 <td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''></td>
@@ -90,7 +90,7 @@ if($list['bofile']) {
 <tr>
 <td>ファイル</td>
 <td>
-<a target=_top href='http://j2k.naver.com/k2j_frame.php/korean/oops.org/z/$down_link'>
+<a target=_top href='$down_link'>
 <img src="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" align="middle">
 <span class="attachfn">{$list['bofile']}</span></a> - $hfsize &nbsp; &nbsp;
 <input type="checkbox" name="atc[fdel]" value=1> ファイル削除
@@ -156,7 +156,7 @@ EOF;
 <!--  $list['text'] : 修正する 文 本文を 出力                                 -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
-<script type="text/javascript" src="http://j2k.naver.com/j2k_script.php/korean/EUC-KR/oops.org/z/theme/common/textarea.js"></script>
+<script type="text/javascript" src="theme/common/textarea.js"></script>
 <textarea id="epost" class="resizable" name="atc[text]" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></TEXTAREa>
 <!--  =============================== 文内容 ===============================  -->
 
