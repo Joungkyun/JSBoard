@@ -24,7 +24,7 @@ $size = form_size(4);
 $board['wwrap'] = !$board['wwrap'] ? 120 : $board['wwrap'];
 
 $list['date']  = date("Y-m-d H:i:s", $list['date']);
-$list['text']  = text_nl2br($list['text'], $list['html']);
+text_nl2br($list['text'], $list['html']);
 $list['text']  = $list['html'] ? $list['text'] : wordwrap($list['text'],$board['wwrap']);
 $list['num']   = print_reply($table, $list);
 

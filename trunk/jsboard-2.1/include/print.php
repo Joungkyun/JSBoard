@@ -85,26 +85,6 @@ function form_size($size, $print = 0) {
   return $size;
 }
 
-# 넷스케이프와 익스간의 TEXTAREA WRAP 설정 여부를 결정하는 함수
-#
-function form_wrap($print = 0) {
-  global $board, $_, $list, $agent;
-
-  if ($board['wrap'] && $agent['os'] != "LINUX" && !$list['html']) {
-    $wrap['op'] = "wrap=\"hard\"";
-    $wrap['ment'] = "&nbsp;";
-  } else {
-    $wrap['op'] = "wrap=\"off\"";
-    $wrap['ment'] = $_('w_ment') . '&nbsp;';
-  }
-
-  if ( $agent['br'] == "OTHER" )
-    $wrap['op'] = '';
-
-  if($print) echo $wrap;
-  return $wrap;
-}
-
 # 현재 페이지의 앞, 뒤 페이지를 정해준 갯수($num)만큼 출력하는 함수
 function page_list($table, $pages, $count, $num, $print = 0) {
   global $o;   # 검색 등 관련 변수
@@ -719,10 +699,10 @@ function print_spam_trap() {
 
 function debug_block ($ipaddr, $var) {
   if($_SERVER['REMOTE_ADDR'] === $ipaddr) {
-     echo "<pre>\n";
-     print_r($var);
-     echo "</pre>\n";
-     exit;
+    echo "<pre>\n";
+    print_r($var);
+    echo "</pre>\n";
+    exit;
   }
 }
 ?>

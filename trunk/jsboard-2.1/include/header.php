@@ -75,12 +75,14 @@ include_once "include/check.php";
 if(!check_windows()) { include_once "include/exec.php"; }
 include_once "include/get.php";
 include_once "include/list.php";
+include_once "include/sURI.php";
 include_once "include/parse.php";
 include_once "database/db.php";
 include_once "include/replicate.php";
 include_once "include/sendmail.php";
 
 sessionInit($board['sessTmp']);
+init_htmltag();
 session_start ();
 if ( ! session_is_registered ($jsboard) && ! preg_match ('/session\.php/i', $_pself) )
   session_destroy ();

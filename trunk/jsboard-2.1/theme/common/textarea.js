@@ -1,4 +1,4 @@
-// $Id: textarea.js,v 1.1 2008-12-01 15:09:45 oops Exp $
+// $Id: textarea.js,v 1.2 2008-12-12 19:40:14 oops Exp $
 // $origId: textarea.js,v 1.9 2006/04/14 13:48:56 killes Exp $
 // from drupal
 // many functions are imported from drupal.js to eliminate dependency
@@ -10,6 +10,30 @@ if (document.jsEnabled == undefined) {
    !document.createElement        ||
    !document.createTextNode       ||
    !document.getElementById);
+}
+
+function textarea_cols(obj) {
+  if ( /%/.test(obj.style.width) ) {
+    if ( /%/.test(tarea_width) ) { width = browserSize('width'); }
+    else { width = tarea_width; }
+  } else {
+    width = obj.style.width;
+  }
+
+  wtype = typeof width;
+  if ( wtype == 'string' )
+    width = width.replace(/[ ]*px/g, "");
+
+  if ( ! width || obj.cols == -1 || obj.cols == 20 ) {
+    obj.cols = tarea_cols;
+    //document.getElementById('vcols').value = obj.cols;
+    return true;
+  }
+
+  obj.cols = Math.round(width / 7) + 7;
+  //document.getElementById('vcols').value = obj.cols;
+
+  return true;
 }
 
 /**
@@ -141,6 +165,11 @@ function textArea(element,wrapper) {
   this.element.style.width = '100%';
   this.element.style.height = this.dimensions.height +'px';
 
+  /**
+   * textarea_width is defined on (write|edit|reply).php
+   */
+  textarea_cols(this.element);
+
   // Wrap textarea
   if (typeof wrapper=='undefined') {
     removeNode(this.element);
@@ -219,6 +248,8 @@ textArea.prototype.endDrag = function (event) {
   document.onmousemove = this.oldMoveHandler;
   document.onmouseup = this.oldUpHandler;
 
+  textarea_cols(this.element);
+
   // Restore opacity
   this.element.style.opacity = 1.0;
   if (window.event) this.element.style.filter = '';
@@ -229,8 +260,7 @@ if (document.jsEnabled) {
   var oldOnload = window.onload;
   if (typeof window.onload != 'function') {
     window.onload = textAreaAutoAttach;
-  }
-  else {
+  } else {
     window.onload = function() {
       oldOnload();
       textAreaAutoAttach();

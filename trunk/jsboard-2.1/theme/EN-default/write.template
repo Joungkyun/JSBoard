@@ -119,7 +119,7 @@ if ( (!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1 ) {
   echo <<<END
 <td valign="top">Password</td>
 <td valign="top"{$pcaptcharcolspan}>
-<input type="password" id="passwd" name="atc[passwd]" size={$size['pass']} maxlength=16 class="passwdbox;">
+<input type="password" id="passwd" name="atc[passwd]" size={$size['pass']} maxlength=16 class="passwdbox">
 {$pcaptcha}
 </td>
 ?>
@@ -138,12 +138,11 @@ if ( (!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1 ) {
 <tr><td class="rbodybg">
 
 <!-- ==================================================================== -->
-<!-- $wrap['op']   : print wrap option of textarea                        -->
 <!-- $size['text'] : print size of textarea                               -->
 <!-- ==================================================================== -->
 <!-- =============================== Contents =========================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<textarea id="wpost" class="resizable" name="atc[text]" <?=$wrap['op']?>></textarea>
+<textarea id="wpost" class="resizable" name="atc[text]"></textarea>
 <!-- =============================== Contents =========================== -->
 
 </td></tr>
@@ -151,13 +150,11 @@ if ( (!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1 ) {
 
 
 <!-- ==================================================================== -->
-<!-- $wrap['ment']       : if wrap option isn't hard, print warn message  -->
 <!-- $table.$pages      : print link option to back list                  -->
 <!-- $print['passform']  : hidden value for regist article                -->
 <!-- $orig_option      : back to original size of textarea                -->
 <!-- ==================================================================== -->
 <table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td align="right"><?=$wrap['ment']?></td></tr>
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="Regist">

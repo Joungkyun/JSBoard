@@ -71,14 +71,6 @@ END;
 }
 ?>
 
-<tr>
-<td>HTML</td>
-<td colspan="3">
-<input type="radio" name="atc[html]" value=1> 사용함
-<input type="radio" name="atc[html]" value=0 checked="checked"> 사용안함
-</td>
-</tr>
-
 <!-- ==================================================================== -->
 <!-- upload 부분 출력여부 설정 (왠만하면 그냥 쓰면 됨)                    -->
 <!-- ==================================================================== -->
@@ -123,7 +115,7 @@ if ( (!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1 ) {
   echo <<<END
 <td valign="top">패스워드</td>
 <td valign="top"{$pcaptcharcolspan}>
-<input type="password" id="passwd" name="atc[passwd]" size="{$size['pass']}" maxlength=16 class="passwdbox;">
+<input type="password" id="passwd" name="atc[passwd]" size="{$size['pass']}" maxlength=16 class="passwdbox">
 {$pcaptcha}
 </td>
 END;
@@ -144,12 +136,11 @@ END;
 <tr><td class="rbodybg">
 
 <!-- ==================================================================== -->
-<!-- $wrap['op']   : textarea 의 wrap 옵션출력                            -->
 <!-- $size['text'] : textarea 의 size 출력                                -->
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<textarea id="wpost" class="resizable" name="atc[text]" <?=$wrap['op']?>></textarea>
+<textarea id="wpost" class="resizable" name="atc[text]"></textarea>
 <!-- =============================== 글내용 =============================== -->
 
 </td></tr>
@@ -157,13 +148,11 @@ END;
 
 
 <!-- ==================================================================== -->
-<!-- $wrap['ment']     : textarea 에 wrap 이 hard 가 아닐 경우 경고 메세지-->
 <!-- $table.$pages     : 목록으로 돌아가는 링크에 필요한 변수들           -->
 <!-- $print['passform']: 글 등록하는데 필요한 hidden 변수들               -->
 <!-- $orig_option      : 글쓰기 창 조절시 원래 크기로 돌아가는 옵션       -->
 <!-- ==================================================================== -->
 <table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td align="right"><?=$wrap['ment']?></td></tr>
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
 <input type="submit" value="등록">

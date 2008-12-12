@@ -570,4 +570,20 @@ function sessionInit($dir) {
 
   session_save_path ($dir);
 }
+
+#
+# html code 뒤에 ':' 가 붙어 있으면 block 을 유지 시켜 줘야 하는
+# 태그로 인식한다. (wordwrap 이 되면 안되는 code)
+#
+function init_htmltag () {
+  global $enable;
+
+  if ( ! $eanble['tag'] )
+    $enable['tag'] = 'b,i,u,ul,ol,li,span,font,table,tr,td';
+
+  $enable['tag'] .= ',code';
+  $p = preg_replace ('/[\s]/', '', $enable['tag']);
+  $p = explode (',', $p);
+  $enable['tag'] = (object) $p;
+}
 ?>

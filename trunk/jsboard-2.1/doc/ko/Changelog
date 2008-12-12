@@ -9,6 +9,18 @@
 -------------------------------------------------------------------------------
 버전 2.1.0
 
+2008.12.13
+By 김정균
+	- textarea 의 wrap 옵션 제거
+	  글 등록시에 강제로 라인 breaking 하던 것을 view page 하도록 변경
+	- html 쓰기 옵션 제거
+	  기본적으로 html 을 사용할 수 있도록 변경
+	  허가할 HTML tag 를 지정해 줘야 함. (BB code 처럼 <> 대신 []를 사용)
+	  [b]굵은 글씨[/b]
+	- code block 지원
+	  [code] ~ [/code] 에서 원본 형태 유지
+	  CSS 에서 jsCodeBlock id 로 design 제어 가능
+
 2008.12.04
 By 김정균
 	- IE 에서 document.location 에서 referer 남지 않는 문제 수정

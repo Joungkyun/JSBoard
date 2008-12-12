@@ -64,6 +64,11 @@ $chg['comment'] = $ua['comment'] ? 1 : 0;
 # Option of print emoticon function
 $chg['emoticon'] = $ua['emoticon'] ? 1 : 0;
 
+if ( ! trim ($ua['tag']) )
+  $ua['tag'] = 'b,i,u,ul,ol,li,span,font,table,tr,td';
+else
+  $ua['tag'] = preg_replace ('/[<\s\/>]/', '', $ua['tag']);
+
 # Board Basic Configuration
 if($ua['title'] && $ua['title'] != $board['title'])
   $chg['title'] = "{$ua['title']}";
@@ -93,7 +98,7 @@ if($ua['cookie'] && $ua['cookie'] != $board['cookie'])
   $chg['cookie'] = "{$ua['cookie']}";
 else $chg['cookie'] = "{$board['cookie']}";
 
-$ua['wwrap'] = !$ua['wwrap'] ? "120" : trim($ua['wwrap']);
+$ua['wwrap'] = !$ua['wwrap'] ? "86" : trim($ua['wwrap']);
 
 # File Upload Configuration
 $chg['upload'] = $ua['upload'] ? 1 : 0;
@@ -218,6 +223,13 @@ $chg_conf = "<?
 
 
 ###############################################################################
+#  사용 허가할 HTML tag
+###############################################################################
+#
+\$enable['tag']     = '{$ua['tag']}';
+
+
+###############################################################################
 #  게시판 정렬 상태를 설정
 # <DIV align=\"\$board['align']\">
 ###############################################################################
@@ -231,9 +243,7 @@ $chg_conf = "<?
 #
 # 게시판 제목
 \$board['title']     = '{$chg['title']}';
-# 본문 길게 늘어지는것 방지
-\$board['wrap']      = {$ua['wrap']};
-# \$board['wrap']이 적용안될시 강제 적용
+# 글 읽기 시에 한 줄당 표시할 글자 수
 \$board['wwrap']     = {$ua['wwrap']};
 # 게시판 너비
 \$board['width']     = '{$chg['width']}';

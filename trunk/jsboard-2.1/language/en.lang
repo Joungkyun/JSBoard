@@ -16,7 +16,6 @@ $en['c_ps'] = "Pass";
 $en['c_en'] = "ENTER";
 
 # write.php
-$en['w_ment'] = "Don't write a long sentence unless you use HTML code or spaces";
 $en['upload'] = "Uploading file is denied by the administrator.";
 
 # edit.php

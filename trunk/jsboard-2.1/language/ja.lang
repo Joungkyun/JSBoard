@@ -19,7 +19,6 @@ $ja['c_ps'] = "暗号";
 $ja['c_en'] = "入力";
 
 # write.php
-$ja['w_ment'] = "分かち書き なく 書くとか HTML 不使用 時 １行を とても 長く 什 飲んでください.";
 $ja['upload'] = "File upload 機能を 全体 管理者が 制限して あります.";
 
 # edit.php

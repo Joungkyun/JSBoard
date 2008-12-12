@@ -280,9 +280,118 @@ function search_hl($list) {
   return $list;
 }
 
-function text_nl2br($text, $html) {
+function wordwrap_js (&$buf, $len = 80) {
+  $_buf = split ("\r?\n", $buf);
+  $size = count ($_buf);
+  $buf = '';
+  for ( $i=0; $i<$size; $i++ ) {
+    $_buf[$i] = rtrim ($_buf[$i]);
+    if ( strlen ($_buf[$i]) > $len ) {
+      if ( ord ($_buf[$i][$len - 1]) & 0x80 ) {
+        $z = strlen(preg_replace ('/[\x00-\x7F]/', '', substr ($_buf[$i], 0, $len)));
+        $cut = ( $z % 2 ) ? $len - 1 : $len;
+      } else
+        $cut = $len;
+
+      $buf .= substr ($_buf[$i], 0, $cut) . "\n";
+
+      if ( preg_match ('/^(: )+/', $_buf[$i], $matches) ) {
+        $next = $matches[0] . substr ($_buf[$i], $cut);
+        if ( ! strncmp ($matches[0], $_buf[$i+1], strlen ($matches[0])) )
+          $_buf[$i+1] = $next . ' ' .  preg_replace ('/^(: )+/', '', $_buf[$i+1]);
+        else
+          $buf .= $next . "\n";
+      } else {
+        if ( strlen(trim($_buf[$i+1])) != 0 )
+          $_buf[$i+1] = substr ($_buf[$i], $cut) . ' ' .  $_buf[$i+1];
+        else
+          $buf .= substr ($_buf[$i], $cut) . "\n";
+      }
+    } else
+      $buf .= $_buf[$i] . "\n";
+  }
+}
+
+function js_htmlcode(&$buf) {
+  global $enable, $agent;
+
+  if(!is_object($enable['tag']))
+    return;
+
+  foreach($enable['tag'] as $v) {
+    if($v == 'code')
+      continue;
+    $reg .= $v . '|';
+  }
+  $reg = preg_replace ('/\|$/', '', $reg);
+  $reg = "!\[(/?({$reg}))\]!i";
+
+  $buf = preg_replace ($reg, '<\\1>', $buf);
+  unset($reg);
+  $reg[] = "/\[code\][\r\n]*/i";
+  $reg[] = "/[\r\n]*\[\/code\]/i";
+  $reg[] = '/^[: ]*: <li/m';
+  if ( $agent['br'] == "MSIE" || $agent['tx'] ) {
+    $conv[] = '<div id="jsCodeBlock"><pre>';
+    $conv[] = '<pre></div>';
+  } else {
+    $conv[] = '\\1<div id="jsCodeBlock" style="white-space: pre;">';
+    $conv[] = '</div>';
+  }
+  $conv[] = '<li';
+  $buf = preg_replace ($reg, $conv, $buf);
+}
+
+function new_read_format(&$buf) {
+  global $enable, $board;
+
+  $buf = preg_replace ("/\r?\n/", "\n", $buf);
+  if(!is_object($enable['tag']))
+    return;
+
+  $req_code = array ('[code]', '[table]', '[ul]', '[ol]');
+  foreach ($enable['tag'] as $v) {
+    $v = trim($v);
+    switch ($v) {
+      case 'code' :
+      case 'table' :
+      case 'ul' :
+      case 'ol' :
+        break;
+      default :
+        if (preg_match('/:$/', $v))
+          $req_code[] = '[' . $v . ']';
+    }
+  }
+
+  $buf_r = block_devided($buf, $req_code);
+
+  if(!is_array($buf_r) || count($buf_r) < 1) {
+    $buf = "<pre>{$buf}</pre>";
+    return;
+  }
+
+  $buf = '';
+  foreach($buf_r as $v) {
+    $block = false;
+    if(preg_match('/^[:\s]*(\[[^\]]+\])/', $v, $matches))
+      if(array_search($matches[1], $req_code) !== FALSE)
+        $block = true;
+
+    if(!$block) {
+      wordwrap_js($v, $board['wwrap']);
+      $v = preg_replace ("/\n$/", '', $v);
+      $buf .= "<pre>{$v}</pre>";
+    } else
+      $buf .= $v;
+  }
+
+  js_htmlcode ($buf);
+}
+
+function text_nl2br(&$text, $html) {
   global $_code;
-  if($html) {
+  if($html == 1) {
     $source = array("/<(\?|%)/i","/(\?|%)>/i","/<img .*src=[a-z0-9\"']*script:[^>]+>/i","/\r\n/",
                     "/<(\/*(script|style|pre|xmp|xml|base|span|html)[^>]*)>/i","/(=[0-9]+%)&gt;/i");
     $target = array("&lt;\\1","\\1&gt;","","\n","&lt;\\1&gt;","\\1>");
@@ -293,18 +402,22 @@ function text_nl2br($text, $html) {
     $text = preg_replace("/(\n)?<table/i","</pre><table",$text);
     $text = preg_replace("/<\/table>(\n)?/i","</table><pre>",$text);
     $text = !$text ? "No Contents" : $text;
-    $text = "<pre>$text</pre>";
   } else {
     $text = htmlspecialchars($text);
     # 한글 깨지는것 보정
     if ($_code == 'ko') $text = ugly_han($text);
-    $text = "<pre>\n$text\n</pre>";
+    if ($html)
+      new_read_format($text);
+    else
+      $text = "<pre>\n$text\n</pre>";
     $text = auto_link($text);
   }
-  return $text;
 }
 
-function delete_tag($text) {
+function delete_tag(&$var) {
+  if ( $var['html'] != 1 )
+    return;
+
   $src = array("/\n/i","/<html.*<body[^>]*>/i","/<\/body.*<\/html>.*/i",
                "/<\/*(div|span|layer|body|html|head|meta|input|select|option|form)[^>]*>/i",
                "/<(style|script|title).*<\/(style|script|title)>/i",
@@ -312,9 +425,7 @@ function delete_tag($text) {
                "/#\^--ENTER--\^#/i");
   $tar = array("#^--ENTER--^#","","","","","","&lt;\\1","\\1&gt;","\\1>","\n");
 
-  $text = chop(preg_replace($src,$tar,$text));
-
-  return $text;
+  $var['text'] = chop(preg_replace($src,$tar,$var['text']));
 }
 
 # 문자열을 일정한 길이로 자르는 함수
@@ -526,7 +637,7 @@ function unhtmlspecialchars($t) {
 }
 
 # Emoticon 변환 함수
-function conv_emoticon($str, $opt=0) {
+function conv_emoticon(&$str, $opt=0) {
   if (!$opt) return $str;
 
   $src[] = "/\^\^|\^\.\^/";
@@ -558,13 +669,12 @@ function conv_emoticon($str, $opt=0) {
   $src[] = '/([^0-9a-z]):-P|:P([^0-9a-z])/';
   $con[] = "\\1<img src=\"./emoticon/icon14.gif\" border=0 alt='emoticon'>\\2";
 
-  $ret = preg_replace($src, $con, $str);
-  $ret = str_replace("ㅜ.ㅜ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $ret);
-  $ret = str_replace("ㅠ.ㅠ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $ret);
-  $ret = str_replace("ㅠ_ㅠ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $ret);
-  $ret = str_replace("ㅜㅜ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $ret);
-  $ret = str_replace("ㅠㅠ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $ret);
-  return $ret;
+  $str = preg_replace($src, $con, $str);
+  $str = str_replace("ㅜ.ㅜ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
+  $str = str_replace("ㅠ.ㅠ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
+  $str = str_replace("ㅠ_ㅠ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
+  $str = str_replace("ㅜㅜ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
+  $str = str_replace("ㅠㅠ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
 }
 
 function checkquote ( $str ) {
