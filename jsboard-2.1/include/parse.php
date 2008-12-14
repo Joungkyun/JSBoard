@@ -332,10 +332,10 @@ function js_htmlcode(&$buf) {
   $reg[] = "/[\r\n]*\[\/code\]/i";
   $reg[] = '/^[: ]*: <li/m';
   if ( $agent['br'] == "MSIE" || $agent['tx'] ) {
-    $conv[] = '<div id="jsCodeBlock"><pre>';
+    $conv[] = '<div class="jsCodeBlock"><pre>';
     $conv[] = '<pre></div>';
   } else {
-    $conv[] = '\\1<div id="jsCodeBlock" style="white-space: pre;">';
+    $conv[] = '\\1<div class="jsCodeBlock" style="white-space: pre;">';
     $conv[] = '</div>';
   }
   $conv[] = '<li';
