@@ -19,7 +19,7 @@
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
 <td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=""></td>
-<td class="counter"> &gt;&gt; Read <?=$list['num']?> article</td>
+<td class="counter" width="95%"> &gt;&gt; Read <?=$list['num']?> article</td>
 <td class="admin"><?=$print['lout']?><?=$print['admin']?></td>
 </tr>
 
