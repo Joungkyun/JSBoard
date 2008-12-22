@@ -1,3 +1,10 @@
+
+<!-- ==================================================================== -->
+<!-- print_keymenu() : keyboard 로 게시판을 제어                          -->
+<!--                   'b' = 이전 페이지                                  -->
+<!-- ==================================================================== -->
+<?=print_keymenu(2)?>
+
 <form name="editp" method=post action="act.php"<?=$board['formtype']?> onsubmit="return registCheck();">
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>

@@ -12,6 +12,7 @@
 2008.12.23
 By 김정균
 	- reply format 변경
+	- write/edit/reply page 에서 b key 를 이용해서 이전 페이지 이동
 
 by 박원규
 	- jsboard wikify patch (from http://ktug.kldp.org)
