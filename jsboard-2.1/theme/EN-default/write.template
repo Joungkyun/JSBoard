@@ -73,14 +73,6 @@ END;
 }
 ?>
 
-<tr>
-<td>HTML</td>
-<td colspan=3>
-<input type=radio name="atc[html]" value=1> Yes
-<input type=radio name="atc[html]" value=0 checked="checked"> No
-</td>
-</tr>
-
 <!-- ==================================================================== -->
 <!-- print upload field                                                   -->
 <!-- ==================================================================== -->
