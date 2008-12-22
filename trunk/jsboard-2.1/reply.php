@@ -73,13 +73,13 @@ else $board['formtype'] = " enctype=\"multipart/form-data\"";
 
 # 원본글 포함 선택 여부
 if ($enable['ore']) {
-  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\"></textarea>";
+  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\" tabindex=\"7\"></textarea>";
   $orig_button = "<input type=\"hidden\" id=\"hidev\" name=\"hidev\" value=\"{$list['text']}\">\n" .
                  "<input type=\"hidden\" name=\"cenable[ore]\" value=1>\n" .
                  "<input tabindex=\"100\" type=\"button\" name=\"quote\" value=\"원본 포함\" ".
                  "onClick=\"document.getElementById('rpost').value=document.getElementById('rpost').value + document.getElementById('hidev').value; document.getElementById('hidev').value ='';\">\n";
 } else {
-  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\">{$list['text']}</textarea>";
+  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\" tabindex=\"7\">{$list['text']}</textarea>";
   $orig_button = "<input type=\"hidden\" name=\"cenable[ore]\" value=0>\n";
 }
 

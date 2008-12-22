@@ -34,7 +34,7 @@
 <!-- ==================================================================== -->
 <tr>
 <td width=80><b>Name</b></td>
-<td><input type="text" id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$list['name']?>"<?=$disable?>></td>
+<td><input type="text" id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$list['name']?>"<?=$disable?> tabindex="1"></td>
 </tr>
 
 <!-- ==================================================================== -->
@@ -46,7 +46,7 @@ if($view['email'] || trim($list['email'])) {
   echo "
 <tr>
 <td><b>Email</b></td>
-<td><input type=\"text\" id=\"email\" name=\"atc[email]\" size={$size['name']} maxlength=255 value=\"{$list['email']}\"$disable></td>
+<td><input type=\"text\" id=\"email\" name=\"atc[email]\" size={$size['name']} maxlength=255 value=\"{$list['email']}\"$disable tabindex=\"2\"></td>
 </tr>\n";
 }
 ?>
@@ -60,7 +60,7 @@ if($view['url'] || trim($list['url'])) {
   echo "
 <tr>
 <td><b>Homepage</b></td>
-<td><input type=\"text\" id=\"url\" name=\"atc[url]\" size={$size['name']} maxlength=255 value=\"{$list['url']}\"$disable></td>
+<td><input type=\"text\" id=\"url\" name=\"atc[url]\" size={$size['name']} maxlength=255 value=\"{$list['url']}\"$disable tabindex=\"3\"></td>
 </tr>\n";
 }
 ?>
@@ -76,7 +76,7 @@ if($list['bofile']) {
        "<a href=\"$down_link\">\n".
        "<img src=\"images/$icon\" width=16 height=16 border=0 alt={$list['bofile']} align=middle>\n".
        "<span class=\"attachfn\">{$list['bofile']}</span></a> - $hfsize &nbsp; &nbsp;\n".
-       "<input type=\"checkbox\" name=\"atc[fdel]\" value=1> 파일삭제\n".
+       "<input type=\"checkbox\" name=\"atc[fdel]\" value=1 tabindex=\"4\"> 파일삭제\n".
        "</td>\n".
        "</tr>\n";
 }
@@ -86,7 +86,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
        "<td><b>Edit File</b></td>\n".
        "<td>\n".
        "<input type=\"hidden\" name=\"max_file_size\" value=\"{$upload['maxsize']}\">\n".
-       "<input type=\"file\" name=\"userfile\" size=\"{$size['uplo']}\" maxlength=256>\n".
+       "<input type=\"file\" name=\"userfile\" size=\"{$size['uplo']}\" maxlength=256 tabindex=\"5\">\n".
        "</td>\n".
        "</tr>\n";
 }
@@ -98,7 +98,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!-- ==================================================================== -->
 <tr>
 <td><b>Subject</b></td>
-<td><input type="text" id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100 value="<?=$list['title']?>"></td>
+<td><input type="text" id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100 value="<?=$list['title']?>" tabindex="6"></td>
 </tr>
 
 <tr>
@@ -134,7 +134,7 @@ if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<textarea id="epost" class="resizable" name="atc[text]"><?="{$list['text']}\n\n"?></textarea>
+<textarea id="epost" class="resizable" name="atc[text]" tabindex="7"><?="{$list['text']}\n\n"?></textarea>
 <!-- =============================== 글내용 =============================== -->
 
 </td></tr>
@@ -149,10 +149,10 @@ if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
 <table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
-<input type="submit" value="Modify">
-<input type="button" value="Reset" onclick="document.location.reload(); return true;">
-<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="List">
-<input type="button" onclick="history.back()" value="Back">
+<input type="submit" value="Modify" tabindex="8">
+<input type="button" value="Reset" onclick="document.location.reload(); return true;" tabindex="9">
+<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="List" tabindex="10">
+<input type="button" onclick="history.back()" value="Back" tabindex="11">
 </td></tr>
 </table>
 </form>
