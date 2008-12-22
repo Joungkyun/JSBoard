@@ -705,4 +705,24 @@ function debug_block ($ipaddr, $var) {
     exit;
   }
 }
+
+function new_reply_read_format (&$buf, $html) {
+  $src[] = '/\[[\s]*quote[\s]*\]/i';
+  if ( $html != 1 )
+    $dsc[] = '</pre><blockquote><pre>';
+  else
+    $dsc[] = '<blockquote>';
+  $src[] = '/\[[\s]*\/quote[\s]*\]/i';
+  if ( $html != 1 )
+    $dsc[] = '</blockquote>';
+  else
+    $dsc[] = '</blockquote><pre>';
+  $src[] = '/\[[\s]*quote[\s]*=[\s]*&quot;(.*)&quot;[\s]*\]/i';
+  if ( $html != 1 )
+    $dsc[] = '</pre><blockquote><cite>\\1 wrote:</cite><pre>';
+  else
+    $dsc[] = '<blockquote><cite>\\1 wrote:</cite>';
+
+  $buf = preg_replace ($src, $dsc, $buf);
+}
 ?>

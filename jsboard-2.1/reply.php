@@ -48,6 +48,7 @@ $reti = ++$reti;
 if ($reti == "1") $reti = "";
 else $reti = "^$reti";
 
+/*
 $conv_list[0] = "/<([^<>\n]+)\n([^\n<>]+)>/i";
 $resu_list[0] = "<\\1 \\2>";
 $conv_list[1] = "/^/";
@@ -55,6 +56,10 @@ $resu_list[1] = ": ";
 $conv_list[2] = "/\n/";
 $resu_list[2] = "\n: ";
 $list['text'] = preg_replace($conv_list, $resu_list, $list['text']);
+ */
+$list['text'] = <<<EOF
+[quote="{$list['name']}"]{$list['text']}[/quote]
+EOF;
 
 # 본문에 html tag 가 존재할 경우를 대비
 $list['text'] = htmlspecialchars($list['text']);
@@ -69,12 +74,12 @@ else $board['formtype'] = " enctype=\"multipart/form-data\"";
 # 원본글 포함 선택 여부
 if ($enable['ore']) {
   $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\"></textarea>";
-  $orig_button = "<input type=\"hidden\" id=\"hidev\" name=\"hidev\" value=\"\n\n{$list['name']} wrote..\n{$list['text']}\">\n" .
+  $orig_button = "<input type=\"hidden\" id=\"hidev\" name=\"hidev\" value=\"{$list['text']}\">\n" .
                  "<input type=\"hidden\" name=\"cenable[ore]\" value=1>\n" .
                  "<input tabindex=\"100\" type=\"button\" name=\"quote\" value=\"원본 포함\" ".
                  "onClick=\"document.getElementById('rpost').value=document.getElementById('rpost').value + document.getElementById('hidev').value; document.getElementById('hidev').value ='';\">\n";
 } else {
-  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\">\n\n\n{$list['name']} wrote..\n{$list['text']}</textarea>";
+  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\">{$list['text']}</textarea>";
   $orig_button = "<input type=\"hidden\" name=\"cenable[ore]\" value=0>\n";
 }
 
