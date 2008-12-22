@@ -280,6 +280,14 @@ function search_hl($list) {
   return $list;
 }
 
+function quote_len ($buf) {
+  $no = 0;
+  preg_match_all ('/\[\/?quote[^\]]+\]/', $buf, $matches);
+  foreach ($matches as $v)
+    $no += strlen (trim ($v[0]));
+  return $no;
+}
+
 function wordwrap_js (&$buf, $len = 80) {
   $_buf = split ("\r?\n", $buf);
   $size = count ($_buf);
@@ -288,7 +296,6 @@ function wordwrap_js (&$buf, $len = 80) {
     $_buf[$i] = rtrim ($_buf[$i]);
     $_bufs = preg_replace ('/\[(\/)?quote[^\]]*\]/i', '', $_buf[$i]);
     $_bufs_size = strlen ($_bufs);
-    $_rems = strlen ($_buf[$i]) - $_bufs_size;
 
     if ( $_bufs_size > $len ) {
       if ( ord ($_bufs[$len - 1]) & 0x80 ) {
@@ -297,7 +304,9 @@ function wordwrap_js (&$buf, $len = 80) {
       } else
         $cut = $len;
 
-      $cut += $_rems;
+      $_bufs = substr ($_buf[$i], 0, $cut);
+      $_bufsno = quote_len ($_bufs);
+      $cut += $_bufsno;
       $buf .= substr ($_buf[$i], 0, $cut) . "\n";
 
       if ( preg_match ('/^(: )+/', $_buf[$i], $matches) ) {
