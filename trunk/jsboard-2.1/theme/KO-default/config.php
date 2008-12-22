@@ -26,7 +26,7 @@ $lines['height'] = '25';
 # 정 함. COLSPAN=AA 는 필요 없음.
 #$lines['design'] = '<TD COLSPAN=AA><hr></TD>';
 $lines['design'] = '';
-$lines['comment_design'] = '<tr>\n' .
+$lines['comment_design'] = '<tr>' .
   '<td colspan=4 style="background-image: url(./images/dotline.gif)">' .
   '<img src="./images/blank.gif" width=1 height=4 border=0 alt="">' .
   '</td></tr>';
