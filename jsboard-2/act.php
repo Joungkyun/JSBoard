@@ -60,8 +60,12 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     $atc['date'] = time(); # 현재 시각
     $atc['host'] = get_hostname(0); # 글쓴이 주소
 
-    # 글 등록시에 html header tag를 사용하는 것을 방지한다.
-    if($atc['html']) $atc['text'] = delete_tag($atc['text']);
+    # Injection 등의 위험 요소 때문에 html 쓰기 지원을 포기한다.
+    # phpbb 의 bb tag 처럼 대안을 제시
+    $atc['html']   = 2;
+
+    # 글 등록 호환 모드시에 html header tag를 사용하는 것을 방지한다.
+    delete_tag($atc);
 
     $atc = article_check($table, $atc);
     if(preg_match("/^0|4|6$/",$board['mode'])) $atc['passwd'] = crypt($atc['passwd']);
@@ -130,8 +134,12 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     $atc['date'] = time(); # 현재 시각
     $atc['host'] = get_hostname(0); # 글쓴이 주소
 
-    # 글 등록시에 html header tag를 사용하는 것을 방지한다.
-    if($atc['html']) $atc['text'] = delete_tag($atc['text']);
+    # Injection 등의 위험 요소 때문에 html 쓰기 지원을 포기한다.
+    # phpbb 의 bb tag 처럼 대안을 제시
+    $atc['html']   = 2;
+
+    # 글 등록 호환 모드시에 html header tag를 사용하는 것을 방지한다.
+    delete_tag($atc);
 
     # 댓글에서 : 때문에 글이 밀리는 것을 복구한다.
     $atc['text'] = preg_replace("/(^[:]+ [^\r\n]+)\r?\n([^:\r\n]+\r?\n)/mi","\\1 \\2",$atc['text']);
@@ -222,8 +230,8 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if(eregi($rmail['chars'],$atc['email'])) $atc['email'] = str_replace($rmail['chars'],"@",$atc['email']);
     $atc = article_check($table, $atc);
 
-    # 글 등록시에 html header tag를 사용하는 것을 방지한다.
-    if($atc['html']) $atc['text'] = delete_tag($atc['text']);
+    # 글 등록 호환 모드시에 html header tag를 사용하는 것을 방지한다.
+    delete_tag($atc);
 
     # 댓글에서 : 때문에 글이 밀리는 것을 복구한다.
     $atc['text'] = preg_replace("/(^[:]+ [^\r\n]+)\r?\n([^:\r\n]+\r?\n)/mi","\\1 \\2",$atc['text']);
@@ -442,7 +450,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if($atc['email']) $atc['email'] = check_email($atc['email'],1);
 
     # 쓰기,답장 모드에서 html 사용시 table tag 검사
-    if(($o['at'] == "write" || $o['at'] == "reply" || $o['at'] == "edit") && $atc['html']) {
+    if(($o['at'] == "write" || $o['at'] == "reply" || $o['at'] == "edit") && $atc['html'] == 1) {
       check_htmltable($atc['text']);
       check_iframe($atc['text']);
       $denyiframe = array("!<(iframe[^>]*)>!i","!<(/iframe)>!i");

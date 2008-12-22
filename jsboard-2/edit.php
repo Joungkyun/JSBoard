@@ -30,8 +30,6 @@ else $passment = "";
 
 if($board['notice']) print_notice($board['notice']);
 
-$wrap = form_wrap();
-
 if($list['html']) $html_chk_ok = " CHECKED";
 else $html_chk_no = " CHECKED";
 
@@ -54,20 +52,29 @@ $page = $page ? "&page=$page" : "";
 
 $print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=\"edit\">\n".
                    "<INPUT TYPE=hidden NAME=\"table\" VALUE=\"$table\">\n".
-                   "<INPUT TYPE=hidden NAME=\"atc[no]\" VALUE=\"{$list['no']}\">";
+                   "<INPUT TYPE=hidden NAME=\"atc[no]\" VALUE=\"{$list['no']}\">\n".
+                   "<INPUT TYPE=hidden NAME=\"atc[html]\" VALUE=\"{$list['html']}\">";
 
 if($disable) {
   $list['rname'] = !$list['rname'] ? "" : "\n<INPUT TYPE=hidden NAME=\"atc[rname]\" VALUE=\"{$list['rname']}\">";
   $print['passform'] .= "\n<INPUT TYPE=hidden NAME=\"atc[name]\" VALUE=\"{$list['name']}\">".
                       "{$list['rname']}".
                       "\n<INPUT TYPE=hidden NAME=\"atc[email]\" VALUE=\"{$list['email']}\">".
-                      "\n<INPUT TYPE=hidden NAME=\"atc[url]\" VALUE=\"{$list['url']}\">\n";
+                      "\n<INPUT TYPE=hidden NAME=\"atc[url]\" VALUE=\"{$list['url']}\">\n".
+                      "\n<INPUT TYPE=hidden NAME=\"atc[html]\" VALUE=\"{$list['html']}\">";
 }
 
 # 본문에 html tag 가 존재할 경우를 대비
 $list['text'] = htmlspecialchars($list['text']);
 
 mysql_close();
+
+$print['preview_script'] = <<<EOF
+<script type="text/javascript">
+  var tarea_width = '{$board['width']}';
+  var tarea_cols  = '{$size['text']}';
+</script>
+EOF;
 
 # Template file 을 호출
 meta_char_check($print['theme'], 1, 1);

@@ -65,17 +65,14 @@ else $html_chk_no = " checked";
 if($noup == 1) $board['formtype'] = "";
 else $board['formtype'] = " ENCTYPE=\"multipart/form-data\"";
 
-# TEXTAREA에서 wrap option check
-$wrap = form_wrap();
-
 # 원본글 포함 선택 여부
 if ($enable['ore']) {
-	$text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\" cols=\"{$size['text']}\" {$wrap['op']}></TEXTAREA>";
+  $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\"></TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"hide\" VALUE=\"\n\n{$list['name']} wrote..\n{$list['text']}\">\n" .
                  "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=1>\n" .
                  "<INPUT TABINDEX=\"100\" TYPE=\"button\" NAME=\"quote\" VALUE=\"원본 포함\" onClick=\"this.form.rpost.value=this.form.rpost.value + this.form.hide.value; this.form.hide.value ='';\">\n";
 } else {
-  $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\" {$wrap['op']}>\n\n\n{$list['name']} wrote..\n{$list['text']}</TEXTAREA>";
+  $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\">\n\n\n{$list['name']} wrote..\n{$list['text']}</TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=0>\n";
 }
 
@@ -84,7 +81,8 @@ $print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=\"reply\">\n".
                    "<INPUT TYPE=hidden NAME=\"page\" VALUE=\"$page\">\n".
                    "<INPUT TYPE=hidden NAME=\"table\" VALUE=\"$table\">\n".
                    "<INPUT TYPE=hidden NAME=\"rmail[origmail]\" VALUE=\"{$list['email']}\">\n".
-                   "<INPUT TYPE=hidden NAME=\"atc[reno]\" VALUE=\"{$list['no']}\">";
+                   "<INPUT TYPE=hidden NAME=\"atc[reno]\" VALUE=\"{$list['no']}\">\n".
+                   "<INPUT TYPE=hidden NAME=\"atc[html]\" VALUE=\"{$list['html']}\">";
 
 $pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<INPUT TYPE=hidden NAME=\"atc[rname]\" VALUE=\"{$pre_regist['rname']}\">";
 
@@ -103,6 +101,13 @@ if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode']) && $_SESSION[$j
 $pages = "&amp;page=$page";
 
 mysql_close();
+
+$print['preview_script'] = <<<EOF
+<script type="text/javascript">
+  var tarea_width = '{$board['width']}';
+  var tarea_cols  = '{$size['text']}';
+</script>
+EOF;
 
 # Template file 을 호출
 meta_char_check($print['theme'], 1, 1);

@@ -77,26 +77,6 @@ function form_size($size, $print = 0) {
   return $size;
 }
 
-# 넷스케이프와 익스간의 TEXTAREA WRAP 설정 여부를 결정하는 함수
-#
-function form_wrap($print = 0) {
-  global $board, $langs, $list, $agent;
-
-  if ($board['wrap'] && $agent['os'] != "LINUX" && !$list['html']) {
-    $wrap['op'] = "WRAP=hard";
-    $wrap['ment'] = "&nbsp;";
-  } else {
-    $wrap['op'] = "WRAP=off";
-    $wrap['ment'] = "{$langs['w_ment']}&nbsp;";
-  }
-
-  if ( $agent['br'] == "OTHER" )
-    $wrap['op'] = '';
-
-  if($print) echo $wrap;
-  return $wrap;
-}
-
 # 현재 페이지의 앞, 뒤 페이지를 정해준 갯수($num)만큼 출력하는 함수
 function page_list($table, $pages, $count, $num, $print = 0) {
   global $color; # 게시판 기본 설정 (config/global.php)
@@ -984,5 +964,14 @@ function print_spam_trap() {
   echo "<form method=\"POST\" action=\"{$_SERVER['PHP_SELF']}\">\n" .
        "<input type=\"hidden\" name=\"goaway\" value=\"1\">\n" .
        "</form>\n";
+}
+
+function debug_block ($ipaddr, $var) {
+  if($_SERVER['REMOTE_ADDR'] === $ipaddr) {
+    echo "<pre>\n";
+    print_r($var);
+    echo "</pre>\n";
+    exit;
+  }
 }
 ?>

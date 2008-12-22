@@ -43,6 +43,14 @@ SELECT {
   border-color: #555555;
   background-Color: #FFFFFF;
 }
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
 form { display: inline; }
 pre { font-family: tahoma, sans-serif; }
 

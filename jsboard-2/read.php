@@ -72,8 +72,8 @@ if($alert) {
   $list['num']  = print_reply($table, $list);
   $list['date'] = date("Y-m-d H:i:s", $list['date']);
   $list['text'] = $list['html'] ? $list['text'] : wordwrap($list['text'],$board['wwrap']);
-  $list['text'] = text_nl2br($list['text'], $list['html']);
-  $list['text'] = conv_emoticon($list['text'], $enable['emoticon']);
+  text_nl2br($list['text'], $list['html']);
+  conv_emoticon($list['text'], $enable['emoticon']);
   
   # 제목 길이를 테이블 크기에 맞춰 다음줄로 넘김
   if (!preg_match("/%$/", $board['width'])) {
