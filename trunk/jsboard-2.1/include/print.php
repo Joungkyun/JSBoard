@@ -719,9 +719,9 @@ function new_reply_read_format (&$buf, $html) {
     $dsc[] = '</blockquote><pre>';
   $src[] = '/\[[\s]*quote[\s]*=[\s]*&quot;(.*)&quot;[\s]*\]/i';
   if ( $html != 1 )
-    $dsc[] = '</pre><blockquote><cite>\\1 wrote:</cite><pre>';
+    $dsc[] = "</pre><blockquote><cite>\\1 wrote:</cite><pre>\n";
   else
-    $dsc[] = '<blockquote><cite>\\1 wrote:</cite>';
+    $dsc[] = "<blockquote><cite>\\1 wrote:</cite>\n";
 
   $buf = preg_replace ($src, $dsc, $buf);
 }
