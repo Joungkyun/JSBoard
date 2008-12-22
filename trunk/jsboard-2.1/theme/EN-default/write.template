@@ -114,6 +114,8 @@ if ( (!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1 ) {
 <input type="password" id="passwd" name="atc[passwd]" size={$size['pass']} maxlength=16 class="passwdbox" tabindex="6">
 {$pcaptcha}
 </td>
+END;
+}
 ?>
 </tr>
 

@@ -18,9 +18,8 @@
 <?=$print['dsearch']?>
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
-<td width=44 valign="bottom"><img src="./theme/KO-default/img/icon_over.gif"
- align="middle" alt=""></td>
-<td class="counter"> &gt;&gt; <?=$print['count']?></td>
+<td width=44 valign="bottom"><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=""></td>
+<td class="counter" width="95%"> &gt;&gt; <?=$print['count']?></td>
 <td class="admin">&nbsp;<?=$print['lout']?><?=$print['admin']?></td>
 </tr>
 
