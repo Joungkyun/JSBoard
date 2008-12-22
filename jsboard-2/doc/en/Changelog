@@ -18,6 +18,21 @@ file.
 Version   : jsboard 2.0.14
 
 
+Tue, Dec, 23 2008
+by JoungKyun.Kim
+	- changed reply format
+
+Sat, Dec, 13 2008
+by JoungKyun.Kim
+	- remove wrap property of textarea
+	  force line breaking per one line on read page
+	- remove html write option support html write basicaly.
+	  must setting allow html tag. (use [] instead of <> like bb code)
+	  [b]Bold[/b]
+	- support code block
+	  no force line breaking on [code] ~ [/code] block
+	  enable control with jsCodeBlock id on CSS for UI
+
 Sat, Dec 06 2008
   by JoungKyun.Kim
 	- fixed textarea col problem when wrap="hard"
