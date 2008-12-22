@@ -67,18 +67,6 @@ if($view['url']) {
 ?>
 
 <!-- ==================================================================== -->
-<!-- $html_chk_ok  : print CHECKED if parent article use HTML option      -->
-<!-- $html_chk_no  : print CHECKED if parent article don't use HTML option-->
-<!-- ==================================================================== -->
-<tr>
-<td>HTML</td>
-<td colspan=3>
-<input type="radio" name="atc[html]" value=1<?=$html_chk_ok?>> Yes
-<input type="radio" name="atc[html]" value=0<?=$html_chk_no?>> No
-</td>
-</tr>
-
-<!-- ==================================================================== -->
 <!-- print upload field                                                   -->
 <!-- ==================================================================== -->
 <?
