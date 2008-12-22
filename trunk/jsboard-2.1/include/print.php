@@ -565,18 +565,18 @@ function print_comment($table,$no,$print=0) {
        "<form method=\"post\" action=\"act.php\">\n".
        "<table summary=\"\" border=0 cellpadding=0 cellspacing=1 class=\"ci_table\">\n".
        "<tr>\n".
-       "<td align=\"center\">".
+       "<td align=\"center\" width=\"5\">".
        "<img src=\"./images/blank.gif\" width=5 height=1 border=0 alt=''>".
        "</td>\n".
-       "<td align=\"right\" valign=\"top\">\n".
+       "<td align=\"right\" valign=\"top\" width=\"20%\">\n".
        $_('c_na') . " <input type=\"text\"$disable name=\"atc[name]\" maxlength=30 size={$size['pass']} value=\"{$pre_regist['name']}\" style=\"margin: 1px 1px;\" tabindex=\"1\"><br>\n".
-       $_('c_ps') . " <input type=\"password\"$disable name=\"atc[passwd]\" size={$size['pass']} style=\"margin: 1px 1px;\" tabindex=\"2\">\n".
+       $_('c_ps') . " <input type=\"password\"$disable name=\"atc[passwd]\" size={$size['pass']} style=\"margin: 1px 1px;\" tabindex=\"2\"><br>\n".
        "<input type=\"submit\" value=\"" . $_('c_en') . "\" style=\"margin: 1px 1px;\" tabindex=\"4\">\n".
        "</td>\n".
        "<td align=\"center\">\n".
        "<textarea name=\"atc[text]\" cols=$textareasize rows=3 wrap=\"hard\" tabindex=\"3\"></textarea>\n".
        "</td>\n".
-       "<td align=\"center\">\n".
+       "<td align=\"center\" width=\"5\">\n".
        "<img src=\"./images/blank.gif\" width=5 height=1 border=0 alt=''>\n".
        "</td>\n".
        "</tr>\n".
