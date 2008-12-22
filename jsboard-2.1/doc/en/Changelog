@@ -12,6 +12,7 @@ Version 2.1.0
 Tue, Dec, 23 2008
 by JoungKyun.Kim
 	- changed reply format
+	- move previous page with b key on write/repay/edit page
 
 by WonKyu Park
 	- add jsboard wikify patch from http://ktug.kldp.org

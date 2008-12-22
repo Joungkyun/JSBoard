@@ -1,4 +1,6 @@
 
+<?=print_keymenu(3)?>
+
 <!-- ==================================================================== -->
 <!-- $board['width'] : print width of webboard. It's config in board admin-->
 <!-- $board['formtype'] : print form option to use upload image           -->
