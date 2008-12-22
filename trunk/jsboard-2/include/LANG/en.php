@@ -16,7 +16,6 @@ $langs['c_ps'] = "Pass";
 $langs['c_en'] = "ENTER";
 
 # write.php
-$langs['w_ment'] = "Don't write a long sentence unless you use HTML code or spaces";
 $langs['upload'] = "Uploading file is denied by the administrator.";
 
 # edit.php
@@ -164,6 +163,8 @@ $langs['ua_emoticon']   = "Emoticon";
 $langs['ua_emoticon_y'] = "Use";
 $langs['ua_emoticon_n'] = "Don't use";
 
+$langs['ua_html_tag'] = 'Input HTML tag to allow with delimiter \',\'';
+
 $langs['ua_align']   = "Board Align";
 $langs['ua_align_c'] = "Center";
 $langs['ua_align_l'] = "Left";
@@ -185,10 +186,8 @@ $langs['ua_b13'] = "Cookie";
 $langs['ua_b14'] = "Day";
 $langs['ua_b15'] = "Shwo";
 $langs['ua_b16'] = "Hide";
-$langs['ua_b19'] = "Board wrap";
-$langs['ua_b20'] = "Avoid long text in content";
 $langs['ua_b21'] = "Word wrap";
-$langs['ua_b22'] = "Limit of the number of characters if board wrap isn't applied.";
+$langs['ua_b22'] = "Limit of the number of characters per line on Read article.";
 
 $langs['ua_ha1'] = "Show";
 $langs['ua_ha2'] = "IP address";

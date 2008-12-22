@@ -52,6 +52,14 @@ TEXTAREA {
   padding-left: 1px;
   background-Color: <?=$color['l4_bg']?>;
 }
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
 form { display: inline; }
 
 <?=$user_stylesheet?>

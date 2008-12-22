@@ -17,7 +17,6 @@ $langs['c_ps'] = "암호";
 $langs['c_en'] = "입력";
 
 # write.php
-$langs['w_ment'] = "띄어쓰기 없이 쓰거나 HTML 미사용 시 한줄을 너무 길게 쓰지 마십시오.";
 $langs['upload'] = "File upload 기능을 전체 관리자가 제한하고 있습니다.";
 
 # edit.php
@@ -167,6 +166,8 @@ $langs['ua_emoticon']   = "이모티콘";
 $langs['ua_emoticon_y'] = "사용하기";
 $langs['ua_emoticon_n'] = "사용하지 않기";
 
+$langs['ua_html_tag'] = '사용을 허가할 HTML tag를 , 를 구분자로 적습니다.';
+
 $langs['ua_align']   = "게시판 정렬";
 $langs['ua_align_c'] = "가운데";
 $langs['ua_align_l'] = "좌측";
@@ -188,10 +189,8 @@ $langs['ua_b13'] = "쿠키기간";
 $langs['ua_b14'] = "일";
 $langs['ua_b15'] = "출력함";
 $langs['ua_b16'] = "출력하지 않음";
-$langs['ua_b19'] = "보드랩";
-$langs['ua_b20'] = "글내용 길게 늘어지는것 방지";
 $langs['ua_b21'] = "워드랩";
-$langs['ua_b22'] = "보드랩이 적용안될 경우 강제로 자를 글자수";
+$langs['ua_b22'] = "읽기 시 한 줄당 표시할 글자 수";
 
 $langs['ua_ha1'] = "출력여부";
 $langs['ua_ha2'] = "IP 주소를";

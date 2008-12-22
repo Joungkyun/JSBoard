@@ -70,6 +70,8 @@ form { display: inline; }
 
 <!-- ======================= Start Header Design ======================= -->
 <?
+echo $print['preview_script'] . "\n";
+
 if(!$np) {
   # Design per user
   include "{$board['headpath']}";
@@ -155,18 +157,6 @@ EOF;
 ?>
 
 <!-- ==================================================================== -->
-<!-- $html_chk_ok  : print CHECKED if parent article use HTML option      -->
-<!-- $html_chk_no  : print CHECKED if parent article don't use HTML option-->
-<!-- ==================================================================== -->
-<TR>
-<TD><B>HTML</B></TD>
-<TD>
-<INPUT TYPE="radio" NAME="atc[html]" VALUE=1<?=$html_chk_ok?>> Use
-<INPUT TYPE="radio" NAME="atc[html]" VALUE=0<?=$html_chk_no?>> Don't Use
-</TD>
-</TR>
-
-<!-- ==================================================================== -->
 <!-- print upload field                                                   -->
 <!-- ==================================================================== -->
 <?
@@ -236,13 +226,12 @@ EOF;
 <TR><TD BGCOLOR="<?=$color['l5_bg']?>" ALIGN="CENTER">
 
 <!-- ==================================================================== -->
-<!-- $wrap['op']   : print wrap option of textarea                        -->
 <!-- $size['text'] : print size of textarea                               -->
 <!-- $list['text'] : print content of original content for modified       -->
 <!-- ==================================================================== -->
 <!-- =============================== Contents =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<TEXTAREA NAME="epost" CLASS="resizable" cols="<?=$size['text']?>" <?=$wrap['op']?>><?="{$list['text']}\n\n"?></TEXTAREA>
+<TEXTAREA NAME="epost" CLASS="resizable"><?="{$list['text']}\n\n"?></TEXTAREA>
 <!-- =============================== Contents =============================== -->
 
 </TD></TR>
@@ -250,13 +239,11 @@ EOF;
 
 
 <!-- ==================================================================== -->
-<!-- $wrap['ment'] : if wrap option isn't hard, print warn message        -->
 <!-- $table.$page      : print link option to back list                   -->
 <!-- $print['passform']  : hidden value for regist reply article          -->
 <!-- $orig_option      : back to original size of textarea                -->
 <!-- ==================================================================== -->
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD ALIGN="right"><?=$wrap['ment']?></TD></TR>
 <TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <?=$print['passform']?>
 <INPUT TYPE="submit" VALUE="Modify">

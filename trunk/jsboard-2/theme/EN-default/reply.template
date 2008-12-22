@@ -78,6 +78,8 @@ form { display: inline; }
 
 <!-- ======================= Start Header Design ======================= -->
 <?
+echo $print['preview_script'] . "\n";
+
 if(!$np) {
   # Design per user
   include "{$board['headpath']}";
@@ -162,18 +164,6 @@ EOF;
 ?>
 
 <!-- ==================================================================== -->
-<!-- $html_chk_ok  : print CHECKED if parent article use HTML option      -->
-<!-- $html_chk_no  : print CHECKED if parent article don't use HTML option-->
-<!-- ==================================================================== -->
-<TR>
-<TD><B>HTML</B></TD>
-<TD COLSPAN="3">
-<INPUT TYPE="radio" NAME="atc[html]" VALUE=1<?=$html_chk_ok?>> Use
-<INPUT TYPE="radio" NAME="atc[html]" VALUE=0<?=$html_chk_no?>> Don't Use
-</TD>
-</TR>
-
-<!-- ==================================================================== -->
 <!-- print upload field                                                   -->
 <!-- ==================================================================== -->
 <?
@@ -251,14 +241,12 @@ EOF;
 
 
 <!-- ==================================================================== -->
-<!-- $wrap['ment'] : if wrap option isn't hard, print warn message        -->
 <!-- $table.$pages     : print link option to back list                   -->
 <!-- $print['passform']  : hidden value for regist reply article          -->
 <!-- $orig_option      : back to original size of textarea                -->
 <!-- $orig_button      : print button for printed parent contents         -->
 <!-- ==================================================================== -->
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD ALIGN="right"><?=$wrap['ment']?></TD></TR>
 <TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <?=$print['passform']?>
 <INPUT TYPE="submit" VALUE="Regist">

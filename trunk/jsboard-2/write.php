@@ -38,9 +38,6 @@ if($board['notice']) print_notice($board['notice']);
 if($noup == 1) $board['formtype'] = "";
 else $board['formtype'] = " ENCTYPE=\"multipart/form-data\"";
 
-# TEXTAREAÀÇ wrap option check
-$wrap = form_wrap();
-
 $print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=\"write\">\n".
                    "<INPUT TYPE=hidden NAME=\"table\" VALUE=\"$table\">\n";
 
@@ -59,6 +56,13 @@ $pages = $page ? "&amp;page=$page" : "";
 
 if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode']) && $_SESSION[$jsboard]['pos'] != 1) 
   $pre_regist['name'] = $_SESSION[$jsboard]['name'] ? $_SESSION[$jsboard]['name'] : $pre_regist['name'];
+
+$print['preview_script'] = <<<EOF
+<script type="text/javascript">
+  var tarea_width = '{$board['width']}';
+  var tarea_cols  = '{$size['text']}';
+</script>
+EOF;
 
 meta_char_check($print['theme'], 1, 1);
 require_once 'captcha/captchacommon.php';

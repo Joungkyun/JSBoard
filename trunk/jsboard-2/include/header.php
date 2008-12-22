@@ -68,11 +68,13 @@ include_once "include/check.php";
 if(!check_windows()) { include_once "include/exec.php"; }
 include_once "include/get.php";
 include_once "include/list.php";
+include_once "include/sURI.php";
 include_once "include/parse.php";
 include_once "include/sql.php";
 include_once "include/replicate.php";
 include_once "include/sendmail.php";
 
+init_htmltag();
 $agent = get_agent();
 $db = replication_mode($db);
 
