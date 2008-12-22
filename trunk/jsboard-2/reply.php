@@ -47,6 +47,7 @@ $reti = ++$reti;
 if ($reti == "1") $reti = "";
 else $reti = "^$reti";
 
+/*
 $conv_list[0] = "/<([^<>\n]+)\n([^\n<>]+)>/i";
 $resu_list[0] = "<\\1 \\2>";
 $conv_list[1] = "/^/";
@@ -54,6 +55,10 @@ $resu_list[1] = ": ";
 $conv_list[2] = "/\n/";
 $resu_list[2] = "\n: ";
 $list['text'] = preg_replace($conv_list, $resu_list, $list['text']);
+ */
+$list['text'] = <<<EOF
+[quote="{$list['name']}"]{$list['text']}[/quote]
+EOF;
 
 # 본문에 html tag 가 존재할 경우를 대비
 $list['text'] = htmlspecialchars($list['text']);
@@ -68,11 +73,11 @@ else $board['formtype'] = " ENCTYPE=\"multipart/form-data\"";
 # 원본글 포함 선택 여부
 if ($enable['ore']) {
   $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\"></TEXTAREA>";
-  $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"hide\" VALUE=\"\n\n{$list['name']} wrote..\n{$list['text']}\">\n" .
+  $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"hide\" VALUE=\"{$list['text']}\">\n" .
                  "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=1>\n" .
                  "<INPUT TABINDEX=\"100\" TYPE=\"button\" NAME=\"quote\" VALUE=\"원본 포함\" onClick=\"this.form.rpost.value=this.form.rpost.value + this.form.hide.value; this.form.hide.value ='';\">\n";
 } else {
-  $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\">\n\n\n{$list['name']} wrote..\n{$list['text']}</TEXTAREA>";
+  $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\">{$list['text']}</TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=0>\n";
 }
 
