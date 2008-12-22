@@ -38,7 +38,7 @@
 <!-- ==================================================================== -->
 <tr>
 <td width=80>이름</td>
-<td colspan="3"><input type="text" id="name" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$pre_regist['name']?>"<?=$disable?>></td>
+<td colspan="3"><input type="text" id="name" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$pre_regist['name']?>"<?=$disable?> tabindex="1"></td>
 </tr>
 
 <!-- ==================================================================== -->
@@ -50,7 +50,7 @@ if ( $view['email'] ) {
   echo <<<END
 <tr>
 <td>메일</td>
-<td colspan="3"><input type="text" id="email" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$pre_regist['email']}"{$disable}></td>
+<td colspan="3"><input type="text" id="email" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$pre_regist['email']}"{$disable} tabindex="2"></td>
 </tr>
 END;
 }
@@ -65,7 +65,7 @@ if ( $view['url'] ) {
   echo <<<END
 <tr>
 <td>홈페이지</td>
-<td colspan="3"><input type="text" id="url" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$pre_regist['url']}"{$disable}></td>
+<td colspan="3"><input type="text" id="url" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$pre_regist['url']}"{$disable} tabindex="3"></td>
 </tr>
 END;
 }
@@ -81,7 +81,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <td>파일</td>
 <td colspan="3">
 <input type="hidden" name="max_file_size" value="{$upload['maxsize']}">
-<input type="file" name="userfile" size="{$size['uplo']}" maxlength=256>
+<input type="file" name="userfile" size="{$size['uplo']}" maxlength=256 tabindex="4">
 </td>
 </tr>
 
@@ -102,7 +102,7 @@ EOF;
 <!-- ==================================================================== -->
 <tr>
 <td>제목</td>
-<td colspan="3"><input type="text" id="title" name="atc[title]" size="<?=$size['titl']?>" maxlength=100></td>
+<td colspan="3"><input type="text" id="title" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 tabindex="5"></td>
 </tr>
 
 <tr>
@@ -115,7 +115,7 @@ if ( (!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1 ) {
   echo <<<END
 <td valign="top">패스워드</td>
 <td valign="top"{$pcaptcharcolspan}>
-<input type="password" id="passwd" name="atc[passwd]" size="{$size['pass']}" maxlength=16 class="passwdbox">
+<input type="password" id="passwd" name="atc[passwd]" size="{$size['pass']}" maxlength=16 class="passwdbox" tabindex="6">
 {$pcaptcha}
 </td>
 END;
@@ -140,7 +140,7 @@ END;
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<textarea id="wpost" class="resizable" name="atc[text]"></textarea>
+<textarea id="wpost" class="resizable" name="atc[text]" tabindex="7"></textarea>
 <!-- =============================== 글내용 =============================== -->
 
 </td></tr>
@@ -155,10 +155,10 @@ END;
 <table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
-<input type="submit" value="등록">
-<input type="button" value="다시" onclick="document.location.reload(); return false;">
-<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="목록">
-<input type="button" onclick="history.back()" value="이전">
+<input type="submit" value="등록" tabindex="8">
+<input type="button" value="다시" onclick="document.location.reload(); return false;" tabindex="9">
+<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="목록" tabindex="10">
+<input type="button" onclick="history.back()" value="이전" tabindex="11">
 </td></tr>
 </table>
 </form>

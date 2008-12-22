@@ -35,7 +35,7 @@
 <!-- ==================================================================== -->
 <tr>
 <td width=80>Name</td>
-<td colspan=3><input type="text" id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist[name]?>"<?=$disable?>></td>
+<td colspan=3><input type="text" id="name" name="atc[name]" size=<?=$size['name']?> maxlength=50 value="<?=$pre_regist[name]?>"<?=$disable?> tabindex="1"></td>
 </tr>
 
 <!-- ==================================================================== -->
@@ -47,7 +47,7 @@ if($view['email']) {
   echo "
 <tr>
 <td>Email</td>
-<td colspan=3><input type=\"text\" id=\"email\" name=\"atc[email]\" size={$size['name']} maxlength=255 value=\"{$pre_regist['email']}\"$disable></td>
+<td colspan=3><input type=\"text\" id=\"email\" name=\"atc[email]\" size={$size['name']} maxlength=255 value=\"{$pre_regist['email']}\"$disable tabindex=\"2\"></td>
 </tr>\n";
 }
 ?>
@@ -61,7 +61,7 @@ if($view['url']) {
   echo "
 <tr>
 <td>Homepage</td>
-<td colspan=3><input type=\"text\" id=\"url\" name=\"atc[url]\" size={$size['name']} maxlength=255 value=\"{$pre_regist['url']}\"$disable></td>
+<td colspan=3><input type=\"text\" id=\"url\" name=\"atc[url]\" size={$size['name']} maxlength=255 value=\"{$pre_regist['url']}\"$disable tabindex=\"3\"></td>
 </tr>\n";
 }
 ?>
@@ -75,7 +75,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
        "<td>ÆÄÀÏ</td>\n".
        "<td colspan=3>\n".
        "<input type=\"hidden\" name=\"max_file_size\" value=\"{$upload['maxsize']}\">\n".
-       "<input type=\"file\" name=\"userfile\" size={$size['uplo']} maxlength=256>\n".
+       "<input type=\"file\" name=\"userfile\" size={$size['uplo']} maxlength=256 tabindex=\"4\">\n".
        "</td>\n".
        "</tr>\n";
 } elseif(!$upload['yesno'] && $cupload['yesno']) {
@@ -93,7 +93,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <!-- ==================================================================== -->
 <tr>
 <td>Subject</td>
-<td colspan=3><input type="text" id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100 value="<?="Re$reti: {$list['title']}"?>"></td>
+<td colspan=3><input type="text" id="title" name="atc[title]" size=<?=$size['titl']?> maxlength=100 value="<?="Re$reti: {$list['title']}"?>" tabindex="5"></td>
 </tr>
 
 <tr>
@@ -105,7 +105,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 if(preg_match("/^[04]$/",$board['mode']) && !$board['super']) {
   echo "<td valign=\"top\">Password</td>\n".
        "<td valign=\"top\"{$pcaptcharcolspan}>\n".
-       "<input type=\"password\" id=\"passwd\" name=\"atc[passwd]\" size={$size['pass']} maxlength=16 class=\"passwdbox\">\n".
+       "<input type=\"password\" id=\"passwd\" name=\"atc[passwd]\" size={$size['pass']} maxlength=16 class=\"passwdbox\" tabindex=\"6\">\n".
        "{$pcaptcha}\n" .
        "</td>\n";
 }
@@ -146,10 +146,10 @@ if(preg_match("/^[04]$/",$board['mode']) && !$board['super']) {
 <table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
-<input type="submit" value="Regist">
-<input type="button" value="Reset" onclick="document.location.reload(); return true;"><?=$orig_button?>
-<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="List">
-<input type="button" onclick="history.back()" value="Back">
+<input type="submit" value="Regist" tabindex="8">
+<input type="button" value="Reset" onclick="document.location.reload(); return true;"><?=$orig_button? tabindex="9">
+<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="List" tabindex="10">
+<input type="button" onclick="history.back()" value="Back" tabindex="11">
 </td></tr>
 </table>
 
