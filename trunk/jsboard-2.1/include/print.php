@@ -565,25 +565,20 @@ function print_comment($table,$no,$print=0) {
        "<form method=\"post\" action=\"act.php\">\n".
        "<table summary=\"\" border=0 cellpadding=0 cellspacing=1 class=\"ci_table\">\n".
        "<tr>\n".
-       "<td rowspan=2 align=\"center\">".
+       "<td align=\"center\">".
        "<img src=\"./images/blank.gif\" width=5 height=1 border=0 alt=''>".
        "</td>\n".
-       "<td align=\"right\">\n".
-       $_('c_na') . " <input type=\"text\"$disable name=\"atc[name]\" maxlength=30 size={$size['pass']} value=\"{$pre_regist['name']}\"><br>\n".
-       $_('c_ps') . " <input type=\"password\"$disable name=\"atc[passwd]\" size={$size['pass']}>\n".
+       "<td align=\"right\" valign=\"top\">\n".
+       $_('c_na') . " <input type=\"text\"$disable name=\"atc[name]\" maxlength=30 size={$size['pass']} value=\"{$pre_regist['name']}\" style=\"margin: 1px 1px;\"><br>\n".
+       $_('c_ps') . " <input type=\"password\"$disable name=\"atc[passwd]\" size={$size['pass']} style=\"margin: 1px 1px;\">\n".
+       "<input type=\"submit\" value=\"" . $_('c_en') . "\" style=\"margin: 1px 1px;\">\n".
        "</td>\n".
-       "<td rowspan=2 align=\"center\">".
-       "<img src=\"./images/blank.gif\" width=5 height=1 border=0 alt=''>".
-       "</td>\n".
-       "<td rowspan=2 align=\"center\">\n".
+       "<td align=\"center\">\n".
        "<textarea name=\"atc[text]\" cols=$textareasize rows=3 wrap=\"hard\"></textarea>\n".
        "</td>\n".
-       "<td rowspan=2 align=\"center\">\n".
+       "<td align=\"center\">\n".
        "<img src=\"./images/blank.gif\" width=5 height=1 border=0 alt=''>\n".
        "</td>\n".
-       "</tr>\n".
-       "<tr>\n".
-       "<td align=\"right\"><input type=\"submit\" value=\"" . $_('c_en') . "\"></td>\n".
        "</tr>\n".
        "</table>\n".
        "<input type=\"hidden\" name=\"atc[no]\" value=\"$no\">\n".
