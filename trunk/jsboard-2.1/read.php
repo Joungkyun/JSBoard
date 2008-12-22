@@ -1,6 +1,7 @@
 <?php
 $p_time[] = microtime(); # 속도 체크
-include "include/header.php";
+require_once "include/header.php";
+require_once "include/wikify.php";
   
 if(preg_match("/^(2|3|5)$/",$board['mode']) && !session_is_registered("$jsboard"))
   print_error($_('login_err'));
@@ -75,6 +76,9 @@ if($alert) {
   text_nl2br($list['text'], $list['html']);
   conv_emoticon($list['text'], $enable['emoticon']);
   new_reply_read_format ($list['text'], $list['html']);
+
+  macro_interwiki();
+  wikify($list['text']);
   
   # 제목 길이를 테이블 크기에 맞춰 다음줄로 넘김
   if (!preg_match("/%$/", $board['width'])) {
