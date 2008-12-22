@@ -256,6 +256,7 @@ function get_comment($table,$no,$prints=0) {
 
 function print_comment_art($table,$list,$prints=0,$delimg) {
   global $jsboard, $board, $page, $no, $delimgcheck, $print;
+  global $_config;
 
   $list['name'] = ugly_han(htmlspecialchars(trim($list['name'])));
   $list['name'] = preg_replace("/&amp;(lt|gt|quot)/i","&\\1",$list['name']);
@@ -265,6 +266,7 @@ function print_comment_art($table,$list,$prints=0,$delimg) {
   $list['text'] = preg_replace("/&lt;(\/?FONT[^&]*)&gt;/i","<\\1>",$list['text']);
 
   $list['text'] = auto_link($list['text']);
+  wikify($list['text']);
   $list['date'] = date("m/d H:i:s",$list['date']);
 
   if(($board['adm'] || $board['super'] == 1) ||

@@ -22,6 +22,9 @@ file.
   by 김정균
   	- 답장 형식 변경
 
+  by 박원규
+	- jsboard wikify patch (from http://ktug.kldp.org)
+
 2008.12.22
   by 김정균
 	- textarea 의 wrap 옵션 제거
