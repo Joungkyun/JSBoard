@@ -75,8 +75,8 @@ function search2sql($o, $wh = 1, $join = 0) {
     $chkBOpen = strlen(preg_replace("/\)/i","",$chk));
     $chkBClos = strlen(preg_replace("/\(/i","",$chk));
 
-		if($chkAOpen !== $chkAClos) $str .= "]";
-		elseif($chkBOpen !== $chkBClos) $str .= ")";
+    if($chkAOpen !== $chkAClos) $str .= "]";
+    elseif($chkBOpen !== $chkBClos) $str .= ")";
   }
 
   if($o['at'] == "d") {
@@ -286,13 +286,18 @@ function wordwrap_js (&$buf, $len = 80) {
   $buf = '';
   for ( $i=0; $i<$size; $i++ ) {
     $_buf[$i] = rtrim ($_buf[$i]);
-    if ( strlen ($_buf[$i]) > $len ) {
-      if ( ord ($_buf[$i][$len - 1]) & 0x80 ) {
-        $z = strlen(preg_replace ('/[\x00-\x7F]/', '', substr ($_buf[$i], 0, $len)));
+    $_bufs = preg_replace ('/\[(\/)?quote[^\]]*\]/i', '', $_buf[$i]);
+    $_bufs_size = strlen ($_bufs);
+    $_rems = strlen ($_buf[$i]) - $_bufs_size;
+
+    if ( $_bufs_size > $len ) {
+      if ( ord ($_bufs[$len - 1]) & 0x80 ) {
+        $z = strlen(preg_replace ('/[\x00-\x7F]/', '', substr ($_bufs, 0, $len)));
         $cut = ( $z % 2 ) ? $len - 1 : $len;
       } else
         $cut = $len;
 
+      $cut += $_rems;
       $buf .= substr ($_buf[$i], 0, $cut) . "\n";
 
       if ( preg_match ('/^(: )+/', $_buf[$i], $matches) ) {
