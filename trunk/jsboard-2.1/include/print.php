@@ -476,7 +476,7 @@ function detail_searchform($p='') {
           "<td class=\"ds_td\">" . $_('sh_str') . "</td>\n".
           "<td class=\"ds_td\">:</td>\n".
           "<td class=\"ds_td\">\n".
-          "<input type=\"text\" name=\"o[ss]\" size=".form_size(26)." maxlength=255 value=\"{$o['ss']}\">\n".
+          "<input type=\"text\" name=\"o[ss]\" size=".form_size(26)." maxlength=255 value=\"{$o['ss']}\" tabindex=\"1\">\n".
           "<input type=\"hidden\" name=\"o[at]\" value=\"d\">\n".
           "<input type=\"hidden\" name=\"o[go]\" value=\"p\">\n".
           "</td>\n".
@@ -486,10 +486,10 @@ function detail_searchform($p='') {
           "<td class=\"ds_td\">" . $_('sh_pat') . "</td>\n".
           "<td class=\"ds_td\">:</td>\n".
           "<td class=\"ds_td\">\n".
-          "<input type=\"radio\" name=\"o[sc]\" value=\"t\"$TCHK> <span class=\"ds_field\">TITLE</span>\n".
-          "<input type=\"radio\" name=\"o[sc]\" value=\"c\"$CCHK> <span class=\"ds_field\">Contents</span>\n".
-          "<input type=\"radio\" name=\"o[sc]\" value=\"n\"$NCHK> <span class=\"ds_field\">Writer</span>\n".
-          "<input type=\"radio\" name=\"o[sc]\" value=\"a\"$ACHK> <span class=\"ds_field\">ALL</span>\n".
+          "<input type=\"radio\" name=\"o[sc]\" value=\"t\"$TCHK tabindex=\"2\"> <span class=\"ds_field\">TITLE</span>\n".
+          "<input type=\"radio\" name=\"o[sc]\" value=\"c\"$CCHK tabindex=\"3\"> <span class=\"ds_field\">Contents</span>\n".
+          "<input type=\"radio\" name=\"o[sc]\" value=\"n\"$NCHK tabindex=\"4\"> <span class=\"ds_field\">Writer</span>\n".
+          "<input type=\"radio\" name=\"o[sc]\" value=\"a\"$ACHK tabindex=\"5\"> <span class=\"ds_field\">ALL</span>\n".
           "</td>\n".
           "</tr>\n\n".
 
@@ -497,27 +497,27 @@ function detail_searchform($p='') {
           "<td class=\"ds_td\">" . $_('sh_dat') . "</td>\n".
           "<td class=\"ds_td\">:</td>\n".
           "<td class=\"ds_td\">\n".
-          "<select name=\"o[y1]\">\n".
+          "<select name=\"o[y1]\" tabindex=\"6\">\n".
           "{$print['peys']}\n".
           "</select>\n\n".
 
-          "<select name=\"o[m1]\">\n".
+          "<select name=\"o[m1]\" tabindex=\"7\">\n".
           "{$print['pems']}\n".
           "</select>\n\n".
 
-          "<select name=\"o[d1]\">\n".
+          "<select name=\"o[d1]\" tabindex=\"8\">\n".
           "{$print['peds']}\n".
           "</select>\n".
           "-\n".
-          "<select name=\"o[y2]\">\n".
+          "<select name=\"o[y2]\" tabindex=\"9\">\n".
           "{$print['peye']}\n".
           "</select>\n\n".
 
-          "<select name=\"o[m2]\">\n".
+          "<select name=\"o[m2]\" tabindex=\"10\">\n".
           "{$print['peme']}\n".
           "</select>\n\n".
 
-          "<select name=\"o[d2]\">\n".
+          "<select name=\"o[d2]\" tabindex=\"11\">\n".
           "{$print['pede']}\n".
           "</select>\n".
           "</td>\n".
@@ -527,8 +527,8 @@ function detail_searchform($p='') {
           "<td class=\"ds_td\">" . $_('check_y') . "</td>\n".
           "<td class=\"ds_td\">:</td>\n".
           "<td class=\"ds_td\">\n".
-          "<input type=\"checkbox\" name=\"o[er]\" value=\"y\"$ERCHK>\n".
-          "<input type=\"submit\" value=\"" . $_('sh_sbmit') . "\">\n".
+          "<input type=\"checkbox\" name=\"o[er]\" value=\"y\"$ERCHK tabindex=\"12\">\n".
+          "<input type=\"submit\" value=\"" . $_('sh_sbmit') . "\" tabindex=\"13\">\n".
           "</td>\n".
           "</tr>\n\n".
 
@@ -672,6 +672,8 @@ function print_keymenu($type=0) {
               "    location_ref('$nlink');\n".
               "  } else if(ch == 'b' || ch == 'B' || ch == '-') {\n".
               "    location_ref('$plink');\n".
+              "  } else if(ch == 's' || ch == 'S') {\n".
+              "    document.getElementById('searchstr').focus();\n".
               "  } else if(ch == 'w' || ch == 'W' || ch == '*') {\n".
               "    location_ref('./write.php?table=$table&page=$page');\n".
               "  } $anycmd\n";
