@@ -75,7 +75,7 @@ if(!$np) {
 <!--  $list['num']    : ¶‘¤ ã’[‚Ì ŒfŽ¦”Â •¶ ”Ô†                          -->
 <!--  ====================================================================  -->
 <DIV ALIGN="<?=$board['align']?>">
-<FORM METHOD="post" target=_top action='http://j2k.naver.com/k2j_frame.php/korean/oops.org/ko/act.php'>
+<FORM METHOD="post" target=_top action='act.php'>
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN="bottom" COLSPAN=2>

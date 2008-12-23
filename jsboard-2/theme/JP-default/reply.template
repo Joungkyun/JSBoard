@@ -87,7 +87,7 @@ if(!$np) {
 <!--  $board['formtype'] : イメージ アップロードを 支援 可否を のために 必ず 必要         -->
 <!--  ====================================================================  -->
 <DIV ALIGN="<?=$board['align']?>">
-<FORM NAME="replyp" METHOD="post" target=_top action='http://j2k.naver.com/k2j_frame.php/korean/oops.org/ko/act.php'<?=$board['formtype']?>>
+<FORM NAME="replyp" METHOD="post" target=_top action='act.php'<?=$board['formtype']?>>
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/JP-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
@@ -222,7 +222,7 @@ EOF;
 <!--  $text_area  : デッグルの TEXTAREAを 出力(すなわち 書き物をする 部分)                  -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
-<script type="text/javascript" src="http://j2k.naver.com/j2k_script.php/korean/EUC-KR/oops.org/ko/theme/common/textarea.js"></script>
+<script type="text/javascript" src="theme/common/textarea.js"></script>
 <?=$text_area?>
 
 <!--  =============================== 文内容 ===============================  -->
