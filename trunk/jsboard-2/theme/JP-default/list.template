@@ -124,7 +124,7 @@ EOF;
   }
 ?>
   <TD WIDTH="<?=$td_width[dates]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">日付</FONT></TD>
-  <TD WIDTH="<?=$td_width[refer]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">問い合わせ</FONT></TD>
+  <TD WIDTH="<?=$td_width[refer]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">読み</FONT></TD>
 </TR>
 
 <!--  ====================================================================  -->
@@ -164,7 +164,7 @@ EOF;
 </TR>
 
 <!--  ====================================================================  -->
-<!--  ゴムセックポムと ページ フォームは doc/ko/README.THEME 参照                         -->
+<!--  ゴムセックポムと ページ フォームは doc/en/README.THEME 参照                         -->
 <!--  $print['dserlink'] : 詳細 検索 リンク 出力                              -->
 <!--  $print['times']  : 右側 下端の 処理時間 出力                          -->
 <!--  ====================================================================  -->
