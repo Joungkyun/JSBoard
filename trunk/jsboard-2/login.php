@@ -27,8 +27,8 @@ if($table && file_exists("data/$table/config.php")) {
 $size = form_size(6);
 
 $opt = !$table ? "" : "&amp;table=$table";
-$hin = !$table ? "" : "<INPUT TYPE=hidden NAME=table VALUE=\"$table\">";
-$tin = ($type == "admin") ? "<INPUT TYPE=hidden NAME=type VALUE=\"$type\">" : "";
+$hin = !$table ? "" : "<INPUT TYPE=\"hidden\" NAME=\"table\" VALUE=\"$table\">";
+$tin = ($type == "admin") ? "<INPUT TYPE=\"hidden\" NAME=\"type\" VALUE=\"$type\">" : "";
 $board['align'] = $board['align'] ? $board['align'] : "center";
 $print['theme'] = !$print['theme'] ? "KO-default" : $print['theme'];
 

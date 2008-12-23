@@ -72,30 +72,30 @@ else $board['formtype'] = " ENCTYPE=\"multipart/form-data\"";
 
 # 원본글 포함 선택 여부
 if ($enable['ore']) {
-  $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\"></TEXTAREA>";
+  $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\" tabindex=\"7\"></TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"hide\" VALUE=\"{$list['text']}\">\n" .
                  "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=1>\n" .
-                 "<INPUT TABINDEX=\"100\" TYPE=\"button\" NAME=\"quote\" VALUE=\"원본 포함\" onClick=\"this.form.rpost.value=this.form.rpost.value + this.form.hide.value; this.form.hide.value ='';\">\n";
+                 "<INPUT TABINDEX=\"100\" TYPE=\"button\" NAME=\"quote\" VALUE=\"원본 포함\" onClick=\"this.form.rpost.value=this.form.rpost.value + this.form.hide.value; this.form.hide.value ='';\" tabindex=\"9\">\n";
 } else {
-  $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\">{$list['text']}</TEXTAREA>";
+  $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\" tabindex=\"7\">{$list['text']}</TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=0>\n";
 }
 
 $page = $page ? $page : 1;
-$print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=\"reply\">\n".
-                   "<INPUT TYPE=hidden NAME=\"page\" VALUE=\"$page\">\n".
-                   "<INPUT TYPE=hidden NAME=\"table\" VALUE=\"$table\">\n".
-                   "<INPUT TYPE=hidden NAME=\"rmail[origmail]\" VALUE=\"{$list['email']}\">\n".
-                   "<INPUT TYPE=hidden NAME=\"atc[reno]\" VALUE=\"{$list['no']}\">\n".
-                   "<INPUT TYPE=hidden NAME=\"atc[html]\" VALUE=\"{$list['html']}\">";
+$print['passform'] = "<INPUT TYPE=\"hidden\" NAME=\"o[at]\" VALUE=\"reply\">\n".
+                   "<INPUT TYPE=\"hidden\" NAME=\"page\" VALUE=\"$page\">\n".
+                   "<INPUT TYPE=\"hidden\" NAME=\"table\" VALUE=\"$table\">\n".
+                   "<INPUT TYPE=\"hidden\" NAME=\"rmail[origmail]\" VALUE=\"{$list['email']}\">\n".
+                   "<INPUT TYPE=\"hidden\" NAME=\"atc[reno]\" VALUE=\"{$list['no']}\">\n".
+                   "<INPUT TYPE=\"hidden\" NAME=\"atc[html]\" VALUE=\"{$list['html']}\">";
 
-$pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<INPUT TYPE=hidden NAME=\"atc[rname]\" VALUE=\"{$pre_regist['rname']}\">";
+$pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<INPUT TYPE=\"hidden\" NAME=\"atc[rname]\" VALUE=\"{$pre_regist['rname']}\">";
 
 if(!$nodisable) {
-  $print['passform'] .= "\n<INPUT TYPE=hidden NAME=\"atc[name]\" VALUE=\"{$pre_regist['name']}\">".
+  $print['passform'] .= "\n<INPUT TYPE=\"hidden\" NAME=\"atc[name]\" VALUE=\"{$pre_regist['name']}\">".
                       "{$pre_regist['rname']}".
-                      "\n<INPUT TYPE=hidden NAME=\"atc[email]\" VALUE=\"{$pre_regist['email']}\">".
-                      "\n<INPUT TYPE=hidden NAME=\"atc[url]\" VALUE=\"{$pre_regist['url']}\">\n";
+                      "\n<INPUT TYPE=\"hidden\" NAME=\"atc[email]\" VALUE=\"{$pre_regist['email']}\">".
+                      "\n<INPUT TYPE=\"hidden\" NAME=\"atc[url]\" VALUE=\"{$pre_regist['url']}\">\n";
 }  elseif($_SESSION[$jsboard]['pos'] == 1) {
   $print['passform'] .= "{$pre_regist['rname']}\n";
 }

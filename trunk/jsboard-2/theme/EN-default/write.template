@@ -130,7 +130,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <TR>
 <TD WIDTH=80><B>Name</B></TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?>></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?> tabindex="1"></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -143,7 +143,7 @@ if($view['email']) {
 
 <TR>
 <TD><B>Email</B></TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable tabindex="2"></TD>
 </TR>
 EOF;
 }
@@ -159,7 +159,7 @@ if($view['url']) {
 
 <TR>
 <TD><B>Homepage</B></TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable tabindex="3"></TD>
 </TR>
 EOF;
 }
@@ -175,7 +175,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <TD><B>File</B></TD>
 <TD COLSPAN=3>
 <INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
-<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256>
+<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256 tabindex="4">
 </TD>
 </TR>
 EOF;
@@ -194,7 +194,7 @@ EOF;
 <!-- ==================================================================== -->
 <TR>
 <TD><B>Subject</B></TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 tabindex="5"></TD>
 </TR>
 
 <TR>
@@ -207,7 +207,7 @@ if((!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1) {
   echo <<<EOF
 <TD VALIGN="top"><B>Password</B></TD>
 <TD VALIGN="top"{$pcaptcharcolspan}>
-<INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16>
+<INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16 tabindex="6">
 {$pcaptcha}
 </TD>
 EOF;
@@ -232,7 +232,7 @@ EOF;
 <!-- ==================================================================== -->
 <!-- =============================== Contents =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<TEXTAREA NAME="wpost" CLASS="resizable"></TEXTAREA>
+<TEXTAREA NAME="wpost" CLASS="resizable" tabindex="7"></TEXTAREA>
 <!-- =============================== Contents =============================== -->
 
 </TD></TR>
@@ -247,10 +247,10 @@ EOF;
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <?=$print['passform']?>
-<INPUT TYPE="submit" VALUE="Regist">
-<INPUT TYPE="button" VALUE="Reset" onClick="document.location.reload(); return false;">
-<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List">
-<INPUT TYPE="button" onClick="history.back()" VALUE="Back">
+<INPUT TYPE="submit" VALUE="Regist" tabindex="8">
+<INPUT TYPE="button" VALUE="Reset" onClick="document.location.reload(); return false;" tabindex="9">
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List" tabindex="10">
+<INPUT TYPE="button" onClick="history.back()" VALUE="Back" tabindex="11">
 </TD></TR>
 </TABLE>
 

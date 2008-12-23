@@ -74,8 +74,8 @@ if($mode == "comment") {
 <TR>
 <TD ALIGN="CENTER" STYLE="overflow: hidden; white-space: nowrap"><NOBR>
 Password
-<INPUT TYPE="password" NAME="lp" SIZE="<?=$size?>">
-<INPUT TYPE="SUBMIT" VALUE="DELETE">
+<INPUT TYPE="password" NAME="lp" SIZE="<?=$size?>" tabindex="1">
+<INPUT TYPE="SUBMIT" VALUE="DELETE" tabindex="2">
 </NOBR>
 <BR>
 </TD>
@@ -83,18 +83,18 @@ Password
 <? } else { ?>
 <TR>
 <TD ALIGN="CENTER">User</TD>
-<TD ALIGN="CENTER"><INPUT TYPE="text" NAME="lu" SIZE="<?=$size?>"></TD>
+<TD ALIGN="CENTER"><INPUT TYPE="text" NAME="lu" SIZE="<?=$size?>" tabindex="1"></TD>
 </TR>
 
 <TR>
 <TD ALIGN="CENTER">Password</TD>
-<TD ALIGN="CENTER"><INPUT TYPE="password" NAME="lp" SIZE="<?=$size?>"></TD>
+<TD ALIGN="CENTER"><INPUT TYPE="password" NAME="lp" SIZE="<?=$size?>" tabindex="2"></TD>
 </TR>
 
 <TR>
 <TD ALIGN="CENTER" COLSPAN=2>
-Session Reset <INPUT TYPE="BUTTON" VALUE="RESET" onClick="document.location='./session.php?m=logout<?=$opt?>'">
-<INPUT TYPE="SUBMIT" VALUE="LogIn">
+Session Reset <INPUT TYPE="BUTTON" VALUE="RESET" onClick="document.location='./session.php?m=logout<?=$opt?>'" tabindex="4">
+<INPUT TYPE="SUBMIT" VALUE="LogIn" tabindex="3">
 <BR>
 </TD>
 </TR>

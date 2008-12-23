@@ -25,7 +25,7 @@ if(preg_match("/^(2|3|5|7)$/",$board['mode']) && !$board['super'])
 $list['email'] = str_replace("@",$rmail['chars'],$list['email']);
 
 if(!$board['super'])
-  $passment = "$passment <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"{$size['pass']}\" MAXLENGTH=16 STYLE=\"font: 10px tahoma;\">&nbsp;";
+  $passment = "$passment <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"{$size['pass']}\" MAXLENGTH=16 STYLE=\"font: 10px tahoma;\" tabindex=\"7\">&nbsp;";
 else $passment = "";
 
 if($board['notice']) print_notice($board['notice']);
