@@ -10,7 +10,7 @@
 <!--  ====================================================================  -->
 <meta http-equiv="Content-type" content="text/html; charset=<?=$_('charset')?>">
 <title><?=get_title()?> - JSBoard <?=$board['ver']?></title>
-<script type="text/javascript" src="http://j2k.naver.com/j2k_script.php/korean/EUC-KR/oops.org/ko/theme/common/lib.js"></script>
+<script type="text/javascript" src="theme/common/lib.js"></script>
 <link rel="stylesheet" type="text/css" href="./theme/JP-default/default.css">
 <?=$user_stylesheet?>
 <?=$rss['link']?>
