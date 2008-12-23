@@ -316,10 +316,8 @@ function wordwrap_js (&$buf, $len = 80) {
         else
           $buf .= $next . "\n";
       } else {
-        if ( strlen(trim($_buf[$i+1])) != 0 )
-          $_buf[$i+1] = substr ($_buf[$i], $cut) . ' ' .  $_buf[$i+1];
-        else
-          $buf .= substr ($_buf[$i], $cut) . "\n";
+        $_buf[$i] = substr ($_buf[$i], $cut);
+        $i--;
       }
     } else
       $buf .= $_buf[$i] . "\n";
