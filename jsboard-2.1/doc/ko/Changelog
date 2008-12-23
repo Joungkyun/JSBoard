@@ -9,6 +9,13 @@
 -------------------------------------------------------------------------------
 버전 2.1.0
 
+
+2008.12.24
+By 김정균
+	- print_keymenu 에서 document.all 대신 docuemtn.getElementById 를 우선 사용
+	  하도록 변경
+	- captureEvent 만료로 addEventListener 로 변경
+
 2008.12.23
 By 김정균
 	- reply format 변경
