@@ -26,6 +26,7 @@ file.
 	- captureEvent 만료로 addEventListener 로 변경
 	- tabindex 추가
 	- write/edit/reply 에 keyboard menu 추가
+	- release 2.0.14
 
 2008.12.23
   by 김정균
