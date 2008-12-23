@@ -39,7 +39,7 @@
 <td>
 <img src="images/blank.gif" width=1 height=3 border=0 alt=''><br>
 <font Style="font-weight:bold">ìoò^</font> <?=$list['date']?> <?=$list['dhost']?> &nbsp; &nbsp; 
-<font Style="font-weight:bold">ñ‚Ç¢çáÇÌÇπ</font> <?=$list['refer']?><br>
+<font Style="font-weight:bold">ì«Ç›</font> <?=$list['refer']?><br>
 <font Style="font-weight:bold">ñºëO</font> <?=$list['uname']?> &nbsp; &nbsp;
 <?
 if($list['attach'])
@@ -92,5 +92,4 @@ EOF;
 </td></tr>
 </table>
 </form>
-
 

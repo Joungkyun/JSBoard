@@ -55,7 +55,7 @@
 <td>
 <img src="images/blank.gif" width=1 height=3 border=0 alt=""><br>
 <span class="ritem">登録</span> <?=$list['date']?> &nbsp; &nbsp; 
-<span class="ritem">問い合わせ</span> <?=$list['refer']?><br>
+<span class="ritem">読み</span> <?=$list['refer']?><br>
 <span class="ritem">名前</span> <?=$list['uname']?> &nbsp; &nbsp;
 <?=$list['attach'] ? "<span class=\"ritem\">ファイル</span> {$list['attach']}" : "" ?><br>
 <img src="images/blank.gif" width=1 height=3 border=0 alt=""><br>
@@ -121,7 +121,7 @@
 </table>
 
 <!--  ====================================================================  -->
-<!--  ゴムセックポムと ページ フォームは doc/ko/README.THEME 参照                         -->
+<!--  ゴムセックポムと ページ フォームは doc/en/README.THEME 参照                         -->
 <!--  $print['dserlink'] : 詳細 検索 リンク 出力                              -->
 <!--  $print['pagetime']  : 右側 下端 ページ ローディング 時間 出力                 -->
 <!--  $print['sqltime']   : 右側 下端 sql ローディング 時間 出力                    -->
@@ -186,4 +186,5 @@ SQL Time [ <?=$print['sqltime']?> Sec ]<br>
 </td>
 </tr>
 </table>
+
 

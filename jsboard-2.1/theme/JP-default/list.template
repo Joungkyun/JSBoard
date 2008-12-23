@@ -46,7 +46,7 @@
 EOF;
 ?>
   <td width="<?=$td_width[dates]?>" class="ltitle">“ú•t</td>
-  <td width="<?=$td_width[refer]?>" class="ltitle">–â‚¢‡‚í‚¹</td>
+  <td width="<?=$td_width[refer]?>" class="ltitle">“Ç‚Ý</td>
 </tr>
 
 <!--  ====================================================================  -->
@@ -146,4 +146,5 @@ EOF;
 </td>
 </tr>
 </table>
+
 
