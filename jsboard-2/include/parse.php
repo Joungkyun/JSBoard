@@ -284,8 +284,8 @@ function search_hl($list) {
 function quote_len ($buf) {
   $no = 0;
   preg_match_all ('/\[\/?quote[^\]]+\]/', $buf, $matches);
-  foreach ($matches as $v)
-    $no += strlen (trim ($v[0]));
+  foreach ($matches[0] as $v)
+    $no += strlen (trim ($v));
   return $no;
 }
 
