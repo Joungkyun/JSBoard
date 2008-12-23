@@ -69,6 +69,7 @@ form { display: inline; }
 
 <!--  ======================= ヘッダー デザイン 手始め =======================  -->
 <?
+print_keymenu(2);
 echo $print['preview_script'] . "\n";
 
 if(!$np) {
