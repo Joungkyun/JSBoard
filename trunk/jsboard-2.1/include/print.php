@@ -748,7 +748,7 @@ function new_reply_read_format (&$buf, $html) {
     $dsc[] = '</pre></blockquote><pre>';
   else
     $dsc[] = '</blockquote>';
-  $src[] = '/\[[\s]*quote[\s]*=[\s]*&quot;(.*)&quot;[\s]*\]/i';
+  $src[] = '/\[[\s]*quote[\s]*=[\s]*&quot;([^\]]*)&quot;[\s]*\]/i';
   if ( $html != 1 )
     $dsc[] = "</pre><blockquote><cite>\\1 wrote:</cite><pre>\n";
   else
