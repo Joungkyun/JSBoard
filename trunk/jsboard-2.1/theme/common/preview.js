@@ -26,7 +26,11 @@ if ( nav.core == 'Netscape' ) {
 }
 document.onmousemove = mouseMove;
 if ( nav.core != 'MSIE' ) {
-  document.captureEvents(Event.MOUSEMOVE);
+  if (document.addEventListener) {
+    document.addEventListener("move", mouseMove, false);
+  } else {
+    document.captureEvents(Event.MOUSEMOVE);
+  }
 }
 
 function drs(text, title) { dts(1,text); }
