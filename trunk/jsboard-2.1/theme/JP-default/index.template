@@ -1,16 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<!-- ==================================================================== -->
-<!-- $_('charset')     : 掲示板の 言語 タイプに よって charset を 持って来る.   -->
-<!-- $board['ver']     : 掲示板の バージョン 情報を 持って 来る.                -->
-<!-- get_title()       : 掲示板の ヘッダー タイトルを 持って 来る.              -->
-<!-- $user_stylesheet  : 使用者 正義 スタイル シーツ                          -->
-<!-- $rss['link']      : RSS Link meta tag                                -->
-<!-- ==================================================================== -->
+<!--  ====================================================================  -->
+<!--  $_('charset')     : 掲示板の 言語 タイプに よって charset を 持って来る.    -->
+<!--  $board['ver']     : 掲示板の バージョン 情報を 持って 来る.                 -->
+<!--  get_title()       : 掲示板の ヘッダー タイトルを 持って 来る.               -->
+<!--  $user_stylesheet  : 使用者 正義 スタイル シーツ                           -->
+<!--  $rss['link']      : RSS Link meta tag                                 -->
+<!--  ====================================================================  -->
 <meta http-equiv="Content-type" content="text/html; charset=<?=$_('charset')?>">
 <title><?=get_title()?> - JSBoard <?=$board['ver']?></title>
-<script type="text/javascript" src="./theme/common/lib.js"></script>
+<script type="text/javascript" src="http://j2k.naver.com/j2k_script.php/korean/EUC-KR/oops.org/ko/theme/common/lib.js"></script>
 <link rel="stylesheet" type="text/css" href="./theme/JP-default/default.css">
 <?=$user_stylesheet?>
 <?=$rss['link']?>
@@ -18,30 +18,30 @@
 
 <body<?=$_focus?>>
 <div id="overDiv" class="preview"></div>
-<!-- ==================================================================== -->
-<!-- $print['preview_script'] : 予め見るのを ための java script を 出力.      -->
-<!-- ==================================================================== -->
+<!--  ====================================================================  -->
+<!--  $print['preview_script'] : 予め見るのを ための java script を 出力.       -->
+<!--  ====================================================================  -->
 <?=$print['preview_script']?>
 
-<!-- ========================= ヘッダー デザイン 手始め ========================= -->
+<!--  ========================= ヘッダー デザイン 手始め =========================  -->
 <?
 if(!$np) {
   # 各 ユーザー別 Design
   if ( file_exists ($board['headpath']) ) {
     require_once "{$board['headpath']}";
   }
-  # 全体 管理者に 義解 強制 input になる Design
+  # 全体 管理者に 義解 強制 input なる Design
   require_once "html/head.php";
  }
 ?>
-<!-- ========================= ヘッダー デザイン 終り   ========================= -->
+<!--  ========================= ヘッダー デザイン 終り   =========================  -->
 
-<!-- ==================================================================== -->
-<!-- $board['align'] : 掲示板の align を 定義する. おこる 掲示板 管理者で -->
-<!--                   設定を すること ある.                                  -->
-<!-- ==================================================================== -->
+<!--  ====================================================================  -->
+<!--  $board['align'] : 掲示板の align を 定義する. おこる 掲示板 管理者で  -->
+<!--                    設定を すること ある.                                   -->
+<!--  ====================================================================  -->
 <div align="<?=$board['align']?>">
-<!-- ========================= BODY Start       ========================= -->
+<!--  ========================= BODY Start       =========================  -->
 <?
 switch ($bodyType) {
   case 'ext' :
@@ -51,32 +51,32 @@ switch ($bodyType) {
     require_once "{$bodyType}.template";
 }
 ?>
-<!-- ========================= BODY End         ========================= -->
+<!--  ========================= BODY End         =========================  -->
 
 <?=print_spam_trap()?>
 
-<!-- ========================= ライセンス         ========================= -->
+<!--  ========================= ライセンス         =========================  -->
 <? if ( ! $nocopy ) { ?>
 <table summary="" width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr><td class="copy">
-<a href="http://jsboard.kldp.net/GPL2" target="_blank">Copyleft</a>
+<a href='http://jsboard.kldp.net/GPL2' target="_blank">Copyleft</a>
 1999-<?=date('Y')?> by
-<a href="http://jsboard.kldp.net" target="_blank" class="copylnk">
+<a href='http://jsboard.kldp.net/' target="_blank" class="copylnk">
 JSBoard Open Project</a><br>
 Theme Designed by
-<a href="http://idoo.net" target="_blank" class="copylnk">IDOO</a>
+<a href='http://idoo.net/' target="_blank" class="copylnk">IDOO</a>
 All right reserved
 </td></tr>
 </table>
 <? } ?>
-<!-- ========================= ライセンス         ========================= -->
+<!--  ========================= ライセンス         =========================  -->
 
 </div>
 
-<!-- ========================= しっぽ デザイン 手始め ========================= -->
+<!--  ========================= しっぽ デザイン 手始め =========================  -->
 <?
 if(!$np) {
-  # 全体 管理者に 義解 強制 input になる Design
+  # 全体 管理者に 義解 強制 input なる Design
   require_once "html/tail.php";
   # 各 ユーザー別 Design
   if ( file_exists ($board['tailpath']) ) {
@@ -84,7 +84,7 @@ if(!$np) {
   }
 }
 ?>
-<!-- ========================= しっぽ デザイン 終り   ========================= -->
+<!--  ========================= しっぽ デザイン 終り   =========================  -->
 
 </body>
 </html>

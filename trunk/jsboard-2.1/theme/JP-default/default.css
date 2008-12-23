@@ -109,14 +109,14 @@ form { display: inline; }
   font-weight: bold;
 }
 
-/* list table ã’[ counter / read article number */
+/* list table »ó´Ü counter / read article number */
 .counter {
   font-size: 11px;
   font-family: ÌÀÄ«, tahoma, sans-serif;
   color: #555555;
 }
 
-/* list ‰æ–Ê title row */
+/* list È­¸é title row */
 .ltitle {
   color: #ffffff;
   font-weight: bold;
@@ -141,7 +141,7 @@ form { display: inline; }
 /* read article body text */
 .rbody {
   color: #000000;
-  font-family: ÌÀÄ«, "Lucida Console", monospace;
+  font-family: ÌÀÄ«, "Lucida Console";
   text-align: left;
 }
 
@@ -263,14 +263,14 @@ div.previewload {
   width: 360px;
 }
 
-/* list ¶‘¤ ‰º’[ page link */
+/* list ÁÂÃø ÇÏ´Ü page link */
 .fast {
   font-size: 10px;
   font-family: ÌÀÄ«, tahoma, sans-serif;
   color: #555555;
 }
 
-/* list ‰E‘¤ ‰º’[ sql time */
+/* list ¿ìÃø ÇÏ´Ü sql time */
 .sqltime {
   font-size: 11px;
   font-family: ÌÀÄ«, tahoma, sans-serif;

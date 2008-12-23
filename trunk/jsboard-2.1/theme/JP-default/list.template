@@ -1,14 +1,14 @@
 
 <!--  ====================================================================  -->
 <!--  print_keymenu() : keyboard 路 掲示板を 制御                           -->
-<!--                    'n or +' = 次 ページ                              -->
-<!--                    'b or -' = 以前 ページ                              -->
+<!--                    'n or +' = 次 ページ                              -->         
+<!--                    'b or -' = 以前 ページ                              -->         
 <!--  ====================================================================  -->
 <?=print_keymenu(0)?>
 
 <!--  ====================================================================  -->
 <!--  $print['dsearch'] : 詳細 検索 テーブル 出力                             -->
-<!--  $board['width'] : 掲示板の 広さを 指定する. 掲示板 管理者で 調整    -->
+<!--  $board['width'] : 掲示板の 広さを 指定する. 掲示板 管理者で 調整    --> 
 <!--  $print['count'] : 掲示板の 左側 上端 カウンターを 出力する.               -->
 <!--  $print['admin'] : 掲示板 右側の admin リンクを 出力 おこる admin link これ  -->
 <!--                  未知を 呼んで 来る ので 必ず admin.gif街 存在すると たいてい    -->
@@ -18,14 +18,14 @@
 <?=$print['dsearch']?>
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
-<td valign="bottom" class="counter"><img src="./theme/JP-default/img/icon_over.gif"
- align="middle" alt=""> &gt;&gt; <?=$print['count']?></td>
+<td width=44 valign="bottom"><img src="./theme/JP-default/img/icon_over.gif" align="middle" alt=""></td>
+<td class="counter" width="95%"> &gt;&gt; <?=$print['count']?></td>
 <td class="admin">&nbsp;<?=$print['lout']?><?=$print['admin']?></td>
 </tr>
 
-<tr><td colspan=2>
+<tr><td colspan=3>
 <!--  ====================================================================  -->
-<!--  $td_width[ ] : テーブル フィールドの 広さ の割合を 指定する. おこる               -->
+<!--  $td_width[ ] : テーブル フィールドの 広さ 割合を 指定する. おこる               -->
 <!--                 theme/theme_name/config.php で 正義を する.          -->
 <!--  ====================================================================  -->
 <!--    掲示板 メイン テーブル 手始め     -->
@@ -41,10 +41,12 @@
 <!--  ====================================================================  -->
 <?
   if($upload['yesno'] && $cupload['yesno'])
-    echo "<td width=\"{$td_width['upload']}\" class=\"ltitle\">File</td>\n";
+    echo <<<EOF
+  <td width="{$td_width['upload']}" class="ltitle">ファイル</td>\n
+EOF;
 ?>
-  <td width="<?=$td_width[dates]?>" class="ltitle">日</td>
-  <td width="<?=$td_width[refer]?>" class="ltitle">読み</td>
+  <td width="<?=$td_width[dates]?>" class="ltitle">日付</td>
+  <td width="<?=$td_width[refer]?>" class="ltitle">問い合わせ</td>
 </tr>
 
 <!--  ====================================================================  -->
@@ -74,7 +76,7 @@
 <!--                   conj.gif        - 関連文                             -->
 <!--                                                                        -->
 <!--                   を theme/theme_name/img に 上の イメージを 作って      -->
-<!--                   から list_cmd(1,1) 路 指定を する.                   -->
+<!--                   出て list_cmd(1,1) 路 指定を する.                   -->
 <!--  ====================================================================  -->
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
@@ -84,7 +86,7 @@
 </tr>
 
 <!--  ====================================================================  -->
-<!--  ゴムセックポムと ページ フォームは doc/ko/README.THEME 参照                         -->
+<!--  ゴムセックポムと ページ フォームは doc/en/README.THEME 参照                         -->
 <!--  $print['dserlink'] : 詳細 検索 リンク 出力                              -->
 <!--  $print['times']  : 右側 下端の 処理時間 出力                          -->
 <!--  ====================================================================  -->
@@ -101,7 +103,7 @@
 <option value="n"<?=$sform['sc']['n']?>>Writer</option>
 <option value="a"<?=$sform['sc']['a']?>>All</option>
 </select>
-<input type="text" name="o[ss]" size=<?=form_size(8)?> maxlength=255 value="<?=$sform['ss']?>">
+<input type="text" name="o[ss]" size="<?=form_size(8)?>" maxlength=255 value="<?=$sform['ss']?>">
 <input type="submit" value="Search">
 </td>
 </tr><tr>
@@ -135,7 +137,7 @@
 <option value="p" selectED>Page No.</option>
 <option value="n">Article No.</option>
 </select>
-<input type="text" name="o[no]" size=<?=form_size(2)?> maxlength=6 value='<?=$pform['value']?>'>
+<input type="text" name="o[no]" size="<?=form_size(2)?>" maxlength=6 value='<?=$pform['value']?>'>
 <input type="submit" value="Go!">
 </td>
 </tr>

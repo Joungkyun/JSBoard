@@ -1,14 +1,20 @@
 
+<!--  ====================================================================  -->
+<!--  print_keymenu() : keyboard 路 掲示板を 制御                           -->
+<!--                    'b' = 以前 ページ                                   -->
+<!--  ====================================================================  -->
+<?=print_keymenu(2)?>
+
 <form id="replyp" name="replyp" method="post" target=_top action='act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
-<td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''></td>
+<td valign="bottom" width=44><img src="./theme/JP-default/img/icon_over.gif" align="middle" alt=''></td>
 <td class="counter"> &gt;&gt; Write reply article</td>
 </tr>
 
 <tr bgcolor="#a0dc10">
 <td colspan=2>
-<img src="./theme/KO-default/img/board_no.gif" align="middle" alt=''>
+<img src="./theme/JP-default/img/board_no.gif" align="middle" alt=''>
 <span style="color: #ffffff; font-weight: bold;">デッグル 書き取り</span>
 </td>
 </tr>
@@ -33,7 +39,7 @@
 <!--  ====================================================================  -->
 <tr>
 <td width=80>名前</td>
-<td colspan="3"><input type="text" id="name" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$pre_regist[name]?>"<?=$disable?>></td>
+<td colspan="3"><input type="text" id="name" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$pre_regist[name]?>"<?=$disable?> tabindex="1"></td>
 </tr>
 
 <!--  ====================================================================  -->
@@ -46,7 +52,7 @@ if($view['email']) {
 
 <tr>
 <td>メール</td>
-<td colspan="3"><input type="text" id="email" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$pre_regist['email']}"$disable></td>
+<td colspan="3"><input type="text" id="email" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$pre_regist['email']}"$disable tabindex="2"></td>
 </tr>
 
 EOF;
@@ -63,24 +69,12 @@ if($view['url']) {
 
 <tr>
 <td>ホームページ</td>
-<td colspan="3"><input type="text" id="url" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$pre_regist['url']}"$disable></td>
+<td colspan="3"><input type="text" id="url" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$pre_regist['url']}"$disable tabindex="3"></td>
 </tr>
 
 EOF;
 }
 ?>
-
-<!--  ====================================================================  -->
-<!--  $html_chk_ok  : 親文が html サヨングハムイルテ 基本 チェック なるようにする             -->
-<!--  $html_chk_no  : 親文が html サヨングアンハムイルテ 基本 チェック なるようにする           -->
-<!--  ====================================================================  -->
-<tr>
-<td>HTML</td>
-<td colspan="3">
-<input type="radio" name="atc[html]" value=1<?=$html_chk_ok?>> 使い
-<input type="radio" name="atc[html]" value=0<?=$html_chk_no?>> 使用の中し
-</td>
-</tr>
 
 <!--  ====================================================================  -->
 <!--  upload 部分 出力可否 設定 (まあまあの程ならば そのまま 使えば なり)                     -->
@@ -92,7 +86,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <td>ファイル</td>
 <td colspan="3">
 <input type="hidden" name="max_file_size" value="{$upload['maxsize']}">
-<input type="file" name="userfile" size="{$size['uplo']}" maxlength=256>
+<input type="file" name="userfile" size="{$size['uplo']}" maxlength=256 tabindex="4">
 </td>
 </tr>
 
@@ -115,7 +109,7 @@ EOF;
 <!--  ====================================================================  -->
 <tr>
 <td>題目</td>
-<td colspan="3"><input type="text" id="title" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 value="<?="Re$reti: {$list['title']}"?>"></td>
+<td colspan="3"><input type="text" id="title" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 value="<?="Re$reti: {$list['title']}"?>" tabindex="5"></td>
 </tr>
 
 <tr>
@@ -128,7 +122,7 @@ if(preg_match("/^[04]$/",$board['mode']) && !$board['super']) {
   echo <<<EOF
 <td valign="top">パスワード</td>
 <td valign="top"{$pcaptcharcolspan}>
-<input type="password" id="passwd" name="atc[passwd]" size="{$size['pass']}" maxlength=16 class="passwdbox">
+<input type="password" id="passwd" name="atc[passwd]" size="{$size['pass']}" maxlength=16 class="passwdbox" tabindex="6">
 {$pcaptcha}
 </td>
 EOF;
@@ -152,7 +146,7 @@ EOF;
 <!--  $text_area  : デッグルの TEXTAREAを 出力(すなわち 書き物をする 部分)                  -->
 <!--  ====================================================================  -->
 <!--  =============================== 文内容 ===============================  -->
-<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<script type="text/javascript" src="theme/common/textarea.js"></script>
 <?=$text_area?>
 
 <!--  =============================== 文内容 ===============================  -->
@@ -170,10 +164,10 @@ EOF;
 <table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
 <tr><td bgcolor="#a0dc10" align="center">
 <?=$print['passform']?>
-<input type="submit" value="登録">
-<input type="reset" value="再び" onclick="document.location.reload(); return false;"><?=$orig_button?>
-<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト">
-<input type="button" onclick="history.back()" value="以前">
+<input type="submit" value="登録" tabindex="8">
+<input type="reset" value="再び" onclick="document.location.reload(); return false;" tabindex="9"><?=$orig_button?>
+<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト" tabindex="10">
+<input type="button" onclick="history.back()" value="以前" tabindex="11">
 </td></tr>
 </table>
 
