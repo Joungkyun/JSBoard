@@ -915,8 +915,10 @@ function print_keymenu($type=0) {
        "}\n\n" .
 
        "function keypresshandler(e){\n".
+	   "  if(navigator.userAgent.indexOf('MSIE') != -1) { msie = true; }\n" .
+	   "  else msie = false;\n" .
        "  if(document.all) e=window.event; // for IE\n".
-       "  if(_dom==3) var EventStatus = e.srcElement.tagName;\n".
+       "  if(_dom==3 || msie) var EventStatus = e.srcElement.tagName;\n".
        "  else if(_dom==1) var EventStatus = e.target.nodeName; // for Mozilla\n\n".
 
        "  if(EventStatus == 'INPUT' || EventStatus == 'TEXTAREA' || _dom == 2) return;\n\n".
@@ -924,7 +926,7 @@ function print_keymenu($type=0) {
        "  var cc = '';\n".
        "  var ch = '';\n\n".
 
-       "  if(_dom==3) {                   // for IE\n".
+       "  if(_dom==3 || msie) {                   // for IE\n".
        "    if(e.keyCode>0) {\n".
        "      ch=String.fromCharCode(e.keyCode);\n".
        "      cc=e.keyCode;\n".
@@ -951,8 +953,8 @@ function print_keymenu($type=0) {
        "}\n\n".
 
        "function input(){\n".
-       "	_dom=document.all ? 3 : (document.getElementById ? 1 : (document.layers ? 2 : 0));\n".
-       "	document.onkeypress = keypresshandler;\n".
+       "  _dom=document.getElementById ? 1 : (document.layers ? 2 : (document.all ? 3 : 0));\n".
+       "  document.onkeypress = keypresshandler;\n".
        "}\n\n".
 
        "input();\n".

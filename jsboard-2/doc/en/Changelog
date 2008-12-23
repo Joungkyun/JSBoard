@@ -18,6 +18,10 @@ file.
 Version   : jsboard 2.0.14
 
 
+Wed, Dec, 24 2008
+by JoungKyun.Kim
+	- use getElementById instead of document.all on print_keymenu
+
 Tue, Dec, 23 2008
 by JoungKyun.Kim
 	- changed reply format
