@@ -1,8 +1,8 @@
 
 <!--  ====================================================================  -->
 <!--  print_keymenu() : keyboard òH åfé¶î¬Ç êßå‰                           -->
-<!--                    'n or +' = è„ï∂                                     -->
-<!--                    'b or -' = ÇÃâ∫ï∂                                   -->
+<!--                    'n or +' = è„ï∂                                     -->  
+<!--                    'b or -' = ÇÃâ∫ï∂                                   -->  
 <!--  ====================================================================  -->
 <?=print_keymenu(1)?>
 
@@ -18,10 +18,8 @@
 <?=$print['dsearch']?>
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
 <tr>
-<td valign="bottom" class="counter">
-<img src="./theme/JP-default/img/icon_over.gif" align="middle" alt="">
-&gt;&gt; Read <?=$list['num']?> article
-</td>
+<td valign="bottom" width=44><img src="./theme/JP-default/img/icon_over.gif" align="middle" alt=""></td>
+<td class="counter" width="95%"> &gt;&gt; Read <?=$list['num']?> article</td>
 <td class="admin"><?=$print['lout']?><?=$print['admin']?></td>
 </tr>
 
@@ -30,14 +28,14 @@
 <!--  ====================================================================  -->
 <? $list['title'] = preg_replace ("/<br>\n/i", "\\0<img src=\"{$board['path']}images/blank.gif\" width=40 height=1 alt=\"\">", $list['title']); ?>
 <tr bgcolor="#a0dc10">
-<td colspan=2>
+<td colspan=3>
 <img src="./theme/JP-default/img/board_no.gif" align="middle" alt="TITLE: ">
 <span class="rtitle"><?=$list['title']?></span>
 </td>
 </tr>
 
 <tr>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=""></td>
+<td colspan=3><img src="images/blank.gif" width=1 height=3 border=0 alt=""></td>
 </tr>
 </table>
 
@@ -56,10 +54,10 @@
 <td width=5><img src="images/blank.gif" width=5 height=1 border=0 alt=""></td>
 <td>
 <img src="images/blank.gif" width=1 height=3 border=0 alt=""><br>
-<span class="ritem">ìoò^</span> <?=$list['date']?> &nbsp; &nbsp;
-<span class="ritem">ì«Ç›</span> <?=$list['refer']?><br>
+<span class="ritem">ìoò^</span> <?=$list['date']?> &nbsp; &nbsp; 
+<span class="ritem">ñ‚Ç¢çáÇÌÇπ</span> <?=$list['refer']?><br>
 <span class="ritem">ñºëO</span> <?=$list['uname']?> &nbsp; &nbsp;
-<?=$list['attach'] ? "<span class=\"ritem\">File</span> {$list['attach']}" : "" ?><br>
+<?=$list['attach'] ? "<span class=\"ritem\">ÉtÉ@ÉCÉã</span> {$list['attach']}" : "" ?><br>
 <img src="images/blank.gif" width=1 height=3 border=0 alt=""><br>
 </td>
 <td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=""></td>
@@ -111,7 +109,7 @@
 
 <!--  ====================================================================  -->
 <!--  $print['regist']  : ï∂ ìoò^éèÇ èoóÕ. (åfé¶î¬ AdminÇ≈ ä«óùÇ™ â¬î\  -->
-<!--                    Ç∑ÇÈ Ç©ÇÁ ê›íËÇ ì˙ ó^Ç¶ÇÈÇ±Ç∆!                         -->
+<!--                    âƒä˙ ÇæÇ©ÇÁ ê›íËÇ ì˙ ó^Ç¶ÇÈÇ±Ç∆!                         -->
 <!--  read_cmd(0,1)   : list page ã`  list_cmd(0,1) éQè∆ (âEë§ â∫í[ ÉÅÉjÉÖÅ[)   -->
 <!--  ====================================================================  -->
 <table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
@@ -142,7 +140,7 @@
 <option value="n"<?=$sform['sc']['n']?>>Writer</option>
 <option value="a"<?=$sform['sc']['a']?>>All</option>
 </select>
-<input type="text" name="o[ss]" size=<?=form_size(8)?> maxlength=255 value="<?=$sform['ss']?>">
+<input type="text" name="o[ss]" size="<?=form_size(8)?>" maxlength=255 value="<?=$sform['ss']?>">
 <input type="submit" value="Search">
 </td>
 </tr><tr>
@@ -179,7 +177,7 @@ SQL Time [ <?=$print['sqltime']?> Sec ]<br>
 <option value="p" selected="selected">Page No.</option>
 <option value="n">Article No.</option>
 </select>
-<input type="text" name="o[no]" size=<?=form_size(2)?> maxlength=6 value="<?=$pform['value']?>">
+<input type="text" name="o[no]" size="<?=form_size(2)?>" maxlength=6 value="<?=$pform['value']?>">
 <input type="submit" value="Go!">
 </td>
 </tr>

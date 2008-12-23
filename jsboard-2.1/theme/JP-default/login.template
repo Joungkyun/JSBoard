@@ -42,26 +42,26 @@ if($mode == "comment") {
 <tr>
 <td class="log_td">
 Password
-<input type="password" name="lp" id="lp" SIZE="<?=$size?>">
-<input type="submit" value="DELETE">
+<input type="password" name="lp" id="lp" size="<?=$size?>" tabindex="1">
+<input type="submit" value="DELETE" tabindex="2">
 <br>
 </td>
 </tr>
 <? } else { ?>
 <tr>
 <td align="center">User</td>
-<td align="center"><input type="text" name="lu" id="lu" SIZE="<?=$size?>"></td>
+<td align="center"><input type="text" name="lu" id="lu" size="<?=$size?>" tabindex="1"></td>
 </tr>
 
 <tr>
 <td align="center">Password</td>
-<td align="center"><input type="password" name="lp" id="lp" SIZE="<?=$size?>"></td>
+<td align="center"><input type="password" name="lp" id="lp" size="<?=$size?>" tabindex="2"></td>
 </tr>
 
 <tr>
 <td align="center" colspan=2>
-Session Reset <input type="button" value="RESET" onClick="document.location='./session.php?m=logout<?=$opt?>'">
-<input type="submit" value="LogIn">
+Session Reset <input type="button" value="RESET" onClick="document.location='./session.php?m=logout<?=$opt?>'" tabindex="4">
+<input type="submit" value="LogIn" tabindex="3">
 <br>
 </td>
 </tr>
