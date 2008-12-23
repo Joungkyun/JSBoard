@@ -574,7 +574,7 @@ function print_comment($table,$no,$print=0) {
        "<input type=\"submit\" value=\"" . $_('c_en') . "\" style=\"margin: 1px 1px;\" tabindex=\"4\">\n".
        "</td>\n".
        "<td align=\"center\">\n".
-       "<textarea name=\"atc[text]\" cols=$textareasize rows=3 wrap=\"hard\" tabindex=\"3\"></textarea>\n".
+       "<textarea name=\"atc[text]\" class=\"cmtarea\" cols=$textareasize rows=3 wrap=\"hard\" tabindex=\"3\"></textarea>\n".
        "</td>\n".
        "<td align=\"center\" width=\"5\">\n".
        "<img src=\"./images/blank.gif\" width=5 height=1 border=0 alt=''>\n".
