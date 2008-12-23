@@ -1,88 +1,94 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
+<!--  ====================================================================  -->
+<!--    ƒEƒFƒ“‚¾‚¯ ‚·‚ê‚Î ‚»‚Ì‚Ü‚Ü ƒTƒˆƒ“ƒOƒnƒMƒ‹ :-) ƒfƒUƒCƒ“‚ª •Ê‚É •K—v ‚È‚µ               -->
+<!--  ====================================================================  -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
 <TITLE><?=$print['head']?> - Jsboard <?=$board['ver']?></TITLE>
 <STYLE TYPE="text/css">
-<!--
+<!-- 
 BODY {
-  margin: 0 0 0 0;
-  font-size:12px;
-  font-family:<?=$langs['font']?>, monospace;
+  font-size: 12px;
+  font-family: <?=$langs['font']?>, sans-serif;
   color: <?=$color['text']?>;
-  background-color: #ffffff;
+  margin: 0px 0px 0px 0px;
+  background-color: #FFFFFF;
 }
 TD {
-  font-size:12px;
-  font-family:<?=$langs['font']?>, monospace;
-  color:#555555;
+  font-size: 12px;
+  font-family: <?=$langs['font']?>, sans-serif;
+  color: #555555;
 }
 A:LINK, A:VISITED, A:ACTIVE {
-  text-decoration:none;
-  color:#555555
+  text-decoration: none;
+  color: #555555;
 }
 A:hover {
-  text-decoration:underline;
-  color:#555555
+  text-decoration: underline;
+  color: #555555;
 }
 INPUT {
-  font: 11px tahoma, sans-serif;
-  color:<?=$color['l4_fg']?> ;
-  border-width:1px;
-  border-style:solid;
-  border-color:<?=$color['l4_gu']?>;
-  padding-left:1px;
-  padding-right:1px;
-  background-color:<?=$color['l4_bg']?>;
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: <?=$color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?=$color['l4_bg']?>;
 }
 SELECT {
-  font: 11px tahoma, sans-serif;
-  color:<?=$color['l4_fg']?>;
-  border-width:1px;
-  border-style:solid;
-  border-color:<?=$color['l4_gu']?>;
-  background-Color:<?=$color['l4_bg']?>;
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: <?=$color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  background-Color: <?=$color['l4_bg']?>;
 }
 TEXTAREA {
-  font: 13px <?=$langs['font']?>, monospace;
-  color:<?=$color['l4_fg']?>;
-  border-width:1px;
-  border-style:solid;
-  border-color:<?=$color['l4_gu']?>;
-  padding-left:1px;
-  background-Color:<?=$color['l4_bg']?>;
+  font-size: 13px;
+  font-family: <?=$langs['font']?>, sans-serif;
+  color: <?=$color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  padding-left: 1px;
+  background-Color: <?=$color['l4_bg']?>;
 }
  .radio {
-  font: 9pt <?=$langs['font']?>, monospace;
+  font: 9pt <?=$langs['font']?>,sans-serif;
   background-color: <?=$color['bgcol']?>;
   color: <?=$color['text']?>;
-  border:2px solid <?=$color['bgcol']?>;
+  border: 2px solid <?=$color['bgcol']?>;
 }
  .title {
-  font: 15pt <?=$langs['font']?>, monospace;
+  font: 15pt <?=$langs['font']?>,sans-serif;
   color: <?=$color['n0_fg']?>;
-  font-weight: bold;
+  font-weight: bold
 }
  .en {
   font: 15pt Tahoma, sans-serif;
   font-weight: bold;
-  color: <?=$color['text']?>;
+  COLOR: <?=$color['text']?>;
 }
 <?=$user_stylesheet?>
--->
+ -->
 </STYLE>
 </HEAD>
 
 <BODY>
 
 <?
-# ÀüÃ¼ °ü¸®ÀÚ¿¡ ÀÇÇØ °­Á¦ input µÇ´Â µðÀÚÀÎ
+# ‘S‘Ì ŠÇ—ŽÒ‚É ‹`‰ð ‹­§ input ‚È‚é ƒfƒUƒCƒ“
 include "html/head.php";
 
-# ¸ÞÀÎ Ãâ·Â
+# ƒƒCƒ“ o—Í
 echo $print['body'];
 
-# ÀüÃ¼ °ü¸®ÀÚ¿¡ ÀÇÇØ °­Á¦ input µÇ´Â µðÀÚÀÎ
+# ‘S‘Ì ŠÇ—ŽÒ‚É ‹`‰ð ‹­§ input ‚È‚é ƒfƒUƒCƒ“
 include "html/tail.php";
 ?>
 

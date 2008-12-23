@@ -14,7 +14,7 @@ $designer['ver'] = 'A9';
 # Language configuration
 ##############################################################
 $langs['code'] = 'jp';		# webboard language
-$langs['font'] = 'arial';	# Fixed width font
+$langs['font'] = 'ÌÀÄ«';	# Fixed width font
 $langs['vfont'] = 'tahoma';	# Variable width font
 
 ##############################################################
@@ -64,10 +64,10 @@ $color['d_fg'] = '#555555';	# Option filed Text
 # <IMG SRC=img/blank.gif WIDTH=0 HEIGHT=$line_height BORDER=0 ALT=''>
 $lines['height'] = '25';
 
-# ±Û ¸®½ºÆ®µé »çÀÌ¿¡ µğÀÚÀÎÀ» ³Ö±âÀ§ÇÑ ÄÚµå ÀÌ¼³Á¤Àº <TD></TD>
-# ¼³Á¤À¸·Î ÀÌ·ç¾î Áü. <TD> ¿¡´Â ²À COLSPAN="AA" °¡ µé¾î°¡¾ß ÇÔ. 
-# ÀÌ¼³Á¤Àº ¸®½ºÆ®ÀÇ colspan À» ¸ÂÃß±â À§ÇØ list.php ¿¡¼­ º¯È¯À»
-# ÇÏ°Ô µÇ¾î ÀÖÀ½ ´ÙÀ½ÀÇ ¿¹Á¦¸¦ ÀÌ¿ëÇÏ¿© Å×½ºÆ® ÇØ º¸±â ¹Ù¶÷
+# •¶ ƒŠƒXƒg ŠÔ‚É ƒfƒUƒCƒ“‚ğ “ü‚ê‚é‚½‚ß‚Ì ƒR[ƒh —›İ’è‚Í <TD></TD>
+# İ’è‚Å ¬‚µ‚Ä ‰×. <TD> ‚É‚Í •K‚¸ COLSPAN="AA" ŠX “ü‚Á‚Äs‚­‚Æ ƒnƒ€. 
+# —›İ’è‚Í ƒŠƒXƒg‚Ì colspan ‚ğ ‡‚í‚¹ ‚Ì‚½‚ß‚É list.php ‚Å •ÏŠ·‚ğ
+# ‚·‚é‚æ‚¤‚É ‚È‚Á‚Ä ‚ ‚è Ÿ‚Ì —á‘è‚ğ —˜—p‚µ‚Ä ƒeƒXƒg “ú •\¦ •—
 #$line_design = '<TD COLSPAN="AA"><hr></TD>';
 $lines['design'] = '';
 $lines['comment_design'] = '<TR><TD COLSPAN=4 BACKGROUND="./images/dotline.gif">'.

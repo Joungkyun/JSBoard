@@ -17,7 +17,6 @@ $langs['c_ps'] = "暗号";
 $langs['c_en'] = "入力";
 
 # write.php
-$langs['w_ment'] = "分かち書き なく 使うとか HTML 不使用 時 １行を あまり 長く 什 飲んでください.";
 $langs['upload'] = "File upload 機能を 全体 管理者が 制限して あります.";
 
 # edit.php
@@ -101,7 +100,7 @@ $langs['chk_if'] = "IFRAME タグが 開かれるの なかったとか 閉まるの なかったです.
 $langs['chk_sp'] = "接続する IP 増えた 存在するの ない 領域です.";
 $langs['chk_bl'] = "接続する IP 街 管理者に 義解 拒否されました.";
 $langs['chk_hy'] = "Hyper Link に よった 接近を 承諾するの ないです.";
-$langs['chk_an'] = "global.ph に spam 設定を すると します.\ndoc/ko/README.CONFIG で Anti Spam\n項目を 参照 してください";
+$langs['chk_an'] = "global.ph に spam 設定を すると します.\ndoc/en/README.CONFIG で Anti Spam\n項目を 参照 してください";
 $langs['chk_rp'] = "SPAM 登録期を 利用して 文を 登録する 数 ないです.";
 
 # get.ph
@@ -167,6 +166,8 @@ $langs['ua_emoticon']   = "かおもじ";
 $langs['ua_emoticon_y'] = "使うこと";
 $langs['ua_emoticon_n'] = "使うの ない";
 
+$langs['ua_html_tag'] = '使用を 許可する HTML tagを , を 仕分け者で 少ないです.';
+
 $langs['ua_align']   = "掲示板 整列";
 $langs['ua_align_c'] = "中";
 $langs['ua_align_l'] = "左側";
@@ -188,10 +189,8 @@ $langs['ua_b13'] = "クッキー期間";
 $langs['ua_b14'] = "仕事";
 $langs['ua_b15'] = "出力する";
 $langs['ua_b16'] = "出力するの なさ";
-$langs['ua_b19'] = "ボドラップ";
-$langs['ua_b20'] = "文内容 長く 垂れること 防止";
 $langs['ua_b21'] = "ウォドラップ";
-$langs['ua_b22'] = "ボドラップが 適用の中される 場合 強制で 切る 字詰め";
+$langs['ua_b22'] = "読み取り 時 たいてい 竝びだ 表示する 字 数";
 
 $langs['ua_ha1'] = "出力可否";
 $langs['ua_ha2'] = "IP 住所を";
@@ -268,7 +267,7 @@ $langs['spamer_m'] = "SPAMMER LISTには 文内容中 入って あれば 拒否する 単語を た
 
 # ADMIN
 $langs['a_reset'] = "パスワード 初期化";
-$langs['sql_na'] = "<p><font color=\"#ff0000\"><b>DB 連結に 失敗しました!<p>\njsboard/config/global.phで db server, db user, db passwordを<br>\n確認して ください\n 以上が なければ MySQL路 root義 権限で ログインを<br>\n真書 flush privileges 命令を 行ってください</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 帰ること ]</a><p>\n Copyleft 1999-2001 <a target=_top href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.net/'>JSBoard Open Project</a>";
+$langs['sql_na'] = "<p><font color=\"#ff0000\"><b>DB 連結に 失敗しました!<p>\njsboard/config/global.phで db server, db user, db passwordを<br>\n確認して ください\n 以上が なければ MySQL路 root義 権限で ログインを<br>\n真書 flush privileges 命令を 行ってください</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 帰ること ]</a><p>\n Copyleft 1999-2008 <a target=_top href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.net/'>JSBoard Open Project</a>";
 
 $langs['a_t1'] = "掲示板 名前";
 $langs['a_t2'] = "掲示物 登録数";
@@ -324,15 +323,15 @@ $langs['st_lyear'] = "最 およそ 仕事 年";
 $langs['st_ltot'] = "私は 食あたり";
 
 # Inatllation
-$langs['waitm'] = "Jsboardを 使うこと ための 環境 設定を 検査して あります<br>\n5超 後に 結果を 見る 数 あります<p>もし Linux竜 Netscape 4.x を 使ったら 次 ページで<br>自動で 移るの ない 首都 あります.<br>この時は doc/ko/INSTALL.MANUALY 文書を 参照して 設置を してください";
+$langs['waitm'] = "Jsboardを 使うこと ための 環境 設定を 検査して あります<br>\n5超 後に 結果を 見る 数 あります<p>もし Linux竜 Netscape 4.x を 使ったら 次 ページで<br>自動で 移るの ない 首都 あります.<br>この時は doc/en/INSTALL.MANUALY 文書を 参照して 設置を してください";
 $langs['wait'] = "[ 5初刊 待って ください ]";
 $langs['mcheck'] = "MySQL loginに 失敗しました.\njsboard/INSTALLER/include/passwd.ph に MySQL義 root\npassword街 正確か 確認して くださって 当たれば PHP義 設置の時に\n--with-mysql オプションが 入って行ったのか 確認して ください<br>\nもし DB server街 独立されて あったら QuickInstall文書を 参照\nして 設置を なさること 望みます";
 $langs['icheck'] = "httpd.conf義 DirectoryIndex 指示者に index.phpを 追加<br>\n日 くださって apacheを 再実行 してください.";
 $langs['pcheck'] = "設置を 夏期 前に 先に jsboard/INSTALLER/scriptで\npreinstall を 行って くださると します. INSTALL文書を\n参照してください";
-$langs['auser'] = "設置に 一度 失敗したら doc/ko/INSTALL.MANUALY を 見て 受動で 設置すると します.";
+$langs['auser'] = "設置に 一度 失敗したら doc/en/INSTALL.MANUALY を 見て 受動で 設置すると します.";
 
 $langs['inst_r'] = "初期化";
-$langs['inst_sql_err'] = "<p><font color=\"#ff0000\"><b>DB 連結に 失敗しました!<p>\nMySQL Root passwordを<br>\n確認して ください\n</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 帰ること ]</a><p>\n Copyleft 1999-2001 <a href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.net/' target=_blank>JSBoard Open Project</a>"; 
+$langs['inst_sql_err'] = "<p><font color=\"#ff0000\"><b>DB 連結に 失敗しました!<p>\nMySQL Root passwordを<br>\n確認して ください\n</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ 帰ること ]</a><p>\n Copyleft 1999-2008 <a href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.net/' target=_blank>JSBoard Open Project</a>"; 
 $langs['inst_chk_varp'] = "DBで 使う パスワードを 指定するの なかったです.";
 $langs['inst_chk_varn'] = "DBで DB 名前を 指定するの なかったです.";
 $langs['inst_chk_varu'] = "DBで DB userを 指定するの なかったです.";
@@ -385,10 +384,10 @@ $langs['reg_attention'] = "次は 加入する 時 気を付ける 点です.\n\n".
                         "聞く 修正する 数価 あります.\n";
 
 # ext
-$langs['nomatch_theme'] = "テーマ バージョンが 当たるの ないです. doc/ko/README.THEME\n".
+$langs['nomatch_theme'] = "テーマ バージョンが 当たるの ないです. doc/en/README.THEME\n".
                         "ファイルで バージョンに 関する 部分を 参照 してください";
 $langs['detable_search_link'] = "詳細 検索";
-$langs['captstr'] = "右側の イメージを クリック してください";
+$langs['captstr'] = "左側の イメージを クリック してください";
 $langs['captnokey'] = "文 登録を ための 背が ないです.";
 $langs['captinvalid'] = "否定的な 接近です.";
 ?>
