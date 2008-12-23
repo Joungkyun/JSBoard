@@ -466,7 +466,11 @@ function print_preview_src($print=0) {
   } elseif($agent['br'] == "MOZL" || $agent['br'] == 'Firefox' || ($agent['br'] == "NS" && $agent['vr'] == 6)) {
     $script_for_browser = "  over = document.getElementById('overDiv');\n".
                           "  document.onmousemove = mouseMove;\n".
-                          "  document.captureEvents(Event.MOUSEMOVE);\n\n".
+                          "  if(document.addEventListener) {\n".
+                          "    document.addEventListener(\"move\", mouseMove, false);\n".
+                          "  } else {\n".
+                          "    document.captureEvents(Event.MOUSEMOVE);\n".
+                          "  }\n\n".
 
                           " function drs(text, title) { dts(1,text); }\n\n".
 
@@ -518,7 +522,11 @@ function print_preview_src($print=0) {
   } elseif($agent['br'] == "NS") {
     $script_for_browser = "  over = document.overDiv;\n".
                           "  document.onmousemove = mouseMove;\n".
-                          "  document.captureEvents(Event.MOUSEMOVE);\n\n".
+                          "  if(document.addEventListener) {\n".
+                          "    document.addEventListener(\"move\", mouseMove, false);\n".
+                          "  } else {\n".
+                          "    document.captureEvents(Event.MOUSEMOVE);\n".
+                          "  }\n\n".
 
                           "  function drs(text, title) { dts(1,text); }\n\n".
 
