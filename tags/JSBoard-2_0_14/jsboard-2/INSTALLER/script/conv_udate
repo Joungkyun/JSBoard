@@ -1,0 +1,498 @@
+#!/bin/sh
+PERL_PATH="/usr/bin/perl"
+DEFAULTPATH="../.."
+
+echo "global.php 변환중.."
+echo
+ACONFFILE="${DEFAULTPATH}/config/global.php"
+
+rm -rf ${DEFAULTPATH}/config/themes
+rm -f ${DEFAULTPATH}/config/README.THEME
+rm -f ${DEFAULTPATH}/config/default.themes
+rm -f ${DEFAULTPATH}/config/allow_browser.txt
+
+ASERVER=$(sed -n -e '/db\[server\]/ s/.*db\[server\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${ASERVER}" = "" ] && ASERVER=""
+
+AUSER=$(sed -n -e '/db\[user\]/ s/.*db\[user\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${AUSER}" = "" ] && AUSER=""
+
+APASS=$(sed -n -e '/db\[pass\]/ s/.*db\[pass\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${APASS}" = "" ] && APASS=""
+
+ANAME=$(sed -n -e '/db\[name\]/ s/.*db\[name\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${ANAME}" = "" ] && ANAME=""
+
+ATITLE=$(sed -n -e '/board\[title\]/ s/.*board\[title\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${ATITLE}" = "" ] && ATITLE="WebBoard"
+
+AWIDTH=$(sed -n -e '/board\[width\]/ s/.*board\[width\][^=]*=[^\"0-9%]*[\"]*\([0-9%]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${AWIDTH}" = "" ] && AWIDTH="550"
+
+ATIT_L=$(sed -n -e '/board\[tit_l\]/ s/.*board\[tit_l\][^=]*=[^\"0-9]*[\"]*\([0-9 ]*\)[\"]*;.*/\1/p;' ${ACONFFILE})
+[ "${ATIT_L}" = "" ] && ATIT_L=42
+
+ANAM_L=$(sed -n -e '/board\[nam_l\]/ s/.*board\[nam_l\][^=]*=[^\"0-9]*[\"]*\([0-9 ]*\)[\"]*;.*/\1/p;' ${ACONFFILE})
+[ "${ANAM_L}" = "" ] && ANAM_L=8
+
+APERNO=$(sed -n -e '/board\[perno\]/ s/.*board\[perno\][^=]*=[^\"0-9]*[\"]*\([0-9 ]*\)[\"]*;.*/\1/p;' ${ACONFFILE})
+[ "${APERNO}" = "" ] && APERNO=10
+
+APLIST=$(sed -n -e '/board\[plist\]/ s/.*board\[plist\][^=]*=[^\"0-9]*[\"]*\([0-9 ]*\)[\"]*;.*/\1/p;' ${ACONFFILE})
+[ "${APLIST}" = "" ] && APLIST=3
+
+ALANG=$(sed -n -e '/langs\[code\]/ s/.*langs\[code\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+case ${ALANG} in
+  ko|KO|Ko|kO) ATHEME="KO-default" ;;
+  en|EN|En|eN) ATHEME="EN-default" ;;
+  *) ATHEME="EN-default"
+esac
+
+ADATEF=$(sed -n -e '/board\[date_fmt\]/ s/.*board\[date_fmt\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${ADATEF}" = "" ] && ADATEF="Y.m.d"
+
+AHL=$(sed -n -e '/board\[hl\]/ s/.*board\[hl\][^=]*=[^\"0-9a-zA-Z<>]*[\"]*\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+if [ "${AHL}" = "" ]; then
+  AHL="#000000"
+else
+  AHL=${AHL##*=}
+  AHL=${AHL%%>*}
+fi
+
+AALIGN=$(sed -n -e '/board\[align\]/ s/.*board\[align\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\"]*;.*/\1/p;' ${ACONFFILE})
+[ "${AALIGN}" = "" ] && AALIGN="center"
+
+AYESNO=$(sed -n -e '/upload\[yesno\]/ s/.*upload\[yesno\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+case ${AYESNO} in
+  y*|Y*) AYESNO=1;;
+  *) AYESNO=0;;
+esac
+
+ADIR=$(sed -n -e '/upload\[dir\]/ s/.*upload\[dir\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${ADIR}" = "" ] && ADIR="files"
+
+AMAX=$(sed -n -e '/upload\[maxsize\]/ s/.*upload\[maxsize\][^=]*=[^\"0-9%]*[\"]*\([0-9%]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${AMAX}" = "" ] && AMAX="2000000"
+
+AUSES=$(sed -n -e '/rmail\[uses\]/ s/.*rmail\[uses\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+case ${AUSES} in
+  y*|Y*) AUSES=1;;
+  *) AUSES=0;;
+esac
+
+ASMTP=$(sed -n -e '/rmail\[smtp\]/ s/.*rmail\[smtp\][^=]*=[^\"0-9a-zA-Z\xA1-\xFE\.]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${ASMTP}" = "" ] && ASMTP="127.0.0.1"
+
+ABBS=$(sed -n -e '/rmail\[bbshome\]/ s/.*rmail\[bbshome\][^=]*=[^\"0-9a-zA-Z\xA1-\xFE\.]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${ABBS}" = "" ] && ABBS="http://127.0.0.1/jsboard/"
+
+APRE=$(sed -n -e '/list\[pre\]/ s/.*list\[pre\][^=]*=[^\"0-9]*[\"]*\([0-9 ]*\)[\"]*;.*/\1/p;' ${ACONFFILE})
+[ "${APRE}" = "" ] && APRE=0
+
+APREN=$(sed -n -e '/list\[preren\]/ s/.*list\[preren\][^=]*=[^\"0-9]*[\"]*\([0-9 ]*\)[\"]*;.*/\1/p;' ${ACONFFILE})
+[ "${APREN}" = "" ] && APREN=100
+
+ACNAME=$(sed -n -e '/compare\[name\]/ s/.*compare\[name\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${ACNAME}" = "" ] && ACNAME=""
+
+ACMAIL=$(sed -n -e '/compare\[email\]/ s/.*compare\[email\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${ACONFFILE})
+[ "${ACMAIL}" = "" ] && ACMAIL=""
+
+cp -af ${DEFAULTPATH}/config/global.php ${DEFAULTPATH}/config/global.php.orig
+
+echo "<?
+##############################################################################
+#  DATABASE Configuration
+##############################################################################
+\$db[server]      = \"${ASERVER}\";	# DB address
+\$db[user]        = \"${AUSER}\";			# DB login user
+\$db[pass]        = \"${APASS}\";			# DB login pass
+\$db[name]        = \"${ANAME}\";			# DB name
+
+
+##############################################################################
+#  Basic Configuration
+##############################################################################
+\$board[title]    = \"${ATITLE}\";	# Board title
+\$board[width]    = \"${AWIDTH}\";	# Board width
+\$board[tit_l]    = ${ATIT_L};			# Max lenth of subject field
+\$board[nam_l]    = ${ANAM_L};			# Max lenth of writer field
+\$board[perno]    = ${APERNO};			# Article number per page
+\$board[plist]    = ${APLIST};			# Print page link number (x2+1)
+\$board[uconf]    = 1;			# Permited to use configuration per user
+\$board[date_fmt] = \"${ADATEF}\";		# format of date
+
+# period of cookie time (day value)
+\$board[cookie]   = 30;
+
+# Highlight of search string
+\$board[hl] = \"<FONT STYLE=\\\"color:${AHL};font-weight:bold;text-decoration:underline;\\\">STR</FONT>\";
+
+# Table Align of board
+\$board[align]    = \"${AALIGN}\";
+
+# web path of installed jsboard
+\$board[path]  = \"${ABBS}\";
+
+
+##############################################################################
+#  login mode Configuration
+##############################################################################
+# login variation name (This value must be modified as security problem)
+\$jsboard         = \"login\";
+
+# Don't touch this line.
+\$jsboard         = \"jsboard\".\$jsboard;
+
+# location of default page after login
+\$print[dpage] = \"${ABBS}list.php?table=test\";
+
+# location of default page after logout
+\$print[dopage] = \"${ABBS}list.php?table=test\";
+
+# permition of user registration
+# 1 -> everyone
+# 0 -> admin only
+\$board[regist] = 0;
+
+
+##############################################################################
+#  Theme Configuration
+##############################################################################
+# Theme Name
+\$print[theme]    = \"${ATHEME}\";
+
+
+##############################################################################
+#  UPLOAD Configuration
+#  if value of \$upload[yesno] is 0, then all board disable upload
+##############################################################################
+\$upload[yesno]   = ${AYESNO};			# enable upload
+\$upload[dir]     = \"${ADIR}\";		# directory name of upload file
+\$upload[maxsize] = \"${AMAX}\";		# upload max size
+
+
+##############################################################################
+#  Config of IP Blocking
+#  if value of \$board[useipbl] is 0, then all board disable check ip blocking.
+##############################################################################
+\$board[useipbl] = 0;
+
+
+##############################################################################
+#  Control Access From Remote Hyper Link
+#  if value of \$board[usedhyper] is 0, then all board disable check dhyper.
+##############################################################################
+\$board[usedhyper] = 0;
+
+
+##############################################################################
+#  Mail Configuration
+##############################################################################
+\$rmail[uses]     = ${AUSES};
+# MTA configuration
+# no value            -> send mail with self method of JSBoard
+# mail server address -> send mail with selected mail server
+# WARN : windows version can't select self method of JSBoard
+\$rmail[mta]      = \"${ASMTP}\";
+# charactor of converted mail address
+\$rmail[chars]    = \"__at__\";
+
+
+##############################################################################
+#  Preview article contents
+##############################################################################
+\$list[pre]       = ${APRE};   # enable preview
+\$list[preren]    = ${APREN}; # if enable preview, lenth of contents
+
+
+##############################################################################
+#  If registed article as follow information, requried passwd of super user
+##############################################################################
+\$compare[name]   = \"${ACNAME}\";
+\$compare[email]  = \"${ACMAIL}\";
+?>" > ${DEFAULTPATH}/config/global.php
+
+
+# 게시판 목록을 구함
+TARGET=$(ls -l ${DEFAULTPATH}/data | grep -e "^d" | awk '{print $9}' | sed -e 's/\///')
+
+for i in ${TARGET}
+do
+
+  echo "${i} 게시판 작업중"
+
+  # 필요 없는 테마 파일을 삭제
+  rm -f "${DEFAULTPATH}/data/${i}/default.themes"
+  CONFFILE="${DEFAULTPATH}/data/${i}/config.php"
+
+  # 미리보기 허가 설정값
+  PRE=$(sed -n -e '/enable\[pre\]/ s/.*enable\[pre\][^=]*=[^\"0-9]*[\"]*\([0-9 ]*\)[\"]*;.*/\1/p;' ${CONFFILE})
+  [ "${PRE}" = "" ] && PRE=0
+
+  # 미리보기 허가 글길이 값
+  PREREN=$(sed -n -e '/enable\[preren\]/ s/.*enable\[preren\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${PREREN}" = "" ] && PREREN=100
+
+  # 원본글 포함 여부 값
+  ORE=$(sed -n -e '/enable\[ore\]/ s/.*enable\[ore\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${ORE}" = "" ] && ORE=0
+
+  # 관련글 리스트 값
+  RE_LIST=$(sed -n -e '/enable\[re_list\]/ s/.*enable\[re_list\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${RE_LIST}" = "" ] && RE_LIST=0
+
+  # 보드 align 값
+  ALIGN=$(sed -n -e '/board\[align\]/ s/.*board\[align\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${ALIGN}" = "" ] && ALIGN="center"
+
+  # 게시판 제목
+  TITLE=$(sed -n -e '/board\[title\]/ s/.*board\[title\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${TITLE}" = "" ] && TITLE=""
+
+  # 본문 길게 늘어지는것 방지
+  WRAP=$(sed -n -e '/board\[wrap\]/ s/.*board\[wrap\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${WRAP}" = "" ] && WRAP=0
+
+  WWRAP=$(sed -n -e '/board\[wwrap\]/ s/.*board\[wwrap\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${WWRAP}" = "" ] && WWRAP=120
+
+  # 게시판 너비
+  WIDTH=$(sed -n -e '/board\[width\]/ s/.*board\[width\][^=]*=[^\"0-9%]*[\"]*\([0-9%]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${WIDTH}" = "" ] && WIDTH=550
+
+  # 제목 필드 최대 길이
+  TIT_L=$(sed -n -e '/board\[tit_l\]/ s/.*board\[tit_l\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${TIT_L}" = "" ] && TIT_L=38
+
+  # 글쓴이 필드 최대 길이
+  NAM_L=$(sed -n -e '/board\[nam_l\]/ s/.*board\[nam_l\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${NAM_L}" = "" ] && NAM_L=8
+
+  # 페이지 당 게시물 수
+  PERNO=$(sed -n -e '/board\[perno\]/ s/.*board\[perno\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${PERNO}" = "" ] && PERNO=10
+
+  # 페이지 목록 출력 갯수
+  PLIST=$(sed -n -e '/board\[plist\]/ s/.*board\[plist\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${PLIST}" = "" ] && PLIST=3
+
+  # 쿠키값
+  COOKIE=$(sed -n -e '/board\[cookie\]/ s/.*board\[cookie\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${COOKIE}" = "" ] && COOKIE=30
+
+  # IP address 출력 여부(상단 메뉴 출력 안할시)
+  DHOST=$(sed -n -e '/enable\[dhost\]/ s/.*enable\[dhost\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${DHOST}" = "" ] && DHOST=0
+
+  # DNS lookup 여부
+  DLOOK=$(sed -n -e '/enable\[dlook\]/ s/.*enable\[dlook\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${DLOOK}" = "" ] && DLOOK=0
+
+  # WHOIS 검색 여부
+  DWHO=$(sed -n -e '/enable\[dwho\]/ s/.*enable\[dwho\][^=]*=[^\"0-9]*[\"]*\([0-9]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${DWHO}" = "" ] && DWHO=0
+
+  # upload 사용 여부
+  YESNO=$(sed -n -e '/cupload\[yesno\]/ s/.*cupload\[yesno\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+
+  case ${YESNO} in
+    y*|Y*) YESNO=1;;
+    *) YESNO=0;;
+  esac
+
+  # URL 출력 여부
+  VURL=$(sed -n -e '/view\[url\]/ s/.*view\[url\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+
+  case ${VURL} in
+    y*|Y*) VURL=1;;
+    *) VURL=0;;
+  esac
+
+  # EMAIL 출력 여부
+  VEMAIL=$(sed -n -e '/view\[email\]/ s/.*view\[email\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+
+  case ${VEMAIL} in
+    y*|Y*) VEMAIL=1;;
+    *) VEMAIL=0;;
+  esac
+
+  # 메일 발송 여부(어드민)
+  RADMIN=$(sed -n -e '/rmail\[admin\]/ s/.*rmail\[admin\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+
+  case ${RADMIN} in
+    y*|Y*) RADMIN=1;;
+    *) RADMIN=0;;
+  esac
+
+  # 메일 발송 여부(유저)
+  RUSER=$(sed -n -e '/rmail\[user\]/ s/.*rmail\[user\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+
+  case ${RUSER} in
+    y*|Y*) RUSER=1;;
+    *) RUSER=0;;
+  esac
+
+  # 메일 발송 주소(어드민)
+  TOADMIN=$(sed -n -e '/rmail\[toadmin\]/ s/.*rmail\[toadmin\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${TOADMIN}" = "" ] && TOADMIN=""
+
+
+  # 패스워드 요구 정보(이름)
+  CNAME=$(sed -n -e '/ccompare\[name\]/ s/.*ccompare\[name\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${CNAME}" = "" ] && CNAME=""
+
+  # 패스워드 요구 정보(메일)
+  CEMAIL=$(sed -n -e '/ccompare\[email\]/ s/.*ccompare\[email\][^=]*=[^\"a-zA-Z\xA1-\xFE]*[\"]\([^\"]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  [ "${CEMAIL}" = "" ] && CEMAIL=""
+
+  # LANGUAGE 체크
+  CLANG=$(sed -n -e '/langs\[code\]/ s/.*langs\[code\][^=]*=[^\"a-zA-Z]*[\"]*\([a-zA-Z]*\)[\" ]*;.*/\1/p;' ${CONFFILE})
+  case ${CLANG} in
+    ko|KO|Ko|kO) CTHEME="KO-default" ;;
+    en|EN|En|eN) CTHEME="EN-default" ;;
+    *) CTHEME="EN-default"
+  esac
+
+  cp -af ${DEFAULTPATH}/data/${i}/config.php ${DEFAULTPATH}/data/${i}/config.php.old
+
+  echo "<?
+###############################################################################
+#  게시판 관리 모드
+#   ad   -> 게시판 관리자 id
+#   mode -> 게시판 관리 모드
+#           0 -> 공개 게시판
+#           1 -> 공지 게시판 (admin only write)
+#           2 -> 회원 전용 게시판
+#           3 -> 회원 전용 공지 게시판 (admin only write)
+#           4 -> 공개 게시판 (read, reply only)
+#           5 -> 회원 전용 게시판 (read, reply only)
+#           6 -> 공개 게시판 (reply only admin)
+#           7 -> 회원 전용 게시판 (reply only admin)
+###############################################################################
+#
+\$board[ad] = \"admin\";
+\$board[mode] = 0;
+
+# 로그인 모드시에 이름 출력을 실명으로 할지 Nickname 으로 할지 결정
+# 이 변수값이 설정이 안되어 있으면 Nickname 으로 출력
+\$board[rnname] = 0;
+
+# 로그아웃 후에 이동할 페이지를 지정
+\$print[dopage] = \"${ABBS}list.php?table=${i}\";
+
+
+###############################################################################
+#  게시판 허가 설정
+###############################################################################
+#
+\$enable[pre]     = ${PRE};		# 미리 보기 허가
+\$enable[preren]  = ${PREREN};		# 미리 보기 허가시 글 길이
+
+# 답장시 원본글 포함을 선택사항으로 설정
+#
+\$enable[ore] = ${ORE};		# 0 - 무조건 출력  1 - 선택사항
+
+# 글읽기에서 관련글이 있을 경우 관련글 리스트를 보여줄지 여부 설정
+#
+\$enable[re_list] = ${RE_LIST};		# 0 - 보여주지 않음 1 - 보여줌
+
+
+###############################################################################
+#  게시판 정렬 상태를 설정
+###############################################################################
+#
+\$board[align] = \"${ALIGN}\";	# <DIV align=\"center\">
+
+
+###############################################################################
+#  게시판 기본 설정
+###############################################################################
+#
+\$board[title] = \"${TITLE}\";	# 게시판 제목
+\$board[wrap]  = ${WRAP};		# 본문 길게 늘어지는것 방지
+\$board[wwrap] = ${WWRAP};		# \$board[wrap]이 적용안될시 강제 적용
+\$board[width] = \"${WIDTH}\";		# 게시판 너비
+\$board[tit_l] = ${TIT_L};		# 제목 필드 최대 길이
+\$board[nam_l] = ${NAM_L};		# 글쓴이 필드 최대 길이
+\$board[perno] = ${PERNO};		# 페이지 당 게시물 수
+\$board[plist] = ${PLIST};		# 페이지 목록 출력 갯수 (x2)
+
+# 쿠키 기간 설정 (日)
+\$board[cookie] = ${COOKIE};
+
+
+###############################################################################
+#  호스트 정보 출력 설정 0 - Failed, 1 - True 
+###############################################################################
+#
+\$enable[dhost] = ${DHOST};	# IP address 출력 여부(상단 메뉴 출력 안할시)
+\$enable[dlook] = ${DLOOK};	# DNS lookup 여부
+\$enable[dwho]  = ${DWHO};	# WHOIS 검색 여부
+
+
+###############################################################################
+#  Theme Configuration
+###############################################################################
+#
+\$print[theme] = \"${CTHEME}\";	# Theme 이름 
+
+
+###############################################################################
+#  file upload 관련 설정
+#  전체 관리자가 허락 하지 않으면 여기서 yes를 선택해도 이기능을 사용할수 없다
+###############################################################################
+#
+\$cupload[yesno] = ${YESNO};	# upload 사용 여부
+
+
+###############################################################################
+#  url,email 사용 여부 설정
+###############################################################################
+#
+\$view[url]      = ${VURL};
+\$view[email]    = ${VEMAIL};
+
+
+###############################################################################
+#  mail 발송 여부 설정
+#  전체 관리자의 기능 on에 의해 사용을 할수 있다
+###############################################################################
+#
+\$rmail[admin]   = ${RADMIN};
+\$rmail[user]    = ${RUSER};
+\$rmail[toadmin] = \"${TOADMIN}\";	# 메일을 받을 게시판 관리자의 메일 주소
+
+
+###############################################################################
+#  아래의 정보를 사용하여 글 등록시 관리자의 password를 요구
+###############################################################################
+#
+\$ccompare[name]  = \"${CNAME}\";
+\$ccompare[email] = \"${CEMAIL}\";
+
+
+###############################################################################
+#  IP Blocking 기능
+#  설정값의 구분자는 ';' 로 한다.
+#  설정 예) 1.1.1.1;2.2.2.2;3.3.3.3
+###############################################################################
+\$enable[ipbl] = \"\";
+
+
+###############################################################################
+#  원격의 하이퍼링크를 통해 들어오는 접속제어
+#  dhyper : 0 -> 등록된 값만 허락
+#           1 -> 등록된 값만 막음
+#           plink 가 없을 경우에는 작동 안함
+#  plink  : dhyper 가 작동할 ip 주소. ';' 를 구분자로 사용
+#  설정 예) 1.1.1.1;2.2.2.2;3.3.3.3
+###############################################################################
+#
+\$enable[dhyper] = 0;
+\$enable[plink]  = \"\";
+?>" > ${DEFAULTPATH}/data/${i}/config.php
+
+done
+
+exit 0

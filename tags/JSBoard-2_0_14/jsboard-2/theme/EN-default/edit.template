@@ -1,0 +1,276 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!-- ==================================================================== -->
+<!-- $langs['charset'] : print charset code                               -->
+<!-- $board['ver']     : version information in webboard                  -->
+<!-- get_title()     : print header title in webbared                     -->
+<!-- $user_stylesheet : User Defined StyleSheet                           -->
+<!-- ==================================================================== -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+body,td {
+  font-size: 12px;
+  font-family: tahoma, sans-serif;
+  color: #555555;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #555555;
+}
+a:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+input {
+  font: 11px tahoma,sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right:  1px;
+  background-color: #FFFFFF;
+  margin: 1px 1px;
+}
+textarea {
+  font: 13px comic,sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  background-Color: #ffffff;
+  width: 100%;
+  height: 150px;
+}
+
+.resizable-textarea .grippie {
+  height: 14px;
+  background: #ECE9D6 url(theme/EN-default/img/grippie.png) no-repeat 100% 100%;
+  border: 1px solid #DFDBCA;
+  border-top-width: 0;
+  cursor: se-resize;
+}
+
+.resizable-textarea {
+  width: 100% !important;
+  width: 98%; /* for IE */
+}
+form { display: inline; }
+
+<?=$user_stylesheet?>
+-->
+</style>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<!-- ======================= Start Header Design ======================= -->
+<?
+print_keymenu(2);
+echo $print['preview_script'] . "\n";
+
+if(!$np) {
+  # Design per user
+  include "{$board['headpath']}";
+  # Input by whole admin
+  include "html/head.php";
+}
+?>
+<!-- ======================= End Header Design   ======================= -->
+
+<!-- ==================================================================== -->
+<!-- $board['align'] : print align of webboard. It's config in board admin-->
+<!-- $board['width'] : print width of webboard. It's config in board admin-->
+<!-- $board['formtype'] : print form option to use upload image           -->
+<!-- ==================================================================== -->
+<DIV ALIGN="<?=$board['align']?>">
+<FORM NAME="editp" METHOD="post" ACTION="act.php"<?=$board['formtype']?>>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;">&gt;&gt; <B>Edit</B> article</FONT></TD>
+</TR>
+
+<TR BGCOLOR="#FFAE00">
+<TD COLSPAN=2>
+<IMG SRC="./theme/EN-default/img/board_no.gif" ALIGN="middle" ALT=''>
+<FONT STYLE="color:#FFFFFF"><IMG SRC="theme/EN-default/img/edit_title.gif" BORDER=0 ALT=''></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=10><IMG SRC="images/blank.gif" WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+
+<!-- ==================================================================== -->
+<!-- $size['name']  : print size of input of name filed                   -->
+<!-- $list['name']  : print registed name                                 -->
+<!-- ==================================================================== -->
+<TR>
+<TD WIDTH=80><B>Name</B></TD>
+<TD><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$list['name']?>"<?=$disable?> tabindex="1"></TD>
+</TR>
+
+<!-- ==================================================================== -->
+<!-- $view['email']          : print email field                          -->
+<!-- $list['email']          : print registed email                       -->
+<!-- ==================================================================== -->
+<?
+if($view['email'] || trim($list['email'])) {
+  echo <<<EOF
+
+<TR>
+<TD><B>Email</B></TD>
+<TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['email']}"$disable tabindex="2"></TD>
+</TR>
+EOF;
+}
+?>
+
+<!-- ==================================================================== -->
+<!-- $view['url']             : print url field                           -->
+<!-- $list['url']             : print registed url                        -->
+<!-- ==================================================================== -->
+<?
+if($view['url'] || trim($list['url'])) {
+  echo <<<EOF
+
+<TR>
+<TD><B>Homepage</B></TD>
+<TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['url']}"$disable tabindex="3"></TD>
+</TR>
+EOF;
+}
+?>
+
+<!-- ==================================================================== -->
+<!-- print upload field                                                   -->
+<!-- ==================================================================== -->
+<?
+if($list['bofile']) {
+  echo <<<EOF
+<TR>
+<TD><B>File</B></TD>
+<TD>
+<A HREF="$down_link">
+<IMG SRC="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" align="middle">
+<FONT style="color:{$color['text']}">{$list['bofile']}</FONT></A> - $hfsize &nbsp; &nbsp;
+<INPUT TYPE="CHECKBOX" NAME="atc[fdel]" VALUE=1 tabindex="4"> Remove File
+</TD>
+</TR>
+EOF;
+}
+
+if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
+  echo <<<EOF
+<TR>
+<TD><B>Edit File</B></TD>
+<TD>
+<INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
+<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256 tabindex="5">
+</TD>
+</TR>
+EOF;
+}
+?>
+
+<!-- ==================================================================== -->
+<!-- $size['titl']  : size of title input form                            -->
+<!-- $list['title'] : print for modified subject                          -->
+<!-- ==================================================================== -->
+<TR>
+<TD><B>Subject</B></TD>
+<TD><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 VALUE="<?=$list['title']?>" tabindex="6"></TD>
+</TR>
+
+<TR>
+<!-- ==================================================================== -->
+<!-- if login admin, don't need password                                  -->
+<!-- if IE and NS6 case, print textarea size operation button             -->
+<!-- ==================================================================== -->
+<?
+if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
+  echo <<<EOF
+<TD><B>Password</B></TD>
+<TD>
+$passment
+</TD>
+EOF;
+}
+?>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?=$color['l5_bg']?>" ALIGN="CENTER">
+
+<!-- ==================================================================== -->
+<!-- $size['text'] : print size of textarea                               -->
+<!-- $list['text'] : print content of original content for modified       -->
+<!-- ==================================================================== -->
+<!-- =============================== Contents =============================== -->
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<TEXTAREA NAME="epost" CLASS="resizable" tabindex="8"><?="{$list['text']}\n\n"?></TEXTAREA>
+<!-- =============================== Contents =============================== -->
+
+</TD></TR>
+</TABLE>
+
+
+<!-- ==================================================================== -->
+<!-- $table.$page      : print link option to back list                   -->
+<!-- $print['passform']  : hidden value for regist reply article          -->
+<!-- $orig_option      : back to original size of textarea                -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
+<?=$print['passform']?>
+<INPUT TYPE="submit" VALUE="Modify" tabindex="9">
+<INPUT TYPE="button" VALUE="Reset" onClick="document.location.reload(); return false;" tabindex="10">
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List" tabindex="11">
+<INPUT TYPE="button" onClick="history.back()" VALUE="Back" tabindex="12">
+</TD></TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- print_license()  : Printed Licese table                              -->
+<!-- ==================================================================== -->
+<?=print_license()?>
+
+</FORM>
+</DIV>
+
+<!-- ======================= Start Tail Design ====================== -->
+<?
+if(!$np) {
+  # Input by whole admin
+  include "html/tail.php";
+  # Design per user
+  include "{$board['tailpath']}";
+}
+?>
+<!-- ======================= End   Tail Design ====================== -->
+</BODY>
+</HTML>
