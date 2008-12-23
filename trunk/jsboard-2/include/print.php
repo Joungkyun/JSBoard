@@ -735,15 +735,15 @@ function detail_searchform($p='') {
 
   $form = "<!-- ======================  Detail Search Table ==================== -->\n".
           "<TABLE SUMMARY=\"\" WIDTH=\"{$board['width']}\" BORDER=0 CELLPADDING=0 CELLSPACING=0>\n<TR><TD>\n".
-          "<FORM METHOD=post ACTION=locate.php?table=$table>\n".
-          "<TABLE SUMMARY=\"\" WIDTH=\"{$board['width']}\" BORDER=0 CELLPADDING=10 CELLSPACING=0 ALIGN=center BGCOLOR=\"{$color['l5_bg']}\">\n".
+          "<FORM METHOD=\"post\" ACTION=\"locate.php?table=$table\">\n".
+          "<TABLE SUMMARY=\"\" WIDTH=\"{$board['width']}\" BORDER=0 CELLPADDING=10 CELLSPACING=0 ALIGN=\"center\" BGCOLOR=\"{$color['l5_bg']}\">\n".
           "<TR>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['sh_str']}</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
-          "<INPUT TYPE=text NAME=\"o[ss]\" SIZE=".form_size(26)." MAXLENGTH=255 VALUE=\"{$o['ss']}\">\n".
-          "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=d>\n".
-          "<INPUT TYPE=hidden NAME=\"o[go]\" VALUE=p>\n".
+          "<INPUT TYPE=\"text\" NAME=\"o[ss]\" SIZE=".form_size(26)." MAXLENGTH=255 VALUE=\"{$o['ss']}\" tabindex=\"1\">\n".
+          "<INPUT TYPE=\"hidden\" NAME=\"o[at]\" VALUE=\"d\">\n".
+          "<INPUT TYPE=\"hidden\" NAME=\"o[go]\" VALUE=\"p\">\n".
           "</TD>\n".
           "</TR>\n\n".
 
@@ -751,10 +751,10 @@ function detail_searchform($p='') {
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['sh_pat']}</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
-          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=t$TCHK> <FONT STYLE=\"font-family: tahoma,sans-serif;\">TITLE</FONT>\n".
-          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=c$CCHK> <FONT STYLE=\"font-family: tahoma,sans-serif;\">Contents</FONT>\n".
-          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=n$NCHK> <FONT STYLE=\"font-family: tahoma,sans-serif;\">Writer</FONT>\n".
-          "<INPUT TYPE=radio NAME=\"o[sc]\" VALUE=a$ACHK> <FONT STYLE=\"font-family: tahoma,sans-serif;\">ALL</FONT>\n".
+          "<INPUT TYPE=\"radio\" NAME=\"o[sc]\" VALUE=\"t\"$TCHK tabindex=\"2\"> <FONT STYLE=\"font-family: tahoma,sans-serif;\">TITLE</FONT>\n".
+          "<INPUT TYPE=\"radio\" NAME=\"o[sc]\" VALUE=\"c\"$CCHK tabindex=\"3\"> <FONT STYLE=\"font-family: tahoma,sans-serif;\">Contents</FONT>\n".
+          "<INPUT TYPE=\"radio\" NAME=\"o[sc]\" VALUE=\"n\"$NCHK tabindex=\"4\"> <FONT STYLE=\"font-family: tahoma,sans-serif;\">Writer</FONT>\n".
+          "<INPUT TYPE=\"radio\" NAME=\"o[sc]\" VALUE=\"a\"$ACHK tabindex=\"5\"> <FONT STYLE=\"font-family: tahoma,sans-serif;\">ALL</FONT>\n".
           "</TD>\n".
           "</TR>\n\n".
 
@@ -762,27 +762,27 @@ function detail_searchform($p='') {
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['sh_dat']}</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
-          "<SELECT NAME=\"o[y1]\">\n".
+          "<SELECT NAME=\"o[y1]\" tabindex=\"6\">\n".
           "{$print['peys']}\n".
           "</SELECT>\n\n".
 
-          "<SELECT NAME=\"o[m1]\">\n".
+          "<SELECT NAME=\"o[m1]\" tabindex=\"7\">\n".
           "{$print['pems']}\n".
           "</SELECT>\n\n".
 
-          "<SELECT NAME=\"o[d1]\">\n".
+          "<SELECT NAME=\"o[d1]\" tabindex=\"8\">\n".
           "{$print['peds']}\n".
           "</SELECT>\n".
           "-\n".
-          "<SELECT NAME=\"o[y2]\">\n".
+          "<SELECT NAME=\"o[y2]\" tabindex=\"9\">\n".
           "{$print['peye']}\n".
           "</SELECT>\n\n".
 
-          "<SELECT NAME=\"o[m2]\">\n".
+          "<SELECT NAME=\"o[m2]\" tabindex=\"10\">\n".
           "{$print['peme']}\n".
           "</SELECT>\n\n".
 
-          "<SELECT NAME=\"o[d2]\">\n".
+          "<SELECT NAME=\"o[d2]\" tabindex=\"11\">\n".
           "{$print['pede']}\n".
           "</SELECT>\n".
           "</TD>\n".
@@ -792,8 +792,8 @@ function detail_searchform($p='') {
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">{$langs['check_y']}</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">:</TD>\n".
           "<TD STYLE=\"overflow: hidden; white-space: nowrap\">\n".
-          "<INPUT TYPE=checkbox NAME=\"o[er]\" VALUE=y$ERCHK>\n".
-          "<INPUT TYPE=submit VALUE=\"{$langs['sh_sbmit']}\">\n".
+          "<INPUT TYPE=\"checkbox\" NAME=\"o[er]\" VALUE=\"y\"$ERCHK tabindex=\"12\">\n".
+          "<INPUT TYPE=\"submit\" VALUE=\"{$langs['sh_sbmit']}\" tabindex=\"13\">\n".
           "</TD>\n".
           "</TR>\n\n".
 
@@ -867,46 +867,90 @@ function print_comment($table,$no,$print=0) {
 function print_keymenu($type=0) {
   global $table, $pages, $pos, $page, $no, $nolenth;
 
-  if(!$type) {
-    $nextpage = $pages['nex'] ? $pages['nex'] : $pages['all'];
-    $prevpage = $pages['pre'] ? $pages['pre'] : 1;
-    $nlink = "./list.php?table=$table&page=$nextpage";
-    $plink = "./list.php?table=$table&page=$prevpage";
-    $ment = "Page";
+  switch ($type) {
+    case '3' :
+    case '2' : 
+      /* write/reply/edit mode */
+      $plink = "./read.php?table={$table}&no={$no}";
+      $anycmd = "else if(ch == ':' || strs == ':') {\n".
+                "    strs = strs + ch;\n". 
+                "    if(strs == ':q') { self.close(); }\n".
+                "  }\n";
+      break; 
+    case '1' :
+      /* read mode */
+      $nlink = "./read.php?table={$table}&no={$pos['prev']}";
+      $plink = "./read.php?table={$table}&no={$pos['next']}";
+      $ment = "Article";
 
-    $precmd = " if (cc == 13) {\n".
-              "    if(strs.length > 0) location_ref ('read.php?table=$table&num=' + strs + '&page=$page');\n".
-              "    else strs = \"\";\n".
-              "  } else";
+      $anycmd = "else if(ch == 'l' || ch == '.' || ch == 'L') {\n".
+                "    location_ref('./list.php?table={$table}&page={$page}');\n".
+                "  } else if(ch == 'r' || ch == 'R' || ch == '/') {\n".
+                "    location_ref('./reply.php?table={$table}&no={$no}&page={$page}');\n".
+                "  } else if(ch == 'e' || ch == 'E') {\n".
+                "    location_ref('./edit.php?table={$table}&no={$no}&page={$page}');\n".
+                "  } else if(ch == 'd' || ch == 'D') {\n".
+                "    location_ref('./delete.php?table={$table}&no={$no}&page={$page}');\n".
+                "  } else if(ch == ':' || strs == ':') {\n".
+                "    strs = strs + ch;\n".
+                "    if(strs == ':q') { self.close(); }\n".
+                "  }\n";
+      break;
+    default :
+      /* list mode */
+      $nextpage = $pages['nex'] ? $pages['nex'] : $pages['all'];
+      $prevpage = $pages['pre'] ? $pages['pre'] : 1;
+      $nlink = "./list.php?table={$table}&page={$nextpage}";
+      $plink = "./list.php?table={$table}&page={$prevpage}";
+      $ment = "Page";
 
-    $anycmd = "else if(ch == ':' || strs == ':') {\n".
-              "    strs = strs + ch;\n".
-              "    if(strs == ':q') { self.close(); }\n".
-              "  } else {\n".
-              "    strs = strs + ch;\n".
-              "    if(strs.length > $nolenth) strs = \"\";\n".
-              "    document.getElementById(\"num\").innerHTML=strs;\n".
-              "  }\n";
-  } else {
-    $nlink = "./read.php?table=$table&no={$pos['prev']}";
-    $plink = "./read.php?table=$table&no={$pos['next']}";
-    $ment = "Article";
+      $precmd = " if (cc == 13) {\n".
+                "    if(strs.length > 0) location_ref('read.php?table={$table}&num=' + strs + '&page={$page}');\n".
+                "    else strs = \"\";\n".
+                "  } else";
 
-    $anycmd = "else if(ch == 'l' || ch == '.' || ch == 'L') {\n".
-              "    location_ref ('./list.php?table=$table&page=$page');\n".
-              "  } else if(ch == 'r' || ch == 'R' || ch == '/') {\n".
-              "    location_ref ('./reply.php?table=$table&no=$no&page=$page');\n".
-              "  } else if(ch == 'e' || ch == 'E') {\n".
-              "    location_ref ('./edit.php?table=$table&no=$no&page=$page');\n".
-              "  } else if(ch == 'd' || ch == 'D') {\n".
-              "    location_ref ('./delete.php?table=$table&no=$no&page=$page');\n".
-              "  } else if(ch == ':' || strs == ':') {\n".
-              "    strs = strs + ch;\n".
-              "    if(strs == ':q') { self.close(); }\n".
-              "  }\n";
+      $anycmd = "else if(ch == ':' || strs == ':') {\n".
+                "    strs = strs + ch;\n".
+                "    if(strs == ':q') { self.close(); }\n".
+                "  } else {\n".
+                "    strs = strs + ch;\n".
+                "    if(strs.length > {$nolenth}) strs = \"\";\n".
+                "    document.getElementById(\"num\").innerHTML=strs;\n".
+                "  }\n";
   }
 
-  echo " <SCRIPT TYPE=\"text/javascript\">\n".
+  switch ($type) {
+    case '3' :
+    case '2' :
+      if ( $type == 3 )
+        $plink = 'history.back();';
+      else
+        $plink = 'location_ref(\'' . $plink . '\');';
+      $cmds = " ${precmd} if(ch == 'p' || ch == 'P') {\n".
+              "    location_ref('./list.php?table=$table&page=1');\n".
+              "  } else if(ch == 'b' || ch == 'B' || ch == '-') {\n".
+              "    {$plink}\n".
+              "  } else if(ch == 'w' || ch == 'W' || ch == '*') {\n".
+              "    location_ref('./write.php?table=$table&page=$page');\n".
+              "  } $anycmd\n";
+       break;
+    case '1' :
+    default :
+      $cmds = " ${precmd} if(ch == 'p' || ch == 'P') {\n".
+              "    location_ref('./list.php?table=$table&page=1');\n".
+              "  } else if(ch == 'n' || ch == 'N' || ch == '+') {\n".
+              "    location_ref('$nlink');\n".
+              "  } else if(ch == 'b' || ch == 'B' || ch == '-') {\n".
+              "    location_ref('$plink');\n".
+              "  } else if(ch == 's' || ch == 'S') {\n".
+              "    document.getElementById('searchstr').focus();\n".
+              "  } else if(ch == 'w' || ch == 'W' || ch == '*') {\n".
+              "    location_ref('./write.php?table=$table&page=$page');\n".
+              "  } $anycmd\n";
+      break;
+  }
+
+  echo " <script type=\"text/javascript\">\n".
        "<!--//\n".
        "_dom=0;\n".
        "strs=\"\";\n\n".
@@ -947,16 +991,8 @@ function print_keymenu($type=0) {
        "  }\n\n".
 
        "  if(e.altKey || e.ctrlKey) return;\n\n".
-       
-       " ${precmd} if(ch == 'p' || ch == 'P') {\n".
-       "    location_ref ('./list.php?table=$table&page=1');\n".
-       "  } else if(ch == 'n' || ch == 'N' || ch == '+') {\n".
-       "    location_ref ('$nlink');\n".
-       "  } else if(ch == 'b' || ch == 'B' || ch == '-') {\n".
-       "    location_ref = ('$plink');\n".
-       "  } else if(ch == 'w' || ch == 'W' || ch == '*') {\n".
-       "    location_ref ('./write.php?table=$table&page=$page');\n".
-       "  } $anycmd\n".
+
+       $cmds .
        "  return;\n".
        "}\n\n".
 
@@ -967,7 +1003,7 @@ function print_keymenu($type=0) {
 
        "input();\n".
        "//-->\n".
-       "</SCRIPT>\n";
+       "</script>\n";
 }
 
 function print_spam_trap() {
