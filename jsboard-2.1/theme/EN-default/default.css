@@ -69,6 +69,8 @@ textarea {
   height: 150px;
 }
 
+.cmtarea { height: 100px; }
+
 .resizable-textarea .grippie {
   height: 14px;
   background: #ECE9D6 url(img/grippie.png) no-repeat 100% 100%;
