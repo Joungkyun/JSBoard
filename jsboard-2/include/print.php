@@ -143,9 +143,9 @@ function page_list($table, $pages, $count, $num, $print = 0) {
     
   $str .= "<!-- ============================ Page List Form ========================== -->\n";
 
-  if($print) {
-	echo $str;
-  }
+  if($print)
+    echo $str;
+
   return $str;
 }
 
@@ -923,8 +923,8 @@ function print_keymenu($type=0) {
        "}\n\n" .
 
        "function keypresshandler(e){\n".
-	   "  if(navigator.userAgent.indexOf('MSIE') != -1) { msie = true; }\n" .
-	   "  else msie = false;\n" .
+       "  if(navigator.userAgent.indexOf('MSIE') != -1) { msie = true; }\n" .
+       "  else msie = false;\n" .
        "  if(document.all) e=window.event; // for IE\n".
        "  if(_dom==3 || msie) var EventStatus = e.srcElement.tagName;\n".
        "  else if(_dom==1) var EventStatus = e.target.nodeName; // for Mozilla\n\n".
