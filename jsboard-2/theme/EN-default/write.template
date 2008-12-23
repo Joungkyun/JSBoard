@@ -78,6 +78,7 @@ form { display: inline; }
 
 <!-- ======================= Start Header Design ======================= -->
 <?
+print_keymenu(3);
 echo $print['preview_script'] . "\n";
 
 if(!$np) {

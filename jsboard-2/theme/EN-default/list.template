@@ -178,7 +178,7 @@ EOF;
 <OPTION VALUE="n"<?=$sform['sc']['n']?>>Writer
 <OPTION VALUE="a"<?=$sform['sc']['a']?>>All
 </SELECT>
-<INPUT TYPE="text" NAME="o[ss]" SIZE="<?=form_size(8)?>" MAXLENGTH=255 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555;" VALUE="<?=$sform['ss']?>">
+<INPUT TYPE="text" ID="searchstr" NAME="o[ss]" SIZE="<?=form_size(8)?>" MAXLENGTH=255 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555;" VALUE="<?=$sform['ss']?>">
 <INPUT TYPE="submit" VALUE="Search" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555;">
 </TD>
 </TR><TR>
