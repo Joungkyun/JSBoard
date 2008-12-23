@@ -26,7 +26,8 @@ $board['wwrap'] = !$board['wwrap'] ? 120 : $board['wwrap'];
 
 $list['date']  = date("Y-m-d H:i:s", $list['date']);
 text_nl2br($list['text'], $list['html']);
-$list['text']  = $list['html'] ? $list['text'] : wordwrap($list['text'],$board['wwrap']);
+#$list['text']  = $list['html'] ? $list['text'] : wordwrap($list['text'],$board['wwrap']);
+new_reply_read_format ($list['text'], $list['html']);
 $list['num']   = print_reply($table, $list);
 
 # 제목을 테이블 크기에 맞춰 다음줄로 넘김
