@@ -24,6 +24,8 @@ file.
 	- print_keymenu 에서 document.all 대신 docuemtn.getElementById 를 우선
 	  사용 하도록 변경
 	- captureEvent 만료로 addEventListener 로 변경
+	- tabindex 추가
+	- write/edit/reply 에 keyboard menu 추가
 
 2008.12.23
   by 김정균
