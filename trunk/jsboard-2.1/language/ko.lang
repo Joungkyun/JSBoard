@@ -41,8 +41,8 @@ $ko['er_msg'] = "경고";
 $ko['er_msgs'] = "오류";
 
 # act.php
-$ko['act_ud'] = "크기가 0인 파일은 업로드할 수 없으며\nphp.ini에서 지정된 " . ___get_cfg_var('upload_max_filesize') ."\n이상의 파일 역시 업로드할 수 없습니다.";
-$ko['act_md'] = "$upload[maxsize] 이상의 파일은 업로드하실 수 없으며\nphp.ini에서 지정된 " . ___get_cfg_var('upload_max_filesize') ." 이상의 파일 역시\n업로드할 수 없습니다.";
+$ko['act_ud'] = "크기가 0인 파일은 업로드할 수 없으며\nphp.ini에서 지정된 " . get_cfg_var('upload_max_filesize') ."\n이상의 파일 역시 업로드할 수 없습니다.";
+$ko['act_md'] = "$upload[maxsize] 이상의 파일은 업로드하실 수 없으며\nphp.ini에서 지정된 " . get_cfg_var('upload_max_filesize') ." 이상의 파일 역시\n업로드할 수 없습니다.";
 $ko['act_de'] = "파일 이름에 특수문자(#,\$,%등)를 포함할 수 없습니다";
 $ko['act_ed'] = "업로드할 파일이 없거나 비정상적인 업로드가 수행 되었습니다.";
 $ko['act_pw'] = "패스워드가 틀립니다. 확인 후 재시도하십시오.";

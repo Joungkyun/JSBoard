@@ -40,8 +40,8 @@ $en['er_msg'] = "Warning";
 $en['er_msgs'] = "Error";
 
 # act.php
-$en['act_ud'] = "File with size of 0 byte or bigger\nthan max specified in php.ini(" . ___get_cfg_var('upload_max_filesize') . ") can't be uploaded";
-$en['act_md'] = "File bigger than {$upload['maxsize']} or " . ___get_cfg_var('upload_max_filesize') . " in php.ini can't be uploaded";
+$en['act_ud'] = "File with size of 0 byte or bigger\nthan max specified in php.ini(" . get_cfg_var('upload_max_filesize') . ") can't be uploaded";
+$en['act_md'] = "File bigger than {$upload['maxsize']} or " . get_cfg_var('upload_max_filesize') . " in php.ini can't be uploaded";
 $en['act_de'] = "File that has special characters (#,\$,%, etc) in its filename can't be uploaded";
 $en['act_ed'] = "Invaild or non-existent filename";
 $en['act_pw'] = "Invalid password. Check your password and try again.";
