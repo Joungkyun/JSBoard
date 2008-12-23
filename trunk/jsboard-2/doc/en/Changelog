@@ -22,6 +22,8 @@ Wed, Dec, 24 2008
 by JoungKyun.Kim
 	- use getElementById instead of document.all on print_keymenu
 	- change captureEvent to addEventListener preview java script
+	- add tabindex
+	- add keyboard menu 'b' on write/edit/reply page
 
 Tue, Dec, 23 2008
 by JoungKyun.Kim
