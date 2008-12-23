@@ -121,7 +121,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <TR>
 <TD WIDTH=80>이름</TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist[name]?>"<?=$disable?>></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist[name]?>"<?=$disable?> tabindex="1"></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -133,7 +133,7 @@ if($view['email']) {
   echo <<<EOF
 <TR>
 <TD>메일</TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable tabindex="2"></TD>
 </TR>
 EOF;
 }
@@ -148,7 +148,7 @@ if($view['url']) {
   echo <<<EOF
 <TR>
 <TD>홈페이지</TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable tabindex="3"></TD>
 </TR>
 EOF;
 }
@@ -164,7 +164,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <TD>파일</TD>
 <TD COLSPAN=3>
 <INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
-<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256>
+<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256 tabindex="4">
 </TD>
 </TR>
 EOF;
@@ -185,7 +185,7 @@ EOF;
 <!-- ==================================================================== -->
 <TR>
 <TD>제목</TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 VALUE="<?="Re$reti: {$list['title']}"?>"></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 VALUE="<?="Re$reti: {$list['title']}"?>" tabindex="5"></TD>
 </TR>
 
 <TR>
@@ -198,7 +198,7 @@ if(preg_match("/^[04]$/",$board['mode']) && !$board['super']) {
   echo <<<EOF
 <TD VALIGN="top">패스워드</TD>
 <TD VALIGN="top"{$pcaptcharcolspan}>
-<INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16 STYLE="font:10px tahoma,sans-serif;">
+<INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16 STYLE="font:10px tahoma,sans-serif;" tabindex="6">
 {$pcaptcha}
 </TD>
 EOF;
@@ -240,10 +240,10 @@ EOF;
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <?=$print['passform']?>
-<INPUT TYPE="submit" VALUE="등록">
-<INPUT TYPE="button" VALUE="다시" onClick="document.location.reload(); return false;"><?=$orig_button?>
-<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록">
-<INPUT TYPE="button" onClick="history.back()" VALUE="이전">
+<INPUT TYPE="submit" VALUE="등록" tabindex="8">
+<INPUT TYPE="button" VALUE="다시" onClick="document.location.reload(); return false;" tabindex="9"><?=$orig_button?>
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록" tabindex="10">
+<INPUT TYPE="button" onClick="history.back()" VALUE="이전" tabindex="11">
 </TD></TR>
 </TABLE>
 

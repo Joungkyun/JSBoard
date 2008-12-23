@@ -122,7 +122,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <TR>
 <TD WIDTH=80>이름</TD>
-<TD><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$list['name']?>"<?=$disable?>></TD>
+<TD><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$list['name']?>"<?=$disable?> tabindex="1"></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -134,7 +134,7 @@ if($view['email'] || trim($list['email'])) {
   echo <<<EOF
 <TR>
 <TD>메일</TD>
-<TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['email']}"{$disable}></TD>
+<TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['email']}"{$disable} tabindex="2"></TD>
 </TR>
 EOF;
 }
@@ -149,7 +149,7 @@ if($view['url'] || trim($list['url'])) {
   echo <<<EOF
 <TR>
 <TD>홈페이지</TD>
-<TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['url']}"{$disable}></TD>
+<TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['url']}"{$disable} tabindex="3"></TD>
 </TR>
 EOF;
 }
@@ -167,7 +167,7 @@ if($list['bofile']) {
 <A HREF="$down_link">
 <IMG SRC="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" valign="middle">
 <FONT style="color:{$color['text']}">{$list['bofile']}</FONT></A> - $hfsize &nbsp; &nbsp;
-<INPUT TYPE="CHECKBOX" NAME="atc[fdel]" VALUE=1> 파일삭제
+<INPUT TYPE="CHECKBOX" NAME="atc[fdel]" VALUE=1 tabindex="4"> 파일삭제
 </TD>
 </TR>
 EOF;
@@ -179,7 +179,7 @@ if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
 <TD>파일수정</TD>
 <TD>
 <INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
-<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256>
+<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256 tabindex="5">
 </TD>
 </TR>
 EOF;
@@ -192,7 +192,7 @@ EOF;
 <!-- ==================================================================== -->
 <TR>
 <TD>제목</TD>
-<TD><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 VALUE="<?=$list['title']?>"></TD>
+<TD><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 VALUE="<?=$list['title']?>" tabindex="6"></TD>
 </TR>
 
 <TR>
@@ -230,7 +230,7 @@ EOF;
 <!-- ==================================================================== -->
 <!-- =============================== 글내용 =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<TEXTAREA NAME="epost" CLASS="resizable"><?="{$list['text']}\n\n"?></TEXTAREA>
+<TEXTAREA NAME="epost" CLASS="resizable" tabindex="8"><?="{$list['text']}\n\n"?></TEXTAREA>
 <!-- =============================== 글내용 =============================== -->
 
 </TD></TR>
@@ -245,10 +245,10 @@ EOF;
 <TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <?=$print['passform']?>
-<INPUT TYPE="submit" VALUE="등록">
-<INPUT TYPE="button" VALUE="다시" onClick="document.location.reload(); return false;">
-<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록">
-<INPUT TYPE="button" onClick="history.back()" VALUE="이전">
+<INPUT TYPE="submit" VALUE="등록" tabindex="9">
+<INPUT TYPE="button" VALUE="다시" onClick="document.location.reload(); return false;" tabindex="10">
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록" tabindex="11">
+<INPUT TYPE="button" onClick="history.back()" VALUE="이전" tabindex="12">
 </TD></TR>
 </TABLE>
 

@@ -826,21 +826,21 @@ function print_comment($table,$no,$print=0) {
        "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
        "</TD>\n".
        "<TD ALIGN=right>\n".
-       "{$langs['c_na']} <INPUT TYPE=text$disable NAME=\"atc[name]\" MAXLENGTH=30 SIZE={$size['pass']} VALUE=\"{$pre_regist['name']}\"><BR>\n".
-       "{$langs['c_ps']} <INPUT TYPE=password$disable NAME=\"atc[passwd]\" SIZE={$size['pass']}>\n".
+       "{$langs['c_na']} <INPUT TYPE=text$disable NAME=\"atc[name]\" MAXLENGTH=30 SIZE={$size['pass']} VALUE=\"{$pre_regist['name']}\" tabindex=\"1\"><BR>\n".
+       "{$langs['c_ps']} <INPUT TYPE=password$disable NAME=\"atc[passwd]\" SIZE={$size['pass']} tabindex=\"2\">\n".
        "</TD>\n".
        "<TD ROWSPAN=2 ALIGN=center>".
        "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
        "</TD>\n".
        "<TD ROWSPAN=2 ALIGN=center>\n".
-       "<TEXTAREA NAME=\"atc[text]\" COLS=$textareasize ROWS=3 WRAP=hard></TEXTAREA>\n".
+       "<TEXTAREA NAME=\"atc[text]\" COLS=$textareasize ROWS=3 WRAP=hard tabindex=\"3\"></TEXTAREA>\n".
        "</TD>\n".
        "<TD ROWSPAN=2 ALIGN=center>".
        "<IMG SRC=./images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''>".
        "</TD>\n".
        "</TR>\n".
        "<TR>\n".
-       "<TD ALIGN=right><INPUT TYPE=submit VALUE=\"{$langs['c_en']}\"></TD>\n".
+       "<TD ALIGN=right><INPUT TYPE=submit VALUE=\"{$langs['c_en']}\" tabindex=\"4\"></TD>\n".
        "</TR>\n".
        "<INPUT TYPE=hidden NAME=\"atc[no]\" VALUE=$no>\n".
        "<INPUT TYPE=hidden NAME=\"atc[rname]\" VALUE=\"{$pre_regist['rname']}\">\n".
