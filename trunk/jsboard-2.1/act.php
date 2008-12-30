@@ -131,7 +131,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
   # 게시물 답장 함수
   function article_reply($table, $atc) {
     global $board,$upload,$cupload,$rmail,$_,$agent,$jsboard,$page;
-    global $print, $max_file_size, $c, $db, $o, $referer;
+    global $print, $max_file_size, $c, $db, $referer;
 
     $atc['date'] = time(); # 현재 시각
     $atc['host'] = get_hostname(0); # 글쓴이 주소
