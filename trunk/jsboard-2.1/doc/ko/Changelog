@@ -10,6 +10,10 @@
 버전 2.1.0
 
 
+2008.12.31
+By 김정균
+	- 글 작성/수정 실패 시에 기입된 폼 정보 사라지는 문제 처리 추가
+
 2008.12.24
 By 김정균
 	- print_keymenu 에서 document.all 대신 docuemtn.getElementById 를 우선 사용
