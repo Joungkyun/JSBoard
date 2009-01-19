@@ -18,6 +18,15 @@ file.
 Version   : jsboard 2.0.14
 
 
+Mon, Jan, 19 2009
+by JoungKyun.Kim
+	- fixed wrong old html format
+
+
+-----------------------------------------------------------------------------
+Version   : jsboard 2.0.14
+
+
 Wed, Dec, 24 2008
 by JoungKyun.Kim
 	- use getElementById instead of document.all on print_keymenu

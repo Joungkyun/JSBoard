@@ -415,6 +415,7 @@ function text_nl2br(&$text, $html) {
     $text = preg_replace("/(\n)?<table/i","</PRE><TABLE",$text);
     $text = preg_replace("/<\/table>(\n)?/i","</TABLE><PRE>",$text);
     $text = !$text ? "No Contents" : $text;
+    $text = "<pre>$text</pre>";
   } else {
     $text = htmlspecialchars($text);
     # 한글 깨지는것 보정
