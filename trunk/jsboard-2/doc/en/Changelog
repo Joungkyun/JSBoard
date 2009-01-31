@@ -18,6 +18,10 @@ file.
 Version   : jsboard 2.0.14
 
 
+Sun, Feb,  1 2009
+by JoungKyun.Kim
+	- fixed twice parsing problem when block start 0 on block_Devided function
+
 Mon, Jan, 19 2009
 by JoungKyun.Kim
 	- fixed wrong old html format
