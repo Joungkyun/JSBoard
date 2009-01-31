@@ -13,7 +13,7 @@
  * @author     JoungKyun.Kim <http://oops.org>
  * @copyright  1997-2008 OOPS.ORG
  * @license    BSD License
- * @version    CVS: $Id: sURI.php,v 1.1 2008-12-22 14:51:13 oops Exp $
+ * @version    CVS: $Id: sURI.php,v 1.2 2009-01-31 17:28:52 oops Exp $
  * @since      File available since Release 0.1
  */
 
@@ -22,13 +22,15 @@ function block_devided ($string, $block = null) {
     return false;
 
   while ( ($p = array_pos ($string, $block)) !== false ) {
-    $_r = substr ($string, 0, $p->pos - 1);
-    if ( preg_match ("/\n([: ]*:)$/", rtrim ($_r), $matches) ) {
-      $r[] = preg_replace ("/\n[: ]+$/", '', $_r);
-    } else {
-      $r[]= $_r;
+    if ( $p->pos > 0 ) {
+      $_r = substr ($string, 0, $p->pos - 1);
+      if ( preg_match ("/\n([: ]*:)$/", rtrim ($_r), $matches) ) {
+        $r[] = preg_replace ("/\n[: ]+$/", '', $_r);
+      } else {
+        $r[]= $_r;
+      }
+      $string = substr ($string, $p->pos);
     }
-    $string = substr ($string, $p->pos);
 
     $end = preg_replace ('/[\[<]/', '\\0/', $p->needle);
     if ( ($pp = strpos ($string, $end)) !== false ) {
