@@ -9,11 +9,11 @@
  * LICENSE: BSD license
  *
  * @category   pear
- * @package    sUIR
+ * @package    sURI
  * @author     JoungKyun.Kim <http://oops.org>
  * @copyright  1997-2008 OOPS.ORG
  * @license    BSD License
- * @version    CVS: $Id: sURI.php,v 1.2 2009-01-31 17:27:12 oops Exp $
+ * @version    CVS: $Id: sURI.php,v 1.3 2009-02-01 14:08:04 oops Exp $
  * @since      File available since Release 0.1
  */
 
@@ -23,7 +23,7 @@ function block_devided ($string, $block = null) {
 
   while ( ($p = array_pos ($string, $block)) !== false ) {
     if ( $p->pos > 0 ) {
-      $_r = substr ($string, 0, $p->pos - 1);
+      $_r = substr ($string, 0, $p->pos);
       if ( preg_match ("/\n([: ]*:)$/", rtrim ($_r), $matches) ) {
         $r[] = preg_replace ("/\n[: ]+$/", '', $_r);
       } else {

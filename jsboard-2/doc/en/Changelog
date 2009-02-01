@@ -21,6 +21,7 @@ Version   : jsboard 2.0.14
 Sun, Feb,  1 2009
 by JoungKyun.Kim
 	- fixed twice parsing problem when block start 0 on block_Devided function
+	- fixed lost last 1byte of first block on block_devided function
 
 Mon, Jan, 19 2009
 by JoungKyun.Kim
