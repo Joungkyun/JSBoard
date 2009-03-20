@@ -95,12 +95,13 @@ function prelist($t,$limit=3,$cut=30) {
     $p['date'] = date("y.m.d",$row['date']);
     $p['email'] = $row['email'];
     $p['count'] = $row['refer'];
-    $p['l'] = " ".$GLOBALS['prlistOpt'];
+    if ( $GLOBALS['prlistOpt'] )
+      $p['l'] = " ".$GLOBALS['prlistOpt'];
 
     $p['preview'] = cut_string(htmlspecialchars($row['text']),100);
-    $p['preview'] = preg_replace("/#|'|\\\\/i","\\\\\\0",$p['preview']);
+    $p['preview'] = preg_replace_callback ('/[#\'\x5c]/','escape_callback',$p['preview']);
     $p['preview'] = htmlspecialchars(htmlspecialchars($p['preview']));
-    $p['preview'] = preg_replace("/\r*\n/i","<BR>",$p['preview']);
+    $p['preview'] = preg_replace("/\r?\n/i","<br>",$p['preview']);
     $p['preview'] = trim(str_replace("&amp;amp;","&amp;",$p['preview']));
     $p['preview'] = " onMouseOver=\"drs('{$p['preview']}'); return true;\" onMouseOut=\"nd(); return true;\"";
 
@@ -119,4 +120,7 @@ function prelist($t,$limit=3,$cut=30) {
   mysql_close();
 }
 
+function escape_callback ($matches) {
+  return '&#x' . strtoupper (dechex (ord ($matches[0]))) . ';';
+}
 ?>
