@@ -15,8 +15,12 @@ file.
 
 
 -----------------------------------------------------------------------------
-Version   : jsboard 2.0.14
+Version   : jsboard 2.0.15
 
+
+Fri, Mar, 20 2009
+by JoungKyun.Kim
+	- fixed java script error on prelist
 
 Sun, Feb,  1 2009
 by JoungKyun.Kim
