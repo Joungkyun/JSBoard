@@ -10,6 +10,10 @@
 버전 2.1.0
 
 
+2009.03.20
+By 김정균
+	- prelist javascript 오류 수정
+
 2009.02.01
 By 김정균
 	- block_devided function 에서 해당 블럭 시작이 0 일 경우 2번 파싱 되는 문제 수정
