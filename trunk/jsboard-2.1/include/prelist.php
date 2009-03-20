@@ -98,6 +98,7 @@ function prelist($t,$limit=3,$cut=30) {
     $p['preview'] = htmlspecialchars(htmlspecialchars($p['preview']));
     $p['preview'] = preg_replace("/\r*\n/i","<BR>",$p['preview']);
     $p['preview'] = trim(str_replace("&amp;amp;","&amp;",$p['preview']));
+	$p['preview'] = preg_replace ('/[\x5c\']/', '\\\\0', $p['preview']);
     $p['preview'] = " onMouseOver=\"drs('{$p['preview']}'); return true;\" onMouseOut=\"nd(); return true;\"";
 
     if($cut) {

@@ -9,6 +9,10 @@
 Version 2.1.0
 
 
+Fri, Mar, 20 2009
+by JoungKyun.Kim
+	- fixed java script error on prelist
+
 Sun, Feb,  1 2009
 by JoungKyun.Kim
 	- fixed twice parsing problem when block start 0 on block_Devided function
