@@ -74,7 +74,7 @@ if(trim($notice['subject'])) {
   $notice_filno = $colspan_no - 1;
 
   if($notice['contents']) {
-    $notice['subject'] = "<A HREF=read.php?table=$table&amp;alert=1>".
+    $notice['subject'] = "<A HREF=\"read.php?table=$table&amp;alert=1\">".
                         "<FONT STYLE=\"color:{$color['nr_fg']}; font-weight:bold\">{$notice['subject']}</FONT></A>";
   } else {
     $notice['subject'] = "<FONT STYLE=\"color:{$color['nr_fg']}; font-weight:bold\">{$notice['subject']}</FONT>";

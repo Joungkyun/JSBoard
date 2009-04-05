@@ -80,7 +80,7 @@ if(trim($notice['subject'])) {
   }
 
   $print['lists'] = "<tr class=\"noticebg\">\n".
-                  "<td align=\"right\"><img src=\"./theme/{$print['theme']}/img/notice.gif\" border=0>".
+                  "<td align=\"right\"><img src=\"./theme/{$print['theme']}/img/notice.gif\" border=0 alt=\"\">".
                   "<img src=\"./images/blank.gif\" width=5 height=\"{$lines['height']}\" border=0 align=\"middle\" alt=''></td>\n".
                   "<td colspan=\"$notice_filno\">{$notice['subject']}</td>\n</tr>\n\n";
 
