@@ -80,10 +80,10 @@ if(trim($notice['subject'])) {
     $notice['subject'] = "<FONT STYLE=\"color:{$color['nr_fg']}; font-weight:bold\">{$notice['subject']}</FONT>";
   }
 
-  $print['lists'] = "<TR BGCOLOR={$color['nr_bg']}>\n".
-                  "<TD ALIGN=right><IMG SRC=\"./theme/{$print['theme']}/img/notice.gif\" BORDER=0>".
-                  "<IMG SRC=\"./images/blank.gif\" WIDTH=5 HEIGHT={$lines['height']} BORDER=0 ALIGN=\"middle\" ALT=''></TD>\n".
-                  "<TD COLSPAN=$notice_filno>{$notice['subject']}</TD>\n</TR>\n\n";
+  $print['lists'] = "<TR BGCOLOR=\"{$color['nr_bg']}\">\n".
+                  "<TD ALIGN=\"right\"><IMG ALT=\"\" SRC=\"./theme/{$print['theme']}/img/notice.gif\" BORDER=\"0\">".
+                  "<IMG ALT=\"\" SRC=\"./images/blank.gif\" WIDTH=\"5\" HEIGHT=\"{$lines['height']}\" BORDER=\"0\" ALIGN=\"middle\"></TD>\n".
+                  "<TD COLSPAN=\"$notice_filno\">{$notice['subject']}</TD>\n</TR>\n\n";
 
   # 글 리스트들 사이에 디자인을 넣기 위한 코드
   if($lines['design']) {

@@ -18,6 +18,10 @@ file.
 Version   : jsboard 2.0.15
 
 
+Sun, Apr,  5 2009
+by JoungKyun.Kim
+	- fixed html validate
+
 Fri, Mar, 20 2009
 by JoungKyun.Kim
 	- fixed java script error on prelist
