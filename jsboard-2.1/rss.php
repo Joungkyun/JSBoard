@@ -108,7 +108,7 @@ echo "<?xml version=\"1.0\" encoding=\"{$_charset}\"?>\n";
     <title><?=$rss['channel']?></title>
     <link><?=$rss['link']?></link>
     <description><?=$board['title']?></description>
-    <language><?=$_charset?></language>
+    <language><?=$_code?></language>
     <copyright>1999-<?=$cYear?> JSBoard Open Project</copyright>
     <lastBuildDate><?=$bdate?></lastBuildDate>
     <generator>JSBoard <?=$board['ver']?></generator>

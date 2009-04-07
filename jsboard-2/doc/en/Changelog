@@ -18,6 +18,10 @@ file.
 Version   : jsboard 2.0.15
 
 
+Wed, Apr,  8 2009
+by JoungKyun.Kim
+	- fixed wrong language declear on RSS feed
+
 Sun, Apr,  5 2009
 by JoungKyun.Kim
 	- fixed html validate
