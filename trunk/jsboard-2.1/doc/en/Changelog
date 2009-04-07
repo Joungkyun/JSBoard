@@ -9,6 +9,10 @@
 Version 2.1.0
 
 
+Wed, Apr,  8 2009
+by JoungKyun.Kim
+	- fixed wrong language declear on RSS feed
+
 Fri, Mar, 20 2009
 by JoungKyun.Kim
 	- fixed java script error on prelist
