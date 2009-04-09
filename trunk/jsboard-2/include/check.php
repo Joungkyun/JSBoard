@@ -161,7 +161,7 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
 
   # php versin check
   if ( function_exists ("version_compare") ) {
-    if ( version_compare ("4.3.0", js_wrapper('phpversion'), '<=') ) {
+    if ( version_compare ("4.3.0", PHP_VERSION, '<=') ) {
       $mbext = 1;
     }
   }
