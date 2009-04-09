@@ -18,6 +18,10 @@ file.
 Version   : jsboard 2.0.15
 
 
+Thu, Apr,  9 2009
+by JoungKyun.Kim
+	- changed rss output charset to utf8 from local charset when support iconv
+
 Wed, Apr,  8 2009
 by JoungKyun.Kim
 	- fixed wrong language declear on RSS feed
