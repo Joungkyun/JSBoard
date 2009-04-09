@@ -180,5 +180,16 @@ if ($indb['check']) {
 
 mysql_close();
 ?>
-<script>document.location='session.php?mode=first&langss=<?=$langss?>';</script>
-<NOSCRIPT><META http-equiv="refresh" content="0;URL=./session.php?mode=first&langss=<?=$langss?>"></NOSCRIPT>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>JSBoard Initialize</title>
+  <meta http-equiv="refresh" content="0;URL=./session.php?mode=first&langss=<?php echo $langss?>">
+</head>
+
+<body>
+  <script type="text/javascript">
+    document.location='session.php?mode=first&langss=<?php echo $langss?>';
+  </script>
+</body>
+</html>

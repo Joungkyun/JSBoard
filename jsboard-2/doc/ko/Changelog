@@ -22,6 +22,7 @@ file.
 2009.04.10
   by 김정균
 	- php 시스템 정보를 구하는 js_wrapper 함수 추가
+	- INSTALLER html validate
 
 2009.04.09
   by 김정균
