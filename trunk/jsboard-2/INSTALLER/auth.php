@@ -150,10 +150,10 @@ EOF;
   # httpd.conf 의 DirectoryIndex 에 index.php 가 등록되어 있는지 여부
   $cindex = 0;
 
-  $arr = explode(" ",$apache_config_file);
-  for($c=0;$c<sizeof($arr);$c++) {
-    if(file_exists($arr[$c])) {
-      $array = file ($arr[$c]);
+  $arr = $apache_config_file;
+  for($c=0;$c<sizeof($apache_config_file);$c++) {
+    if(file_exists($apache_config_file[$c])) {
+      $array = file ($apache_config_file[$c]);
 
       for($i=0;$i<sizeof($array);$i++) {
         $array[$i] = trim($array[$i]);
