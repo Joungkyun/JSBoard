@@ -21,6 +21,7 @@ Version   : jsboard 2.0.15
 Thu, Apr, 10 2009
 by JoungKyun.Kim
 	- add js_wrapper function that is php system information fucntion wrapper
+	- INSTALLER html validate
 
 Thu, Apr,  9 2009
 by JoungKyun.Kim
