@@ -18,6 +18,10 @@ file.
 Version   : jsboard 2.0.15
 
 
+Thu, Apr, 10 2009
+by JoungKyun.Kim
+	- add js_wrapper function that is php system information fucntion wrapper
+
 Thu, Apr,  9 2009
 by JoungKyun.Kim
 	- changed rss output charset to utf8 from local charset when support iconv

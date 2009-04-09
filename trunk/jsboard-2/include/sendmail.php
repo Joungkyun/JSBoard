@@ -244,7 +244,7 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
   $mails['text'] = $mail_header.$body;
 
   if($mta) {
-    ini_set("SMTP","$smtp");
+    ini_set('SMTP','$smtp');
     $body = str_replace("\r\n","\n",$body);
     $mail_header = str_replace("\r\n","\n",$mail_header);
     mail($mails['to'],$title,$body,$mail_header,"-f{$mails['from']}");

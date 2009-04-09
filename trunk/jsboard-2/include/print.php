@@ -1,9 +1,56 @@
 <?php
+#
+# Wrapper function
+#
+function js_wrapper ($func, $var1 = '', $var2 = '') {
+  switch ($func) {
+	case 'php_info' :
+	case 'php_uname' :
+	case 'php_version' :
+		if ( $var1 )
+			$function_complete = "{$func} (\"{$var1}\")";
+		else
+			$function_complete = "{$func} ()";
+
+		break;
+	case 'ini_get_all' :
+		if ( $var1 ) {
+			$var2 = $var2 ? $var2 : true;
+			$function_complete = "{$func} (\"{$var1}\", $var2)";
+		} else
+			$function_complete = "{$func} ()";
+
+		break;
+    case 'ini_get' :
+    case 'get_cfg_var' :
+		$function_complete = "{$func} (\"$var1\")";
+		break;
+    case 'ini_set' :
+		$function_complete = "{$func} (\"$var1\", \"$var2\")";
+		break;
+	default :
+		$function_complete = "{$func} ()";
+  }
+
+  $code = <<<EOF
+    if ( function_exists ("$func") )
+      \$ret = $function_complete;
+	else if ( function_exists ("___$func") )
+      \$ret = ___$function_complete;
+    else
+      \$ret = false;
+EOF;
+
+  eval ($code);
+  return $ret;
+}
+
+
 # 서버의 request_method 형태에 따라 변수를 체크하는 함수
 # register_globals 값이 off 일 경우 편리하게 사용
 #
 function parse_query_str() {
-  if(ini_get("register_globals")) return;
+  if(js_wrapper('ini_get','register_globals')) return;
 
   if(count($_GET)) {
     foreach($_GET as $key => $value) {

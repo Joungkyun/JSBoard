@@ -161,7 +161,7 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
 
   # php versin check
   if ( function_exists ("version_compare") ) {
-    if ( version_compare ("4.3.0", phpversion(), '<=') ) {
+    if ( version_compare ("4.3.0", js_wrapper('phpversion'), '<=') ) {
       $mbext = 1;
     }
   }
@@ -346,7 +346,7 @@ function check_iis() {
 # 윈도우용 php 인지 아닌지를 판단.
 # 윈도우용 php 일 경우 turn 를 반환
 function check_windows() {
-  if(preg_match("/Windows/i",php_uname())) return 1;
+  if(preg_match("/Windows/i",js_wrapper('php_uname'))) return 1;
   else return 0;
 }
 

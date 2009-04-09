@@ -542,7 +542,7 @@ function get_upload_value($up) {
     if($up['maxtime']) set_time_limit($up['maxtime']);
     # JSBoard 에서 조정할 수 있는 업로드 최대 사이즈
     # 최대값은 POST 데이타를 위해 post_max_size 보다 1M 를 작게 잡는다.
-    $max = ini_get(post_max_size);
+    $max = js_wrapper('ini_get', 'post_max_size');
     if(preg_match("/M$/i",$max)) {
       $max = (preg_replace("/M$/i","",$max) - 1) * 1024 * 1024;
     } elseif (preg_match("/K$/i",$max)) {
