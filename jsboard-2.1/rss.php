@@ -111,6 +111,7 @@ echo "<?xml version=\"1.0\" encoding=\"{$cset}\"?>\n";
 ?>
 <rss version="2.0" xml:base="<?=$board['path']?>" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
+    <atom:link href="http://<?=$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']?>" rel="self" type="application/rss+xml" />
     <title><?=$rss['channel']?></title>
     <link><?=$rss['link']?></link>
     <description><?=$board['title']?></description>
