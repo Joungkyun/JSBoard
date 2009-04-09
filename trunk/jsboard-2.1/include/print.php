@@ -756,4 +756,18 @@ function new_reply_read_format (&$buf, $html) {
 
   $buf = preg_replace ($src, $dsc, $buf);
 }
+
+function utf8_fallback (&$obj, $charset, $skip = false) {
+  if ( $skip === false ) {
+    if ( check_utf8_conv ($charset) === false )
+      return $str;
+  }
+
+  if ( is_array ($obj) || is_object ($obj) ) {
+    foreach ( $obj as $key => $val )
+      utf8_fallback ($obj[$key], $charset, true);
+  } else {
+    $obj = iconv ($charset, 'utf-8//ignore', $obj);
+  }
+}
 ?>

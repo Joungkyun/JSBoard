@@ -94,14 +94,20 @@ $cYear = date ("Y", $now);
 $bdate = date ("r", $now);
 $_charset = strtolower ($_('charset'));
 
+$gotoUTF8 = check_utf8_conv ($_charset);
+$cset = $gotoUTF8 ? 'utf-8' : $_charset;
+
 # 여기 까지 이상이 없으면, 실제 RSS 출력
 #
 header ('Cache-Control: no-cache, pre-check=0, post-check=0, max-age=0');
 header ('Expires: ' . gmdate('D, d M Y H:i:s', time()) . ' GMT');
 header ('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-header ('Content-Type: text/xml');
+header ('Content-Type: text/xml; charset=' . $cset);
 
-echo "<?xml version=\"1.0\" encoding=\"{$_charset}\"?>\n";
+utf8_fallback ($rss['channel'], $_charset);
+utf8_fallback ($board['title'], $_charset);
+
+echo "<?xml version=\"1.0\" encoding=\"{$cset}\"?>\n";
 ?>
 <rss version="2.0" xml:base="<?=$board['path']?>" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
@@ -115,6 +121,7 @@ echo "<?xml version=\"1.0\" encoding=\"{$_charset}\"?>\n";
 
 <?php
 for ( $i=0; $i<$rss_article_num; $i++ ) {
+  utf8_fallback ($rss_article[$i], $_charset);
   echo "<item>\n" .
        "  <title>{$rss_article[$i]['title']}</title>\n" .
        "  <link>{$rss_article[$i]['link']}</link>\n";

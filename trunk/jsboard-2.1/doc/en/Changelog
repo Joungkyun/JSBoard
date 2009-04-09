@@ -9,9 +9,10 @@
 Version 2.1.0
 
 
-Wed, Apr,  8 2009
+Wed, Apr,  9 2009
 by JoungKyun.Kim
-	- fixed wrong language declear on RSS feed
+	- RSS feed validator
+	- change print charset to utf-8 from local charset when support iconv
 
 Fri, Mar, 20 2009
 by JoungKyun.Kim
