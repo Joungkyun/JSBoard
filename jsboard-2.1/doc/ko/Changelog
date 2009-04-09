@@ -10,6 +10,11 @@
 버전 2.1.0
 
 
+2009.04.09
+By 김정균
+	- RSS feed validator
+	- iconv 사용 가능시에 RSS를 utf8 로 출력하도록 변경
+
 2009.03.20
 By 김정균
 	- prelist javascript 오류 수정

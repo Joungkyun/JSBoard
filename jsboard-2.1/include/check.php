@@ -586,4 +586,14 @@ function init_htmltag () {
   $p = explode (',', $p);
   $enable['tag'] = (object) $p;
 }
+
+function check_utf8_conv ($charset) {
+  if ( preg_match ('/^utf[-]?8$/i', $charset) )
+    return false;
+
+  if ( ! extension_loaded ('iconv') )
+    return false;
+
+  return true;
+}
 ?>
