@@ -1,4 +1,4 @@
-<?
+<?php
 $incpath = ini_get ('include_path');
 ini_set ('include_path', "$incpath:" . dirname (__FILE__));
 if ( version_compare (PHP_VERSION, '6.0.0', '<') ) {
