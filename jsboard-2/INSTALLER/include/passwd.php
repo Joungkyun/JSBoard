@@ -37,10 +37,14 @@ $mysqlusername = "";
 # 스페이스로 구분하여 여러개의 설정파일을 지정해 놓으면
 # 인스톨시 설정된 파일들을 모두 검색함.
 #
-$apache_config_file = '/etc/httpd/conf/httpd.conf '.
-                      '/etc/httpd/conf.d/php.conf '.
-                      '/etc/apache/httpd.conf '.
-                      '/usr/local/apache/conf/httpd.conf';
+$apache_config_file = array (
+  '/etc/httpd/conf/httpd.conf',
+  '/etc/httpd/conf.d/php.conf',
+  '/etc/apache/httpd.conf',
+  '/usr/local/apache/conf/httpd.conf',
+  '/etc/apache2/apache2.conf',
+  '/etc/apache2/mods-enabled/dir.conf',
+);
 
 # MySQL의 socket file 위치를 지정. socket file이 무엇인지
 # 모르겠으면 localhost 나 127.0.0.1 을 적도록 한다. DB 서
