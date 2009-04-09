@@ -78,7 +78,7 @@ init_htmltag();
 $agent = get_agent();
 $db = replication_mode($db);
 
-if(!ini_get("file_uploads") || $agent['tx']) $noup = 1;
+if(!js_wrapper('ini_get','file_uploads') || $agent['tx']) $noup = 1;
 
 if(preg_match("/(act|write|edit|reply)\.php/i",$_SERVER['PHP_SELF']))
   $upload['maxsize'] = get_upload_value($upload);

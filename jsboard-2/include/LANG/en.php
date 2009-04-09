@@ -321,7 +321,7 @@ $langs['st_lyear'] = "A N N U A L";
 $langs['st_ltot'] = "A L L";
 
 # Inatllation
-$langs['waitm'] = "Checking environment to use JSBoard<br>\nResult will be shown after 5 sec.<p>If you use Netscape 4.x for Linux or Other UNIX,<br>then you may need to install manually.<br>Refer to doc/en/INSTALL.MANUALY document";
+$langs['waitm'] = "Checking environment to use JSBoard<br>\nResult will be shown after 5 sec.<br><br>If you use Netscape 4.x for Linux or Other UNIX,<br>then you may need to install manually.<br>Refer to doc/en/INSTALL.MANUALY document";
 $langs['wait'] = "[ Wait 5 seconds ]";
 $langs['mcheck'] = "Failed MySQL login. Check the MySQL root password in jsbaord/installer/include/passwd.ph. If password is correct, check if PHP was compiled with --with-mysql option.<br>If you use external DB server, refer to doc/en/INSTALL.MANUALY document";
 $langs['icheck'] = "Add index.php to DirectoryIndex directive in httpd.conf and restart<br>\napache web server.";

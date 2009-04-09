@@ -19,6 +19,10 @@ file.
 버전   : jsboard 2.0.15
 
 
+2009.04.10
+  by 김정균
+	- php 시스템 정보를 구하는 js_wrapper 함수 추가
+
 2009.04.09
   by 김정균
 	- iconv 가 지원되면 rss 출력을 utf8로 하도록 변경

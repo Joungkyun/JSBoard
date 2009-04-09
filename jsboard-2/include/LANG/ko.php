@@ -323,7 +323,7 @@ $langs['st_lyear'] = "최 근 일 년";
 $langs['st_ltot'] = "전 체";
 
 # Inatllation
-$langs['waitm'] = "Jsboard를 사용하기 위한 환경 설정을 검사하고 있습니다<br>\n5초 후에 결과를 보실 수 있습니다<p>만약 Linux용 Netscape 4.x 를 사용하신다면 다음 페이지로<br>자동으로 넘어가지 않을 수도 있습니다.<br>이때는 doc/ko/INSTALL.MANUALY 문서를 참조하셔서 설치를 하십시오";
+$langs['waitm'] = "Jsboard를 사용하기 위한 환경 설정을 검사하고 있습니다<br>\n5초 후에 결과를 보실 수 있습니다<br><br>만약 Linux용 Netscape 4.x 를 사용하신다면 다음 페이지로<br>자동으로 넘어가지 않을 수도 있습니다.<br>이때는 doc/ko/INSTALL.MANUALY 문서를 참조하셔서 설치를 하십시오";
 $langs['wait'] = "[ 5초간 기다려 주세요 ]";
 $langs['mcheck'] = "MySQL login에 실패했습니다.\njsboard/INSTALLER/include/passwd.ph 에 MySQL의 root\npassword가 정확한지 확인해 주시고 맞으면 PHP의 설치시에\n--with-mysql 옵션이 들어갔는지 확인해 주십시오<br>\n만약 DB server가 독립되어 있다면 QuickInstall문서를 참조\n하여 설치를 하시기 바랍니다";
 $langs['icheck'] = "httpd.conf의 DirectoryIndex 지시자에 index.php를 추가<br>\n해 주시고 apache를 재실행 하십시오.";
