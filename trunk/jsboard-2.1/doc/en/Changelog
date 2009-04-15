@@ -9,6 +9,10 @@
 Version 2.1.0
 
 
+Thu, Apr, 16 2009
+by JoungKyun.Kim
+	- fixed missing string that start < and end > on feed
+
 Wed, Apr,  9 2009
 by JoungKyun.Kim
 	- RSS feed validator

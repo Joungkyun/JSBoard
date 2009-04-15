@@ -53,6 +53,7 @@ while( $rss_article[$i] = sql_fetch_array($result) ) {
   if ( $rss['is_des'] ) {
     #$rss_article[$i]['text'] = preg_replace ("!\n!", "<br />\n", $rss_article[$i]['text']);
 	$rss_article[$i]['text'] = preg_replace ("!^[([0-9]+;[0-9]+m)?!", "", $rss_article[$i]['text']);
+    $rss_article[$i]['text'] = htmlspecialchars ($rss_article[$i]['text']);
     $rss_article[$i]['text'] = auto_link ($rss_article[$i]['text']);
 
     $_body = "<table width=\"100%\" border=0 cellpadding=0 cellspacing=1>\n" .
@@ -128,7 +129,7 @@ for ( $i=0; $i<$rss_article_num; $i++ ) {
   utf8_fallback ($rss_article[$i], $_charset);
   echo "<item>\n" .
        "  <title>{$rss_article[$i]['title']}</title>\n" .
-       "  <link>{$rss_article[$i]['link']}</link>\n";
+       "  <link>{$rss_article[$i]['link']}</link>\n" .
        "  <guid>{$rss_article[$i]['link']}</guid>\n";
 
   if ( $rss['is_des'] ) {

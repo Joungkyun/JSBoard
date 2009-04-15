@@ -18,6 +18,10 @@ file.
 Version   : jsboard 2.0.15
 
 
+Thu, Apr, 16 2009
+by JoungKyun.Kim
+	- fixed missing string that start < and end > on feed
+
 Thu, Apr, 10 2009
 by JoungKyun.Kim
 	- add js_wrapper function that is php system information fucntion wrapper
