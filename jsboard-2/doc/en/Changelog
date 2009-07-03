@@ -18,6 +18,10 @@ file.
 Version   : jsboard 2.0.15
 
 
+Fri, Jul,  3 2009
+by JoungKyun.Kim
+	- fixed form size on Linux Firefox
+
 Thu, Apr, 16 2009
 by JoungKyun.Kim
 	- fixed missing string that start < and end > on feed

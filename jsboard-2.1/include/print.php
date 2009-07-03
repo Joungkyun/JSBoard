@@ -65,7 +65,7 @@ function form_size($size, $print = 0) {
         if ($_code == 'ko') $size *= 2.3;
         else $size *= 1.8;
       }
-    } else $size *= 2.6;
+    } else $size *= 1.6;
   }
 
   # 인터넷 익스플로러
