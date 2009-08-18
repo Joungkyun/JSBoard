@@ -289,6 +289,7 @@ function quote_len ($buf) {
 }
 
 function wordwrap_js (&$buf, $len = 80) {
+  $buf = unhtmlspecialchars ($buf);
   $_buf = split ("\r?\n", $buf);
   $size = count ($_buf);
   $buf = '';
@@ -316,12 +317,12 @@ function wordwrap_js (&$buf, $len = 80) {
         else
           $buf .= $next . "\n";
       } else {
-        $_buf[$i] = substr ($_buf[$i], $cut);
-        $i--;
+        $_buf[$i+1] = substr ($_buf[$i], $cut) . ' ' . $_buf[$i+1];
       }
     } else
       $buf .= $_buf[$i] . "\n";
   }
+  $buf = htmlspecialchars ($buf);
 }
 
 function js_htmlcode(&$buf) {
