@@ -19,6 +19,10 @@ file.
 버전   : jsboard 2.0.15
 
 
+2009.08.24
+  by 김정균
+  	- wordwrap_js 함수 파싱 버그 수정
+
 2009.08.18
   by 김정균
   	- wordwrap_js 함수 파싱 결과 향상

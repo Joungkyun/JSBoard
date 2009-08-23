@@ -8,6 +8,10 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Mon, Aug, 24 2009
+by JoungKyun.Kim
+	- fixed wordwrap_js parse bug
+
 Tue, Aug, 18 2009
 by JoungKyun.Kim
 	- Implement wordwrap_js parsing
