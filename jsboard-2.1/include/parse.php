@@ -317,14 +317,14 @@ function wordwrap_js (&$buf, $len = 80) {
         else
           $buf .= $next . "\n";
       } else {
-		if ( preg_match ('/^[\s]*$/', $_buf[$i+1]) ) {
-		  $next = substr ($_buf[$i], $cut);
+        if ( preg_match ('/^[\s]*$/', $_buf[$i+1]) ) {
+          $next = substr ($_buf[$i], $cut);
           if ( strlen ($next) > $len ) {
             $_buf[$i] = $next;
             $i--;
-		  } else
+          } else
             $buf .= $next . "\n";
-		} else
+        } else
           $_buf[$i+1] = substr ($_buf[$i], $cut) . ' ' . $_buf[$i+1];
       }
     } else
