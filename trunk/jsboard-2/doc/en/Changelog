@@ -17,6 +17,11 @@ file.
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.15
 
+
+Thu, Sep,  3 2009
+by JoungKyun.Kim
+	- fixed miss checked spam bot on SSL connection
+
 Mon, Aug, 24 2009
 by JoungKyun.Kim
 	- fixed wordwrap_js parse bug

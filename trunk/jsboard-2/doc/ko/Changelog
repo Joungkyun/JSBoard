@@ -19,17 +19,21 @@ file.
 버전   : jsboard 2.0.15
 
 
+2009.09.03
+  by 김정균
+	- SSL 접근시에 스팸 등록기로 판단되는 문제 수정
+
 2009.08.24
   by 김정균
-  	- wordwrap_js 함수 파싱 버그 수정
+	- wordwrap_js 함수 파싱 버그 수정
 
 2009.08.18
   by 김정균
-  	- wordwrap_js 함수 파싱 결과 향상
+	- wordwrap_js 함수 파싱 결과 향상
 
 2009.07.03
   by 김정균
-  	- Linux Firefox 의 form size 수정
+	- Linux Firefox 의 form size 수정
 
 2009.04.16
   by 김정균
