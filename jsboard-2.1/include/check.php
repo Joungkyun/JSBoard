@@ -554,7 +554,7 @@ function check_spamer($v) {
     $reg = preg_replace ('!www\x5c\.!', '(\0)?', $reg);
   else
     $reg = '(www\.)?' . $reg;
-  $reg = '!^http://' . $reg . '!';
+  $reg = '!^http[s]?://' . $reg . '!';
 
   if ( ! preg_match ($reg, $_SERVER['HTTP_REFERER']) )
     print_error($_('chk_rp'),250,250,1);
