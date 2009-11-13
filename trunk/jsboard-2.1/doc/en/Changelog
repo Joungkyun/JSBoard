@@ -8,6 +8,10 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
+Sat, Nov, 14 2009
+by JoungKyun.Kim
+	- defenced xss attack on error popup windows
+
 Thu, Sep,  3 2009
 by JoungKyun.Kim
 	- fixed miss checked spam bot on SSL connection
