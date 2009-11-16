@@ -4,38 +4,38 @@
 #
 function js_wrapper ($func, $var1 = '', $var2 = '') {
   switch ($func) {
-	case 'php_info' :
-	case 'php_uname' :
-	case 'php_version' :
-		if ( $var1 )
-			$function_complete = "{$func} (\"{$var1}\")";
-		else
-			$function_complete = "{$func} ()";
+    case 'php_info' :
+    case 'php_uname' :
+    case 'php_version' :
+      if ( $var1 )
+        $function_complete = "{$func} (\"{$var1}\")";
+      else
+        $function_complete = "{$func} ()";
 
-		break;
-	case 'ini_get_all' :
-		if ( $var1 ) {
-			$var2 = $var2 ? $var2 : true;
-			$function_complete = "{$func} (\"{$var1}\", $var2)";
-		} else
-			$function_complete = "{$func} ()";
+      break;
+    case 'ini_get_all' :
+      if ( $var1 ) {
+        $var2 = $var2 ? $var2 : true;
+        $function_complete = "{$func} (\"{$var1}\", $var2)";
+      } else
+        $function_complete = "{$func} ()";
 
-		break;
+      break;
     case 'ini_get' :
     case 'get_cfg_var' :
-		$function_complete = "{$func} (\"$var1\")";
-		break;
+      $function_complete = "{$func} (\"$var1\")";
+      break;
     case 'ini_set' :
-		$function_complete = "{$func} (\"$var1\", \"$var2\")";
-		break;
-	default :
-		$function_complete = "{$func} ()";
+      $function_complete = "{$func} (\"$var1\", \"$var2\")";
+      break;
+    default :
+      $function_complete = "{$func} ()";
   }
 
   $code = <<<EOF
     if ( function_exists ("$func") )
       \$ret = $function_complete;
-	else if ( function_exists ("___$func") )
+    else if ( function_exists ("___$func") )
       \$ret = ___$function_complete;
     else
       \$ret = false;

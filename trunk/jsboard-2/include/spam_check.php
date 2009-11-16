@@ -4,7 +4,7 @@ function get_spam($table, $no) {
   while($list = sql_fetch_array($result)) {
     if($list['email']) $spam[] = "EM:{$list['email']}";
     if($list['url']) $spam[] = "HP:{$list['url']}";
-	
+
     $urls = preg_replace("/(http:\/\/[a-z0-9:&#@=_\?\/~\.\+-]+)", "||\\1||/i", $list['text']);
     $url  = explode("||", $urls);
     for($co = 0; $co < count($url); $co++) {
