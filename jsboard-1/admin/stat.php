@@ -79,9 +79,9 @@ function get_stat($table, $interval) {
 
     # 최고 조회수 글 번호
     if($refer[max]) {
-	$result = sql_query("SELECT no FROM $table WHERE refer = '$refer[max]' AND date > '$intv'");
-	$refer[mno] = sql_result($result,0,"no");
-	sql_free_result($result);
+      $result = sql_query("SELECT no FROM $table WHERE refer = '$refer[max]' AND date > '$intv'");
+      $refer[mno] = sql_result($result,0,"no");
+      sql_free_result($result);
     }
 
     # 최저 조회수
