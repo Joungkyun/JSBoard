@@ -292,9 +292,9 @@ if($db['name'] && !$table) {
 
     for($i=$page_num; $i<$scale_lastpage; $i++) {
       if($i <= $lastpage) { 
-	$page_view = $i;
-	if($i == $nowpage) echo "<font color=red>$page_view</font> ";
-	else echo "<a href={$_SERVER['PHP_SELF']}?page=$i&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks><font color={$color['l0_bg']}>$page_view</font></a> ";
+        $page_view = $i;
+        if($i == $nowpage) echo "<font color=red>$page_view</font> ";
+        else echo "<a href={$_SERVER['PHP_SELF']}?page=$i&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks><font color={$color['l0_bg']}>$page_view</font></a> ";
       }
     }
 

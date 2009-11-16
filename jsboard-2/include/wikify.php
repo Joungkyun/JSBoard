@@ -63,7 +63,7 @@ function macro_interwiki($options=array()) {
         $interwiki[$wiki]=trim($url);
         $interwikirule.="$wiki|";
       }
-	}
+    }
     $interwikirule.="Self";
     $interwiki['Self']=get_scriptname().$_config['query_prefix'];
 

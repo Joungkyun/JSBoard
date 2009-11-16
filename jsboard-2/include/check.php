@@ -220,7 +220,7 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
         $spamstr_t = $spam_string[0];
       }
 
-	  $spamstr_t = htmlentities ($spamstr_t);
+      $spamstr_t = htmlentities ($spamstr_t);
       $GLOBALS['spamstr'] = "\nDetected: {$spamstr_t}";
       return 1;
       break;
@@ -548,9 +548,9 @@ function check_spamer($v) {
   $url = parse_url ($board['path']);
   $reg = preg_quote ($url['host']);
   if ( preg_match ('!www\x5c\.!', $reg) )
-	  $reg = preg_replace ('!www\x5c\.!', '(\0)?', $reg);
+    $reg = preg_replace ('!www\x5c\.!', '(\0)?', $reg);
   else
-	  $reg = '(www\.)?' . $reg;
+    $reg = '(www\.)?' . $reg;
   $reg = '!^http[s]?://' . $reg . '!';
 
   if ( ! preg_match ($reg, $_SERVER['HTTP_REFERER']) )
