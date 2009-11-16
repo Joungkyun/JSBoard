@@ -209,9 +209,9 @@ function page_list($table, $pages, $count, $num, $print = 0) {
     
   $str .= "<!-- ============================ 페이지 목록 폼 ========================== -->\n";
 
-  if($print) {
-	echo $str;
-  }
+  if($print)
+    echo $str;
+
   return $str;
 }
 

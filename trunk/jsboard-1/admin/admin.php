@@ -92,7 +92,7 @@ if($db[name] && !$table) {
 
         $result = mysql_query($total,$connect );
         $total_today = @mysql_result($result,0,"COUNT(*)");
-	$total_today = !$total_today ? 0 : $total_today;
+        $total_today = !$total_today ? 0 : $total_today;
 
         # 오늘 등록된 글들의 합을 구합니다.
         $to_today = $to_today + $total_today;
@@ -246,9 +246,9 @@ if($db[name] && !$table) {
 
     for($i=$page_num; $i<$scale_lastpage; $i++) {
       if($i <= $lastpage) { 
-	$page_view = $i;
-	if($i == $nowpage) echo "<font color=red>$page_view</font> ";
-	else echo "<a href=$PHP_SELF?page=$i&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks><font color=$color[l0_bg]>$page_view</font></a> ";
+        $page_view = $i;
+        if($i == $nowpage) echo "<font color=red>$page_view</font> ";
+        else echo "<a href=$PHP_SELF?page=$i&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks><font color=$color[l0_bg]>$page_view</font></a> ";
       }
     }
 

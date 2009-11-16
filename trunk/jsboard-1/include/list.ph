@@ -25,16 +25,16 @@ function print_list($table, $list, $r=0)
     }
 
     if($list[reno]) {
-	$list[rede] *= 10;
-	$list[title] = "<IMG SRC=\"images/n.gif\" BORDER=\"0\" ALT=\"\" WIDTH=\"$list[rede]\" HEIGHT=\"1\">" .
-	               "<IMG SRC=\"images/rep.gif\" WIDTH=\"12\" BORDER=\"0\" HEIGHT=\"12\" ALT=\"$langs[ln_re]\"> $list[title]";
-	$list[num]   = "&nbsp;";
+      $list[rede] *= 10;
+      $list[title] = "<IMG SRC=\"images/n.gif\" BORDER=\"0\" ALT=\"\" WIDTH=\"$list[rede]\" HEIGHT=\"1\">" .
+                     "<IMG SRC=\"images/rep.gif\" WIDTH=\"12\" BORDER=\"0\" HEIGHT=\"12\" ALT=\"$langs[ln_re]\"> $list[title]";
+      $list[num]   = "&nbsp;";
 
-	$bg = $color[l3_bg];
-	$fg = $color[l3_fg];
+      $bg = $color[l3_bg];
+      $fg = $color[l3_fg];
     } else {
-	$bg = $color[l2_bg];
-	$fg = $color[l2_fg];
+      $bg = $color[l2_bg];
+      $fg = $color[l2_fg];
     }
 
     $date = date($board[date_fmt], $list[date]);
@@ -44,9 +44,9 @@ function print_list($table, $list, $r=0)
     $list[refer] = ereg_replace("^(\.+)", "<FONT COLOR=\"$bg\" $board[css]>\\1</FONT>", $list[refer]);
 
     if($list[email]) {
-	$list[name] = url_link($list[email], $list[name], $fg, $list[no]);
+      $list[name] = url_link($list[email], $list[name], $fg, $list[no]);
     } else {
-	$list[name] = "<FONT COLOR=\"$fg\" $board[css]>$list[name]</FONT>";
+      $list[name] = "<FONT COLOR=\"$fg\" $board[css]>$list[name]</FONT>";
     }
 
     # 글 내용 미리 보기 설정
@@ -87,11 +87,11 @@ function print_list($table, $list, $r=0)
    echo "  <TD BGCOLOR=\"$bg\" align=right NOWRAP><FONT SIZE=\"-1\" COLOR=\"$fg\" $board[css]><NOBR>$date</NOBR></FONT></TD>";
 
     if(get_date() <= $list[date]) {
-	echo "
+      echo "
   <TD WIDTH=\"1\" BGCOLOR=\"$color[td_co]\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"*\" BORDER=\"0\"></TD>
   <TD ALIGN=\"right\" BGCOLOR=\"$bg\"><FONT COLOR=\"$fg\" $board[css]>$list[refer]</FONT></TD>";
     } else {
-	echo "
+      echo "
   <TD ALIGN=\"right\" BGCOLOR=\"$bg\" COLSPAN=\"2\"><FONT COLOR=\"$fg\" $board[css]>$list[refer]</FONT></TD>";
     }
     echo "
@@ -111,11 +111,11 @@ function get_list($table, $pages, $reply = 0)
 
     $result = sql_query($query);
     if(sql_num_rows($result)) {
-	while($list = sql_fetch_array($result)) {
-	    print_list($table,$list,$reply);
-	}
-    }  else {
-	print_narticle($table, $color[l2_fg], $color[l2_bg], 1);
+      while($list = sql_fetch_array($result)) {
+        print_list($table,$list,$reply);
+      }
+    } else {
+      print_narticle($table, $color[l2_fg], $color[l2_bg], 1);
     }
     sql_free_result($result);
 }

@@ -24,9 +24,9 @@ if(!$adminsession || $cenable[delete]) {
     }
   }
 
-	if(!$adminsession) {
+  if(!$adminsession) {
     $langs[w_pass] = "$langs[w_pass]: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" ".
-  	                 "MAXLENGTH=\"8\" STYLE=\"font: 10px tahoma\">&nbsp;";
+                     "MAXLENGTH=\"8\" STYLE=\"font: 10px tahoma\">&nbsp;";
   } else $langs[w_pass] = "";
 } else {
   $warning = "&nbsp;";
