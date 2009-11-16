@@ -12,6 +12,7 @@ set_magic_quotes_runtime(0);
 ini_set(magic_quotes_gpc,1);
 ini_set(magic_quotes_sybase,0);
 
+include_once "$ipath/include/variable.php";
 include_once "$ipath/include/error.php";
 include_once "$ipath/include/check.php";
 include_once "$ipath/include/get.php";

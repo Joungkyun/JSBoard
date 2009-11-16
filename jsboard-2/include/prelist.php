@@ -13,6 +13,7 @@ $prlist['path'] = "/webroot/jsboard-version";
 $prlist['wpath'] = "http://µµ∏ﬁ¿Œ/jsboard-version";
 
 include_once "{$prlist['path']}/config/global.php";
+include_once "{$prlist['path']}/include/variable.php";
 include_once "{$prlist['path']}/include/error.php";
 include_once "{$prlist['path']}/include/parse.php";
 include_once "{$prlist['path']}/include/check.php";

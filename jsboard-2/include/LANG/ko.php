@@ -57,6 +57,7 @@ $langs['act_s'] = "스팸으로 판단되어 글쓰기를 거부합니다.";
 $langs['act_same'] = "똑같은 글을 두번 올리지 마십시오.";
 $langs['act_dc'] = "바뀐 내용이 없습니다.";
 $langs['act_complete'] = "변경이 완료되었습니다";
+$langs['upfile_rule'] = '업로드 파일이름은 [A-Za-z0-9_-.] 문자만 사용할 수 있습니다.';
 
 # list.ph message
 $langs['ln_re'] = "답장";
@@ -257,6 +258,7 @@ $langs['n_meta'] = "게시판 이름은 알파벳, 숫자 그리고 _,- 문자만 가능합니다.";
 $langs['n_promise'] = "지정하신 게시판 이름은 DB에서 사용하는 예약어입니다.";
 $langs['n_acc'] = "게시판 계정이 존재하지 않습니다.";
 $langs['a_acc'] = "이미 동일한 이름의 게시판이 존재 합니다.";
+$langs['tb_rule'] = '게시판 이름은 [A-Za-z0-9_-] 문자만 사용할 수 있습니다.';
 
 $langs['first1'] = "배포자";
 $langs['first2'] = "이 글은 읽으신 후에 꼭 삭제하십시오!";
@@ -359,7 +361,7 @@ $langs['u_no'] = "등록된 유저가 없습니다.";
 $langs['u_print'] = "유저관리";
 $langs['chk_id_y'] = "사용할수 있는 ID 입니다.";
 $langs['chk_id_n'] = "ID가 이미 존재합니다.";
-$langs['chk_id_s'] = "ID는 한글, 숫자, 알파멧으로만 지정할수 있습니다.";
+$langs['chk_id_s'] = "ID는 한글, 숫자, 알파벳, 마침표만 지정할수 있습니다.";
 
 $langs['reg_id'] = "ID 를 지정해 주십시오";
 $langs['reg_name'] = "이름를 지정해 주십시오";
