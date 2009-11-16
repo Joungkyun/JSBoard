@@ -221,7 +221,7 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
         $spamstr_t = $spam_string[0];
       }
 
-	  $spamstr_t = htmlentities ($spamstr_t);
+      $spamstr_t = htmlentities ($spamstr_t);
       $GLOBALS['spamstr'] = "\nDetected: {$spamstr_t}";
       return 1;
       break;

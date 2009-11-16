@@ -83,7 +83,7 @@ if ( $m == "login" ) {
   } else {
     require_once './include/error.php';
     require_once './include/get.php';
-	require_once './include/check.php';
+    require_once './include/check.php';
 
     $urls = $edb['logout'];
 
