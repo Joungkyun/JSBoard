@@ -1,5 +1,6 @@
 <?php
 # This flie applied under GPL License
+# $Id: stat.php,v 1.3 2009-11-16 21:52:46 oops Exp $
 if ( preg_match ('/user_admin/', $_SERVER['HTTP_REFERER']) ) $path['type'] = "user_admin";
 else $path['type'] = "admin";
 require_once './include/admin_head.php';

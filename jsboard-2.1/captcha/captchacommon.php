@@ -1,4 +1,5 @@
 <?
+# $Id: captchacommon.php,v 1.4 2009-11-16 21:52:46 oops Exp $
 if ( $board['captcha'] ) {
 	require_once 'captcha/captcha.php';
 	$capt = new Captcha ($board['captcha']);

@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="./theme/EN-default/default.css">
 <?=$user_stylesheet?>
 <?=$rss['link']?>
+<!-- $Id: index.template,v 1.4 2009-11-16 21:52:47 oops Exp $ -->
 </head>
 
 <body<?=$_focus?>>

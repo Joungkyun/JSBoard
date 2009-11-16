@@ -1,4 +1,5 @@
 <?php
+# $Id: admin_head.php,v 1.10 2009-11-16 21:52:46 oops Exp $
 $_pself = $_SERVER['PHP_SELF'];
 $sadmin['pern']   = 10;
 if($path['type'] == "user_admin") {

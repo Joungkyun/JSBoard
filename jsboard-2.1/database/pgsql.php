@@ -1,6 +1,7 @@
 <?php
 #
 # PosgreSQL Basic mapping function
+# $Id: pgsql.php,v 1.2 2009-11-16 21:52:46 oops Exp $
 #
 
 $_extname = 'pgsql';

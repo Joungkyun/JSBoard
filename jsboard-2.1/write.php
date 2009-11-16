@@ -1,4 +1,5 @@
 <?php
+# $Id: write.php,v 1.9 2009-11-16 21:52:45 oops Exp $
 include "include/header.php";
 
 if ( ! $_SERVER['HTTP_REFERER'] ) { 

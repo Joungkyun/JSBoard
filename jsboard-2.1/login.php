@@ -1,4 +1,5 @@
 <?php
+# $Id: login.php,v 1.5 2009-11-16 21:52:45 oops Exp $
 require_once './include/variable.php';
 require_once './include/version.php';
 require_once './include/print.php';

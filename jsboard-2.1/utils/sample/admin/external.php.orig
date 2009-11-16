@@ -4,6 +4,7 @@
 #  Fill up here if you want use external database for JSBoard authorization  
 #
 #  For more details, see the section 5 in doc/ko/README.OPERATE
+#  $Id: external.php.orig,v 1.2 2009-11-16 21:52:48 oops Exp $
 ###############################################################################
 # Whether using external DB or not
 $edb['uses']       = 1;

@@ -32,6 +32,7 @@ form { display: inline; }
  #title {font:20pt <?=$_('font')?>; color:<?=$color['n0_bg']?>}
 -->
 </style>
+<!-- $Id: html_ahead.php,v 1.2 2009-11-16 21:52:46 oops Exp $ -->
 </head>
 
 <body bgcolor="<?=$color['b_bg']?>">

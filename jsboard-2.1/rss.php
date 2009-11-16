@@ -1,5 +1,6 @@
 <?php
 # JSboard RSS Feed
+# $Id: rss.php,v 1.13 2009-11-16 21:52:45 oops Exp $
 #
 
 # header file »ðÀÔ

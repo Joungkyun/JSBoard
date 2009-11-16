@@ -1,4 +1,6 @@
 <?php
+# $Id: print.php,v 1.2 2009-11-16 21:52:46 oops Exp $
+
 # html head 읽어오기
 function htmlhead() {
   global $version, $board, $_, $_code, $table;

@@ -1,4 +1,6 @@
 <?php
+# $Id: print.php,v 1.25 2009-11-16 21:52:47 oops Exp $
+
 # 서버의 REQUEST_METHOD 형태에 따라 변수를 체크하는 함수
 # register_globals 값이 off 일 경우 편리하게 사용
 #

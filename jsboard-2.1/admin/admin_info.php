@@ -1,4 +1,5 @@
 <?php
+# $Id: admin_info.php,v 1.2 2009-11-16 21:52:46 oops Exp $
 $path['type'] = "admin";
 require_once "./include/admin_head.php";
 

@@ -1,4 +1,5 @@
 #!/bin/sh
+# $Id: permission,v 1.3 2009-11-16 21:52:48 oops Exp $
 
 source ./lib/install-config
 source ./lib/commonlib

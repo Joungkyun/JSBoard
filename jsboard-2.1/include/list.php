@@ -1,4 +1,6 @@
 <?php
+# $Id: list.php,v 1.7 2009-11-16 21:52:47 oops Exp $
+
 function print_list($table, $list, $r=0, $sno = 0)
 {
   global $board, $_, $enable, $print, $td_array;

@@ -1,4 +1,5 @@
 <?php
+# $Id: image.php,v 1.4 2009-11-16 21:52:45 oops Exp $
 include_once 'include/variable.php';
 include_once 'include/print.php';
 include_once 'include/check.php';

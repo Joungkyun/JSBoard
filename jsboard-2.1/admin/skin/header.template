@@ -5,6 +5,7 @@
 <title>JSBoard Administration Center [ <?=$_title?> ]</title>
 <link rel="stylesheet" type="text/css" href="<?=$dpath?>/skin/<?=$_code?>-admin.css">
 <script type="text/javascript" src="<?=$dpath?>/skin/admin.js"></script>
+<!-- $Id: header.template,v 1.2 2009-11-16 21:52:46 oops Exp $ -->
 </head>
 
 <body>

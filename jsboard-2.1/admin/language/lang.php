@@ -1,4 +1,6 @@
 <?
+# $Id: lang.php,v 1.2 2009-11-16 21:52:46 oops Exp $
+
 if ( ! isset ($_supportlang) ) {
   $d = opendir ($dpath . '/language');
   while ( $p = readdir ($d) ) {

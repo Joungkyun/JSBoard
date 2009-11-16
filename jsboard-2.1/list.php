@@ -1,4 +1,5 @@
 <?php
+# $Id: list.php,v 1.5 2009-11-16 21:52:45 oops Exp $
 # 페이지 로딩 시간 시작
 $p_time[] = microtime();
 include "include/header.php";

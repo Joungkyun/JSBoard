@@ -1,4 +1,5 @@
 <?php
+# $Id: edit.php,v 1.8 2009-11-16 21:52:45 oops Exp $
 include "include/header.php";
 
 $board['super'] = $board['adm'] ? 1 : $board['super'];
