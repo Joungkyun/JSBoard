@@ -20,6 +20,7 @@ if ( preg_match ('!/\.+|%00$!', $table) ) {
   exit;
 }
 
+include_once 'include/variable.php';
 include_once "include/error.php";
 include_once "include/print.php";
 # GET/POST 변수를 제어

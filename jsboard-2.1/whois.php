@@ -1,5 +1,6 @@
 <?php
-include "include/print.php";
+include 'include/variable.php';
+include 'include/print.php';
 # register_globals 옵션의 영향을 받지 않기 위한 함수
 parse_query_str();
 

@@ -1,4 +1,5 @@
 <?php
+include_once "include/variable.php";
 include_once "include/print.php";
 # GET/POST 변수를 제어
 parse_query_str();
@@ -436,6 +437,9 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     $atc['title'] = trim($atc['title']);
     $atc['text']  = chop($atc['text']);
 
+    if(preg_match("/[^\xA1-\xFEa-z\. ]/i", $name))
+      print_error ($_('reg_format_n'), 250, 150, 1);
+
     if(($o['at'] == "write" || $o['at'] == "reply") && preg_match("/^(0|4|6)$/",$board['mode']) && !$board['adm'] && $board['super'] != 1) {
       if(!trim($atc['passwd']) && !trim($passwd)) print_error($_('act_pwm'),250,150,1);
     }
@@ -459,9 +463,9 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if(($o['at'] == "write" || $o['at'] == "reply" || $o['at'] == "edit") && $atc['html'] == 1) {
       check_htmltable($atc['text']);
       check_iframe($atc['text']);
-      $denyiframe = array("!<(iframe[^>]*)>!i","!<(/iframe)>!i");
-      $editiframe = array("&lt;\\1&gt;","&lt;\\1&gt;");
-      $atc['text'] = preg_replace($denyiframe,$editiframe,$atc['text']);
+      $denysrc = array("!<((iframe|script|img)[^>]*)>!i","!<(/(iframe|script|img))>!i");
+      $editsrc = array("&lt;\\1&gt;","&lt;\\1&gt;");
+      $atc['text'] = preg_replace($denysrc,$editsrc,$atc['text']);
     }
 
     $compare['email'] = trim($compare['email']) ? $compare['email'] : "mail check";

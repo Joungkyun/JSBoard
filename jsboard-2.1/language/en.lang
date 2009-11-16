@@ -56,6 +56,7 @@ $en['act_s'] = "Denied due to spamming";
 $en['act_same'] = "Please don't post duplicate article.";
 $en['act_dc'] = "Nothing is changed.";
 $en['act_complete'] = "Updated successfully";
+$en['upfile_rule'] = 'You can use [A-Za-z0-9_-.] characters for upload file name.';
 
 # list.ph message
 $en['ln_re'] = "Reply";
@@ -141,7 +142,7 @@ $en['u_no'] = "No such user.";
 $en['u_print'] = "User info";
 $en['chk_id_y'] = "You can use this ID.";
 $en['chk_id_n'] = "This ID already exists.";
-$en['chk_id_s'] = "ID should be alphanumeric or Korean only.";
+$en['chk_id_s'] = "ID should be alphanumeric or Korean or dot only.";
 $en['reg']      = 'Regist';
 $en['back']     = 'BACK';
 

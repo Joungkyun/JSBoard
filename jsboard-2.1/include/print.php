@@ -8,6 +8,7 @@ function parse_query_str() {
   if(count($_GET)) {
     foreach($_GET as $key => $value) {
       global ${$key};
+      confirm_variable ($key, $value);
       ${$key} = $value;
     }
   }
@@ -15,6 +16,7 @@ function parse_query_str() {
   if(count($_POST)) {
     foreach($_POST as $key => $value) {
       global ${$key};
+      confirm_variable ($key, $value);
       ${$key} = $value;
     }
   }
