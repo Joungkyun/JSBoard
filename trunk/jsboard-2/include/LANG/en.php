@@ -56,6 +56,7 @@ $langs['act_s'] = "Denied due to spamming";
 $langs['act_same'] = "Please don't post duplicate article.";
 $langs['act_dc'] = "Nothing is changed.";
 $langs['act_complete'] = "Updated successfully";
+$langs['upfile_rule'] = 'You can use [A-Za-z0-9_-.] characters for upload file name.';
 
 # list.ph message
 $langs['ln_re'] = "Reply";
@@ -254,6 +255,7 @@ $langs['n_meta'] = "Special Characters can't be used in board name.";
 $langs['n_promise'] = "This name is reserved word in DB.";
 $langs['n_acc'] = "Specified nonexistent board name.";
 $langs['a_acc'] = "The board with this name already exists.";
+$langs['tb_rule'] = 'You can use [A-Za-z0-9_-] characters for board name.';
 
 $langs['first1'] = "Distributor";
 $langs['first2'] = "After reading this, you must delete this article!";
@@ -356,7 +358,7 @@ $langs['u_no'] = "No such user.";
 $langs['u_print'] = "User info";
 $langs['chk_id_y'] = "You can use this ID.";
 $langs['chk_id_n'] = "This ID already exists.";
-$langs['chk_id_s'] = "ID should be alphanumeric or Korean only.";
+$langs['chk_id_s'] = "ID should be alphanumeric or Korean or dot only.";
 
 $langs['reg_id'] = "Specify ID";
 $langs['reg_name'] = "Specify name";

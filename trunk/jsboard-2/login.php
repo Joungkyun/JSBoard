@@ -1,9 +1,10 @@
 <?php
-include "./include/version.php";
-include "./include/print.php";
-include "./include/get.php";
-include "./include/check.php";
-include "./include/error.php";
+require_once './include/variable.php';
+require_once './include/version.php';
+require_once './include/print.php';
+require_once './include/get.php';
+require_once './include/check.php';
+require_once './include/error.php';
 parse_query_str();
 
 $agent = get_agent();

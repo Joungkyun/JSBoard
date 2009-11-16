@@ -92,6 +92,10 @@ else if($mode=='db_del') {
 else if($mode == 'db_create')  {
   $tbl_list = mysql_list_tables($db['name']);
 
+  # 게시판 이름 규칙 -> A-Za-z0-9_-
+  if ( preg_match ('/[^a-z0-9_-]/i', $new_table) )
+    print_error ($langs['tb_rule'], 250, 150, 1);
+
   # 새로만들 계정이름의 존재유무 체크
   table_name_check($new_table);
   # table list 존재 유무 체크
