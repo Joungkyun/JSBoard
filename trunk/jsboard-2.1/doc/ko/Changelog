@@ -1,13 +1,16 @@
 ** JSBoard 2.1 Changelog
 **
-** Maintainer : 장현성
-**              http://jsboard.kldp.net/cgi-bin/s.cgi?usr=dont&adr=orzz.org
-** Developer  : 김정균
-**              http://jsboard.kldp.net/cgi-bin/s.cgi?usr=admin&adr=oops.org
+** Maintainer : 장현성 <http://orzz.org>
+** Developer  : 김정균 <http://oops.org>
 
 
 -------------------------------------------------------------------------------
 버전 2.1.0
+
+2009.11.17
+by 김정균
+	- 외부에서 JSBoard link로 XSS 유도 가능한 버그 수정
+	  http://oops.org/SERVICE/jsboard/read.php?table=jsboard_oopsQnA&no=52055
 
 2009.11.14
 by 김정균

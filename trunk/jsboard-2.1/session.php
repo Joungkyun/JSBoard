@@ -1,4 +1,5 @@
 <?php
+include_once "include/variable.php";
 include_once "include/print.php";
 parse_query_str ();
 

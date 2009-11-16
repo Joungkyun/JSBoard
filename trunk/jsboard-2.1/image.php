@@ -1,4 +1,5 @@
 <?php
+include_once 'include/variable.php';
 include_once 'include/print.php';
 include_once 'include/check.php';
 include_once 'include/error.php';

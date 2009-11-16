@@ -26,6 +26,7 @@ if ( $m == 'act' ) {
   $email = check_email ($email);
   $url   = check_url ($url);
 
+  if ( preg_match ("/[^\xA1-\xFEa-z0-9.]/i", $id) ) print_error ($_('chk_id_s'), 250, 150, 1);
   if ( preg_match ("/[^\xA1-\xFEa-z\. ]/i", $name) ) print_error ($_('reg_format_n'), 250, 150, 1);
   if ( ! $email ) print_error ($_('reg_format_e'), 250, 150, 1);
   $url = str_replace('http://', '', $url);

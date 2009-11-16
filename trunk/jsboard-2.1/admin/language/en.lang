@@ -132,6 +132,7 @@ $en['n_meta'] = "Special Characters can't be used in board name.";
 $en['n_promise'] = "This name is reserved word in DB.";
 $en['n_acc'] = "Specified nonexistent board name.";
 $en['a_acc'] = "The board with this name already exists.";
+$en['tb_rule'] = 'You can use [A-Za-z0-9_-] characters for board name.';
 
 $en['first1'] = "Distributor";
 $en['first2'] = "After reading this, you must delete this article!";

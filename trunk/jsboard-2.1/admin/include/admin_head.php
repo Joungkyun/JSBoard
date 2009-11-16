@@ -16,6 +16,7 @@ ini_set ('track_errors', 1);
 
 $_ = '_lang';
 
+include_once "$ipath/include/variable.php";
 include_once "$ipath/include/error.php";
 include_once "$ipath/include/check.php";
 include_once "$ipath/include/get.php";

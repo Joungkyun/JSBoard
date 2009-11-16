@@ -18,6 +18,7 @@ $prcode = isset ($prlist['code']) ? $prlist['code'] : 'en';
 putenv ("JSLANG={$prcode}");
 
 require_once "{$prlist['path']}/language/lang.php";
+include_once "{$prlist['path']}/include/variable.php";
 
 include_once "{$prlist['path']}/config/global.php";
 include_once "{$prlist['path']}/include/error.php";
