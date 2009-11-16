@@ -1,4 +1,7 @@
 <!--
+/*
+ * $Id: admin.js,v 1.2 2009-11-16 21:52:46 oops Exp $
+ */
 var child = null;
 var count = 0;
 

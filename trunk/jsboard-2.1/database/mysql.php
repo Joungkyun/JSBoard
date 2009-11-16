@@ -1,6 +1,7 @@
 <?php
 #
 # MySQL Basic mapping function
+# $Id: mysql.php,v 1.2 2009-11-16 21:52:46 oops Exp $
 #
 
 $_extname = 'mysql';

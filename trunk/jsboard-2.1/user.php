@@ -1,4 +1,5 @@
 <?php
+# $Id: user.php,v 1.4 2009-11-16 21:52:45 oops Exp $
 $p_time[] = microtime(); # 속도 체크
 require_once "include/header.php";
 require_once "admin/include/lib.php";

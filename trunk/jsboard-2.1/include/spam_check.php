@@ -1,4 +1,6 @@
 <?php
+# $Id: spam_check.php,v 1.3 2009-11-16 21:52:47 oops Exp $
+
 function get_spam($table, $no) {
   global $c, $db;
   $result = sql_query("SELECT * FROM $table WHERE no = '$no'", $c);

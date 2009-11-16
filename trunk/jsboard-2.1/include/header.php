@@ -1,4 +1,5 @@
 <?php
+# $Id: header.php,v 1.13 2009-11-16 21:52:47 oops Exp $
 $_pself = $_SERVER['PHP_SELF'];
 if ( preg_match ('/(write|edit|reply|read)\.php/i',$_pself) )
   session_cache_limiter ('private');

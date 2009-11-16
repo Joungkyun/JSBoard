@@ -1,4 +1,5 @@
 <?php
+# $Id: act.php,v 1.21 2009-11-16 21:52:45 oops Exp $
 include_once "include/variable.php";
 include_once "include/print.php";
 # GET/POST 변수를 제어

@@ -1,6 +1,7 @@
 <?php
 #
-# PosgreSQL Basic mapping function
+# SQLite Basic mapping function
+# $Id: sqlite.php,v 1.2 2009-11-16 21:52:46 oops Exp $
 #
 
 $_extname = 'sqlite';

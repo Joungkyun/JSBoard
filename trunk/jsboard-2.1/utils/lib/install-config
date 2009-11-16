@@ -1,4 +1,5 @@
 #!/bin/sh
+# $Id: install-config,v 1.2 2009-11-16 21:52:48 oops Exp $
 
 #
 # database client configuration

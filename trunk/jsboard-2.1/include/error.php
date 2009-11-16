@@ -1,4 +1,6 @@
 <?php
+# $Id: error.php,v 1.2 2009-11-16 21:52:47 oops Exp $
+
 function print_error($str,$width=250,$height=150,$back='') {
   global $table, $path, $prlist, $agent, ${$jsboard};
   global $_;

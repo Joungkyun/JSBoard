@@ -1,4 +1,5 @@
 <?php
+# $Id: db.php,v 1.2 2009-11-16 21:52:46 oops Exp $
 $__db = $_db['type'] ? $_db['type'] : $db['type'];
 $_based = dirname ($_SERVER['PHP_SELF']);
 

@@ -1,4 +1,5 @@
 <?php
+# $Id: read.php,v 1.5 2009-11-16 21:52:45 oops Exp $
 $p_time[] = microtime(); # 속도 체크
 require_once "include/header.php";
 require_once "include/wikify.php";

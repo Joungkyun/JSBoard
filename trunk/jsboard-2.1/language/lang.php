@@ -1,4 +1,5 @@
 <?
+# $Id: lang.php,v 1.3 2009-11-16 21:52:47 oops Exp $
 if ( ! isset ($_supportlang) ) {
   $_dp = isset ($prlist['path']) ? $prlist['path'] : '.';
   $d = opendir ("{$_dp}/language");

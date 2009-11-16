@@ -1,3 +1,6 @@
+/*
+ * $Id: preview.js,v 1.5 2009-11-16 21:52:47 oops Exp $
+ */
 
 function previewInit() {
   this.x = 0;

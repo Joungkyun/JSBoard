@@ -1,4 +1,5 @@
 <?php
+# $Id: uadmin.php,v 1.4 2009-11-16 21:52:46 oops Exp $
 $path['type'] = 'user_admin';
 include "../include/admin_head.php";
 

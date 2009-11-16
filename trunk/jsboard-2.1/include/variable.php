@@ -1,4 +1,6 @@
 <?php
+# $Id: variable.php,v 1.2 2009-11-16 21:52:47 oops Exp $
+
 $jsvari = (object) array (
   'atc'     => (object) array (
     'ckeyv' => '/[^[:alnum:]]/',
