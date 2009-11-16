@@ -149,9 +149,9 @@ function page_list($table, $pages, $count, $num, $print = 0) {
     
   $str .= "<!-- ============================ Page List Form ========================== -->\n";
 
-  if($print) {
-	echo $str;
-  }
+  if($print)
+    echo $str;
+
   return $str;
 }
 
