@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: installation,v 1.6 2009-11-17 13:52:10 oops Exp $
+# $Id: installation,v 1.7 2009-11-17 14:45:06 oops Exp $
 
 source ./lib/install-config
 source ./lib/commonlib
@@ -127,10 +127,10 @@ echo "  2. MySQL 4.0"
 echo "  3. Over MySQL 4.1"
 echo "  4. PostgreSQL 7/8"
 echo "  5. SQLIte"
-printf "${MSG_CHOISE}" "2"
+printf "${MSG_CHOISE}" "3"
 read sdb
 
-[ -z "${sdb}" ] && sdb=2
+[ -z "${sdb}" ] && sdb=3
 
 while [ -z "${database_type}" ]
 do
@@ -184,7 +184,8 @@ if [ "${database_type}" = "pgsql" ]; then
 elif [ "${database_type}" = "sqlite" ]; then
 	database_host="../config/jsboard.db"
 else
-	for i in /tmp/mysql.sock /var/lib/mysql/mysql.sock
+	[ -f "${mysql_config}" ] && __database_host=$(${mysql_config} --socket 2> /dev/null)
+	for i in ${__database_host} /tmp/mysql.sock /var/lib/mysql/mysql.sock
 	do
 		if [ -S "${i}" ]; then
 			database_host=":${i}"
@@ -244,6 +245,24 @@ if [ "${database_type}" != "sqlite" ]; then
 			echo -n "${database_tname} ${S3_MSG_5} : "
 			read database_pass
 		fi
+
+		echo -n "${S3_MSG_13} "
+		printf "${MSG_CHOISE}" "N"
+		read _already_database
+		[ -z "${_already_database}" ] && _already_database="N"
+
+		while [ -z "${already_database}" ]
+		do
+			case "${_already_database}" in
+				Y|y) already_database="y" ;;
+				N|n) already_database="n" ;;
+			esac
+
+			if [ -z "${already_database}" ]; then
+				printf "${MSG_CHOISE}" "N"
+				read _already_database
+			fi
+		done
 	fi
 
 	# database root user
@@ -262,7 +281,7 @@ if [ "${database_type}" != "sqlite" ]; then
 	read jsboard_dbname
 	[ -z "${jsboard_dbname}" ] && jsboard_dbname="jsboard"
 
-	if [ "${dbroot}" = "y" ]; then
+	if [ "${dbroot}" = "y" -a ${already_database} = "n" ]; then
 		if [ "$database_type" = "pgsql" ]; then
 			_database_client="${database_client} -U ${database_root}${database_opthost} template1"
 		else
