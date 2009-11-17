@@ -1,5 +1,5 @@
 <?php
-# $Id: parse.php,v 1.14 2009-11-16 21:52:47 oops Exp $
+# $Id: parse.php,v 1.15 2009-11-17 17:50:26 oops Exp $
 
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
@@ -595,7 +595,7 @@ function file_upload($fn,$updir) {
   $ufile['type'] = $_FILES[$fn]['type'];
   $ufile['tmp_name'] = $_FILES[$fn]['tmp_name'];
 
-  if(preg_match('/[^a-z0-9_-.]/i', $ufile['name'])) {
+  if(preg_match('/[^.a-z0-9_-]/i', $ufile['name'])) {
     print_error($_('upfile_rule'),250,150,1);
     exit;
   }
