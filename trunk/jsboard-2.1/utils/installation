@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: installation,v 1.8 2009-11-17 18:20:50 oops Exp $
+# $Id: installation,v 1.9 2009-11-17 18:23:18 oops Exp $
 
 source ./lib/install-config
 source ./lib/commonlib
@@ -45,7 +45,7 @@ do
 done
 
 # include language pack
-echo $LANG | grep -i "utf[-]\?8";
+echo $LANG | grep -i "utf[-]\?8" >& /dev/null
 if [ $? -eq 0 ]; then
 	eval "c_lang=\$${_lang}"
 	if [ ! -f "./lib/lang/installation-${_lang}.conf.utf8" ]; then
