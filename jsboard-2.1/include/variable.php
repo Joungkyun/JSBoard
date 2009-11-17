@@ -1,5 +1,5 @@
 <?php
-# $Id: variable.php,v 1.2 2009-11-16 21:52:47 oops Exp $
+# $Id: variable.php,v 1.3 2009-11-17 17:57:33 oops Exp $
 
 $jsvari = (object) array (
   'atc'     => (object) array (
@@ -21,7 +21,7 @@ $jsvari = (object) array (
   'nd'      => '/[^0-9]/',
   'no'      => '/[^0-9]/',
   'o'       => (object) array (
-    'at'  => '/[^[:alpha:]]/',
+    'at'  => '/[^a-z_]/i',
     'er'  => '/[^[:alpha:]]/',
     'sc'  => '/[^[:alpha:]]/',
     'sct' => '/[^[:alpha:]]/',
