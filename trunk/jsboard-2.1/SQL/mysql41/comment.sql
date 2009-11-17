@@ -14,5 +14,5 @@ CREATE TABLE @table@_comm (
 		date int(11) NOT NULL default '0',
 		PRIMARY KEY  (no),
 		KEY parent (reno)
-	) RAID_TYPE=striped RAID_CHUNKS=5 RAID_CHUNKSIZE=256;
+	) CHARSET=euckr
 

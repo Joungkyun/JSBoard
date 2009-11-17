@@ -16,5 +16,5 @@ CREATE TABLE userdb (
 		UNIQUE KEY nid (nid),
 		KEY name (name),
 		KEY position (position)
-	) RAID_TYPE=striped RAID_CHUNKS=5 RAID_CHUNKSIZE=256;
+	) CHARSET=euckr
 

@@ -34,4 +34,4 @@ CREATE TABLE @table@ (
 		KEY reto (reto),
 		KEY comm (comm),
 		PRIMARY KEY (no)
-	);
+	) TYPE=MyISAM;

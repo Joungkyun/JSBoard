@@ -34,4 +34,4 @@ CREATE TABLE @table@ (
 		KEY reto (reto),
 		KEY comm (comm),
 		PRIMARY KEY (no)
-	) RAID_TYPE=striped RAID_CHUNKS=5 RAID_CHUNKSIZE=256;
+	) CHARSET=euckr

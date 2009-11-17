@@ -14,5 +14,5 @@ CREATE TABLE @table@_comm (
 		date int(11) NOT NULL default '0',
 		PRIMARY KEY  (no),
 		KEY parent (reno)
-	);
+	) TYPE=MyISAM;
 
