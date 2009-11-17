@@ -1,5 +1,5 @@
 <?php
-# $Id: ko.lang,v 1.4 2009-11-16 21:52:46 oops Exp $
+# $Id: ko.lang,v 1.5 2009-11-17 17:40:16 oops Exp $
 setlocale(LC_ALL, 'ko');
 # Language Charactor Set
 $ko['charset'] = "EUC-KR";
@@ -135,7 +135,7 @@ $ko['n_meta'] = "게시판 이름은 알파벳, 숫자 그리고 _,- 문자만 가능합니다.";
 $ko['n_promise'] = "지정하신 게시판 이름은 DB에서 사용하는 예약어입니다.";
 $ko['n_acc'] = "게시판 계정이 존재하지 않습니다.";
 $ko['a_acc'] = "이미 동일한 이름의 게시판이 존재 합니다.";
-$ko['tb_rule'] = '게시판 이름은 [A-Za-z0-9_-] 문자만 사용할 수 있습니다.';
+$ko['tb_rule'] = '게시판 이름은 [A-Za-z0-9_] 문자만 사용할 수 있습니다.';
 
 $ko['first1'] = "배포자";
 $ko['first2'] = "이 글은 읽으신 후에 꼭 삭제하십시오! ";

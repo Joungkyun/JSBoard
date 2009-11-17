@@ -1,5 +1,5 @@
 <?php
-# $Id: en.lang,v 1.4 2009-11-16 21:52:46 oops Exp $
+# $Id: en.lang,v 1.5 2009-11-17 17:40:16 oops Exp $
 # Language Charactor Set
 $en['charset'] = "iso-8859-1";
 $en['font']    = '"Lucida Console", monosapce';
@@ -133,7 +133,7 @@ $en['n_meta'] = "Special Characters can't be used in board name.";
 $en['n_promise'] = "This name is reserved word in DB.";
 $en['n_acc'] = "Specified nonexistent board name.";
 $en['a_acc'] = "The board with this name already exists.";
-$en['tb_rule'] = 'You can use [A-Za-z0-9_-] characters for board name.';
+$en['tb_rule'] = 'You can use [A-Za-z0-9_] characters for board name.';
 
 $en['first1'] = "Distributor";
 $en['first2'] = "After reading this, you must delete this article!";

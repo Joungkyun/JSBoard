@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.3 2009-11-16 21:52:46 oops Exp $
+# $Id: act.php,v 1.4 2009-11-17 17:40:16 oops Exp $
 $path['type'] = "admin";
 require_once './include/admin_head.php';
 require_once '../include/ostype.php';
@@ -85,8 +85,8 @@ else if ( $mode == 'db_del' ) {
 }
 
 else if ( $mode == 'db_create' )  {
-  # 게시판 이름 규칙 -> A-Za-z0-9_-
-  if ( preg_match ('/[^a-z0-9_-]/i', $new_table) )
+  # 게시판 이름 규칙 -> A-Za-z0-9_
+  if ( preg_match ('/[^a-z0-9_]/i', $new_table) )
     print_error ($_('tb_rule'), 250, 150, 1);
 
   # 새로만들 계정이름의 존재유무 체크
