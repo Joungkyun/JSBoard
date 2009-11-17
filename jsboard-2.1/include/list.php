@@ -1,5 +1,5 @@
 <?php
-# $Id: list.php,v 1.7 2009-11-16 21:52:47 oops Exp $
+# $Id: list.php,v 1.8 2009-11-17 18:11:18 oops Exp $
 
 function print_list($table, $list, $r=0, $sno = 0)
 {
@@ -250,7 +250,7 @@ function get_comment($table,$no,$prints=0) {
   }
 
   if($lines['comment_design']) $lists .= $lines['comment_design'];
-  $lists = conv_emoticon ($lists, $GLOBALS['enable']['emoticon']);
+  conv_emoticon ($lists, $GLOBALS['enable']['emoticon']);
 
   if($prints) echo $lists;
   else return $lists;
