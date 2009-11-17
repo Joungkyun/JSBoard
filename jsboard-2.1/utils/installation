@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: installation,v 1.5 2009-11-17 13:47:44 oops Exp $
+# $Id: installation,v 1.6 2009-11-17 13:52:10 oops Exp $
 
 source ./lib/install-config
 source ./lib/commonlib
@@ -307,7 +307,7 @@ if [ "${database_type}" != "sqlite" ]; then
 		else
 			create_user="GRANT all privileges ON ${jsboard_dbname}.* TO ${jsboard_dbname}@localhost IDENTIFIED by '${jsboard_dbpass}';"
 			[ "${database_type}" = "mysql41" ] && \
-			create_user="${create_user}UPDATE user SET password = old_password('${jsboard_dbpass}') WHERE user = '${jsboard_dbuser}'; flush privileges;"
+			create_user="${create_user}UPDATE user SET password = password('${jsboard_dbpass}') WHERE user = '${jsboard_dbuser}'; flush privileges;"
 		fi
 
 		echo -n "${S3_MSG_10}${mvcol}"
