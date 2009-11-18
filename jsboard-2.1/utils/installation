@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: installation,v 1.9 2009-11-17 18:23:18 oops Exp $
+# $Id: installation,v 1.10 2009-11-18 14:45:48 oops Exp $
 
 source ./lib/install-config
 source ./lib/commonlib
@@ -263,6 +263,8 @@ if [ "${database_type}" != "sqlite" ]; then
 				read _already_database
 			fi
 		done
+	else
+		already_database="n"
 	fi
 
 	# database root user
