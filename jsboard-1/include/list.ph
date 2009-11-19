@@ -1,5 +1,5 @@
 <?php
-# $Id: list.ph,v 1.14 2009-11-19 19:17:30 oops Exp $
+# $Id: list.ph,v 1.15 2009-11-19 20:28:20 oops Exp $
 
 function print_list($table, $list, $r=0)
 {
@@ -43,7 +43,7 @@ function print_list($table, $list, $r=0)
 
     $list[refer] = sprintf("%5d", $list[refer]);
     $list[refer] = str_replace(" ", ".", $list[refer]);
-    $list[refer] = ereg_replace("^(\.+)", "<FONT COLOR=\"$bg\" $board[css]>\\1</FONT>", $list[refer]);
+    $list[refer] = preg_replace('/^(\.+)/', "<FONT COLOR=\"{$bg}\" {$board[css]}>\\1</FONT>", $list[refer]);
 
     if($list[email]) {
       $list[name] = url_link($list[email], $list[name], $fg, $list[no]);

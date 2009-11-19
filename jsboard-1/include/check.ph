@@ -1,5 +1,5 @@
 <?php
-# $Id: check.ph,v 1.25 2009-11-19 19:10:58 oops Exp $
+# $Id: check.ph,v 1.26 2009-11-19 20:28:20 oops Exp $
 
 # table 이름에 meta character 가 포함되어 있는지 검사하는 함수
 # $name -> 변수값
@@ -41,19 +41,15 @@ function is_alpha($char) {
 
 # URL이 정확한 것인지 검사하는 함수
 #
-# eregi         - 정규 표현식을 이용한 검사 (대소문자 무시)
-#                 http://www.php.net/manual/function.eregi.php
-# eregi_replace - 정규 표현식을 이용한 치환 (대소문자 무시)
-#                 http://www.php.net/manual/function.eregi-replace.php
 function check_url($url) {
   $url = trim($url);
 
   # 프로토콜(http://, ftp://...)을 나타내는 부분이 없을 때 기본값으로
   # http://를 붙임
-  if(!eregi("^(http://|https://|ftp://|telnet://|news://)", $url))
-    $url = eregi_replace("^", "http://", $url);
+  if(!preg_match("/^(http|https|ftp|telnet|news):\/\//i", $url))
+    $url = "http://$url";
 
-  if(!eregi("(http|https|ftp|telnet|news):\/\/[\xA1-\xFEa-z0-9-]+\.[][\xA1-\xFEa-zA-Z0-9,:&#@=_~%?\/.+-]+$", $url))
+  if(!preg_match("/(http|https|ftp|telnet|news):\/\/[\xA1-\xFEa-z0-9-]+\.[\xA1-\xFEa-zA-Z0-9,:&#@=_~%?\/.+-]+$/i", $url))
     return;
 
   return $url;
@@ -61,11 +57,18 @@ function check_url($url) {
 
 # E-MAIL 주소가 정확한 것인지 검사하는 함수
 #
-# eregi - 정규 표현식을 이용한 검사 (대소문자 무시)
-#         http://www.php.net/manual/function.eregi.php
 function check_email($url) {
-  if(eregi("^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$",trim($url))) return $url;
-  else return;
+  $url = trim($email);
+  if($hchk) {
+    $host = explode("@",$url);
+    if(preg_match("/^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$/i", $url)) {
+      if(checkdnsrr($host[1],"MX") || gethostbynamel($host[1])) return $url;
+      else return;
+    }
+  } else {
+    if(preg_match("/^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$/i", $url)) return $url;
+    else return;
+  }
 }
 
 # 패스워드 비교 함수
@@ -98,8 +101,8 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
   # 문자열들과 일치하는 문자열이 $spam_str에 있는지 검사함, 있을 경우
   # 스팸으로 판단하고 정수형 1을 반환함, 없을 경우는 0을 반환함
   for($co = 0; $co < count($list); $co++) {
-    $list[$co] = trim($list[$co]);
-    if($list[$co] && eregi($list[$co], $str)) {
+    $list[$co] = preg_quote(trim($list[$co]));
+    if($list[$co] && perg_match("/{$list[$co]}/", $str)) {
       return 1;
     }
   }
@@ -117,7 +120,7 @@ function chk_spam_browser($file = "config/allow_browser.txt") {
     $br = file($file);
     for($i=0;$i<sizeof($br);$i++) {
       $br[$i] = trim($br[$i]);
-      if (eregi($br[$i],$agent_env)) {
+      if (preg_match("/{$br[$i]}/",$agent_env)) {
         return 1;
         break;
       }
