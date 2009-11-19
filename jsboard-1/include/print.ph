@@ -1,5 +1,5 @@
-<?
-# $Id: print.ph,v 1.22 2009-11-19 19:00:08 oops Exp $
+<?php
+# $Id: print.ph,v 1.23 2009-11-19 19:10:58 oops Exp $
 
 # 서버의 REQUEST_METHOD 형태에 따라 변수를 체크하는 함수
 # register_globals 값이 off 일 경우 편리하게 사용

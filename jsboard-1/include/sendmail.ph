@@ -1,5 +1,6 @@
 <?php
 # mail 보내기 함수 2001.11.30 김정균
+# $Id: sendmail.ph,v 1.17 2009-11-19 19:10:58 oops Exp $
 
 # 서버상의 smtp daemon 에 의존하지 않고 직접 발송하는 smtp class
 #

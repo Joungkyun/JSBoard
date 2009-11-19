@@ -1,5 +1,6 @@
-<?
+<?php
 # SQL 관련 함수들에 대한 프론트 엔드 함수
+# $Id: sql.ph,v 1.4 2009-11-19 19:10:58 oops Exp $
 #
 # 비정상적인 동작에 대한 에러 출력 등에 사용됨
 # http://www.php.net/manual/ref.mysql.php

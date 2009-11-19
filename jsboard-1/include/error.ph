@@ -1,4 +1,6 @@
-<?
+<?php
+# $Id: error.ph,v 1.10 2009-11-19 19:10:58 oops Exp $
+
 function print_error($str, $width = 250, $height = 100) {
   global $table, $path, $prlist, $agent;
   if(!$agent[br]) $agent = get_agent();

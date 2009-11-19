@@ -1,4 +1,5 @@
-<?
+<?php
+# $Id: security.ph,v 1.4 2009-11-19 19:10:58 oops Exp $
 function get_security_info() {
   @include "./config/security_data.ph";
 

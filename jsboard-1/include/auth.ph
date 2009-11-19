@@ -1,5 +1,6 @@
-<?
+<?php
 # 사용자 인증 함수
+# $Id: auth.ph,v 1.4 2009-11-19 19:10:58 oops Exp $
 #
 # header    - HTTP 헤더 전송 (아무 것도 출력되지 않은 상태에서 사용되어야 함)
 #             http://www.php.net/manual/function.header.php

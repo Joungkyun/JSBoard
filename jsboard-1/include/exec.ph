@@ -1,5 +1,5 @@
-<?
-# $Id: exec.ph,v 1.3 2009-11-19 13:55:41 oops Exp $
+<?php
+# $Id: exec.ph,v 1.4 2009-11-19 19:10:58 oops Exp $
 
 # if failed, return 1
 # else return 0

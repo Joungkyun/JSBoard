@@ -1,4 +1,6 @@
-<?
+<?php
+# $Id: check.ph,v 1.25 2009-11-19 19:10:58 oops Exp $
+
 # table 이름에 meta character 가 포함되어 있는지 검사하는 함수
 # $name -> 변수값
 # $i    -> null 이라도 상관없을 경우 1
@@ -109,7 +111,7 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
 #
 function chk_spam_browser($file = "config/allow_browser.txt") {
   global $HTTP_SERVER_VARS;
-  $agent_env = $HTTP_SERVER_VARS["HTTP_USER_AGENT"];
+  $agent_env = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
 
   if(@file_exists($file)) {
     $br = file($file);
@@ -245,7 +247,7 @@ function check_location($n=0) {
     $sre[] = "/:[0-9]+/i";
     $tre[] = "";
 
-    $r = gethostbyname(preg_replace($sre,$tre,$HTTP_SERVER_VARS["HTTP_REFERER"]));
+    $r = gethostbyname(preg_replace($sre,$tre,$HTTP_SERVER_VARS['HTTP_REFERER']));
     $l = gethostbyname(preg_replace($sre,$tre,$rmail[bbshome]));
 
     if ($r != $l) {
@@ -384,11 +386,11 @@ function check_access($c=0,$wips='',$ips='') {
     $ips = trim($wips) ? "$wips;$ips" : $ips;
 
     # 원격 접속지가 존재하지 않거나 ips 변수가 없거나, 접속지가 자신이라면 체크 중지
-    if(!trim($ips) || !$HTTP_SERVER_VARS[REMOTE_ADDR] ||
-       $HTTP_SERVER_VARS[REMOTE_ADDR] == $HTTP_SERVER_VARS[SERVE_ADDR]) return;
+    if(!trim($ips) || !$HTTP_SERVER_VARS['REMOTE_ADDR'] ||
+       $HTTP_SERVER_VARS['REMOTE_ADDR'] == $HTTP_SERVER_VARS['SERVE_ADDR']) return;
 
     # spoofing 체크
-    $ipchk = explode(".",$HTTP_SERVER_VARS[REMOTE_ADDR]);
+    $ipchk = explode(".",$HTTP_SERVER_VARS['REMOTE_ADDR']);
     for($j=1;$j<4;$j++) $ipchk[$j] = $ipchk[$j] ? $ipchk[$j] : 0;
     # 각 자리수 마다 255 보다 크면 ip 주소를 벋어나므로 체크 
     if($ipchk[0] > 255 || $ipchk[1] > 255 || $ipchk[2] > 255 || $ipchk[3] > 255)
@@ -398,7 +400,7 @@ function check_access($c=0,$wips='',$ips='') {
     for($i=0;$i<sizeof($addr);$i++) {
       if(!preg_match("/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}|\.$/i",$addr[$i])) $addr[$i] .= ".";
       $addr[$i] = str_replace(".","\.",$addr[$i]);
-      if(preg_match("/^$addr[$i]/i",$HTTP_SERVER_VARS[REMOTE_ADDR])) $val = 1;
+      if(preg_match("/^$addr[$i]/i",$HTTP_SERVER_VARS['REMOTE_ADDR'])) $val = 1;
     }
 
     if($val) print_error($langs[chk_bl]);
@@ -410,10 +412,10 @@ function check_access($c=0,$wips='',$ips='') {
 #      1 : ips 에 등록된 Ip 에서의 링크만 막음
 #
 function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
-  global $langs;
+  global $HTTP_SERVER_VARS, $langs;
 
   # $c 설정이 있고, list read from write page 에서만 체크
-  if($c && preg_match("/(list|read|form|write)\.php/i",$_SERVER[PHP_SELF])) {
+  if($c && preg_match("/(list|read|form|write)\.php/i",$HTTP_SERVER_VARS['PHP_SELF'])) {
     # global.ph 에 $board[dhyper] 가 정의 되어 있으면 체크 목록을 합침
     $ips = trim($wips) ? "$wips;$ips" : $ips;
 
@@ -425,15 +427,15 @@ function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
       $m_value = ($i === 0) ? $am : $m;
 
       # 레퍼럴이 존재하지 않거나 ips_value 변수가 없으면 체크 중지
-      if(!trim($ips_value) || !$_SERVER[HTTP_REFERER]) return;
+      if(!trim($ips_value) || !$HTTP_SERVER_VARS['HTTP_REFERER']) return;
 
       # 레퍼럴에서 서버 이름만 추출
-      preg_match("/^(http:\/\/)?([^\/]+)/i",$_SERVER[HTTP_REFERER],$chks);
+      preg_match("/^(http:\/\/)?([^\/]+)/i",$HTTP_SERVER_VARS['HTTP_REFERER'],$chks);
       # 추출한 이름의 ip 를 구함
       $chk = gethostbyname($chks[2]);
 
       # chk 가 자신과 동일하면 체크 중지
-      if($chk == $_SERVER[SERVER_ADDR]) return;
+      if($chk == $HTTP_SERVER_VARS['SERVER_ADDR']) return;
 
       $addr = explode(";",$ips_value);
       for($j=0;$j<sizeof($addr);$j++) {

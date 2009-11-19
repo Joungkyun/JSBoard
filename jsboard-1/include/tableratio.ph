@@ -1,4 +1,5 @@
-<?
+<?php
+# $Id: tableratio.ph,v 1.7 2009-11-19 19:10:58 oops Exp $
 
 # list paget table ratio ===================================
 $td_width[1] = "5%";	# 번호 필드 너비

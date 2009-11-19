@@ -1,4 +1,5 @@
-<?
+<?php
+# $Id: spam_check.ph,v 1.3 2009-11-19 19:10:58 oops Exp $
 function get_spam($table, $no) {
   $result = sql_query("SELECT * FROM $table WHERE no = '$no'");
   while($list = sql_fetch_array($result)) {
