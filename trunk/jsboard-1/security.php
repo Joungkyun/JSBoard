@@ -35,7 +35,7 @@ if($viewtype || $adminsession) {
   if($security[prints] == 2) $open_file = "security_first.php";
   else $open_file = "security_notice.php";
   
-  $text = get_html_src("jsboard.kldp.org","50000","SecurityMSG/$open_file",1);
+  $text = get_html_src("jsboard.kldp.net","50000","SecurityMSG/$open_file",1);
   $body_text = "$text";
   $body_text .= "\n<BR><CENTER><FORM><input type=button value=\"VEIW LIST\" onClick=\"document.location='$PHP_SELF?table=$table&m=golist'\"></FORM></CENTER>\n";
 

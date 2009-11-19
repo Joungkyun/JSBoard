@@ -333,7 +333,7 @@ $langs[brlist_m] = "List supported browsers in Allow Browser List. Only browsers
 
 # ADMIN
 $langs[a_reset]	= "Reset Password";
-$langs[sql_na]	= "<p><font color=red><b>Failed connect SQL Server!<p>\nCheck the db server, db user, db password in \"jsboard/config/global.ph\"<br>\nIf your settings are right,<br>excute \"flush privileges\" command as root user under MySQL</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ BACK ]</a><p>\n Copyleft 1999-2001 <a href=http://jsbord.kldp.org>JSBoard Open Project</a>"; 
+$langs[sql_na]	= "<p><font color=red><b>Failed connect SQL Server!<p>\nCheck the db server, db user, db password in \"jsboard/config/global.ph\"<br>\nIf your settings are right,<br>excute \"flush privileges\" command as root user under MySQL</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ BACK ]</a><p>\n Copyleft 1999-2009 <a href=\"http://jsbord.kldp.net\">JSBoard Open Project</a>"; 
 
 $langs[a_t1]	= "Board Name";
 $langs[a_t2]	= "Articles";
@@ -372,7 +372,7 @@ $langs[pcheck] = "Must excute root.sh in jsboard/Installer/script before Install
 $langs[auser] = "If U are account user, refer to QUICK_INSTALL document";
 
 $langs[inst_r]	= "Reset";
-$langs[sql_int_err]	= "<p><font color=red><b>Failed to connect SQL Server!<p>\nCheck the MySQL Root Password</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ BACK ]</a><p>\n Copyleft 1999-2001 <a href=http://jsboard.kldp.org>JSBoard Open Project</a>"; 
+$langs[sql_int_err]	= "<p><font color=red><b>Failed to connect SQL Server!<p>\nCheck the MySQL Root Password</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ BACK ]</a><p>\n Copyleft 1999-2009 <a href=\"http://jsboard.kldp.net\">JSBoard Open Project</a>"; 
 $langs[inst_chk_varp] = "Specified DB password to use in DB.";
 $langs[inst_chk_varn] = "Specified DB name to use in DB.";
 $langs[inst_chk_varu] = "Specified DB user to use in DB.";

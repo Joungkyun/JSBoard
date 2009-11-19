@@ -12,7 +12,7 @@
 #
 ###########################################################################
 #
-# $Id: INSTALL,v 1.12 2009-11-19 14:19:27 oops Exp $
+# $Id: INSTALL,v 1.13 2009-11-19 19:58:10 oops Exp $
 #                               Installation in JSBoard 1.3 v0.9
 #
 ###########################################################################
@@ -41,7 +41,7 @@ configure 시에 --disable-session 옵션을 놓으면 절대 안된다.
 
 하나.
 계정 유저들과 0.7 이하 버젼에서의 upgrade 를 하는 유저들은 따로 지원을 하지
-않는다. http://jsboard.kldp.org/bbs/read.php?table=bbs_download&no=30 를 참
+않는다. http://jsboard.kldp.net/bbs/read.php?table=bbs_download&no=30 를 참
 고하여 적절하게 upgrade 를 하기를 바란다.
 
 하나.
@@ -433,7 +433,7 @@ Linux, FreeBSD 이외의 OS에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문 서를
     AddType application/x-httpd-php3-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
     AddType application/x-httpd-php-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
 
-    ErrorDocument 403 http://jsboard.kldp.org/ErrorMSG/error_msg.php?l=ko&c=403
+    ErrorDocument 403 http://jsboard.kldp.net/ErrorMSG/error_msg.php?l=ko&c=403
 
     <Files ~ ".*\.ph$">
       Order allow,deny
@@ -449,7 +449,7 @@ Linux, FreeBSD 이외의 OS에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문 서를
   따라 수정을 해 줘야 한다.
 
   또한 data 라는 이름의 디렉토리 아래로 .ph로 직접 접근할 경우에는
-  http://jsboard.kldp.org/ErrorMSG/error_msg.php?l=ko&c=403
+  http://jsboard.kldp.net/ErrorMSG/error_msg.php?l=ko&c=403
   페이지를 출력 하라는 의미이다.
 
   이 설정은 root 의 권한만 가지고 있으면 누구나 다 설정을 해 주는 것이 좋으

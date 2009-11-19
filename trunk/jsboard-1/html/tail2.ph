@@ -1,4 +1,4 @@
 <!-- ========================= Tail ========================= -->
 <p><center>
-Copyleft 1999-2001 by <a href=http://jsboard.kldp.org target=_blank>JSBoard Open Project</a> 
+Copyleft 1999-2009 by <a href="http://jsboard.kldp.net" target="_blank">JSBoard Open Project</a> 
 <!-- ========================= Tail ========================= -->

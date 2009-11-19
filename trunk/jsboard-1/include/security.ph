@@ -1,5 +1,5 @@
 <?php
-# $Id: security.ph,v 1.4 2009-11-19 19:10:58 oops Exp $
+# $Id: security.ph,v 1.5 2009-11-19 19:58:10 oops Exp $
 function get_security_info() {
   @include "./config/security_data.ph";
 
@@ -11,7 +11,7 @@ function get_security_info() {
   $chk_rtime = date("Ymd",$security[stamp]);
 
   if($chk_time > $chk_rtime) {
-    $p = @get_html_src("jsboard.kldp.org",500,"SecurityMSG/serial.txt",1);
+    $p = @get_html_src("jsboard.kldp.net",500,"SecurityMSG/serial.txt",1);
     if(!eregi("none",$p)) $p = trim(eregi_replace(".+ ([0-9]{11})","\\1",$p));
     else $p = "none";
 

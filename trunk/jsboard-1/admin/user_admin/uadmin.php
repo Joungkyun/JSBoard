@@ -825,7 +825,7 @@ $langs[ua_dhyper]
 </td></tr>
 
 <tr><td bgcolor=$color[l0_bg] align=center colspan=6>
-<font id=l0fg>Scripted by <a href=http://jsboard.kldp.org>JSBoard Open Project</a><br>
+<font id=l0fg>Scripted by <a href=\"http://jsboard.kldp.net/\">JSBoard Open Project</a><br>
 and all right reserved</font>
 </td></tr>
 
