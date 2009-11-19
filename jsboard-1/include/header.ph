@@ -1,5 +1,5 @@
 <?php
-# $Id: header.ph,v 1.12 2009-11-19 19:10:58 oops Exp $
+# $Id: header.ph,v 1.13 2009-11-19 20:18:17 oops Exp $
 # config of magic quotes
 set_magic_quotes_runtime(0);
 ini_set(magic_quotes_gpc,1);
@@ -14,6 +14,7 @@ if(preg_match("/(write|reply)\.php/i",$phpself))
 session_start();
 if(!session_is_registered("login")) session_destroy();
 
+include_once 'include/variable.ph';
 include_once "include/print.ph";
 # register_globals 옵션의 영향을 받지 않기 위한 함수
 if(!$parse_query_str_check) parse_query_str();
