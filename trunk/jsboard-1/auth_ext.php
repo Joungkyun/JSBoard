@@ -1,4 +1,5 @@
 <?php
+# $Id: auth_ext.php,v 1.5 2009-11-19 13:55:41 oops Exp $
 require "./include/header.ph";
 require "./html/head.ph";
 

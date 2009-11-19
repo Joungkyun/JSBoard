@@ -57,21 +57,21 @@ if (!$mode) {
     if ($langs[code] == "en") $colsize = form_size(40);
     else $colsize = form_size(35);
 
-    echo "<textarea cols=$colsize rows=15 wrap=hard>$agree_ment</textarea>\n";
+    echo "<textarea cols=\"{$colsize}\" rows=15 wrap=\"hard\">{$agree_ment}</textarea>\n";
   }
 
   echo "</td></tr>\n" .
-       "<tr><td bgcolor=$color[l0_bg] align=center>\n" .
-       "<input type=hidden name=mode value=check_exec>\n" .
-       "<input type=hidden name=langss value=$langs[code]>\n" .
-       "<input type=submit value='AGREE'>\n" .
+       "<tr><td bgcolor=\"{$color[l0_bg]}\" align=\"center\">\n" .
+       "<input type=\"hidden\" name=\"mode\" value=\"check_exec\">\n" .
+       "<input type=\"hidden\" name=\"langss\" value=\"{$langs[code]}\">\n" .
+       "<input type=\"submit\" value='AGREE'>\n" .
        "</td></tr>\n</table>\n" .
        "</form>\n";
 } elseif ($mode == "check_exec") {
   echo "<table width=500 border=0 cellpadding=5>\n" .
-       "<tr><td bgcolor=$color[l0_bg] align=center>\n" .
-       "<font color=$color[l0_fg]>JSBoard Environment Check</font>\n" .
-       "</td></tr>\n<tr><td align=center>\n<font color=white>\n";
+       "<tr><td bgcolor=\"{$color[l0_bg]}\" align=\"center\">\n" .
+       "<font color=\"{$color[l0_fg]}\">JSBoard Environment Check</font>\n" .
+       "</td></tr>\n<tr><td align=\"center\">\n<font color=\"white\">\n";
 
   $mcheck = @mysql_connect($mysql_sock, "root", "$passwd");
 
@@ -81,18 +81,20 @@ if (!$mode) {
     $mcheck = 0;
   }
 
-  if (exec("echo hello")) {
-    $echeck = 1;
-    exec("cat $apache_config_file | grep DirectoryIndex",$array);
+  $cindex = 0;
+  for($c=0;$c<count($apache_config_file);$c++) {
+    if(file_exists($apache_config_file[$c])) {
+      $array = file ($apache_config_file[$c]);
 
-    for($i=0;$i<sizeof($array);$i++) {
-      $array[$i] = trim($array[$i]);
-      if(preg_match("/^Directory/i",$array[$i]) && preg_match("/index.(php |php$)/i",$array[$i])) $cindex = 1;
+      for($i=0;$i<count($array);$i++) {
+        $array[$i] = trim($array[$i]);
+        if(preg_match('/^DirectoryIndex/i',$array[$i]) &&
+           preg_match('/index.(php |php$)/',$array[$i])) {
+          $cindex = 1;
+          break 2;
+        }
+      }
     }
-  } else {
-    $echeck = 0;
-    $cindex = 0;
-    $cconf  = 0;
   }
 
   if(@touch("../data/aaa.test")) {
@@ -108,11 +110,11 @@ if (!$mode) {
   if ($p1 && $p2) $pcheck = 1;
   else $pcheck = 0;
 
-  echo "</font>\n$langs[waitm]\n" .
-       "<meta http-equiv=\"refresh\" content=\"5;URL=$PHP_SELF?mode=check_conform&mcheck=$mcheck&echeck=$echeck&cindex=$cindex&cconf=$cconf&pcheck=$pcheck&langss=$langs[code]\">" .
+  echo "</font>\n{$langs[waitm]}\n" .
+       "<meta http-equiv=\"refresh\" content=\"5;URL={$PHP_SELF}?mode=check_conform&mcheck={$mcheck}&cindex={$cindex}&pcheck={$pcheck}&langss={$langs[code]}\">" .
        "</td></tr>\n" .
-       "<tr><td bgcolor=$color[l0_bg] align=center>\n" .
-       "<font color=$color[l0_fg]>$langs[wait]</font>\n" .
+       "<tr><td bgcolor={$color[l0_bg]} align=\"center\">\n" .
+       "<font color={$color[l0_fg]}>{$langs[wait]}</font>\n" .
        "</td></tr>\n</table>\n";
 } elseif ($mode == "check_conform") {
 
@@ -120,16 +122,13 @@ if (!$mode) {
     $m = "OK";
   } else $m = "Failed";
 
-  if ($echeck) {
-    $e = "OK";
-    if ($cindex) $ci = "OK";
-    else $ci = "Failed";
-  } else $e = "Failed";
+  if ($cindex) $ci = "OK";
+  else $ci = "Failed";
 
   if ($pcheck) $p = "OK";
   else $p = "Error";
 
-  if (!$mcheck || !$echeck || !$cindex || $cconf || !$pcheck) $actlink = "";
+  if (!$mcheck || !$cindex || !$pcheck) $actlink = "";
   else $actlink = "choise";
 
   if (preg_match("/linux/i",$OSTYPE)) {
@@ -145,23 +144,13 @@ if (!$mode) {
        "<font color=$color[text]>\n&nbsp;<br>\n\n" .
        "<table>\n<tr>\n<td>OS Type</td>\n<td>:</td>\n<td>$os_type</td>\n</tr>\n\n";
 
-  if (!preg_match("/linux/i",$OSTYPE))
-    echo "<tr>\n<td colspan=3>\n<font color=red>$langs[os_check]</font>\n</td>\n</tr>\n\n";
-
   echo "<tr>\n<td>MySQL check</td>\n<td>:</td>\n<td>$m</td>\n</tr>\n\n";
 
   if (!$mcheck)
     echo "<tr>\n<td colspan=3>\n<font color=red>$langs[mcheck]</font>\n</td>\n</tr>\n\n";
 
-  echo "<tr>\n<td>exec() function check</td>\n<td>:</td>\n<td>$e</td>\n</tr>\n\n";
-
-  if ($e == "Failed")
-    echo "<tr>\n<td colspan=3>\n<font color=red>$langs[echeck]</font>\n</td>\n</tr>\n\n";
-
-  if ($echeck) {
-    echo "<tr>\n<td>index file check</td>\n<td>:</td>\n<td>$ci</td>\n</tr>\n\n";
-    if ($ci == "Failed") echo "<tr>\n<td colspan=3>\n<font color=red>$langs[icheck]</font>\n</td>\n</tr>\n\n";
-  }
+  echo "<tr>\n<td>index file check</td>\n<td>:</td>\n<td>$ci</td>\n</tr>\n\n";
+  if ($ci == "Failed") echo "<tr>\n<td colspan=3>\n<font color=red>$langs[icheck]</font>\n</td>\n</tr>\n\n";
 
   echo "<tr>\n<td>Permission check</td>\n<td>:</td>\n<td>$p</td>\n</tr>\n\n";
 
