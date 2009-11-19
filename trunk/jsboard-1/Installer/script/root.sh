@@ -106,7 +106,7 @@ if [ ! -f "../../config/default.themes" ] ; then
 fi
 
 if [ ! -f "../../data/test/default.themes" ] ; then
-  ln -sf ./themes/basic.themes ../../data/test/default.themes
+  ln -sf ../themes/basic.themes ../../data/test/default.themes
 fi
 
 # owner configuration
