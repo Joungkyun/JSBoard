@@ -1,5 +1,5 @@
 <?php
-# $Id: auth.php,v 1.10 2009-11-19 14:19:27 oops Exp $
+# $Id: auth.php,v 1.11 2009-11-19 14:29:02 oops Exp $
 include_once '../include/version.ph';
 include_once '../include/print.ph';
 parse_query_str();
@@ -136,9 +136,15 @@ if (!$mode) {
   else $actlink = "choise";
 
   if (preg_match("/linux/i",$OSTYPE)) {
-    if (file_exists("/etc/redhat-release")) $os_type = "Redhat";
+    if (file_exists("/etc/annyung-release")) $os_type = "AnNyung";
+    elseif (file_exists("/etc/redhat-release")) $os_type = "Redhat";
     elseif (file_exists("/etc/debian_version")) $os_type = "Debian";
-  } else $os_type = $OSTYPE;
+  } else {
+    if (file_exists("/etc/annyung-release")) $os_type = "AnNyung";
+    elseif (file_exists("/etc/redhat-release")) $os_type = "Redhat";
+    elseif (file_exists("/etc/debian_version")) $os_type = "Debian";
+    else $os_type = $OSTYPE;
+  }
 
   echo "<form method=POST action=$PHP_SELF>\n\n" .
        "<table width=400 border=0 cellpadding=5>\n" .
