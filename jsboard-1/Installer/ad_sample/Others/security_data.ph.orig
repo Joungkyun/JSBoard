@@ -1,5 +1,6 @@
 <?
-$security[stamp] = 1;
-$security[serial] = 1;
-$security[prints] = 0;
+# $Id: security_data.ph.orig,v 1.2 2009-11-19 12:59:31 oops Exp $
+$security['stamp'] = 1;
+$security['serial'] = 1;
+$security['prints'] = 0;
 ?>

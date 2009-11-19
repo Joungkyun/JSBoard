@@ -1,4 +1,5 @@
 <?
-$sadmin[pern]   = 10; # 전체 관리자 페이지 당 유저 table 수
-$sadmin[passwd] = "lHJTjGW8VhHc."; # 전체 관리자 password
+# $Id: config.ph.orig,v 1.6 2009-11-19 12:59:30 oops Exp $
+$sadmin['pern']   = 10; # 전체 관리자 페이지 당 유저 table 수
+$sadmin['passwd'] = "lHJTjGW8VhHc."; # 전체 관리자 password
 ?>
