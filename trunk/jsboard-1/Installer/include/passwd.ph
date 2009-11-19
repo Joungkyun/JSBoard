@@ -1,6 +1,6 @@
 <?php
 /****************************************************/
-# $Id: passwd.ph,v 1.9 2009-11-19 14:06:18 oops Exp $
+# $Id: passwd.ph,v 1.10 2009-11-19 14:19:27 oops Exp $
 # Specify MySQL Root Password
 # mysql을 관리할 root의 password 를 지정
 #
@@ -12,6 +12,7 @@ $passwd = '';
 # 수동으로 설치했을 경우 /usr/local/apache/conf/httpd.conf
 # 에 위치하는 경우가 많음.
 # freebsd 의 port 를 사용할 경우 /usr/local/etc/apache/httpd.conf 임
+# 다음 배열 리스트에 존재하지 않는다면, 추가를 해 주도록 한다.
 #
 $apache_config_file = array (
   '/etc/httpd/conf/httpd.conf',

@@ -1,5 +1,5 @@
 <?php
-# $Id: auth.php,v 1.9 2009-11-19 14:05:43 oops Exp $
+# $Id: auth.php,v 1.10 2009-11-19 14:19:27 oops Exp $
 include_once '../include/version.ph';
 include_once '../include/print.ph';
 parse_query_str();
@@ -192,7 +192,7 @@ if (!$mode) {
        "<tr><td bgcolor=$color[l0_bg] align=center>\n" .
        "<font color=$color[l0_fg]>JSBoard Installer</font>\n" .
        "</td></tr>\n<tr><td align=center>\n" .
-       "<font color=$color[text]>\nMySQL password<br>\n" .
+       "<font color=$color[text]>\nMySQL Root password<br>\n" .
        "<input type=password name=mysqlpass size=$fsize style=\"font:12px tahoma;\">\n" .
        "<input type=hidden name=mode value=login>\n" .
        "<input type=hidden name=langss value=$langs[code]>\n" .
