@@ -1,5 +1,5 @@
 <?php
-# $Id: print.ph,v 1.24 2009-11-19 19:30:19 oops Exp $
+# $Id: print.ph,v 1.25 2009-11-19 20:18:17 oops Exp $
 
 # 서버의 REQUEST_METHOD 형태에 따라 변수를 체크하는 함수
 # register_globals 값이 off 일 경우 편리하게 사용
@@ -31,6 +31,7 @@ function parse_query_str() {
   if(isset($HTTP_GET_VARS)) {
     foreach($HTTP_GET_VARS as $key => $value) {
       global ${$key};
+      confirm_variable($key, $value);
       ${$key} = $value;
     }
   }
@@ -38,6 +39,7 @@ function parse_query_str() {
   if(isset($HTTP_POST_VARS)) {
     foreach($HTTP_POST_VARS as $key => $value) {
       global ${$key};
+      confirm_variable($key, $value);
       ${$key} = $value;
     }
   }
