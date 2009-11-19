@@ -1,4 +1,5 @@
 <?php
+# $Id: act.php,v 1.8 2009-11-19 13:55:41 oops Exp $
 include "./include/admin_head.ph";
 include "../include/ostype.ph";
 
@@ -33,7 +34,7 @@ if( $mode != "manager_config") {
     $result = mysql_query($table_del,$connect);
 
     # 게시판 계정에서 사용되는 file 삭제
-    exec("$exec[rm] ../data/$table_name");
+	unlink_r("../data/{$table_name}");
     mysql_close();
   }
 

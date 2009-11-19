@@ -367,7 +367,6 @@ $langs[waitm] = "Checking Environment to use JSBoard<br>\nResult will be display
 $langs[wait] = "[ Wait 5 seconds ]";
 $lnags[os_check] ="If OS isn't Linux, change shell command in jsboard/include/exec.ph to corresponding command in your OS";
 $langs[mcheck] = "Failed MySQL login. Check the MySQL root password in jsbaord/installer/include/passwd.ph. If password is right, check if PHP was compiled with --with-mysql option.<br>If you use external DB server, refer to QUICK_INSTALL document";
-$langs[echeck] = "exec() function is not working. Checked your path to php3.ini or php.ini configuration file";
 $langs[icheck] = "Add index.php to DirectoryIndex directive in httpd.conf and restart<br>\napache web server.";
 $langs[pcheck] = "Must excute root.sh in jsboard/Installer/script before Installation";
 $langs[auser] = "If U are account user, refer to QUICK_INSTALL document";

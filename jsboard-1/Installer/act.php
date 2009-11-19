@@ -1,4 +1,5 @@
 <?php
+# $Id: act.php,v 1.7 2009-11-19 13:55:41 oops Exp $
 session_start(); // session을 시작한다.
 include_once "../include/print.ph";
 parse_query_str();
