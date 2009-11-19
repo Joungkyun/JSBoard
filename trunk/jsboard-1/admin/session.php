@@ -1,5 +1,5 @@
 <?php
-# $Id: session.php,v 1.8 2009-11-19 17:24:31 oops Exp $
+# $Id: session.php,v 1.9 2009-11-19 17:41:44 oops Exp $
 session_start();
 $path['type'] = 'admin';
 include '../include/print.ph';
@@ -20,7 +20,7 @@ include 'include/check.ph';
 #
 if (function_exists('version_compare')) {
   if (version_compare(phpversion(), '4.2.3', '>'))
-    ini_set ('session.bug_compat_42', false);
+    ini_set ('session.bug_compat_warn', false);
 }
 
 switch($mode) {
