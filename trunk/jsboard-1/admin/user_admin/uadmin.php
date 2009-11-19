@@ -148,7 +148,7 @@ if(!$color[r5_bg]) $color[r5_bg] = "$color[r0_bg]";
 if(!$color[r5_fg]) $color[r5_fg] = "$color[r0_fg]";
 
 
-$board[hls] = preg_replace("/<FONT COLOR=/i","",$board[hl]);
+$board[hls] = preg_replace("/<FONT COLOR=['\"]?/i","",$board[hl]);
 $board[hls] = preg_replace("/><B><U>STR<\/U><\/B><\/FONT>/i","",$board[hls]);
 
 # html header의 정보를 가져 온다
