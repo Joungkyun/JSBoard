@@ -1,7 +1,7 @@
 ***** JSBOARD + OOPS administartion Center *********************************
 
-Original Developer              : Byung Chan Kim <redhands AT linux.sarang.net>
-Source Disturibute              : Joung Kyun Kim <admin AT oops.org>
+Original Developer              : Byung Chan Kim <http://linux.sarang.net/>
+Source Disturibute              : JoungKyun Kim <http://oops.org/>
 
 ## Warning ##
 
@@ -11,6 +11,7 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
+$Id: Changelog,v 1.69 2009-11-19 14:09:31 oops Exp $
 
 
 -----------------------------------------------------------------------------
@@ -20,6 +21,7 @@ file.
 
 * 변경된점
 1. backport get_agent function
+2. OS 의존성 코드 제거
 
 
 -----------------------------------------------------------------------------
