@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.9 2009-11-19 16:23:41 oops Exp $
+# $Id: act.php,v 1.10 2009-11-19 17:08:55 oops Exp $
 session_start(); // session을 시작한다.
 include_once '../include/print.ph';
 parse_query_str();
@@ -8,12 +8,12 @@ $path['type'] = 'Install';
 if ($langss == 'ko') $langs['code'] = 'ko';
 else $langs['code'] = 'en';
 
-include '../include/ostype.ph';
-include '../include/lang.ph';
-include '../include/get.ph';
-include '../include/error.ph';
-include './include/passwd.ph';
-include './include/check.ph';
+include_once '../include/ostype.ph';
+include_once '../include/lang.ph';
+include_once '../include/get.ph';
+include_once '../include/error.ph';
+include_once './include/passwd.ph';
+include_once './include/check.ph';
 
 # Password Checkk
 inst_pwcheck($passwd,$mysqlpass,$langs['act_pw']);
@@ -33,7 +33,7 @@ if ($indb['check']) {
   $create['dbname'] = "create database {$dbinst['name']}";
   $result['dbname'] = mysql_query($create['dbname'],$connect);
 
-    # 외부 DB 일 경우에는 접근 권한을 외부로 지정한다.
+  # 외부 DB 일 경우에는 접근 권한을 외부로 지정한다.
   if($mysql_sock != '127.0.0.1' &&
      $mysql_sock != 'localhost' &&
      !preg_match('/mysql\.sock/i',$mysql_sock))
@@ -50,7 +50,7 @@ if ($indb['check']) {
   mysql_select_db($dbinst['name'],$connect);
 
   $create['table'] = "CREATE TABLE test ( 
-    no int(6) DEFAULT '0' NOT NULL auto_increment,
+    no int(6) NOT NULL auto_increment,
     num int(6) DEFAULT '0' NOT NULL,
     idx int(6) DEFAULT '0' NOT NULL,
     date int(11) DEFAULT '0' NOT NULL,
@@ -79,7 +79,7 @@ if ($indb['check']) {
     KEY reto (reto),
     PRIMARY KEY (no))";
 
-  require('../admin/include/first_reg.ph');
+  require '../admin/include/first_reg.ph';
   $passwd_ext = crypt($passwd_ext);
 
   $create['data'] = "INSERT INTO test
