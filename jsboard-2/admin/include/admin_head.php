@@ -1,4 +1,5 @@
 <?php
+# $Id: admin_head.php,v 1.4 2009-11-19 05:29:50 oops Exp $
 $sadmin['pern']   = 10;
 if($path['type'] == "user_admin") {
   $dpath = "..";

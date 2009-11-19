@@ -1,4 +1,5 @@
 <?php
+# $Id: header.php,v 1.12 2009-11-19 05:29:51 oops Exp $
 if(preg_match("/(write|edit|reply|read)\.php/i",$_SERVER['PHP_SELF']))
   session_cache_limiter('nocache');
 

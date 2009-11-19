@@ -1,4 +1,5 @@
 #!/bin/sh
+# $Id: account_p,v 1.5 2009-11-19 05:29:50 oops Exp $
 clear
 echo "########################################################"
 echo "# JSBoard Config File Installer v2.0                   #"

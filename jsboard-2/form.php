@@ -1,4 +1,5 @@
 <?php
+# $Id: form.php,v 1.12 2009-11-19 05:29:49 oops Exp $
 include "./include/header.php";
 
 if($mode == "photo") {

@@ -1,4 +1,5 @@
 #!/bin/sh
+# $Id: dbconv_to_20,v 1.5 2009-11-19 05:29:50 oops Exp $
 
 # 아래의 정보들은 global.php 의 DB 정보와 동일하게 입력함.
 # jsboard 에 접근할 유저이름

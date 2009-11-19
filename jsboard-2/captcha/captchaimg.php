@@ -1,4 +1,5 @@
 <?
+# $Id: captchaimg.php,v 1.2 2009-11-19 05:29:50 oops Exp $
 require_once ('../config/global.php');
 require_once ('./captcha.php');
 

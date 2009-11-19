@@ -1,14 +1,14 @@
 JSBoard 2.x README
 ------------------
+$Id: README,v 1.9 2009-11-19 05:29:50 oops Exp $
 
 INTRODUCTION
 
 JSBoard was first developed by Byungchan Kim in 1999 and released under GNU
-GPL2. Joungkyun Kim is maintaining its development version and Unix-like system
-versions and Kisu Choi is the maintainer of its win32 version. Other contributers
+GPL2. Joungkyun Kim is maintaining its development version Other contributers
 are listed in CREDIT file.
 
-Our project is located in http://jsboard.kldp.net
+Our project is located in http://jsboard.kldp.net/
 
 
 
@@ -63,4 +63,4 @@ LICENSE
 
 JSBoard follows GPL2 License.
 
-Sep  4 2001 JoungKyun Kim <http://oops.org>
+Sep  4 2001 JoungKyun Kim <http://oops.org/>

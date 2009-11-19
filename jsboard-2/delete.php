@@ -1,4 +1,5 @@
 <?php
+# $Id: delete.php,v 1.24 2009-11-19 05:29:49 oops Exp $
 require_once "./include/header.php";
 require_once "./include/wikify.php";
 

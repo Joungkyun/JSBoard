@@ -1,4 +1,5 @@
 <?php
+# $Id: check.php,v 1.2 2009-11-19 05:29:49 oops Exp $
 # Password 체크 부분
 function inst_pwcheck($pass,$mypass,$msg) {
   global $langs;

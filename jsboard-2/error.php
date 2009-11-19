@@ -1,4 +1,5 @@
 <?php
+# $Id: error.php,v 1.5 2009-11-19 05:29:49 oops Exp $
 include "include/header.php";
 
 $str = urldecode($str);

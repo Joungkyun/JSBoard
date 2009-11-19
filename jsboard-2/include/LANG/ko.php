@@ -1,4 +1,5 @@
 <?php
+# $Id: ko.php,v 1.12 2009-11-19 05:29:51 oops Exp $
 setlocale(LC_ALL,"ko");
 # Language Charactor Set
 $langs['charset'] = "EUC-KR";

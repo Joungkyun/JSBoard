@@ -1,17 +1,16 @@
 ##### JSBOARD + OOPS administartion Center #####################################
 #
-#  Original Developer	: 김병찬 <redhands at linux.sarang.net>
+#  Original Developer   : 김병찬 <redhands at linux.sarang.net>
 #  Maintainer           : 김정균 <admin at oops.org>
-#  Windows Version	: 최기수 <choiks at nuri.net>
 #
-#  서버및 회선 제공	: http://www.adwars.com
-#  Special Thanks    	: 권순선 <http://kldp.org>
-#			: 임은재 <eunjea at kldp.org>
-#			: 차경묵 <dimanche at dimanche.co.kr>
-#			: 방창현 <winchild at kldp.org>
+#  Special Thanks       : 권순선 <http://kldp.org>
+#                       : 임은재 <eunjea at kldp.org>
+#                       : 차경묵 <dimanche at dimanche.co.kr>
+#                       : 방창현 <winchild at kldp.org>
 #
 #################################################################################
 #
+# $Id: INSTALL,v 1.18 2009-11-19 05:29:50 oops Exp $
 #                               Installation in JSBoard 2.0 v0.5
 #
 #################################################################################

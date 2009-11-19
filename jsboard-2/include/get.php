@@ -1,4 +1,6 @@
 <?php
+# $Id: get.php,v 1.20 2009-11-19 05:29:51 oops Exp $
+
 # login 정보를 얻어오는 함수
 #
 function get_authinfo($id,$nocry='') {
