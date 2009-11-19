@@ -1,4 +1,5 @@
 Theme 추가하기
+$Id: README.THEME,v 1.3 2009-11-19 12:48:59 oops Exp $
 
 theme를 추가하는 것은 간단하다. 일단 themes directory에서 기존의
 아무 theme file을 원하는이름.themes 로 copy를 한다음 각 사항들을
