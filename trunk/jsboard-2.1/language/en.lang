@@ -1,5 +1,5 @@
 <?php
-# $Id: en.lang,v 1.8 2009-11-16 21:52:47 oops Exp $
+# $Id: en.lang,v 1.9 2009-11-19 04:01:07 oops Exp $
 # Language Charactor Set
 $en['charset'] = "iso-8859-1";
 
@@ -57,7 +57,7 @@ $en['act_s'] = "Denied due to spamming";
 $en['act_same'] = "Please don't post duplicate article.";
 $en['act_dc'] = "Nothing is changed.";
 $en['act_complete'] = "Updated successfully";
-$en['upfile_rule'] = 'You can use [A-Za-z0-9_-.] characters for upload file name.';
+$en['upfile_rule'] = 'You can use [A-Za-z0-9 _-.] characters for upload file name.';
 
 # list.ph message
 $en['ln_re'] = "Reply";
