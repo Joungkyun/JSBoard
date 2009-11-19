@@ -1,10 +1,11 @@
 <?php
-include "./include/admin_head.ph";
+# $Id: admin.php,v 1.8 2009-11-19 17:41:44 oops Exp $
+include './include/admin_head.ph';
 
 # 알파벳별 분류에 대한 링크
 if($ts) {
-  $tslink = "?ts=$ts";
-  $tslinks = "&ts=$ts";
+  $tslink = "?ts={$ts}";
+  $tslinks = "&ts={$ts}";
 }
 
 # password 비교함수 - admin/include/check.ph
