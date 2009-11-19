@@ -1,5 +1,5 @@
 <?php
-# $Id: print.php,v 1.37 2009-11-19 05:29:51 oops Exp $
+# $Id: print.php,v 1.38 2009-11-19 12:00:38 oops Exp $
 #
 # Wrapper function
 #
@@ -107,7 +107,7 @@ function form_size($size, $print = 0) {
         if ($langs['code'] == 'ko') $size *= 2.3;
         else $size *= 1.8;
       }
-    } else $size *= 1.6;
+    } else $size *= 1.9;
   }
 
   # 인터넷 익스플로러

@@ -1,5 +1,5 @@
 <?php
-# $Id: print.php,v 1.25 2009-11-16 21:52:47 oops Exp $
+# $Id: print.php,v 1.26 2009-11-19 11:59:34 oops Exp $
 
 # 서버의 REQUEST_METHOD 형태에 따라 변수를 체크하는 함수
 # register_globals 값이 off 일 경우 편리하게 사용
@@ -69,7 +69,7 @@ function form_size($size, $print = 0) {
         if ($_code == 'ko') $size *= 2.3;
         else $size *= 1.8;
       }
-    } else $size *= 1.6;
+    } else $size *= 1.9;
   }
 
   # 인터넷 익스플로러
