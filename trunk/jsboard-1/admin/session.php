@@ -1,4 +1,5 @@
 <?php
+# $Id: session.php,v 1.8 2009-11-19 17:24:31 oops Exp $
 session_start();
 $path['type'] = 'admin';
 include '../include/print.ph';
