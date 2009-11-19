@@ -10,13 +10,18 @@ Any one who wants install this package on any other platform must revise
 it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
-If you wnat to see windog's change log, see also
- http://jsboard.kldp.org/download/Changelogwin.txt
-
 ******************************************************************************
 
 
-fixed hangul filename handleing bug
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin AT oops.org)
+작성일 : 2009년  11월 19일
+버전   : jsboard-1.3.15
+
+* 변경된점
+1. backport get_agent function
+
+
 -----------------------------------------------------------------------------
 작성자 : 김정균 (admin AT oops.org)
 작성일 : 2004년  12월 20일
