@@ -1,4 +1,6 @@
 <?
+# $Id: print.ph,v 1.21 2009-11-19 12:07:04 oops Exp $
+
 # 서버의 REQUEST_METHOD 형태에 따라 변수를 체크하는 함수
 # register_globals 값이 off 일 경우 편리하게 사용
 #
@@ -80,44 +82,44 @@ function form_size($size, $print = 0) {
   # 클라이언트 브라우져 종류를 가져오는 함수 (include/get_info.ph)
   if(!$agent[br]) $agent = get_agent();
 
-  # 윈도우용 네스케이프
-  if($agent[br] == "MOZL") {
-    if($agent[os] == "NT") {
-      if($agent[ln] == "KO") $size *= 1.1; # 한글판
+  # for Nescape
+  if($agent['br'] == 'NS' && $agent['vr'] <= 4) {
+    if($agent['os'] == 'NT') {
+      if($agent['ln'] == 'KO') $size *= 1.1; # 한글판
       else {
-        if ($langs[code] == "ko") $size *= 2.6;
+        if ($langs['code'] == 'ko') $size *= 2.6;
         else $size *= 1.4;
       }
-    } else if($agent[os] == "WIN") {
-      if($agent[ln] == "KO") $size *= 1.1; # 한글판
+    } else if($agent['os'] == 'WIN') {
+      if($agent['ln'] == 'KO') $size *= 1.1; # 한글판
       else $size *= 1.3;
-    } elseif($agent[os] == "LINUX") {
-      if($agent[ln] == "KO") $size *= 2.8; # 한글판
+    } elseif($agent['os'] == 'LINUX') { 
+      if($agent['ln'] == 'KO') $size *= 2.8; # 한글판
       else $size *= 1.0;
     }
   }
 
-  # 네스케이프 6
-  if($agent[br] == "MOZL6") {
-    if($agent[os] == "NT") {
-      if($agent[ln] == "KO") $size *= 1.1; # 한글판
+  # Nescape 6 or Mozilla
+  else if($agent['nco'] == 'moz') {
+    if($agent['os'] == 'NT') {
+      if($agent['ln'] == 'KO') $size *= 2.2; # 한글판
       else {
-        if ($langs[code] == "ko") $size *= 2.4;
+        if ($langs['code'] == 'ko') $size *= 2.3;
         else $size *= 1.8;
       }
-    } else $size *= 2.4;
+    } else $size *= 1.9;
   }
 
   # 인터넷 익스플로러
-  if($agent[br] == "MSIE" || $agent[br] == "MSIE5.5") {
-    if ($agent[os] == "NT")
-      if ($langs[code] == "ko") $size *= 2.3;
-      else $size *= 2.6;
+  else if($agent['br'] == 'MSIE' || $agent['br'] == 'Firefox') {
+    if ($agent['os'] == 'NT')
+      if ($langs['code'] == 'ko') $size *= 2.3;
+      else $size *= 2.0;
     else $size *= 2.3;
   }
 
-  if($agent[br] == "LYNX") $size *= 2;
-  if($agent[br] == "KONQ") $size *= 2.6;
+  else if($agent['tx']) $size *= 2;
+  else if($agent['br'] == 'KONQ') $size *= 2.6;
 
   $size = intval($size);
   if($print) echo $size;
