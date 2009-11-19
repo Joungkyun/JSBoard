@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.9 2009-11-19 17:08:55 oops Exp $
+# $Id: act.php,v 1.10 2009-11-19 18:22:26 oops Exp $
 include './include/admin_head.ph';
 include '../include/ostype.ph';
 
@@ -151,14 +151,15 @@ if( $mode != 'manager_config') {
       $ad_pass = crypt($admincenter_pass);
 
       $configfile = './include/config.ph';
-      $admininfo = file_operate($configfile,'r',"Don't open {$configfile}");
-      $admininfo = preg_replace(
-                                "/(passwd['\"]?\][ \t]*=[ \t]*['\"])[^'\"]*(['\"];)/",
-                                "\\1{$ad_pass}\\2",
-                                $admininfo
-      );
+	  require_once './include/config.ph';
+	  $buf = <<<EOF
+<?php
+\$sadmin['pern']   = 10; # 전체 관리자 페이지 당 유저 table 수
+\$sadmin['passwd'] = '{$ad_pass}'; # 전체 관리자 password
+?>
+EOF;
 
-      file_operate($configfile,'w',"Can't update {$configfile}",$admininfo);
+      file_operate($configfile,'w',"Can't update {$configfile}",$buf);
 
       complete_adminpass();
     } else admin_pass_error();
