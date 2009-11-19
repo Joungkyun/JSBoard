@@ -20,7 +20,7 @@ require("./include/check.ph");
 inst_pwcheck($passwd,$mysqlpass,$langs[act_pw]);
 
 $dbname = "JSBoard-$version";
-$dbname = eregi_replace("(\-|\.|[ ]*)","",$dbname);
+$dbname = preg_replace('/[-]|[.]|[ ]*/','',$dbname);
 ?>
 
 <table border=0 width=100% height=100%>
