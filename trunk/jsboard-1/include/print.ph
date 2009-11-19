@@ -1,58 +1,63 @@
 <?
-# $Id: print.ph,v 1.21 2009-11-19 12:07:04 oops Exp $
+# $Id: print.ph,v 1.22 2009-11-19 19:00:08 oops Exp $
 
 # 서버의 REQUEST_METHOD 형태에 따라 변수를 체크하는 함수
 # register_globals 값이 off 일 경우 편리하게 사용
 #
 function parse_query_str() {
+  global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+  global $HTTP_SESSION_VARS, $HTTP_SERVER_VARS;
+
+  if ( ! isset ($HTTP_GET_VARS) )
+    $HTTP_GET_VARS = $_GET;
+
+  if ( ! isset ($HTTP_POST_VARS) )
+    $HTTP_POST_VARS = $_POST;
+
+  if ( ! isset ($HTTP_COOKIE_VARS) )
+    $HTTP_COOKIE_VARS = $_COOKIE;
+
+  if ( ! isset ($HTTP_SESSION_VARS) )
+    $HTTP_SESSION_VARS = $_SESSION;
+
+  if ( ! isset ($HTTP_SERVER_VARS) )
+    $HTTP_SERVER_VARS = $_SERVER;
+
+  if ( ! isset ($HTTP_ENV_VARS) )
+    $HTTP_ENV_VARS = $_ENV;
+
   if(ini_get("register_globals")) return;
 
-  if(substr(PHP_VERSION,0,3) < 4.1) {
-    global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
-    global $HTTP_SESSION_VARS, $HTTP_SERVER_VARS;
-    $O_GET  = $HTTP_GET_VARS;
-    $O_POST = $HTTP_POST_VARS;
-    $O_COOKIE = $HTTP_COOKIE_VARS;
-    $O_SESSION = $HTTP_SESSION_VARS;
-    $O_SERVER = $HTTP_SERVER_VARS;
-  } else {
-    $O_GET  = $_GET;
-    $O_POST = $_POST;
-    $O_COOKIE = $_COOKIE;
-    $O_SESSION = $_SESSION;
-    $O_SERVER = $_SERVER;
-  }
-
-  if(count($O_GET)) {
-    foreach($O_GET as $key => $value) {
+  if(isset($HTTP_GET_VARS)) {
+    foreach($HTTP_GET_VARS as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
 
-  if(count($O_POST)) {
-    foreach($O_POST as $key => $value) {
+  if(isset($HTTP_POST_VARS)) {
+    foreach($HTTP_POST_VARS as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
 
-  if(count($O_COOKIE)) {
-    foreach($O_COOKIE as $key => $value) {
+  if(isset($HTTP_COOKIE_VARS)) {
+    foreach($HTTP_COOKIE_VARS as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
 
-  if(count($O_SESSION)) {
-    foreach($O_SESSION as $key => $value) {
+  if(isset($HTTP_SESSION_VARS)) {
+    foreach($HTTP_SESSION_VARS as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }
   }
     
-  if(count($O_SERVER)) {
-    foreach($O_SERVER as $key => $value) {
+  if(isset($HTTP_SERVER_VARS)) {
+    foreach($HTTP_SERVER_VARS as $key => $value) {
       global ${$key};
       ${$key} = $value;
     }

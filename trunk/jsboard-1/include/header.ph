@@ -5,7 +5,10 @@ ini_set(magic_quotes_gpc,1);
 ini_set(magic_quotes_sybase,0);
 ini_set(precision,15);
 
-if(preg_match("/(write|reply)\.php/i",$_SERVER[PHP_SELF]))
+$phpself = $HTTP_SERVER_VARS['PHP_SELF'] ?
+           $HTTP_SERVER_VARS['PHP_SELF'] : $_SERVER['PHP_SELF'];
+
+if(preg_match("/(write|reply)\.php/i",$phpself))
   session_cache_limiter('nocache');
 session_start();
 if(!session_is_registered("login")) session_destroy();
@@ -33,7 +36,7 @@ include_once "include/sendmail.ph";
 $agent = get_agent();
 include_once "include/tableratio.ph";
 
-if(preg_match("/(act|write|edit|reply)\.php/i",$HTTP_SERVER_VARS[PHP_SELF]))
+if(preg_match("/(act|write|edit|reply)\.php/i",$phpself))
   $upload[maxsize] = get_upload_value($upload);
 
 check_access($board[useipbl],$board[ipbl],$enable[ipbl]);
