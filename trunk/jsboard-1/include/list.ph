@@ -1,5 +1,5 @@
 <?php
-# $Id: list.ph,v 1.13 2009-11-19 19:10:58 oops Exp $
+# $Id: list.ph,v 1.14 2009-11-19 19:17:30 oops Exp $
 
 function print_list($table, $list, $r=0)
 {
@@ -107,6 +107,9 @@ function get_list($table, $pages, $reply = 0)
 
     if($reply[ck]) $sql = search2sql($reply);
     else $sql = search2sql($o);
+
+    if ($pages['no'] < 0 )
+      $pages['no'] = 0;
 
     if ($enable[re_list] && preg_match("/read\.php/i",$PHP_SELF)) $query = "SELECT * FROM $table $sql ORDER BY idx DESC";
     else $query = "SELECT * FROM $table $sql ORDER BY idx DESC LIMIT $pages[no], $board[perno]";
