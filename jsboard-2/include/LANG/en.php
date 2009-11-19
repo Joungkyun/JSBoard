@@ -56,7 +56,6 @@ $langs['act_s'] = "Denied due to spamming";
 $langs['act_same'] = "Please don't post duplicate article.";
 $langs['act_dc'] = "Nothing is changed.";
 $langs['act_complete'] = "Updated successfully";
-$langs['upfile_rule'] = 'You can use [A-Za-z0-9_-.] characters for upload file name.';
 
 # list.ph message
 $langs['ln_re'] = "Reply";

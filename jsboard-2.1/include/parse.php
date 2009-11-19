@@ -1,5 +1,5 @@
 <?php
-# $Id: parse.php,v 1.19 2009-11-19 04:01:06 oops Exp $
+# $Id: parse.php,v 1.20 2009-11-19 04:05:32 oops Exp $
 
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
@@ -596,11 +596,6 @@ function file_upload($fn,$updir) {
   $ufile['tmp_name'] = $_FILES[$fn]['tmp_name'];
 
   if(is_uploaded_file($ufile['tmp_name']) && $ufile['size'] > 0) {
-    if(preg_match('/[^\xA1-\xFE[:alnum:] ._-]/i', $ufile['name'])) {
-      print_error($_('upfile_rule'),250,150,1);
-      exit;
-    }
-
     if ($ufile['size'] > $upload['maxsize']) {
       print_error($_('act_md'),250,150,1);
       exit;

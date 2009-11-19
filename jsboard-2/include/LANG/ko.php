@@ -57,7 +57,6 @@ $langs['act_s'] = "스팸으로 판단되어 글쓰기를 거부합니다.";
 $langs['act_same'] = "똑같은 글을 두번 올리지 마십시오.";
 $langs['act_dc'] = "바뀐 내용이 없습니다.";
 $langs['act_complete'] = "변경이 완료되었습니다";
-$langs['upfile_rule'] = '업로드 파일이름은 한글과 [A-Za-z0-9_-.] 문자만 사용할 수 있습니다.';
 
 # list.ph message
 $langs['ln_re'] = "답장";
