@@ -1,4 +1,5 @@
-<?
+<?php
+# $Id: parse.ph,v 1.26 2009-11-19 19:10:58 oops Exp $
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
   if (!$html) $text = preg_replace("/&amp;(#|amp)/i","&\\1",$text);
@@ -391,6 +392,9 @@ function url_link($url, $str, $color, $no = 0) {
 #
 function file_upload($fn,$updir) {
   global $HTTP_POST_FILES, $upload, $langs, $table;
+
+  if (!isset($HTTP_POST_FILES))
+    $HTTP_POST_FILES = $_FILES;
 
   $ufile[name] = $HTTP_POST_FILES[$fn][name];
   $ufile[size] = $HTTP_POST_FILES[$fn][size];

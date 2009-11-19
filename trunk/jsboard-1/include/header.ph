@@ -1,4 +1,5 @@
-<?
+<?php
+# $Id: header.ph,v 1.12 2009-11-19 19:10:58 oops Exp $
 # config of magic quotes
 set_magic_quotes_runtime(0);
 ini_set(magic_quotes_gpc,1);

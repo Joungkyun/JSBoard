@@ -1,5 +1,5 @@
-<?
-# $Id: get.ph,v 1.28 2009-11-19 12:07:04 oops Exp $
+<?php
+# $Id: get.ph,v 1.29 2009-11-19 19:10:58 oops Exp $
 
 # 웹 서버 접속자의 IP 주소 혹은 도메인명을 가져오는 함수
 # HTTP_X_FORWARDED_FOR - proxy server가 설정하는 환경 변수
@@ -9,15 +9,15 @@ function get_hostname($reverse = 0,$addr = 0) {
   global $HTTP_SERVER_VARS;
 
   if(!$addr) {
-    if($HTTP_SERVER_VARS[HTTP_VIA]) {
+    if($HTTP_SERVER_VARS['HTTP_VIA']) {
       $tmp = array('HTTP_CLIENT_IP','HTTP_X_FORWARDED_FOR','HTTP_X_COMING_FROM',
                    'HTTP_X_FORWARDED','HTTP_FORWARDED_FOR','HTTP_FORWARDED',
                    'HTTP_COMING_FROM','HTTP_PROXY','HTTP_SP_HOST');
-      foreach($tmp AS $v) if($HTTP_SERVER_VARS[$v] && $HTTP_SERVER_VARS[$v] != $HTTP_SERVER_VARS[REMOTE_ADDR]) break;
+      foreach($tmp AS $v) if($HTTP_SERVER_VARS[$v] && $HTTP_SERVER_VARS[$v] != $HTTP_SERVER_VARS['REMOTE_ADDR']) break;
       if($HTTP_SERVER_VARS[$v]) $host = preg_replace(array('/unknown,/i','/,.*/'),array('',''),$HTTP_SERVER_VARS[$v]);
-      $host = ($host = trim($host)) ? $host : $HTTP_SERVER_VARS[REMOTE_ADDR];
+      $host = ($host = trim($host)) ? $host : $HTTP_SERVER_VARS['REMOTE_ADDR'];
     }
-    else $host = $HTTP_SERVER_VARS[REMOTE_ADDR];
+    else $host = $HTTP_SERVER_VARS['REMOTE_ADDR'];
   } else $host = $addr;
   $check = $reverse ? @gethostbyaddr($host) : '';
 
@@ -29,9 +29,7 @@ function get_hostname($reverse = 0,$addr = 0) {
 #
 function get_agent() {
   global $HTTP_SERVER_VARS;
-  $agent_env = $HTTP_SERVER_VARS['HTTP_USER_AGENT'] ?
-               $HTTP_SERVER_VARS['HTTP_USER_AGENT'] :
-               $_SERVER['HTTP_USER_AGENT'];
+  $agent_env = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
 
   # $agent 배열 정보 [br] 브라우져 종류
   #                  [os] 운영체제
@@ -295,7 +293,7 @@ function get_title() {
   $title  = $board[title];
 
   # SCRIPT_NAME이라는 아파치 환경 변수를 가져옴 (현재 PHP 파일)
-  $script = $HTTP_SERVER_VARS["SCRIPT_NAME"];
+  $script = $HTTP_SERVER_VARS['SCRIPT_NAME'];
   $script = basename($script);
 
   switch($script) {

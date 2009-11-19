@@ -1,4 +1,6 @@
-<?
+<?php
+# $Id: list.ph,v 1.13 2009-11-19 19:10:58 oops Exp $
+
 function print_list($table, $list, $r=0)
 {
     global $color, $board, $langs, $enable;
