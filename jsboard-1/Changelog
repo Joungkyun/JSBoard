@@ -11,7 +11,7 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.69 2009-11-19 14:09:31 oops Exp $
+$Id: Changelog,v 1.70 2009-11-19 14:10:02 oops Exp $
 
 
 -----------------------------------------------------------------------------
@@ -22,6 +22,7 @@ $Id: Changelog,v 1.69 2009-11-19 14:09:31 oops Exp $
 * 변경된점
 1. backport get_agent function
 2. OS 의존성 코드 제거
+3. Installer에서 HTML title 출력 안되는 문제 수정
 
 
 -----------------------------------------------------------------------------
