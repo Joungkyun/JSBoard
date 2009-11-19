@@ -1,4 +1,5 @@
 <?php
+# $Id: check.php,v 1.24 2009-11-19 05:29:51 oops Exp $
 # table 이름에 meta character 가 포함되어 있는지 검사하는 함수
 # $name -> 변수값
 # $i    -> null 이라도 상관없을 경우 1

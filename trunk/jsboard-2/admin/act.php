@@ -1,4 +1,5 @@
 <?php
+# $Id: act.php,v 1.15 2009-11-19 05:29:50 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 include "../include/ostype.php";

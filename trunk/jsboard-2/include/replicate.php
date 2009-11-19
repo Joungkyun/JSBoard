@@ -1,4 +1,6 @@
 <?php
+# $Id: replicate.php,v 1.2 2009-11-19 05:29:51 oops Exp $
+
 function replication_mode($db) {
   $db['userver'] = $db['userver'] ? $db['userver'] : $db['server'];
   if(!preg_match("/#/",$db['userver'])) $db['userver'] .= "#w";

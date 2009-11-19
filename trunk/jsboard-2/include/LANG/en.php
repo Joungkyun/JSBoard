@@ -1,4 +1,5 @@
 <?php
+# $Id: en.php,v 1.11 2009-11-19 05:29:51 oops Exp $
 # Language Charactor Set
 $langs['charset'] = "iso-8859-1";
 

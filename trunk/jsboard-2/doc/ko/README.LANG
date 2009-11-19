@@ -1,3 +1,5 @@
+$Id: README.LANG,v 1.3 2009-11-19 05:29:50 oops Exp $
+
 Multi language를 구현하기 위해서는 LANG directory에 있는 languae file을
 국가 코드이름으로 copy를 한다.
 

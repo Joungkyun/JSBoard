@@ -1,4 +1,6 @@
 <?php
+# $Id: exec.php,v 1.2 2009-11-19 05:29:51 oops Exp $
+
 # if failed, return 1
 # else return 0
 #

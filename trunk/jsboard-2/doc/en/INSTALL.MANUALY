@@ -1,11 +1,8 @@
 ##### JSBOARD + OOPS administartion Center #####################################
 #
 #  Original Developer   : ByungChan Kim <redhands at linux.sarang.net>
-#  Source Disturibute   : JoungKyun Kim <admin at oops.org>
 #  Maintainer           : JoungKyun Kim <admin at oops.org>
-#  Windows Version      : Kisoo Choi <choiks at nuri.net>
 #
-#  Support Server	: http://www.adwars.com
 #  Special Thanks       : SunSoon Kwon <http://www.kldp.org>
 #                       : Eunjea Lim <eunjea at kldp.org>
 #                       : KyungMook Cha <dimanche at dimanche.co.kr>
@@ -13,6 +10,7 @@
 #
 #################################################################################
 #
+# $Id: INSTALL.MANUALY,v 1.10 2009-11-19 05:29:50 oops Exp $
 #                              Quick Installation in JSBoard 2.0 v0.4
 #
 #################################################################################

@@ -1,4 +1,5 @@
 <?php
+# $Id: locate.php,v 1.7 2009-11-19 05:29:49 oops Exp $
 include "include/header.php";
 
 $go = $o['go'];

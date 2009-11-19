@@ -1,4 +1,5 @@
 <?php
+# $Id: session.php,v 1.22 2009-11-19 05:29:49 oops Exp $
 include_once 'include/variable.php';
 include_once "include/print.php";
 parse_query_str();

@@ -1,4 +1,5 @@
 <?php
+# $Id: regist.php,v 1.18 2009-11-19 05:29:49 oops Exp $
 $p_time[] = microtime(); # 속도 체크
 include "include/header.php";
 include "admin/include/check.php";

@@ -1,4 +1,5 @@
 <?php
+# $Id: whois.php,v 1.10 2009-11-19 05:29:49 oops Exp $
 include 'include/variable.php';
 include 'include/print.php';
 # register_globals 옵션의 영향을 받지 않기 위한 함수

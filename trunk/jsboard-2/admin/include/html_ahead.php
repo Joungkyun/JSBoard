@@ -2,6 +2,7 @@
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<? echo $langs['charset'] ?>">
+<!-- $Id: html_ahead.php,v 1.4 2009-11-19 05:29:50 oops Exp $ -->
 <TITLE>JSBoard Administration Center [ 
 <?
  if (!preg_match("/admin/i",$file_lo)) echo get_title();

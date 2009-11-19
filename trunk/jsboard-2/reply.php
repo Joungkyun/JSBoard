@@ -1,4 +1,5 @@
 <?php
+# $Id: reply.php,v 1.31 2009-11-19 05:29:49 oops Exp $
 include "include/header.php";
 
 if ( ! $_SERVER['HTTP_REFERER'] ) {

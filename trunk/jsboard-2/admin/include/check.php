@@ -1,4 +1,6 @@
 <?php
+# $Id: check.php,v 1.3 2009-11-19 05:29:50 oops Exp $
+
 # 게시판에 사용될 DB가 제대로 지정이 되었는지 검사 여부
 #
 function exsit_dbname_check($db) {

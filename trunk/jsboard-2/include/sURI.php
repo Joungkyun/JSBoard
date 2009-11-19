@@ -1,6 +1,7 @@
 <?php
 /*
  * This file is a part of Secure URI pear packages.
+ * $Id: sURI.php,v 1.4 2009-11-19 05:29:51 oops Exp $
  *
  * sURI class
  *
@@ -13,7 +14,7 @@
  * @author     JoungKyun.Kim <http://oops.org>
  * @copyright  1997-2008 OOPS.ORG
  * @license    BSD License
- * @version    CVS: $Id: sURI.php,v 1.3 2009-02-01 14:10:07 oops Exp $
+ * @version    CVS: $origId: sURI.php,v 1.2 2009/02/26 05:30:35 oops Exp $
  * @since      File available since Release 0.1
  */
 
