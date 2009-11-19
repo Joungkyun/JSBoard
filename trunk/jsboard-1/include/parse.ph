@@ -1,5 +1,5 @@
 <?php
-# $Id: parse.ph,v 1.26 2009-11-19 19:10:58 oops Exp $
+# $Id: parse.ph,v 1.27 2009-11-19 20:03:29 oops Exp $
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
   if (!$html) $text = preg_replace("/&amp;(#|amp)/i","&\\1",$text);
@@ -227,7 +227,7 @@ function text_nl2br($text, $html) {
 function delete_tag($text) {
   $src = array("/\n/i","/<html.*<body[^>]*>/i","/<\/body.*<\/html>.*/i",
                "/<\/*(div|span|layer|body|html|head|meta|input|select|option|form)[^>]*>/i",
-               "/<(style|script|title).*<\/(style|script|title)>/i",
+               "/<(style|script|title|iframe|frame).*<\/(style|script|title|iframe|frame)>/i",
                "/<\/*(script|style|title|xmp)>/i","/<(\\?|%)/i","/(\\?|%)>/i",
                "/#\^--ENTER--\^#/i");
   $tar = array("#^--ENTER--^#","","","","","","&lt;\\1","\\1&gt;","\n");

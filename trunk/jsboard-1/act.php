@@ -1,4 +1,5 @@
-<?
+<?php
+# $Id: act.php,v 1.24 2009-11-19 20:03:29 oops Exp $
 include_once "include/print.ph";
 # register_globals 옵션의 영향을 받지 않기 위한 함수
 parse_query_str();
