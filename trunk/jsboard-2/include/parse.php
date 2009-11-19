@@ -590,12 +590,12 @@ function file_upload($fn,$updir) {
   $ufile['type'] = $_FILES[$fn]['type'];
   $ufile['tmp_name'] = $_FILES[$fn]['tmp_name'];
 
-  if(!preg_match('/[^.\xA1-\xFEa-z0-9_-]/i', $ufile['name'])) {
-    print_error($langs['upfile_rule'],250,150,1);
-    exit;
-  }
-
   if(is_uploaded_file($ufile['tmp_name']) && $ufile['size'] > 0) {
+    if(preg_match('/[^\xA1-\xFE[:alnum:]._-]/', $ufile['name'])) {
+      print_error($langs['upfile_rule'],250,150,1);
+      exit;
+    }
+
     if ($ufile['size'] > $upload['maxsize']) {
       print_error($langs['act_md'],250,150,1);
       exit;
