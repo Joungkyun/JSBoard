@@ -1,9 +1,9 @@
 <?php
-# $Id: variable.php,v 1.3 2009-11-17 17:57:33 oops Exp $
+# $Id: variable.php,v 1.4 2009-11-19 03:22:09 oops Exp $
 
 $jsvari = (object) array (
   'atc'     => (object) array (
-    'ckeyv' => '/[^[:alnum:]]/',
+    'ckeyv' => '/[^[:alnum:]#$%&\/?@]/',
     'ckey' => '/[^0-9]/',
     'reno' => '/[^0-9]/',
     'html' => '/[^0-9]/',
