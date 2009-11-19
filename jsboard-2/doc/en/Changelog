@@ -18,6 +18,10 @@ file.
 Version   : jsboard 2.0.15
 
 
+Thu, Nov, 19 2009
+by JoungKyun.Kim
+	- release 2.0.15
+
 Tue, Nov, 17 2009
 by JoungKyun.Kim
 	- fixed external XSS attack
