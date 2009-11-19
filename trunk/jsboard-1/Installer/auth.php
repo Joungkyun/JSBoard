@@ -1,17 +1,21 @@
 <?php
-include_once "../include/print.ph";
+# $Id: auth.php,v 1.9 2009-11-19 14:05:43 oops Exp $
+include_once '../include/version.ph';
+include_once '../include/print.ph';
 parse_query_str();
 
-$path[type] = "Install";
+$path['type'] = 'Install';
 $copydate = time();
-$copydate = date("Y",$copydate);
-$form_border = "1x";
+$copydate = date('Y',$copydate);
+$form_border = '1x';
 
-require_once "../config/themes/basic.themes";
-require_once "./include/passwd.ph";
+require_once '../config/themes/basic.themes';
+require_once './include/passwd.ph';
 
-if ($langss == "ko") $langs[code] = "ko";
-else $langs[code] = "en";
+if ($langss == 'ko') $langs[code] = 'ko';
+else $langs[code] = 'en';
+
+$board['title'] = 'v' . $board['ver'] . ' Installation';
 
 include_once "../include/lang.ph";
 include_once "../include/get.ph";
