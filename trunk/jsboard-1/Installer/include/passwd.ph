@@ -1,10 +1,10 @@
 <?php
 /****************************************************/
-# $Id: passwd.ph,v 1.8 2009-11-19 13:55:41 oops Exp $
+# $Id: passwd.ph,v 1.9 2009-11-19 14:06:18 oops Exp $
 # Specify MySQL Root Password
 # mysql을 관리할 root의 password 를 지정
 #
-$passwd = "";
+$passwd = '';
 
 # apache의 설정파일(httpd.conf)의 경로를 지정
 # redhat rpm package의 경우 /etc/httpd/conf/httpd.conf
@@ -32,6 +32,6 @@ $apache_config_file = array (
 # netstat -an | grep mysql 
 # 로 알수가 있다.
 #
-$mysql_sock = "localhost";
+$mysql_sock = 'localhost';
 /****************************************************/
 ?>
