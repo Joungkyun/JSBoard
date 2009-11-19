@@ -93,14 +93,14 @@ echo "
 if (preg_match("/MSIE/i",$agent[br]) || $agent[br] == "MOZL6") {
   $orig_option = " onClick=fresize(0)";
   echo "\n</TR><TR>\n".
-       "  <TD COLSPAN=\"2\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>Textarea Size Operation</FONT></TD>\n".
-       "  <TD ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">\n\n".
+       "  <TD COLSPAN=\"2\" BGCOLOR=\"{$color[r1_bg]}\"><FONT COLOR=\"{$color[r1_fg]}\" {$board[css]}>Textarea Size Operation</FONT></TD>\n".
+       "  <TD ALIGN=\"center\" BGCOLOR=\"{$color[r2_bg]}\">\n\n".
 
-       "<SCRIPT LANGUAGE=JavaScript>\n".
+       "<SCRIPT TYPE=\"text/javascript\">\n".
        "<!--\n".
        "function fresize(value) {\n".
        "  if (value == 0) {\n".
-       "    document.writep.wpost.cols  = $size[text];\n".
+       "    document.writep.wpost.cols  = {$size[text]};\n".
        "    document.writep.wpost.rows  = 10;\n".
        "  }\n".
        "  if (value == 1) document.writep.wpost.cols += 5;\n".

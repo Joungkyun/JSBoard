@@ -122,23 +122,24 @@ echo "
 if (preg_match("/MSIE/i",$agent[br]) || $agent[br] == "MOZL6") {
   $orig_option = " onClick=fresize(0)";
 
-  echo "
+  echo <<<EOF
 </TR><TR>
-  <TD COLSPAN=\"2\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>Textarea size config</FONT></TD>
-  <TD ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">
+  <TD COLSPAN="2" BGCOLOR="{$color[r1_bg]}"><FONT COLOR="{$color[r1_fg]}" {$board[css]}>Textarea size config</FONT></TD>
+  <TD ALIGN="center" BGCOLOR="{$color[r2_bg]}">
 
-<SCRIPT LANGUAGE=JavaScript>
+<SCRIPT TYPE="text/javascript">
 <!--
 function fresize(value) {
 if (value == 0) {
-  document.replyp.rpost.cols  = $size[text];
+  document.replyp.rpost.cols  = {$size[text]};
   document.replyp.rpost.rows  = 10;
 }
 if (value == 1) document.replyp.rpost.cols += 5;
 if (value == 2) document.replyp.rpost.rows += 5;
 }
 // -->
-</SCRIPT>\n";
+</SCRIPT>
+EOF;
 
   form_size_button();
 

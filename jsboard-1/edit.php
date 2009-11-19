@@ -115,7 +115,7 @@ if (preg_match("/MSIE/i",$agent[br]) || $agent[br] == "MOZL6") {
   <TD COLSPAN=\"2\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>Textarea size config</FONT></TD>
   <TD ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">
 
-<SCRIPT LANGUAGE=JavaScript>
+<SCRIPT TYPE=\"text/javascript\">
 <!--
 function fresize(value) {
 if (value == 0) {

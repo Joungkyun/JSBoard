@@ -1,10 +1,11 @@
-<?
+<?php
+# Id: $
 include "include/print.ph";
 # register_globals 옵션의 영향을 받지 않기 위한 함수
 parse_query_str();
 
 if($window) {
-  echo "<SCRIPT LANGUAGE = \"Javascript\">\n" .
+  echo "<SCRIPT TYPE=\"text/javascript\">\n" .
        "<!--\nvar farwindow = null;\n" .
        "function remoteWindow() {\n" .
        "  farwindow = window.open(\"\",\"Whois\",\"width=600,height=480,scrollbars=1,resizable=1\");\n" .
@@ -12,7 +13,7 @@ if($window) {
        "    if (farwindow.opener == null) {\n" .
        "      farwindow.opener = self;\n" .
        "    }\n" .
-       "  farwindow.location.href = \"whois.php?table=$table&host=$host\";\n" .
+       "  farwindow.location.href = \"whois.php?table={$table}&host={$host}\";\n" .
        "  }\n" .
        "}\n" .
        "//-->\nremoteWindow();\nhistory.back();\n" .

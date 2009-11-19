@@ -75,8 +75,8 @@ function check_invalid($str) {
   $target = array("/<(\?|%)/i","/(\?|%)>/i","/<(\/?embed[^>]*)>/i","/<(IMG[^>]*SRC=[^\.]+\.(ph|asp|htm|jsp|cgi|pl|sh)[^>]*)>/i");
   $remove = array("<xmp>","</xmp>","$perment &lt;\\1&gt;<BR>","$perment &lt;\\1&gt;<BR>");
 
-  if(preg_match("/<SCRIPT[\s]*LANGUAGE[\s]*=[\s]*(\"|')?php(\"|')?/i",$str)) {
-    $target[] = "/<SCRIPT[\s]*LANGUAGE[\s]*=[\s]*(\"|')?php(\"|')?/i";
+  if(preg_match("/<SCRIPT[\s]*TYPE[\s]*=[\s]*(\"|')?php(\"|')?/i",$str)) {
+    $target[] = "/<SCRIPT[\s]*TYPE[\s]*=[\s]*(\"|')?php(\"|')?/i";
     $remove[] = "<XMP";
     $target[] = "/<\/SCRIPT>/i";
     $remove[] = "</XMP>";
