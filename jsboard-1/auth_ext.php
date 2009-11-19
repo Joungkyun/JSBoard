@@ -1,5 +1,5 @@
 <?php
-# $Id: auth_ext.php,v 1.5 2009-11-19 13:55:41 oops Exp $
+# $Id: auth_ext.php,v 1.6 2009-11-19 19:58:10 oops Exp $
 require "./include/header.ph";
 require "./html/head.ph";
 
@@ -17,34 +17,34 @@ $kinds = ucfirst($kind);
 
 if ($ena) $langs[au_ment] = $clangs[au_ment];
 
-echo "
-<table width=100% height=100%>
-<tr><td align=center valign=center>
+echo <<<EOF
+<table width="100%" height="100%">
+<tr><td align="center" valign="center">
 
-<table width=80% border=0>
-<tr align=center><td bgcolor=$color[l1_bg]><font id=title>$kinds Check</font></td></tr>
+<table width="80%" border=0>
+<tr align="center"><td bgcolor="{$color[l1_bg]}"><font id="title">{$kinds} Check</font></td></tr>
 
-<tr align=center><td><p><br><br>
-<form name=auth method=POST action=act.php>
-$langs[au_ment]<br>
-<input type=password name=pcheck id=input size=$size STYLE=\"font: 10px tahoma\">
-<input type=hidden name=table value=$table>
-<input type=hidden name=page value=$page>
-<input type=hidden name=kind value=$kind>
-<input type=hidden name=no value=$no>
-<input type=hidden name=o[at] value=se>
-<input type=hidden name=o[se] value=login>
+<tr align="center"><td><p><br><br>
+<form name="auth" method="POST" action="act.php">
+{$langs[au_ment]}<br>
+<input type="password" name="pcheck" id="input" size="{$size}" style="font: 10px tahoma;">
+<input type="hidden" name="table" value="{$table}">
+<input type="hidden" name="page" value="{$page}">
+<input type="hidden" name="kind" value="{$kind}">
+<input type="hidden" name="no" value="{$no}">
+<input type="hidden" name="o[at]" value="se">
+<input type="hidden" name="o[se]" value="login">
 </form>
 
-<a href=$filepath>[ $langs[au_ments] ]</a>
+<a href="{$filepath}">[ {$langs[au_ments]} ]</a>
 
 <br>
 </td></tr>
 
-<tr align=center><td bgcolor=$color[l1_bg]>
-<font color=$color[l1_fg]>
-Copyleft 1999-$lyear Jsboard Open Project<br>
-<a href=http://jsboard.kldp.org target=_blank title=\"Jsboard Open Project\">http://jsboard.kldp.org</a>
+<tr align="center"><td bgcolor="{$color[l1_bg]}">
+<font color="{$color[l1_fg]}">
+Copyleft 1999-{$lyear} Jsboard Open Project<br>
+<a href=http://jsboard.kldp.net target=_blank title=\"Jsboard Open Project\">http://jsboard.kldp.net/</a>
 </font>
 </td></tr>
 </table>
@@ -52,7 +52,9 @@ Copyleft 1999-$lyear Jsboard Open Project<br>
 </td></tr>
 </table>
 
-</form>\n";
+</form>
+
+EOF;
 
 require("./html/tail.ph");
 ?>

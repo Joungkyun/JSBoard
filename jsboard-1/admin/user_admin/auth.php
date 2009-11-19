@@ -88,7 +88,7 @@ $textBR
 
 <tr align=center><td bgcolor=$color[l1_bg]>
 <font color=$color[l1_fg]>
-Scripted by <A HREF=http://jsboard.kldp.org TARGET=_blank>JSBoard Open Project</a><br>
+Scripted by <A HREF=\"http://jsboard.kldp.net\" TARGET=\"_blank\">JSBoard Open Project</a><br>
 and all right reserved
 </font>
 </td></tr>

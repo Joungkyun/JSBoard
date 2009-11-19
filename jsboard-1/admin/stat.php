@@ -240,7 +240,7 @@ display_stat($stat,"Àü Ã¼");
 
 echo "\n<br>\n</td></tr>\n\n".
      "<tr align=center><td bgcolor=$color[r1_bg]>\n<font color=$color[text]>\n".
-     "Copyright by <a href=http://jsboard.kldp.org><font color=$color[link]>JSBoard Open Project</font></a><br>\n".
+     "Copyright by <a href=\"http://jsboard.kldp.net\"><font color=$color[link]>JSBoard Open Project</font></a><br>\n".
      "and all right reserved\n</font>\n</td></tr>\n</table>\n";
 
 require("include/html_atail.ph");

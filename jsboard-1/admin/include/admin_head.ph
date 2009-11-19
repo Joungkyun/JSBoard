@@ -10,7 +10,7 @@ if(!$parse_query_str_check) parse_query_str();
 # Copyright Á¤º¸
 $copy[name]     = "JSBoard Open Project";
 $copy[email]    = "";
-$copy[url]      = "http://jsboard.kldp.org";
+$copy[url]      = "http://jsboard.kldp.net/";
 $copy[version]  = "3.0";
 
 include_once "./include/config.ph";

@@ -336,7 +336,7 @@ $langs[brlist_m] = "Allow Browser LIST에는 글등록을 허락할 Agent를 기입합니다. �
 
 # ADMIN
 $langs[a_reset] = "패스워드 초기화";
-$langs[sql_na] = "<p><font color=red><b>DB 연결에 실패를 했습니다!<p>\njsboard/config/global.ph에서 db server, db user, db password를<br>\n확인해 주십시오\n 이상이 없다면 MySQL로 root의 권한으로 로그인을<br>\n하여 flush privileges 명령을 실행하십시오</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ 돌아가기 ]</a><p>\n Copyleft 1999-2001 <a href=http://kldp.org/jsboard>JSBoard Open Project</a>"; 
+$langs[sql_na] = "<p><font color=red><b>DB 연결에 실패를 했습니다!<p>\njsboard/config/global.ph에서 db server, db user, db password를<br>\n확인해 주십시오\n 이상이 없다면 MySQL로 root의 권한으로 로그인을<br>\n하여 flush privileges 명령을 실행하십시오</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ 돌아가기 ]</a><p>\n Copyleft 1999-2009 <a href=\"http://jsboard.kldp.net\">JSBoard Open Project</a>"; 
 
 $langs[a_t1] = "게시판 이름";
 $langs[a_t2] = "게시물 등록수";
@@ -375,7 +375,7 @@ $langs[pcheck] = "Install을 하기 이전에 먼저 jsboard/Installer/script에서\nroot.
 $langs[auser] = "계정 설치자는 QUICK_INSTALL 문서를 참고하여 설치하십시오";
 
 $langs[inst_r] = "초기화";
-$langs[inst_sql_err] = "<p><font color=red><b>DB 연결에 실패를 했습니다!<p>\nMySQL Root password를<br>\n확인해 주십시오\n</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ 돌아가기 ]</a><p>\n Copyleft 1999-2001 <a href=http://kldp.org/jsboard target=_blank>JSBoard Open Project</a>"; 
+$langs[inst_sql_err] = "<p><font color=red><b>DB 연결에 실패를 했습니다!<p>\nMySQL Root password를<br>\n확인해 주십시오\n</b></font>\n\n<br><br>\n<a href=javascript:history.back()>[ 돌아가기 ]</a><p>\n Copyleft 1999-2009 <a href=\" http://jsboard.kldp.net\" target=\" _blank\" >JSBoard Open Project</a>"; 
 $langs[inst_chk_varp] = "DB에서 사용할 패스워드를 지정하지 않았습니다.";
 $langs[inst_chk_varn] = "DB에서 DB 이름을 지정하지 않았습니다.";
 $langs[inst_chk_varu] = "DB에서 DB user를 지정하지 않았습니다.";

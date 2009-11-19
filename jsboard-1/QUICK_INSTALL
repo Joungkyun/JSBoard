@@ -30,7 +30,7 @@ JSBoard 1.3 은 PHP4-4.0.3 이상 버젼에서 정상 동작을 한다.
 
 0.7 이하 버젼과 DB 구조체와 SQL query 의 형식이 변경이 되었으므로 무조건 덮어 씌
 우지 말기 바란며 공식적인 지원은 하지 않는다. upgrade 시에는
-http://jsboard.kldp.org/bbs/read.php?table=bbs_download&no=30 를 참고하여 적절하
+http://jsboard.kldp.net/bbs/read.php?table=bbs_download&no=30 를 참고하여 적절하
 게 upgrade 를 하기 바란다.
 
 !!!!!!!!!!!!!
@@ -415,7 +415,7 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
     AddType application/x-httpd-php3-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
     AddType application/x-httpd-php-source .phps .php .ph .php3 .cgi .sh .pl .html .htm .shtml .vbs .ins
 
-    ErrorDocument 403 http://jsboard.kldp.org/ErrorMSG/error_msg.php?l=ko&c=403
+    ErrorDocument 403 http://jsboard.kldp.net/ErrorMSG/error_msg.php?l=ko&c=403
 
     <Files ~ ".*\.ph$">
       Order allow,deny
@@ -430,7 +430,7 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
   의 경로는 게시판 디렉토리 이름을 어떻게 하느냐에 따라 수정을 해 줘야 한다.
 
   또한 data 라는 이름의 디렉토리 아래로 .ph로 직접 접근할 경우에는
-  http://jsboard.kldp.org/ErrorMSG/error_msg.php?l=ko&c=403 페이지를 출력 하라는
+  http://jsboard.kldp.net/ErrorMSG/error_msg.php?l=ko&c=403 페이지를 출력 하라는
   의미이다.
 
   이 설정은 root 의 권한만 가지고 있으면 누구나 다 설정을 해 주는 것이 좋으며 만
@@ -557,7 +557,7 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
 
 7. Bug report
 
-  버그를 발견할 경우에는 http://jsboard.kldp.org/bbs/list.php?table=bbs_upgrade
+  버그를 발견할 경우에는 http://jsboard.kldp.net/bbs/list.php?table=bbs_upgrade
   에 리포팅을 해 주면 감사하겠다
 
 
