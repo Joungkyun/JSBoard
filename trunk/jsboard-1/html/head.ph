@@ -1,5 +1,6 @@
 <HTML>
 <HEAD>
+<!-- $Id: head.ph,v 1.12 2009-11-19 19:30:19 oops Exp $ -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<? echo $langs[charset] ?>">
 <TITLE>Jsboard <? echo $version ?> - <? echo get_title() ?></TITLE>
 <STYLE TYPE="text/css">
@@ -16,9 +17,9 @@ TEXTAREA {font: 10pt <? echo $langs[font] ?>; BACKGROUND-COLOR:<? echo $color[n2
 -->
 </STYLE>
 <?
-if($view[email] == "yes" || ($upload[yesno] == "yes" && $cupload[yesno] == "yes")) {
-echo "
-<script LANGUAGE=JavaScript>
+if($view[email] == 'yes' || ($upload[yesno] == 'yes' && $cupload[yesno] == 'yes')) {
+echo <<<EOF
+<script type="text/javaScript">
 <!-- Begin
   var child = null;
   var count = 0;
@@ -59,21 +60,23 @@ echo "
     return;
   }
 //-->
-</script>\n";
+</script>
+
+EOF;
 } 
 ?>
 </HEAD>
 
 <?
-echo "<BODY BACKGROUND=\"$color[image]\" BGCOLOR=\"$color[bgcol]\" TEXT=\"$color[text]\" LINK=\"$color[link]\" VLINK=\"$color[vlink]\" ALINK=\"$color[alink]\">\n";
+echo "<BODY BACKGROUND=\"{$color[image]}\" BGCOLOR=\"{$color[bgcol]}\" TEXT=\"{$color[text]}\" LINK=\"{$color[link]}\" VLINK=\"{$color[vlink]}\" ALINK=\"{$color[alink]}\">\n";
 
-if (eregi("[^a-z0-9_\-]",$table))
+if (preg_match("/[^a-z0-9_-]/i",$table))
   print_error("Can't use special characters except alphabat, numberlic , _, - charcters");
 
-if(file_exists("data/$table/html_head.ph")) {
-  @include "data/$table/html_head.ph";
-} else if(file_exists("html/head2.ph")) {
-  @include "html/head2.ph";
+if(file_exists("data/{$table}/html_head.ph")) {
+  @include "data/{$table}/html_head.ph";
+} else if(file_exists('html/head2.ph')) {
+  @include 'html/head2.ph';
 }
 ?>
 

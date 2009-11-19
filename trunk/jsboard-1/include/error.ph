@@ -1,11 +1,11 @@
 <?php
-# $Id: error.ph,v 1.10 2009-11-19 19:10:58 oops Exp $
+# $Id: error.ph,v 1.11 2009-11-19 19:30:19 oops Exp $
 
 function print_error($str, $width = 250, $height = 100) {
   global $table, $path, $prlist, $agent;
   if(!$agent[br]) $agent = get_agent();
 
-  echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
+  echo "<SCRIPT TYPE=\"text/javascript\">\n<!--\n";
 
   if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
     $str = wordwrap($str,40);
@@ -40,7 +40,7 @@ function print_notice($str, $width = 330, $height = 210) {
   global $table, $path, $agent;
   if(!$agent[br]) $agent = get_agent();
 
-  echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
+  echo "<SCRIPT TYPE=\"text/javascript\">\n<!--\n";
 
   if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
     $str = wordwrap($str,40);
@@ -72,7 +72,7 @@ function print_pwerror($str, $width = 250, $height = 100) {
   $textBR = preg_match("/links|w3m|lynx/i",$agent[br]) ? 1 : "";
 
   if(!$textBR) {
-    echo "<SCRIPT LANGUAGE=JavaScript>\n<!--\n";
+    echo "<SCRIPT TYPE=\"text/javascript\">\n<!--\n";
 
     if(preg_match("/^(WIN|NT)$/i",$agent[os])) {
       $str = wordwrap($str,40);

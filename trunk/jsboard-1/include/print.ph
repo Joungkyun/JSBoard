@@ -1,5 +1,5 @@
 <?php
-# $Id: print.ph,v 1.23 2009-11-19 19:10:58 oops Exp $
+# $Id: print.ph,v 1.24 2009-11-19 19:30:19 oops Exp $
 
 # 서버의 REQUEST_METHOD 형태에 따라 변수를 체크하는 함수
 # register_globals 값이 off 일 경우 편리하게 사용
@@ -722,7 +722,7 @@ function print_preview_src() {
   }
 
   echo "<DIV ID=\"overDiv\" STYLE=\"position: absolute; z-index: 50; width: 260; visibility: hidden\"></DIV>\n".
-       "<SCRIPT LANGUAGE=JavaScript>\n".
+       "<SCRIPT TYPE=\"text/javascript\">\n".
        "  var x = 0;\n".
        "  var y = 0;\n".
        "  var snow = 0;\n".
