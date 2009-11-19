@@ -173,8 +173,8 @@ if($ua['n2_fg'] && $ua['n2_fg'] != $color['n2_fg'] && !$ua['theme'])
   $chg['n2_fg'] = $ua['n2_fg'];
 else $chg['n2_fg'] = $color['n2_fg'];
 
-$board['hls'] = preg_replace('/<FONT COLOR=/i','',$board['hl']);
-$board['hls'] = preg_replace('/><B><U>STR<\/U><\/B><\/FONT>/i','',$board['hls']);
+$board['hls'] = preg_replace('/<FONT COLOR=[\'"]?/i','',$board['hl']);
+$board['hls'] = preg_replace('/[ \'"]*><B><U>STR<\/U><\/B><\/FONT>/i','',$board['hls']);
 
 if($ua['hls'] && $ua['hls'] != $board['hls'] && !$ua['theme'])
   $chg['hls'] = $ua['hls'];
