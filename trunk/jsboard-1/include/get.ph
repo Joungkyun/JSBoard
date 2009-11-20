@@ -1,5 +1,5 @@
 <?php
-# $Id: get.ph,v 1.29 2009-11-19 19:10:58 oops Exp $
+# $Id: get.ph,v 1.30 2009-11-20 13:45:48 oops Exp $
 
 # 웹 서버 접속자의 IP 주소 혹은 도메인명을 가져오는 함수
 # HTTP_X_FORWARDED_FOR - proxy server가 설정하는 환경 변수
@@ -125,7 +125,7 @@ function get_agent() {
 
     # version 정보
     $agent['vr'] = preg_replace ('/^Opera\/([0-9]+(\.[0-9]+)?) .*/', '\\1', $agent_env);
-  } else $agent['br'] = "OTHER";
+  } else $agent['br'] = 'OTHER';
 
   return $agent;
 }
@@ -151,11 +151,11 @@ function get_board_info($table) {
 
   # date 필드를 비교해서 오늘 올라온 글의 갯수를 가져옴
   $sql    = search2sql($o);
-  $result = sql_query("SELECT COUNT(1/(date > '$today')), COUNT(*) FROM $table $sql");
+  $result = sql_query("SELECT COUNT(1/(date > '{$today}')), COUNT(*) FROM {$table} {$sql}");
   $A = sql_fetch_array($result);
 
-  $count[all]    = $A[1];	# 전체 글 수
-  $count[today]  = $A[0];	# 오늘 글 수
+  $count['all']    = $A[1];	# 전체 글 수
+  $count['today']  = $A[0];	# 오늘 글 수
 
   return $count;
 }
@@ -166,32 +166,32 @@ function get_page_info($count, $page = 0) {
 
     # 보통 글 수를 페이지 당 글 수로 나누어 전체 페이지를 구함
     # 나눈 값은 정수형으로 변환하며 정확히 나누어 떨어지지 않으면 1을 더함
-    if($count[all] % $board[perno])
-      $pages[all] = intval($count[all] / $board[perno]) + 1;
+    if($count['all'] % $board['perno'])
+      $pages['all'] = intval($count['all'] / $board['perno']) + 1;
     else
-      $pages[all] = intval($count[all] / $board[perno]);
+      $pages['all'] = intval($count['all'] / $board['perno']);
 
-    # $page 값이 있으면 그 값을 $pages[cur] 값으로 대입함
+    # $page 값이 있으면 그 값을 $pages['cur'] 값으로 대입함
     if($page)
-      $pages[cur] = $page;
+      $pages['cur'] = $page;
 
-    # $pages[cur] 값이 없으면 1로 대입함
-    if(!$pages[cur])
-      $pages[cur] = 1;
-    # $pages[cur] 값이 전체 페이지 수보다 클 경우 전체 페이지 값을 대입함
-    if($pages[cur] > $pages[all])
-      $pages[cur] = $pages[all];
+    # $pages['cur'] 값이 없으면 1로 대입함
+    if(!$pages['cur'])
+      $pages['cur'] = 1;
+    # $pages['cur'] 값이 전체 페이지 수보다 클 경우 전체 페이지 값을 대입함
+    if($pages['cur'] > $pages['all'])
+      $pages['cur'] = $pages['all'];
 
-    # $pages[no] 값이 없으면 $pages[cur] 값을 참고하여 대입함. 목록에서
+    # $pages['no'] 값이 없으면 $pages['cur'] 값을 참고하여 대입함. 목록에서
     # 불러올 글의 시작 번호로 사용됨
-    if(!$pages[no])
-      $pages[no] = ($pages[cur] - 1) * $board[perno];
+    if(!$pages['no'])
+      $pages['no'] = ($pages['cur'] - 1) * $board['perno'];
 
-    # $pages[cur] 값에 따라 이전(pre), 다음(nex) 페이지 값을 대입함
-    if($pages[cur] > 1)
-      $pages[pre] = $pages[cur] - 1;
-    if($pages[cur] < $pages[all])
-      $pages[nex] = $pages[cur] + 1;
+    # $pages['cur'] 값에 따라 이전(pre), 다음(nex) 페이지 값을 대입함
+    if($pages['cur'] > 1)
+      $pages['pre'] = $pages['cur'] - 1;
+    if($pages['cur'] < $pages['all'])
+      $pages['nex'] = $pages['cur'] + 1;
 
     return $pages;
 }
@@ -208,13 +208,13 @@ function get_current_page($table, $idx) {
   $count = get_board_info($table);
 
   # 지정된 글의 idx보다 큰 번호를 가진 글의 갯수를 가져옴
-  $result     = sql_query("SELECT COUNT(*) FROM $table WHERE idx > '$idx' $sql");
-  $count[cur] = sql_result($result, 0, "COUNT(*)");
+  $result     = sql_query("SELECT COUNT(*) FROM {$table} WHERE idx > '{$idx}' {$sql}");
+  $count['cur'] = sql_result($result, 0, "COUNT(*)");
   sql_free_result($result);
 
   # 가져온 값을 페이지 당 글 수로 나누어 몇 번째 페이지인지 가져옴
   # (페이지는 1부터 시작하기 때문에 1을 더함)
-  $page   = intval($count[cur] / $board[perno]) + 1;
+  $page   = intval($count['cur'] / $board['perno']) + 1;
 
   return $page;
 }
@@ -226,46 +226,46 @@ function get_pos($table, $idx) {
     $sql    = search2sql($o, 0);
     
     # 지정된 글의 idx보다 작은 번호를 가진 글 중에 idx가 가장 큰 글 (다음글)
-    $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < '$idx' $sql");
-    $pos[next] = sql_result($result, 0, "idx");
+    $result    = sql_query("SELECT MAX(idx) AS idx FROM {$table} WHERE idx < '{$idx}' {$sql}");
+    $pos['next'] = sql_result($result, 0, "idx");
     sql_free_result($result);
-    if($pos[next]) { 
-      $result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '$pos[next]'");
+    if($pos['next']) { 
+      $result = sql_query("SELECT no, title, num, reto FROM {$table} WHERE idx = '{$pos['next']}'");
       $next   = sql_fetch_array($result);
       sql_free_result($result);
-      $next[title] = str_replace("&amp;","&",$next[title]);
-      $next[title] = eregi_replace("(#|')","\\\\1",htmlspecialchars($next[title]));
+      $next['title'] = str_replace("&amp;","&",$next['title']);
+      $next['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($next['title']));
 
-      $pos[next] = $next[no];
-      if($next[reto]) {
-        $result    = sql_query("SELECT num FROM $table WHERE no = '$next[reto]'");
-        $next[num] = sql_result($result, 0, "num");
+      $pos['next'] = $next['no'];
+      if($next['reto']) {
+        $result    = sql_query("SELECT num FROM {$table} WHERE no = '{$next['reto']}'");
+        $next['num'] = sql_result($result, 0, "num");
         sql_free_result($result);
-        $pos[next_t] = "Reply of No.$next[num]: $next[title]";
+        $pos['next_t'] = "Reply of No.{$next['num']}: {$next['title']}";
       } else {
-        $pos[next_t] = "No.$next[num]: $next[title]";
+        $pos['next_t'] = "No.{$next['num']}: {$next['title']}";
       }
     }
 
     # 지정된 글의 idx보다 큰 번호를 가진 글 중에 idx가 가장 작은 글 (이전글)
-    $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > '$idx' $sql");
-    $pos[prev] = sql_result($result, 0, "idx");
+    $result    = sql_query("SELECT MIN(idx) AS idx FROM {$table} WHERE idx > '{$idx}' {$sql}");
+    $pos['prev'] = sql_result($result, 0, "idx");
     sql_free_result($result);
-    if($pos[prev]) { 
-      $result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '$pos[prev]'");
+    if($pos['prev']) { 
+      $result = sql_query("SELECT no, title, num, reto FROM {$table} WHERE idx = '{$pos['prev']}'");
       $prev   = sql_fetch_array($result);
       sql_free_result($result);
-      $prev[title] = str_replace("&amp;","&",$prev[title]);
-      $prev[title] = eregi_replace("(#|')","\\\\1",htmlspecialchars($prev[title]));
+      $prev['title'] = str_replace("&amp;","&",$prev['title']);
+      $prev['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($prev['title'])); 
 
-      $pos[prev] = $prev[no];
-      if($prev[reto]) {
-        $result    = sql_query("SELECT num FROM $table WHERE no = '$prev[reto]'");
-        $prev[num] = sql_result($result, 0, "num");
+      $pos['prev'] = $prev['no'];
+      if($prev['reto']) {
+        $result    = sql_query("SELECT num FROM {$table} WHERE no = '{$prev[reto]}'");
+        $prev['num'] = sql_result($result, 0, 'num');
         sql_free_result($result);
-        $pos[prev_t] = "Reply of No.$prev[num]: $prev[title]";
+        $pos['prev_t'] = "Reply of No.{$prev['num']}: {$prev['title']}";
       } else {
-        $pos[prev_t] = "No.$prev[num]: $prev[title]";
+        $pos['prev_t'] = "No.{$prev['num']}: {$prev['title']}";
       }
     }
 
@@ -277,8 +277,8 @@ function get_pos($table, $idx) {
 # explode - 구분 문자열을 기준으로 문자열을 나눔
 #           http://www.php.net/manual/function.explode.php
 function get_microtime($old, $new) {
-  $start = explode(" ", $old);
-  $end = explode(" ", $new);
+  $start = explode(' ', $old);
+  $end = explode(' ', $new);
 
   return sprintf("%.2f", ($end[1] + $end[0]) - ($start[1] + $start[0]));
 }
@@ -290,61 +290,61 @@ function get_microtime($old, $new) {
 function get_title() {
   global $board, $langs, $HTTP_SERVER_VARS;
 
-  $title  = $board[title];
+  $title  = $board['title'];
 
   # SCRIPT_NAME이라는 아파치 환경 변수를 가져옴 (현재 PHP 파일)
   $script = $HTTP_SERVER_VARS['SCRIPT_NAME'];
   $script = basename($script);
 
   switch($script) {
-    case "list.php":
-      $title .= " $langs[get_v]";
+    case 'list.php':
+      $title .= ' '.$langs['get_v'];
       break;
-    case "read.php":
-      $title .= " $langs[get_r]";
+    case 'read.php':
+      $title .= ' '.$langs['get_r'];
       break;
-    case "edit.php":
-      $title .= " $langs[get_e]";
+    case 'edit.php':
+      $title .= ' '.$langs['get_e'];
       break;
-    case "write.php":
-      $title .= " $langs[get_w]";
+    case 'write.php':
+      $title .= ' '.$langs['get_w'];
       break;
-    case "reply.php":
-      $title .= " $langs[get_re]";
+    case 'reply.php':
+      $title .= ' '.$langs['get_re'];
       break;
-    case "delete.php":
-      $title .= " $langs[get_d]";
+    case 'delete.php':
+      $title .= ' '.$langs['get_d'];
       break;
   }
 
   return $title;
 }
 
-function get_article($table, $no, $field0 = "*", $field1 = "no") {
+function get_article($table, $no, $field0 = '*', $field1 = 'no') {
   global $langs;
   if(!$no)
-    print_error("$langs[get_no]");
+    print_error($langs['get_no']);
 
-  $result  = sql_query("SELECT $field0 FROM $table WHERE $field1 = '$no'");
+  $result  = sql_query("SELECT {$field0} FROM {$table} WHERE {$field1} = '{$no}'");
   $article = sql_fetch_array($result);
   sql_free_result($result);
 
   if(!$article)
-    print_error("$langs[get_n]");
+    print_error($langs['get_n']);
 
   return $article;
 }
 
 function get_theme_img($t) {
-  if (@file_exists("./data/$t/default.themes"))
-    $theme = readlink("./data/$t/default.themes");
+  if (@file_exists("./data/{$t}/default.themes"))
+    $theme = readlink("./data/{$t}/default.themes");
   else  
-    $theme = readlink("./config/default.themes");
-  $theme = eregi_replace("themes|config|\/|\.","",$theme);
+    $theme = readlink('./config/default.themes');
+  $theme = preg_replace('!themes|config|/|\.!i','',$theme);
 
-  if (is_dir("images/$theme"))
-    $path = "images/$theme";
-  else $path = "images";
+  if (is_dir("images/{$theme}"))
+    $path = "images/{$theme}";
+  else $path = 'images';
 
   return $path;
 }
@@ -354,12 +354,12 @@ function get_theme_img($t) {
 #
 # number_formant() - 3자리를 기준으로 컴마를 사용
 function human_fsize($bfsize, $sub = "0") {
-  $BYTES = number_format($bfsize) . " Bytes"; // 3자리를 기준으로 컴마
+  $BYTES = number_format($bfsize) . ' Bytes'; // 3자리를 기준으로 컴마
 
   if($bfsize < 1024) return $BYTES; # Bytes 범위
-  elseif($bfsize < 1048576) $bfsize = number_format(round($bfsize/1024)) . " KB"; # KBytes 범위
-  elseif($bfsize < 1073741827) $bfsize = number_format(round($bfsize/1048576)) . " MB"; # MB 범위
-  else $bfsize = number_format(round($bfsize/1073741827)) . " GB"; # GB 범위
+  elseif($bfsize < 1048576) $bfsize = number_format(round($bfsize/1024)) . ' KB'; # KBytes 범위
+  elseif($bfsize < 1073741827) $bfsize = number_format(round($bfsize/1048576)) . ' MB'; # MB 범위
+  else $bfsize = number_format(round($bfsize/1073741827)) . ' GB'; # GB 범위
 
   if($sub) $bfsize .= "($BYTES)";
 
@@ -371,52 +371,53 @@ function viewfile($tail) {
   global $langs, $icons, $agent;
 
   if(!$agent[br]) $agent = get_agent();
-  $upload_file = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
-  $wupload_file = "./data/$table/$upload[dir]/$list[bcfile]/".urlencode($list[bofile]);
+  $upload_file = "./data/{$table}/{$upload['dir']}/{$list['bcfile']}/{$list['bofile']}";
+  $wupload_file = "./data/{$table}/{$upload['dir']}/{$list['bcfile']}/".urlencode($list['bofile']);
 
-  $source1 = "<p><br>\n---- $list[bofile] $langs[inc_file] -------------------------- \n<p>\n<pre>\n";
+  $source1 = "<p><br>\n---- {$list['bofile']} {$langs['inc_file']} -------------------------- \n<p>\n<pre>\n";
   $source2 = "\n</pre>\n<br><br>";
-  $source3 = "   <font color=red>$list[bofile]</font> file is broken link!!\n\n";
+  $source3 = "   <font color=red>{$list['bofile']}</font> file is broken link!!\n\n";
 
   if (@file_exists($upload_file)) {
-    if (preg_match("/^(gif|jpg|png)$/i",$tail)) {
+    if (preg_match('/^(gif|jpg|png)$/i',$tail)) {
       $imginfo = GetImageSize($upload_file);
-      if(preg_match("/MOZL/i",$agent[br])) $list[bofile] = urlencode($list[bofile]);
-      $uplink_file = "./form.php?mode=photo&table=$table&f[c]=$list[bcfile]&f[n]=$list[bofile]&f[w]=$imginfo[0]&f[h]=$imginfo[1]";
+      if(preg_match('/MOZL/i',$agent['br'])) $list['bofile'] = urlencode($list['bofile']);
+      $uplink_file = "./form.php?mode=photo&table={$table}&f[c]={$list['bcfile']}&f[n]={$list['bofile']}&f[w]={$imginfo[0]}&f[h]={$imginfo[1]}";
 
-      if($imginfo[0] > $board[width] - 6 && !preg_match("/%/",$board[width])) {
-        $p[vars] = $imginfo[0]/$board[width];
-        if($board[img] != "yes") $p[width] = $board[width] - 6;
-        else $p[width] = $board[width] - $icons[size] * 2 - 6;
-        $p[height] = intval($imginfo[1]/$p[vars]);
-        $p[up]  = "[ <b>Original Size</b> $imginfo[0] * $imginfo[1] ]<br>\n";
-        $p[up] .= "<a href=javascript:new_windows(\"$uplink_file\",\"photo\",0,0,$imginfo[0],$imginfo[1])>".
-                  "<img src=\"$wupload_file\" width=$p[width] height=$p[height] border=0></a>\n<p>\n";
+      if($imginfo[0] > $board['width'] - 6 && !preg_match('/%/',$board['width'])) {
+        $p['vars'] = $imginfo[0]/$board['width'];
+        if($board['img'] != 'yes') $p['width'] = $board['width'] - 6;
+        else $p['width'] = $board['width'] - $icons['size'] * 2 - 6;
+        $p['height'] = intval($imginfo[1]/$p['vars']);
+        $p['up']  = "[ <b>Original Size</b> {$imginfo[0]} * {$imginfo[1]} ]<br>\n";
+        $p['up'] .= "<a href=javascript:new_windows(\"{$uplink_file}\",\"photo\",0,0,{$imginfo[0]},{$imginfo[1]})>".
+                  "<img src=\"{$wupload_file}\" width=\"{$p['width']}\" height=\"{$p['height']}\" border=\"0\"></a>\n<p>\n";
       } else {
-        $p[up] = "<img src=\"$wupload_file\" $imginfo[2]>\n<p>\n";
+        $p['up'] = "<img src=\"{$wupload_file}\" {$imginfo[2]}>\n<p>\n";
       }
-    } else if (preg_match("/^(phps|txt|htm|shs)$/i",$tail)) {
-      $view = file_operate($upload_file,"r",0,1200);
+    } else if (preg_match('/^(phps|txt|htm|shs)$/i',$tail)) {
+      $view = file_operate($upload_file,'r',0,1200);
       $view = htmlspecialchars(cut_string($view,1000));
-      if (filesize($upload_file) > 1000) $view = $view . " <p>\n ......$langs[preview]\n\n";
+      if (filesize($upload_file) > 1000) $view = $view . " <p>\n ......{$langs['preview']}\n\n";
 
       $p[down] = "$source1$view$source2";
-    } elseif (preg_match("/^(mid|wav|mp3)$/i",$tail)) {
-      if($tail == "mp3" && $agent[br] == "MOZL")
-        $p[up] = "[ MP3 file은 IE에서만 들으실수 있습니다. ]";
+    } elseif (preg_match('/^(mid|wav|mp3)$/i',$tail)) {
+      if($tail == 'mp3' && $agent['br'] == 'MOZL')
+        $p['up'] = '[ MP3 file은 IE에서만 들으실수 있습니다. ]';
       elseif($agent[br] == "LYNX")
-        $p[bo] = "";
+        $p['bo'] = '';
       else
-        $p[bo] = "<embed src=$upload_file autostart=true hidden=true mastersound>";
-    } elseif (preg_match("/^(mpeg|mpg|asf|dat|avi)$/i",$tail)) {
-      if($agent[br] == "MSIE") $p[up] = "<embed src=$upload_file autostart=true>";
-    } elseif ($tail == "mov" && $agent[br] == "MSIE") {
-      $p[up] = "<embed src=$upload_file autostart=true width=300 height=300 align=center>";
-    } elseif ($tail == "swf") {
-      $flash_size = $board[width] - 10;
-      if(preg_match("/^(MSIE|MOZL6)$/i",$agent[br])) $p[up] = "<embed src=$upload_file width=$flash_size height=$flash_size align=center>";
+        $p['bo'] = "<embed src=\"{$upload_file}\" autostart=\"true\" hidden=\"true\" mastersound>";
+    } elseif (preg_match('/^(mpeg|mpg|asf|dat|avi)$/i',$tail)) {
+      if($agent['br'] == 'MSIE') $p['up'] = "<embed src=\"{$upload_file}\" autostart=\"true\">";
+    } elseif ($tail == 'mov' && $agent['br'] == 'MSIE') {
+      $p['up'] = "<embed src=\"{$upload_file}\" autostart=\"true\" width=\"300\" height=\"300\" align=\"center\">";
+    } elseif ($tail == 'swf') {
+      $flash_size = $board['width'] - 10;
+	  if(preg_match('/^(MSIE|MOZL6)$/i',$agent['br']))
+        $p['up'] = "<embed src=\"{$upload_file}\" width=\"{$flash_size}\" height=\"{$flash_size}\" align=\"center\">";
     }
-  } else $p[down] = "$source1$source3$source2";
+  } else $p['down'] = "$source1$source3$source2";
 
   return $p;
 }
@@ -456,8 +457,8 @@ function file_operate($p,$m,$msg='',$s='',$t=0) {
 function get_html_src($url,$size=5000,$file="",$type="") {
   if(!$type) {
     $p = @fsockopen($url,80,$errno,$errstr);
-    fputs($p,"GET /$file HTTP/1.1\r\nhost: $url\r\n\r\n");
-  } else $p = @fopen("http://$url/$file","rb");
+    fputs($p,"GET /{$file} HTTP/1.1\r\nhost: {$url}\r\n\r\n");
+  } else $p = @fopen("http://{$url}/{$file}",'rb');
   $f = fread($p,$size);
   fclose($p);
 
@@ -470,20 +471,20 @@ function get_html_src($url,$size=5000,$file="",$type="") {
 # upload 관련 변수들을 조정
 #
 function get_upload_value($up) {
-  if($up[yesno] == "yes") {
-    if($up[maxtime]) set_time_limit($up[maxtime]);
+  if($up['yesno'] == 'yes') {
+    if($up['maxtime']) set_time_limit($up['maxtime']);
     # JSBoard 에서 조정할 수 있는 업로드 최대 사이즈
     # 최대값은 POST 데이타를 위해 post_max_size 보다 1M 를 작게 잡는다.
     $max = ini_get(post_max_size);
-    if(preg_match("/M$/i",$max)) {
-      $max = (preg_replace("/M$/i","",$max) - 1) * 1024 * 1024;
-    } elseif (preg_match("/K$/i",$max)) {
-      $max = (preg_replace("/K$/i","",$max) - 1) * 1024;
+    if(preg_match('/M$/i',$max)) {
+      $max = (preg_replace('/M$/i','',$max) - 1) * 1024 * 1024;
+    } elseif (preg_match('/K$/i',$max)) {
+      $max = (preg_replace('/K$/i','',$max) - 1) * 1024;
     } else {
       $max -= 1024;
     }
     ini_set(upload_max_filesize,$max);
-    $size = ($up[maxsize] > $max) ? $max : $up[maxsize];
+    $size = ($up['maxsize'] > $max) ? $max : $up['maxsize'];
 
     return $size;
   } else return 0;
@@ -494,7 +495,7 @@ function get_upload_value($up) {
 function get_spam_value($v) {
   global $HTTP_COOKIE_VARS;
   $chk = explode(":",$v);
-  $ran = preg_replace("/[^1-9]/i","",$HTTP_COOKIE_VARS[PHPSESSID]);
+  $ran = preg_replace("/[^1-9]/i","",$HTTP_COOKIE_VARS['PHPSESSID']);
   $ran = ($ran > 99999) ? substr($ran,0,5) : $ran;
   $ret = $chk[0] * $ran - ($chk[1] * $chk[2]);
 
