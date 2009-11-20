@@ -1,15 +1,17 @@
 <?php
+# $Id: uadmin.php,v 1.11 2009-11-20 14:03:59 oops Exp $
 session_start();
 if(!session_is_registered("login")) session_destroy();
 $path[type] = "user_admin";
 
-include "../../include/print.ph";
+include_once '../../include/variable.ph';
+include_once "../../include/print.ph";
 # register_globals 옵션의 영향을 받지 않기 위한 함수
 parse_query_str();
 
-include "../../include/error.ph";
-include "../../include/get.ph";
-include "../include/check.ph";
+include_once "../../include/error.ph";
+include_once "../../include/get.ph";
+include_once "../include/check.ph";
 
 # table 이름을 체크한다.
 table_name_check($table);

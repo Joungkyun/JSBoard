@@ -1,7 +1,8 @@
 <?php
-# $Id: session.php,v 1.9 2009-11-19 17:41:44 oops Exp $
+# $Id: session.php,v 1.10 2009-11-20 14:03:59 oops Exp $
 session_start();
 $path['type'] = 'admin';
+include '../include/variable.ph';
 include '../include/print.ph';
 include '../include/lang.ph';
 # register_globals 옵션의 영향을 받지 않기 위한 함수
