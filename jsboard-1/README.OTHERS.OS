@@ -1,4 +1,5 @@
 $ Redhat, Debian, FreeBSD, Windog 2K or NT 이외의 OS에서의 설치
+$Id: README.OTHERS.OS,v 1.3 2009-11-20 13:56:38 oops Exp $
 
 Do It Yourself!!!!! ^.^
 

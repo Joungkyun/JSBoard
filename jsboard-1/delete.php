@@ -1,4 +1,5 @@
 <?
+# $Id: delete.php,v 1.9 2009-11-20 13:56:38 oops Exp $
 include "include/header.ph";
 include "./admin/include/config.ph";
 include "html/head.ph";
@@ -12,38 +13,38 @@ $list = get_article($table, $no);
 
 $size = form_size(4);
 if(!$adminsession || $cenable[delete]) {
-  $warning = "$langs[d_wa]";
+  $warning = $langs[d_wa];
   # 패스워드가 없는 게시물일  경우 관리자 인증을 거침
   if(!$list[passwd] || $list[reyn] || !$enable[delete] || !$cenable[delete]) {
     if (!$enable[delete]) { 
-      $adm = "sadmin";
-      $warning = "$langs[d_waw]";
+      $adm = 'sadmin';
+      $warning = $langs[d_waw];
     } else if (($enable[delete] && !$cenable[delete]) || $list[reyn] || !$list[passwd]) {
-      $adm = "admin";
-      $warning = "$langs[d_waa]";
+      $adm = 'admin';
+      $warning = $langs[d_waa];
     }
   }
 
   if(!$adminsession) {
-    $langs[w_pass] = "$langs[w_pass]: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" ".
+    $langs[w_pass] = "{$langs[w_pass]}: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" ".
                      "MAXLENGTH=\"8\" STYLE=\"font: 10px tahoma\">&nbsp;";
-  } else $langs[w_pass] = "";
+  } else $langs[w_pass] = '';
 } else {
-  $warning = "&nbsp;";
-  $langs[w_pass] = "";
+  $warning = '&nbsp;';
+  $langs[w_pass] = '';
 }
 
 # 워드랩이 설정이 안되어 있을 경우 기본값을 지정
-$board[wwrap] = "" ? 120 : $board[wwrap];
+$board['wwrap'] = ! $board['wwrap'] ? 120 : $board['wwrap'];
 
-$list[date]  = date("Y-m-d H:i:s", $list[date]);
-$list[text]  = text_nl2br($list[text], $list[html]);
-$list[text]  = $list[html] ? $list[text] : wordwrap($list[text],$board[wwrap]);
-$list[num]   = print_reply($table, $list);
+$list['date']  = date('Y-m-d H:i:s', $list[date]);
+$list['text']  = text_nl2br($list[text], $list[html]);
+$list['text']  = $list[html] ? $list[text] : wordwrap($list[text],$board[wwrap]);
+$list['num']   = print_reply($table, $list);
 
 if($list[bofile]) {
-  $deldir  = "./data/$table/$upload[dir]/$list[bcfile]";
-  $delfile = "./data/$table/$upload[dir]/$list[bcfile]/$list[bofile]";
+  $deldir  = "./data/{$table}/{$upload[dir]}/{$list[bcfile]}";
+  $delfile = "./data/{$table}/{$upload[dir]}/{$list[bcfile]}/{$list[bofile]}";
 }
 
 # image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
@@ -52,30 +53,33 @@ if ($board[img] == "yes" && !preg_match("/%/",$board[width]))
 
 if($enable[dhost]) {
   $list[dhost] = get_hostname($enable[dlook],$list[host]);
-  if($enable[dwho]) $list[dhost] = "<a href=javascript:new_windows('./whois.php?table=$table&host=$list[host]',0,1,0,600,480)><FONT COLOR=\"$color[r2_fg]\">$list[dhost]</FONT></a>";
-  else $list[dhost] = "<FONT COLOR=\"$color[r2_fg]\">$list[dhost]</FONT>";
+  if($enable[dwho]) $list[dhost] = "<a href=javascript:new_windows('./whois.php?table={$table}&host={$list[host]}',0,1,0,600,480)><FONT COLOR=\"{$color[r2_fg]}\">{$list[dhost]}</FONT></a>";
+  else $list[dhost] = "<FONT COLOR=\"{$color[r2_fg]}\">{$list[dhost]}</FONT>";
 } else $list[dhost] = "";
 
-echo "
-<DIV ALIGN=\"$board[align]\">
-<TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"0\" BGCOLOR=\"$color[r0_bg]\"><TR><TD>
-<TABLE WIDTH=\"100%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
-<FORM METHOD=\"post\" ACTION=\"act.php\">
+echo <<<EOF
+
+<DIV ALIGN="{$board[align]}">
+<TABLE WIDTH="{$board[width]}" BORDER="0" CELLPADDING="0" CELLSPACING="0" BGCOLOR="{$color[r0_bg]}"><TR><TD>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="1" CELLPADDING="3">
+<FORM METHOD="post" ACTION="act.php">
 <TR>
-  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[d_no]</NOBR></FONT></TD>
-  <TD WIDTH=\"64%\" BGCOLOR=\"$color[r2_bg]\"><FONT COLOR=\"$color[r2_fg]\">$list[num]</FONT></TD>
-  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[date]</NOBR></FONT></TD>
-  <TD WIDTH=\"34%\" BGCOLOR=\"$color[r2_bg]\"><FONT COLOR=\"$color[r2_fg]\">$list[date]</FONT></TD>
+  <TD WIDTH="1%"  BGCOLOR="{$color[r1_bg]}" NOWRAP><FONT COLOR="{$color[r1_fg]}"><NOBR>{$langs[d_no]}</NOBR></FONT></TD>
+  <TD WIDTH="64%" BGCOLOR="{$color[r2_bg]}"><FONT COLOR="{$color[r2_fg]}">$list[num]</FONT></TD>
+  <TD WIDTH="1%"  BGCOLOR="{$color[r1_bg]}" NOWRAP><FONT COLOR="{$color[r1_fg]}"><NOBR>{$langs[date]}</NOBR></FONT></TD>
+  <TD WIDTH="34%" BGCOLOR="{$color[r2_bg]}"><FONT COLOR="{$color[r2_fg]}">$list[date]</FONT></TD>
 </TR><TR>
-  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[name]</NOBR></FONT></TD>
-  <TD WIDTH=\"64%\" BGCOLOR=\"$color[r2_bg]\"><FONT COLOR=\"$color[r2_fg]\">$list[name]</FONT></TD>
-  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[d_ad]</NOBR></FONT></TD>
-  <TD WIDTH=\"34%\" BGCOLOR=\"$color[r2_bg]\">$list[dhost]</TD>\n";
+  <TD WIDTH="1%"  BGCOLOR="{$color[r1_bg]}" NOWRAP><FONT COLOR="{$color[r1_fg]}"><NOBR>{$langs[name]}</NOBR></FONT></TD>
+  <TD WIDTH="64%" BGCOLOR="{$color[r2_bg]}"><FONT COLOR="{$color[r2_fg]}">$list[name]</FONT></TD>
+  <TD WIDTH="1%"  BGCOLOR="{$color[r1_bg]}" NOWRAP><FONT COLOR="{$color[r1_fg]}"><NOBR>{$langs[d_ad]}</NOBR></FONT></TD>
+  <TD WIDTH="34%" BGCOLOR="{$color[r2_bg]}">{$list[dhost]}</TD>
+
+EOF;
 
 if ($list[email]) {
   echo "</TR><TR>\n" .
-       "  <TD WIDTH=\"1%\" BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\"><NOBR>$langs[w_mail]</NOBR></FONT></TD>\n" .
-       "  <TD BGCOLOR=\"$color[r2_bg]\" COLSPAN=\"3\"><FONT COLOR=\"$color[r2_fg]\">$list[email]</FONT></TD>\n";
+       "  <TD WIDTH=\"1%\" BGCOLOR=\"{$color[r1_bg]}\" NOWRAP><FONT COLOR=\"{$color[r1_fg]}\"><NOBR>{$langs[w_mail]}</NOBR></FONT></TD>\n" .
+       "  <TD BGCOLOR=\"{$color[r2_bg]}\" COLSPAN=\"3\"><FONT COLOR=\"{$color[r2_fg]}\">{$list[email]}</FONT></TD>\n";
 }
 
 if ($list[url]) {

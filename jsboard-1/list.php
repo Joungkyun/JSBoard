@@ -1,4 +1,5 @@
 <?
+# $Id: list.php,v 1.7 2009-11-20 13:56:38 oops Exp $
 include "include/header.ph";
 include "html/head.ph";
 

@@ -1,5 +1,5 @@
 <?
-# $Id: read.php,v 1.7 2009-11-20 13:45:48 oops Exp $
+# $Id: read.php,v 1.8 2009-11-20 13:56:38 oops Exp $
 include 'include/header.ph';
 include 'html/head.ph';
 
@@ -18,7 +18,7 @@ $page = get_current_page($table, $list['idx']); # 글이 위치한 페이지를 가져옴
 $pos  = get_pos($table, $list['idx']); # 다음, 이전 글 번호를 가져옴
 
 # 워드랩이 설정이 안되어 있을 경우 기본값을 지정
-$board['wwrap'] = $board['wwrap'] ? 120 : $board['wwrap'];
+$board['wwrap'] = ! $board['wwrap'] ? 120 : $board['wwrap'];
 
 $list['num']  = print_reply($table, $list);
 $list['date'] = date('Y-m-d H:i:s', $list['date']);
