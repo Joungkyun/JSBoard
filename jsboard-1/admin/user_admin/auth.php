@@ -1,32 +1,34 @@
 <?php
+# $Id: auth.php,v 1.8 2009-11-20 14:03:59 oops Exp $
 session_start();
 if(!session_is_registered("login")) session_destroy();
 $path[type] = "user_admin";
 
-include "../../include/print.ph";
+include_once '../../include/variable.ph';
+include_once '../../include/print.ph';
 # register_globals 옵션의 영향을 받지 않기 위한 함수
 if(!$parse_query_str_check) parse_query_str();
 
-include "../../include/error.ph";
-include "../include/check.ph";
-include "../../include/get.ph";
+include_once '../../include/error.ph';
+include_once '../include/check.ph';
+include_once '../../include/get.ph';
 
 # table 이름을 체크한다.
 table_name_check($table);
 
-include "../../config/global.ph";
-if(@file_exists("../../data/$table/config.ph"))
-  { include "../../data/$table/config.ph"; }
+include '../../config/global.ph';
+if(@file_exists("../../data/{$table}/config.ph"))
+  { include "../../data/{$table}/config.ph"; }
 
 if($color[theme]) {
-  include "../../config/default.themes";
-  if(@file_exists("../../data/$table/default.themes"))
-    { include "../../data/$table/default.themes"; }
+  include '../../config/default.themes';
+  if(@file_exists("../../data/{$table}/default.themes"))
+    { include "../../data/{$table}/default.themes"; }
 }
-include "../include/config.ph";
+include '../include/config.ph';
 
-include "../../include/lang.ph";
-include "../include/get.ph";
+include '../../include/lang.ph';
+include '../include/get.ph';
 
 $agent = get_agent();
 

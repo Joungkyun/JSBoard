@@ -3,6 +3,7 @@
 session_start();
 if(!session_is_registered("login")) session_destroy();
 
+include_once '../include/variable.ph';
 include_once "../include/print.ph";
 # register_globals 옵션의 영향을 받지 않기 위한 함수
 if(!$parse_query_str_check) parse_query_str();
