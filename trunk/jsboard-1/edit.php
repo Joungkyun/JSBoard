@@ -1,4 +1,5 @@
 <?
+# Id: $
 include "include/header.ph";
 include "./admin/include/config.ph";
 include "html/head.ph";

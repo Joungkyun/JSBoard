@@ -1,4 +1,5 @@
 <?
+# $Id: write.php,v 1.13 2009-11-20 13:56:38 oops Exp $
 session_cache_limiter('nocache, must-revalidate');
 session_start();
 if(!session_is_registered("login")) session_destroy();
