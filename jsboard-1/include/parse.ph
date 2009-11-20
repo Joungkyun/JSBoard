@@ -1,5 +1,5 @@
 <?php
-# $Id: parse.ph,v 1.28 2009-11-19 20:28:20 oops Exp $
+# $Id: parse.ph,v 1.29 2009-11-20 12:25:12 oops Exp $
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
   if (!$html) $text = preg_replace("/&amp;(#|amp)/i","&\\1",$text);
@@ -211,7 +211,7 @@ function text_nl2br($text, $html) {
     else $text = chop(str_replace("<--no-autolink>","",$text));
 
     $text = preg_replace("/[\n]?<table/i","</PRE><TABLE",$text);
-    $text = preg_replace("/</table>[\n]?/i","</TABLE><PRE>",$text);
+    $text = preg_replace("/<\/table>[\n]?/i","</TABLE><PRE>",$text);
     $text = !$text ? "No Contents" : $text;
     $text = "<PRE>$text</PRE>";
   } else {
