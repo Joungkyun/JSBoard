@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!-- $Id: write.template,v 1.33 2009-11-19 05:29:51 oops Exp $ -->
+<!-- ==================================================================== -->
+<!-- $langs['charset'] : print charset code                               -->
+<!-- $board['ver']     : version information in webboard                  -->
+<!-- get_title()     : print header title in webbared                     -->
+<!-- $user_stylesheet : User Defined StyleSheet                           -->
+<!-- ==================================================================== -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+BODY,TD {
+  font-size: 12px;
+  font-family: tahoma, sans-serif;
+  color: #555555;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font: 11px tahoma,sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #FFFFFF;
+  margin: 1px 1px;
+}
+SELECT {
+  font: 11px tahoma,sans-serif;
+  color: #555555;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  background-Color: #FFFFFF;
+}
+TEXTAREA {
+  font: 13px tahoma,sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  background-Color: #ffffff;
+  width: 100%;
+  height: 150px;
+}
+
+.resizable-textarea .grippie {
+  height: 14px;
+  background: #ECE9D6 url(theme/EN-default/img/grippie.png) no-repeat 100% 100%;
+  border: 1px solid #DFDBCA;
+  border-top-width: 0;
+  cursor: se-resize;
+}
+
+.resizable-textarea {
+  width: 100% !important;
+  width: 98%; /* for IE */
+}
+form { display: inline; }
+
+<?=$user_stylesheet?>
+-->
+</style>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<!-- ======================= Start Header Design ======================= -->
+<?
+print_keymenu(3);
+echo $print['preview_script'] . "\n";
+
+if(!$np) {
+  # Design per user
+  include "{$board['headpath']}";
+  # Input by whole admin
+  include "html/head.php";
+}
+?>
+<!-- ======================= End Header Design   ======================= -->
+
+
+<!-- ==================================================================== -->
+<!-- $board['align'] : print align of webboard. It's config in board admin-->
+<!-- $board['width'] : print width of webboard. It's config in board admin-->
+<!-- $board['formtype'] : print form option to use upload image           -->
+<!-- ==================================================================== -->
+<DIV ALIGN="<?=$board['align']?>">
+<FORM NAME="writep" METHOD="post" ACTION="act.php"<?=$board['formtype']?>>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; <B>Write</B> new article</FONT></TD>
+</TR>
+
+<TR BGCOLOR="#FFAE00">
+<TD COLSPAN=2>
+<IMG SRC="./theme/EN-default/img/board_no.gif" ALIGN="middle" ALT=''>
+<FONT STYLE="color:#FFFFFF"><IMG SRC="theme/EN-default/img/write_title.gif" BORDER=0 ALT=''></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=10><IMG SRC="images/blank.gif" WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD COLSPAN=4><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+
+<!-- ==================================================================== -->
+<!-- $size['name']         : print size of input of name filed            -->
+<!-- $pre_regist['name']   : print name of registed cookie                -->
+<!-- ==================================================================== -->
+<TR>
+<TD WIDTH=80><B>Name</B></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?> tabindex="1"></TD>
+</TR>
+
+<!-- ==================================================================== -->
+<!-- $view['email']          : print email field                          -->
+<!-- $pre_regist['email']    : print email of registed cookie             -->
+<!-- ==================================================================== -->
+<?
+if($view['email']) {
+  echo <<<EOF
+
+<TR>
+<TD><B>Email</B></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable tabindex="2"></TD>
+</TR>
+EOF;
+}
+?>
+
+<!-- ==================================================================== -->
+<!-- $view['url']             : print url field                           -->
+<!-- $pre_regist['url']       : print homepage of registed cookie         -->
+<!-- ==================================================================== -->
+<?
+if($view['url']) {
+  echo <<<EOF
+
+<TR>
+<TD><B>Homepage</B></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable tabindex="3"></TD>
+</TR>
+EOF;
+}
+?>
+
+<!-- ==================================================================== -->
+<!-- print upload field                                                   -->
+<!-- ==================================================================== -->
+<?
+if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
+  echo <<<EOF
+<TR>
+<TD><B>File</B></TD>
+<TD COLSPAN=3>
+<INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
+<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256 tabindex="4">
+</TD>
+</TR>
+EOF;
+} elseif(!$upload['yesno'] && $cupload['yesno']) {
+  echo <<<EOF
+<TR>
+<TD><B>File</B></TD>
+<TD COLSPAN=3><FONT STYLE="color:red;font-weight:bold">{$langs['upload']}<FONT></TD>
+</TR>
+EOF;
+}
+?>
+
+<!-- ==================================================================== -->
+<!-- $size['titl']  : size of title input form                            -->
+<!-- ==================================================================== -->
+<TR>
+<TD><B>Subject</B></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 tabindex="5"></TD>
+</TR>
+
+<TR>
+<!-- ==================================================================== -->
+<!-- if login admin, don't need password                                  -->
+<!-- if IE and NS6 case, print textarea size operation button             -->
+<!-- ==================================================================== -->
+<?
+if((!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1) {
+  echo <<<EOF
+<TD VALIGN="top"><B>Password</B></TD>
+<TD VALIGN="top"{$pcaptcharcolspan}>
+<INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16 tabindex="6">
+{$pcaptcha}
+</TD>
+EOF;
+}
+?>
+</TR>
+
+<TR>
+<TD COLSPAN=4><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?=$color['l5_bg']?>" ALIGN="CENTER">
+
+<!-- ==================================================================== -->
+<!-- $size['text'] : print size of textarea                               -->
+<!-- ==================================================================== -->
+<!-- =============================== Contents =============================== -->
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<TEXTAREA NAME="wpost" CLASS="resizable" tabindex="7"></TEXTAREA>
+<!-- =============================== Contents =============================== -->
+
+</TD></TR>
+</TABLE>
+
+
+<!-- ==================================================================== -->
+<!-- $table.$pages      : print link option to back list                  -->
+<!-- $print['passform']  : hidden value for regist article                -->
+<!-- $orig_option      : back to original size of textarea                -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
+<?=$print['passform']?>
+<INPUT TYPE="submit" VALUE="Regist" tabindex="8">
+<INPUT TYPE="button" VALUE="Reset" onClick="document.location.reload(); return false;" tabindex="9">
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List" tabindex="10">
+<INPUT TYPE="button" onClick="history.back()" VALUE="Back" tabindex="11">
+</TD></TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- print_license()  : Printed Licese table                              -->
+<!-- ==================================================================== -->
+<?=print_license()?>
+
+</FORM>
+<?=print_spam_trap()?>
+</DIV>
+
+<!-- ======================= 꼬리 디자인 시작 ======================= -->
+<?
+if(!$np) {
+  # Input by whole admin
+  include "html/tail.php";
+  # Design per user
+  include "{$board['tailpath']}";
+}
+?>
+<!-- ======================= 꼬리 디자인 끝   ======================= -->
+</BODY>
+</HTML>
