@@ -3,10 +3,14 @@
 ** Maintainer  : Jang Hyun Sung <http://orzz.org>
 ** Development : JoungKyun.Kim <http://oops.org>
 **
-** $Id: Changelog,v 1.58 2009-11-16 21:52:47 oops Exp $
+** $Id: Changelog,v 1.59 2009-11-21 16:58:29 oops Exp $
 
 -------------------------------------------------------------------------------
 Version 2.1.0
+
+Sun, Nov, 22 2009
+by JoungKyun.Kim
+	- fixed missing captcha on board mode 6
 
 Tue, Nov, 17 2009
 by JoungKyun.Kim

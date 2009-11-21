@@ -1,5 +1,5 @@
 <?
-# $Id: captchacommon.php,v 1.4 2009-11-19 05:29:50 oops Exp $
+# $Id: captchacommon.php,v 1.5 2009-11-21 17:00:53 oops Exp $
 
 if ( $board['captcha'] ) {
 	require_once 'captcha/captcha.php';
@@ -19,7 +19,7 @@ if ( $board['captcha'] ) {
 	if ( preg_match ('/reply\.php$/', $_SERVER['PHP_SELF']) )
 		$pattern = '/^[25-7]$/';
 	else
-		$pattern = '/^[24-7]$/';
+		$pattern = '/^[2457]$/';
 
 	if ( preg_match ($pattern, $board['mode']) ) {
 		$pcaptcharcolspan = ' colspan=3';

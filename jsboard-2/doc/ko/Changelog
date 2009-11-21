@@ -11,16 +11,25 @@ Any one who wants install this package on any other platform must revise
 it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
-$Id: Changelog,v 1.297 2009-11-19 05:29:50 oops Exp $
+$Id: Changelog,v 1.298 2009-11-21 17:00:53 oops Exp $
 
 ******************************************************************************
 
 
 
 -----------------------------------------------------------------------------
+버전   : jsboard 2.0.16
+
+2009.11.22
+  by 김정균
+	- 게시판 모드 6에서 captcha 작동하지 않는 문제 수정
+
+
+-----------------------------------------------------------------------------
 버전   : jsboard 2.0.15
 
 2009.11.19
+  by 김정균
 	- release 2.0.15
 
 2009.11.17
