@@ -1,5 +1,5 @@
 <?php
-# $Id: version.php,v 1.17 2009-11-19 05:29:51 oops Exp $
-$board['ver'] = "2.0.15";
+# $Id: version.php,v 1.18 2009-11-21 16:59:07 oops Exp $
+$board['ver'] = "2.0.16-dev";
 $theme['ver'] = "A9"
 ?>
