@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.75 2009-11-19 05:29:49 oops Exp $
+# $Id: act.php,v 1.76 2009-11-21 17:00:53 oops Exp $
 include_once 'include/variable.php';
 include_once "include/print.php";
 # GET/POST 변수를 제어
@@ -33,7 +33,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if ( $board['super'] || $board['adm'] )
       return;
 
-    $pattern = ( $o['at'] == 'reply' ) ? '/^[25-7]/' : '/^[24-7]/';
+    $pattern = ( $o['at'] == 'reply' ) ? '/^[25-7]/' : '/^[2457]/';
     if ( preg_match ($pattern, $board['mode']) )
       return;
 
