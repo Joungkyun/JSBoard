@@ -26,7 +26,7 @@
 <!-- ==================================================================== -->
 <!-- $list['title']  : 게시판 글 제목                                     -->
 <!-- ==================================================================== -->
-<? $list['title'] = preg_replace ("/<br>\n/i", "\\0<img src=\"{$board['path']}images/blank.gif\" width=40 height=1 alt=\"\">", $list['title']); ?>
+<? $list['title'] = preg_replace ("/<br>\n/i", "\\0<img src=\"images/blank.gif\" width=40 height=1 alt=\"\">", $list['title']); ?>
 <tr bgcolor="#a0dc10">
 <td colspan=3>
 <img src="./theme/KO-default/img/board_no.gif" align="middle" alt="TITLE: ">

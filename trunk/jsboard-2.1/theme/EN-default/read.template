@@ -26,7 +26,7 @@
 <!-- ==================================================================== -->
 <!-- $list['title']  : Subject of article                                 -->
 <!-- ==================================================================== -->
-<? $list['title'] = preg_replace ("/<br>\n/i", "\\0<img src=\"{$board['path']}images/blank.gif\" width=40 height=1 alt=\"\">", $list['title']); ?>
+<? $list['title'] = preg_replace ("/<br>\n/i", "\\0<img src=\"images/blank.gif\" width=40 height=1 alt=\"\">", $list['title']); ?>
 <tr bgcolor="#a0dc10">
 <td colspan=2>
 <img src="./theme/EN-default/img/board_no.gif" align="middle" alt="TITLE: ">
