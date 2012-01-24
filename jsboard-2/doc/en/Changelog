@@ -11,12 +11,15 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.281 2009-11-21 17:00:53 oops Exp $
+$Id: Changelog,v 1.282 2012-01-24 16:33:09 oops Exp $
 
 
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.16
 
+Wed, Jan, 25 2012
+by JoungKyun.Kim
+	- fixed object type check problem about URL parameter check
 
 Sun, Nov, 22 2009
 by JoungKyun.Kim

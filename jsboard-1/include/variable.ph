@@ -1,5 +1,5 @@
 <?php
-# $Id: variable.ph,v 1.1 2009-11-19 20:18:17 oops Exp $
+# $Id: variable.ph,v 1.2 2012-01-24 16:30:08 oops Exp $
 
 $jsvari = (object) array (
   'atc'     => (object) array (
@@ -48,6 +48,12 @@ function confirm_variable ($key, $value) {
   if (is_array($value)) {
     foreach ($value as $k => $v) {
       if (!isset($jsvari->$key->$k)) continue;
+
+      if (!is_string ($jsvari->$key->$k)) {
+        fatal_error ('You send invalid parameter');
+        exit;
+      }
+
       if (preg_match($jsvari->$key->$k,$v)) {
         $msg = sprintf('You can not access with %s[%s]=%s', $key, $k, $v);
         fatal_error($msg);
@@ -55,6 +61,11 @@ function confirm_variable ($key, $value) {
       }
     }
     return;
+  }
+
+  if (!is_string ($jsvari->$key)) {
+    fatal_error ('You send invalid parameter');
+    exit;
   }
 
   if (preg_match($jsvari->$key,$value)) {
