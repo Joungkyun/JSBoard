@@ -1,5 +1,5 @@
 <?php
-# $Id: print.php,v 1.38 2009-11-19 12:00:38 oops Exp $
+# $Id: print.php,v 1.39 2012-10-02 17:33:05 oops Exp $
 #
 # Wrapper function
 #
@@ -7,7 +7,7 @@ function js_wrapper ($func, $var1 = '', $var2 = '') {
   switch ($func) {
     case 'php_info' :
     case 'php_uname' :
-    case 'php_version' :
+    case 'phpversion' :
       if ( $var1 )
         $function_complete = "{$func} (\"{$var1}\")";
       else
