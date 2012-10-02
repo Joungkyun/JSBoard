@@ -3,12 +3,16 @@
 ** Maintainer : 장현성 <http://orzz.org>
 ** Developer  : 김정균 <http://oops.org>
 **
-** $Id: Changelog,v 1.60 2012-01-24 16:22:18 oops Exp $
+** $Id: Changelog,v 1.61 2012-10-02 17:44:16 oops Exp $
 
 
 -------------------------------------------------------------------------------
 버전 2.1.0
 
+2012.10.03
+by 김정균
+	- [#301263] windows 5.3 이전 버전에서 checkdnsrr 함수 지원하지 못하는
+	  문제 해결
 2012.01.25
 by 김정균
 	- variable.php에서 URL parameter 체크시에 object parameter 공격 가능성

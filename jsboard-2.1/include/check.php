@@ -1,5 +1,5 @@
 <?php
-# $Id: check.php,v 1.14 2009-11-16 21:52:47 oops Exp $
+# $Id: check.php,v 1.15 2012-10-02 17:44:17 oops Exp $
 
 # table 이름에 meta character 가 포함되어 있는지 검사하는 함수
 # $name -> 변수값
@@ -79,8 +79,13 @@ function check_email($email,$hchk=0) {
   if($hchk) {
     $host = explode("@",$url);
     if(preg_match("/^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$/i", $url)) {
-      if(checkdnsrr($host[1],"MX") || gethostbynamel($host[1])) return $url;
-      else return;
+      if(!check_windows() || version_compare('5.3.0',phpversion(),'>=') {
+        if(checkdnsrr($host[1],"MX") || gethostbynamel($host[1])) return $url;
+        else return;
+      } else {
+        if(gethostbynamel($host[1])) return $url;
+        else return;
+      }
     }
   } else {
     if(preg_match("/^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$/i", $url)) return $url;
