@@ -11,11 +11,15 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.282 2012-01-24 16:33:09 oops Exp $
+$Id: Changelog,v 1.283 2012-10-02 17:35:37 oops Exp $
 
 
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.16
+
+Wed, Oct,  3 2012
+by JoungKyun.Kim
+	- fixed wrong function name php_version to phpversion
 
 Wed, Jan, 25 2012
 by JoungKyun.Kim

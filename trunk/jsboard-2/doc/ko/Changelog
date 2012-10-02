@@ -11,7 +11,7 @@ Any one who wants install this package on any other platform must revise
 it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
-$Id: Changelog,v 1.299 2012-01-24 16:33:10 oops Exp $
+$Id: Changelog,v 1.300 2012-10-02 17:35:37 oops Exp $
 
 ******************************************************************************
 
@@ -20,9 +20,13 @@ $Id: Changelog,v 1.299 2012-01-24 16:33:10 oops Exp $
 -----------------------------------------------------------------------------
 버전   : jsboard 2.0.16
 
+2012.10.03
+  by 김정균
+	- phpversion 함수 오타 수정
+
 2012.01.25
   by 김정균
-  	- URL 파라미터 검사시에 object type 체크 문제 수정
+	- URL 파라미터 검사시에 object type 체크 문제 수정
 
 2009.11.22
   by 김정균
