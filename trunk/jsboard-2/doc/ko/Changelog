@@ -11,7 +11,7 @@ Any one who wants install this package on any other platform must revise
 it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
-$Id: Changelog,v 1.300 2012-10-02 17:35:37 oops Exp $
+$Id: Changelog,v 1.301 2012-10-02 17:40:12 oops Exp $
 
 ******************************************************************************
 
@@ -23,6 +23,7 @@ $Id: Changelog,v 1.300 2012-10-02 17:35:37 oops Exp $
 2012.10.03
   by 김정균
 	- phpversion 함수 오타 수정
+	- [#301263] windows 5.3 이전 버전에서 checkdnsrr 지원하지 않는 문제 해결
 
 2012.01.25
   by 김정균

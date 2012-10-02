@@ -3,10 +3,14 @@
 ** Maintainer  : Jang Hyun Sung <http://orzz.org>
 ** Development : JoungKyun.Kim <http://oops.org>
 **
-** $Id: Changelog,v 1.60 2012-01-24 16:22:17 oops Exp $
+** $Id: Changelog,v 1.61 2012-10-02 17:44:14 oops Exp $
 
 -------------------------------------------------------------------------------
 Version 2.1.0
+
+Wed, Oct,  3 2012
+by JoungKyun.Kim
+	- [#301263] fixed unsupport checkdnsrr function before 5.3 on windows
 
 Wed, Jan, 25 2012
 by JoungKyun.Kim
