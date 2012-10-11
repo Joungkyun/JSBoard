@@ -3,7 +3,7 @@
 ** Maintainer : 장현성 <http://orzz.org>
 ** Developer  : 김정균 <http://oops.org>
 **
-** $Id: Changelog,v 1.61 2012-10-02 17:44:16 oops Exp $
+** $Id: Changelog,v 1.62 2012-10-11 16:25:39 oops Exp $
 
 
 -------------------------------------------------------------------------------
@@ -11,8 +11,13 @@
 
 2012.10.03
 by 김정균
+	- [#318316] captcha image 출력 잘못 되는 현상 수정
+
+2012.10.03
+by 김정균
 	- [#301263] windows 5.3 이전 버전에서 checkdnsrr 함수 지원하지 못하는
 	  문제 해결
+
 2012.01.25
 by 김정균
 	- variable.php에서 URL parameter 체크시에 object parameter 공격 가능성

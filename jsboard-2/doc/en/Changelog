@@ -11,11 +11,15 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.284 2012-10-02 17:40:11 oops Exp $
+$Id: Changelog,v 1.285 2012-10-11 16:22:56 oops Exp $
 
 
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.16
+
+Fri, Oct, 12 2012
+by JoungKyun.Kim
+	- [#318316] fixed load captcha image with wrong data
 
 Wed, Oct,  3 2012
 by JoungKyun.Kim
