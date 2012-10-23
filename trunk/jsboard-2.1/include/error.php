@@ -1,5 +1,5 @@
 <?php
-# $Id: error.php,v 1.2 2009-11-16 21:52:47 oops Exp $
+# $Id: error.php,v 1.3 2012-10-23 16:29:03 oops Exp $
 
 function print_error($str,$width=250,$height=150,$back='') {
   global $table, $path, $prlist, $agent, ${$jsboard};
@@ -12,8 +12,8 @@ function print_error($str,$width=250,$height=150,$back='') {
 
   if(preg_match("/^(WIN|NT)$/i",$agent['os'])) {
     $str = wordwrap($str,40);
-    $str = preg_replace("/\n/","\\n",$str);
-    $str = preg_replace("/('|#|\))/","\\\\1",$str);
+    $str = preg_replace("/\r?\n/",'\\n',$str);
+    $str = preg_replace("/('|#|\))/","\\\\\\1",$str);
     echo "alert('$str');\n";
   } else {
     $str = str_replace("\n","<br>",$str);
