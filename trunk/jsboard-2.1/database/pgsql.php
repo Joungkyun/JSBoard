@@ -1,7 +1,7 @@
 <?php
 #
 # PosgreSQL Basic mapping function
-# $Id: pgsql.php,v 1.2 2009-11-16 21:52:46 oops Exp $
+# $Id: pgsql.php,v 1.3 2012-10-23 16:12:03 oops Exp $
 #
 
 $_extname = 'pgsql';
@@ -117,6 +117,26 @@ function sql_close ($p) {
   if ( is_resource ($p) ) {
     pg_close ($p);
   }
+}
+
+function sql_escase ($c, &$v) {
+  if ( function_exists ('get_magic_quotes_gpc') && get_magic_quotes_gpc() )
+    return;
+
+  $func = ( function_exists ('pg_escape_literal' ) ?
+          'pg_escape_literal' : 'pg_escape_string';
+
+  if ( is_array ($v) ) {
+    foreach ($v as $key => $val) {
+      if ( ! is_numeric ($val) )
+        $v[$key] = $func ($c, $val);
+    }
+
+    return;
+  }
+
+  if ( ! is_numeric ($v) )
+    $v = $func ($c, $v);
 }
 
 function sql_error ($error) {
