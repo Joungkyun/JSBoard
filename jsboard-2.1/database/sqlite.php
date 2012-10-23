@@ -1,7 +1,7 @@
 <?php
 #
 # SQLite Basic mapping function
-# $Id: sqlite.php,v 1.3 2012-10-23 16:12:03 oops Exp $
+# $Id: sqlite.php,v 1.4 2012-10-23 17:13:00 oops Exp $
 #
 
 $_extname = 'sqlite';
@@ -101,6 +101,11 @@ function sql_escase ($c, &$v) {
 
   if ( is_array ($v) ) {
     foreach ($v as $key => $val) {
+      if ( is_array ($val) ) {
+        sql_escape ($c, $v[$key]);
+        continue;
+      }
+
       if ( ! is_numeric ($val) )
         $v[$key] = sqlite_escape_string ($val);
     }

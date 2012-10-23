@@ -1,6 +1,6 @@
 <?php
 # SQL 관련 함수들에 대한 프론트 엔드 함수
-# $Id: sql.php,v 1.3 2012-10-23 16:21:48 oops Exp $
+# $Id: sql.php,v 1.4 2012-10-23 17:09:45 oops Exp $
 #
 # 비정상적인 동작에 대한 에러 출력 등에 사용됨
 # http://www.php.net/manual/ref.mysql.php
@@ -100,6 +100,11 @@ function sql_escase(&$v) {
 
   if (is_array($v)) {
     foreach ($v as $key => $val) {
+      if ( is_array ($val) ) {
+        sql_escape ($v[$key]);
+        continue;
+      }
+
       if (!is_numeric($val))
         $v[$key] = mysql_real_escape_string ($val);
     }

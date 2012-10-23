@@ -1,7 +1,7 @@
 <?php
 #
 # PosgreSQL Basic mapping function
-# $Id: pgsql.php,v 1.3 2012-10-23 16:12:03 oops Exp $
+# $Id: pgsql.php,v 1.4 2012-10-23 17:13:00 oops Exp $
 #
 
 $_extname = 'pgsql';
@@ -27,7 +27,7 @@ function sql_connect ($sock, $user, $pass, $dbname, $mode = 'w') {
 
   if ( is_resource ($r) && $db['charset'] )
     sql_query ("set client_encoding to {$db['charset']}", $r, 1);
-	//pg_set_client_encoding ($r, $db['charset']);
+    //pg_set_client_encoding ($r, $db['charset']);
 
   return $r;
 }
@@ -123,11 +123,16 @@ function sql_escase ($c, &$v) {
   if ( function_exists ('get_magic_quotes_gpc') && get_magic_quotes_gpc() )
     return;
 
-  $func = ( function_exists ('pg_escape_literal' ) ?
+  $func = ( function_exists ('pg_escape_literal') ) ?
           'pg_escape_literal' : 'pg_escape_string';
 
   if ( is_array ($v) ) {
     foreach ($v as $key => $val) {
+      if ( is_array ($val) ) {
+        sql_escape ($c, $v[$key]);
+        continue;
+      }
+
       if ( ! is_numeric ($val) )
         $v[$key] = $func ($c, $val);
     }

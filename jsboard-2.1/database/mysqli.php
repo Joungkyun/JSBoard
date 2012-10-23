@@ -1,7 +1,7 @@
 <?php
 #
 # MySQLi mapping function
-# $Id: mysqli.php,v 1.3 2012-10-23 16:12:03 oops Exp $
+# $Id: mysqli.php,v 1.4 2012-10-23 17:13:00 oops Exp $
 #
 
 $_extname = 'mysqli';
@@ -160,6 +160,11 @@ function sql_escase ($c, &$v) {
 
   if ( is_array ($v) ) {
     foreach ($v as $key => $val) {
+      if ( is_array ($val) ) {
+        sql_escape ($c, $v[$key]);
+        continue;
+      }
+
       if ( ! is_numeric ($val) )
         $v[$key] = mysqli_real_escape_string ($c, $val);
     }
