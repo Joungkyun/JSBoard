@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.23 2012-10-23 16:12:02 oops Exp $
+# $Id: act.php,v 1.24 2012-10-23 16:24:30 oops Exp $
 include_once "include/variable.php";
 include_once "include/print.php";
 # GET/POST 변수를 제어
@@ -412,7 +412,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     $sql = "INSERT INTO {$table}_comm (reno,rname,name,passwd,text,host,date) ".
            "VALUES ('{$atc['no']}','{$atc['rname']}','{$atc['name']}','{$atc['passwd']}','{$atc['text']}','$host','$dates')";
     sql_query($sql, $c);
-    $sql = "UPDATE {$table} SET comm = comm + 1 WHERE no = {$atc['no']}";
+    $sql = "UPDATE {$table} SET comm = comm + 1 WHERE no = '{$atc['no']}'";
     sql_query($sql, $c);
     set_cookie($atc,1);
   }
@@ -429,7 +429,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
 	sql_escape ($c, $table);
 
     sql_query("DELETE FROM {$table}_comm WHERE no = '$cid'", $c);
-    $sql = "UPDATE {$table} SET comm = comm - 1 WHERE no = {$no}";
+    $sql = "UPDATE {$table} SET comm = comm - 1 WHERE no = '{$no}'";
     sql_query($sql, $c);
   }
 

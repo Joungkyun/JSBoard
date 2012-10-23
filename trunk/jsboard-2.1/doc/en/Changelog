@@ -2,12 +2,13 @@
 **
 ** Maintainer : JoungKyun.Kim <http://oops.org>
 **
-** $Id: Changelog,v 1.63 2012-10-23 16:12:03 oops Exp $
+** $Id: Changelog,v 1.64 2012-10-23 16:24:30 oops Exp $
 
 -------------------------------------------------------------------------------
 Version 2.1.0
 
 Wed, Oct, 24 2012
+by JoungKyun.Kim
 	- [#318355] fixed article posting on PHP 5.4 or magic_quotes_runtime = OFF
 
 Fri, Oct, 12 2012
