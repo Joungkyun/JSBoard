@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.76 2009-11-21 17:00:53 oops Exp $
+# $Id: act.php,v 1.77 2012-10-23 16:21:47 oops Exp $
 include_once 'include/variable.php';
 include_once "include/print.php";
 # GET/POST 변수를 제어
@@ -89,6 +89,9 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       $upfile['name'] = "";
     }
 
+	sql_escape($table);
+	sql_escape($atc);
+
     $result = sql_query("SELECT MAX(num) AS num, MAX(idx) AS idx FROM $table");
     $atc['mxnum'] = sql_result($result, 0, "num") + 1; # 최고 번호
     $atc['mxidx'] = sql_result($result, 0, "idx") + 1; # 최고 인덱스 번호
@@ -169,6 +172,9 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if ( $atc['reno'] != $referer['no'] )
       print_error($langs['act_s'],250,150,1);
 
+	sql_escape($table);
+	sql_escape($atc);
+
     # 답장글에 대한 정보를 가져옴
     sql_query("LOCK TABLES $table WRITE");
     $reply = get_article($table, $atc['reno']);
@@ -238,6 +244,9 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     # 댓글에서 : 때문에 글이 밀리는 것을 복구한다.
     $atc['text'] = preg_replace("/(^[:]+ [^\r\n]+)\r?\n([^:\r\n]+\r?\n)/mi","\\1 \\2",$atc['text']);
 
+	sql_escape($table);
+	sql_escape($atc);
+
     # file 삭제 루틴
     if($atc['fdel']) {
       $fdelqy = sql_query("SELECT bcfile, bofile FROM {$table} WHERE no = '{$atc['no']}'");
@@ -296,6 +305,9 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     # 관리자 모드가 아닐 경우 댓글이 존재하면 에러메세지
     if($atc['reyn'] && ($board['super'] != 1 && !$board['adm'] && $admchk != 2))
       print_error($langs['act_c'],250,150,1);
+
+	sql_escape($table);
+	sql_escape($atc);
 
     # 부모글의 답장글이 자신 밖에 없을 때 부모글의 reyn을 초기화 (답장글 여부)
     if($atc['reno']) {
@@ -392,10 +404,13 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if(preg_replace("/\s/i","",$atc['passwd'])) $atc['passwd'] = crypt($atc['passwd']);
     if($agent['co'] == "mozilla") $atc['text'] = wordwrap($atc['text'],60,"\n",1);
 
+	sql_escape($table);
+	sql_escape($atc);
+
     $sql = "INSERT INTO {$table}_comm (no,reno,rname,name,passwd,text,host,date) ".
            "VALUES ('','{$atc['no']}','{$atc['rname']}','{$atc['name']}','{$atc['passwd']}','{$atc['text']}','$host','$dates')";
     sql_query($sql);
-    $sql = "UPDATE {$table} SET comm = comm + 1 WHERE no = {$atc['no']}";
+    $sql = "UPDATE {$table} SET comm = comm + 1 WHERE no = '{$atc['no']}'";
     sql_query($sql);
     set_cookie($atc,1);
   }
@@ -410,7 +425,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     }
 
     sql_query("DELETE FROM {$table}_comm WHERE no = '$cid'");
-    $sql = "UPDATE {$table} SET comm = comm - 1 WHERE no = {$no}";
+    $sql = "UPDATE {$table} SET comm = comm - 1 WHERE no = '{$no}'";
     sql_query($sql);
   }
 

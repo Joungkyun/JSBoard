@@ -1,6 +1,6 @@
 <?php
 # SQL 관련 함수들에 대한 프론트 엔드 함수
-# $Id: sql.php,v 1.2 2009-11-19 05:29:51 oops Exp $
+# $Id: sql.php,v 1.3 2012-10-23 16:21:48 oops Exp $
 #
 # 비정상적인 동작에 대한 에러 출력 등에 사용됨
 # http://www.php.net/manual/ref.mysql.php
@@ -92,6 +92,22 @@ function sql_free_result($result) {
   sql_error(mysql_errno(), mysql_error());
 
   return $return;
+}
+
+function sql_escase(&$v) {
+  if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc())
+    return;
+
+  if (is_array($v)) {
+    foreach ($v as $key => $val) {
+      if (!is_numeric($val))
+        $v[$key] = mysql_real_escape_string ($val);
+    }
+    return;
+  }
+
+  if (!is_numeric($v))
+    $v = mysql_real_escape_string($v);
 }
 
 # sprintf - 정형화된 문자열을 반환함
