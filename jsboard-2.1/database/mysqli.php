@@ -1,7 +1,7 @@
 <?php
 #
 # MySQLi mapping function
-# $Id: mysqli.php,v 1.2 2009-11-16 21:52:46 oops Exp $
+# $Id: mysqli.php,v 1.3 2012-10-23 16:12:03 oops Exp $
 #
 
 $_extname = 'mysqli';
@@ -152,6 +152,23 @@ function sql_fetch_row ($_r) {
 function sql_close ($p) {
   if ( is_object ($p) )
     @mysqli_close ($p);
+}
+
+function sql_escase ($c, &$v) {
+  if ( function_exists ('get_magic_quotes_gpc') && get_magic_quotes_gpc() )
+    return;
+
+  if ( is_array ($v) ) {
+    foreach ($v as $key => $val) {
+      if ( ! is_numeric ($val) )
+        $v[$key] = mysqli_real_escape_string ($c, $val);
+    }
+
+    return;
+  }
+
+  if ( ! is_numeric ($v) )
+    $v = mysqli_real_escape_string ($c, $v);
 }
 
 function sql_error ($errno, $error) {

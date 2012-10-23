@@ -1,13 +1,16 @@
 ** JSBoard 2.1 Changelog
 **
-** Maintainer : ¿Â«ˆº∫ <http://orzz.org>
-** Developer  : ±Ë¡§±’ <http://oops.org>
+** Maintainer : ±Ë¡§±’ <http://oops.org>
 **
-** $Id: Changelog,v 1.62 2012-10-11 16:25:39 oops Exp $
+** $Id: Changelog,v 1.63 2012-10-23 16:12:03 oops Exp $
 
 
 -------------------------------------------------------------------------------
 πˆ¿¸ 2.1.0
+
+2012.10.24
+by ±Ë¡§±’
+	- [#318355] PHP 5.4 π◊ magic_quotes_runtime = OFF Ω√¿« ±€µÓ∑œ πÆ¡¶ «ÿ∞·
 
 2012.10.03
 by ±Ë¡§±’

@@ -1,7 +1,7 @@
 <?php
 #
 # SQLite Basic mapping function
-# $Id: sqlite.php,v 1.2 2009-11-16 21:52:46 oops Exp $
+# $Id: sqlite.php,v 1.3 2012-10-23 16:12:03 oops Exp $
 #
 
 $_extname = 'sqlite';
@@ -93,6 +93,23 @@ function sql_free_result ($r) { }
 function sql_close ($p) {
   if ( is_resource ($p) )
     @sqlite_close ($p);
+}
+
+function sql_escase ($c, &$v) {
+  if ( function_exists ('get_magic_quotes_gpc') && get_magic_quotes_gpc() )
+    return;
+
+  if ( is_array ($v) ) {
+    foreach ($v as $key => $val) {
+      if ( ! is_numeric ($val) )
+        $v[$key] = sqlite_escape_string ($val);
+    }
+
+    return;
+  }
+
+  if ( ! is_numeric ($v) )
+    $v = sqlite_escape_string ($v);
 }
 
 function sql_error ($errno) {

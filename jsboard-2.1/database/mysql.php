@@ -1,7 +1,7 @@
 <?php
 #
 # MySQL Basic mapping function
-# $Id: mysql.php,v 1.2 2009-11-16 21:52:46 oops Exp $
+# $Id: mysql.php,v 1.3 2012-10-23 16:12:03 oops Exp $
 #
 
 $_extname = 'mysql';
@@ -128,6 +128,23 @@ function sql_fetch_array ($_r) {
 function sql_close ($p) {
   if ( is_resource ($p) )
     @mysql_close ($p);
+}
+
+function sql_escase ($c, &$v) {
+  if ( function_exists ('get_magic_quotes_gpc') && get_magic_quotes_gpc() )
+    return;
+
+  if ( is_array ($v) ) {
+    foreach ($v as $key => $val) {
+      if ( ! is_numeric ($val) )
+        $v[$key] = mysql_real_escape_string ($val, $c);
+    }
+
+    return;
+  }
+
+  if ( ! is_numeric ($v) )
+    $v = mysql_real_escape_string ($v, $c);
 }
 
 function sql_error ($errno, $error) {

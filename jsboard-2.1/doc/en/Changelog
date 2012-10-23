@@ -1,12 +1,14 @@
 ** JSBoard 2.1 Changelog
 **
-** Maintainer  : Jang Hyun Sung <http://orzz.org>
-** Development : JoungKyun.Kim <http://oops.org>
+** Maintainer : JoungKyun.Kim <http://oops.org>
 **
-** $Id: Changelog,v 1.62 2012-10-11 16:25:39 oops Exp $
+** $Id: Changelog,v 1.63 2012-10-23 16:12:03 oops Exp $
 
 -------------------------------------------------------------------------------
 Version 2.1.0
+
+Wed, Oct, 24 2012
+	- [#318355] fixed article posting on PHP 5.4 or magic_quotes_runtime = OFF
 
 Fri, Oct, 12 2012
 by JoungKyun.Kim
