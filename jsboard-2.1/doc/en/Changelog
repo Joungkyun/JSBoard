@@ -2,10 +2,14 @@
 **
 ** Maintainer : JoungKyun.Kim <http://oops.org>
 **
-** $Id: Changelog,v 1.64 2012-10-23 16:24:30 oops Exp $
+** $Id: Changelog,v 1.65 2014-01-01 09:30:38 oops Exp $
 
 -------------------------------------------------------------------------------
 Version 2.1.0
+
+Wed, Jan, 01 2013
+by JoungKyun.Kim
+	- fixed registed article with blank name, subject, context
 
 Wed, Oct, 24 2012
 by JoungKyun.Kim
