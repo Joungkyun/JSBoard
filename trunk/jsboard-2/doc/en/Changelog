@@ -11,11 +11,15 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.286 2012-10-23 16:21:47 oops Exp $
+$Id: Changelog,v 1.287 2014-01-01 09:34:23 oops Exp $
 
 
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.16
+
+Wed, Jan, 01 2013
+by JoungKyun.Kim
+	- fixed registed article with blank name, subject, context
 
 Wed, Oct, 24 2012
 by JoungKyun.Kim
