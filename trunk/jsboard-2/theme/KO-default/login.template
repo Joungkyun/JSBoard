@@ -1,18 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: login.template,v 1.21 2009-11-19 05:29:51 oops Exp $ -->
+<!-- $Id: login.template,v 1.22 2014-02-26 16:28:25 oops Exp $ -->
 <META HTTP-EQUIV="Cache-Control" CONTENT="No-Cache">
 <META HTTP-EQUIV="Pragma" CONTENT="No-Cache">
-<TITLE>JSBoard <?=$board['ver']?> Login page</TITLE>
+<TITLE>JSBoard <?php echo $board['ver']?> Login page</TITLE>
 <STYLE TYPE="text/css">
 a:link, a:visited, a:active {
   text-decoration: none;
-  color: <?=$color['text']?>;
+  color: <?php echo $color['text']?>;
 }
 a:hover {
   text-decoration: underline;
-  color: <?=$color['text']?>;
+  color: <?php echo $color['text']?>;
 }
 TD {
   font: 12px tahoma,sans-serif;
@@ -20,13 +20,13 @@ TD {
 }
 INPUT {
   font: 11px tahoma,sans-serif;
-  color: <?=$color['m_fg']?>;
+  color: <?php echo $color['m_fg']?>;
   border-width: 1;
   border-style: solid;
-  border-color: <?=$color['d_bg']?>;
+  border-color: <?php echo $color['d_bg']?>;
   padding-left: 1px;
   padding-right: 1px;
-  background-color: <?=$color['m_bg']?>;
+  background-color: <?php echo $color['m_bg']?>;
 }
 form { display: inline; }
 </STYLE>
@@ -43,7 +43,7 @@ function InputFocus() {
 //-->
 </script>
 </HEAD>
-<BODY BGCOLOR="<?=$color['b_bg']?>" onLoad="InputFocus()">
+<BODY BGCOLOR="<?php echo $color['b_bg']?>" onLoad="InputFocus()">
 
 <?
 include "html/head.php";
@@ -61,14 +61,14 @@ if($mode == "comment") {
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="height: 100%;">
 <TR><TD ALIGN="center" VALIGN="middle">
 
-<FORM NAME="auth" METHOD="POST" ACTION="<?=$actpage?>">
+<FORM NAME="auth" METHOD="POST" ACTION="<?php echo $actpage?>">
 <TABLE WIDTH="200" BORDER=0 CELLPADDING=3 CELLSPACING=0>
 <TR>
-<TD BGCOLOR="<?=$color['t_bg']?>" ALIGN="CENTER"><FONT STYLE="FONT: 14px Tahoma; COLOR:<?=$color['t_fg']?>; FONT-WEIGHT:bold"><?=$ment?></FONT></TD>
+<TD BGCOLOR="<?php echo $color['t_bg']?>" ALIGN="CENTER"><FONT STYLE="FONT: 14px Tahoma; COLOR:<?php echo $color['t_fg']?>; FONT-WEIGHT:bold"><?php echo $ment?></FONT></TD>
 </TR>
 
 <TR>
-<TD BGCOLOR="<?=$color['m_bg']?>" ALIGN="CENTER">
+<TD BGCOLOR="<?php echo $color['m_bg']?>" ALIGN="CENTER">
 <IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=4><BR>
 
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
@@ -76,7 +76,7 @@ if($mode == "comment") {
 <TR>
 <TD ALIGN="CENTER" STYLE="overflow: hidden; white-space: nowrap"><NOBR>
 Password
-<INPUT TYPE="password" NAME="lp" SIZE="<?=$size?>" tabindex="1">
+<INPUT TYPE="password" NAME="lp" SIZE="<?php echo $size?>" tabindex="1">
 <INPUT TYPE="SUBMIT" VALUE="DELETE" tabindex="2">
 </NOBR>
 <BR>
@@ -85,17 +85,17 @@ Password
 <? } else { ?>
 <TR>
 <TD ALIGN="CENTER">User</TD>
-<TD ALIGN="CENTER"><INPUT TYPE="text" NAME="lu" SIZE="<?=$size?>" tabindex="1"></TD>
+<TD ALIGN="CENTER"><INPUT TYPE="text" NAME="lu" SIZE="<?php echo $size?>" tabindex="1"></TD>
 </TR>
 
 <TR>
 <TD ALIGN="CENTER">Password</TD>
-<TD ALIGN="CENTER"><INPUT TYPE="password" NAME="lp" SIZE="<?=$size?>" tabindex="2"></TD>
+<TD ALIGN="CENTER"><INPUT TYPE="password" NAME="lp" SIZE="<?php echo $size?>" tabindex="2"></TD>
 </TR>
 
 <TR>
 <TD ALIGN="CENTER" COLSPAN=2>
-Session Reset <INPUT TYPE="BUTTON" VALUE="RESET" onClick="document.location='./session.php?m=logout<?=$opt?>'" tabindex="4">
+Session Reset <INPUT TYPE="BUTTON" VALUE="RESET" onClick="document.location='./session.php?m=logout<?php echo $opt?>'" tabindex="4">
 <INPUT TYPE="SUBMIT" VALUE="LogIn" tabindex="3">
 <BR>
 </TD>
@@ -106,18 +106,18 @@ Session Reset <INPUT TYPE="BUTTON" VALUE="RESET" onClick="document.location='./s
 <IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=4><BR>
 <INPUT TYPE="HIDDEN" NAME="m" VALUE="login">
 <? if ($mode == "comment") { ?>
-<INPUT TYPE="HIDDEN" NAME="table" VALUE="<?=$table?>">
-<INPUT TYPE="HIDDEN" NAME="atc[no]" VALUE="<?=$no?>">
-<INPUT TYPE="HIDDEN" NAME="atc[cid]" VALUE="<?=$cid?>">
+<INPUT TYPE="HIDDEN" NAME="table" VALUE="<?php echo $table?>">
+<INPUT TYPE="HIDDEN" NAME="atc[no]" VALUE="<?php echo $no?>">
+<INPUT TYPE="HIDDEN" NAME="atc[cid]" VALUE="<?php echo $cid?>">
 <INPUT TYPE="HIDDEN" NAME="o[at]" VALUE="c_del">
-<INPUT TYPE="HIDDEN" NAME="page" VALUE="<?=$page?>">
+<INPUT TYPE="HIDDEN" NAME="page" VALUE="<?php echo $page?>">
 <? } ?>
 
 </TD>
 </TR>
 </TABLE>
-<?=$hin?>
-<?=$tin?>
+<?php echo $hin?>
+<?php echo $tin?>
 </FORM>
 
 </TD></TR>

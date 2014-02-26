@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: delete.template,v 1.23 2009-11-19 05:29:51 oops Exp $ -->
+<!-- $Id: delete.template,v 1.24 2014-02-26 16:28:24 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : print charset code                               -->
 <!-- $board['ver']     : bersion information in webboard                  -->
 <!-- get_title()     : print header title in webbared                     -->
 <!-- $user_stylesheet : User Defined StyleSheet                           -->
 <!-- ==================================================================== -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
-<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
 
 <STYLE TYPE="text/css">
 <!--
@@ -55,7 +55,7 @@ SELECT {
 form { display: inline; }
 pre { font-family: tahoma, sans-serif; }
 
-<?=$user_stylesheet?>
+<?php echo $user_stylesheet?>
 -->
 </style>
 
@@ -82,12 +82,12 @@ if(!$np) {
 <!-- $board['width'] : print width of webboard. It's config in board admin-->
 <!-- $list['num']    : Number of article                                  -->
 <!-- ==================================================================== -->
-<DIV ALIGN="<?=$board['align']?>">
+<DIV ALIGN="<?php echo $board['align']?>">
 <FORM METHOD="post" ACTION="act.php">
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
-<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; <B>Delete</B> <?=$list['num']?> article</FONT></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; <B>Delete</B> <?php echo $list['num']?> article</FONT></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -97,7 +97,7 @@ if(!$np) {
 <TR BGCOLOR="#FFAE00">
 <TD COLSPAN=2>
 <IMG SRC="./theme/EN-default/img/board_no.gif" ALIGN="middle" ALT='TITLE: '>
-<FONT STYLE="color:#FFFFFF; font-weight:bold"><?=$list['title']?></FONT>
+<FONT STYLE="color:#FFFFFF; font-weight:bold"><?php echo $list['title']?></FONT>
 </TD>
 </TR>
 
@@ -115,16 +115,16 @@ if(!$np) {
 <!-- $list['attach'] : attached file                                      -->
 <!-- ==================================================================== -->
 <? if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD WIDTH=5><IMG SRC="images/blank.gif" WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD>
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
-<FONT Style="font-weight:bold">Date</FONT> <?=$list['date']?> <?=$list['dhost']?> &nbsp; &nbsp; 
-<FONT Style="font-weight:bold">Read</FONT> <?=$list['refer']?><BR>
-<FONT Style="font-weight:bold">Name</FONT> <?=$list['uname']?> &nbsp; &nbsp;
+<FONT Style="font-weight:bold">Date</FONT> <?php echo $list['date']?> <?php echo $list['dhost']?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">Read</FONT> <?php echo $list['refer']?><BR>
+<FONT Style="font-weight:bold">Name</FONT> <?php echo $list['uname']?> &nbsp; &nbsp;
 <? if($list['attach']) echo "<FONT Style=\"font-weight:bold\">File</FONT> {$list['attach']}" ?><BR>
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
 </TD>
@@ -132,7 +132,7 @@ if(!$np) {
 </TR>
 </TABLE>
 
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
 </TABLE>
 
@@ -141,15 +141,15 @@ if(!$np) {
 <!-- $list['text']    : print content of article                          -->
 <!-- $preview['down'] : print if attach file is ascii type                -->
 <!-- ==================================================================== -->
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD BGCOLOR="<?=$color['l5_bg']?>">
-<DIV style="color:<?=$color['l5_fg']?>;font-family:thoam,sans-serif">
-<?=$preview['up']?>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>">
+<DIV style="color:<?php echo $color['l5_fg']?>;font-family:thoam,sans-serif">
+<?php echo $preview['up']?>
 <!-- =============================== Content =============================== -->
-<?=$list['text']?>
+<?php echo $list['text']?>
 
 <!-- =============================== Content =============================== -->
-<?=$preview['down']?>
+<?php echo $preview['down']?>
 </DIV>
 </TD></TR>
 </TABLE>
@@ -159,14 +159,14 @@ if(!$np) {
 <!-- $table.$page      : print link option to back list                   -->
 <!-- $print['passform']  : hidden value for delete                        -->
 <!-- ==================================================================== -->
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD ALIGN="right">
-<?=$warning?>&nbsp;
-[ <A HREF="list.php?table=<?=$table.$page?>"><FONT STYLE="color:#555555">List</FONT></A> | <A HREF="javascript:history.back()"><FONT STYLE="color:#555555">Back</FONT></A> ]
+<?php echo $warning?>&nbsp;
+[ <A HREF="list.php?table=<?php echo $table.$page?>"><FONT STYLE="color:#555555">List</FONT></A> | <A HREF="javascript:history.back()"><FONT STYLE="color:#555555">Back</FONT></A> ]
 </TD></TR>
 <TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <FONT STYLE="color:#FFFFFF;font-weight:bold">
-<?=$print['passform']?>
+<?php echo $print['passform']?>
 <INPUT TYPE="submit" VALUE="Delete">&nbsp;
 <INPUT TYPE="button" onClick="history.back()" VALUE="Cancel">
 </FONT>
@@ -176,7 +176,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <!-- print_license()  : Printed Licese table                              -->
 <!-- ==================================================================== -->
-<?=print_license()?>
+<?php echo print_license()?>
 
 </FORM>
 </DIV>

@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: list.template,v 1.24 2009-11-19 05:29:51 oops Exp $ -->
+<!-- $Id: list.template,v 1.25 2014-02-26 16:28:25 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : print charset code                               -->
 <!-- $board['ver']     : version information in webboard                  -->
 <!-- get_title()     : print header title in webbared                     -->
 <!-- $user_stylesheet : User Defined StyleSheet                           -->
 <!-- ==================================================================== -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
-<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
 
 <STYLE TYPE="text/css">
 <!--
@@ -46,7 +46,7 @@ TEXTAREA {
   background-Color: #ffffff;
 }
 
-<?=$user_stylesheet?>
+<?php echo $user_stylesheet?>
 -->
 </style>
 
@@ -57,10 +57,10 @@ TEXTAREA {
 <!--                          list page                                   -->
 <!-- ==================================================================== -->
 <? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
-<?=$rss['link']?>
+<?php echo $rss['link']?>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
-<?=$print['preview_script']?>
+<?php echo $print['preview_script']?>
 
 <!-- ======================= Start Header Design ======================= -->
 <?
@@ -78,7 +78,7 @@ if(!$np) {
 <!--                   'n or +' = next page                               -->
 <!--                   'b or -' = previous page                           -->
 <!-- ==================================================================== -->
-<?=print_keymenu(0)?>
+<?php echo print_keymenu(0)?>
 
 <!-- ==================================================================== -->
 <!-- $board['align'] : print align of webboard. It's config in board admin-->
@@ -88,13 +88,13 @@ if(!$np) {
 <!-- $print['count'] : registed article & page count                      -->
 <!-- $print['lout']  : print logout link.                                 -->
 <!-- ==================================================================== -->
-<DIV ALIGN="<?=$board['align']?>">
-<?=$print['dsearch']?>
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<DIV ALIGN="<?php echo $board['align']?>">
+<?php echo $print['dsearch']?>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''>
-<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#55555;"> &gt;&gt; <?=$print['count']?></FONT></TD>
-<TD ALIGN="right" VALIGN="bottom">&nbsp;<?=$print['lout']?><?=$print['admin']?></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#55555;"> &gt;&gt; <?php echo $print['count']?></FONT></TD>
+<TD ALIGN="right" VALIGN="bottom">&nbsp;<?php echo $print['lout']?><?php echo $print['admin']?></TD>
 </TR>
 
 <TR><TD COLSPAN=3>
@@ -106,9 +106,9 @@ if(!$np) {
 <!--   Start main table    -->
 <TABLE WIDTH="100%" BORDER=0 CELLSPACING=0 CELLPADDING=0>
 <TR>
-  <TD WIDTH="<?=$td_width['no']?>" ALIGN="left" BGCOLOR="#FFAE00"><IMG SRC="./theme/EN-default/img/board_no.gif" ALT='No.'></TD>
-  <TD WIDTH="<?=$td_width['title']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Subject</FONT></TD>
-  <TD WIDTH="<?=$td_width['name']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Name</FONT></TD>
+  <TD WIDTH="<?php echo $td_width['no']?>" ALIGN="left" BGCOLOR="#FFAE00"><IMG SRC="./theme/EN-default/img/board_no.gif" ALT='No.'></TD>
+  <TD WIDTH="<?php echo $td_width['title']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Subject</FONT></TD>
+  <TD WIDTH="<?php echo $td_width['name']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Name</FONT></TD>
 
 <!-- ==================================================================== -->
 <!-- if($upload['yesno'] && $cupload['yesno']) : If use                   -->
@@ -121,14 +121,14 @@ if(!$np) {
 EOF;
   }
 ?>
-  <TD WIDTH="<?=$td_width['dates']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Date</FONT></TD>
-  <TD WIDTH="<?=$td_width['refer']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Read</FONT></TD>
+  <TD WIDTH="<?php echo $td_width['dates']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Date</FONT></TD>
+  <TD WIDTH="<?php echo $td_width['refer']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Read</FONT></TD>
 </TR>
 
 <!-- ==================================================================== -->
 <!-- $print['lists'] : print article list                                 -->
 <!-- ==================================================================== -->
-<?=$print['lists']?>
+<?php echo $print['lists']?>
 </TABLE>
 
 <!--   End main tale    -->
@@ -154,9 +154,9 @@ EOF;
 <!--                  upper image is located in theme/theme_name/img      -->
 <!--                  and use list_cmd option with list_cmd(1,1)          -->
 <!-- ==================================================================== -->
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD><FONT style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?=$print['p_list']?></FONT>
+<TD><FONT style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?php echo $print['p_list']?></FONT>
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
 <TD ALIGN="right"><? list_cmd(0,1) ?></TD>
 </TR>
@@ -169,28 +169,28 @@ EOF;
 <TR>
 <TD>
 <!-- =============================== SEARCH FORM =============================== -->
-<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
 <TR>
 <TD>
 <SELECT NAME="o[sc]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
-<OPTION VALUE="t"<?=$sform['sc']['t']?>>Title
-<OPTION VALUE="c"<?=$sform['sc']['c']?>>Contents
-<OPTION VALUE="n"<?=$sform['sc']['n']?>>Writer
-<OPTION VALUE="a"<?=$sform['sc']['a']?>>All
+<OPTION VALUE="t"<?php echo $sform['sc']['t']?>>Title
+<OPTION VALUE="c"<?php echo $sform['sc']['c']?>>Contents
+<OPTION VALUE="n"<?php echo $sform['sc']['n']?>>Writer
+<OPTION VALUE="a"<?php echo $sform['sc']['a']?>>All
 </SELECT>
-<INPUT TYPE="text" ID="searchstr" NAME="o[ss]" SIZE="<?=form_size(8)?>" MAXLENGTH=255 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555;" VALUE="<?=$sform['ss']?>">
+<INPUT TYPE="text" ID="searchstr" NAME="o[ss]" SIZE="<?php echo form_size(8)?>" MAXLENGTH=255 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555;" VALUE="<?php echo $sform['ss']?>">
 <INPUT TYPE="submit" VALUE="Search" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555;">
 </TD>
 </TR><TR>
 <TD>
 <SELECT NAME="o[st]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
-<OPTION VALUE="m"<?=$sform['st']['m']?>>A Month
-<OPTION VALUE="w"<?=$sform['st']['w']?>>A Week
-<OPTION VALUE="a"<?=$sform['st']['a']?>>All
+<OPTION VALUE="m"<?php echo $sform['st']['m']?>>A Month
+<OPTION VALUE="w"<?php echo $sform['st']['w']?>>A Week
+<OPTION VALUE="a"<?php echo $sform['st']['a']?>>All
 </SELECT>
-<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?=$sform['er']['y']?> style="border:1px solid #555555;background-Color:#ffffff">
-<FONT STYLE="font-family:tahoma,sans-serif;color:#555555;font-weight:bold">REGEX</FONT> <?=$print['dserlink']?>
+<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?php echo $sform['er']['y']?> style="border:1px solid #555555;background-Color:#ffffff">
+<FONT STYLE="font-family:tahoma,sans-serif;color:#555555;font-weight:bold">REGEX</FONT> <?php echo $print['dserlink']?>
 </TD>
 </TR>
 </TABLE>
@@ -202,19 +202,19 @@ EOF;
 <!-- =============================== SEARCH FORM=============================== -->
 </TD>
 <TD ALIGN="right">
-<FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"><?=$print['times']?></FONT><BR>
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"><?php echo $print['times']?></FONT><BR>
 <!-- ============================== PAGE FORM ============================== -->
-<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
 <TR>
 <TD ALIGN="right">
 <FONT STYLE="font-size:10px;font-family:tahoma,sans-serif;">
-<?=$pform['post']?>
+<?php echo $pform['post']?>
 <SELECT NAME="o[go]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
 <OPTION VALUE="p" SELECTED>Page No.
 <OPTION VALUE="n">Article No.
 </SELECT>
-<INPUT TYPE="text" NAME="o[no]" SIZE="<?=form_size(2)?>" MAXLENGTH=6 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555" VALUE='<?=$pform['value']?>'>
+<INPUT TYPE="text" NAME="o[no]" SIZE="<?php echo form_size(2)?>" MAXLENGTH=6 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555" VALUE='<?php echo $pform['value']?>'>
 <INPUT TYPE="submit" VALUE="Go!" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
 </FONT>
 </TD>
@@ -228,7 +228,7 @@ EOF;
 <!-- ==================================================================== -->
 <!-- print_license()  : Printed Licese table                              -->
 <!-- ==================================================================== -->
-<?=print_license()?>
+<?php echo print_license()?>
 
 </DIV>
 

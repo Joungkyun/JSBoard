@@ -1,5 +1,5 @@
 <?php
-# $Id: userlist.php,v 1.9 2009-11-19 05:29:50 oops Exp $
+# $Id: userlist.php,v 1.10 2014-02-26 16:28:24 oops Exp $
 $path['type'] = "admin";
 include "include/admin_head.php";
 
@@ -147,11 +147,11 @@ java_scr();
 <TABLE BORDER=0 WIDTH=100% HEIGHT=100% CELLPADDING=0 CELLSPACING=0>
 <TR><TD ALIGN=center VALIGN=center>
 
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH=<?php echo $board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR><TD>
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD ROWSPAN=2 VALIGN=center><FONT STYLE="font:40px Tahoma;color:<?=$color['m_bg']?>;font-weight:bold">J</FONT></TD>
+<TD ROWSPAN=2 VALIGN=center><FONT STYLE="font:40px Tahoma;color:<?php echo $color['m_bg']?>;font-weight:bold">J</FONT></TD>
 <TD VALIGN=bottom><FONT STYLE="font: 12px tahoma; font-weight:bold">SBoard User</FONT></TD>
 </TR>
 <TR>
@@ -161,45 +161,45 @@ java_scr();
 </TD></TR>
 </TABLE>
 
-<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0 ALIGN=<?=$board['align']?>>
+<TABLE WIDTH=<?php echo $board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0 ALIGN=<?php echo $board['align']?>>
 <FORM>
 <TR><TD ALIGN=center>
 
-<?=$sec_status?>
+<?php echo $sec_status?>
 
 <P>
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=2>
 <TR>
-<TD><?=$han_index?></TD>
+<TD><?php echo $han_index?></TD>
 <TD VALIGN=bottom ALIGN=right>
 [ <A HREF=./><FONT STYLE="font-weight:bold">MAIN</FONT></A> ]&nbsp;
 </TD>
 </TR>
 <TR>
-<TD> <?=$al_index?></TD>
+<TD> <?php echo $al_index?></TD>
 <TD ALIGN=right>
-[ <A HREF=<?=$registLink?>><FONT STYLE="font-weight:bold">REGIST</FONT></A> ]&nbsp;
+[ <A HREF=<?php echo $registLink?>><FONT STYLE="font-weight:bold">REGIST</FONT></A> ]&nbsp;
 </TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=4 CELLSPACING=1>
 <TR ALIGN=center>
-<TD BGCOLOR=<?=$color['t_bg']?>><FONT STYLE="color:<?=$color['t_fg']?>;font-weight:bold"><?=$langs['cmd_edit']?></FONT></TD>
-<TD BGCOLOR=<?=$color['t_bg']?>><FONT STYLE="color:<?=$color['t_fg']?>;font-weight:bold"><?=$langs['u_nid']?></FONT></TD>
-<TD BGCOLOR=<?=$color['t_bg']?>><FONT STYLE="color:<?=$color['t_fg']?>;font-weight:bold"><?=$langs['u_name']?></FONT></TD>
-<TD BGCOLOR=<?=$color['t_bg']?>><FONT STYLE="color:<?=$color['t_fg']?>;font-weight:bold"><?=$langs['u_email']?></FONT></TD>
-<TD BGCOLOR=<?=$color['t_bg']?>><FONT STYLE="color:<?=$color['t_fg']?>;font-weight:bold"><?=$langs['u_url']?></FONT></TD>
-<TD BGCOLOR=<?=$color['t_bg']?>><FONT STYLE="color:<?=$color['t_fg']?>;font-weight:bold"><?=$langs['cmd_del']?></FONT></TD>
+<TD BGCOLOR=<?php echo $color['t_bg']?>><FONT STYLE="color:<?php echo $color['t_fg']?>;font-weight:bold"><?php echo $langs['cmd_edit']?></FONT></TD>
+<TD BGCOLOR=<?php echo $color['t_bg']?>><FONT STYLE="color:<?php echo $color['t_fg']?>;font-weight:bold"><?php echo $langs['u_nid']?></FONT></TD>
+<TD BGCOLOR=<?php echo $color['t_bg']?>><FONT STYLE="color:<?php echo $color['t_fg']?>;font-weight:bold"><?php echo $langs['u_name']?></FONT></TD>
+<TD BGCOLOR=<?php echo $color['t_bg']?>><FONT STYLE="color:<?php echo $color['t_fg']?>;font-weight:bold"><?php echo $langs['u_email']?></FONT></TD>
+<TD BGCOLOR=<?php echo $color['t_bg']?>><FONT STYLE="color:<?php echo $color['t_fg']?>;font-weight:bold"><?php echo $langs['u_url']?></FONT></TD>
+<TD BGCOLOR=<?php echo $color['t_bg']?>><FONT STYLE="color:<?php echo $color['t_fg']?>;font-weight:bold"><?php echo $langs['cmd_del']?></FONT></TD>
 </TR>
 
-<?=$ulist?>
+<?php echo $ulist?>
 
 </TABLE>
 
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD ALIGN=right>
-<?=$pagelink?>
+<?php echo $pagelink?>
 </TD></TR>
 </TABLE>
 
