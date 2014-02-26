@@ -1,21 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: ext.template,v 1.12 2009-11-19 05:29:51 oops Exp $ -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
-<TITLE><?=$print['head']?> - Jsboard <?=$board['ver']?></TITLE>
+<!-- $Id: ext.template,v 1.13 2014-02-26 16:28:25 oops Exp $ -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo $print['head']?> - Jsboard <?php echo $board['ver']?></TITLE>
 <STYLE TYPE="text/css">
 <!--
 body {
   font-size: 12px;
-  font-family: <?=$langs['font']?>, sans-serif;
-  color: <?=$color['text']?>;
+  font-family: <?php echo $langs['font']?>, sans-serif;
+  color: <?php echo $color['text']?>;
   margin: 0px 0px 0px 0px;
   background-color: #FFFFFF;
 }
 td {
   font-size: 12px;
-  font-family: <?=$langs['font']?>;
+  font-family: <?php echo $langs['font']?>;
   color: #555555;
 }
 a:link, a:visited, a:active {
@@ -28,49 +28,49 @@ A:hover {
 }
 INPUT {
   font: 11px tahoma;
-  color: <?=$color['l4_fg']?> ;
+  color: <?php echo $color['l4_fg']?> ;
   border-width: 1px;
   border-style: solid;
-  border-color: <?=$color['l4_gu']?>;
+  border-color: <?php echo $color['l4_gu']?>;
   padding-left: 1px;
   padding-right: 1px;
-  background-color: <?=$color['l4_bg']?>;
+  background-color: <?php echo $color['l4_bg']?>;
 }
 SELECT {
   font: 11px tahoma;
-  color:<?=$color['l4_fg']?>;
+  color:<?php echo $color['l4_fg']?>;
   border-width: 1px;
   border-style: solid;
-  border-color: <?=$color['l4_gu']?>;
-  background-Color: <?=$color['l4_bg']?>;
+  border-color: <?php echo $color['l4_gu']?>;
+  background-Color: <?php echo $color['l4_bg']?>;
 }
 TEXTAREA {
-  font: 13px <?=$langs['font']?>;
-  color: <?=$color['l4_fg']?>;
+  font: 13px <?php echo $langs['font']?>;
+  color: <?php echo $color['l4_fg']?>;
   border-width: 1px;
   border-style: solid;
-  border-color: <?=$color['l4_gu']?>;
+  border-color: <?php echo $color['l4_gu']?>;
   padding-left: 1px;
-  background-Color: <?=$color['l4_bg']?>;
+  background-Color: <?php echo $color['l4_bg']?>;
 }
  .radio {
-  font: 9pt <?=$langs['font']?>;
-  background-color: <?=$color['bgcol']?>;
-  color: <?=$color['text']?>;
-  border: 2px solid <?=$color['bgcol']?>;
+  font: 9pt <?php echo $langs['font']?>;
+  background-color: <?php echo $color['bgcol']?>;
+  color: <?php echo $color['text']?>;
+  border: 2px solid <?php echo $color['bgcol']?>;
 }
  .title {
-  font: 15pt <?=$langs['font']?>;
-  color: <?=$color['n0_fg']?>;
+  font: 15pt <?php echo $langs['font']?>;
+  color: <?php echo $color['n0_fg']?>;
   font-weight: bold;
 }
  .en {
   font: 15pt Tahoma;
   font-weight: bold;
-  color: <?=$color['text']?>;
+  color: <?php echo $color['text']?>;
 }
 form { display: inline; }
-<?=$user_stylesheet?>
+<?php echo $user_stylesheet?>
 -->
 </STYLE>
 </HEAD>

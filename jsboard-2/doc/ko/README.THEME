@@ -1,5 +1,5 @@
 JSBoard Template 제작 방법
-$Id: README.THEME,v 1.5 2009-11-19 05:29:50 oops Exp $
+$Id: README.THEME,v 1.6 2014-02-26 16:28:24 oops Exp $
 
 작성 : 김정균 <http://www.oops.org>
 일시 : 2001 12  3
@@ -64,23 +64,23 @@ include/version.php 의 $theme[ver] 의 값이 변경이 된다.
 검색 폼은 아래의 폼문을 기본으로 가지고 있어야 한다. 이 폼문을 기본으
 로 디자인을 하면 된다.
 
-<FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
+<FORM METHOD=post ACTION=locate.php?table=<?php echo $table?>>
   <SELECT NAME=o[sc]>
-    <OPTION VALUE=t<?=$sform[sc][t]?>>Title
-    <OPTION VALUE=c<?=$sform[sc][c]?>>Contents
-    <OPTION VALUE=n<?=$sform[sc][n]?>>Writer
-    <OPTION VALUE=a<?=$sform[sc][a]?>>All
+    <OPTION VALUE=t<?php echo $sform[sc][t]?>>Title
+    <OPTION VALUE=c<?php echo $sform[sc][c]?>>Contents
+    <OPTION VALUE=n<?php echo $sform[sc][n]?>>Writer
+    <OPTION VALUE=a<?php echo $sform[sc][a]?>>All
   </SELECT>
-  <INPUT TYPE=text NAME=o[ss] SIZE=<?=form_size(8)?> MAXLENGTH=255 VALUE="<?=$sform[ss]?>">
+  <INPUT TYPE=text NAME=o[ss] SIZE=<?php echo form_size(8)?> MAXLENGTH=255 VALUE="<?php echo $sform[ss]?>">
   <INPUT TYPE=submit VALUE=Search> 
 
   <SELECT NAME=o[st]>
-    <OPTION VALUE=m<?=$sform[st][m]?>>A Month
-    <OPTION VALUE=w<?=$sform[st][w]?>>A Week
-    <OPTION VALUE=a<?=$sform[st][a]?>>All
+    <OPTION VALUE=m<?php echo $sform[st][m]?>>A Month
+    <OPTION VALUE=w<?php echo $sform[st][w]?>>A Week
+    <OPTION VALUE=a<?php echo $sform[st][a]?>>All
   </SELECT>
 
-  <INPUT TYPE=checkbox NAME=o[er] VALUE=y<?=$sform[er][y]?>> 졍규표현식
+  <INPUT TYPE=checkbox NAME=o[er] VALUE=y<?php echo $sform[er][y]?>> 졍규표현식
 
   <INPUT TYPE=hidden NAME=o[at] VALUE=s>
   <INPUT TYPE=hidden NAME=o[go] VALUE=p>
@@ -116,13 +116,13 @@ if(!$o[at]) {
 
 # Page FORM
 
-<FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
-<?=$pform[post]?>
+<FORM METHOD=post ACTION=locate.php?table=<?php echo $table?>>
+<?php echo $pform[post]?>
 <SELECT NAME=o[go]>
 <OPTION VALUE=p SELECTED>Page No.
 <OPTION VALUE=n>Article No.
 </SELECT>
-<INPUT TYPE=text NAME=o[no] SIZE=<?=form_size(2)?> MAXLENGTH=6 VALUE='<?=$pform[value]?>'>
+<INPUT TYPE=text NAME=o[no] SIZE=<?php echo form_size(2)?> MAXLENGTH=6 VALUE='<?php echo $pform[value]?>'>
 <INPUT TYPE=submit VALUE=Go!>
 </FORM>
 

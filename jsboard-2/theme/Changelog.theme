@@ -1,7 +1,7 @@
-$Id: Changelog.theme,v 1.24 2009-11-19 05:29:51 oops Exp $
+$Id: Changelog.theme,v 1.25 2014-02-26 16:28:24 oops Exp $
 
 Version: A9
-- reply.template 와 write.template 에 <?=print_spam_trap()?> 추가
+- reply.template 와 write.template 에 <?php echo print_spam_trap()?> 추가
 - textarea tag 에 class="resizable" 추가
 - include textarea.js
 - write/edit/reply 에서 reset button 을 button type 으로 변경
@@ -30,7 +30,7 @@ Version: A5
   이동되게 수정
 
 Version: A4
-- 키보드 제어 코드 추가 : <?=pirnt_keymenu()?>
+- 키보드 제어 코드 추가 : <?php echo pirnt_keymenu()?>
 - edit.template, reply.template, write.template 의
   if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
   라인을
@@ -38,7 +38,7 @@ Version: A4
   로 수정
 
 Version: A3
-- logout 링크 추가 (<?=$print[lout]?> - list.template, read.template)
+- logout 링크 추가 (<?php echo $print[lout]?> - list.template, read.template)
 - img/notice.gif 추가 (공지글 ICON)
 - 공지사항 배경,폰트 색상 추가 (config.ph)
 

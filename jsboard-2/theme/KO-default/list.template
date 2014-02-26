@@ -1,21 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: list.template,v 1.25 2009-11-19 05:29:51 oops Exp $ -->
+<!-- $Id: list.template,v 1.26 2014-02-26 16:28:25 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : 게시판의 언어 타입에 따라 charset 을 가져온다.   -->
 <!-- $board['ver']     : 게시판의 버젼 정보를 가지고 온다.                -->
 <!-- get_title()     : 게시판의 헤더 타이틀을 가지고 온다.                -->
 <!-- $user_stylesheet : 사용자 정의 스타일 시트                           -->
 <!-- ==================================================================== -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
-<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
 
 <STYLE TYPE="text/css">
 <!--
 BODY,TD {
   font-size: 12px;
-  font-family: <?=$langs['font']?>, monospace;
+  font-family: <?php echo $langs['font']?>, monospace;
   color: #555555;
   line-height: 15pt;
 }
@@ -29,24 +29,24 @@ A:hover {
 }
 INPUT {
   font: 11px tahoma, sans-serif;
-  color: <?=$color['l4_fg']?>;
+  color: <?php echo $color['l4_fg']?>;
   border-width: 1px;
   border-style: solid;
-  border-color: <?=$color['l4_gu']?>;
+  border-color: <?php echo $color['l4_gu']?>;
   padding-left: 1px;
   padding-right: 1px;
-  background-color: <?=$color['l4_bg']?>; }
+  background-color: <?php echo $color['l4_bg']?>; }
 SELECT {
   font: 11px tahoma, sans-serif;
-  color: <?=$color['l4_fg']?>;
+  color: <?php echo $color['l4_fg']?>;
   border-width: 1px;
   border-style: solid;
-  border-color: <?=$color['l4_gu']?>;
-  background-Color: <?=$color['l4_bg']?>
+  border-color: <?php echo $color['l4_gu']?>;
+  background-Color: <?php echo $color['l4_bg']?>
 }
 form { display: inline; }
 
-<?=$user_stylesheet?>
+<?php echo $user_stylesheet?>
 -->
 </style>
 
@@ -57,10 +57,10 @@ form { display: inline; }
 <!--                          출력한다.                                   -->
 <!-- ==================================================================== -->
 <? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
-<?=$rss['link']?>
+<?php echo $rss['link']?>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
-<?=$print['preview_script']?>
+<?php echo $print['preview_script']?>
 
 <!-- ======================= 헤더 디자인 시작 ======================= -->
 <?
@@ -78,7 +78,7 @@ if(!$np) {
 <!--                   'n or +' = 다음 페이지                             -->         
 <!--                   'b or -' = 이전 페이지                             -->         
 <!-- ==================================================================== -->
-<?=print_keymenu(0)?>
+<?php echo print_keymenu(0)?>
 
 <!-- ==================================================================== -->
 <!-- $board['align'] : 게시판의 align 을 정의한다. 이는 게시판 관리자에서 -->
@@ -91,13 +91,13 @@ if(!$np) {
 <!--                 다. 게시판 관리자에서 안보이도록 설정을 할수가있다   -->
 <!-- $print['lout']  : 로그인시 로그아웃 버튼을 출력                      -->
 <!-- ==================================================================== -->
-<DIV ALIGN="<?=$board['align']?>">
-<?=$print['dsearch']?>
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<DIV ALIGN="<?php echo $board['align']?>">
+<?php echo $print['dsearch']?>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
-<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"> &gt;&gt; <?=$print['count']?></FONT></TD>
-<TD ALIGN="right" VALIGN="bottom"><?=$print['lout']?>&nbsp;<?=$print['admin']?></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"> &gt;&gt; <?php echo $print['count']?></FONT></TD>
+<TD ALIGN="right" VALIGN="bottom"><?php echo $print['lout']?>&nbsp;<?php echo $print['admin']?></TD>
 </TR>
 
 <TR><TD COLSPAN=3>
@@ -109,9 +109,9 @@ if(!$np) {
 <!--   게시판 메인 테이블 시작    -->
 <TABLE WIDTH="100%" BORDER=0 CELLSPACING=0 CELLPADDING=0>
 <TR>
-  <TD WIDTH="<?=$td_width[no]?>" ALIGN="left" BGCOLOR="#FFAE00"><IMG SRC="./theme/KO-default/img/board_no.gif" ALT='No.'></TD>
-  <TD WIDTH="<?=$td_width[title]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">제목</FONT></TD>
-  <TD WIDTH="<?=$td_width[name]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">이름</FONT></TD>
+  <TD WIDTH="<?php echo $td_width[no]?>" ALIGN="left" BGCOLOR="#FFAE00"><IMG SRC="./theme/KO-default/img/board_no.gif" ALT='No.'></TD>
+  <TD WIDTH="<?php echo $td_width[title]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">제목</FONT></TD>
+  <TD WIDTH="<?php echo $td_width[name]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">이름</FONT></TD>
 
 <!-- ==================================================================== -->
 <!-- if($upload['yesno'] && $cupload['yesno']) : 파일                     -->
@@ -124,14 +124,14 @@ if(!$np) {
 EOF;
   }
 ?>
-  <TD WIDTH="<?=$td_width[dates]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">날짜</FONT></TD>
-  <TD WIDTH="<?=$td_width[refer]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">조회</FONT></TD>
+  <TD WIDTH="<?php echo $td_width[dates]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">날짜</FONT></TD>
+  <TD WIDTH="<?php echo $td_width[refer]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">조회</FONT></TD>
 </TR>
 
 <!-- ==================================================================== -->
 <!-- $print['lists'] : 게시판 리스트를 출력을 한다.                       -->
 <!-- ==================================================================== -->
-<?=$print['lists']?>
+<?php echo $print['lists']?>
 </TABLE>
 
 <!--   게시판 메인 테이블 끝    -->
@@ -157,9 +157,9 @@ EOF;
 <!--                  를 theme/theme_name/img 에 위의 이미지를 만들고     -->
 <!--                  나서 list_cmd(1,1) 로 지정을 한다.                  -->
 <!-- ==================================================================== -->
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-<TD><FONT style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?=$print['p_list']?></FONT>
+<TD><FONT style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?php echo $print['p_list']?></FONT>
 <IMG SRC="images/blank.gif" WIDTH="1" HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
 <TD ALIGN="right"><? list_cmd(0,1) ?></TD>
 </TR>
@@ -172,29 +172,29 @@ EOF;
 <TR>
 <TD>
 <!-- =============================== 검색폼 =============================== -->
-<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
 <TR>
 <TD>
 <SELECT NAME="o[sc]">
-<OPTION VALUE="t"<?=$sform['sc']['t']?>>Title
-<OPTION VALUE="c"<?=$sform['sc']['c']?>>Contents
-<OPTION VALUE="n"<?=$sform['sc']['n']?>>Writer
-<OPTION VALUE="a"<?=$sform['sc']['a']?>>All
+<OPTION VALUE="t"<?php echo $sform['sc']['t']?>>Title
+<OPTION VALUE="c"<?php echo $sform['sc']['c']?>>Contents
+<OPTION VALUE="n"<?php echo $sform['sc']['n']?>>Writer
+<OPTION VALUE="a"<?php echo $sform['sc']['a']?>>All
 </SELECT>
-<INPUT TYPE="text" ID="searchstr" NAME="o[ss]" SIZE="<?=form_size(8)?>" MAXLENGTH=255 style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font-size:12px;color:<?=$color['l4_fg']?>;" VALUE="<?=$sform['ss']?>"
+<INPUT TYPE="text" ID="searchstr" NAME="o[ss]" SIZE="<?php echo form_size(8)?>" MAXLENGTH=255 style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font-size:12px;color:<?php echo $color['l4_fg']?>;" VALUE="<?php echo $sform['ss']?>"
 >
-<INPUT TYPE="submit" VALUE="Search" style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?=$color['l4_fg']?>;">
+<INPUT TYPE="submit" VALUE="Search" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>;">
 </TD>
 </TR><TR>
 <TD>
 <SELECT NAME="o[st]">
-<OPTION VALUE="m"<?=$sform['st']['m']?>>A Month
-<OPTION VALUE="w"<?=$sform['st']['w']?>>A Week
-<OPTION VALUE="a"<?=$sform['st']['a']?>>All
+<OPTION VALUE="m"<?php echo $sform['st']['m']?>>A Month
+<OPTION VALUE="w"<?php echo $sform['st']['w']?>>A Week
+<OPTION VALUE="a"<?php echo $sform['st']['a']?>>All
 </SELECT>
-<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?=$sform['er']['y']?> style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>">
-<FONT STYLE="font-family: <?=$langs['vfont']?>,sans-serif;color:#555555">정규표현식</FONT> <?=$print['dserlink']?>
+<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?php echo $sform['er']['y']?> style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>">
+<FONT STYLE="font-family: <?php echo $langs['vfont']?>,sans-serif;color:#555555">정규표현식</FONT> <?php echo $print['dserlink']?>
 </TD>
 </TR>
 </TABLE>
@@ -206,21 +206,21 @@ EOF;
 <!-- =============================== 검색폼 =============================== -->
 </TD>
 <TD ALIGN="right">
-<FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"><?=$print['times']?></FONT><BR>
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"><?php echo $print['times']?></FONT><BR>
 <!-- ============================== 페이지폼 ============================== -->
-<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
 <TR>
 <TD ALIGN="right">
 <FONT STYLE="font-size:10px;font-family:tahoma,sans-serif;">
-<?=$pform['post']?>
+<?php echo $pform['post']?>
 <SELECT NAME="o[go]">
 <OPTION VALUE="p" SELECTED>Page No.
 <OPTION VALUE="n">Article No.
 </SELECT>
-<INPUT TYPE="text" NAME="o[no]" SIZE="<?=form_size(2)?>" MAXLENGTH=6 style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font-size:12px;color:<?=$color['l4_fg']?>" VALUE='<?=$pform['value']?>'
+<INPUT TYPE="text" NAME="o[no]" SIZE="<?php echo form_size(2)?>" MAXLENGTH=6 style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font-size:12px;color:<?php echo $color['l4_fg']?>" VALUE='<?php echo $pform['value']?>'
 >
-<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma,sans-serif;color:#555555">
+<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:#555555">
 </FONT>
 </TD>
 </TR>
@@ -233,7 +233,7 @@ EOF;
 <!-- ==================================================================== -->
 <!-- print_license()  : 라이센스 출력                                     -->
 <!-- ==================================================================== -->
-<?=print_license()?>
+<?php echo print_license()?>
 
 </DIV>
 

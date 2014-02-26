@@ -1,21 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: write.template,v 1.32 2009-11-19 05:29:51 oops Exp $ -->
+<!-- $Id: write.template,v 1.33 2014-02-26 16:28:25 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : 게시판의 언어 타입에 따라 charset 을 가져온다.   -->
 <!-- $board['ver']     : 게시판의 버젼 정보를 가지고 온다.                -->
 <!-- get_title()     : 게시판의 헤더 타이틀을 가지고 온다.                -->
 <!-- $user_stylesheet : 사용자 정의 스타일 시트                           -->
 <!-- ==================================================================== -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
-<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
 
 <STYLE TYPE="text/css">
 <!--
 BODY,TD {
   font-size: 12px;
-  font-family: <?=$langs['font']?>, sans-serif;
+  font-family: <?php echo $langs['font']?>, sans-serif;
   color: #555555;
 }
 A:LINK, A:VISITED, A:ACTIVE {
@@ -37,7 +37,7 @@ INPUT {
   background-color: #FFFFFF;
 }
 TEXTAREA {
-  font: 13px <?=$langs['font']?>, sans-serif;
+  font: 13px <?php echo $langs['font']?>, sans-serif;
   color: #333333;
   border-width: 1px;
   border-style: solid;
@@ -62,7 +62,7 @@ TEXTAREA {
 }
 form { display: inline; }
 
-<?=$user_stylesheet?>
+<?php echo $user_stylesheet?>
 -->
 </style>
 </HEAD>
@@ -88,9 +88,9 @@ if(!$np) {
 <!-- $board['width'] : 게시판의 넓이를 지정한다. 게시판 관리자에서 조정   -->
 <!-- $board['formtype'] : 이미지 업로드를 지원 여부를 위해 꼭 필요        -->
 <!-- ==================================================================== -->
-<DIV ALIGN="<?=$board['align']?>">
-<FORM NAME="writep" METHOD="post" ACTION="act.php"<?=$board['formtype']?>>
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<DIV ALIGN="<?php echo $board['align']?>">
+<FORM NAME="writep" METHOD="post" ACTION="act.php"<?php echo $board['formtype']?>>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
 <TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Write new article</FONT></TD>
@@ -108,7 +108,7 @@ if(!$np) {
 </TR>
 </TABLE>
 
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
 <TR>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -123,7 +123,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <TR>
 <TD WIDTH=80>이름</TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?> tabindex="1"></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[name]" SIZE="<?php echo $size['name']?>" MAXLENGTH=50 VALUE="<?php echo $pre_regist['name']?>"<?php echo $disable?> tabindex="1"></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -187,7 +187,7 @@ EOF;
 <!-- ==================================================================== -->
 <TR>
 <TD>제목</TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 tabindex="5"></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[title]" SIZE="<?php echo $size['titl']?>" MAXLENGTH=100 tabindex="5"></TD>
 </TR>
 
 <TR>
@@ -213,12 +213,12 @@ EOF;
 </TR>
 </TABLE>
 
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
 </TABLE>
 
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD BGCOLOR="<?=$color['l5_bg']?>" ALIGN="CENTER">
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>" ALIGN="CENTER">
 
 <!-- ==================================================================== -->
 <!-- $size['text'] : textarea 의 size 출력                                -->
@@ -237,12 +237,12 @@ EOF;
 <!-- $print['passform']: 글 등록하는데 필요한 hidden 변수들               -->
 <!-- $orig_option      : 글쓰기 창 조절시 원래 크기로 돌아가는 옵션       -->
 <!-- ==================================================================== -->
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
-<?=$print['passform']?>
+<?php echo $print['passform']?>
 <INPUT TYPE="submit" VALUE="등록" tabindex="9">
 <INPUT TYPE="button" VALUE="다시" onClick="document.location.reload(); return false;" tabindex="10">
-<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="목록" tabindex="11">
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?php echo $table.$pages?>'" VALUE="목록" tabindex="11">
 <INPUT TYPE="button" onClick="history.back()" VALUE="이전" tabindex="12">
 </TD></TR>
 </TABLE>
@@ -250,10 +250,10 @@ EOF;
 <!-- ==================================================================== -->
 <!-- print_license()  : 라이센스 출력                                     -->
 <!-- ==================================================================== -->
-<?=print_license()?>
+<?php echo print_license()?>
 
 </FORM>
-<?=print_spam_trap()?>
+<?php echo print_spam_trap()?>
 </DIV>
 
 <!-- ======================= 꼬리 디자인 시작 ======================= -->

@@ -7,14 +7,14 @@
 <!--  get_title()     : 掲示板の ヘッダー タイトルを 持って 来る.                 -->
 <!--  $user_stylesheet : 使用者 正義 スタイル シーツ                            -->
 <!--  ====================================================================  -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
-<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
 
 <STYLE TYPE="text/css">
 <!-- 
 BODY,TD {
   font-size: 12px;
-  font-family: <?=$langs['font']?>, sans-serif;
+  font-family: <?php echo $langs['font']?>, sans-serif;
   color: #555555;
 }
 A:LINK, A:VISITED, A:ACTIVE {
@@ -36,7 +36,7 @@ INPUT {
   background-color: #FFFFFF;
 }
 TEXTAREA {
-  font: 13px <?=$langs['font']?>, sans-serif;
+  font: 13px <?php echo $langs['font']?>, sans-serif;
   color: #333333;
   border-width: 1px;
   border-style: solid;
@@ -61,7 +61,7 @@ TEXTAREA {
 }
 form { display: inline; }
 
-<?=$user_stylesheet?>
+<?php echo $user_stylesheet?>
  -->
 </style>
 </HEAD>
@@ -87,9 +87,9 @@ if(!$np) {
 <!--  $board['width'] : 掲示板の 広さを 指定する. 掲示板 管理者で 調整    -->
 <!--  $board['formtype'] : イメージ アップロードを 支援 可否を のために 必ず 必要         -->
 <!--  ====================================================================  -->
-<DIV ALIGN="<?=$board['align']?>">
-<FORM NAME="writep" METHOD="post" target=_top action='act.php'<?=$board['formtype']?>>
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<DIV ALIGN="<?php echo $board['align']?>">
+<FORM NAME="writep" METHOD="post" target=_top action='act.php'<?php echo $board['formtype']?>>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/JP-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
 <TD><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Write new article</FONT></TD>
@@ -107,7 +107,7 @@ if(!$np) {
 </TR>
 </TABLE>
 
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
 <TR>
 <TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
 <TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -122,7 +122,7 @@ if(!$np) {
 <!--  ====================================================================  -->
 <TR>
 <TD WIDTH=80>名前</TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[name]" SIZE="<?=$size['name']?>" MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?> tabindex="1"></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[name]" SIZE="<?php echo $size['name']?>" MAXLENGTH=50 VALUE="<?php echo $pre_regist['name']?>"<?php echo $disable?> tabindex="1"></TD>
 </TR>
 
 <!--  ====================================================================  -->
@@ -186,7 +186,7 @@ EOF;
 <!--  ====================================================================  -->
 <TR>
 <TD>題目</TD>
-<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[title]" SIZE="<?=$size['titl']?>" MAXLENGTH=100 tabindex="5"></TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[title]" SIZE="<?php echo $size['titl']?>" MAXLENGTH=100 tabindex="5"></TD>
 </TR>
 
 <TR>
@@ -212,12 +212,12 @@ EOF;
 </TR>
 </TABLE>
 
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
 </TABLE>
 
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
-<TR><TD BGCOLOR="<?=$color['l5_bg']?>" ALIGN="CENTER">
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>" ALIGN="CENTER">
 
 <!--  ====================================================================  -->
 <!--  $size['text'] : textarea 義 size 出力                                 -->
@@ -236,12 +236,12 @@ EOF;
 <!--  $print['passform']: 文 登録するのに 必要な hidden 変数たち                -->
 <!--  $orig_option      : 書き込み 窓 調節の時 元々 大きさで 帰る オプション        -->
 <!--  ====================================================================  -->
-<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
-<?=$print['passform']?>
+<?php echo $print['passform']?>
 <INPUT TYPE="submit" VALUE="登録" tabindex="9">
 <INPUT TYPE="button" VALUE="再び" onClick="document.location.reload(); return false;" tabindex="10">
-<INPUT TYPE="button" onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="リスト" tabindex="11">
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?php echo $table.$pages?>'" VALUE="リスト" tabindex="11">
 <INPUT TYPE="button" onClick="history.back()" VALUE="以前" tabindex="12">
 </TD></TR>
 </TABLE>
@@ -249,10 +249,10 @@ EOF;
 <!--  ====================================================================  -->
 <!--  print_license()  : ライセンス 出力                                      -->
 <!--  ====================================================================  -->
-<?=print_license()?>
+<?php echo print_license()?>
 
 </FORM>
-<?=print_spam_trap()?>
+<?php echo print_spam_trap()?>
 </DIV>
 
 <!--  ======================= しっぽ デザイン 手始め =======================  -->

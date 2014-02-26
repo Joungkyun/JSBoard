@@ -1,5 +1,5 @@
 <?php
-# $Id: whois.php,v 1.10 2009-11-19 05:29:49 oops Exp $
+# $Id: whois.php,v 1.11 2014-02-26 16:28:23 oops Exp $
 include 'include/variable.php';
 include 'include/print.php';
 # register_globals 옵션의 영향을 받지 않기 위한 함수
@@ -52,13 +52,13 @@ include "include/lang.php";
 		      
 <HTML>
 <HEAD>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
 <TITLE><? echo $host ?> WHOIS 정보</TITLE>
 <STYLE TYPE="text/css">
 <!--
 A:link, A:visited, A:active { text-decoration: none; }
 A:hover { text-decoration:underline; }
-TD { font-size: 12px;font-family: <?=$langs['font']?> }
+TD { font-size: 12px;font-family: <?php echo $langs['font']?> }
 -->
 </STYLE>
 </HEAD>

@@ -1,6 +1,6 @@
 <?php
 # JSboard RSS Feed
-# $Id: rss.php,v 1.23 2009-11-19 05:29:49 oops Exp $
+# $Id: rss.php,v 1.24 2014-02-26 16:28:23 oops Exp $
 #
 
 # header file »ðÀÔ
@@ -112,18 +112,18 @@ utf8_fallback ($board['title'], $_charset);
 echo "<?xml version=\"1.0\" encoding=\"{$cset}\"?>\n";
 ?>
 <rss version="2.0"
-  xml:base="<?=$board['path']?>"
+  xml:base="<?php echo $board['path']?>"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <atom:link href="http://<?=$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']?>" rel="self" type="application/rss+xml" />
-    <title><?=$rss['channel']?></title>
-    <link><?=$rss['link']?></link>
-    <description><?=$board['title']?></description>
-    <language><?=$langs['code']?></language>
-    <copyright>1999-<?=$cYear?> JSBoard Open Project</copyright>
-    <lastBuildDate><?=$bdate?></lastBuildDate>
-    <generator>JSBoard <?=$board['ver']?></generator>
+    <atom:link href="http://<?php echo $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']?>" rel="self" type="application/rss+xml" />
+    <title><?php echo $rss['channel']?></title>
+    <link><?php echo $rss['link']?></link>
+    <description><?php echo $board['title']?></description>
+    <language><?php echo $langs['code']?></language>
+    <copyright>1999-<?php echo $cYear?> JSBoard Open Project</copyright>
+    <lastBuildDate><?php echo $bdate?></lastBuildDate>
+    <generator>JSBoard <?php echo $board['ver']?></generator>
 
 <?php
 for ( $i=0; $i<$rss_article_num; $i++ ) {
