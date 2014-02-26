@@ -1,6 +1,6 @@
 <?php
 # SQL 관련 함수들에 대한 프론트 엔드 함수
-# $Id: sql.php,v 1.4 2012-10-23 17:09:45 oops Exp $
+# $Id: sql.php,v 1.5 2014-02-26 18:30:19 oops Exp $
 #
 # 비정상적인 동작에 대한 에러 출력 등에 사용됨
 # http://www.php.net/manual/ref.mysql.php
@@ -15,6 +15,8 @@ function sql_connect($server,$user,$pass,$mode='w') {
   if($mode == "r") print_error("System Checking NOW !! \n\nSorry, Read only enable.",250,130,1);
   $return = @mysql_connect($server,$user,$pass);
   sql_error(mysql_errno(), mysql_error());
+
+  sql_query('SET NAMES euckr', $return);
 
   return $return;
 }
