@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: write.template,v 1.34 2014-02-26 16:28:25 oops Exp $ -->
+<!-- $Id: write.template,v 1.35 2014-02-26 17:09:13 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : print charset code                               -->
 <!-- $board['ver']     : version information in webboard                  -->
@@ -78,7 +78,7 @@ form { display: inline; }
 <BODY BGCOLOR="#FFFFFF">
 
 <!-- ======================= Start Header Design ======================= -->
-<?
+<?php
 print_keymenu(3);
 echo $print['preview_script'] . "\n";
 
@@ -139,7 +139,7 @@ if(!$np) {
 <!-- $view['email']          : print email field                          -->
 <!-- $pre_regist['email']    : print email of registed cookie             -->
 <!-- ==================================================================== -->
-<?
+<?php
 if($view['email']) {
   echo <<<EOF
 
@@ -155,7 +155,7 @@ EOF;
 <!-- $view['url']             : print url field                           -->
 <!-- $pre_regist['url']       : print homepage of registed cookie         -->
 <!-- ==================================================================== -->
-<?
+<?php
 if($view['url']) {
   echo <<<EOF
 
@@ -170,7 +170,7 @@ EOF;
 <!-- ==================================================================== -->
 <!-- print upload field                                                   -->
 <!-- ==================================================================== -->
-<?
+<?php
 if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
   echo <<<EOF
 <TR>
@@ -204,7 +204,7 @@ EOF;
 <!-- if login admin, don't need password                                  -->
 <!-- if IE and NS6 case, print textarea size operation button             -->
 <!-- ==================================================================== -->
-<?
+<?php
 if((!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1) {
   echo <<<EOF
 <TD VALIGN="top"><B>Password</B></TD>
@@ -266,7 +266,7 @@ EOF;
 </DIV>
 
 <!-- ======================= 꼬리 디자인 시작 ======================= -->
-<?
+<?php
 if(!$np) {
   # Input by whole admin
   include "html/tail.php";

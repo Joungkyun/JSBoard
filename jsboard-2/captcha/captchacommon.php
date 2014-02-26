@@ -1,5 +1,5 @@
-<?
-# $Id: captchacommon.php,v 1.5 2009-11-21 17:00:53 oops Exp $
+<?php
+# $Id: captchacommon.php,v 1.6 2014-02-26 17:09:13 oops Exp $
 
 if ( $board['captcha'] ) {
 	require_once 'captcha/captcha.php';

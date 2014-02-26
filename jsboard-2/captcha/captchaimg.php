@@ -1,5 +1,5 @@
-<?
-# $Id: captchaimg.php,v 1.3 2012-10-11 16:22:56 oops Exp $
+<?php
+# $Id: captchaimg.php,v 1.4 2014-02-26 17:09:13 oops Exp $
 require_once ('../config/global.php');
 require_once ('./captcha.php');
 

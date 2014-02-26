@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.15 2009-11-19 05:29:50 oops Exp $
+# $Id: act.php,v 1.16 2014-02-26 17:09:12 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 include "../include/ostype.php";
@@ -184,7 +184,7 @@ else if($mode == "global_chg") {
   mysql_close();
   # quot 변환된 문자를 un quot 한다
 
-  $vars = "<?\n".stripslashes($glob['vars'])."\n?>";
+  $vars = "<?php\n".stripslashes($glob['vars'])."\n?>";
   $spam = stripslashes($glob['spam']);
 
   file_operate("../config/global.php","w",0,$vars);

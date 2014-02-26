@@ -81,7 +81,7 @@ TEXTAREA {
 
 <BODY>
 
-<?
+<?php
 # 全体 管理者に 義解 強制 input なる デザイン
 include "html/head.php";
 

@@ -10,7 +10,7 @@
 #
 #################################################################################
 #
-# $Id: INSTALL.MANUALY,v 1.10 2009-11-19 05:29:50 oops Exp $
+# $Id: INSTALL.MANUALY,v 1.11 2014-02-26 17:09:13 oops Exp $
 #                              Quick Installation in JSBoard 2.0 v0.4
 #
 #################################################################################
@@ -146,7 +146,7 @@ windows.
  
     Now try following code with the path that you've just discovered.
 
-    <?
+    <?php
     $mcheck = mysql_connect(":/var/lib/mysql/mysql.sock","root","$passwd");
 
     if ($mcheck) echo "mysql connect successful";

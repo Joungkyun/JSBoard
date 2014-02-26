@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: delete.template,v 1.24 2014-02-26 16:28:24 oops Exp $ -->
+<!-- $Id: delete.template,v 1.25 2014-02-26 17:09:13 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : print charset code                               -->
 <!-- $board['ver']     : bersion information in webboard                  -->
@@ -63,11 +63,11 @@ pre { font-family: tahoma, sans-serif; }
 <!-- print_newwindow_src()  : print java script for open new window to    -->
 <!--                          use in jsboard                              -->
 <!-- ==================================================================== -->
-<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
 <!-- ======================= Start Header Design ======================= -->
-<?
+<?php
 if(!$np) {
   # Design per user
   include "{$board['headpath']}";
@@ -93,7 +93,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <!-- $list['title']  : subject of article                                 -->
 <!-- ==================================================================== -->
-<? $list['title'] = preg_replace("/<br>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
+<?php $list['title'] = preg_replace("/<br>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
 <TR BGCOLOR="#FFAE00">
 <TD COLSPAN=2>
 <IMG SRC="./theme/EN-default/img/board_no.gif" ALIGN="middle" ALT='TITLE: '>
@@ -114,7 +114,7 @@ if(!$np) {
 <!-- $list['uname']  : name of writer (include homepage url)              -->
 <!-- $list['attach'] : attached file                                      -->
 <!-- ==================================================================== -->
-<? if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
+<?php if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
 <TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -125,7 +125,7 @@ if(!$np) {
 <FONT Style="font-weight:bold">Date</FONT> <?php echo $list['date']?> <?php echo $list['dhost']?> &nbsp; &nbsp; 
 <FONT Style="font-weight:bold">Read</FONT> <?php echo $list['refer']?><BR>
 <FONT Style="font-weight:bold">Name</FONT> <?php echo $list['uname']?> &nbsp; &nbsp;
-<? if($list['attach']) echo "<FONT Style=\"font-weight:bold\">File</FONT> {$list['attach']}" ?><BR>
+<?php if($list['attach']) echo "<FONT Style=\"font-weight:bold\">File</FONT> {$list['attach']}" ?><BR>
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
 </TD>
 <TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -182,7 +182,7 @@ if(!$np) {
 </DIV>
 
 <!-- ======================= Start Tail Design ====================== -->
-<?
+<?php
 if(!$np) {
   # Input by whole admin
   include "html/tail.php";

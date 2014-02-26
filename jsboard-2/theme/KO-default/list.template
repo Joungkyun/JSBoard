@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: list.template,v 1.26 2014-02-26 16:28:25 oops Exp $ -->
+<!-- $Id: list.template,v 1.27 2014-02-26 17:09:13 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : 게시판의 언어 타입에 따라 charset 을 가져온다.   -->
 <!-- $board['ver']     : 게시판의 버젼 정보를 가지고 온다.                -->
@@ -56,14 +56,14 @@ form { display: inline; }
 <!-- $print['preview_script'] : list 에서 미리보기를 위한 java script를   -->
 <!--                          출력한다.                                   -->
 <!-- ==================================================================== -->
-<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
 <?php echo $rss['link']?>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
 <?php echo $print['preview_script']?>
 
 <!-- ======================= 헤더 디자인 시작 ======================= -->
-<?
+<?php
 if(!$np) {
   # 각 유저별 Design
   include "{$board['headpath']}";
@@ -117,7 +117,7 @@ if(!$np) {
 <!-- if($upload['yesno'] && $cupload['yesno']) : 파일                     -->
 <!--              업로드 기능을 사용할 경우 해당 필드를 출력을 한다.      -->
 <!-- ==================================================================== -->
-<?
+<?php
   if($upload['yesno'] && $cupload['yesno']) {
     echo <<<EOF
   <TD WIDTH="$td_width[upload]" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">파일</FONT></TD>
@@ -161,7 +161,7 @@ EOF;
 <TR>
 <TD><FONT style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?php echo $print['p_list']?></FONT>
 <IMG SRC="images/blank.gif" WIDTH="1" HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
-<TD ALIGN="right"><? list_cmd(0,1) ?></TD>
+<TD ALIGN="right"><?php list_cmd(0,1) ?></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -238,7 +238,7 @@ EOF;
 </DIV>
 
 <!-- ======================= 꼬리 디자인 시작 ======================= -->
-<?
+<?php
 if(!$np) {
   # 전체 관리자에 의해 강제 input 되는 Design
   include "html/tail.php";

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: edit.template,v 1.30 2014-02-26 16:28:25 oops Exp $ -->
+<!-- $Id: edit.template,v 1.31 2014-02-26 17:09:13 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : print charset code                               -->
 <!-- $board['ver']     : version information in webboard                  -->
@@ -70,7 +70,7 @@ form { display: inline; }
 <BODY BGCOLOR="#FFFFFF">
 
 <!-- ======================= Start Header Design ======================= -->
-<?
+<?php
 print_keymenu(2);
 echo $print['preview_script'] . "\n";
 
@@ -130,7 +130,7 @@ if(!$np) {
 <!-- $view['email']          : print email field                          -->
 <!-- $list['email']          : print registed email                       -->
 <!-- ==================================================================== -->
-<?
+<?php
 if($view['email'] || trim($list['email'])) {
   echo <<<EOF
 
@@ -146,7 +146,7 @@ EOF;
 <!-- $view['url']             : print url field                           -->
 <!-- $list['url']             : print registed url                        -->
 <!-- ==================================================================== -->
-<?
+<?php
 if($view['url'] || trim($list['url'])) {
   echo <<<EOF
 
@@ -161,7 +161,7 @@ EOF;
 <!-- ==================================================================== -->
 <!-- print upload field                                                   -->
 <!-- ==================================================================== -->
-<?
+<?php
 if($list['bofile']) {
   echo <<<EOF
 <TR>
@@ -203,7 +203,7 @@ EOF;
 <!-- if login admin, don't need password                                  -->
 <!-- if IE and NS6 case, print textarea size operation button             -->
 <!-- ==================================================================== -->
-<?
+<?php
 if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
   echo <<<EOF
 <TD><B>Password</B></TD>
@@ -264,7 +264,7 @@ EOF;
 </DIV>
 
 <!-- ======================= Start Tail Design ====================== -->
-<?
+<?php
 if(!$np) {
   # Input by whole admin
   include "html/tail.php";
