@@ -1,5 +1,5 @@
 <?php
-# $Id: admin_head.php,v 1.5 2014-02-26 17:24:01 oops Exp $
+# $Id: admin_head.php,v 1.6 2014-02-26 17:50:18 oops Exp $
 $sadmin['pern']   = 10;
 if($path['type'] == "user_admin") {
   $dpath = "..";
@@ -40,7 +40,6 @@ if(!@file_exists("$ipath/config/global.php")) {
 
 # sessionÀ» ½ÃÀÛ
 session_start();
-if(!isset($_SESSION[$jsboard])) session_destroy();
 
 if($path['type'] == "user_admin" && $table) {
   if(file_exists("$ipath/data/$table/config.php"))

@@ -1,5 +1,5 @@
 <?php
-# $Id: session.php,v 1.22 2009-11-19 05:29:49 oops Exp $
+# $Id: session.php,v 1.23 2014-02-26 17:50:18 oops Exp $
 include_once 'include/variable.php';
 include_once "include/print.php";
 parse_query_str();
@@ -44,7 +44,7 @@ if ($m == "login") {
     }
 
     # 技记 殿废
-    session_register("$jsboard");
+    $_SESSION[$jsboard] = $$jsboard;
 
     if($type == "admin" && ${$jsboard}['pos'] == 1) {
       header("Location: admin/admin.php");
@@ -58,7 +58,7 @@ if ($m == "login") {
   include_once "./config/global.php";
 
   # 技记阑 昏力
-  session_destroy();
+  unset ($_SESSION[$jsboard]);
 
   if($logins == "fail") {
     if($type == "admin") $var = "?type=admin";

@@ -1,5 +1,5 @@
 <?php
-# $Id: header.php,v 1.13 2014-02-26 17:24:02 oops Exp $
+# $Id: header.php,v 1.14 2014-02-26 17:50:18 oops Exp $
 if(preg_match("/(write|edit|reply|read)\.php/i",$_SERVER['PHP_SELF']))
   session_cache_limiter('nocache');
 
@@ -30,8 +30,6 @@ if ( ! @file_exists("config/global.php") ) {
 } else { include_once "config/global.php"; }
 
 session_start();
-if(!isset($_SESSION[$jsboard]) && !preg_match("/session\.php/i",$_SERVER['PHP_SELF']))
-  session_destroy();
 
 ##############################################################################
 #  이 정보들은 건들지 말도록 한다!!!!!
