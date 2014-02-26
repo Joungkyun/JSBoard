@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: delete.template,v 1.21 2014-02-26 16:28:25 oops Exp $ -->
+<!-- $Id: delete.template,v 1.22 2014-02-26 17:09:13 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : 게시판의 언어 타입에 따라 charset 을 가져온다.   -->
 <!-- $board['ver']     : 게시판의 버젼 정보를 가지고 온다.                -->
@@ -55,17 +55,17 @@ form { display: inline; }
 <!-- print_newwindow_src()  : jsboard 의 기능에서 필요한 새창을 띄우는    -->
 <!--                          java script 를 출력하게 해 준다.            -->
 <!-- ==================================================================== -->
-<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
 <!-- ======================= 헤더 디자인 시작 ======================= -->
-<?
+<?php
 if(!$np) {
   # 각 유저별 Design
   include "{$board['headpath']}";
   # 전체 관리자에 의해 강제 input 되는 Design
   include "html/head.php";
- }
+}
 ?>
 <!-- ======================= 헤더 디자인 끝   ======================= -->
 
@@ -88,7 +88,9 @@ if(!$np) {
 <!-- ==================================================================== -->
 <!-- $list['title']  : 게시판 글 제목                                     -->
 <!-- ==================================================================== -->
-<? $list['title'] = preg_replace("/<br>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
+<?php
+$list['title'] = preg_replace("/<br>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']);
+?>
 <TR BGCOLOR="#FFAE00">
 <TD COLSPAN=2>
 <IMG SRC="./theme/KO-default/img/board_no.gif" ALIGN="middle" ALT='No.'>
@@ -109,7 +111,7 @@ if(!$np) {
 <!-- $list['uname']  : 글쓴이 이름 (homepage url 포함)                    -->
 <!-- $list['attach'] : 첨부 파일 링크                                     -->
 <!-- ==================================================================== -->
-<? if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
+<?php if($enable['dhost']) $list['dhost'] = 'By '.$list['dhost']; ?>
 <TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -120,7 +122,7 @@ if(!$np) {
 <FONT Style="font-weight:bold">등록</FONT> <?php echo $list['date']?> <?php echo $list['dhost']?> &nbsp; &nbsp; 
 <FONT Style="font-weight:bold">조회</FONT> <?php echo $list['refer']?><BR>
 <FONT Style="font-weight:bold">이름</FONT> <?php echo $list['uname']?> &nbsp; &nbsp;
-<? if($list['attach']) echo "<FONT Style=\"font-weight:bold\">파일</FONT> {$list['attach']}" ?><BR>
+<?php if($list['attach']) echo "<FONT Style=\"font-weight:bold\">파일</FONT> {$list['attach']}" ?><BR>
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
 </TD>
 <TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -177,7 +179,7 @@ if(!$np) {
 </DIV>
 
 <!-- ======================= 꼬리 디자인 시작 ======================= -->
-<?
+<?php
 if(!$np) {
   # 전체 관리자에 의해 강제 input 되는 Design
   include "html/tail.php";

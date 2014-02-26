@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: login.template,v 1.22 2014-02-26 16:28:25 oops Exp $ -->
+<!-- $Id: login.template,v 1.23 2014-02-26 17:09:13 oops Exp $ -->
 <META HTTP-EQUIV="Cache-Control" CONTENT="No-Cache">
 <META HTTP-EQUIV="Pragma" CONTENT="No-Cache">
 <TITLE>JSBoard <?php echo $board['ver']?> Login page</TITLE>
@@ -33,11 +33,11 @@ form { display: inline; }
 <script type="text/javascript">
 <!--
 function InputFocus() {
-<? if($mode == "comment") { ?>
+<?php if($mode == "comment") { ?>
   document.auth.lp.focus();
-<? } else { ?>
+<?php } else { ?>
   document.auth.lu.focus();
-<? } ?>
+<?php } ?>
   return;
 }
 //-->
@@ -45,7 +45,7 @@ function InputFocus() {
 </HEAD>
 <BODY BGCOLOR="<?php echo $color['b_bg']?>" onLoad="InputFocus()">
 
-<?
+<?php
 include "html/head.php";
 if($table) { include "data/$table/html_head.php"; }
 
@@ -72,7 +72,7 @@ if($mode == "comment") {
 <IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=4><BR>
 
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
-<? if($mode == "comment") { ?>
+<?php if($mode == "comment") { ?>
 <TR>
 <TD ALIGN="CENTER" STYLE="overflow: hidden; white-space: nowrap"><NOBR>
 Password
@@ -82,7 +82,7 @@ Password
 <BR>
 </TD>
 </TR>
-<? } else { ?>
+<?php } else { ?>
 <TR>
 <TD ALIGN="CENTER">User</TD>
 <TD ALIGN="CENTER"><INPUT TYPE="text" NAME="lu" SIZE="<?php echo $size?>" tabindex="1"></TD>
@@ -100,18 +100,18 @@ Session Reset <INPUT TYPE="BUTTON" VALUE="RESET" onClick="document.location='./s
 <BR>
 </TD>
 </TR>
-<? } ?>
+<?php } ?>
 </TABLE>
 
 <IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=4><BR>
 <INPUT TYPE="HIDDEN" NAME="m" VALUE="login">
-<? if ($mode == "comment") { ?>
+<?php if ($mode == "comment") { ?>
 <INPUT TYPE="HIDDEN" NAME="table" VALUE="<?php echo $table?>">
 <INPUT TYPE="HIDDEN" NAME="atc[no]" VALUE="<?php echo $no?>">
 <INPUT TYPE="HIDDEN" NAME="atc[cid]" VALUE="<?php echo $cid?>">
 <INPUT TYPE="HIDDEN" NAME="o[at]" VALUE="c_del">
 <INPUT TYPE="HIDDEN" NAME="page" VALUE="<?php echo $page?>">
-<? } ?>
+<?php } ?>
 
 </TD>
 </TR>
@@ -123,7 +123,7 @@ Session Reset <INPUT TYPE="BUTTON" VALUE="RESET" onClick="document.location='./s
 </TD></TR>
 </TABLE>
 
-<?
+<?php
 if($table) { include "data/$table/html_tail.php"; }
 include "html/tail.php";
 ?>

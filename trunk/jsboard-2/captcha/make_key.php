@@ -1,5 +1,5 @@
-<?
-# $Id: make_key.php,v 1.3 2012-10-11 16:22:56 oops Exp $
+<?php
+# $Id: make_key.php,v 1.4 2014-02-26 17:09:13 oops Exp $
 # alphabat uper case range 65 ~ 90
 
 $fname = 'captcha-' . getmypid () . '.db';

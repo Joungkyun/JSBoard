@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: ext.template,v 1.14 2014-02-26 16:30:58 oops Exp $ -->
+<!-- $Id: ext.template,v 1.15 2014-02-26 17:09:13 oops Exp $ -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
 <TITLE><?php echo $print['head']?> - Jsboard <?php echo $board['ver']?></TITLE>
 <STYLE TYPE="text/css">
@@ -77,7 +77,7 @@ form { display: inline; }
 
 <BODY>
 
-<?
+<?php
 include "html/head.php";
 
 echo $print['body'];

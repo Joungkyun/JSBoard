@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.26 2009-11-19 05:29:50 oops Exp $
+# $Id: act.php,v 1.27 2014-02-26 17:09:12 oops Exp $
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
@@ -175,7 +175,7 @@ $chg['notice_c'] = trim(preg_replace($src,$tar,$chg['notice_c']));
 $chg['notice_c'] = str_replace("#FONT-TAG-OPEN#","<",$chg['notice_c']);
 $chg['notice_c'] = str_replace("#FONT-TAG-CLOSE#",">",$chg['notice_c']);
 
-$chg_conf = "<?
+$chg_conf = "<?php
 ###############################################################################
 #  게시판 관리 모드
 #   ad   -> 게시판 관리자 id
@@ -389,7 +389,7 @@ file_operate("$wfile","w","Can't update $wfile",$tail);
 # style sheet file 생성
 $ua['style'] = eregi_replace("\\\\\"|\"","",$ua['style']);
 $ua['style'] = check_invalid($ua['style']);
-$wstyle = "<?
+$wstyle = "<?php
 \$user_stylesheet = \"{$ua['style']}\";
 ?>";
 

@@ -1,5 +1,5 @@
 <?php
-# $Id: uadmin.php,v 1.37 2014-02-26 16:28:24 oops Exp $
+# $Id: uadmin.php,v 1.38 2014-02-26 17:09:12 oops Exp $
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
@@ -317,7 +317,7 @@ function fresize(value,name) {
 
 <BODY BGCOLOR=<?php echo $color['b_bg']?>>
 
-<? include "../../data/$table/html_head.php"; ?>
+<?php include "../../data/$table/html_head.php"; ?>
 
 <TABLE width=600 border=0 cellpadding=0 cellspacing=1 ALIGN=<?php echo $board['align']?>>
 <TR><TD BGCOLOR=<?php echo $color['b_bg']?>>
@@ -385,7 +385,7 @@ function fresize(value,name) {
 <TD COLSPAN=4>
 <SELECT NAME=ua[theme_c]>
 
-<? get_theme_list($path['type'],$print['theme']); ?>
+<?php get_theme_list($path['type'],$print['theme']); ?>
 
 </SELECT>
 </TD>
@@ -603,7 +603,7 @@ function fresize(value,name) {
 <TD BGCOLOR=<?php echo $color['m_bg']?>><font class=MCOLOR>Admin</font></TD>
 <TD ALIGN=center>
 
-<?
+<?php
 if ($rmail['uses']) {
   echo "<INPUT TYPE=radio name=ua[admin] $amail_ok value=1 class=RADIO>{$langs['ua_mail_p']}\n".
        "<INPUT TYPE=radio name=ua[admin] $amail_no value=0 class=RADIO>{$langs['ua_mail_n']}\n";
@@ -618,7 +618,7 @@ if ($rmail['uses']) {
 <TD BGCOLOR=<?php echo $color['m_bg']?>><font class=MCOLOR>User</font></TD>
 <TD ALIGN=center>
 
-<?
+<?php
 if ($rmail['uses']) {
   echo "<INPUT TYPE=radio name=ua[user] $umail_ok value=1 class=RADIO>{$langs['ua_mail_p']}\n".
        "<INPUT TYPE=radio name=ua[user] $umail_no value=0 class=RADIO>{$langs['ua_mail_n']}\n";
@@ -637,7 +637,7 @@ if ($rmail['uses']) {
 <TD BGCOLOR=<?php echo $color['m_bg']?>><font class=MCOLOR>E-mail</font></TD>
 <TD COLSPAN=4>
 
-<?
+<?php
 if ($rmail['uses']) echo "<INPUT TYPE=text name=ua[toadmin] size=$lsize value=\"{$rmail['toadmin']}\">";
 else echo "<CENTER><FONT COLOR=RED><B>{$langs['ua_while_wn']}</B></FONT></CENTER>";
 ?>
@@ -874,7 +874,7 @@ and all rights follow GPL2 License</font>
 </TABLE>
 </form>
 
-<? include "../../data/$table/html_tail.php"; ?>
+<?php include "../../data/$table/html_tail.php"; ?>
 
 </BODY>
 </HTML>

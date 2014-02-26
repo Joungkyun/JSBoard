@@ -54,11 +54,11 @@ form { display: inline; }
 <!--  print_newwindow_src()  : jsboard 義 機能で 必要な 新しいウィンドーを 浮かべる     -->
 <!--                           java script を 出力するように 日 与える.             -->
 <!--  ====================================================================  -->
-<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
 <!--  ======================= ヘッダー デザイン 手始め =======================  -->
-<?
+<?php
 if(!$np) {
   # 各 ユーザー別 Design
   include "{$board['headpath']}";
@@ -87,7 +87,7 @@ if(!$np) {
 <!--  ====================================================================  -->
 <!--  $list['title']  : 掲示板 文 題目                                      -->
 <!--  ====================================================================  -->
-<? $list['title'] = preg_replace("/<br>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
+<?php $list['title'] = preg_replace("/<br>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
 <TR BGCOLOR="#FFAE00">
 <TD COLSPAN=2>
 <IMG SRC="./theme/JP-default/img/board_no.gif" ALIGN="middle" ALT='No.'>
@@ -108,7 +108,7 @@ if(!$np) {
 <!--  $list['uname']  : 著者 名前 (homepage url 含み)                     -->
 <!--  $list['attach'] : 添付 ファイル リンク                                      -->
 <!--  ====================================================================  -->
-<? if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
+<?php if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
 <TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
 <TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -119,7 +119,7 @@ if(!$np) {
 <FONT Style="font-weight:bold">登録</FONT> <?php echo $list['date']?> <?php echo $list['dhost']?> &nbsp; &nbsp; 
 <FONT Style="font-weight:bold">問い合わせ</FONT> <?php echo $list['refer']?><BR>
 <FONT Style="font-weight:bold">名前</FONT> <?php echo $list['uname']?> &nbsp; &nbsp;
-<? if($list['attach']) echo "<FONT Style=\"font-weight:bold\">ファイル</FONT> {$list['attach']}" ?><BR>
+<?php if($list['attach']) echo "<FONT Style=\"font-weight:bold\">ファイル</FONT> {$list['attach']}" ?><BR>
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
 </TD>
 <TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -176,7 +176,7 @@ if(!$np) {
 </DIV>
 
 <!--  ======================= しっぽ デザイン 手始め =======================  -->
-<?
+<?php
 if(!$np) {
   # 全体 管理者に 義解 強制 input なる Design
   include "html/tail.php";

@@ -1,7 +1,7 @@
 JSBoard Template 제작 방법
-$Id: README.THEME,v 1.6 2014-02-26 16:28:24 oops Exp $
+$Id: README.THEME,v 1.7 2014-02-26 17:09:13 oops Exp $
 
-작성 : 김정균 <http://www.oops.org>
+작성 : 김정균 <http://oops.org>
 일시 : 2001 12  3
 
 일단 테마를 만들려면 테마의 이름은 대문자언어코드-테마이름 (예를 들어
@@ -9,7 +9,7 @@ KO-default) 의 형식을 가져야 한다. 또한 theme directory의 테마들은 테
 마 이름의 디렉토리를 가지고 있어야 한다.
 
 KO-default theme 에 있는 파일들은 모두 존재해야하며 image는 img 디렉토
-리 아래에 admin.gif 가 꼭 존재해야 한다. 각 html template 에서 <? ?>로
+리 아래에 admin.gif 가 꼭 존재해야 한다. 각 html template 에서 <?php ?>로
 쌓여져 있는 부분은 게시판에서 꼭 필요한 부분 들이기 때문에 모두 사용을
 해야 한다. 혹시 빠지는 것을 대비 하기 위해 게시판 관리자에서 모든 기능
 을 활성화 한 상태에서 theme 를 만들기 바란다.
@@ -105,7 +105,7 @@ c 의 값으로 변경해 줘야 한다. 이는 검색후에 검색폼이 검색한 값을 유지시
 만약 select 문을 checkbox 나 radio button 으로 변경하여 사용할 경우에
 는 서치폼 위에
 
-<?
+<?php
 if(!$o[at]) {
   $sform[sc][t] = " CHECKED";
   $sform[st][m] = " CHECKED";

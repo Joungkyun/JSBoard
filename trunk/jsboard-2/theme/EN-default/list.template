@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: list.template,v 1.25 2014-02-26 16:28:25 oops Exp $ -->
+<!-- $Id: list.template,v 1.26 2014-02-26 17:09:13 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : print charset code                               -->
 <!-- $board['ver']     : version information in webboard                  -->
@@ -56,14 +56,14 @@ TEXTAREA {
 <!-- $print['preview_script'] : print jsva script for preview function in -->
 <!--                          list page                                   -->
 <!-- ==================================================================== -->
-<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
 <?php echo $rss['link']?>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
 <?php echo $print['preview_script']?>
 
 <!-- ======================= Start Header Design ======================= -->
-<?
+<?php
 if(!$np) {
   # Design per user
   include "{$board['headpath']}";
@@ -114,7 +114,7 @@ if(!$np) {
 <!-- if($upload['yesno'] && $cupload['yesno']) : If use                   -->
 <!--             file upload function, this printed                       -->
 <!-- ==================================================================== -->
-<?
+<?php
   if($upload['yesno'] && $cupload['yesno']) {
     echo <<<EOF
   <TD WIDTH="{$td_width['upload']}" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">File</FONT></TD>
@@ -158,7 +158,7 @@ EOF;
 <TR>
 <TD><FONT style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?php echo $print['p_list']?></FONT>
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
-<TD ALIGN="right"><? list_cmd(0,1) ?></TD>
+<TD ALIGN="right"><?php list_cmd(0,1) ?></TD>
 </TR>
 
 <!-- ==================================================================== -->
@@ -233,7 +233,7 @@ EOF;
 </DIV>
 
 <!-- ======================= Start Tail Design ====================== -->
-<?
+<?php
 if(!$np) {
   # Input by whole admin
   include "html/tail.php";

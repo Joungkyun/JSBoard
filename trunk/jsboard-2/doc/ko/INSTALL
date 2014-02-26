@@ -10,7 +10,7 @@
 #
 #################################################################################
 #
-# $Id: INSTALL,v 1.18 2009-11-19 05:29:50 oops Exp $
+# $Id: INSTALL,v 1.19 2014-02-26 17:09:13 oops Exp $
 #                               Installation in JSBoard 2.0 v0.5
 #
 #################################################################################
@@ -657,11 +657,11 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
    경우에는 .php3 file 에서만 이 기능을 사용할수 있다.  그리고 prelist.php 를 불러
    들이는 위치는 꼭 <body> 와 </body> 태그 사이어야 한다는 것이 아주 중요하다.)
 
-   <? include "절대경로/prelist.php"; ?>
+   <?php include "절대경로/prelist.php"; ?>
 
    다음 리스트 출력을 원하는 부분에 다음과 같은 함수를 적어 주도록 한다.
 
-   <? prelist("a","b","c"); ?>
+   <?php prelist("a","b","c"); ?>
 
    prelist() 함수의 값들에 대해서는 아래를 참고하라.
 
@@ -675,11 +675,11 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
    예)
 
    test 게시판 3개 미리보기<br>
-   <? prelist("test",3,30); ?>
+   <?php prelist("test",3,30); ?>
 
    <p>
    test1 게시판 5개 미리보기<br>
-   <? prelist("test1",5,30); ?>
+   <?php prelist("test1",5,30); ?>
 
    일단, 위와 같이 출력을 하면 현재로서는 아무런 디자인없이 제목만 한 줄씩
    출력하게 된다. 원하는 디자인을 구성하고 싶다면 prlist() 함수를 호출하기
@@ -690,7 +690,7 @@ INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
    예>
 
    <table>
-   <?
+   <?php
    $prlistTemplate = "<tr>\n".
                      "<td>P_SUBJECT_</td>\n".
                      "<td>P_LNAME_</td>\n".

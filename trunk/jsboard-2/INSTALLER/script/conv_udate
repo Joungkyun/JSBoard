@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: conv_udate,v 1.14 2009-11-19 05:29:50 oops Exp $
+# $Id: conv_udate,v 1.15 2014-02-26 17:09:12 oops Exp $
 PERL_PATH="/usr/bin/perl"
 DEFAULTPATH="../.."
 
@@ -101,7 +101,7 @@ ACMAIL=$(sed -n -e '/compare\[email\]/ s/.*compare\[email\][^=]*=[^\"a-zA-Z\xA1-
 
 cp -af ${DEFAULTPATH}/config/global.php ${DEFAULTPATH}/config/global.php.orig
 
-echo "<?
+echo "<?php
 ##############################################################################
 #  DATABASE Configuration
 ##############################################################################
@@ -357,7 +357,7 @@ do
 
   cp -af ${DEFAULTPATH}/data/${i}/config.php ${DEFAULTPATH}/data/${i}/config.php.old
 
-  echo "<?
+  echo "<?php
 ###############################################################################
 #  게시판 관리 모드
 #   ad   -> 게시판 관리자 id

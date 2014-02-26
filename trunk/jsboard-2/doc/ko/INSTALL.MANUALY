@@ -10,7 +10,7 @@
 #
 #################################################################################
 #
-# $Id: INSTALL.MANUALY,v 1.22 2009-11-19 05:29:50 oops Exp $
+# $Id: INSTALL.MANUALY,v 1.23 2014-02-26 17:09:13 oops Exp $
 #                              Quick Installation in JSBoard 2.0 v0.4
 #
 #################################################################################
@@ -163,7 +163,7 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
 
     다음 위의 소켓 file의 경로를 이용하여 다음과 같이 file을 만든다.
 
-    <?
+    <?php
     $mcheck = mysql_connect(":/var/lib/mysql/mysql.sock","root","$passwd");
 
     if ($mcheck) echo "MySQL 접속에 성공했습니다.";
@@ -606,11 +606,11 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
    경우에는 .php3 file 에서만 이 기능을 사용할수 있다.  그리고 prelist.php 를 불러
    들이는 위치는 꼭 <body> 와 </body> 태그 사이어야 한다는 것이 아주 중요하다.)
 
-   <? include "절대경로/prelist.php"; ?>
+   <?php include "절대경로/prelist.php"; ?>
 
    다음 리스트 출력을 원하는 부분에 다음과 같은 함수를 적어 주도록 한다.
 
-   <? prelist("a","b","c"); ?>
+   <?php prelist("a","b","c"); ?>
 
    prelist() 함수의 값들에 대해서는 아래를 참고하라.
 
@@ -624,11 +624,11 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
    예)
 
    test 게시판 3개 미리보기<br>
-   <? prelist("test",3,30); ?>
+   <?php prelist("test",3,30); ?>
 
    <p>
    test1 게시판 5개 미리보기<br>
-   <? prelist("test1",5,30); ?>
+   <?php prelist("test1",5,30); ?>
 
    일단, 위와 같이 출력을하면 현재로서는 아무런 디자인없이 제목만 한 줄씩 출력하
    게 된다. 원하는 디자인을 구성하고 싶다면 prlist() 함수를 호출하기 전에
@@ -639,7 +639,7 @@ Redhat, Debian, FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS 문
    예>
 
    <table>
-   <?
+   <?php
    $prlistTemplate = "<tr>\n".
                      "<td>P_SUBJECT_</td>\n".
                      "<td>P_LNAME_</td>\n".

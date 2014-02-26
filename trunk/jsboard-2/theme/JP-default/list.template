@@ -55,14 +55,14 @@ form { display: inline; }
 <!--  $print['preview_script'] : list で 予め見るのを ための java scriptを    -->
 <!--                           出力する.                                    -->
 <!--  ====================================================================  -->
-<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
 <?php echo $rss['link']?>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
 <?php echo $print['preview_script']?>
 
 <!--  ======================= ヘッダー デザイン 手始め =======================  -->
-<?
+<?php
 if(!$np) {
   # 各 ユーザー別 Design
   include "{$board['headpath']}";
@@ -116,7 +116,7 @@ if(!$np) {
 <!--  if($upload['yesno'] && $cupload['yesno']) : ファイル                      -->
 <!--               アップロード 機能を 使う 場合 該当 フィールドを 出力を する.       -->
 <!--  ====================================================================  -->
-<?
+<?php
   if($upload['yesno'] && $cupload['yesno']) {
     echo <<<EOF
   <TD WIDTH="$td_width[upload]" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">ファイル</FONT></TD>
@@ -160,7 +160,7 @@ EOF;
 <TR>
 <TD><FONT style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?php echo $print['p_list']?></FONT>
 <IMG SRC="images/blank.gif" WIDTH="1" HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
-<TD ALIGN="right"><? list_cmd(0,1) ?></TD>
+<TD ALIGN="right"><?php list_cmd(0,1) ?></TD>
 </TR>
 
 <!--  ====================================================================  -->
@@ -237,7 +237,7 @@ EOF;
 </DIV>
 
 <!--  ======================= しっぽ デザイン 手始め =======================  -->
-<?
+<?php
 if(!$np) {
   # 全体 管理者に 義解 強制 input なる Design
   include "html/tail.php";

@@ -1,5 +1,5 @@
-<?
-# $Id: session.php,v 1.9 2009-11-19 05:29:49 oops Exp $
+<?php
+# $Id: session.php,v 1.10 2014-02-26 17:09:10 oops Exp $
 session_start(); // session을 시작한다.
 require_once '../include/print.php';
 parse_query_str();

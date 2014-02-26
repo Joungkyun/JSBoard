@@ -1,22 +1,22 @@
 <!-- =============================== A foreword =============================== -->
 <HTML>
 <HEAD>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<? echo $langs['charset'] ?>">
-<!-- $Id: html_ahead.php,v 1.4 2009-11-19 05:29:50 oops Exp $ -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset'] ?>">
+<!-- $Id: html_ahead.php,v 1.5 2014-02-26 17:09:12 oops Exp $ -->
 <TITLE>JSBoard Administration Center [ 
-<?
+<?php
  if (!preg_match("/admin/i",$file_lo)) echo get_title();
  else    echo "$sub_title";
 ?> ]</TITLE>
 <STYLE TYPE="text/css">
 <!--
-A:link, A:visited, A:active { TEXT-DECORATION: none; color:<? echo $color['text'] ?> }
-A:hover { TEXT-DECORATION: underline; color:<? echo $color['text'] ?> }
-TD { FONT: 10pt <? echo $langs['font'] ?>; color:<? echo $color['text'] ?>; }
-INPUT {font: 9pt <? echo $langs['font'] ?>; BACKGROUND-COLOR:<? echo $color['b_bg'] ?>; COLOR:<? echo $color['text'] ?>; BORDER:1x solid <? echo $color['n1_fg'] ?>}
-TEXTAREA {font: 10pt <? echo $langs['font'] ?>; BACKGROUND-COLOR:<? echo $color['l4_bg'] ?>; COLOR:<? echo $color['l4_fg'] ?>; BORDER:1x solid <? echo $color['l4_gu'] ?>}
- .radio {font: 9pt <? echo $langs['font'] ?>; BACKGROUND-COLOR:<? echo $color['bgcol'] ?>; COLOR:<? echo $color['l0_bg'] ?>; BORDER:1x solid <? echo $color['bgcol'] ?>}
- .title {font:20pt <? echo $langs['font'] ?>; color:<? echo $color['n0_bg'] ?>}
+A:link, A:visited, A:active { TEXT-DECORATION: none; color:<?php echo $color['text'] ?> }
+A:hover { TEXT-DECORATION: underline; color:<?php echo $color['text'] ?> }
+TD { FONT: 10pt <?php echo $langs['font'] ?>; color:<?php echo $color['text'] ?>; }
+INPUT {font: 9pt <?php echo $langs['font'] ?>; BACKGROUND-COLOR:<?php echo $color['b_bg'] ?>; COLOR:<?php echo $color['text'] ?>; BORDER:1x solid <?php echo $color['n1_fg'] ?>}
+TEXTAREA {font: 10pt <?php echo $langs['font'] ?>; BACKGROUND-COLOR:<?php echo $color['l4_bg'] ?>; COLOR:<?php echo $color['l4_fg'] ?>; BORDER:1x solid <?php echo $color['l4_gu'] ?>}
+ .radio {font: 9pt <?php echo $langs['font'] ?>; BACKGROUND-COLOR:<?php echo $color['bgcol'] ?>; COLOR:<?php echo $color['l0_bg'] ?>; BORDER:1x solid <?php echo $color['bgcol'] ?>}
+ .title {font:20pt <?php echo $langs['font'] ?>; color:<?php echo $color['n0_bg'] ?>}
 -->
 </STYLE>
 <?php

@@ -1,5 +1,5 @@
 <?php
-# $Id: userlist.php,v 1.10 2014-02-26 16:28:24 oops Exp $
+# $Id: userlist.php,v 1.11 2014-02-26 17:09:12 oops Exp $
 $path['type'] = "admin";
 include "include/admin_head.php";
 
@@ -207,4 +207,4 @@ java_scr();
 </FORM>
 </TABLE>
 
-<? htmltail(); ?>
+<?php htmltail(); ?>

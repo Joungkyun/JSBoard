@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: read.template,v 1.28 2014-02-26 16:28:25 oops Exp $ -->
+<!-- $Id: read.template,v 1.29 2014-02-26 17:09:14 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : 게시판의 언어 타입에 따라 charset 을 가져온다.   -->
 <!-- $board['ver']     : 게시판의 버젼 정보를 가지고 온다.                -->
@@ -113,13 +113,13 @@ form { display: inline; }
 <!-- $print['preview_script'] : list 에서 미리보기를 위한 java script를   -->
 <!--                          출력한다.                                   -->
 <!-- ==================================================================== -->
-<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
 <?php echo $print['preview_script']?>
 
 <!-- ======================= 헤더 디자인 시작 ======================= -->
-<?
+<?php
 if(!$np) {
   # 각 유저별 Design
   include "{$board['headpath']}";
@@ -159,7 +159,7 @@ if(!$np) {
 <!-- ==================================================================== -->
 <!-- $list['title']  : 게시판 글 제목                                     -->
 <!-- ==================================================================== -->
-<? $list['title'] = preg_replace("/<BR>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
+<?php $list['title'] = preg_replace("/<BR>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
 <TR BGCOLOR="#FFAE00">
 <TD COLSPAN=3>
 <IMG SRC="./theme/KO-default/img/board_no.gif" ALIGN="middle" ALT='TITLE: '>
@@ -190,7 +190,7 @@ if(!$np) {
 <FONT Style="font-weight:bold">등록</FONT> <?php echo $list['date']?> &nbsp; &nbsp; 
 <FONT Style="font-weight:bold">조회</FONT> <?php echo $list['refer']?><BR>
 <FONT Style="font-weight:bold">이름</FONT> <?php echo $list['uname']?> &nbsp; &nbsp;
-<? if($list['attach']) echo "<FONT Style=\"font-weight:bold\">파일</FONT> {$list['attach']}" ?><BR>
+<?php if($list['attach']) echo "<FONT Style=\"font-weight:bold\">파일</FONT> {$list['attach']}" ?><BR>
 <IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
 </TD>
 <TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
@@ -224,7 +224,7 @@ if(!$np) {
 </TD></TR>
 </TABLE>
 
-<? if ($print['rlists']) { ?>
+<?php if ($print['rlists']) { ?>
 <P>
 <TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
 <TR><TD BGCOLOR="<?php echo $color['l3_bg']?>"><IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
@@ -238,7 +238,7 @@ if(!$np) {
 </TD></TR>
 <TR><TD BGCOLOR="<?php echo $color['l3_bg']?>"><IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
 </TABLE>
-<? } ?>
+<?php } ?>
 
 <!-- ==================================================================== -->
 <!-- $print['regist']  : 글 등록지를 출력. (게시판 어드민에서 관리가 가능 -->
@@ -249,7 +249,7 @@ if(!$np) {
 <TR>
 <TD>
 <FONT style="font-family:tahoma,sans-serif;font-size:11px;"><?php echo $print['regist']?>&nbsp;</FONT><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
-<TD ALIGN="right"><? read_cmd(0,1) ?></TD>
+<TD ALIGN="right"><?php read_cmd(0,1) ?></TD>
 </TR>
 </TABLE>
 
@@ -330,7 +330,7 @@ SQL Time [ <?php echo $print['sqltime']?> Sec ]<BR>
 </DIV>
 
 <!-- ======================= 꼬리 디자인 시작 ======================= -->
-<?
+<?php
 if(!$np) {
   # 전체 관리자에 의해 강제 input 되는 Design
   include "html/tail.php";
