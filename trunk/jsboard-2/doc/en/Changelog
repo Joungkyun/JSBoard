@@ -11,7 +11,7 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.291 2014-02-26 18:55:11 oops Exp $
+$Id: Changelog,v 1.292 2014-02-26 19:02:04 oops Exp $
 
 
 -----------------------------------------------------------------------------
@@ -23,6 +23,7 @@ by JoungKyun.Kim
 	- fixed session_register and session_destroy problems on PHP 5.5
 	- fixed print utf8 charset on Mysql utf8 default-charset env
 	- fixed htmlspecials probome after PHP 5.4
+	- fixed shorter form size problem on Chrome browser
 
 Wed, Jan, 01 2014
 by JoungKyun.Kim
