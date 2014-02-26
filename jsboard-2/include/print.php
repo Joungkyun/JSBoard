@@ -1,5 +1,5 @@
 <?php
-# $Id: print.php,v 1.41 2014-02-26 18:55:11 oops Exp $
+# $Id: print.php,v 1.42 2014-02-26 19:02:04 oops Exp $
 #
 # Wrapper function
 #
@@ -111,7 +111,7 @@ function form_size($size, $print = 0) {
   }
 
   # 인터넷 익스플로러
-  else if($agent['br'] == 'MSIE' || $agent['br'] == 'Firefox') {
+  else if($agent['br'] == 'MSIE' || $agent['br'] == 'Firefox' || $agent['br'] == 'Chrome') {
     if ($agent['os'] == 'NT')
       if ($langs['code'] == 'ko') $size *= 2.3;
       else $size *= 2.0;
