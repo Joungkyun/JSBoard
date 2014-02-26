@@ -1,5 +1,5 @@
 <?php
-# $Id: admin_head.php,v 1.4 2009-11-19 05:29:50 oops Exp $
+# $Id: admin_head.php,v 1.5 2014-02-26 17:24:01 oops Exp $
 $sadmin['pern']   = 10;
 if($path['type'] == "user_admin") {
   $dpath = "..";
@@ -40,7 +40,7 @@ if(!@file_exists("$ipath/config/global.php")) {
 
 # session을 시작
 session_start();
-if(!session_is_registered("$jsboard")) session_destroy();
+if(!isset($_SESSION[$jsboard])) session_destroy();
 
 if($path['type'] == "user_admin" && $table) {
   if(file_exists("$ipath/data/$table/config.php"))
@@ -60,7 +60,7 @@ include_once "$ipath/include/replicate.php";
 include_once "$dpath/include/print.php";
 
 # 관리자 정보
-if (session_is_registered("$jsboard")) {
+if (isset($_SESSION[$jsboard])) {
   if($_SESSION[$jsboard]['pos'] == 1) $board['super'] = 1;
   if(strstr($board['ad'],";")) {
     if(preg_match("/{$_SESSION[$jsboard]['id']};|;{$_SESSION[$jsboard]['id']}/",$board['ad'])) $board['adm'] = 1;

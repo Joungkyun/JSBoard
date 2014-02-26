@@ -1,5 +1,5 @@
 JSBoard v2.0 Upgrade document
-$Id: README.OPERATE,v 1.10 2014-02-26 17:09:13 oops Exp $
+$Id: README.OPERATE,v 1.11 2014-02-26 17:24:02 oops Exp $
 
 2001.12.19 김정균 <http://www.oops.org>
 
@@ -216,7 +216,7 @@ JSBoard 의 로그인 모드는 총 7가지 단계를 가진다. 각 단계의 설정은 다음과 같다. �
     는 것이다.
 
     <?php
-    if(session_is_registered("$loginjsboard") && $loginjsboard[pos] == 1) {
+    if(isset($_SESSION[$loginjsboard]) && $loginjsboard['pos'] == 1) {
       echo "<a href=http://domain.com/jsboard/admin/>전체 관리자</a>";
     }
     ?>

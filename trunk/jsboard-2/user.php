@@ -1,10 +1,10 @@
 <?php
-# $Id: user.php,v 1.16 2009-11-19 05:29:49 oops Exp $
+# $Id: user.php,v 1.17 2014-02-26 17:24:01 oops Exp $
 $p_time[] = microtime(); # 加档 眉农
 include "include/header.php";
 include "admin/include/check.php";
 
-if(!session_is_registered("$jsboard")) print_error("{$langs['login_err']}");
+if(!isset($_SESSION[$jsboard])) print_error("{$langs['login_err']}");
 
 $a_time[] = microtime(); # 加档 眉农
 

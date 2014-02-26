@@ -1,5 +1,5 @@
 <?php
-# $Id: admin.php,v 1.18 2009-11-19 05:29:50 oops Exp $
+# $Id: admin.php,v 1.19 2014-02-26 17:24:01 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 
@@ -9,7 +9,7 @@ if($ts) {
   $tslinks = "&ts=$ts";
 }
 
-if(!session_is_registered("$jsboard") || $_SESSION[$jsboard]['pos'] != 1)
+if(!isset($_SESSION[$jsboard]) || $_SESSION[$jsboard]['pos'] != 1)
   print_error($langs['login_err']);
 
 # 패스워드가 기본값에서 변경이 되지 않았을 경우 계속 경고를 함 - admin/include/print.php

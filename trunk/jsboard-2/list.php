@@ -1,5 +1,5 @@
 <?php
-# $Id: list.php,v 1.27 2009-11-19 05:29:49 oops Exp $
+# $Id: list.php,v 1.28 2014-02-26 17:24:01 oops Exp $
 # 페이지 로딩 시간 시작
 $p_time[] = microtime();
 include "include/header.php";
@@ -7,7 +7,7 @@ include "include/header.php";
 $page = !$page ? 1 : $page;
 $nolenth = 0;
 
-if(!session_is_registered("$jsboard") && preg_match("/^(2|3|5|7)$/",$board['mode']))
+if(!isset($_SESSION[$jsboard]) && preg_match("/^(2|3|5|7)$/",$board['mode']))
   print_error($langs['login_err']);
 
 $board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";

@@ -1,10 +1,10 @@
 <?php
-# $Id: read.php,v 1.34 2009-11-19 05:29:49 oops Exp $
+# $Id: read.php,v 1.35 2014-02-26 17:24:01 oops Exp $
 $p_time[] = microtime(); # 속도 체크
 require_once "include/header.php";
 require_once "include/wikify.php";
   
-if(preg_match("/^(2|3|5)$/",$board['mode']) && !session_is_registered("$jsboard"))
+if(preg_match("/^(2|3|5)$/",$board['mode']) && !isset($_SESSION[$jsboard]))
   print_error($langs['login_err']);
   
 $board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";

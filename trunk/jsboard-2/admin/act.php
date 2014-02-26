@@ -1,10 +1,10 @@
 <?php
-# $Id: act.php,v 1.16 2014-02-26 17:09:12 oops Exp $
+# $Id: act.php,v 1.17 2014-02-26 17:24:01 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 include "../include/ostype.php";
 
-if(!session_is_registered("$jsboard") || $_SESSION[$jsboard]['pos'] != 1)
+if(!isset($_SESSION[$jsboard]) || $_SESSION[$jsboard]['pos'] != 1)
 print_error($langs['login_err']);
 
 if($mode == "global_chg") {

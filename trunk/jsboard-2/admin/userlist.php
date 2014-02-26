@@ -1,9 +1,9 @@
 <?php
-# $Id: userlist.php,v 1.11 2014-02-26 17:09:12 oops Exp $
+# $Id: userlist.php,v 1.12 2014-02-26 17:24:01 oops Exp $
 $path['type'] = "admin";
 include "include/admin_head.php";
 
-if(!session_is_registered("$jsboard") || $_SESSION[$jsboard]['pos'] != 1)
+if(!isset($_SESSION[$jsboard]) || $_SESSION[$jsboard]['pos'] != 1)
   print_error($langs['login_err']);
 
 if($t && $m == "delete") $do = "?t=$t";

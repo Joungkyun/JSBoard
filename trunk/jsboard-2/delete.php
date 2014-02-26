@@ -1,12 +1,12 @@
 <?php
-# $Id: delete.php,v 1.24 2009-11-19 05:29:49 oops Exp $
+# $Id: delete.php,v 1.25 2014-02-26 17:24:01 oops Exp $
 require_once "./include/header.php";
 require_once "./include/wikify.php";
 
 $board['super'] = $board['adm'] ? 1 : $board['super'];
 
 if(preg_match("/^(1|3)$/",$board['mode'])) { if($board['super'] != 1) print_error($langs['perm_err'],250,150,1); }
-if(preg_match("/^(2|5)$/",$board['mode']) && !session_is_registered("$jsboard")) print_error($langs['perm_err'],250,150,1);
+if(preg_match("/^(2|5)$/",$board['mode']) && !isset($_SESSION[$jsboard])) print_error($langs['perm_err'],250,150,1);
 
 # upload['dir'] 에 mata character 포함 여부 체크
 meta_char_check($upload['dir']);

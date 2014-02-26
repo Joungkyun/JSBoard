@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.78 2014-01-01 09:34:23 oops Exp $
+# $Id: act.php,v 1.79 2014-02-26 17:24:01 oops Exp $
 include_once 'include/variable.php';
 include_once "include/print.php";
 # GET/POST 변수를 제어
@@ -11,9 +11,9 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
   sql_connect($db['rhost'],$db['user'],$db['pass'],$db['rmode']);
   sql_select_db($db['name']);
 
-  if($board['mode'] && session_is_registered("$jsboard")) {
+  if($board['mode'] && isset($_SESSION[$jsboard])) {
     # 로그인을 안했을 경우 로그인 화면으로, 했을 경우 패스워드 인증
-    if($board['mode'] != 1 && !session_is_registered("$jsboard")) print_error($langs['login_err']);
+    if($board['mode'] != 1 && !isset($_SESSION[$jsboard])) print_error($langs['login_err']);
     else compare_pass($_SESSION[$jsboard]);
     $atc['passwd'] = $_SESSION[$jsboard]['pass'];
   }
@@ -150,7 +150,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     $atc['text'] = preg_replace("/(^[:]+ [^\r\n]+)\r?\n([^:\r\n]+\r?\n)/mi","\\1 \\2",$atc['text']);
 
     $atc = article_check($table, $atc);
-    if(preg_match("/^(0|4)$/",$board['mode']) || !session_is_registered("$jsboard")) $atc['passwd'] = crypt($atc['passwd']);
+    if(preg_match("/^(0|4)$/",$board['mode']) || !isset($_SESSION[$jsboard])) $atc['passwd'] = crypt($atc['passwd']);
 
     # 답변시 file upload 설정 부분, 전체 관리자가 허락시에만 가능
     if ($upload['yesno'] && $cupload['yesno'] && !$agent['tx']) {
