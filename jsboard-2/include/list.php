@@ -1,5 +1,5 @@
 <?php
-# $Id: list.php,v 1.8 2009-11-19 05:29:51 oops Exp $
+# $Id: list.php,v 1.9 2014-02-26 18:55:11 oops Exp $
 
 function print_list($table, $list, $r=0)
 {
@@ -15,7 +15,7 @@ function print_list($table, $list, $r=0)
     $list['name'] = $list['rname'] ? $list['rname'] : $list['name'];
   }
   $list['name'] = unhtmlspecialchars($list['name']);
-  $list['name']  = htmlspecialchars(cut_string($list['name'],$board['nam_l']));
+  $list['name']  = convspecialchars(cut_string($list['name'],$board['nam_l']));
   $list['name'] = trim(ugly_han($list['name']));
   $list['title'] = unhtmlspecialchars($list['title']);
 
@@ -26,8 +26,8 @@ function print_list($table, $list, $r=0)
   }
 
   # read시의 관련글 출력시 제목길이 조정
-  if(!$r['ln']) $list['title'] = htmlspecialchars(cut_string($list['title'],$board['tit_l']-$list['rede']*2));
-  else $list['title'] = htmlspecialchars(cut_string($list['title'],$board['tit_l']-$r['ln']-$list['rede']*2));
+  if(!$r['ln']) $list['title'] = convspecialchars(cut_string($list['title'],$board['tit_l']-$list['rede']*2));
+  else $list['title'] = convspecialchars(cut_string($list['title'],$board['tit_l']-$r['ln']-$list['rede']*2));
 
   if ($fchk == 1) {
     $fchk = 0;
@@ -76,7 +76,7 @@ function print_list($table, $list, $r=0)
   if($enable['pre']) {
     $list['ptext'] = cut_string($list['text'],$enable['preren']);
     $list['ptext'] = preg_replace("/#|'|\\\\/i","\\\\\\0",$list['ptext']);
-    $list['ptext'] = htmlspecialchars(htmlspecialchars($list['ptext']));
+    $list['ptext'] = convspecialchars(convspecialchars($list['ptext']));
     $list['ptext'] = preg_replace("/\r*\n/i","<BR>",$list['ptext']);
     $list['ptext'] = trim(str_replace("&amp;amp;","&amp;",$list['ptext']));
     $list['preview'] = " onMouseOver=\"drs('{$list['ptext']}'); return true;\" onMouseOut=\"nd(); return true;\"";
@@ -260,9 +260,9 @@ function print_comment_art($table,$list,$prints=0,$delimg) {
   global $jsboard, $board, $page, $no, $delimgcheck, $print;
   global $_config;
 
-  $list['name'] = ugly_han(htmlspecialchars(trim($list['name'])));
+  $list['name'] = ugly_han(convspecialchars(trim($list['name'])));
   $list['name'] = preg_replace("/&amp;(lt|gt|quot)/i","&\\1",$list['name']);
-  $list['text'] = ugly_han(htmlspecialchars(trim($list['text'])));
+  $list['text'] = ugly_han(convspecialchars(trim($list['text'])));
   $list['text'] = preg_replace("/&amp;(lt|gt|quot)/i","&\\1",$list['text']);
   $list['text'] = str_replace("&quot;","\"",$list['text']);
   $list['text'] = preg_replace("/&lt;(\/?FONT[^&]*)&gt;/i","<\\1>",$list['text']);

@@ -1,5 +1,5 @@
 <?php
-# $Id: get.php,v 1.20 2009-11-19 05:29:51 oops Exp $
+# $Id: get.php,v 1.21 2014-02-26 18:55:11 oops Exp $
 
 # login 정보를 얻어오는 함수
 #
@@ -281,7 +281,7 @@ function get_pos($table, $idx) {
       $next   = sql_fetch_array($result);
       sql_free_result($result);
         $next['title'] = str_replace("&amp;","&",$next['title']);
-      $next['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($next['title']));
+      $next['title'] = preg_replace("/(#|')/","\\\\1",convspecialchars($next['title']));
 
       $pos['next'] = $next['no'];
       if($next['reto']) {
@@ -304,7 +304,7 @@ function get_pos($table, $idx) {
       $prev   = sql_fetch_array($result);
       sql_free_result($result);
         $prev['title'] = str_replace("&amp;","&",$prev['title']);
-      $prev['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($prev['title']));
+      $prev['title'] = preg_replace("/(#|')/","\\\\1",convspecialchars($prev['title']));
 
       $pos['prev'] = $prev['no'];
       if($prev['reto']) {
@@ -443,7 +443,7 @@ function viewfile($tail) {
       }
     } else if (preg_match("/^(phps|txt|html?|shs)$/i",$tail)) {
       $view = file_operate($upload_file,"r",0,1200);
-      $view = htmlspecialchars(cut_string($view,1000));
+      $view = convspecialchars(cut_string($view,1000));
       if (filesize($upload_file) > 1000) $view = $view . " <p>\n ......{$langs['preview']}\n\n";
 
       $p['down'] = "$source1$view$source2";

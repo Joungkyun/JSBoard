@@ -11,7 +11,7 @@ Any one who wants install this package on any other platform must revise
 it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
-$Id: Changelog,v 1.307 2014-02-26 18:30:19 oops Exp $
+$Id: Changelog,v 1.308 2014-02-26 18:55:11 oops Exp $
 
 ******************************************************************************
 
@@ -25,6 +25,7 @@ $Id: Changelog,v 1.307 2014-02-26 18:30:19 oops Exp $
   	- short tag 사용 못하는 환경에서 동작 수정
 	- PHP 5.5에서 session_register와 session_destroy 제거 대응
 	- mysql default-charset이 UTF-8일 경우 출력 문제 수정
+	- PHP 5.4 이후 htmlspecialchars 문제 수정
 
 2014.01.01
   by 김정균

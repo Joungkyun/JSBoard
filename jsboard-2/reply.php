@@ -1,5 +1,5 @@
 <?php
-# $Id: reply.php,v 1.31 2009-11-19 05:29:49 oops Exp $
+# $Id: reply.php,v 1.32 2014-02-26 18:55:11 oops Exp $
 include "include/header.php";
 
 if ( ! $_SERVER['HTTP_REFERER'] ) {
@@ -62,7 +62,7 @@ $list['text'] = <<<EOF
 EOF;
 
 # 본문에 html tag 가 존재할 경우를 대비
-$list['text'] = htmlspecialchars($list['text']);
+$list['text'] = convspecialchars($list['text']);
 
 if($list['html']) $html_chk_ok = " checked";
 else $html_chk_no = " checked";

@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.79 2014-02-26 17:24:01 oops Exp $
+# $Id: act.php,v 1.80 2014-02-26 18:55:11 oops Exp $
 include_once 'include/variable.php';
 include_once "include/print.php";
 # GET/POST 변수를 제어
@@ -534,8 +534,8 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
 
     # 이름, 제목의 HTML 코드 문자를 치환함
     # ugly_han() -> IE 사용시에 한글 깨지는 것을 복원함
-    $atc['name']  = ugly_han(htmlspecialchars($atc['name']));
-    $atc['title'] = ugly_han(htmlspecialchars($atc['title']));
+    $atc['name']  = ugly_han(convspecialchars($atc['name']));
+    $atc['title'] = ugly_han(convspecialchars($atc['title']));
 
     # 마지막으로 올라온 글의 정보를 가져옴 (중복 투고 검사용)
     $result = sql_query("SELECT * FROM $table ORDER BY no DESC LIMIT 0, 1");

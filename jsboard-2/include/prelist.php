@@ -2,7 +2,7 @@
 ########################################################################
 # JSBoard Pre List v0.4
 # Scripted By JoungKyun Kim 2002.07.30
-# $Id: prelist.php,v 1.6 2009-11-19 05:29:51 oops Exp $
+# $Id: prelist.php,v 1.7 2014-02-26 18:55:11 oops Exp $
 ########################################################################
 
 # JSBoard가 설치되어 있는 절대 경로
@@ -100,9 +100,9 @@ function prelist($t,$limit=3,$cut=30) {
     if ( $GLOBALS['prlistOpt'] )
       $p['l'] = " ".$GLOBALS['prlistOpt'];
 
-    $p['preview'] = cut_string(htmlspecialchars($row['text']),100);
+    $p['preview'] = cut_string(convspecialchars($row['text']),100);
     $p['preview'] = preg_replace_callback ('/[#\'\x5c]/','escape_callback',$p['preview']);
-    $p['preview'] = htmlspecialchars(htmlspecialchars($p['preview']));
+    $p['preview'] = convspecialchars(convspecialchars($p['preview']));
     $p['preview'] = preg_replace("/\r?\n/i","<br>",$p['preview']);
     $p['preview'] = trim(str_replace("&amp;amp;","&amp;",$p['preview']));
     $p['preview'] = " onMouseOver=\"drs('{$p['preview']}'); return true;\" onMouseOut=\"nd(); return true;\"";

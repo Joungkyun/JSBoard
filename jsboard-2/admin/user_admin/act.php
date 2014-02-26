@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.28 2014-02-26 17:24:01 oops Exp $
+# $Id: act.php,v 1.29 2014-02-26 18:55:11 oops Exp $
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
@@ -161,7 +161,7 @@ $chg['notice_s'] = trim($ua['notices']) ? trim($ua['notices']) : "";
 $chg['notice_c'] = trim($noti) ? trim(stripslashes($noti)) : "";
 
 $chg['notice_c'] = preg_replace("/<([\/]?FONT[^>]*)>/i","#FONT-TAG-OPEN#\\1#FONT-TAG-CLOSE#",$chg['notice_c']);
-$chg['notice_c'] = htmlspecialchars($chg['notice_c']);
+$chg['notice_c'] = convspecialchars($chg['notice_c']);
 
 $src[] = "/&quot;/i";
 $tar[] = "\\\\\"";
