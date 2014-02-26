@@ -11,7 +11,7 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.288 2014-02-26 17:48:26 oops Exp $
+$Id: Changelog,v 1.289 2014-02-26 17:50:18 oops Exp $
 
 
 -----------------------------------------------------------------------------
@@ -20,6 +20,7 @@ Version   : jsboard 2.0.16
 Thu, Feb, 27 2014
 by JoungKyun.Kim
 	- remove short tag
+	- fixed session_register and session_destroy problems on PHP 5.5
 
 Wed, Jan, 01 2014
 by JoungKyun.Kim
