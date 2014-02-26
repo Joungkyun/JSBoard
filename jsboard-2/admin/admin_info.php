@@ -1,11 +1,11 @@
 <?php
-# $Id: admin_info.php,v 1.7 2009-11-19 05:29:50 oops Exp $
+# $Id: admin_info.php,v 1.8 2014-02-26 17:24:01 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 
 htmlhead();
 # session 이 등록되어 있지 않으면 로그인 화면으로.
-if(!session_is_registered("$jsboard") || $_SESSION[$jsboard]['pos'] != 1)
+if(!isset($_SESSION[$jsboard]) || $_SESSION[$jsboard]['pos'] != 1)
   print_error($langs['login_err']);
 
 # input 문의 size를 browser별로 맞추기 위한 설정

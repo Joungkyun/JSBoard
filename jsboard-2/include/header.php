@@ -1,5 +1,5 @@
 <?php
-# $Id: header.php,v 1.12 2009-11-19 05:29:51 oops Exp $
+# $Id: header.php,v 1.13 2014-02-26 17:24:02 oops Exp $
 if(preg_match("/(write|edit|reply|read)\.php/i",$_SERVER['PHP_SELF']))
   session_cache_limiter('nocache');
 
@@ -30,7 +30,7 @@ if ( ! @file_exists("config/global.php") ) {
 } else { include_once "config/global.php"; }
 
 session_start();
-if(!session_is_registered("$jsboard") && !preg_match("/session\.php/i",$_SERVER['PHP_SELF']))
+if(!isset($_SESSION[$jsboard]) && !preg_match("/session\.php/i",$_SERVER['PHP_SELF']))
   session_destroy();
 
 ##############################################################################
@@ -129,7 +129,7 @@ switch ($designer['license']) {
 }
 
 # 관리자 정보
-if (session_is_registered("$jsboard")) {
+if (isset($_SESSION[$jsboard])) {
   if($_SESSION[$jsboard]['pos'] == 1) $board['super'] = 1;
   if(strstr($board['ad'],";")) {
     if(preg_match("/{$_SESSION[$jsboard]['id']};|;{$_SESSION[$jsboard]['id']}/",$board['ad'])) $board['adm'] = 1;
@@ -143,7 +143,7 @@ if(preg_match("/(read|list)\.php/i",$_SERVER['PHP_SELF'])) {
 }
 
 # login button 출력
-if(session_is_registered("$jsboard")) {
+if(isset($_SESSION[$jsboard])) {
   if(@file_exists("./theme/{$print['theme']}/img/logout.gif"))
     $print['lout'] = "<IMG SRC=./theme/{$print['theme']}/img/logout.gif BORDER=0 ALT='LOGOUT'>";
   else $print['lout'] = "<FONT STYLE=\"font:12px tahoma;color:{$color['text']}\">&gt;&gt; logout </FONT>";

@@ -1,5 +1,5 @@
 <?php
-# $Id: print.php,v 1.39 2012-10-02 17:33:05 oops Exp $
+# $Id: print.php,v 1.40 2014-02-26 17:24:02 oops Exp $
 #
 # Wrapper function
 #
@@ -338,7 +338,7 @@ function read_cmd($img=0,$prt=0) {
 
   if(!$pos['prev']) $str['prev'] = $img ? "" : "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['n1_fg']}\">{$langs['cmd_upp']}</FONT>";
   if(!$pos['next']) $str['next'] = $img ? "" : "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['n1_fg']}\">{$langs['cmd_down']}</FONT>";
-  if(!session_is_registered("$jsboard") && !$list['passwd']) {
+  if(!isset($_SESSION[$jsboard]) && !$list['passwd']) {
     if(!$img) {
       $menu['edit'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['n1_fg']}\">{$langs['cmd_edit']}</FONT>";
       $menu['dele'] = "<FONT style=\"font-family:{$langs['vfont']},sans-serif;color:{$color['n1_fg']}\">{$langs['cmd_del']}</FONT>";
@@ -356,7 +356,7 @@ function read_cmd($img=0,$prt=0) {
   } else $str['rep'] = "";
 
   # 로그인 mode 에서 관리자가 아니고 자신의 글이 아닐경우 수정과 삭제링크를 제거
-  if(preg_match("/^(1|2|3|5|7)$/i",$board['mode']) && session_is_registered("$jsboard")) {
+  if(preg_match("/^(1|2|3|5|7)$/i",$board['mode']) && isset($_SESSION[$jsboard])) {
     if($_SESSION[$jsboard]['id'] != $list['name'] && $_SESSION[$jsboard]['pos'] != 1 && !$board['adm']) {
       $str['edit'] = "";
       $str['dele'] = "";

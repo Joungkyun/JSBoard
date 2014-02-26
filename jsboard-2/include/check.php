@@ -1,5 +1,5 @@
 <?php
-# $Id: check.php,v 1.25 2012-10-02 17:40:13 oops Exp $
+# $Id: check.php,v 1.26 2014-02-26 17:24:02 oops Exp $
 # table 이름에 meta character 가 포함되어 있는지 검사하는 함수
 # $name -> 변수값
 # $i    -> null 이라도 상관없을 경우 1
@@ -98,7 +98,7 @@ function check_email($email,$hchk=0) {
 #         http://www.php.net/manual/function.crypt.php
 function check_passwd($table,$no,$passwd) {
   global $jsboard, $board, $o;
-  if($board['mode'] && session_is_registered("$jsboard")) $sql_field = "name";
+  if($board['mode'] && isset($_SESSION[$jsboard])) $sql_field = "name";
   else $sql_field = "passwd";
 
   $passwd = !trim($passwd) ? "null passwd" : $passwd;
@@ -111,7 +111,7 @@ function check_passwd($table,$no,$passwd) {
     sql_free_result($result);
   }
 
-  if (session_is_registered("$jsboard")) {
+  if (isset($_SESSION[$jsboard])) {
     if($_SESSION[$jsboard]['id'] == $r['chk']) $chk = 1;
     if($_SESSION[$jsboard]['pos'] == 1) $chk = 2;
   }

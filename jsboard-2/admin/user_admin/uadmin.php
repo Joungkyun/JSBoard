@@ -1,9 +1,9 @@
 <?php
-# $Id: uadmin.php,v 1.38 2014-02-26 17:09:12 oops Exp $
+# $Id: uadmin.php,v 1.39 2014-02-26 17:24:01 oops Exp $
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
-if(!session_is_registered("$jsboard") || (!$board['adm'] && $board['super'] != 1))
+if(!isset($_SESSION[$jsboard]) || (!$board['adm'] && $board['super'] != 1))
   print_error($langs['login_err']);
 
 $dsize = form_size(7);

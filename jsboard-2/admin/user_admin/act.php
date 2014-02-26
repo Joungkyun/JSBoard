@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.27 2014-02-26 17:09:12 oops Exp $
+# $Id: act.php,v 1.28 2014-02-26 17:24:01 oops Exp $
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
@@ -8,7 +8,7 @@ $ua['header'] = $uaheader;
 $ua['tail']   = $uatail;
 $ua['style']  = $uastyle;
 
-if(!session_is_registered("$jsboard") || (!$board['adm'] && $board['super'] != 1))
+if(!isset($_SESSION[$jsboard]) || (!$board['adm'] && $board['super'] != 1))
   print_error($langs['login_err']);
 
 sql_connect($db['rhost'], $db['user'], $db['pass']);
