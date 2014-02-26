@@ -1,6 +1,6 @@
 <?php
 # JSboard RSS Feed
-# $Id: rss.php,v 1.24 2014-02-26 16:28:23 oops Exp $
+# $Id: rss.php,v 1.25 2014-02-26 18:55:11 oops Exp $
 #
 
 # header file »ðÀÔ
@@ -46,7 +46,7 @@ $result = sql_db_query ($db['name'], $sql);
 $i = 0;
 
 while( $rss_article[$i] = sql_fetch_array($result) ) {
-  $rss_article[$i]['title'] = htmlspecialchars ($rss_article[$i]['title'], ENT_QUOTES);
+  $rss_article[$i]['title'] = convspecialchars ($rss_article[$i]['title'], ENT_QUOTES);
   $rss_article[$i]['link'] = "{$board['path']}read.php?table={$table}&amp;no={$rss_article[$i]['no']}";
   $rss_article[$i]['date'] = date ("r", $rss_article[$i]['date']);
   #$rss_article[$i]['date'] = date("Y-m-d",$rss_article[$i]['date'] ) . 'T' . date("H:i:sO", $rss_article[$i]['date']);
@@ -54,7 +54,7 @@ while( $rss_article[$i] = sql_fetch_array($result) ) {
   if ( $rss['is_des'] ) {
     #$rss_article[$i]['text'] = preg_replace ("!\n!", "<br />\n", $rss_article[$i]['text']);
     $rss_article[$i]['text'] = preg_replace ("!^[([0-9]+;[0-9]+m)?!", "", $rss_article[$i]['text']);
-    $rss_article[$i]['text'] = htmlspecialchars ($rss_article[$i]['text']);
+    $rss_article[$i]['text'] = convspecialchars ($rss_article[$i]['text']);
     $rss_article[$i]['text'] = auto_link ($rss_article[$i]['text']);
 
     $_body = "<table width=\"100%\" border=0 cellpadding=0 cellspacing=1>\n" .
@@ -77,7 +77,7 @@ while( $rss_article[$i] = sql_fetch_array($result) ) {
              "</td></tr>\n" .
              "</table>\n";
 
-    $_body = htmlspecialchars ($_body, ENT_QUOTES);
+    $_body = convspecialchars ($_body, ENT_QUOTES);
     $rss_article[$i]['text'] = $_body;
   }
 

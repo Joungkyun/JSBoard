@@ -1,5 +1,5 @@
 <?php
-# $Id: print.php,v 1.40 2014-02-26 17:24:02 oops Exp $
+# $Id: print.php,v 1.41 2014-02-26 18:55:11 oops Exp $
 #
 # Wrapper function
 #
@@ -207,7 +207,7 @@ function page_form($pages,$o) {
 }
 
 function search_form($o) {
-  $s['ss'] = htmlspecialchars(stripslashes($o['ss']));
+  $s['ss'] = convspecialchars(stripslashes($o['ss']));
 
   if($o['er']) {
     # 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
@@ -1103,5 +1103,9 @@ function utf8_fallback (&$obj, $charset, $skip = false) {
   } else {
     $obj = iconv ($charset, 'utf-8//ignore', $obj);
   }
+}
+
+function convspecialchars ($v) {
+  return htmlspecialchars($v, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 }
 ?>

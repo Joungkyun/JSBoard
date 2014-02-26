@@ -1,5 +1,5 @@
 <?php
-# $Id: uadmin.php,v 1.39 2014-02-26 17:24:01 oops Exp $
+# $Id: uadmin.php,v 1.40 2014-02-26 18:55:11 oops Exp $
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
@@ -122,7 +122,7 @@ $board['hls'] = preg_replace("/><B><U>STR<\/U><\/B><\/FONT>/i","",$board['hls'])
 # html header의 정보를 가져 온다
 $top_head = file_operate("../../html/head.php","r");
 
-$top_head = htmlspecialchars($top_head);
+$top_head = convspecialchars($top_head);
 $top_head = str_replace("&lt;? echo ","",$top_head);
 $top_head = preg_replace("/ \?&gt;(;|\}|&lt;|&quot;| -)/i","\\1",$top_head);
 $top_head = str_replace("\$table",$table,$top_head);
@@ -158,7 +158,7 @@ if($agent['tx']) {
 $bottom_tail = file_operate("../../html/tail.php","r");
 $bottom_tail = preg_replace("/<\?(.*)\?>/i","",$bottom_tail);
 $bottom_tail = trim($bottom_tail);
-$bottom_tail = htmlspecialchars($bottom_tail);
+$bottom_tail = convspecialchars($bottom_tail);
 $bottom_tail = nl2br($bottom_tail);
 
 # 사용자 정의 styel sheet

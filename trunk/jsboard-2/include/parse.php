@@ -1,5 +1,5 @@
 <?php
-# $Id: parse.php,v 1.19 2009-11-19 05:29:51 oops Exp $
+# $Id: parse.php,v 1.20 2014-02-26 18:55:11 oops Exp $
 
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
@@ -334,7 +334,7 @@ function wordwrap_js (&$buf, $len = 80) {
     } else
       $buf .= $_buf[$i] . "\n";
   }
-  $buf = htmlspecialchars ($buf);
+  $buf = convspecialchars ($buf);
 }
 
 function js_htmlcode(&$buf) {
@@ -428,7 +428,7 @@ function text_nl2br(&$text, $html) {
     $text = !$text ? "No Contents" : $text;
     $text = "<pre>$text</pre>";
   } else {
-    $text = htmlspecialchars($text);
+    $text = convspecialchars($text);
     # 한글 깨지는것 보정
     if ($langs['code'] == "ko") $text = ugly_han($text);
     if ($html)

@@ -1,5 +1,5 @@
 <?php
-# $Id: edit.php,v 1.22 2009-11-19 05:29:49 oops Exp $
+# $Id: edit.php,v 1.23 2014-02-26 18:55:11 oops Exp $
 include "include/header.php";
 
 $board['super'] = $board['adm'] ? 1 : $board['super'];
@@ -66,7 +66,7 @@ if($disable) {
 }
 
 # 본문에 html tag 가 존재할 경우를 대비
-$list['text'] = htmlspecialchars($list['text']);
+$list['text'] = convspecialchars($list['text']);
 
 mysql_close();
 
