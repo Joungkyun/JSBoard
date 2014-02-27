@@ -1,6 +1,6 @@
 <?php
 # SQL 관련 함수들에 대한 프론트 엔드 함수
-# $Id: sql.php,v 1.5 2014-02-26 18:30:19 oops Exp $
+# $Id: sql.php,v 1.6 2014-02-27 06:50:29 oops Exp $
 #
 # 비정상적인 동작에 대한 에러 출력 등에 사용됨
 # http://www.php.net/manual/ref.mysql.php
@@ -96,7 +96,7 @@ function sql_free_result($result) {
   return $return;
 }
 
-function sql_escase(&$v) {
+function sql_escape(&$v) {
   if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc())
     return;
 

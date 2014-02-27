@@ -1,5 +1,5 @@
 <?php
-# $Id: admin_info.php,v 1.8 2014-02-26 17:24:01 oops Exp $
+# $Id: admin_info.php,v 1.9 2014-02-27 06:50:29 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 
@@ -50,7 +50,7 @@ if(!$mode) {
 
   # global 설정 가져오기
   $global_con = file_operate($configfile,"r","Don't open $configfile");
-  $global_con = preg_replace("/<\?|\?>/i","",$global_con);
+  $global_con = preg_replace("/<\?(php)?|\?>/i","",$global_con);
 
   # spam list 가져오기
   if(file_exists($spamlistfile)) $spamlist = file_operate($spamlistfile,"r");
