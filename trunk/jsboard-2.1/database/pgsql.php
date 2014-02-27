@@ -1,7 +1,7 @@
 <?php
 #
 # PosgreSQL Basic mapping function
-# $Id: pgsql.php,v 1.4 2012-10-23 17:13:00 oops Exp $
+# $Id: pgsql.php,v 1.5 2014-02-27 10:51:31 oops Exp $
 #
 
 $_extname = 'pgsql';
@@ -119,7 +119,7 @@ function sql_close ($p) {
   }
 }
 
-function sql_escase ($c, &$v) {
+function sql_escape ($c, &$v) {
   if ( function_exists ('get_magic_quotes_gpc') && get_magic_quotes_gpc() )
     return;
 
