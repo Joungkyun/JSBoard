@@ -1,7 +1,7 @@
 <?php
 #
 # MySQLi mapping function
-# $Id: mysqli.php,v 1.5 2014-02-27 10:51:31 oops Exp $
+# $Id: mysqli.php,v 1.6 2014-02-27 19:24:38 oops Exp $
 #
 
 $_extname = 'mysqli';
@@ -194,7 +194,7 @@ function exists_database ($c, $db) {
   $sql = 'SHOW DATABASES';
   $_r = sql_query ($sql, $c);
 
-  while ( $r = sql_fetch_row ($r) ) {
+  while ( $r = sql_fetch_row ($_r) ) {
     if ( $r[0] == $db )
       return 1;
   }
