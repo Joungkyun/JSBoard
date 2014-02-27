@@ -1,12 +1,14 @@
 <?php
-# $Id: header.php,v 1.14 2014-02-26 17:50:18 oops Exp $
+# $Id: header.php,v 1.15 2014-02-27 06:50:29 oops Exp $
 if(preg_match("/(write|edit|reply|read)\.php/i",$_SERVER['PHP_SELF']))
   session_cache_limiter('nocache');
 
 # config of magic quotes
-set_magic_quotes_runtime(0); 
-ini_set(magic_quotes_gpc,1);
-ini_set(magic_quotes_sybase,0);
+if(version_compare(PHP_VERSION,'5.4.0','<')) {
+  set_magic_quotes_runtime(0); 
+  ini_set(magic_quotes_gpc,1);
+  ini_set(magic_quotes_sybase,0);
+}
 ini_set(precision,15);
 
 # table 변수 체크
