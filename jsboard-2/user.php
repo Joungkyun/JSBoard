@@ -1,5 +1,5 @@
 <?php
-# $Id: user.php,v 1.17 2014-02-26 17:24:01 oops Exp $
+# $Id: user.php,v 1.18 2014-02-28 21:37:17 oops Exp $
 $p_time[] = microtime(); # 속도 체크
 include "include/header.php";
 include "admin/include/check.php";
@@ -13,8 +13,8 @@ if($m != "act") {
   $db['rmode'] = "";
 }
 
-sql_connect($db['rhost'], $db['user'], $db['pass'],$db['rmode']);
-sql_select_db($db['name']);
+$c = sql_connect($db['rhost'], $db['user'], $db['pass'],$db['rmode']);
+sql_select_db($db['name'], $c);
 
 if($m == "act") {
   if(!$chg['name']) print_error($langs['reg_name'],250,150,1);
@@ -32,7 +32,7 @@ if($m == "act") {
                      url='{$chg['url']}' WHERE no = '{$chg['no']}'";
   }
 
-  sql_query($query);
+  sql_query($query, $c);
 
   if(!$chg['check']) move_page($print['dpage'],0);
   if($_SESSION[$jsboard]['pos'] == 1 && $chg['check']) {
@@ -47,10 +47,10 @@ $board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/ht
 $chjsboard = $_SESSION[$jsboard]['id'];
 $where = ($_SESSION[$jsboard]['pos'] == 1 && $check) ? "no = '$no'" : "nid = '$chjsboard'";
 
-$result = sql_query("SELECT * FROM userdb WHERE $where");
-$row = sql_fetch_array($result);
-sql_free_result($result);
-mysql_close();
+$result = sql_query("SELECT * FROM userdb WHERE $where", $c);
+$row = sql_fetch_array($result,$c);
+sql_free_result($result,$c);
+sql_close($c);
 $a_time[] = microtime();
 $sqltime = get_microtime($a_time[0], $a_time[1]);
 

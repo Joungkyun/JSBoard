@@ -1,5 +1,5 @@
 <?php
-# $Id: userlist.php,v 1.12 2014-02-26 17:24:01 oops Exp $
+# $Id: userlist.php,v 1.13 2014-02-28 21:37:17 oops Exp $
 $path['type'] = "admin";
 include "include/admin_head.php";
 
@@ -14,11 +14,11 @@ if($m != "delete") {
   $db['rmode'] = "";
 }
 
-sql_connect($db['rhost'],$db['user'],$db['pass'],$db['rmode']);
-sql_select_db($db['name']);
+$c = sql_connect($db['rhost'],$db['user'],$db['pass'],$db['rmode']);
+sql_select_db($db['name'], $c);
 
 if($m == "delete") {
-  sql_query("DELETE FROM userdb WHERE no = $x");
+  sql_query("DELETE FROM userdb WHERE no = $x",$c);
   if($do) move_page("{$_SERVER['PHP_SELF']}$do");
 }
 
@@ -28,10 +28,10 @@ $lin = check_userlist_type($t);
 $page = !$page ? "1" : $page;
 $s = $page*20-20;
 
-$result = sql_query("SELECT * FROM userdb {$lin['like']} ORDER BY nid ASC LIMIT $s,20");
+$result = sql_query("SELECT * FROM userdb {$lin['like']} ORDER BY nid ASC LIMIT $s,20",$c);
 
-if(sql_num_rows($result)) {
-  while($row = sql_fetch_array($result)) {
+if(sql_num_rows($result,$c)) {
+  while($row = sql_fetch_array($result,$c)) {
     $i = !$i ? 1 : $i;
     if($i%2 || $i == 1) {
       $bgcol = $color['d_bg'];
@@ -63,23 +63,23 @@ if(sql_num_rows($result)) {
     $i++;
   }
 
-  sql_free_result($result);
+  sql_free_result($result,$c);
 
   # 마지막 페이지를 구함
   # ceil -> 올림을 해 주는 함수
-  $result = sql_query("SELECT COUNT(*) AS total FROM userdb {$lin['like']}");
-  $total = sql_result($result,0,"total");
-  sql_free_result($result);
+  $result = sql_query("SELECT COUNT(*) AS total FROM userdb {$lin['like']}",$c);
+  $total = sql_result($result,0,"total",$c);
+  sql_free_result($result,$c);
   $last = ceil($total/20);
 
   # 총 등록수를 구함
   if($lin['like']) {
-    $result = sql_query("SELECT COUNT(*) AS total FROM userdb");
-    $atotal = sql_result($result,0,"total");
-    sql_free_result($result);
+    $result = sql_query("SELECT COUNT(*) AS total FROM userdb",$c);
+    $atotal = sql_result($result,0,"total",$c);
+    sql_free_result($result,$c);
   }
 
-  mysql_close();
+  sql_close($c);
 
   # PAGE 링크 구성
   $sno = $page-2;
@@ -147,7 +147,7 @@ java_scr();
 <TABLE BORDER=0 WIDTH=100% HEIGHT=100% CELLPADDING=0 CELLSPACING=0>
 <TR><TD ALIGN=center VALIGN=center>
 
-<TABLE WIDTH=<?php echo $board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TABLE WIDTH=700 BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR><TD>
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
@@ -161,7 +161,7 @@ java_scr();
 </TD></TR>
 </TABLE>
 
-<TABLE WIDTH=<?php echo $board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0 ALIGN=<?php echo $board['align']?>>
+<TABLE WIDTH=700 BORDER=0 CELLPADDING=0 CELLSPACING=0 ALIGN=<?php echo $board['align']?>>
 <FORM>
 <TR><TD ALIGN=center>
 

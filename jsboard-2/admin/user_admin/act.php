@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.29 2014-02-26 18:55:11 oops Exp $
+# $Id: act.php,v 1.30 2014-02-28 21:37:18 oops Exp $
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
@@ -11,13 +11,13 @@ $ua['style']  = $uastyle;
 if(!isset($_SESSION[$jsboard]) || (!$board['adm'] && $board['super'] != 1))
   print_error($langs['login_err']);
 
-sql_connect($db['rhost'], $db['user'], $db['pass']);
-sql_select_db($db['name']);
+$c = sql_connect($db['rhost'], $db['user'], $db['pass']);
+sql_select_db($db['name'], $c);
 # password 비교함수 - admin/include/auth.php
 compare_pass($_SESSION[$jsboard]);
 
 if($ua['comment']) {
-  if (!get_tblist($db['name'],"",$table."_comm")) {
+  if (!db_table_list($c, $db['name'], '', $table.'_comm')) {
     $cret_comm = "CREATE TABLE {$table}_comm (\n".
                  "       no int(6) NOT NULL auto_increment,\n".
                  "       reno int(20) NOT NULL default '0',\n".
@@ -29,20 +29,20 @@ if($ua['comment']) {
                  "       date int(11) NOT NULL default '0',\n".
                  "       PRIMARY KEY  (no),\n".
                  "       KEY parent (reno))";
-    sql_query($cret_comm);
+    sql_query($cret_comm, $c);
   }
 
-  if (!field_exist_check ($table, "comm")) {
+  if (!field_exist_check ($c,$db['name'],$table, "comm")) {
     # comm field 추가
-    sql_query ('ALTER TABLE ' . $table . ' add comm int(6) DEFAULT 0');
+    sql_query ('ALTER TABLE ' . $table . ' add comm int(6) DEFAULT 0', $c);
     # comm field key 추가
-    sql_query ('ALTER TABLE ' . $table . ' add key (comm)');
+    sql_query ('ALTER TABLE ' . $table . ' add key (comm)', $c);
   }
 
   sync_comment ($table."_comm", $table);
 }
 
-mysql_close();
+sql_close($c);
 
 # auth value check
 $ua['ad'] = !trim($ua['ad']) ? "admin" : $ua['ad'];

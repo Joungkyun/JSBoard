@@ -1,36 +1,37 @@
 <?php
-# $Id: install.php,v 1.12 2014-02-26 16:28:23 oops Exp $
-include_once "../include/print.php";
+# $Id: install.php,v 1.13 2014-02-28 21:37:17 oops Exp $
+include_once '../include/variable.php';
+include_once '../include/print.php';
 parse_query_str();
 session_start(); // session을 시작한다.
-$path['type'] = "Install";
+$path['type'] = 'Install';
 
-if ($langss == "ko") {
-  $langs['code'] = "ko";
-  $charset = "EUC-KR";
-  $charfont = "굴림체";
+if ($langss == 'ko') {
+  $langs['code'] = 'ko';
+  $charset = 'EUC-KR';
+  $charfont = '굴림체,monospace';
 } else {
-  $langs['code'] = "en";
-  $charset = "ISO-8859-1";
-  $charfont = "tahoma,arial";
+  $langs['code'] = 'en';
+  $charset = 'ISO-8859-1';
+  $charfont = 'tahoma,arial,monospace';
 }
 
-#require("./ad_sample/global.php.orig");
-include_once "../include/lang.php";
-include_once "../include/get.php";
-include_once "../html/head.php";
-include_once "./include/passwd.php";
-include_once "./include/check.php";
-include_once "../include/version.php";
+#require './ad_sample/global.php.orig';
+include_once '../include/lang.php';
+include_once '../include/get.php';
+include_once '../html/head.php';
+include_once './include/passwd.php';
+include_once './include/check.php';
+include_once '../include/version.php';
 
 # Password Check
 inst_pwcheck($passwd,$_SESSION['mysqlpass'],$langs['act_pw']);
 
-$disable = $mysqlroot ? "" : " disabled";
+$disable = $mysqlroot ? '' : ' disabled';
 
 if($mysqlroot) {
   $dbname = "JSBoard-$version";
-  $dbname = preg_replace("/(\-|\.|[ ]*)/","",$dbname);
+  $dbname = preg_replace('/(\-|\.|[ ]*)/','',$dbname);
 } else {
   $dbname = $mysqldatabasename;
   $dbuser = $mysqlusername;
@@ -57,8 +58,8 @@ if($mysqlroot) {
     a:link, a:visited, a:active { text-decoration: none; color:#555; }
     a:hover { text-decoration:underline; color:#555; }
     form { display: inline; }
-    input { border:1x solid #555555;background-color:silver;font:11px <?php echo $charfont?>;color:#333; }
-    textarea { border:1x solid #555555;background-color:silver;font:13px <?php echo $charfont?>;color:#333; }
+    input { border:1x solid #555555;background-color:silver;font-size:11px; font-family: <?php echo $charfont?>;color:#333; }
+    textarea { border:1x solid #555555;background-color:silver;font-size:13px; font-family: <?php echo $charfont?>;color:#333; }
     .defs { color:#555; font-size:12px; font-family: tahoma,sans-serif; }
     .defs_b { color:#555; font-size:12px; font-family: tahoma,sans-serif; font-weight: bold; }
     -->

@@ -1,5 +1,5 @@
 <?php
-# $Id: header.php,v 1.15 2014-02-27 06:50:29 oops Exp $
+# $Id: header.php,v 1.16 2014-02-28 21:37:18 oops Exp $
 if(preg_match("/(write|edit|reply|read)\.php/i",$_SERVER['PHP_SELF']))
   session_cache_limiter('nocache');
 
@@ -64,6 +64,8 @@ if(file_exists("./config/external.php")) {
   include_once "./config/external.php";
 }
 
+$sqlfunc = extension_loaded('mysqlil') ? 'sqli' : 'sql';
+
 include_once "include/version.php";
 include_once "include/lang.php";
 include_once "include/check.php";
@@ -72,7 +74,7 @@ include_once "include/get.php";
 include_once "include/list.php";
 include_once "include/sURI.php";
 include_once "include/parse.php";
-include_once "include/sql.php";
+include_once "include/{$sqlfunc}.php";
 include_once "include/replicate.php";
 include_once "include/sendmail.php";
 

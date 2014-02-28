@@ -1,5 +1,5 @@
 <?php
-# $Id: list.php,v 1.9 2014-02-26 18:55:11 oops Exp $
+# $Id: list.php,v 1.10 2014-02-28 21:37:18 oops Exp $
 
 function print_list($table, $list, $r=0)
 {
@@ -156,7 +156,7 @@ function print_list($table, $list, $r=0)
 function get_list($table,$pages,$reply=0,$print=0)
 {
   global $color,$board,$lines,$upload,$page;
-  global $o,$enable,$count,$agent;
+  global $o,$enable,$count,$agent,$c;
 
   $readchk = (preg_match("/read\.php/i",$_SERVER['PHP_SELF']) && $enable['re_list']) ? 1 : 0;
   if ( $pages['no'] > -1 )
@@ -171,9 +171,9 @@ function get_list($table,$pages,$reply=0,$print=0)
              'bofile, bcfile, bfsize';
   $query = "SELECT {$columns} FROM {$table} {$sql} ORDER BY idx DESC{$limits}";
 
-  $result = sql_query($query);
-  if(sql_num_rows($result)) {
-    while($list = sql_fetch_array($result)) {
+  $result = sql_query($query,$c);
+  if(sql_num_rows($result,$c)) {
+    while($list = sql_fetch_array($result,$c)) {
       if($print) echo print_list($table,$list,$reply);
       else $lists .= print_list($table,$list,$reply);
     }
@@ -190,7 +190,7 @@ function get_list($table,$pages,$reply=0,$print=0)
     $lists = str_replace("###LINE-DESIGN###","\n<TR>\n{$lines['design']}\n</TR>\n",$lists);
   }
 
-  sql_free_result($result);
+  sql_free_result($result,$c);
   return $lists;
 }
 
@@ -214,15 +214,15 @@ function print_narticle($table, $fg, $bg, $print = 0)
 }
 
 function get_comment($table,$no,$prints=0) {
-  global $lines, $corder, $langs, $page, $print;
+  global $lines, $corder, $langs, $page, $print, $c;
 
   $corder = ($corder != 2) ? 1 : $corder;
   $orderby = ($corder == 2) ? "DESC" : "ASC";
 
   $sql = "SELECT * FROM {$table}_comm WHERE reno = '$no' ORDER BY no $orderby";
-  $r = sql_query($sql);
+  $r = sql_query($sql, $c);
 
-  $comment_no = sql_num_rows($r);
+  $comment_no = sql_num_rows($r, $c);
 
   # check of image exists
   if(file_exists("./theme/{$print['theme']}/img/cdelete.gif")) $delimgcheck = 1;
@@ -243,7 +243,7 @@ function get_comment($table,$no,$prints=0) {
               "<TD ALIGN=right><FONT STYLE=\"font: 10px tahoma,sans-serif; font-weight:bold;\">SORT</FONT> $orlink</TD>\n".
               "</TR>\n";
 
-    while ($list = sql_fetch_array($r)) {
+    while ($list = sql_fetch_array($r, $c)) {
       if($lines['comment_design']) $lists .= $lines['comment_design'];
       $lists .= print_comment_art($table,$list,0,$delimgcheck);
     }

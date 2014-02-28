@@ -1,5 +1,5 @@
 <?php
-# $Id: check.php,v 1.2 2009-11-19 05:29:49 oops Exp $
+# $Id: check.php,v 1.3 2014-02-28 21:37:17 oops Exp $
 # Password 체크 부분
 function inst_pwcheck($pass,$mypass,$msg) {
   global $langs;
@@ -26,18 +26,20 @@ function inst_chk_numberic($name,$msg) {
 }
 
 function inst_chk_dbname($name,$msg) {
-  global $indb;
-  for ($i=0; $i<$indb['num']; $i++) {
-    $dbname = mysql_dbname($indb['lists'],$i);
-    if ($name == $dbname) print_error($msg,250,150,1);
+  global $indb, $c;
+
+  $ret = sql_query('SHOW DATABASES', $c);
+  while (($r = sql_fetch_row ($ret,$c))) {
+	  if ($name == $r[0]) print_error($msg,250,150,1);
   }
 }
 
 function inst_chk_dbuser($name,$msg) {
-  global $connect, $langs;
+  global $langs, $c;
   $check = "select user from user where user = '$name'";
-  $result = mysql_db_query("mysql",$check, $connect );
-  $row = mysql_fetch_array($result);
+  sql_select_db('mysql', $c);
+  $result = sql_query($check, $c);
+  $row = sql_fetch_array($result,$c);
   if ($row) print_error($msg,250,150,1);
 }
 

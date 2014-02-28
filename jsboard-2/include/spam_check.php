@@ -2,8 +2,9 @@
 # Id: $
 
 function get_spam($table, $no) {
-  $result = sql_query("SELECT * FROM $table WHERE no = '$no'");
-  while($list = sql_fetch_array($result)) {
+  global $c;
+  $result = sql_query("SELECT * FROM $table WHERE no = '$no'",$c);
+  while($list = sql_fetch_array($result,$c)) {
     if($list['email']) $spam[] = "EM:{$list['email']}";
     if($list['url']) $spam[] = "HP:{$list['url']}";
 

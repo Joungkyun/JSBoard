@@ -1,5 +1,5 @@
 <?php
-# $Id: admin.php,v 1.19 2014-02-26 17:24:01 oops Exp $
+# $Id: admin.php,v 1.20 2014-02-28 21:37:17 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 
@@ -24,15 +24,16 @@ $langs['a_t41'] = ($langs['code'] == "en") ? strtoupper($langs['a_t4']) : $langs
 $langs['a_t61'] = ($langs['code'] == "en") ? strtolower($langs['a_t6']) : $langs['a_t6'];
 
 # MySQL 서버에 연결한다
-$connect=@mysql_connect($db['server'],$db['user'],$db['pass'])  or  
-              die($langs['sql_na']); 
+$c = sql_connect($db['server'],$db['user'],$db['pass']);
+sql_select_db($db['name'],$c);
+
 if($agent['tx']) {
   echo "JSBoard<BR>\n".
        "Administration Center\n";
 } else {
   echo "<table border=0 width=100% height=100% cellpadding=0 cellspacing=0>\n".
        "<tr><td align=center valign=center>\n\n".
-       "<table width={$board['width']} border=0 cellpadding=0 cellspacing=0>\n<tr><td>\n".
+       "<table width=700 border=0 cellpadding=0 cellspacing=0>\n<tr><td>\n".
        "<table border=0 cellpadding=0 cellspacing=0>\n<tr>\n".
        "<td rowspan=2 valign=center>\n".
        "<font style=\"font: 40px Tahoma; color:{$color['m_bg']};font-weight:bold\">J</font></td>\n".
@@ -47,7 +48,7 @@ if($agent['tx']) {
 exsit_dbname_check($db['name']);
 
 if($db['name'] && !$table) {
-  echo "<table border=0 cellpadding=1 cellspacing=1 width={$board['width']} align=center>\n".
+  echo "<table border=0 cellpadding=1 cellspacing=1 width=700 align=center>\n".
        "<tr align=center bgcolor={$color['t_bg']}>\n";
 
   if($agent['tx']) {
@@ -67,7 +68,7 @@ if($db['name'] && !$table) {
   echo "</tr>";
 
 
-  $table_name = get_tblist($db['name'],$ts);
+  $table_name = db_table_list ($c, $db['name'], $ts);
   $tbl_num = sizeof($table_name);
 
   if(!$start && !$page) { $start = 0; $page = 1; }
@@ -80,9 +81,7 @@ if($db['name'] && !$table) {
   $next = $page+1;
 
   # 오늘 날짜에 대한 data 값을 구해 오늘 날짜에 등록된 값을 구합니다.
-  $current = "SELECT UNIX_TIMESTAMP(CURDATE()) as curdate";
-  $result = mysql_query($current,$connect);
-  $current_time = mysql_result($result,0,"curdate");
+  $current_time = mktime (0, 0, 0, date('m, d, Y'));
 
   # scale 별로 출력
   if($tbl_num > 0) {
@@ -90,24 +89,26 @@ if($db['name'] && !$table) {
       if($i < $tbl_num && $table_name[$i] != "userdb") {
         # jsboard에서 사용하는 게시판인지를 판단
         $chk = "select idx from $table_name[$i] where idx = 1;";
-        $chk_result = mysql_query($chk,$connect);
+        $chk_result = sql_query($chk,$c,true);
 
         # 각 table에 등록된 글 수를 check 합니다.
-        $total = "select count(*) from $table_name[$i]";
-        $result = mysql_query($total,$connect);
+        $total = "select count(*) as cnt from $table_name[$i]";
+        $result = sql_query($total,$c,true);
 
-        $total_count = mysql_result($result,0,"COUNT(*)");
+        $total_count = sql_result($result,0,'cnt',$c);
 
         # 각 table에 등록된 글들의 합을 구합니다.
-        $to = $to + $total_count;
-        $total = "select count(*) from $table_name[$i] where date > '$current_time'";
+        if ($chk_result)
+            $to += $total_count;
+        $total = "select count(*) as cnt from $table_name[$i] where date > '$current_time'";
 
-        $result = mysql_query($total,$connect );
-        $total_today = @mysql_result($result,0,"COUNT(*)");
+        if (($result = sql_query($total,$c,true)) !== false)
+            $total_today = @sql_result($result,0,'cnt',$c);
         $total_today = !$total_today ? 0 : $total_today;
 
         # 오늘 등록된 글들의 합을 구합니다.
-        $to_today = $to_today + $total_today;
+        if ($chk_result)
+          $to_today = $to_today + $total_today;
 
         echo "<tr align=center bgcolor={$color['m_bg']}>\n".
              "<td align=left width=30%><font color={$color['m_fg']}>&nbsp;&nbsp;&nbsp;{$table_name[$i]}</font></td>\n".
@@ -138,10 +139,14 @@ if($db['name'] && !$table) {
             $table_explain = preg_replace("/_comm/","",$table_name[$i]);
             $table_explain = "$table_explain Comment";
           } else $table_explain = "Not JSBoard table";  
+
           echo "<form name='delete_db' method='post' action='act.php'><td width=40%>\n".
-               "<font color={$color['m_fg']}>$table_explain</font>\n".
-               "<input type=button value='{$langs['a_t21']}' onClick=\"document.location='./act.php?mode=csync&table_name={$table_name[$i]}&ts=$ts'\">\n".
-               "<input type=submit value='{$langs['a_t9']}' onClick=\"return confirm('{$langs['a_del_cm']}')\">\n".
+               "<font color={$color['m_fg']}>$table_explain</font>\n";
+
+          if(preg_match('/_comm/',$table_name[$i]))
+            echo "<input type=button value='{$langs['a_t21']}' onClick=\"document.location='./act.php?mode=csync&table_name={$table_name[$i]}&ts=$ts'\">\n";
+
+          echo "<input type=submit value='{$langs['a_t9']}' onClick=\"return confirm('{$langs['a_del_cm']}')\">\n".
                "<input type='hidden' name='table_name' value='{$table_name[$i]}'>\n".
                "<input type='hidden' name='mode' value='db_del'>\n".
                "<input type='hidden' name='ts' value='$ts'>\n".
@@ -157,20 +162,29 @@ if($db['name'] && !$table) {
 
   # 전체 등록된 글 수를 확인
   for($t = 0; $t < $tbl_num; $t++) {
+    # jsboard에서 사용하는 게시판인지를 판단
+    $chk = "select idx from $table_name[$t] where idx = 1;";
+    if (($chk_result = sql_query($chk,$c,true)) === false) {
+      if (!preg_match('/_comm/', $table_name[$t]))
+        continue;
+    }
+
     # 각 table에 등록된 글 수를 check 합니다.
-    $total_t = "select count(*) from $table_name[$t]";
-    $result_t = mysql_query($total_t,$connect );
-    $total_count_t = mysql_result($result_t, 0, "COUNT(*)");
+    $sql = "select count(*) as cnt from $table_name[$t]";
+    $result = sql_query($sql,$c);
+    $sum = sql_result($result, 0, 'cnt',$c);
 
     # 각 table에 등록된 글들의 합을 구합니다.
-    $to_t = $to_t + $total_count_t;
+    $to_t += $sum;
 
-    $total_t = "select count(*) from $table_name[$t] where date > '$current_time'";
-    $result_t = mysql_query($total_t,$connect );
-    $total_today_t = @mysql_result($result_t, 0, "COUNT(*)");
+    unset ($sum);
+    $sql = "select count(*) as cnt from $table_name[$t] where date > '$current_time'";
+    if (($result = sql_query($sql,$c,true)) !== false)
+      $sum = sql_result($result, 0, 'cnt',$c);
+    $sum = isset($sum) ? $sum : 0;
 
     # 오늘 등록된 글들의 합을 구합니다.
-    $to_today_t = $to_today_t + $total_today_t;
+    $to_today_t += $sum;
   }
   $to = !$to ? "0" : $to;
   $to_t = !$to_t ? "0" : $to_t;
@@ -181,11 +195,11 @@ if($db['name'] && !$table) {
   $userclick = $_SESSION[$jsboard]['external'] ? "window.alert('External user table Can\'t be Use')" : 
                             "document.location='./userlist.php?t=a'";
 
-  echo "\n<tr align=center bgcolor={$color['d_bg']}>\n".
-       "<td><font color={$color['d_fg']}><b>{$langs['a_t41']} [ {$langs['a_t16']} ]</b></font></td>\n".
-       "<td align=center><font color={$color['d_fg']}>$to_today [$to_today_t]</font></td>\n".
-       "<td align=center><font color={$color['d_fg']}>$to [$to_t]</font></td>\n".
-       "<td bgcolor={$color['m_bg']}>\n";
+  echo "\n<tr align=\"center\" bgcolor=\"{$color['d_bg']}\">\n".
+       "<td><font color=\"{$color['d_fg']}\"><b>{$langs['a_t41']} [ {$langs['a_t16']} ]</b></font></td>\n".
+       "<td align=\"center\"><font color=\"{$color['d_fg']}\">$to_today [$to_today_t]</font></td>\n".
+       "<td align=\"center\"><font color=\"{$color['d_fg']}\">$to [$to_t]</font></td>\n".
+       "<td bgcolor=\"{$color['m_bg']}\">\n";
   if($agent['tx']) {
     $userclick = $_SESSION[$jsboard]['external'] ? "[ {$langs['a_t20']} ]" : "<A HREF=./userlist.php?t=a>[ {$langs['a_t20']} ]</A>";
     echo "$userclick\n".
@@ -366,7 +380,7 @@ if($db['name'] && !$table) {
        "<td></tr>\n</table>\n\n";
 }
 
-mysql_close();
+sql_close($c);
 
 echo "<br>";
 echo "\n</td></tr>\n</table>\n";
