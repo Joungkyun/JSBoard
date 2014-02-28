@@ -1,6 +1,6 @@
 <?php
 # This flie applied under GPL License
-# $Id: stat.php,v 1.3 2009-11-16 21:52:46 oops Exp $
+# $Id: stat.php,v 1.4 2014-02-28 18:41:08 oops Exp $
 if ( preg_match ('/user_admin/', $_SERVER['HTTP_REFERER']) ) $path['type'] = "user_admin";
 else $path['type'] = "admin";
 require_once './include/admin_head.php';
@@ -70,7 +70,7 @@ function get_stat ($table, $interval) {
 
     # 최저 조회수
     $result = sql_query("SELECT MIN(refer) as min FROM $table WHERE date > '$intv'", $c);
-    $refer['min'] = sql_fetch_array($result, 0, 'min');
+    $refer['min'] = sql_result($result, 0, 'min');
     sql_free_result($result);
 
     # 조회수 합계
