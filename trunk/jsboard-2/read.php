@@ -1,5 +1,5 @@
 <?php
-# $Id: read.php,v 1.35 2014-02-26 17:24:01 oops Exp $
+# $Id: read.php,v 1.36 2014-02-28 21:37:17 oops Exp $
 $p_time[] = microtime(); # 속도 체크
 require_once "include/header.php";
 require_once "include/wikify.php";
@@ -53,8 +53,8 @@ if($alert) {
   }
   
   $a_time[] = microtime(); # 속도 체크
-  sql_connect($db['server'], $db['user'], $db['pass']);
-  sql_select_db($db['name']);
+  $c = sql_connect($db['server'], $db['user'], $db['pass']);
+  sql_select_db($db['name'],$c);
   
   if($num && !$no) {
       $num = get_article($table, $num, "no", "num");
@@ -154,7 +154,7 @@ if($alert) {
   $print['comment'] = $enable['comment'] ? print_comment($table,$no,0) : "";
   
   # 글 읽었을 경우 조회수 1 늘림
-  #if (get_hostname(0) != $list['host']) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'");
+  #if (get_hostname(0) != $list['host']) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'",$c);
   replication_addrefer($db);
   
   $b_time[] = microtime(); # 속도 체크
@@ -178,7 +178,7 @@ if($alert) {
   # PAGE 로딩 시간
   $print['pagetime'] = get_microtime($p_time[0],$b_time[1]);
   
-  mysql_close();
+  sql_close($c);
   
   $sform['ss'] = preg_replace("/\\\\+/i","\\",$sform['ss']);
   

@@ -1,5 +1,5 @@
 <?php
-# $Id: check.php,v 1.27 2014-02-26 18:15:15 oops Exp $
+# $Id: check.php,v 1.28 2014-02-28 21:37:18 oops Exp $
 # table 이름에 meta character 가 포함되어 있는지 검사하는 함수
 # $name -> 변수값
 # $i    -> null 이라도 상관없을 경우 1
@@ -97,7 +97,7 @@ function check_email($email,$hchk=0) {
 # crpyt - 문자열을 DES로 암호화함
 #         http://www.php.net/manual/function.crypt.php
 function check_passwd($table,$no,$passwd) {
-  global $jsboard, $board, $o;
+  global $jsboard, $board, $o, $c;
   if($board['mode'] && isset($_SESSION[$jsboard])) $sql_field = "name";
   else $sql_field = "passwd";
 
@@ -106,9 +106,9 @@ function check_passwd($table,$no,$passwd) {
   $table = ($table && $o['at'] == "c_del") ? $table."_comm" : $table;
 
   if ($table && $no) {
-    $result = sql_query("SELECT $sql_field FROM $table WHERE no = '$no'");
-    $r['chk'] = sql_result($result,0,"$sql_field");
-    sql_free_result($result);
+    $result = sql_query("SELECT $sql_field FROM $table WHERE no = '$no'",$c);
+    $r['chk'] = sql_result($result,0,$sql_field,$c);
+    sql_free_result($result,$c);
   }
 
   if (isset($_SESSION[$jsboard])) {
@@ -122,9 +122,9 @@ function check_passwd($table,$no,$passwd) {
 
   if(!$chk || $chk == 1) {
     # 전체 관리자 패스워드
-    $result = sql_query("SELECT passwd FROM userdb WHERE position = 1");
-    $r['su'] = sql_result($result,0,"passwd");
-    sql_free_result($result);
+    $result = sql_query('SELECT passwd FROM userdb WHERE position = 1',$c);
+    $r['su'] = sql_result($result,0,'passwd',$c);
+    sql_free_result($result,$c);
 
     if($r['su'] == crypt($passwd,$r['su'])) $chk =2;
 
@@ -132,9 +132,9 @@ function check_passwd($table,$no,$passwd) {
       $arrayadm = explode(";",$board['ad']);
       for($i=0;$i<sizeof($arrayadm);$i++) {
         # 게시판 관리자 패스워드
-        $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$i]'");
-        $r['ad'] = sql_result($result,0,"passwd");
-        sql_free_result($result);
+        $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$i]'",$c);
+        $r['ad'] = sql_result($result,0,'passwd',$c);
+        sql_free_result($result,$c);
 
         # 게시판 관리자가 존재하지 않을 경우를 대비
         $r['ad'] = !$r['ad'] ? "null admin" : $r['ad'];

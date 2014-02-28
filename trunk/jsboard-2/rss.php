@@ -1,6 +1,6 @@
 <?php
 # JSboard RSS Feed
-# $Id: rss.php,v 1.25 2014-02-26 18:55:11 oops Exp $
+# $Id: rss.php,v 1.26 2014-02-28 21:37:17 oops Exp $
 #
 
 # header file 삽입
@@ -33,7 +33,8 @@ if (!$no)
 
 # DB 정보 가져오기
 #
-sql_connect ($db['server'], $db['user'], $db['pass']);
+$c = sql_connect ($db['server'], $db['user'], $db['pass']);
+sql_select_db ($db['name'], $c);
 
 # Description 정보가 있게 할 것인지 아닌지 여부 체크 (config file 에서 체크)
 #
@@ -42,10 +43,10 @@ if ($rss['is_des'])
 else
   $sql = "select no, date, name, rname, title from {$table} order by date DESC limit $no";
 
-$result = sql_db_query ($db['name'], $sql);
+$result = sql_query ($sql, $c);
 $i = 0;
 
-while( $rss_article[$i] = sql_fetch_array($result) ) {
+while( $rss_article[$i] = sql_fetch_array($result,$c) ) {
   $rss_article[$i]['title'] = convspecialchars ($rss_article[$i]['title'], ENT_QUOTES);
   $rss_article[$i]['link'] = "{$board['path']}read.php?table={$table}&amp;no={$rss_article[$i]['no']}";
   $rss_article[$i]['date'] = date ("r", $rss_article[$i]['date']);
@@ -89,7 +90,7 @@ while( $rss_article[$i] = sql_fetch_array($result) ) {
 
 $rss_article_num = $i;
 unset($result, $i);
-mysql_close();
+sql_close($c);
 
 $now = time ();
 $cYear = date ("Y", $now);

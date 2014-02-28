@@ -1,6 +1,6 @@
 <?php
-# MySQL extension API
-# $Id: sql.php,v 1.7 2014-02-28 21:37:18 oops Exp $
+# MySQLi extension API
+# $Id: sqli.php,v 1.1 2014-02-28 21:37:18 oops Exp $
 #
 
 // {{{ +-- public sql_connect($server,$user,$pass,$mode='w')
@@ -8,19 +8,34 @@ function sql_connect($server,$user,$pass,$mode='w') {
   if ($mode == "r")
     print_error("System Checking NOW !! \n\nSorry, Read only enable.",250,130,1);
 
-  $return = @mysql_connect($server,$user,$pass);
-  sql_error(mysql_errno($return), mysql_error($return));
+  if ( $server[0] == ':' ) {
+    $_socket = preg_replace ('/^:/', '', $server);
+    $server = 'localhost';
+    $_port = 0;
+  } else {
+    $_socket = '';
+    if ( preg_match ('/:/', $server) ) {
+      $_sock = explode (':', $server);
+      $server = $_sock[0];
+      $_port = $_sock[1];
+    }
+  }
 
-  sql_query('SET NAMES euckr', $return);
+  $r = mysqli_connect ($server, $user, $pass, $dbname, $_port, $_socket);
 
-  return $return;
+  sql_error (mysqli_connect_errno (), mysqli_connect_error ());
+
+  //if ( is_object ($r) && $db['charset'] )
+  sql_query ('set names euckr', $r, 1);
+
+  return $r;
 }
 // }}}
 
 // {{{ +-- public sql_select_db($name,$c)
 function sql_select_db($name,$c) {
-  $return = mysql_select_db($name,$c);
-  sql_error(mysql_errno($c), mysql_error($c));
+  $return = @mysqli_select_db($c,$name);
+  sql_error(mysqli_errno($c), mysqli_error($c));
 
   return $return;
 }
@@ -28,8 +43,8 @@ function sql_select_db($name,$c) {
 
 // {{{ +-- public sql_query($query,$c,$noerr=null)
 function sql_query($query,$c,$noerr=null) {
-  $return = mysql_query($query,$c);
-  if(!$noerr) sql_error(mysql_errno($c), mysql_error($c));
+  $return = mysqli_query($c,$query);
+  if(!$noerr) sql_error(mysqli_errno($c), mysqli_error($c));
 
   return $return;
 }
@@ -37,38 +52,43 @@ function sql_query($query,$c,$noerr=null) {
 
 // {{{ +-- public sql_result($result,$row,$field,$c)
 function sql_result($result,$row,$field,$c) {
-  if(mysql_num_rows($result)) $return = mysql_result($result,$row,$field);
-  else $return = 0;
+  if (is_object($result)) {
+    if (mysqli_num_rows($result)) {
+      mysqli_data_seek($result,$row);
+      $rr = sql_fetch_array($result,$c);
+      $r = $rr[$field];
+    }
+    sql_error(mysqli_errno($c), mysqli_error($c));
+  } else $r = 0;
 
-  sql_error(mysql_errno($c), mysql_error($c));
-  return $return;
+  return $r;
 }
 // }}}
 
 // {{{ +-- public sql_fetch_row($result,$c)
 function sql_fetch_row($result,$c) {
-  if(mysql_num_rows($result)) $return = mysql_fetch_row($result);
+  if(sql_num_rows($result,$c)) $return = @mysqli_fetch_row($result);
   else $return = 0;
 
-  sql_error(mysql_errno($c), mysql_error($c));
+  sql_error(mysqli_errno($c), mysqli_error($c));
   return $return;
 }
 // }}}
 
 // {{{ +-- public sql_fetch_array($result,$c)
 function sql_fetch_array($result,$c) {
-  if(mysql_num_rows($result)) $return = mysql_fetch_array($result);
+  if(sql_num_rows($result,$c)) $return = @mysqli_fetch_array($result);
   else $return = 0;
 
-  sql_error(mysql_errno($c), mysql_error($c));
+  sql_error(mysqli_errno($c), mysqli_error($c));
   return $return;
 }
 // }}}
 
 // {{{ +-- public sql_num_rows($result,$c)
 function sql_num_rows($result,$c) {
-  $return = mysql_num_rows($result);
-  sql_error(mysql_errno($c), mysql_error($c));
+  $return = @mysqli_num_rows($result);
+  sql_error(mysqli_errno($c), mysqli_error($c));
 
   return $return;
 }
@@ -76,8 +96,8 @@ function sql_num_rows($result,$c) {
 
 // {{{ +-- public sql_affected_rows($c)
 function sql_affected_rows($c) {
-  $return = mysql_affected_rows($c);
-  sql_error(mysql_errno($c), mysql_error($c));
+  $return = @mysqli_affected_rows($c);
+  sql_error(mysqli_errno($c), mysqli_error($c));
 
   return $return;
 }
@@ -85,8 +105,8 @@ function sql_affected_rows($c) {
 
 // {{{ +-- public sql_free_result($result,$c)
 function sql_free_result($result,$c) {
-  $return = mysql_free_result($result);
-  sql_error(mysql_errno($c), mysql_error($c));
+  $return = @mysqli_free_result($result);
+  sql_error(mysqli_errno($c), mysqli_error($c));
 
   return $return;
 }
@@ -99,27 +119,28 @@ function sql_escape(&$v, $c) {
       return;
   }
 
-  if (!is_array($v)) {
-    $v = @mysql_real_escape_string($v, $c);
+  if (is_array($v)) {
+    foreach ($v as $key => $val) {
+      if ( is_array ($val) ) {
+        sql_escape ($v[$key],$c);
+        continue;
+      }
+
+      if (!is_numeric($val))
+        $v[$key] = mysqli_real_escape_string ($c,$val);
+    }
     return;
   }
 
-  foreach ($v as $key => $val) {
-    if ( is_array ($val) ) {
-      sql_escape ($v[$key],$c);
-      continue;
-    }
-
-    if (!is_numeric($val))
-      $v[$key] = @mysql_real_escape_string ($val, $c);
-  }
+  if (!is_numeric($v))
+    $v = mysqli_real_escape_string($c,$v);
 }
 // }}}
 
 // {{{ +-- public sql_close ($c)
 function sql_close ($c) {
-  if (is_resource($c))
-    mysql_close($c);
+  if (is_object($c))
+    mysqli_close($c);
 }
 // }}}
 
@@ -135,28 +156,27 @@ function sql_error($errno,$error) {
 
 // {{{ +-- public db_table_list ($c, $dbname, $prefix = '', $table = '')
 function db_table_list ($c, $dbname, $prefix = '', $table = '') {
-  $list = mysql_list_tables ($dbname, $c);
+  $sql = 'SHOW TABLES';
+  $r = sql_query ($sql, $c);
 
-  # total table number
-  $list_num = mysql_num_rows ($list);
-  $j = ! $j ? '0' : $j;
+  $i = 0;
+  $j = ! $j ? 0 : $j;
 
-  for ( $i=0; $i<$list_num; $i++ ) {
+  while ( $row = sql_fetch_row ($r,$c) ) {
     if ( ! $table ) {
-      # table 이름을 구하여 배열에 저장
-      $l[$i] = mysql_tablename ($list, $i);
+      $l[$i] = $row[0];
 
-      # 배열에 저장된 이름중 알파벳별 구분 변수가 있으면 소트된
-      # 이름만 다시 배열에 저장
       if ( $prefix ) {
-        if ( preg_match ("/^{$prefix}/i", $l[$i]) ) {
-          $ll[$j] = $l[$i];
+        if ( preg_match ("/^{$prefix}/i", $row[0]) ) {
+          $ll[$j] = $row[0];
           $j++;
         }
       }
+
+      $i++;
     } else {
       $prefix = '';
-      if ( $table == mysql_tablename ($list, $i) ) {
+      if ( $table == $row[0] ) {
         $l = 1;
         break;
       } else $l = 0;
@@ -169,16 +189,12 @@ function db_table_list ($c, $dbname, $prefix = '', $table = '') {
 
 // {{{ +-- public field_exist_check ($c, $database, $table, $compare)
 function field_exist_check ($c, $database, $table, $compare) {
-  global $db;
+  $res = sql_query ('DESC ' . $table, $c);
 
-  $field = @mysql_list_fields ($database, $table, $c);
-  $num = @mysql_num_fields ($field);
-
-  for ($i = 0; $i < $num; $i++) {
-    if ( mysql_field_name ($field, $i) == $compare )
+  while (($r = sql_fetch_array($res,$c))) {
+    if ($r['Field'] == $compare)
       return true;
   }
-
   return false;
 }
 // }}}

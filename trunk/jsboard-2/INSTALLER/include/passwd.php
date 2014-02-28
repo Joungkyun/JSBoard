@@ -1,7 +1,7 @@
 <?php
 #########################################################
 # MySQL root 의 권한 소지 여부
-# $Id: passwd.php,v 1.7 2014-02-26 17:09:11 oops Exp $
+# $Id: passwd.php,v 1.8 2014-02-28 21:37:17 oops Exp $
 # MySQL root 의 패스워드를 알면 1, 모르면 0
 #
 # 만약 MySQL 패스워드를 몰라 0 으로 설정을 하려면 MySQL
@@ -25,27 +25,6 @@ $mysqldatabasename = "";
 
 # mysql root 가 생성해준 database user name 을 지정
 $mysqlusername = "";
-
-# apache의 설정파일(httpd.conf)의 경로를 지정
-# redhat rpm package의 경우 /etc/httpd/conf/httpd.conf
-# debian package의 경우 /etc/apache/httpd.conf
-# 수동으로 설치했을 경우 /usr/local/apache/conf/httpd.conf
-# 에 위치하는 경우가 많음.
-# 이 설정은 httpd.conf 의 Group 지시자의 값을 얻어오기 위
-# 하여 필요하므로, Zento Linux 의 경우에는 commonapache.conf
-# 에 Group 지시자가 존재하기 때문에, commonapache.conf 의
-# 위치를 지정하도록 함
-# 스페이스로 구분하여 여러개의 설정파일을 지정해 놓으면
-# 인스톨시 설정된 파일들을 모두 검색함.
-#
-$apache_config_file = array (
-  '/etc/httpd/conf/httpd.conf',
-  '/etc/httpd/conf.d/php.conf',
-  '/etc/apache/httpd.conf',
-  '/usr/local/apache/conf/httpd.conf',
-  '/etc/apache2/apache2.conf',
-  '/etc/apache2/mods-enabled/dir.conf',
-);
 
 # MySQL의 socket file 위치를 지정. socket file이 무엇인지
 # 모르겠으면 localhost 나 127.0.0.1 을 적도록 한다. DB 서

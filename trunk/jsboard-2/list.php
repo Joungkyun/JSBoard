@@ -1,5 +1,5 @@
 <?php
-# $Id: list.php,v 1.28 2014-02-26 17:24:01 oops Exp $
+# $Id: list.php,v 1.29 2014-02-28 21:37:17 oops Exp $
 # 페이지 로딩 시간 시작
 $p_time[] = microtime();
 include "include/header.php";
@@ -24,8 +24,8 @@ if($board['super'] == 1 || $board['adm']) {
 # SQL 시작 시간 체크
 $a_time[] = microtime();
 
-sql_connect($db['server'], $db['user'], $db['pass']);
-sql_select_db($db['name']);
+$c = sql_connect($db['server'], $db['user'], $db['pass']);
+sql_select_db($db['name'], $c);
 
 # 게시판의 전체, 보통, 답장, 오늘 올라온 글 수 등을 가져옴
 $count = get_board_info($table);
@@ -134,7 +134,7 @@ $p_time[] = microtime();
 $print['pagetime'] = get_microtime($p_time[0], $p_time[1]);
 $print['pagetime'] = "Page Loading [ {$print['pagetime']} Sec ]";
 
-mysql_close();
+sql_close($c);
 
 $sform['ss'] = preg_replace("/\\\\+/i","\\",$sform['ss']);
 

@@ -1,6 +1,7 @@
 <?php
-# $Id: session.php,v 1.11 2014-02-26 17:50:18 oops Exp $
+# $Id: session.php,v 1.12 2014-02-28 21:37:17 oops Exp $
 session_start(); // session을 시작한다.
+include_once '../include/variable.php';
 require_once '../include/print.php';
 parse_query_str();
 if ($mode == "login") {

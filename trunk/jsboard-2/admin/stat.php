@@ -1,6 +1,6 @@
 <?php
 # This flie applied under GPL License
-# $Id: stat.php,v 1.12 2014-02-26 17:24:01 oops Exp $
+# $Id: stat.php,v 1.13 2014-02-28 21:37:17 oops Exp $
 if(preg_match("/user_admin/",$_SERVER['HTTP_REFERER'])) $path['type'] = "user_admin";
 else $path['type'] = "admin";
 include "./include/admin_head.php";
@@ -28,10 +28,10 @@ echo "<table width=100% border=0 align=center>\n".
      "<tr align=center><td>\n".
      "<!----------------- 통계 시작 ------------------->\n\n<p><br>";
 
-sql_connect($db['server'],$db['user'],$db['pass']);
-sql_select_db($db['name']);
+$c = sql_connect($db['server'],$db['user'],$db['pass']);
+sql_select_db($db['name'], $c);
 
-function get_stat($table, $interval) {
+function get_stat(&$c, $table, $interval) {
     global $debug;
     $debug = 1;
 
@@ -39,52 +39,52 @@ function get_stat($table, $interval) {
     else $intv = time() - $interval;
 
     # 전체 글 갯수
-    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$intv'");
-    $count['all'] = sql_result($result,0,"COUNT(*)");
-    sql_free_result($result);
+    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$intv'",$c);
+    $count['all'] = sql_result($result,0,"COUNT(*)",$c);
+    sql_free_result($result,$c);
 
     # 답장 글 갯수
-    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$intv' AND reno != 0");
-    $count['rep'] = sql_result($result,0,"COUNT(*)");
-    sql_free_result($result);
+    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$intv' AND reno != 0",$c);
+    $count['rep'] = sql_result($result,0,"COUNT(*)",$c);
+    sql_free_result($result,$c);
 
     # 보통 글 갯수
     $count['nor'] = $count['all'] - $count['rep'];
 
     # 처음 글
-    $result = sql_query("SELECT * FROM $table WHERE date > '$intv' ORDER BY no LIMIT 0, 1");
-    $article['min'] = sql_fetch_array($result);
-    sql_free_result($result);
+    $result = sql_query("SELECT * FROM $table WHERE date > '$intv' ORDER BY no LIMIT 0, 1",$c);
+    $article['min'] = sql_fetch_array($result,$c);
+    sql_free_result($result,$c);
 
     # 마지막 글
-    $result = sql_query("SELECT * FROM $table WHERE date > '$intv' ORDER BY no DESC LIMIT 0, 1");
-    $article['max'] = sql_fetch_array($result);
-    sql_free_result($result);
+    $result = sql_query("SELECT * FROM $table WHERE date > '$intv' ORDER BY no DESC LIMIT 0, 1",$c);
+    $article['max'] = sql_fetch_array($result,$c);
+    sql_free_result($result,$c);
 
     if($interval) $article['time'] =  $interval;
     else $article['time'] =  $article['max']['date'] - $article['min']['date'];
 
     # 최고 조회수
-    $result = sql_query("SELECT MAX(refer) FROM $table WHERE date > '$intv'");
-    $refer['max'] = sql_result($result,0,"MAX(refer)");
-    sql_free_result($result);
+    $result = sql_query("SELECT MAX(refer) FROM $table WHERE date > '$intv'",$c);
+    $refer['max'] = sql_result($result,0,"MAX(refer)",$c);
+    sql_free_result($result,$c);
 
     # 최고 조회수 글 번호
     if($refer['max']) {
-      $result = sql_query("SELECT no FROM $table WHERE refer = '{$refer['max']}' AND date > '$intv'");
-      $refer['mno'] = sql_result($result,0,"no");
-      sql_free_result($result);
+      $result = sql_query("SELECT no FROM $table WHERE refer = '{$refer['max']}' AND date > '$intv'",$c);
+      $refer['mno'] = sql_result($result,0,"no",$c);
+      sql_free_result($result,$c);
     }
 
     # 최저 조회수
-    $result = sql_query("SELECT MIN(refer) FROM $table WHERE date > '$intv'");
-    $refer['min'] = sql_fetch_array($result,0,"MIN(refer)");
-    sql_free_result($result);
+    $result = sql_query("SELECT MIN(refer) FROM $table WHERE date > '$intv'",$c);
+    $refer['min'] = sql_result($result,0,"MIN(refer)",$c);
+    sql_free_result($result,$c);
 
     # 조회수 합계
-    $result = sql_query("SELECT SUM(refer) FROM $table WHERE date > '$intv'");
-    $refer['total'] = sql_result($result,0,"SUM(refer)");
-    sql_free_result($result);
+    $result = sql_query("SELECT SUM(refer) FROM $table WHERE date > '$intv'",$c);
+    $refer['total'] = sql_result($result,0,"SUM(refer)",$c);
+    sql_free_result($result,$c);
     
     # 평균 조회수
     if($count['all']) $refer['avg'] = intval($refer['total'] / $count['all']);
@@ -211,23 +211,23 @@ function display_stat($stat, $title) {
 }
 
 # 주별
-$stat = get_stat($table, 60*60*24*7);
+$stat = get_stat($c, $table, 60*60*24*7);
 display_stat($stat,$langs['st_lweek']);
 
 # 월별
-$stat = get_stat($table, 60*60*24*30);
+$stat = get_stat($c, $table, 60*60*24*30);
 display_stat($stat,$langs['st_lmonth']);
 
 # 반년별
-$stat = get_stat($table, 60*60*24*30*6);
+$stat = get_stat($c, $table, 60*60*24*30*6);
 display_stat($stat,$langs['st_lhalfyear']);
 
 # 년별
-$stat = get_stat($table, (60*60*24*30*12) + (60*60*24*5));
+$stat = get_stat($c, $table, (60*60*24*30*12) + (60*60*24*5));
 display_stat($stat,$langs['st_lyear']);
 
 # 전체
-$stat = get_stat($table, 0);
+$stat = get_stat($c, $table, 0);
 display_stat($stat,$langs['st_ltot']);
 
 echo "\n<br>\n</td></tr>\n\n".

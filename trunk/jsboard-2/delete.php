@@ -1,5 +1,5 @@
 <?php
-# $Id: delete.php,v 1.25 2014-02-26 17:24:01 oops Exp $
+# $Id: delete.php,v 1.26 2014-02-28 21:37:17 oops Exp $
 require_once "./include/header.php";
 require_once "./include/wikify.php";
 
@@ -14,8 +14,8 @@ meta_char_check($upload['dir']);
 $board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
 $board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php";
 
-sql_connect($db['server'], $db['user'], $db['pass']);
-sql_select_db($db['name']);
+$c = sql_connect($db['server'], $db['user'], $db['pass']);
+sql_select_db($db['name'], $c);
 $list = get_article($table, $no);
 
 if(preg_match("/^(2|3|5|7)$/",$board['mode']) && $board['super'] != 1)
@@ -99,7 +99,7 @@ $print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" value=\"del\">\n".
 # Page 가 존재할 경우 목록으로 갈때 해당 페이지로 이동
 $page = $page ? "&amp;page=$page" : "1";
 
-mysql_close();
+sql_close($c);
 
 # Template file 을 호출
 meta_char_check($print['theme'], 1, 1);

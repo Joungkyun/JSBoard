@@ -1,5 +1,5 @@
 <?php
-# $Id: session.php,v 1.23 2014-02-26 17:50:18 oops Exp $
+# $Id: session.php,v 1.24 2014-02-28 21:37:17 oops Exp $
 include_once 'include/variable.php';
 include_once "include/print.php";
 parse_query_str();
@@ -18,12 +18,12 @@ if ($m == "login") {
   $var = ($type == "admin") ? "&type=admin" : "";
 
   if(!$edb['uses']) {
-    sql_connect($db['server'], $db['user'], $db['pass']);
-    sql_select_db($db['name']);
+    $c = sql_connect($db['server'], $db['user'], $db['pass']);
+    sql_select_db($db['name'], $c);
   }
   $r = $lu ? get_authinfo($lu) : "";
 
-  if($r['position'] == 1 && !$edb['uses']) mysql_close();
+  if($r['position'] == 1 && !$edb['uses']) sql_close($c);
 
   if(check_auth($lp,$r['passwd'])) {
     if($edb['super'] == $r['nid']) $r['position'] = 1;
@@ -33,10 +33,10 @@ if ($m == "login") {
 
     if(!$edb['uses']) {
       if(!${$jsboard}['pos']) {
-        $result = sql_query("SELECT nid FROM userdb WHERE position = 1");
-        ${$jsboard}['super'] = sql_result($result,0,"nid");
-        sql_free_result($result);
-        mysql_close();
+        $result = sql_query('SELECT nid FROM userdb WHERE position = 1', $c);
+        ${$jsboard}['super'] = sql_result($result,0,'nid',$c);
+        sql_free_result($result,$c);
+        sql_close($c);
       } else ${$jsboard}['super'] = ${$jsboard}['id'];
     } else {
       if($r['position'] == 1) ${$jsboard}['super'] = $r['nid'];

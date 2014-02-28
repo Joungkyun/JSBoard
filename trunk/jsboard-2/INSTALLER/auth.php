@@ -1,32 +1,33 @@
 <?php
-# $Id: auth.php,v 1.18 2009-11-19 05:29:49 oops Exp $
-include_once "../include/print.php";
+# $Id: auth.php,v 1.19 2014-02-28 21:37:17 oops Exp $
+include_once '../include/variable.php';
+include_once '../include/print.php';
 parse_query_str();
 
-$path['type'] = "Install";
+$path['type'] = 'Install';
 $copydate = time();
 $copydate = date("Y",$copydate);
 
-include_once "./include/passwd.php";
-$langs['code'] = ($langss == "ko") ? "ko" : "en";
+include_once './include/passwd.php';
+$langs['code'] = ($langss == 'ko') ? 'ko' : 'en';
 
-include_once "../include/lang.php";
-include_once "../include/error.php";
-include_once "../include/get.php";
-include_once "../include/check.php";
-include_once "../include/version.php";
+include_once '../include/lang.php';
+include_once '../include/error.php';
+include_once '../include/get.php';
+include_once '../include/check.php';
+include_once '../include/version.php';
 
 $agent = get_agent();
 if($agent['tx'])
   $submitButton = "<input type=\"submit\" value=\"ENTER\">\n";
 
 
-if($langs['code'] == "ko") {
-  $charset = "euc-kr";
-  $charfont = "굴림체";
+if($langs['code'] == 'ko') {
+  $charset = 'euc-kr';
+  $charfont = '굴림체';
 } else {
-  $charset = "iso-8859-1";
-  $charfont = "tahoma,arial";
+  $charset = 'iso-8859-1';
+  $charfont = 'tahoma,arial';
 }
 
 echo <<<EOF
@@ -41,11 +42,11 @@ echo <<<EOF
     <!--
     a:link, a:visited, a:active { text-decoration:none; color:#555; }
     a:hover { text-decoration:underline; color: #ffa500; }
-    body, td {font: 12px {$charfont}; color:#555; }
+    body, td {font-size: 12px; font-family: {$charfont}, monospace; color:#555; }
     body { background-color: #fff; }
     form { display: inline; }
-    input { border:1x solid #555;background-color:silver;font:11px {$charfont};color:#333; }
-    textarea { border:1x solid #555;background-color:silver;font:12px {$charfont};color:#333; }
+    input { border:1x solid #555;background-color:silver;font-size:11px; font-family: {$charfont}, monospace;color:#333; }
+    textarea { border:1x solid #555;background-color:silver;font-size:12px; font-family: {$charfont}, monospace;color:#333; }
 	iframe {
       background-color: silver;
 	  border: 1px solid #cdcdcd;
@@ -117,7 +118,7 @@ EOF;
     else $colsize = form_size(35);
 
     echo <<<EOF
-        <textarea cols="{$colsize}" rows="15">{$agree_ment}</textarea>
+        <textarea cols="{$colsize}" rows="15" disabled>{$agree_ment}</textarea>
 EOF;
   }
 
@@ -141,27 +142,25 @@ EOF;
 
 EOF;
 
-  if($mysqlroot) $mcon = @mysql_connect($mysql_sock,"root","$passwd");
-  else $mcon = @mysql_connect($mysql_sock,"$mysqlusername","$passwd");
-
-  # mysql login 가능 여부
-  if ($mcon) $mcheck = 1;
-  else $mcheck = 0;
-
-  # httpd.conf 의 DirectoryIndex 에 index.php 가 등록되어 있는지 여부
-  $cindex = 0;
-
-  $arr = $apache_config_file;
-  for($c=0;$c<sizeof($apache_config_file);$c++) {
-    if(file_exists($apache_config_file[$c])) {
-      $array = file ($apache_config_file[$c]);
-
-      for($i=0;$i<sizeof($array);$i++) {
-        $array[$i] = trim($array[$i]);
-        if(preg_match("/^[ \t]*DirectoryIndex/i",$array[$i]) && preg_match("/index.(php |php$)/i",$array[$i])) $cindex = 1;
-      }
-    } else continue;
+  if (extension_loaded('mysqli')) {
+	  $dbconnfunc = 'mysqli_connect';
+	  $dbtype = 'mysqli';
+  } else if (extension_loaded('mysql')) {
+	  $dbconnfunc = 'mysql_connect';
+	  $dbtype = 'mysql';
+  } else {
+	  $dbconnfunc = '';
+	  $dbtype = '';
   }
+
+  $user = $mysqlroot ? 'root' : $mysqlusername;
+
+  if ($dbtype) {
+    $mcon = @$dbconnfunc($mysql_dock, $user, $passwd);
+
+    # mysql login 가능 여부
+	$mcheck = $mcon ? 1 : 0;
+  } else $mcheck = 0;
 
   # jsboard/data 에 쓰기 권한이 있는지 여부
   if(@touch("../data/aaa.test")) {
@@ -181,7 +180,7 @@ EOF;
   echo <<<EOF
         <span style="color:#555;font-size:12px;">{$langs['waitm']}</span>
         <meta http-equiv="refresh"
-              content="5;URL={$_SERVER['PHP_SELF']}?mode=check_confirm&amp;mcheck={$mcheck}&amp;cindex={$cindex}&amp;pcheck={$pcheck}&amp;langss={$langs['code']}">
+              content="5;URL={$_SERVER['PHP_SELF']}?mode=check_confirm&amp;mcheck={$mcheck}&amp;dbtype={$dbtype}&amp;pcheck={$pcheck}&amp;langss={$langs['code']}">
       </td></tr>
       <tr><td class="dash_board">
         <span style="font: 12px {$charfont}; color:#555;">{$langs['wait']}</span>
@@ -194,13 +193,10 @@ EOF;
   if ($mcheck) $m = "OK";
   else $m = "Failed";
 
-  if ($cindex) $ci = "OK";
-  else $ci = "Failed";
-
   if ($pcheck) $p = "OK";
   else $p = "Error";
 
-  if (!$mcheck || !$cindex || !$pcheck) $actlink = "";
+  if (!$mcheck || !$pcheck) $actlink = "";
   else $actlink = "first";
 
   $os_type = js_wrapper('php_uname');
@@ -210,6 +206,7 @@ EOF;
   elseif (preg_match("/windows/i",$os_type)) $os_type = "Windows";
   elseif (preg_match("/linux/i",$os_type)) {
     if ( file_exists ("/etc/annyung-release") ) $os_type = "AnNyung";
+    elseif (file_exists("/etc/centos-release")) $os_type = "CentOS";
     elseif (file_exists("/etc/redhat-release")) $os_type = "Redhat";
     elseif (file_exists("/etc/debian_version")) $os_type = "Debian";
     else $os_type = "Linux";
@@ -233,6 +230,12 @@ EOF;
           </tr>
 
           <tr>
+            <td><span style="color:#555;font-size:12px">MySQL extension type</span></td>
+            <td>:</td>
+            <td><span style="color:#555;font-size:12px">{$dbtype}</span></td>
+          </tr>
+
+          <tr>
             <td><span style="color:#555;font-size:12px">MySQL check</span></td>
             <td>:</td>
             <td><span style="color:#555;font-size:12px">{$m}</span></td>
@@ -242,19 +245,6 @@ EOF;
   if (!$mcheck)
     echo <<<EOF
           <tr><td colspan="3"><span style="color:red">{$langs['mcheck']}</span></td></tr>
-EOF;
-
-  echo <<<EOF
-          <tr>
-            <td><span style="color:#555;font-size:12px">index file check</span></td>
-            <td>:</td>
-            <td><span style="color:#555;font-size:12px">{$ci}</span></td>
-          </tr>
-EOF;
-
-  if ($ci == "Failed")
-    echo <<<EOF
-          <tr><td colspan="3"><span style="color:red;">{$langs['icheck']}</span></td></tr>
 EOF;
 
   echo <<<EOF

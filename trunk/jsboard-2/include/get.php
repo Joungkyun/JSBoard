@@ -1,16 +1,17 @@
 <?php
-# $Id: get.php,v 1.21 2014-02-26 18:55:11 oops Exp $
+# $Id: get.php,v 1.22 2014-02-28 21:37:18 oops Exp $
 
 # login 정보를 얻어오는 함수
 #
 function get_authinfo($id,$nocry='') {
-  global $edb, $db;
+  global $edb, $db, $c;
   if(preg_match("/user_admin/i",$_SERVER['PHP_SELF'])) { $path = "../.."; }
   elseif(preg_match("/admin/i",$_SERVER['PHP_SELF'])) { $path = ".."; }
   else { $path = "."; }
 
   if($edb['uses'] || $_SESSION[$jsboard]['external']) {
     $connect = sql_connect($edb['server'],$edb['user'],$edb['pass']);    
+	sql_selected_db($edb['name'], $connect);
 
     if($edb['sql']) $sql = $edb['sql'];
     else
@@ -18,25 +19,22 @@ function get_authinfo($id,$nocry='') {
                    {$edb['userurl']} AS url,{$edb['userpasswd']} AS passwd
               FROM {$edb['table']} WHERE {$edb['userid']} = '$id'";
 
-    $result = sql_db_query($edb['name'],$sql,$connect);
+    $result = sql_query($sql,$connect);
     $r = sql_fetch_array($result);
     sql_free_result($result);
-    mysql_close($connect);
+    sql_close($connect);
 
     if(is_array($r)) {
       if($edb['crypts'] && !$nocry && $r['passwd']) $r['passwd'] = crypt($r['passwd']);
     }
-
-    sql_connect($db['server'], $db['user'], $db['pass']);
-    sql_select_db($db['name']);
   } else {
     $sql = "SELECT no,nid,name,email,url,passwd,position
               FROM userdb WHERE nid = '$id'";
 
-    $result = sql_query($sql);
-    $r = sql_fetch_array($result);
+    $result = sql_query($sql, $c);
+    $r = sql_fetch_array($result,$c);
 
-    sql_free_result($result);
+    sql_free_result($result,$c);
   }
 
   return $r;
@@ -185,15 +183,15 @@ function get_date() {
 
 # 기본적인 게시판의 정보를 가져오는 함수
 function get_board_info($table) {
-  global $o;
+  global $o, $c;
 
   # 오늘 자정의 UNIX_TIMESTAMP를 구해옴
   $today  = get_date();
 
   # date 필드를 비교해서 오늘 올라온 글의 갯수를 가져옴
   $sql    = search2sql($o);
-  $result = sql_query("SELECT COUNT(1/(date > '$today')), COUNT(*) FROM $table $sql");
-  $A = sql_fetch_array($result);
+  $result = sql_query("SELECT COUNT(1/(date > '$today')), COUNT(*) FROM $table $sql", $c);
+  $A = sql_fetch_array($result, $c);
 
   $count['all']    = $A[1];	# 전체 글 수
   $count['today']  = $A[0];	# 오늘 글 수
@@ -243,15 +241,15 @@ function get_page_info($count, $page = 0) {
 #          http://www.php.net/manual/function.intval.php
 function get_current_page($table, $idx) {
   global $board; # 게시판 기본 설정 (config/global.php)
-  global $o;
+  global $o, $c;
 
   $sql = search2sql($o, 0);
   $count = get_board_info($table);
 
   # 지정된 글의 idx보다 큰 번호를 가진 글의 갯수를 가져옴
-  $result     = sql_query("SELECT COUNT(*) FROM $table WHERE idx > '$idx' $sql");
-  $count['cur'] = sql_result($result, 0, "COUNT(*)");
-  sql_free_result($result);
+  $result     = sql_query("SELECT COUNT(*) FROM $table WHERE idx > '$idx' $sql", $c);
+  $count['cur'] = sql_result($result, 0, 'COUNT(*)', $c);
+  sql_free_result($result,$c);
 
   # 가져온 값을 페이지 당 글 수로 나누어 몇 번째 페이지인지 가져옴
   # (페이지는 1부터 시작하기 때문에 1을 더함)
@@ -262,7 +260,7 @@ function get_current_page($table, $idx) {
 
 # 지정한 글의 다음, 이전글을 가져오는 함수
 function get_pos($table, $idx) {
-    global $o;
+    global $o, $c;
 
     $sql    = search2sql($o, 0);
     
@@ -272,22 +270,22 @@ function get_pos($table, $idx) {
     $idxminus = $idx - 10;
 
     # 지정된 글의 idx보다 작은 번호를 가진 글 중에 idx가 가장 큰 글 (다음글)
-    #$result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < '$idx' $sql");
-    $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxminus' AND '$idxdm') $sql");
-    $pos['next'] = sql_result($result, 0, "idx");
-    sql_free_result($result);
+    #$result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < '$idx' $sql",$c);
+    $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxminus' AND '$idxdm') $sql",$c);
+    $pos['next'] = sql_result($result, 0, 'idx',$c);
+    sql_free_result($result,$c);
     if($pos['next']) { 
-      $result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['next']}'");
-      $next   = sql_fetch_array($result);
-      sql_free_result($result);
+      $result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['next']}'",$c);
+      $next   = sql_fetch_array($result,$c);
+      sql_free_result($result,$c);
         $next['title'] = str_replace("&amp;","&",$next['title']);
       $next['title'] = preg_replace("/(#|')/","\\\\1",convspecialchars($next['title']));
 
       $pos['next'] = $next['no'];
       if($next['reto']) {
-        $result    = sql_query("SELECT num FROM $table WHERE no = '{$next['reto']}'");
-        $next['num'] = sql_result($result, 0, "num");
-        sql_free_result($result);
+        $result    = sql_query("SELECT num FROM $table WHERE no = '{$next['reto']}'",$c);
+        $next['num'] = sql_result($result, 0, 'num',$c);
+        sql_free_result($result,$c);
         $pos['next_t'] = "Reply of No.{$next['num']}: {$next['title']}";
       } else {
         $pos['next_t'] = "No.{$next['num']}: {$next['title']}";
@@ -295,22 +293,22 @@ function get_pos($table, $idx) {
     }
 
     # 지정된 글의 idx보다 큰 번호를 가진 글 중에 idx가 가장 작은 글 (이전글)
-    #$result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > '$idx' $sql");
-    $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxdp' AND '$idxplus') $sql");
-    $pos['prev'] = sql_result($result, 0, "idx");
-    sql_free_result($result);
+    #$result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > '$idx' $sql",$c);
+    $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxdp' AND '$idxplus') $sql",$c);
+    $pos['prev'] = sql_result($result, 0, "idx",$c);
+    sql_free_result($result,$c);
     if($pos['prev']) { 
-      $result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['prev']}'");
-      $prev   = sql_fetch_array($result);
-      sql_free_result($result);
+      $result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['prev']}'",$c);
+      $prev   = sql_fetch_array($result,$c);
+      sql_free_result($result,$c);
         $prev['title'] = str_replace("&amp;","&",$prev['title']);
       $prev['title'] = preg_replace("/(#|')/","\\\\1",convspecialchars($prev['title']));
 
       $pos['prev'] = $prev['no'];
       if($prev['reto']) {
-        $result    = sql_query("SELECT num FROM $table WHERE no = '{$prev['reto']}'");
-        $prev['num'] = sql_result($result, 0, "num");
-        sql_free_result($result);
+        $result    = sql_query("SELECT num FROM $table WHERE no = '{$prev['reto']}'",$c);
+        $prev['num'] = sql_result($result, 0, "num",$c);
+        sql_free_result($result,$c);
         $pos['prev_t'] = "Reply of No.{$prev['num']}: {$prev['title']}";
       } else {
         $pos['prev_t'] = "No.{$prev['num']}: {$prev['title']}";
@@ -375,13 +373,13 @@ function get_title() {
 }
 
 function get_article($table, $no, $field0 = "*", $field1 = "no") {
-  global $langs;
+  global $langs, $c;
   if(!$no)
     print_error($langs['get_no'],250,150,1);
 
-  $result  = sql_query("SELECT $field0 FROM $table WHERE $field1 = '$no'");
-  $article = sql_fetch_array($result);
-  sql_free_result($result);
+  $result  = sql_query("SELECT $field0 FROM $table WHERE $field1 = '$no'",$c);
+  $article = sql_fetch_array($result,$c);
+  sql_free_result($result,$c);
 
   if(!$article)
     print_error($langs['get_n'],250,150,1);

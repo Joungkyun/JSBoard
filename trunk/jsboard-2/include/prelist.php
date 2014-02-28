@@ -2,7 +2,7 @@
 ########################################################################
 # JSBoard Pre List v0.4
 # Scripted By JoungKyun Kim 2002.07.30
-# $Id: prelist.php,v 1.7 2014-02-26 18:55:11 oops Exp $
+# $Id: prelist.php,v 1.8 2014-02-28 21:37:18 oops Exp $
 ########################################################################
 
 # JSBoard가 설치되어 있는 절대 경로
@@ -13,12 +13,14 @@ $prlist['path'] = "/webroot/jsboard-version";
 # 마지막에 /를 붙이면 안됨
 $prlist['wpath'] = "http://도메인/jsboard-version";
 
+$sqltype = extension_loaded('mysqli') ? 'sqli' : 'sql';
+
 include_once "{$prlist['path']}/config/global.php";
 include_once "{$prlist['path']}/include/variable.php";
 include_once "{$prlist['path']}/include/error.php";
 include_once "{$prlist['path']}/include/parse.php";
 include_once "{$prlist['path']}/include/check.php";
-include_once "{$prlist['path']}/include/sql.php";
+include_once "{$prlist['path']}/include/{$sqltype}.php";
 include_once "{$prlist['path']}/include/get.php";
 include_once "{$prlist['path']}/include/print.php";
 
@@ -79,17 +81,13 @@ function print_prlist($p) {
 function prelist($t,$limit=3,$cut=30) {
   global $prlist, $db;
 
-  sql_connect($db['server'], $db['user'], $db['pass']);
-  sql_select_db($db['name']);
+  $c = sql_connect($db['server'], $db['user'], $db['pass']);
+  sql_select_db($db['name'], $c);
 
   $sql = "SELECT * FROM $t ORDER BY date DESC LIMIT $limit";
-  $result = sql_query($sql);
-  $total = sql_num_rows($result);
+  $result = sql_query($sql, $c);
 
-  for ($i=0;$i<$total;$i++) {
-    mysql_data_seek($result,$i);
-    $row = mysql_fetch_array($result);
-
+  while (($row = sql_fetch_array ($result,$c)) ) {
     $p['no'] = $row['no'];
     $p['title'] = $row['title'];
 
@@ -118,8 +116,8 @@ function prelist($t,$limit=3,$cut=30) {
     print_prlist($p);
   }
 
-  sql_free_result($result);
-  mysql_close();
+  sql_free_result($result,$c);
+  sql_close($c);
 }
 
 function escape_callback ($matches) {

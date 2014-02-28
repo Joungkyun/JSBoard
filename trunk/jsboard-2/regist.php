@@ -1,5 +1,5 @@
 <?php
-# $Id: regist.php,v 1.18 2009-11-19 05:29:49 oops Exp $
+# $Id: regist.php,v 1.19 2014-02-28 21:37:17 oops Exp $
 $p_time[] = microtime(); # 속도 체크
 include "include/header.php";
 include "admin/include/check.php";
@@ -14,8 +14,8 @@ if($m == "act" || $m == "chkid") {
     $db['rhost'] = $db['server'];
     $db['rmode'] = "";
   }
-  sql_connect($db['rhost'], $db['user'], $db['pass'],$db['rmode']);
-  sql_select_db($db['name']);
+  $c = sql_connect($db['rhost'], $db['user'], $db['pass'],$db['rmode']);
+  sql_select_db($db['name'], $c);
 }
 
 if($m == "act") {
@@ -34,16 +34,16 @@ if($m == "act") {
 
   # 유저가 이미 등록되어 있는지 확인
   $query = "SELECT nid FROM userdb WHERE nid = '$id'";
-  sql_query($query);
-  $row = mysql_affected_rows();
+  sql_query($query,$c);
+  $row = sql_affected_rows($c);
   if($row) print_error($langs['chk_id_n'],250,150,1);
 
   # 유저가 등록이 안되어 있으면 등록
   $pass = str_replace("\$","\\\$",crypt($pass));
   $query = "INSERT INTO userdb (no,nid,name,email,url,passwd)
                  VALUES ('','$id','$name','$email','$url','$pass')";
-  sql_query($query);
-  mysql_close();
+  sql_query($query,$c);
+  sql_close($c);
 
   if($check) move_page("./regist.php?check=1");
   else move_page($print['dpage']);
@@ -145,9 +145,9 @@ $backbutton
   }
 
   $query = "SELECT nid FROM userdb WHERE nid = '$id'";
-  sql_query($query);
-  $row = mysql_affected_rows();
-  mysql_close();
+  sql_query($query,$c);
+  $row = sql_affected_rows($c);
+  sql_close($c);
 
   if($row) $ment = $langs['chk_id_n'];
   else $ment = $langs['chk_id_y'];

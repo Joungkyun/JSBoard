@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.17 2014-02-26 17:24:01 oops Exp $
+# $Id: act.php,v 1.18 2014-02-28 21:37:17 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 include "../include/ostype.php";
@@ -19,10 +19,8 @@ if($db['rmode'] == "r")
 #          DB에 접속
 ###########################################
 
-$connect = @mysql_connect($db['rhost'],$db['user'],$db['pass']);
-sql_error(mysql_errno(), mysql_error());
-
-mysql_select_db($db['name'],$connect);
+$c = @sql_connect($db['rhost'],$db['user'],$db['pass']);
+sql_select_db($db['name'],$c);
 
 # password 비교함수 - admin/include/auth.php
 compare_pass($_SESSION[$jsboard]);
@@ -43,23 +41,22 @@ if ($mode == "csync") {
 
   $mother_name = preg_replace("/_comm$/", "", $table_name);
 
-  $tbl_list = mysql_list_tables($db['name']);
   # 동일한 이름의 게시판이 있는지 확인
-  $chk = same_db_check($tbl_list,$table_name, 1);
+  $chk = db_table_list ($c, $db['name'], '', $table_name);
 
   if ($chk) {
-    if ( ! field_exist_check ($mother_name, "comm") ) {
+    if ( ! field_exist_check ($c, $db['name'], $mother_name, "comm") ) {
       # comm field 추가
-      mysql_query ('ALTER TABLE ' . $mother_name . ' add comm int(6) DEFAULT 0', $connect);
+      sql_query ('ALTER TABLE ' . $mother_name . ' add comm int(6) DEFAULT 0', $c);
       # comm field key 추가
-      mysql_query ('ALTER TABLE ' . $mother_name . ' add key (comm)', $connect);
+      sql_query ('ALTER TABLE ' . $mother_name . ' add key (comm)', $c);
     }
 
     sync_comment ($table_name, $mother_name);
 
-    mysql_close();
+    sql_close($c);
   } else {
-    mysql_close();
+    sql_close($c);
     print_error("$table_name is not found",250,150,1);
   }
 }
@@ -67,42 +64,37 @@ if ($mode == "csync") {
 else if($mode=='db_del') {
   table_name_check($table_name);
 
-  $tbl_list = mysql_list_tables($db['name']);
   # 동일한 이름의 게시판이 있는지 확인
-  $chk = same_db_check($tbl_list,$table_name, 1);
+  $chk = db_table_list ($c, $db['name'], '', $table_name);
 
   if ($chk) {
     # table delete
     $table_del = "drop table $table_name";
-    mysql_query($table_del,$connect);
-    sql_error(mysql_errno(),mysql_error());
+    sql_query($table_del,$c);
 
     if(!preg_match("/_comm$/",$table_name)) {
       $comm_del = "drop table {$table_name}_comm";
-      mysql_query($comm_del,$connect);
-      //sql_error(mysql_errno(),mysql_error());
+      sql_query($comm_del,$c);
 
       # 게시판 계정에서 사용되는 file 삭제
       unlink_r ("../data/{$table_name}");
     }
   }
 
-  mysql_close();
+  sql_close($c);
 }
 
 else if($mode == 'db_create')  {
-  $tbl_list = mysql_list_tables($db['name']);
-
   # 게시판 이름 규칙 -> A-Za-z0-9_-
   if ( preg_match ('/[^a-z0-9_-]/i', $new_table) )
     print_error ($langs['tb_rule'], 250, 150, 1);
 
   # 새로만들 계정이름의 존재유무 체크
   table_name_check($new_table);
-  # table list 존재 유무 체크
-  table_list_check($db['name']);
+
   # 동일한 이름의 게시판이 있는지 확인
-  same_db_check($tbl_list,$new_table);
+  if ( $new_table == 'userdb' || db_table_list ($c, $db['name'], '', $new_table) )
+    print_error ($_('a_acc'), 250, 150, 1);
 
   #include "include/first_reg.php";
   $create_table = "CREATE TABLE $new_table ( 
@@ -156,12 +148,10 @@ else if($mode == 'db_create')  {
                          VALUES ('',1,1,$date,'$host_ext','$name_ext','$passwd_ext','$email_ext',
                          '$url_ext','$subj_msg','$text_msg',0,0,0,0,0,0,0,'','','')";
 
-  mysql_query($create_table, $connect);
-  sql_error(mysql_errno(),mysql_error());
-  #$result_insert = mysql_query($insert_data, $connect);
+  sql_query($create_table, $c);
+  #$result_insert = sql_query($insert_data, $c);
 
-  mysql_query($create_comm, $connect);
-  sql_error(mysql_errno(),mysql_error());
+  sql_query($create_comm, $c);
 
   # 새로운 게시판에 필요한 파일및 디렉토리 생성
   mkdir("../data/$new_table",0700);
@@ -177,11 +167,11 @@ else if($mode == 'db_create')  {
   copy("../INSTALLER/sample/data/stylesheet.php","../data/$new_table/stylesheet.php");
   chmod("../data/$new_table/stylesheet.php",0644);
 
-  mysql_close();
+  sql_close($c);
 }
 
 else if($mode == "global_chg") {
-  mysql_close();
+  sql_close($c);
   # quot 변환된 문자를 un quot 한다
 
   $vars = "<?php\n".stripslashes($glob['vars'])."\n?>";

@@ -1,5 +1,5 @@
 <?php
-# $Id: replicate.php,v 1.2 2009-11-19 05:29:51 oops Exp $
+# $Id: replicate.php,v 1.3 2014-02-28 21:37:18 oops Exp $
 
 function replication_mode($db) {
   $db['userver'] = $db['userver'] ? $db['userver'] : $db['server'];
@@ -16,13 +16,15 @@ function replication_addrefer($db) {
   global $table,$list,$no;
 
   if($db['rmode'] == "w")
-    $c = @sql_connect($db['rhost'],$db['user'],$db['pass'],1);
+    $conn = @sql_connect($db['rhost'],$db['user'],$db['pass'],$db['rmode']);
   
   if($c && get_hostname(0) != $list['host']) {
-    @mysql_select_db($db['name'],$c);
-    mysql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'",$c);
-    sql_error($mysql_errno,$mysql_error);
+    @sql_select_db($db['name'],$conn);
+    sql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'",$conn);
     $list['refer']++;
   }
+
+  if ($conn)
+	sql_close($conn);
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-# $Id: print.php,v 1.42 2014-02-26 19:02:04 oops Exp $
+# $Id: print.php,v 1.43 2014-02-28 21:37:18 oops Exp $
 #
 # Wrapper function
 #
@@ -718,10 +718,10 @@ function print_license() {
 }
 
 function detail_searchform($p='') {
-  global $table,$board,$color,$langs,$o;
+  global $table,$board,$color,$langs,$o,$c;
 
-  $res= sql_query("SELECT min(date) AS min,max(date) AS max FROM $table");
-  $period = sql_fetch_array($res);
+  $res= sql_query("SELECT min(date) AS min,max(date) AS max FROM $table",$c);
+  $period = sql_fetch_array($res,$c);
 
   $max = explode(".",date("Y.m.d",$period['max']));
   $min = explode(".",date("Y.m.d",$period['min']));

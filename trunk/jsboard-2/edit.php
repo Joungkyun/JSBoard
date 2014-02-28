@@ -1,5 +1,5 @@
 <?php
-# $Id: edit.php,v 1.23 2014-02-26 18:55:11 oops Exp $
+# $Id: edit.php,v 1.24 2014-02-28 21:37:17 oops Exp $
 include "include/header.php";
 
 $board['super'] = $board['adm'] ? 1 : $board['super'];
@@ -16,8 +16,8 @@ meta_char_check($upload['dir']);
 $board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
 $board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php";
 
-sql_connect($db['server'], $db['user'], $db['pass']);
-sql_select_db($db['name']);
+$c = sql_connect($db['server'], $db['user'], $db['pass']);
+sql_select_db($db['name'], $c);
 
 $list = get_article($table, $no);
 
@@ -68,7 +68,7 @@ if($disable) {
 # 본문에 html tag 가 존재할 경우를 대비
 $list['text'] = convspecialchars($list['text']);
 
-mysql_close();
+sql_close($c);
 
 $print['preview_script'] = <<<EOF
 <script type="text/javascript">

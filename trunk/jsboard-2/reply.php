@@ -1,5 +1,5 @@
 <?php
-# $Id: reply.php,v 1.32 2014-02-26 18:55:11 oops Exp $
+# $Id: reply.php,v 1.33 2014-02-28 21:37:17 oops Exp $
 include "include/header.php";
 
 if ( ! $_SERVER['HTTP_REFERER'] ) {
@@ -36,8 +36,8 @@ if((preg_match("/^(2|3|5)$/",$board['mode']) && $_SESSION[$jsboard]['id']) || $b
 
 if($board['notice']) print_notice($board['notice']);
 
-sql_connect($db['server'], $db['user'], $db['pass']);
-sql_select_db($db['name']);
+$c = sql_connect($db['server'], $db['user'], $db['pass']);
+sql_select_db($db['name'], $c);
 
 $list = get_article($table, $no);
 
@@ -106,7 +106,7 @@ if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode']) && $_SESSION[$j
 
 $pages = "&amp;page=$page";
 
-mysql_close();
+sql_close($c);
 
 $print['preview_script'] = <<<EOF
 <script type="text/javascript">

@@ -1,5 +1,5 @@
 <?php
-# $Id: check.php,v 1.3 2009-11-19 05:29:50 oops Exp $
+# $Id: check.php,v 1.4 2014-02-28 21:37:17 oops Exp $
 
 # 게시판에 사용될 DB가 제대로 지정이 되었는지 검사 여부
 #
@@ -35,73 +35,6 @@ function table_name_check($table,$ck=0) {
     print_error ("Ugly access with table variable \"{$table}\"", 250, 150, 1);
 }
 
-# table list 존재 유무 체크
-#
-function table_list_check($db) {
-  global $langs;
-  if(!mysql_list_tables($db)) {
-    echo "<table width=100% height=100%>\n<tr>\n" .
-         "<td align=center><b><br><br>{$langs['n_acc']}<br><br><br></b></td>\n" .
-         "</tr>\n</table> ";
-    exit;
-  } else return $tbl_list;
-}
-
-# 게시판 생성시 동일한 이름의 게시판이 이미 존재하는지 여부 조사
-#
-function same_db_check($list, $table, $yn = 0) {
-  global $langs;
-  $tbl_num=mysql_num_rows($list);
-  for($k=0;$k<$tbl_num;$k++) {
-    # table list 를 불러 옵니다.
-    $table_name = mysql_tablename($list,$k);
-
-    if ($yn) {
-      if  ($table == $table_name) return 1;
-    } else {
-      if ($table == $table_name || $table == "userdb") print_error($langs['a_acc'],250,150,1);
-    }
-  }
-
-  if ($yn) return 0;
-}
-
-# table list 를 구한다.
-function get_tblist($db,$t="",$chk='') {
-  $list = mysql_list_tables($db);
-
-  # table list 존재 유무 체크
-  table_list_check($db);
-
-  # table 의 총 갯수를 구함
-  $list_num = mysql_num_rows($list);
-  if(!$j) $j = 0;
-
-  for ($i=0;$i<$list_num;$i++) {
-    if(!$chk) {
-      # table 이름을 구하여 배열에 저장
-      $l[$i] = mysql_tablename($list,$i);
-
-      # 배열에 저장된 이름중 알파벳별 구분 변수가 있으면 소트된
-      # 이름만 다시 배열에 저장
-      if($t) {
-        if(preg_match("/^$t/i",$l[$i])) {
-          $ll[$j] = $l[$i];
-          $j++;
-        }
-      }
-    } else {
-      if($chk == mysql_tablename($list,$i)) {
-        $l = 1;
-        break;
-      } else $l = 0;
-    }
-  }
-
-  if($t) return $ll;
-  else return $l;
-}
-
 function check_userlist_type($t) {
   if(is_hangul($t)) {
     if($t == "가") $r['like'] = "나";
@@ -130,7 +63,9 @@ function check_admin($user) {
   $p = opendir("./data");
   while($i = readdir($p)) {
     if($i != "." && $i != ".." && is_dir("./data/$i")) {
-      $c = fopen("./data/$i/config.php","rb");
+      if ( ! file_exists(($chkfile = "./data/$i/config.php")) )
+        continue;
+      $c = fopen($chkfile,"rb");
       $chk = fread($c,500);
       $chk = preg_replace("/.+board\[ad\][ ]*=[ ]*\"([^\"]*)\".+/i","\\1",$chk);
       if(trim($chk) == trim($user)) {
@@ -186,31 +121,17 @@ function parse_ipvalue($str,$r=0) {
   return $str;
 }
 
-function field_exist_check ($t, $compare) {
-  global $db;
-
-  $field = mysql_list_fields ($db['name'], $t);
-  $num = mysql_num_fields ($field);
-
-    for ($i = 0; $i < $num; $i++) {
-    if ( mysql_field_name ($field, $i) == $compare ) {
-      return 1;
-    }
-  }
-
-  return 0;
-}
-
 function sync_comment ($cmt, $mother) {
-  $res = mysql_query ('SELECT reno, count(*) as total FROM ' . $cmt . ' GROUP By reno');
+  global $c;
+  $res = sql_query ('SELECT reno, count(*) as total FROM ' . $cmt . ' GROUP By reno', $c);
 
-  if(mysql_num_rows($res)) {
-    while($list = mysql_fetch_array($res)) {
+  if(sql_num_rows($res,$c)) {
+    while($list = sql_fetch_array($res,$c)) {
       $sql = 'UPDATE ' . $mother . ' SET comm = \'' . $list['total'] . '\' '.
              'WHERE no = \'' . $list['reno'] . '\'';
-      mysql_query ($sql);
+      sql_query ($sql, $c);
     }
   }
-  mysql_free_result($res);
+  sql_free_result($res,$c);
 }
 ?>
