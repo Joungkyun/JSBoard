@@ -10,7 +10,7 @@
 #
 #################################################################################
 #
-# $Id: INSTALL.MANUALY,v 1.11 2014-02-26 17:09:13 oops Exp $
+# $Id: INSTALL.MANUALY,v 1.12 2014-02-28 21:34:39 oops Exp $
 #                              Quick Installation in JSBoard 2.0 v0.4
 #
 #################################################################################
@@ -38,10 +38,7 @@ windows.
 **** Contents ****
 
   1. Pre-requisites
-    1-1. testing MySQL function
-    1-2. Web server configuration
-    1-3. php.ini configuration
-    1-4. modified install script for Solaris or SunOS
+    1-1. testing MySQL API
   2. Installing JSBoard
   3. Changign passowrd of JSBoard super admin
   4. Security in JSBoard
@@ -57,77 +54,27 @@ windows.
 
    Other OS's are not officially supported
   
-  [ apache ]
+  [ web server ]
 
-    1.3.x or later
+    Apache, lighttpd or nginx
   
   [ MySQL ]
 
-    3.22.30 or later
+    4.1 or later
 
   [ PHP ]
 
-    4.1.0 or later
+    4.1.0 or later. If you run 5.3 or after, you can use php-fpm.
+      - must need mysqli or mysql extension
+      - must need mtstring extension 
 
-
-    Following is a configuration example.
-    PHP 4.1
-
-    ./configure --prefix=/usr \  
-                --with-apxs=/usr/sbin/apxs \  
-                --with-config-file-path=/usr/lib/php \
-                --disable-debug \
-                --with-regex=php \
-                --with-mod_charset \
-                --with-gd=shared \
-                --with-mysql=shared \
-                --with-ttf \
-                --enable-sigchild \
-                --enable-socket \
-                --enable-gd-native-ttf \
-                --enable-safe-mode \
-                --enable-inline-optimization \
-                --enable-magic-quotes \
-                --enable-mailparse \
-                --enable-track-vars \
-                --enable-debugger \
-                --enable-mbstring \
-                --enable-mbstr-enc-trans \
-                --enable-mbregex \
-                --enable-sysvsem \
-                --enable-sysvshm
-
-  of PHP 4.3.3
-
-    ./configure --prefix=/usr \
-                --with-apxs=/usr/sbin/apxs \
-                --with-config-file-path=/usr/lib/php \
-                --disable-debug \
-                --with-regex=php \
-                --with-mod_charset \
-                --with-gd=shared \
-                --enable-gd-native-ttf \
-                --with-jpeg-dir=/usr/lib \
-                --with-png-dir=/usr/lib \
-                --with-freetype-dir=/usr/lib \
-                --with-mysql=shared \
-                --enable-mbstring=shared,all \
-                --enable-mbregex \
-                --enable-sigchild \
-                --enable-safe-mode \
-                --enable-inline-optimization \
-                --enable-magic-quotes \
-                --enable-track-vars \
-                --enable-debugger \
-                --enable-sysvsem \
-                --enable-sysvshm
 
   * Check List *
 
   Make sure that your PHP installation supports MySQL functions and php.ini satisfies 
   requirements.
 
-  1-1. Testing MySQL function
+  1-1. Testing MySQL API
 
     Create info.php with following code on your web tree.
 
@@ -147,14 +94,15 @@ windows.
     Now try following code with the path that you've just discovered.
 
     <?php
-    $mcheck = mysql_connect(":/var/lib/mysql/mysql.sock","root","$passwd");
-
-    if ($mcheck) echo "mysql connect successful";
-    else echo "mysql connect failed";
+    $sqlfunc = extension_loaded('mysqli') ? 'mysqli_connect' : 'mysql_connect';
+    $con = $sqlfunc(":/var/run/mysqld/mysql.sock","root","MYSQL_ROOT_PW");
+    if($con) echo "yes";
+    else echo "no";
     ?>
 
+
     Try that page from the browser to see if it can connect MySQL server. If 
-    you get "ysql connect failed" then you can test your MySQL server with 
+    you get "mysql connect failed" then you can test your MySQL server with 
     the following shell command.
 
     shell> mysql -u root -p
@@ -162,36 +110,6 @@ windows.
     if you use remote db server,
 
     shell> mysql -u root -p -h DB_server_address
-
-
-  1-2. Web server configuration
-
-    The index file of jsboard is index.php. and config have index.php as their filename
-    so you may want to add following in your httpd.conf file. 
-
-    DirectoryIndex index.php index.html index.htm ...
-                   ---------
-
-  1-3. php.ini configuration
-
-    value of short_open_tag is must On. If this value is off, for example Redhat 8.x
-    Jsboard has not right operation.
-
-    short_open_tag = On
-
-    There is a problem with typing ' or " in text area. Set following options to 
-    fix it.
-
-    magic_quotes_gpc = ON
-    magic_quotes_runtime = OFF
-    magic_quotes_sybase = OFF
-
-    Also files bigger than 2M may not be uploaded. To allow uploading big files like 
-    that, make post_max_size bigger (5M?) than upload_max_filesize.
-    
-    post_max_size       = 8M
-    max_execution_time  = 30
-    upload_max_filesize = 2M
 
 
 2. Installing JSBoard
@@ -240,10 +158,10 @@ windows.
         ## System INFORMATION
         ########################################################
         #
-        # System Language	: English
-        # System OS		: Linux
-        # Apache User		: nobody
-        # Apache Group		: nobody
+        # System Language   : English
+        # System OS         : Linux
+        # Apache User       : nobody
+        # Apache Group      : nobody
         #
         ########################################################
 
