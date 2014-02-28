@@ -1,5 +1,5 @@
 <?php
-# $Id: admin.php,v 1.3 2009-11-16 21:52:46 oops Exp $
+# $Id: admin.php,v 1.4 2014-02-28 19:30:02 oops Exp $
 $path['type'] = 'admin';
 require_once "./include/admin_head.php";
 
@@ -96,7 +96,8 @@ if( $db['name'] && ! $table ) {
         $total_count = sql_result ($result, 0, 'cnt');
 
         # 각 table에 등록된 글들의 합을 구합니다.
-        $to = $to + $total_count;
+        if ($chk_result)
+          $to = $to + $total_count;
         $total = "SELECT COUNT(*) AS cnt FROM {$table_name[$i]} WHERE date > '$current_time'";
 
         $result = sql_query ($total, $c, 1);
@@ -104,7 +105,8 @@ if( $db['name'] && ! $table ) {
         $total_today = ! $total_today ? 0 : $total_today;
 
         # 오늘 등록된 글들의 합을 구합니다.
-        $to_today = $to_today + $total_today;
+        if ($chk_result)
+          $to_today = $to_today + $total_today;
 
         echo "<tr align=\"center\">\n".
              "<td align=\"left\" width=\"30%\" class=\"rowtype1\">&nbsp;&nbsp;&nbsp;{$table_name[$i]}</td>\n".
@@ -158,6 +160,13 @@ if( $db['name'] && ! $table ) {
 
   # 전체 등록된 글 수를 확인
   for ( $t = 0; $t < $tbl_num; $t++ ) {
+    # jsboard에서 사용하는 게시판인지를 판단
+    $chk = "select idx from $table_name[$t] where idx = 1;";
+    if (($chk_result = sql_query($chk,$c,true)) === false) {
+      if (!preg_match('/_comm/', $table_name[$t]))
+        continue;
+    }
+
     # 각 table에 등록된 글 수를 check 합니다.
     $total_t = "SELECT COUNT(*) AS cnt FROM {$table_name[$t]}";
     $result_t = sql_query ($total_t, $c);
