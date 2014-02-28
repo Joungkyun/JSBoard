@@ -1,9 +1,9 @@
 #!/bin/sh
-# $Id: root,v 1.9 2009-11-19 05:29:50 oops Exp $
+# $Id: root,v 1.10 2014-02-28 21:25:45 oops Exp $
 clear
 echo "########################################################"
-echo "# JSBoard Config File Installer v2.0                   #"
-echo "# Scripted By JoungKyun Kim < http://www.oops.org >    #"
+echo "# JSBoard Config File Installer v2.1                   #"
+echo "# Scripted By JoungKyun Kim < http://oops.org >        #"
 echo "########################################################"
 echo 
 
@@ -52,7 +52,7 @@ else
 fi
 
 DIST=`uname -s`
-Auser=$(ps uax | grep -E "apache|httpd" | grep -v ^root | grep -v grep | awk '{print $1}' | uniq)
+Auser=$(ps uax | grep -E "apache|httpd|www|www-data" | grep -v ^root | grep -v grep | awk '{print $1}' | uniq)
 Agroup=$(cat ${CONF} | grep -E "^(`echo -ne "\t"`|[ ])*Group " | awk '{print $2}')
 
 if [ "${langs}" = "ko" ]; then
