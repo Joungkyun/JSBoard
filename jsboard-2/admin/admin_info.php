@@ -1,14 +1,14 @@
 <?php
-# $Id: admin_info.php,v 1.9 2014-02-27 06:50:29 oops Exp $
+# $Id: admin_info.php,v 1.10 2014-03-02 17:11:30 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 
 htmlhead();
-# session ÀÌ µî·ÏµÇ¾î ÀÖÁö ¾ÊÀ¸¸é ·Î±×ÀÎ È­¸éÀ¸·Î.
+# session ì´ ë“±ë¡ë˜ì–´ ìžˆì§€ ì•Šìœ¼ë©´ ë¡œê·¸ì¸ í™”ë©´ìœ¼ë¡œ.
 if(!isset($_SESSION[$jsboard]) || $_SESSION[$jsboard]['pos'] != 1)
   print_error($langs['login_err']);
 
-# input ¹®ÀÇ size¸¦ browserº°·Î ¸ÂÃß±â À§ÇÑ ¼³Á¤
+# input ë¬¸ì˜ sizeë¥¼ browserë³„ë¡œ ë§žì¶”ê¸° ìœ„í•œ ì„¤ì •
 $size = form_size(9);
 $textsize = form_size(36);
 
@@ -48,13 +48,13 @@ if(!$mode) {
   $configfile = "../config/global.php";
   $spamlistfile = "../config/spam_list.txt";
 
-  # global ¼³Á¤ °¡Á®¿À±â
+  # global ì„¤ì • ê°€ì ¸ì˜¤ê¸°
   $global_con = file_operate($configfile,"r","Don't open $configfile");
   $global_con = preg_replace("/<\?(php)?|\?>/i","",$global_con);
 
-  # spam list °¡Á®¿À±â
+  # spam list ê°€ì ¸ì˜¤ê¸°
   if(file_exists($spamlistfile)) $spamlist = file_operate($spamlistfile,"r");
-  else $spamlist = "jsboard/config ¿¡ spam_list.txt °¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù";
+  else $spamlist = "jsboard/config ì— spam_list.txt ê°€ ì¡´ìž¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤";
 
   $global_con = trim($global_con);
   $spamlist = trim($spamlist);
@@ -86,4 +86,13 @@ if(!$mode) {
 
 htmltail(); 
 
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
 ?>

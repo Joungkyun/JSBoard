@@ -1,19 +1,30 @@
 <?php
-# $Id: session.php,v 1.12 2014-02-28 21:37:17 oops Exp $
-session_start(); // sessionÀ» ½ÃÀÛÇÑ´Ù.
+# $Id: session.php,v 1.13 2014-03-02 17:11:28 oops Exp $
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
+
+session_start(); // sessionì„ ì‹œìž‘í•œë‹¤.
 include_once '../include/variable.php';
 require_once '../include/print.php';
 parse_query_str();
 if ($mode == "login") {
-  $_SESSION['mysqlpass'] = $mysqlpass; //¼¼¼Ç µî·ÏÇÑ´Ù.
+  $_SESSION['mysqlpass'] = $mysqlpass; //ì„¸ì…˜ ë“±ë¡í•œë‹¤.
   header("Location: install.php?langss=$langss");
   exit;
 } elseif ($mode == "logout") {
-  unset ($_SESSION['mysqlpass']); // ¼¼¼ÇÀ» »èÁ¦
+  unset ($_SESSION['mysqlpass']); // ì„¸ì…˜ì„ ì‚­ì œ
   header("Location: auth.php?mode=first&langss=$langss");
   exit;
 } elseif ($mode == "first") {
-  unset ($_SESSION['mysqlpass']); // ¼¼¼ÇÀ» »èÁ¦
+  unset ($_SESSION['mysqlpass']); // ì„¸ì…˜ì„ ì‚­ì œ
   $langs['code'] = ($langss == "ko") ? "ko" : "en";
 
   $path['type'] = "Install";

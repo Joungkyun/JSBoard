@@ -1,6 +1,7 @@
 <?php
-# $Id: error.php,v 1.4 2012-10-23 16:28:27 oops Exp $
+# $Id: error.php,v 1.5 2014-03-02 17:11:31 oops Exp $
 
+// {{{ +-- public print_error($str,$width=250,$height=150,$back='')
 function print_error($str,$width=250,$height=150,$back='') {
   global $table, $path, $prlist, $agent, ${$jsboard};
 
@@ -48,7 +49,9 @@ function print_error($str,$width=250,$height=150,$back='') {
   else move_page("$gopage/session.php?m=logout$var",0);
   exit;
 }
+// }}}
 
+// {{{ +-- public print_notice($str,$width = 330, $height = 210)
 function print_notice($str,$width = 330, $height = 210) {
   global $table, $path, $agent;
 
@@ -79,7 +82,9 @@ function print_notice($str,$width = 330, $height = 210) {
   }
   echo "//-->\n</SCRIPT>\n";
 }
+// }}}
 
+// {{{ +-- public print_pwerror($str, $width = 250, $height = 130)
 function print_pwerror($str, $width = 250, $height = 130) {
   global $table, $path, $agent, $table, ${$jsboard};
 
@@ -117,4 +122,16 @@ function print_pwerror($str, $width = 250, $height = 130) {
        "//-->\n</SCRIPT>\n";
   exit;
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

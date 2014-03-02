@@ -1,41 +1,41 @@
 <?php
-# $Id: captchacommon.php,v 1.6 2014-02-26 17:09:13 oops Exp $
+# $Id: captchacommon.php,v 1.7 2014-03-02 17:11:30 oops Exp $
 
 if ( $board['captcha'] ) {
-	require_once 'captcha/captcha.php';
-	$capt = new Captcha ($board['captcha']);
+  require_once 'captcha/captcha.php';
+  $capt = new Captcha ($board['captcha']);
 
-	if ( $capt->disable === true ) {
-		$pcaptcharcolspan = ' colspan=3';
-		return;
-	}
+  if ( $capt->disable === true ) {
+    $pcaptcharcolspan = ' colspan=3';
+    return;
+  }
 
-    if ( $board['super'] || $board['adm'] ) {
-		$pcaptcharcolspan = ' colspan=3';
-		$capt->disable = true;
-		return;
-    }
+  if ( $board['super'] || $board['adm'] ) {
+    $pcaptcharcolspan = ' colspan=3';
+    $capt->disable = true;
+    return;
+  }
 
-	if ( preg_match ('/reply\.php$/', $_SERVER['PHP_SELF']) )
-		$pattern = '/^[25-7]$/';
-	else
-		$pattern = '/^[2457]$/';
+  if ( preg_match ('/reply\.php$/', $_SERVER['PHP_SELF']) )
+    $pattern = '/^[25-7]$/';
+  else
+    $pattern = '/^[2457]$/';
 
-	if ( preg_match ($pattern, $board['mode']) ) {
-		$pcaptcharcolspan = ' colspan=3';
-		$capt->disable = true;
-		return;
-	}
+  if ( preg_match ($pattern, $board['mode']) ) {
+    $pcaptcharcolspan = ' colspan=3';
+    $capt->disable = true;
+    return;
+  }
 
-	$ckey = $capt->captchakey ();
-	$captsize = $size['pass'] * 2;
+  $ckey = $capt->captchakey ();
+  $captsize = $size['pass'] * 2;
 
-	$pcaptcha = <<<EOF
+  $pcaptcha = <<<EOF
 </td>
 <td style="width: 88px;">
 <script type="text/javascript">
 function captcha_insert() {
-	document.getElementById('id_ckeyv').value = "{$capt->captchadata ($ckey)}";
+  document.getElementById('id_ckeyv').value = "{$capt->captchadata ($ckey)}";
 }
 </script>
 <img src="./captcha/captchaimg.php?{$ckey}" alt="Input {$capt->captchadata($ckey)}" onclick="captcha_insert(); return false;"></td>
@@ -45,4 +45,15 @@ function captcha_insert() {
 <input type="hidden" name="atc[ckey]" value="{$ckey}">
 EOF;
 }
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

@@ -1,5 +1,5 @@
 <?php
-# $Id: reply.php,v 1.33 2014-02-28 21:37:17 oops Exp $
+# $Id: reply.php,v 1.34 2014-03-02 17:11:28 oops Exp $
 include "include/header.php";
 
 if ( ! $_SERVER['HTTP_REFERER'] ) {
@@ -14,7 +14,7 @@ if(preg_match("/^(1|3|6|7)$/",$board['mode']))
 
 if(preg_match("/^(1|3|5)$/",$board['mode']) && !$_SESSION[$jsboard]['id']) print_error($langs['perm_err'],250,150,1);
 
-# ∑Œ±◊¿Œ¿Ã µ«æÓ ¿÷∞Ì ¿¸√ºæÓµÂπŒ ∑Œ±◊¿ŒΩ√ø°¥¬ ∏µÁ∞Õ¿ª ºˆ¡§«“ºˆ ¿÷∞‘.
+# Î°úÍ∑∏Ïù∏Ïù¥ ÎêòÏñ¥ ÏûàÍ≥† Ï†ÑÏ≤¥Ïñ¥ÎìúÎØº Î°úÍ∑∏Ïù∏ÏãúÏóêÎäî Î™®Îì†Í≤ÉÏùÑ ÏàòÏ†ïÌï†Ïàò ÏûàÍ≤å.
 if(preg_match("/^(2|5)$/",$board['mode']) && $_SESSION[$jsboard]['id'] &&
    $_SESSION[$jsboard]['pos'] != 1) $disable = " disabled";
 else $nodisable = 1;
@@ -61,22 +61,22 @@ $list['text'] = <<<EOF
 [quote="{$list['name']}"]{$list['text']}[/quote]
 EOF;
 
-# ∫ªπÆø° html tag ∞° ¡∏¿Á«“ ∞ÊøÏ∏¶ ¥Î∫Ò
-$list['text'] = convspecialchars($list['text']);
+# Î≥∏Î¨∏Ïóê html tag Í∞Ä Ï°¥Ïû¨Ìï† Í≤ΩÏö∞Î•º ÎåÄÎπÑ
+$list['text'] = htmlspecialchars($list['text']);
 
 if($list['html']) $html_chk_ok = " checked";
 else $html_chk_no = " checked";
 
-# Browser∞° Lynx¿œ∂ß multim form ªË¡¶
+# BrowserÍ∞Ä LynxÏùºÎïå multim form ÏÇ≠Ï†ú
 if($noup == 1) $board['formtype'] = "";
 else $board['formtype'] = " ENCTYPE=\"multipart/form-data\"";
 
-# ø¯∫ª±€ ∆˜«‘ º±≈√ ø©∫Œ
+# ÏõêÎ≥∏Í∏Ä Ìè¨Ìï® ÏÑ†ÌÉù Ïó¨Î∂Ä
 if ($enable['ore']) {
   $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\" tabindex=\"7\"></TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"hide\" VALUE=\"{$list['text']}\">\n" .
                  "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=1>\n" .
-                 "<INPUT TABINDEX=\"100\" TYPE=\"button\" NAME=\"quote\" VALUE=\"ø¯∫ª ∆˜«‘\" onClick=\"this.form.rpost.value=this.form.rpost.value + this.form.hide.value; this.form.hide.value ='';\" tabindex=\"9\">\n";
+                 "<INPUT TABINDEX=\"100\" TYPE=\"button\" NAME=\"quote\" VALUE=\"ÏõêÎ≥∏ Ìè¨Ìï®\" onClick=\"this.form.rpost.value=this.form.rpost.value + this.form.hide.value; this.form.hide.value ='';\" tabindex=\"9\">\n";
 } else {
   $text_area = "<TEXTAREA NAME=\"rpost\" CLASS=\"resizable\" tabindex=\"7\">{$list['text']}</TEXTAREA>";
   $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=0>\n";
@@ -115,7 +115,7 @@ $print['preview_script'] = <<<EOF
 </script>
 EOF;
 
-# Template file ¿ª »£√‚
+# Template file ÏùÑ Ìò∏Ï∂ú
 meta_char_check($print['theme'], 1, 1);
 require_once 'captcha/captchacommon.php';
 include "theme/{$print['theme']}/reply.template";

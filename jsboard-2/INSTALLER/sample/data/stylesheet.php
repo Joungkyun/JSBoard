@@ -1,4 +1,4 @@
 <?php
-# $Id: stylesheet.php,v 1.3 2014-02-26 17:09:12 oops Exp $
-$user_stylesheet = "";
+# $Id: stylesheet.php,v 1.4 2014-03-02 17:11:29 oops Exp $
+$user_stylesheet = '';
 ?>

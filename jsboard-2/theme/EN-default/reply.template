@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: reply.template,v 1.30 2014-02-26 17:09:13 oops Exp $ -->
+<!-- $Id: reply.template,v 1.31 2014-03-02 17:11:32 oops Exp $ -->
 <!-- ==================================================================== -->
 <!-- $langs['charset'] : print charset code                               -->
 <!-- $board['ver']     : version information in webboard                  -->
@@ -267,7 +267,7 @@ EOF;
 <?php echo print_spam_trap()?>
 </DIV>
 
-<!-- ======================= ²¿¸® µðÀÚÀÎ ½ÃÀÛ ======================= -->
+<!-- ======================= ê¼¬ë¦¬ ë””ìžì¸ ì‹œìž‘ ======================= -->
 <?php
 if(!$np) {
   # Input by whole admin
@@ -276,6 +276,6 @@ if(!$np) {
   include "{$board['tailpath']}";
 }
 ?>
-<!-- ======================= ²¿¸® µðÀÚÀÎ ³¡   ======================= -->
+<!-- ======================= ê¼¬ë¦¬ ë””ìžì¸ ë   ======================= -->
 </BODY>
 </HTML>

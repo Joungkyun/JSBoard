@@ -1,393 +1,393 @@
 <?php
 setlocale(LC_ALL,"ja");
 # Language Charactor Set
-$langs['charset'] = "Shift_JIS";
+$langs['charset'] = "utf-8";
 
 # Header file Message
-$table_err = "ƒe[ƒuƒ‹‚ð Žw’è‚·‚é‚Æ ‚µ‚Ü‚·";
-$langs['ln_titl'] = "JSBoard $board[ver] ŠÇ—ŽÒ ƒy[ƒW";
-$langs['login_err'] = "ƒƒOƒCƒ“‚ð “ú ‚­‚¾‚³‚¢";
-$langs['perm_err'] = "Œ ŒÀ‚ª ‚È‚¢‚Å‚·.";
+$table_err = "ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ æŒ‡å®šã™ã‚‹ã¨ ã—ã¾ã™";
+$langs['ln_titl'] = "JSBoard {$board['ver']} ç®¡ç†è€… ãƒšãƒ¼ã‚¸";
+$langs['login_err'] = "ãƒ­ã‚°ã‚¤ãƒ³ã‚’ æ—¥ ãã ã•ã„";
+$langs['perm_err'] = "æ¨©é™ãŒ ãªã„ã§ã™.";
 
 # read.php
-$langs['ln_url'] = "ƒz[ƒ€ƒy[ƒW";
-$langs['conj'] = "ŠÖ˜A•¶";
-$langs['c_na'] = "–¼‘O";
-$langs['c_ps'] = "ˆÃ†";
-$langs['c_en'] = "“ü—Í";
+$langs['ln_url'] = "ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸";
+$langs['conj'] = "é–¢é€£æ–‡";
+$langs['c_na'] = "åå‰";
+$langs['c_ps'] = "æš—å·";
+$langs['c_en'] = "å…¥åŠ›";
 
 # write.php
-$langs['upload'] = "File upload ‹@”\‚ð ‘S‘Ì ŠÇ—ŽÒ‚ª §ŒÀ‚µ‚Ä ‚ ‚è‚Ü‚·.";
+$langs['upload'] = "File upload æ©Ÿèƒ½ã‚’ å…¨ä½“ ç®¡ç†è€…ãŒ åˆ¶é™ã—ã¦ ã‚ã‚Šã¾ã™.";
 
 # edit.php
-$langs['e_wpw'] = "[‘S‘Ì ŠÇ—ŽÒ]";
-$langs['b_apw'] = "[ŠÇ—ŽÒ]";
+$langs['e_wpw'] = "[å…¨ä½“ ç®¡ç†è€…]";
+$langs['b_apw'] = "[ç®¡ç†è€…]";
 
 # delete.php
-$langs['d_wa'] = "ƒpƒXƒ[ƒh‚ð “ü—Í‚µ‚Ä ‚­‚¾‚³‚¢. íœ‚µ‚½ ŒfŽ¦•¨‚Í •œ‹Œ‚·‚é ” ‚È‚¢‚Å‚·.";
-$langs['d_waw'] = "[‘S‘Ì ŠÇ—ŽÒ] ƒpƒXƒ[ƒh‚ð “ü—Í ‚µ‚Ä‚­‚¾‚³‚¢. •ÔŽ–‚ª ‘¶Ý‚·‚ê‚Î ˆê‚É íœ‚³‚ê‚Ü‚·.";
-$langs['d_waa'] = "[ŠÇ—ŽÒ] ƒpƒXƒ[ƒh‚ð “ü—Í ‚µ‚Ä‚­‚¾‚³‚¢. •ÔŽ–‚ª ‘¶Ý‚·‚ê‚Î ˆê‚É íœ‚³‚ê‚Ü‚·.";
-$langs['w_pass'] = "ƒpƒXƒ[ƒh";
+$langs['d_wa'] = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ å…¥åŠ›ã—ã¦ ãã ã•ã„. å‰Šé™¤ã—ãŸ æŽ²ç¤ºç‰©ã¯ å¾©æ—§ã™ã‚‹ æ•° ãªã„ã§ã™.";
+$langs['d_waw'] = "[å…¨ä½“ ç®¡ç†è€…] ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ å…¥åŠ› ã—ã¦ãã ã•ã„. è¿”äº‹ãŒ å­˜åœ¨ã™ã‚Œã° ä¸€ç·’ã« å‰Šé™¤ã•ã‚Œã¾ã™.";
+$langs['d_waa'] = "[ç®¡ç†è€…] ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ å…¥åŠ› ã—ã¦ãã ã•ã„. è¿”äº‹ãŒ å­˜åœ¨ã™ã‚Œã° ä¸€ç·’ã« å‰Šé™¤ã•ã‚Œã¾ã™.";
+$langs['w_pass'] = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰";
 
 # auth_ext.php
-$langs['au_ment'] = "‘S‘Ì ŠÇ—ŽÒ ƒpƒXƒ[ƒh‚ð “ü‚ê‚Ä‚­‚¾‚³‚¢";
-$clangs['au_ment'] = "ŒfŽ¦”Â ŠÇ—ŽÒ ‚Ü‚½‚Í ‘S‘Ì ŠÇ—ŽÒ ƒpƒXƒ[ƒh‚ð “ü‚ê‚Ä‚­‚¾‚³‚¢";
-$langs['au_ments'] = "ˆÈ‘O ‰æ–Ê‚Å";
+$langs['au_ment'] = "å…¨ä½“ ç®¡ç†è€… ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ å…¥ã‚Œã¦ãã ã•ã„";
+$clangs['au_ment'] = "æŽ²ç¤ºæ¿ ç®¡ç†è€… ã¾ãŸã¯ å…¨ä½“ ç®¡ç†è€… ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ å…¥ã‚Œã¦ãã ã•ã„";
+$langs['au_ments'] = "ä»¥å‰ ç”»é¢ã§";
 
 # error.ph
-$langs['b_sm'] = "Šm”F";
-$langs['b_reset'] = "Ä‚Ñ";
-$langs['er_msg'] = "Œx";
-$langs['er_msgs'] = "ŠÔˆá‚¢";
+$langs['b_sm'] = "ç¢ºèª";
+$langs['b_reset'] = "å†ã³";
+$langs['er_msg'] = "è­¦å‘Š";
+$langs['er_msgs'] = "é–“é•ã„";
 
 # act.php
-$langs['act_ud'] = "‘å‚«‚³‚ª 0ƒCƒ“ ƒtƒ@ƒCƒ‹‚Í ƒAƒbƒvƒ[ƒh‚·‚é ” ‚È‚¢‚µ\nphp.ini‚Å Žw’è‚³‚ê‚½ " . get_cfg_var(upload_max_filesize) ."\nˆÈã‚Ì ƒtƒ@ƒCƒ‹ ‚â‚Á‚Ï‚è ƒAƒbƒvƒ[ƒh‚·‚é ” ‚È‚¢‚Å‚·.";
-$langs['act_md'] = "$upload[maxsize] ˆÈã‚Ì ƒtƒ@ƒCƒ‹‚Í ƒAƒbƒvƒ[ƒh‚È‚³‚é ” ‚È‚¢‚µ\nphp.ini‚Å Žw’è‚³‚ê‚½ " . get_cfg_var(upload_max_filesize) ." ˆÈã‚Ì ƒtƒ@ƒCƒ‹ ‚â‚Á‚Ï‚è\nƒAƒbƒvƒ[ƒh‚·‚é ” ‚È‚¢‚Å‚·.";
-$langs['act_de'] = "ƒtƒ@ƒCƒ‹ –¼‘O‚É “ÁŽê•¶Žš(#,\$,%‚È‚Ç)‚ð ŠÜ‚Þ ” ‚È‚¢‚Å‚·";
-$langs['act_ed'] = "ƒAƒbƒvƒ[ƒh‚·‚é ƒtƒ@ƒCƒ‹‚ª ‚È‚¢‚Æ‚© ”ñ³í“I‚È ƒAƒbƒvƒ[ƒh‚ª ‹s ‚È‚è‚Ü‚µ‚½.";
-$langs['act_pw'] = "ƒpƒXƒ[ƒh‚ª ˆá‚¢‚Ü‚·. Šm”F Œã ‚â‚è’¼‚µ‚µ‚Ä‚­‚¾‚³‚¢.";
-$langs['act_pww'] = "‘S‘Ì ŠÇ—ŽÒ ƒpƒXƒ[ƒh‚ª ˆá‚¢‚Ü‚·. Šm”F Œã ‚â‚è’¼‚µ‚µ‚Ä‚­‚¾‚³‚¢.";
-$langs['act_pwa'] = "ŠÇ—ŽÒ ƒpƒXƒ[ƒh‚ª ˆá‚¢‚Ü‚·. Šm”F Œã ‚â‚è’¼‚µ‚µ‚Ä‚­‚¾‚³‚¢.";
-$langs['act_c'] = "ŠÖ˜A•¶‚ª ‚ ‚é‚Ì‚Å íœ‚·‚é ” ‚È‚¢‚Å‚·.";
-$langs['act_in'] = "–¼‘O, ‘è–Ú, “à—e‚Í ‚º‚Ð “ü—Í‚·‚é‚Æ ‚µ‚Ü‚·.";
-$langs['act_pwm'] = "ƒpƒXƒ[ƒh‚ð Žw’è‚µ‚Ä ‚­‚¾‚³‚é‚Æ ‚µ‚Ü‚·.";
-$langs['act_ad'] = "“o˜^‚µ‚½ –¼‘O‚Æ “dŽqƒ[ƒ‹‚Í ‘S‘Ì ŠÇ—ŽÒ‚Ì ƒpƒXƒ[ƒh‚ª ‚ ‚é‚Æ “o˜^‚ª ‰Â”\‚Å‚·";
-$langs['act_d'] = "“o˜^‚µ‚½ –¼‘O‚Æ “dŽqƒ[ƒ‹‚Í ƒpƒXƒ[ƒh‚ª ‚ ‚é‚Æ “o˜^‚ª ‰Â”\‚Å‚·";
-$langs['act_s'] = "spam‚Å ”»’f‚³‚ê‚Ä ‘‚«ž‚Ý‚ð ‹‘”Û‚µ‚Ü‚·.";
-$langs['act_same'] = "‚Ü‚Á‚½‚­“¯‚¶‚È •¶‚ð “ñ“x ‚ ‚°‚é‚Ì ˆù‚ñ‚Å‚­‚¾‚³‚¢.";
-$langs['act_dc'] = "•Ï‚í‚Á‚½ “à—e‚ª ‚È‚¢‚Å‚·.";
-$langs['act_complete'] = "•ÏX‚ª Š®—¹‚µ‚Ü‚µ‚½";
+$langs['act_ud'] = "å¤§ãã•ãŒ 0ã‚¤ãƒ³ ãƒ•ã‚¡ã‚¤ãƒ«ã¯ ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ æ•° ãªã„ã—\nphp.iniã§ æŒ‡å®šã•ã‚ŒãŸ " . get_cfg_var(upload_max_filesize) ."\nä»¥ä¸Šã® ãƒ•ã‚¡ã‚¤ãƒ« ã‚„ã£ã±ã‚Š ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ æ•° ãªã„ã§ã™.";
+$langs['act_md'] = "$upload[maxsize] ä»¥ä¸Šã® ãƒ•ã‚¡ã‚¤ãƒ«ã¯ ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ãªã•ã‚‹ æ•° ãªã„ã—\nphp.iniã§ æŒ‡å®šã•ã‚ŒãŸ " . get_cfg_var(upload_max_filesize) ." ä»¥ä¸Šã® ãƒ•ã‚¡ã‚¤ãƒ« ã‚„ã£ã±ã‚Š\nã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ æ•° ãªã„ã§ã™.";
+$langs['act_de'] = "ãƒ•ã‚¡ã‚¤ãƒ« åå‰ã« ç‰¹æ®Šæ–‡å­—(#,Â¥$,%ãªã©)ã‚’ å«ã‚€ æ•° ãªã„ã§ã™";
+$langs['act_ed'] = "ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ ãƒ•ã‚¡ã‚¤ãƒ«ãŒ ãªã„ã¨ã‹ éžæ­£å¸¸çš„ãª ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ãŒ é‚è¡Œ ãªã‚Šã¾ã—ãŸ.";
+$langs['act_pw'] = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒ é•ã„ã¾ã™. ç¢ºèª å¾Œ ã‚„ã‚Šç›´ã—ã—ã¦ãã ã•ã„.";
+$langs['act_pww'] = "å…¨ä½“ ç®¡ç†è€… ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒ é•ã„ã¾ã™. ç¢ºèª å¾Œ ã‚„ã‚Šç›´ã—ã—ã¦ãã ã•ã„.";
+$langs['act_pwa'] = "ç®¡ç†è€… ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒ é•ã„ã¾ã™. ç¢ºèª å¾Œ ã‚„ã‚Šç›´ã—ã—ã¦ãã ã•ã„.";
+$langs['act_c'] = "é–¢é€£æ–‡ãŒ ã‚ã‚‹ã®ã§ å‰Šé™¤ã™ã‚‹ æ•° ãªã„ã§ã™.";
+$langs['act_in'] = "åå‰, é¡Œç›®, å†…å®¹ã¯ ãœã² å…¥åŠ›ã™ã‚‹ã¨ ã—ã¾ã™.";
+$langs['act_pwm'] = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ æŒ‡å®šã—ã¦ ãã ã•ã‚‹ã¨ ã—ã¾ã™.";
+$langs['act_ad'] = "ç™»éŒ²ã—ãŸ åå‰ã¨ é›»å­ãƒ¡ãƒ¼ãƒ«ã¯ å…¨ä½“ ç®¡ç†è€…ã® ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒ ã‚ã‚‹ã¨ ç™»éŒ²ãŒ å¯èƒ½ã§ã™";
+$langs['act_d'] = "ç™»éŒ²ã—ãŸ åå‰ã¨ é›»å­ãƒ¡ãƒ¼ãƒ«ã¯ ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒ ã‚ã‚‹ã¨ ç™»éŒ²ãŒ å¯èƒ½ã§ã™";
+$langs['act_s'] = "spamã§ åˆ¤æ–­ã•ã‚Œã¦ æ›¸ãè¾¼ã¿ã‚’ æ‹’å¦ã—ã¾ã™.";
+$langs['act_same'] = "ã¾ã£ãŸãåŒã˜ãª æ–‡ã‚’ äºŒåº¦ ã‚ã’ã‚‹ã® é£²ã‚“ã§ãã ã•ã„.";
+$langs['act_dc'] = "å¤‰ã‚ã£ãŸ å†…å®¹ãŒ ãªã„ã§ã™.";
+$langs['act_complete'] = "å¤‰æ›´ãŒ å®Œäº†ã—ã¾ã—ãŸ";
 
 # list.ph message
-$langs['ln_re'] = "•ÔŽ–";
-$langs['no_search'] = "ŒŸõ‚³‚ê‚½ •¶‚ª ‚È‚¢‚Å‚·.";
-$langs['no_art'] = "•¶‚ª ‚È‚¢‚Å‚·.";
-$langs['preview'] = "È—ª";
-$langs['nsearch'] = "ŒŸõŒê‚Í ƒnƒ“ƒOƒ‹ 2’è–Ø, ‰p•¶ 3’è–Ø ˆÈã‚¾‚Æ ‚µ‚Ü‚·.";
-$langs['nochar'] = "[\"'] ŠX ŠÜ‚Ü‚ê‚½ ŒŸõŒê‚Í ŒŸõ‚·‚é ” ‚È‚¢‚Å‚·.";
+$langs['ln_re'] = "è¿”äº‹";
+$langs['no_search'] = "æ¤œç´¢ã•ã‚ŒãŸ æ–‡ãŒ ãªã„ã§ã™.";
+$langs['no_art'] = "æ–‡ãŒ ãªã„ã§ã™.";
+$langs['preview'] = "çœç•¥";
+$langs['nsearch'] = "æ¤œç´¢èªžã¯ ãƒãƒ³ã‚°ãƒ« 2å®šæœ¨, è‹±æ–‡ 3å®šæœ¨ ä»¥ä¸Šã ã¨ ã—ã¾ã™.";
+$langs['nochar'] = "[Â¥\"'] è¡— å«ã¾ã‚ŒãŸ æ¤œç´¢èªžã¯ æ¤œç´¢ã™ã‚‹ æ•° ãªã„ã§ã™.";
 
 # print.ph message
-$langs['cmd_priv'] = "‘Oƒy[ƒW";
-$langs['cmd_next'] = "ŽŸƒy[ƒW";
-$langs['cmd_write'] = "‘‚«ž‚Ý";
-$langs['cmd_today'] = "Å‹ß12ŽžŠÔ";
-$langs['cmd_all'] = "‘S‘ÌƒŠƒXƒg";
-$langs['cmd_list'] = "ƒŠƒXƒg•\Ž¦";
-$langs['cmd_upp'] = "ã•¶";
-$langs['cmd_down'] = "‰º‚Ì•¶";
-$langs['cmd_reply'] = "•ÔŽ–‘‚«Žæ‚è";
-$langs['cmd_edit'] = "C³";
-$langs['cmd_del'] = "íœ";
-$langs['cmd_con'] = "ŠÖ˜A•¶";
-$langs['ln_write'] = "ŠÇ—ŽÒ‚¾‚¯ :-)";
+$langs['cmd_priv'] = "å‰ãƒšãƒ¼ã‚¸";
+$langs['cmd_next'] = "æ¬¡ãƒšãƒ¼ã‚¸";
+$langs['cmd_write'] = "æ›¸ãè¾¼ã¿";
+$langs['cmd_today'] = "æœ€è¿‘12æ™‚é–“";
+$langs['cmd_all'] = "å…¨ä½“ãƒªã‚¹ãƒˆ";
+$langs['cmd_list'] = "ãƒªã‚¹ãƒˆè¡¨ç¤º";
+$langs['cmd_upp'] = "ä¸Šæ–‡";
+$langs['cmd_down'] = "ä¸‹ã®æ–‡";
+$langs['cmd_reply'] = "è¿”äº‹æ›¸ãå–ã‚Š";
+$langs['cmd_edit'] = "ä¿®æ­£";
+$langs['cmd_del'] = "å‰Šé™¤";
+$langs['cmd_con'] = "é–¢é€£æ–‡";
+$langs['ln_write'] = "ç®¡ç†è€…ã ã‘ :-)";
 
-$langs['check_y'] = "³‹K•\Œ»Ž®";
-$langs['sh_str'] = "ŒŸõŒê";
-$langs['sh_pat'] = "ŒŸõ•ª–ì";
-$langs['sh_dat'] = "ŒŸõŠúŠÔ";
-$langs['sh_sbmit'] = "ŒŸõŽèŽn‚ß";
-$langs['sh_ment'] = "+ ŒŸõ ŠúŠÔ‚Í Šî–{“I‚É Å‰ “o˜^•¶ ‚©‚ç ÅŒã “o˜^•¶‚Ì “ú•t‚ð Œ©‚¹‚Ä‚­‚ê‚Ü‚·.\n".
-                  "+ ŒŸõŒê‚Í AND, OR ‰‰ŽZ‚ð Žx‰‡‚µ‚Ü‚·. AND ‰‰ŽZ‚Í + ‹L†‚Å OR ‰‰ŽZ‚Í - ‹L†\n".
-                  "  ˜H •\Ž¦‚ð Š„ ” ‚ ‚è‚Ü‚·.\n".
-                  "+ ŒŸõŒê‚Å +,- •¶Žš‚ð ŒŸõŽž \+,\- ˜H •\Œ»‚µ‚Ä ‚­‚¾‚³‚é‚Æ ‚µ‚Ü‚·.\n";
+$langs['check_y'] = "æ­£è¦è¡¨ç¾å¼";
+$langs['sh_str'] = "æ¤œç´¢èªž";
+$langs['sh_pat'] = "æ¤œç´¢åˆ†é‡Ž";
+$langs['sh_dat'] = "æ¤œç´¢æœŸé–“";
+$langs['sh_sbmit'] = "æ¤œç´¢æ‰‹å§‹ã‚";
+$langs['sh_ment'] = "+ æ¤œç´¢ æœŸé–“ã¯ åŸºæœ¬çš„ã« æœ€åˆ ç™»éŒ²æ–‡ ã‹ã‚‰ æœ€å¾Œ ç™»éŒ²æ–‡ã® æ—¥ä»˜ã‚’ è¦‹ã›ã¦ãã‚Œã¾ã™.\n".
+                  "+ æ¤œç´¢èªžã¯ AND, OR æ¼”ç®—ã‚’ æ”¯æ´ã—ã¾ã™. AND æ¼”ç®—ã¯ + è¨˜å·ã§ OR æ¼”ç®—ã¯ - è¨˜å·\n".
+                  "  è·¯ è¡¨ç¤ºã‚’ å‰² æ•° ã‚ã‚Šã¾ã™.\n".
+                  "+ æ¤œç´¢èªžã§ +,- æ–‡å­—ã‚’ æ¤œç´¢æ™‚ Â¥+,Â¥- è·¯ è¡¨ç¾ã—ã¦ ãã ã•ã‚‹ã¨ ã—ã¾ã™.\n";
 
 # check.ph
-$langs['chk_wa'] = "MM ŠÇ—ŽÒ‚ª KK ‹@”\‚ð ³‘ø‚·‚é‚Ì ‚È‚¢‚Å‚·.\nMM ŠÇ—ŽÒ ƒpƒXƒ[ƒh‚ð Šm”F‚µ‚Ä ‚­‚¾‚³‚¢";
-$langs['chk_lo'] = "”ñ³í“I‚È Ú‹ß‚ð ³‘ø‚·‚é‚Ì ‚È‚¢‚Å‚·. ‚à‚µ ³í‚È Žg—p‚¾‚Æ l‚¦‚ð ‚µ‚½‚ç global.ph‹` \$board[path] ’l’i‚ð ³Šm‚É Žw’è‚µ‚Ä ‚­‚¾‚³‚¢";
-$langs['chk_ta'] = "TABLE ƒeƒOƒ‹‚ð ‰ß‚¿ Žg‚¢‚Ü‚µ‚½.";
-$langs['chk_tb'] = "TABLE ƒ^ƒO‚ª ŠJ‚©‚ê‚é‚Ì ‚È‚©‚Á‚½‚Æ‚© •Â‚Ü‚é‚Ì ‚È‚©‚Á‚½‚Å‚·.";
-$langs['chk_if'] = "IFRAME ƒ^ƒO‚ª ŠJ‚©‚ê‚é‚Ì ‚È‚©‚Á‚½‚Æ‚© •Â‚Ü‚é‚Ì ‚È‚©‚Á‚½‚Å‚·.";
-$langs['chk_sp'] = "Ú‘±‚·‚é IP ‘‚¦‚½ ‘¶Ý‚·‚é‚Ì ‚È‚¢ —Ìˆæ‚Å‚·.";
-$langs['chk_bl'] = "Ú‘±‚·‚é IP ŠX ŠÇ—ŽÒ‚É ‹`‰ð ‹‘”Û‚³‚ê‚Ü‚µ‚½.";
-$langs['chk_hy'] = "Hyper Link ‚É ‚æ‚Á‚½ Ú‹ß‚ð ³‘ø‚·‚é‚Ì ‚È‚¢‚Å‚·.";
-$langs['chk_an'] = "global.ph ‚É spam Ý’è‚ð ‚·‚é‚Æ ‚µ‚Ü‚·.\ndoc/en/README.CONFIG ‚Å Anti Spam\n€–Ú‚ð ŽQÆ ‚µ‚Ä‚­‚¾‚³‚¢";
-$langs['chk_rp'] = "SPAM “o˜^Šú‚ð —˜—p‚µ‚Ä •¶‚ð “o˜^‚·‚é ” ‚È‚¢‚Å‚·.";
+$langs['chk_wa'] = "MM ç®¡ç†è€…ãŒ KK æ©Ÿèƒ½ã‚’ æ‰¿è«¾ã™ã‚‹ã® ãªã„ã§ã™.\nMM ç®¡ç†è€… ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ ç¢ºèªã—ã¦ ãã ã•ã„";
+$langs['chk_lo'] = "éžæ­£å¸¸çš„ãª æŽ¥è¿‘ã‚’ æ‰¿è«¾ã™ã‚‹ã® ãªã„ã§ã™. ã‚‚ã— æ­£å¸¸ãª ä½¿ç”¨ã ã¨ è€ƒãˆã‚’ ã—ãŸã‚‰ global.phç¾© Â¥$board[path] å€¤æ®µã‚’ æ­£ç¢ºã« æŒ‡å®šã—ã¦ ãã ã•ã„";
+$langs['chk_ta'] = "TABLE ãƒ†ã‚°ãƒ«ã‚’ éŽã¡ ä½¿ã„ã¾ã—ãŸ.";
+$langs['chk_tb'] = "TABLE ã‚¿ã‚°ãŒ é–‹ã‹ã‚Œã‚‹ã® ãªã‹ã£ãŸã¨ã‹ é–‰ã¾ã‚‹ã® ãªã‹ã£ãŸã§ã™.";
+$langs['chk_if'] = "IFRAME ã‚¿ã‚°ãŒ é–‹ã‹ã‚Œã‚‹ã® ãªã‹ã£ãŸã¨ã‹ é–‰ã¾ã‚‹ã® ãªã‹ã£ãŸã§ã™.";
+$langs['chk_sp'] = "æŽ¥ç¶šã™ã‚‹ IP å¢—ãˆãŸ å­˜åœ¨ã™ã‚‹ã® ãªã„ é ˜åŸŸã§ã™.";
+$langs['chk_bl'] = "æŽ¥ç¶šã™ã‚‹ IP è¡— ç®¡ç†è€…ã« ç¾©è§£ æ‹’å¦ã•ã‚Œã¾ã—ãŸ.";
+$langs['chk_hy'] = "Hyper Link ã« ã‚ˆã£ãŸ æŽ¥è¿‘ã‚’ æ‰¿è«¾ã™ã‚‹ã® ãªã„ã§ã™.";
+$langs['chk_an'] = "global.ph ã« spam è¨­å®šã‚’ ã™ã‚‹ã¨ ã—ã¾ã™.\ndoc/en/README.CONFIG ã§ Anti Spam\né …ç›®ã‚’ å‚ç…§ ã—ã¦ãã ã•ã„";
+$langs['chk_rp'] = "SPAM ç™»éŒ²æœŸã‚’ åˆ©ç”¨ã—ã¦ æ–‡ã‚’ ç™»éŒ²ã™ã‚‹ æ•° ãªã„ã§ã™.";
 
 # get.ph
-$langs['get_v'] = " [ ŒfŽ¦”Â •\Ž¦ ]";
-$langs['get_r'] = " [ ŒfŽ¦•¨ “Ç‚ÝŽæ‚è ]";
-$langs['get_e'] = " [ ŒfŽ¦•¨ C³ ]";
-$langs['get_w'] = " [ ŒfŽ¦•¨ ‘‚«Žæ‚è ]";
-$langs['get_re'] = " [ ŒfŽ¦•¨ •ÔŽ– ]";
-$langs['get_d'] = " [ ŒfŽ¦•¨ íœ ]";
-$langs['get_u'] = " [ Žg—pŽÒ ŠÂ‹« C³ ]";
-$langs['get_rg'] = " [ Žg—pŽÒ “o˜^ ]";
+$langs['get_v'] = " [ æŽ²ç¤ºæ¿ è¡¨ç¤º ]";
+$langs['get_r'] = " [ æŽ²ç¤ºç‰© èª­ã¿å–ã‚Š ]";
+$langs['get_e'] = " [ æŽ²ç¤ºç‰© ä¿®æ­£ ]";
+$langs['get_w'] = " [ æŽ²ç¤ºç‰© æ›¸ãå–ã‚Š ]";
+$langs['get_re'] = " [ æŽ²ç¤ºç‰© è¿”äº‹ ]";
+$langs['get_d'] = " [ æŽ²ç¤ºç‰© å‰Šé™¤ ]";
+$langs['get_u'] = " [ ä½¿ç”¨è€… ç’°å¢ƒ ä¿®æ­£ ]";
+$langs['get_rg'] = " [ ä½¿ç”¨è€… ç™»éŒ² ]";
 
-$langs['get_no'] = "•¶ ”Ô†‚ð Žw’è‚·‚é‚Æ ‚µ‚Ü‚·.";
-$langs['get_n'] = "Žw’è‚µ‚½ •¶‚ª ‚È‚¢‚Å‚·.";
+$langs['get_no'] = "æ–‡ ç•ªå·ã‚’ æŒ‡å®šã™ã‚‹ã¨ ã—ã¾ã™.";
+$langs['get_n'] = "æŒ‡å®šã—ãŸ æ–‡ãŒ ãªã„ã§ã™.";
 
 # sql.ph
-$langs['sql_m'] = "SQL ƒVƒXƒeƒ€‚É –â‘è‚ª ‚ ‚è‚Ü‚·.";
+$langs['sql_m'] = "SQL ã‚·ã‚¹ãƒ†ãƒ ã« å•é¡ŒãŒ ã‚ã‚Šã¾ã™.";
 
 # sendmail.ph
-$langs['sm_dr'] = "‚±‚ê ƒ[ƒ‹‚Í JSBoard‚É ã‚°‚ç‚ê‚½ •¶‚É ‘åŠØ ‚¨’m‚ç‚¹ •¶‚Å‚·.\n•ÔŽ–‚ð ‰ÄŽŠ Šª‚¢‚Ä‚­‚¾‚³‚¢";
-$langs['mail_to_chk_err'] = "ŽóMŽÒ‚Ì ZŠ‚ª Žw’è‚³‚ê‚Ä ‚ ‚é‚Ì ‚È‚¢‚Å‚·.";
-$langs['mail_from_chk_err'] = "‘—‚é ˆÙˆÓ ZŠ‚ª Žw’è‚³‚ê‚Ä ‚ ‚é‚Ì ‚È‚¢‚Å‚·.";
-$langs['mail_title_chk_err'] = "ƒ[ƒ‹ ‘è–Ú‚ª ‚È‚¢‚Å‚·.";
-$langs['mail_body_chk_drr'] = "ƒ[ƒ‹ “à—e‚ª ‚È‚¢‚Å‚·.";
-$langs['mail_send_err'] = "ƒ[ƒ‹ ƒT[ƒo[‚Æ‚Ì Ú‘±‚É Ž¸”s‚µ‚Ü‚µ‚½";
-$langs['html_msg'] = "‚±‚ê ƒ[ƒ‹‚Í http://$_SERVER[SERVER_NAME] ‹` $table ŒfŽ¦”Â‚É Žc‚µ‚Ä‚­‚¾‚³‚Á‚½ •¶‚É ‘åŠØ ƒfƒbƒOƒ‹‚ð\n".
-                   "ƒ[ƒ‹‚Å ‘—‚Á‚Äã‚°‚é ƒT[ƒrƒX ‚Å‚·.\n";
+$langs['sm_dr'] = "ã“ã‚Œ ãƒ¡ãƒ¼ãƒ«ã¯ JSBoardã« ä¸Šã’ã‚‰ã‚ŒãŸ æ–‡ã« å¤§éŸ“ ãŠçŸ¥ã‚‰ã› æ–‡ã§ã™.\nè¿”äº‹ã‚’ å¤è‡³ å·»ã„ã¦ãã ã•ã„";
+$langs['mail_to_chk_err'] = "å—ä¿¡è€…ã® ä½æ‰€ãŒ æŒ‡å®šã•ã‚Œã¦ ã‚ã‚‹ã® ãªã„ã§ã™.";
+$langs['mail_from_chk_err'] = "é€ã‚‹ ç•°æ„ ä½æ‰€ãŒ æŒ‡å®šã•ã‚Œã¦ ã‚ã‚‹ã® ãªã„ã§ã™.";
+$langs['mail_title_chk_err'] = "ãƒ¡ãƒ¼ãƒ« é¡Œç›®ãŒ ãªã„ã§ã™.";
+$langs['mail_body_chk_drr'] = "ãƒ¡ãƒ¼ãƒ« å†…å®¹ãŒ ãªã„ã§ã™.";
+$langs['mail_send_err'] = "ãƒ¡ãƒ¼ãƒ« ã‚µãƒ¼ãƒãƒ¼ã¨ã® æŽ¥ç¶šã« å¤±æ•—ã—ã¾ã—ãŸ";
+$langs['html_msg'] = "ã“ã‚Œ ãƒ¡ãƒ¼ãƒ«ã¯ http://$_SERVER[SERVER_NAME] ç¾© $table æŽ²ç¤ºæ¿ã« æ®‹ã—ã¦ãã ã•ã£ãŸ æ–‡ã« å¤§éŸ“ ãƒ‡ãƒƒã‚°ãƒ«ã‚’\n".
+                   "ãƒ¡ãƒ¼ãƒ«ã§ é€ã£ã¦ä¸Šã’ã‚‹ ã‚µãƒ¼ãƒ“ã‚¹ ã§ã™.\n";
 
 # User_admin
 
-$langs['ua_ment'] = "ƒpƒXƒ[ƒh‚ð “ü‚ê‚Ä‚­‚¾‚³‚¢";
+$langs['ua_ment'] = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ å…¥ã‚Œã¦ãã ã•ã„";
 
-$langs['ua_ad']   = "ŠÇ—ŽÒ";
-$langs['ua_pname'] = "–¼‘Oo—Í";
-$langs['ua_namemt1'] = "ƒƒOƒCƒ“ ƒ‚[ƒh Žg—p‚ÌŽž‚É –¼‘O‚ð [";
-$langs['ua_namemt2'] = " ] ‚Å o—Í";
-$langs['ua_realname'] = "ŽÀ–¼";
-$langs['ua_nickname'] = "ƒjƒbƒNƒl[ƒ€";
-$langs['ua_w']    = "‘‚«ž‚Ý";
-$langs['ua_r']    = "•ÔŽ–";
-$langs['ua_e']    = "C³";
-$langs['ua_d']    = "íœ";
-$langs['ua_pr']   = "ƒvƒŒƒrƒ…[";
-$langs['ua_pren'] = "ƒvƒŒƒrƒ…[ •¶”";
+$langs['ua_ad']   = "ç®¡ç†è€…";
+$langs['ua_pname'] = "åå‰å‡ºåŠ›";
+$langs['ua_namemt1'] = "ãƒ­ã‚°ã‚¤ãƒ³ ãƒ¢ãƒ¼ãƒ‰ ä½¿ç”¨ã®æ™‚ã« åå‰ã‚’ [";
+$langs['ua_namemt2'] = " ] ã§ å‡ºåŠ›";
+$langs['ua_realname'] = "å®Ÿå";
+$langs['ua_nickname'] = "ãƒ‹ãƒƒã‚¯ãƒãƒ¼ãƒ ";
+$langs['ua_w']    = "æ›¸ãè¾¼ã¿";
+$langs['ua_r']    = "è¿”äº‹";
+$langs['ua_e']    = "ä¿®æ­£";
+$langs['ua_d']    = "å‰Šé™¤";
+$langs['ua_pr']   = "ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼";
+$langs['ua_pren'] = "ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ æ–‡æ•°";
 
-$langs['ua_amark']   = "ŠÇ—ŽÒ ƒŠƒ“ƒN";
-$langs['ua_amark_y'] = "•\Ž¦";
-$langs['ua_amark_n'] = "•\Ž¦‚Ì’†‚µ";
+$langs['ua_amark']   = "ç®¡ç†è€… ãƒªãƒ³ã‚¯";
+$langs['ua_amark_y'] = "è¡¨ç¤º";
+$langs['ua_amark_n'] = "è¡¨ç¤ºã®ä¸­ã—";
 
-$langs['ua_ore']   = "Œ´–{•¶";
-$langs['ua_ore_y'] = "ŠÜ‚Ý";
-$langs['ua_ore_n'] = "‘I‘ð";
+$langs['ua_ore']   = "åŽŸæœ¬æ–‡";
+$langs['ua_ore_y'] = "å«ã¿";
+$langs['ua_ore_n'] = "é¸æŠž";
 
-$langs['ua_re_list']   = "ŠÖ˜A•¶";
-$langs['ua_re_list_y'] = "Œ©‚¹‚Ä‚­‚ê‚é‚±‚Æ";
-$langs['ua_re_list_n'] = "Œ©‚¹‚Ä‚­‚ê‚é‚Ì ‚È‚¢";
+$langs['ua_re_list']   = "é–¢é€£æ–‡";
+$langs['ua_re_list_y'] = "è¦‹ã›ã¦ãã‚Œã‚‹ã“ã¨";
+$langs['ua_re_list_n'] = "è¦‹ã›ã¦ãã‚Œã‚‹ã® ãªã„";
 
-$langs['ua_comment']   = "ƒRƒƒ“ƒg";
-$langs['ua_comment_y'] = "Žg‚¤‚±‚Æ";
-$langs['ua_comment_n'] = "Žg‚¤‚Ì ‚È‚¢";
+$langs['ua_comment']   = "ã‚³ãƒ¡ãƒ³ãƒˆ";
+$langs['ua_comment_y'] = "ä½¿ã†ã“ã¨";
+$langs['ua_comment_n'] = "ä½¿ã†ã® ãªã„";
 
-$langs['ua_emoticon']   = "‚©‚¨‚à‚¶";
-$langs['ua_emoticon_y'] = "Žg‚¤‚±‚Æ";
-$langs['ua_emoticon_n'] = "Žg‚¤‚Ì ‚È‚¢";
+$langs['ua_emoticon']   = "ã‹ãŠã‚‚ã˜";
+$langs['ua_emoticon_y'] = "ä½¿ã†ã“ã¨";
+$langs['ua_emoticon_n'] = "ä½¿ã†ã® ãªã„";
 
-$langs['ua_html_tag'] = 'Žg—p‚ð ‹–‰Â‚·‚é HTML tag‚ð , ‚ð Žd•ª‚¯ŽÒ‚Å ­‚È‚¢‚Å‚·.';
+$langs['ua_html_tag'] = 'ä½¿ç”¨ã‚’ è¨±å¯ã™ã‚‹ HTML tagã‚’ , ã‚’ ä»•åˆ†ã‘è€…ã§ å°‘ãªã„ã§ã™.';
 
-$langs['ua_align']   = "ŒfŽ¦”Â ®—ñ";
-$langs['ua_align_c'] = "’†";
-$langs['ua_align_l'] = "¶‘¤";
-$langs['ua_align_r'] = "‰E‘¤";
+$langs['ua_align']   = "æŽ²ç¤ºæ¿ æ•´åˆ—";
+$langs['ua_align_c'] = "ä¸­";
+$langs['ua_align_l'] = "å·¦å´";
+$langs['ua_align_r'] = "å³å´";
 
-$langs['ua_p'] = "‹–‰Â";
-$langs['ua_n'] = "•s‹–";
+$langs['ua_p'] = "è¨±å¯";
+$langs['ua_n'] = "ä¸è¨±";
 
-$langs['ua_b1']  = "ŒfŽ¦”Â ƒ^ƒCƒgƒ‹";
-$langs['ua_b5']  = "ŒfŽ¦”Â •";
-$langs['ua_b6']  = "ƒsƒNƒZƒ‹";
-$langs['ua_b7']  = "‘è–Ú’·‚³";
-$langs['ua_b8']  = "Žš";
-$langs['ua_b9']  = "’˜ŽÒ ’·‚³";
-$langs['ua_b10'] = "ƒXƒP[ƒ‹";
-$langs['ua_b11'] = "Œ¢";
-$langs['ua_b12'] = "ƒŠƒXƒgo—Í";
-$langs['ua_b13'] = "ƒNƒbƒL[ŠúŠÔ";
-$langs['ua_b14'] = "ŽdŽ–";
-$langs['ua_b15'] = "o—Í‚·‚é";
-$langs['ua_b16'] = "o—Í‚·‚é‚Ì ‚È‚³";
-$langs['ua_b21'] = "ƒEƒHƒhƒ‰ƒbƒv";
-$langs['ua_b22'] = "“Ç‚ÝŽæ‚è Žž ‚½‚¢‚Ä‚¢ â‚Ñ‚¾ •\Ž¦‚·‚é Žš ”";
+$langs['ua_b1']  = "æŽ²ç¤ºæ¿ ã‚¿ã‚¤ãƒˆãƒ«";
+$langs['ua_b5']  = "æŽ²ç¤ºæ¿ å¹…";
+$langs['ua_b6']  = "ãƒ”ã‚¯ã‚»ãƒ«";
+$langs['ua_b7']  = "é¡Œç›®é•·ã•";
+$langs['ua_b8']  = "å­—";
+$langs['ua_b9']  = "è‘—è€… é•·ã•";
+$langs['ua_b10'] = "ã‚¹ã‚±ãƒ¼ãƒ«";
+$langs['ua_b11'] = "çŠ¬";
+$langs['ua_b12'] = "ãƒªã‚¹ãƒˆå‡ºåŠ›";
+$langs['ua_b13'] = "ã‚¯ãƒƒã‚­ãƒ¼æœŸé–“";
+$langs['ua_b14'] = "ä»•äº‹";
+$langs['ua_b15'] = "å‡ºåŠ›ã™ã‚‹";
+$langs['ua_b16'] = "å‡ºåŠ›ã™ã‚‹ã® ãªã•";
+$langs['ua_b21'] = "ã‚¦ã‚©ãƒ‰ãƒ©ãƒƒãƒ—";
+$langs['ua_b22'] = "èª­ã¿å–ã‚Š æ™‚ ãŸã„ã¦ã„ ç«ã³ã  è¡¨ç¤ºã™ã‚‹ å­— æ•°";
 
-$langs['ua_ha1'] = "o—Í‰Â”Û";
-$langs['ua_ha2'] = "IP ZŠ‚ð";
-$langs['ua_ha3'] = "o—Í";
-$langs['ua_ha4'] = "o—Í‚Ì’†‚µ";
-$langs['ua_ha5'] = "–¼‘OŒŸõ";
-$langs['ua_ha6'] = "hostname‚ð";
-$langs['ua_ha7'] = "ŒŸõ";
-$langs['ua_ha8'] = "ŒŸõ‚Ì’†‚µ";
-$langs['ua_ha9'] = "î•ñŒŸõ";
-$langs['ua_ha10'] = "WHOIS ŒŸõ";
+$langs['ua_ha1'] = "å‡ºåŠ›å¯å¦";
+$langs['ua_ha2'] = "IP ä½æ‰€ã‚’";
+$langs['ua_ha3'] = "å‡ºåŠ›";
+$langs['ua_ha4'] = "å‡ºåŠ›ã®ä¸­ã—";
+$langs['ua_ha5'] = "åå‰æ¤œç´¢";
+$langs['ua_ha6'] = "hostnameã‚’";
+$langs['ua_ha7'] = "æ¤œç´¢";
+$langs['ua_ha8'] = "æ¤œç´¢ã®ä¸­ã—";
+$langs['ua_ha9'] = "æƒ…å ±æ¤œç´¢";
+$langs['ua_ha10'] = "WHOIS æ¤œç´¢";
 
-$langs['ua_fp'] = "ƒtƒ@ƒCƒ‹ƒAƒbƒvƒ[ƒh";
-$langs['ua_fl'] = "“Y•tƒtƒ@ƒCƒ‹ ƒŠƒ“ƒN";
-$langs['ua_flh'] = "ƒwƒbƒ_[‚ð ’Ê‚¶‚Ä";
-$langs['ua_fld'] = "ƒtƒ@ƒCƒ‹ Œo˜H‚ð ’¼Ú";
+$langs['ua_fp'] = "ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰";
+$langs['ua_fl'] = "æ·»ä»˜ãƒ•ã‚¡ã‚¤ãƒ« ãƒªãƒ³ã‚¯";
+$langs['ua_flh'] = "ãƒ˜ãƒƒãƒ€ãƒ¼ã‚’ é€šã˜ã¦";
+$langs['ua_fld'] = "ãƒ•ã‚¡ã‚¤ãƒ« çµŒè·¯ã‚’ ç›´æŽ¥";
 
-$langs['ua_mail_p'] = "‘—‚è";
-$langs['ua_mail_n'] = "‘—‚ç‚È‚­";
-$langs['ua_while_wn'] = "‘S‘Ì ŠÇ—ŽÒ‚ª ‹@”\‚ð §ŒÀ‚µ‚Ü‚µ‚½.";
+$langs['ua_mail_p'] = "é€ã‚Š";
+$langs['ua_mail_n'] = "é€ã‚‰ãªã";
+$langs['ua_while_wn'] = "å…¨ä½“ ç®¡ç†è€…ãŒ æ©Ÿèƒ½ã‚’ åˆ¶é™ã—ã¾ã—ãŸ.";
 
-$langs['ua_etc1'] = "URL “o˜^";
-$langs['ua_etc2'] = "Email “o˜^";
-$langs['ua_etc3'] = "ID ‹‘”Û";
-$langs['ua_etc4'] = "Email ‹‘”Û";
-$langs['ua_etc5'] = "ŒfŽ¦”Â Table";
+$langs['ua_etc1'] = "URL ç™»éŒ²";
+$langs['ua_etc2'] = "Email ç™»éŒ²";
+$langs['ua_etc3'] = "ID æ‹’å¦";
+$langs['ua_etc4'] = "Email æ‹’å¦";
+$langs['ua_etc5'] = "æŽ²ç¤ºæ¿ Table";
 
-$langs['ua_dhyper'] = "“o˜^‚³‚ê‚½ ZŠ‚Ì ƒŠƒ“ƒN‚¾‚¯";
-$langs['ua_dhyper1'] = "‹–‘ø";
-$langs['ua_dhyper2'] = "–h‚¬";
-$langs['ua_dhyper3'] = "“o˜^‚³‚ê‚½ ’l’i‚ª ‚È‚¯‚ê‚Î ‚±‚ê ‹@”\‚Í ì“®‚·‚é‚Ì ‚È‚¢‚Å‚·.\nŠY“– ‰¿Ši‚Í IP Address ƒ[ƒ}ƒ“ ‚Ps‚É ˆê‚Â‚¸‚Â Žw’è‚ª ‰Â”\‚Å‚·.";
+$langs['ua_dhyper'] = "ç™»éŒ²ã•ã‚ŒãŸ ä½æ‰€ã® ãƒªãƒ³ã‚¯ã ã‘";
+$langs['ua_dhyper1'] = "è¨±è«¾";
+$langs['ua_dhyper2'] = "é˜²ãŽ";
+$langs['ua_dhyper3'] = "ç™»éŒ²ã•ã‚ŒãŸ å€¤æ®µãŒ ãªã‘ã‚Œã° ã“ã‚Œ æ©Ÿèƒ½ã¯ ä½œå‹•ã™ã‚‹ã® ãªã„ã§ã™.\nè©²å½“ ä¾¡æ ¼ã¯ IP Address ãƒ­ãƒ¼ãƒžãƒ³ ï¼‘è¡Œã« ä¸€ã¤ãšã¤ æŒ‡å®šãŒ å¯èƒ½ã§ã™.";
 
-$langs['ua_pw_n'] = "ƒƒOƒCƒ“ ‰ß’ö‚ð Œo‚Á‚Ä ‚­‚¾‚³‚¢!!";
-$langs['ua_pw_c'] = "ƒpƒXƒ[ƒh‚ª ˆá‚¢‚Ü‚·";
+$langs['ua_pw_n'] = "ãƒ­ã‚°ã‚¤ãƒ³ éŽç¨‹ã‚’ çµŒã£ã¦ ãã ã•ã„!!";
+$langs['ua_pw_c'] = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒ é•ã„ã¾ã™";
 
-$langs['ua_rs_u']  = 'Žg—p';
-$langs['ua_rs_ok'] = '—á';
-$langs['ua_rs_no'] = '‚¢‚¢‚¦';
-$langs['ua_rs_de'] = 'Ú×o—Í';
-$langs['ua_rs_ln'] = 'ƒŠƒ“ƒNˆÊ’u';
-$langs['ua_rs_lf'] = '¶‘¤';
-$langs['ua_rs_rg'] = '‰E‘¤';
-$langs['ua_rs_co'] = 'ƒŠƒ“ƒNF‘Š';
-$langs['ua_rs_na'] = 'ƒ`ƒƒƒ“ƒlƒ‹–¼‘O';
+$langs['ua_rs_u']  = 'ä½¿ç”¨';
+$langs['ua_rs_ok'] = 'ä¾‹';
+$langs['ua_rs_no'] = 'ã„ã„ãˆ';
+$langs['ua_rs_de'] = 'è©³ç´°å‡ºåŠ›';
+$langs['ua_rs_ln'] = 'ãƒªãƒ³ã‚¯ä½ç½®';
+$langs['ua_rs_lf'] = 'å·¦å´';
+$langs['ua_rs_rg'] = 'å³å´';
+$langs['ua_rs_co'] = 'ãƒªãƒ³ã‚¯è‰²ç›¸';
+$langs['ua_rs_na'] = 'ãƒãƒ£ãƒ³ãƒãƒ«åå‰';
 
 # admin print.ph
-$langs['p_wa'] = "‘S‘Ì ŠÇ—ŽÒ ”FØ";
-$langs['p_aa'] = "‘S‘Ì ŠÇ—ŽÒ ƒy[ƒW";
-$langs['p_wv'] = "‘Sˆæ •Ï” Ý’è";
-$langs['p_ul'] = "ƒ†[ƒU[ ŠÇ— Ý’è";
+$langs['p_wa'] = "å…¨ä½“ ç®¡ç†è€… èªè¨¼";
+$langs['p_aa'] = "å…¨ä½“ ç®¡ç†è€… ãƒšãƒ¼ã‚¸";
+$langs['p_wv'] = "å…¨åŸŸ å¤‰æ•° è¨­å®š";
+$langs['p_ul'] = "ãƒ¦ãƒ¼ã‚¶ãƒ¼ ç®¡ç† è¨­å®š";
 
-$langs['maker'] = "ì‚Á‚½l";
+$langs['maker'] = "ä½œã£ãŸäºº";
 
-$langs['p_dp'] = "“ñ‚Â‚Ì ƒpƒXƒ[ƒh‚ª ‚¨ŒÝ‚¢‚É ˆá‚¢‚Ü‚·";
-$langs['p_cp'] = "ƒpƒXƒ[ƒh‚ª •ÏX‚³‚ê‚Ü‚µ‚½ Admin Center‚Å\nƒƒOƒAƒEƒg‚È‚³‚Á‚Ä Ä‚Ñ ƒƒOƒCƒ“ ‚µ‚Ä‚­‚¾‚³‚¢.";
-$langs['p_chm'] = "ƒpƒXƒ[ƒh‚ð 0000‚Å •ÏX‚·‚é‚Ì ‚È‚¯‚ê‚Î ‚±‚ê ƒƒbƒZ[ƒW‚Í ˆø‚«‘±‚« o—Í‚³‚ê‚Ü‚· :-)";
-$langs['p_nd'] = "“o˜^‚³‚ê‚½ ƒe[ƒ}‚ª ‚È‚¢‚Å‚·";
+$langs['p_dp'] = "äºŒã¤ã® ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒ ãŠäº’ã„ã« é•ã„ã¾ã™";
+$langs['p_cp'] = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒ å¤‰æ›´ã•ã‚Œã¾ã—ãŸ Admin Centerã§\nãƒ­ã‚°ã‚¢ã‚¦ãƒˆãªã•ã£ã¦ å†ã³ ãƒ­ã‚°ã‚¤ãƒ³ ã—ã¦ãã ã•ã„.";
+$langs['p_chm'] = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ 0000ã§ å¤‰æ›´ã™ã‚‹ã® ãªã‘ã‚Œã° ã“ã‚Œ ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¯ å¼•ãç¶šã å‡ºåŠ›ã•ã‚Œã¾ã™ :-)";
+$langs['p_nd'] = "ç™»éŒ²ã•ã‚ŒãŸ ãƒ†ãƒ¼ãƒžãŒ ãªã„ã§ã™";
 
 # admin check.ph
-$langs['nodb'] = "SQL server‚É DBŠX ‘¶Ý‚·‚é‚Ì ‚È‚¢‚Å‚·.";
-$langs['n_t_n'] = "ŒfŽ¦”Â –¼‘O‚ð Žw’è‚µ‚Ä ‚­‚¾‚³‚¢";
-$langs['n_db'] = "ŒfŽ¦”Â –¼‘O‚Í •K‚¸ ƒAƒ‹ƒtƒ@ƒxƒbƒg‚Å Žn‚ß‚é‚Æ ‚µ‚Ü‚·. Ä‚Ñ Žw’è‚µ‚Ä ‚­‚¾‚³‚¢";
-$langs['n_meta'] = "ŒfŽ¦”Â –¼‘O‚Í ƒAƒ‹ƒtƒ@ƒxƒbƒg, ”Žš ‚»‚µ‚Ä _,- •¶Žš‚¾‚¯ ‰Â”\‚Å‚·.";
-$langs['n_promise'] = "Žw’è‚µ‚½ ŒfŽ¦”Â –¼‘O‚Í DB‚Å Žg‚¤ —\–ñŒê‚Å‚·.";
-$langs['n_acc'] = "ŒfŽ¦”Â Š¨’è‚ª ‘¶Ý‚·‚é‚Ì ‚È‚¢‚Å‚·.";
-$langs['a_acc'] = "‚à‚¤ “™‚µ‚¢ –¼‘O‚Ì ŒfŽ¦”Â‚ª ‘¶Ý ‚µ‚Ü‚·.";
+$langs['nodb'] = "SQL serverã« DBè¡— å­˜åœ¨ã™ã‚‹ã® ãªã„ã§ã™.";
+$langs['n_t_n'] = "æŽ²ç¤ºæ¿ åå‰ã‚’ æŒ‡å®šã—ã¦ ãã ã•ã„";
+$langs['n_db'] = "æŽ²ç¤ºæ¿ åå‰ã¯ å¿…ãš ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆã§ å§‹ã‚ã‚‹ã¨ ã—ã¾ã™. å†ã³ æŒ‡å®šã—ã¦ ãã ã•ã„";
+$langs['n_meta'] = "æŽ²ç¤ºæ¿ åå‰ã¯ ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆ, æ•°å­— ãã—ã¦ _,- æ–‡å­—ã ã‘ å¯èƒ½ã§ã™.";
+$langs['n_promise'] = "æŒ‡å®šã—ãŸ æŽ²ç¤ºæ¿ åå‰ã¯ DBã§ ä½¿ã† äºˆç´„èªžã§ã™.";
+$langs['n_acc'] = "æŽ²ç¤ºæ¿ å‹˜å®šãŒ å­˜åœ¨ã™ã‚‹ã® ãªã„ã§ã™.";
+$langs['a_acc'] = "ã‚‚ã† ç­‰ã—ã„ åå‰ã® æŽ²ç¤ºæ¿ãŒ å­˜åœ¨ ã—ã¾ã™.";
 
-$langs['first1'] = "”z•zŽÒ";
-$langs['first2'] = "‚±‚ê •¶‚Í “Ç‚ñ‚¾ Œã‚É •K‚¸ íœ‚µ‚Ä‚­‚¾‚³‚¢!";
-$langs['first3'] = "ŒfŽ¦”Â‚ð ‰‚ß Žg‚¤Žž —¯ˆÓ‚·‚é “_‚Å‚·.\nŒfŽ¦”Â ¶‘¤ ã’[‚Ì [admin] link‚ð ’Ê‚¶‚Ä ŠÇ—ŽÒ ƒ‚[ƒh‚Å “ü‚Á‚Äs‚­ ”\n‚ ‚è Šî–{ ƒpƒXƒ[ƒh‚Í 0000 ‚Å ‡‚í‚¹‚ç‚ê‚Ä ‚ ‚é‚©‚ç ŠÇ—ŽÒ ƒ‚[ƒh‚Å\nƒpƒXƒ[ƒh‚ð •ÏX‚µ‚Ä\n‚±‚ê •¶‚Í “Ç‚ñ‚¾ Œã‚É •K‚¸ íœ‚µ‚Ä‚­‚¾‚³‚¢!";
+$langs['first1'] = "é…å¸ƒè€…";
+$langs['first2'] = "ã“ã‚Œ æ–‡ã¯ èª­ã‚“ã  å¾Œã« å¿…ãš å‰Šé™¤ã—ã¦ãã ã•ã„!";
+$langs['first3'] = "æŽ²ç¤ºæ¿ã‚’ åˆã‚ ä½¿ã†æ™‚ ç•™æ„ã™ã‚‹ ç‚¹ã§ã™.\næŽ²ç¤ºæ¿ å·¦å´ ä¸Šç«¯ã® [admin] linkã‚’ é€šã˜ã¦ ç®¡ç†è€… ãƒ¢ãƒ¼ãƒ‰ã§ å…¥ã£ã¦è¡Œã æ•°\nã‚ã‚Š åŸºæœ¬ ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã¯ 0000 ã§ åˆã‚ã›ã‚‰ã‚Œã¦ ã‚ã‚‹ã‹ã‚‰ ç®¡ç†è€… ãƒ¢ãƒ¼ãƒ‰ã§\nãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ å¤‰æ›´ã—ã¦\nã“ã‚Œ æ–‡ã¯ èª­ã‚“ã  å¾Œã« å¿…ãš å‰Šé™¤ã—ã¦ãã ã•ã„!";
 
 # admin admin_info.php
-$langs['spamer_m'] = "SPAMMER LIST‚É‚Í •¶“à—e’† “ü‚Á‚Ä ‚ ‚ê‚Î ‹‘”Û‚·‚é ’PŒê‚ð ‚½‚¢‚Ä‚¢ â‚Ñ‚¸‚Â “o˜^‚µ‚Ü‚·. ˆê‰ž ‚±‚ê‚ð Žg‚¤‚±‚Æ ‚½‚ß‚É‚Í jsboard/config‚É spam_list.txt‚Æ‚¢‚¤ ƒtƒ@ƒCƒ‹‚ª ‘¶Ý‚·‚é‚Æ ‚µ‚Ä, nobody‚É ‘‚«Žæ‚è Œ ŒÀ‚ª ‚ ‚é‚Æ ‚µ‚Ü‚·.<p>‘æˆê I‚í‚è‚É ƒ”ƒBƒ“ â‚Ñ‚â ‹ó”’ •¶Žš‚ª ‚ ‚ê‚Î ‚¾‚ß‚Å‚·.";
+$langs['spamer_m'] = "SPAMMER LISTã«ã¯ æ–‡å†…å®¹ä¸­ å…¥ã£ã¦ ã‚ã‚Œã° æ‹’å¦ã™ã‚‹ å˜èªžã‚’ ãŸã„ã¦ã„ ç«ã³ãšã¤ ç™»éŒ²ã—ã¾ã™. ä¸€å¿œ ã“ã‚Œã‚’ ä½¿ã†ã“ã¨ ãŸã‚ã«ã¯ jsboard/configã« spam_list.txtã¨ã„ã† ãƒ•ã‚¡ã‚¤ãƒ«ãŒ å­˜åœ¨ã™ã‚‹ã¨ ã—ã¦,\nobodyã« æ›¸ãå–ã‚Š æ¨©é™ãŒ ã‚ã‚‹ã¨ ã—ã¾ã™.<p>ç¬¬ä¸€ çµ‚ã‚ã‚Šã« ãƒ´ã‚£ãƒ³ ç«ã³ã‚„ ç©ºç™½ æ–‡å­—ãŒ ã‚ã‚Œã° ã ã‚ã§ã™.";
 
 # ADMIN
-$langs['a_reset'] = "ƒpƒXƒ[ƒh ‰Šú‰»";
-$langs['sql_na'] = "<p><font color=\"#ff0000\"><b>DB ˜AŒ‹‚É Ž¸”s‚µ‚Ü‚µ‚½!<p>\njsboard/config/global.ph‚Å db server, db user, db password‚ð<br>\nŠm”F‚µ‚Ä ‚­‚¾‚³‚¢\n ˆÈã‚ª ‚È‚¯‚ê‚Î MySQL˜H root‹` Œ ŒÀ‚Å ƒƒOƒCƒ“‚ð<br>\n^‘ flush privileges –½—ß‚ð s‚Á‚Ä‚­‚¾‚³‚¢</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ ‹A‚é‚±‚Æ ]</a><p>\n Copyleft 1999-2008 <a target=_top href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.net/'>JSBoard Open Project</a>";
+$langs['a_reset'] = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ åˆæœŸåŒ–";
+$langs['sql_na'] = "<p><font color=Â¥\"#ff0000\"><b>DB é€£çµã« å¤±æ•—ã—ã¾ã—ãŸ!<p>\njsboard/config/global.phã§ db server, db user, db passwordã‚’<br>\nç¢ºèªã—ã¦ ãã ã•ã„\n ä»¥ä¸ŠãŒ ãªã‘ã‚Œã° MySQLè·¯ rootç¾© æ¨©é™ã§ ãƒ­ã‚°ã‚¤ãƒ³ã‚’<br>\nçœŸæ›¸ flush privileges å‘½ä»¤ã‚’ è¡Œã£ã¦ãã ã•ã„</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ å¸°ã‚‹ã“ã¨ ]</a><p>\n Copyleft 1999-2008 <a target=_top href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.net/'>JSBoard Open Project</a>";
 
-$langs['a_t1'] = "ŒfŽ¦”Â –¼‘O";
-$langs['a_t2'] = "ŒfŽ¦•¨ “o˜^”";
-$langs['a_t3'] = "¡“ú";
-$langs['a_t4'] = "‡Œv";
-$langs['a_t5'] = "ƒIƒvƒVƒ‡ƒ“";
-$langs['a_t6'] = "œ‹Ž";
-$langs['a_t7'] = "•\Ž¦";
-$langs['a_t8'] = "Ý’è";
-$langs['a_t9'] = "íœ";
-$langs['a_t10'] = "ƒpƒXƒ[ƒh";
-$langs['a_t11'] = "ƒƒOƒAƒEƒg";
-$langs['a_t12'] = "ŒfŽ¦”Â ¶¬";
-$langs['a_t13'] = "“o˜^";
-$langs['a_t14'] = "ŒfŽ¦”Â íœ";
-$langs['a_t15'] = "‘Sˆæ•Ï” Ý’è";
-$langs['a_t16'] = "‘S‘Ì";
-$langs['a_t17'] = "“Œv";
-$langs['a_t18'] = "‘S‘Ì•\Ž¦";
-$langs['a_t19'] = "ƒAƒ‹ƒtƒ@ƒxƒbƒg•Ê";
-$langs['a_t20'] = "ƒ†[ƒU[ ŠÇ—";
-$langs['a_t21'] = "“¯Šú‰»";
+$langs['a_t1'] = "æŽ²ç¤ºæ¿ åå‰";
+$langs['a_t2'] = "æŽ²ç¤ºç‰© ç™»éŒ²æ•°";
+$langs['a_t3'] = "ä»Šæ—¥";
+$langs['a_t4'] = "åˆè¨ˆ";
+$langs['a_t5'] = "ã‚ªãƒ—ã‚·ãƒ§ãƒ³";
+$langs['a_t6'] = "é™¤åŽ»";
+$langs['a_t7'] = "è¡¨ç¤º";
+$langs['a_t8'] = "è¨­å®š";
+$langs['a_t9'] = "å‰Šé™¤";
+$langs['a_t10'] = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰";
+$langs['a_t11'] = "ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ";
+$langs['a_t12'] = "æŽ²ç¤ºæ¿ ç”Ÿæˆ";
+$langs['a_t13'] = "ç™»éŒ²";
+$langs['a_t14'] = "æŽ²ç¤ºæ¿ å‰Šé™¤";
+$langs['a_t15'] = "å…¨åŸŸå¤‰æ•° è¨­å®š";
+$langs['a_t16'] = "å…¨ä½“";
+$langs['a_t17'] = "çµ±è¨ˆ";
+$langs['a_t18'] = "å…¨ä½“è¡¨ç¤º";
+$langs['a_t19'] = "ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆåˆ¥";
+$langs['a_t20'] = "ãƒ¦ãƒ¼ã‚¶ãƒ¼ ç®¡ç†";
+$langs['a_t21'] = "åŒæœŸåŒ–";
 
-$langs['a_del_cm'] = "íœ ‚È‚³‚¢‚Ü‚·‚©?";
-$langs['a_act_fm'] = "Žn‚ß‚Ä ƒy[ƒW‚Å ˆÚ“®";
-$langs['a_act_lm'] = "I‚í‚è ƒy[ƒW‚Å ˆÚ“®";
-$langs['a_act_pm'] = "ˆÈ‘O ƒy[ƒW‚Å ˆÚ“®";
-$langs['a_act_nm'] = "ŽŸ ƒy[ƒW‚Å ˆÚ“®";
-$langs['a_act_cp'] = "•ÏX‚·‚é ƒpƒXƒ[ƒh‚ð Žw’è‚µ‚Ä‚­‚¾‚³‚¢";
+$langs['a_del_cm'] = "å‰Šé™¤ ãªã•ã„ã¾ã™ã‹?";
+$langs['a_act_fm'] = "å§‹ã‚ã¦ ãƒšãƒ¼ã‚¸ã§ ç§»å‹•";
+$langs['a_act_lm'] = "çµ‚ã‚ã‚Š ãƒšãƒ¼ã‚¸ã§ ç§»å‹•";
+$langs['a_act_pm'] = "ä»¥å‰ ãƒšãƒ¼ã‚¸ã§ ç§»å‹•";
+$langs['a_act_nm'] = "æ¬¡ ãƒšãƒ¼ã‚¸ã§ ç§»å‹•";
+$langs['a_act_cp'] = "å¤‰æ›´ã™ã‚‹ ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ æŒ‡å®šã—ã¦ãã ã•ã„";
 
 # stat.php
-$langs['st_ar_no'] = "•¶ ”";
-$langs['st_pub'] = "•’Ê";
-$langs['st_rep'] = "•ÔŽ–";
-$langs['st_per'] = "—¦";
-$langs['st_tot'] = "‡Œv";
-$langs['st_a_ar_no'] = "•½‹Ï •¶ ”";
-$langs['st_ea'] = "Œ¢";
-$langs['st_year'] = "”N";
-$langs['st_mon'] = "ŒŽ";
-$langs['st_day'] = "“ú";
-$langs['st_hour'] = "Žž";
-$langs['st_read'] = "ƒqƒbƒg”";
-$langs['st_max'] = "Å‚";
-$langs['st_no'] = "•¶”Ô†";
-$langs['st_ever'] = "•½‹Ï";
-$langs['st_read_no'] = "”Ô(‰ñ)";
-$langs['st_read_no_ar'] = "”Ô(‰ñ) •¶";
-$langs['st_lweek'] = "Å ‚¨‚æ‚» ‚½‚¢‚Ä‚¢ Š”";
-$langs['st_lmonth'] = "Å ‚¨‚æ‚» ‚½‚¢‚Ä‚¢ ŒŽ";
-$langs['st_lhalfyear'] = "Å ‚¨‚æ‚» ”¼•ª ”N";
-$langs['st_lyear'] = "Å ‚¨‚æ‚» ŽdŽ– ”N";
-$langs['st_ltot'] = "Ž„‚Í H‚ ‚½‚è";
+$langs['st_ar_no'] = "æ–‡ æ•°";
+$langs['st_pub'] = "æ™®é€š";
+$langs['st_rep'] = "è¿”äº‹";
+$langs['st_per'] = "çŽ‡";
+$langs['st_tot'] = "åˆè¨ˆ";
+$langs['st_a_ar_no'] = "å¹³å‡ æ–‡ æ•°";
+$langs['st_ea'] = "çŠ¬";
+$langs['st_year'] = "å¹´";
+$langs['st_mon'] = "æœˆ";
+$langs['st_day'] = "æ—¥";
+$langs['st_hour'] = "æ™‚";
+$langs['st_read'] = "ãƒ’ãƒƒãƒˆæ•°";
+$langs['st_max'] = "æœ€é«˜";
+$langs['st_no'] = "æ–‡ç•ªå·";
+$langs['st_ever'] = "å¹³å‡";
+$langs['st_read_no'] = "ç•ª(å›ž)";
+$langs['st_read_no_ar'] = "ç•ª(å›ž) æ–‡";
+$langs['st_lweek'] = "æœ€ ãŠã‚ˆã ãŸã„ã¦ã„ æ ª";
+$langs['st_lmonth'] = "æœ€ ãŠã‚ˆã ãŸã„ã¦ã„ æœˆ";
+$langs['st_lhalfyear'] = "æœ€ ãŠã‚ˆã åŠåˆ† å¹´";
+$langs['st_lyear'] = "æœ€ ãŠã‚ˆã ä»•äº‹ å¹´";
+$langs['st_ltot'] = "ç§ã¯ é£Ÿã‚ãŸã‚Š";
 
 # Inatllation
-$langs['waitm'] = "Jsboard‚ð Žg‚¤‚±‚Æ ‚½‚ß‚Ì ŠÂ‹« Ý’è‚ð ŒŸ¸‚µ‚Ä ‚ ‚è‚Ü‚·<br>\n5’´ Œã‚É Œ‹‰Ê‚ð Œ©‚é ” ‚ ‚è‚Ü‚·<p>‚à‚µ Linux—³ Netscape 4.x ‚ð Žg‚Á‚½‚ç ŽŸ ƒy[ƒW‚Å<br>Ž©“®‚Å ˆÚ‚é‚Ì ‚È‚¢ Žñ“s ‚ ‚è‚Ü‚·.<br>‚±‚ÌŽž‚Í doc/en/INSTALL.MANUALY •¶‘‚ð ŽQÆ‚µ‚Ä Ý’u‚ð ‚µ‚Ä‚­‚¾‚³‚¢";
-$langs['wait'] = "[ 5‰Š§ ‘Ò‚Á‚Ä ‚­‚¾‚³‚¢ ]";
-$langs['mcheck'] = "MySQL login‚É Ž¸”s‚µ‚Ü‚µ‚½.\njsboard/INSTALLER/include/passwd.ph ‚É MySQL‹` root\npasswordŠX ³Šm‚© Šm”F‚µ‚Ä ‚­‚¾‚³‚Á‚Ä “–‚½‚ê‚Î PHP‹` Ý’u‚ÌŽž‚É\n--with-mysql ƒIƒvƒVƒ‡ƒ“‚ª “ü‚Á‚Äs‚Á‚½‚Ì‚© Šm”F‚µ‚Ä ‚­‚¾‚³‚¢<br>\n‚à‚µ DB serverŠX “Æ—§‚³‚ê‚Ä ‚ ‚Á‚½‚ç QuickInstall•¶‘‚ð ŽQÆ\n‚µ‚Ä Ý’u‚ð ‚È‚³‚é‚±‚Æ –]‚Ý‚Ü‚·";
-$langs['icheck'] = "httpd.conf‹` DirectoryIndex ŽwŽ¦ŽÒ‚É index.php‚ð ’Ç‰Á<br>\n“ú ‚­‚¾‚³‚Á‚Ä apache‚ð ÄŽÀs ‚µ‚Ä‚­‚¾‚³‚¢.";
-$langs['pcheck'] = "Ý’u‚ð ‰ÄŠú ‘O‚É æ‚É jsboard/INSTALLER/script‚Å\npreinstall ‚ð s‚Á‚Ä ‚­‚¾‚³‚é‚Æ ‚µ‚Ü‚·. INSTALL•¶‘‚ð\nŽQÆ‚µ‚Ä‚­‚¾‚³‚¢";
-$langs['auser'] = "Ý’u‚É ˆê“x Ž¸”s‚µ‚½‚ç doc/en/INSTALL.MANUALY ‚ð Œ©‚Ä Žó“®‚Å Ý’u‚·‚é‚Æ ‚µ‚Ü‚·.";
+$langs['waitm'] = "Jsboardã‚’ ä½¿ã†ã“ã¨ ãŸã‚ã® ç’°å¢ƒ è¨­å®šã‚’ æ¤œæŸ»ã—ã¦ ã‚ã‚Šã¾ã™<br>\n5è¶… å¾Œã« çµæžœã‚’ è¦‹ã‚‹ æ•° ã‚ã‚Šã¾ã™<p>ã‚‚ã— Linuxç«œ Netscape 4.x ã‚’ ä½¿ã£ãŸã‚‰ æ¬¡ ãƒšãƒ¼ã‚¸ã§<br>è‡ªå‹•ã§ ç§»ã‚‹ã® ãªã„ é¦–éƒ½ ã‚ã‚Šã¾ã™.<br>ã“ã®æ™‚ã¯ doc/en/INSTALL.MANUALY æ–‡æ›¸ã‚’ å‚ç…§ã—ã¦ è¨­ç½®ã‚’ ã—ã¦ãã ã•ã„";
+$langs['wait'] = "[ 5åˆåˆŠ å¾…ã£ã¦ ãã ã•ã„ ]";
+$langs['mcheck'] = "MySQL loginã« å¤±æ•—ã—ã¾ã—ãŸ.\njsboard/INSTALLER/include/passwd.ph ã« MySQLç¾© root\npasswordè¡— æ­£ç¢ºã‹ ç¢ºèªã—ã¦ ãã ã•ã£ã¦ å½“ãŸã‚Œã° PHPç¾© è¨­ç½®ã®æ™‚ã«\n--with-mysql ã‚ªãƒ—ã‚·ãƒ§ãƒ³ãŒ å…¥ã£ã¦è¡Œã£ãŸã®ã‹ ç¢ºèªã—ã¦ ãã ã•ã„<br>\nã‚‚ã— DB serverè¡— ç‹¬ç«‹ã•ã‚Œã¦ ã‚ã£ãŸã‚‰ QuickInstallæ–‡æ›¸ã‚’ å‚ç…§\nã—ã¦ è¨­ç½®ã‚’ ãªã•ã‚‹ã“ã¨ æœ›ã¿ã¾ã™";
+$langs['icheck'] = "httpd.confç¾© DirectoryIndex æŒ‡ç¤ºè€…ã« index.phpã‚’ è¿½åŠ <br>\næ—¥ ãã ã•ã£ã¦ apacheã‚’ å†å®Ÿè¡Œ ã—ã¦ãã ã•ã„.";
+$langs['pcheck'] = "è¨­ç½®ã‚’ å¤æœŸ å‰ã« å…ˆã« jsboard/INSTALLER/scriptã§\npreinstall ã‚’ è¡Œã£ã¦ ãã ã•ã‚‹ã¨ ã—ã¾ã™. INSTALLæ–‡æ›¸ã‚’\nå‚ç…§ã—ã¦ãã ã•ã„";
+$langs['auser'] = "è¨­ç½®ã« ä¸€åº¦ å¤±æ•—ã—ãŸã‚‰ doc/en/INSTALL.MANUALY ã‚’ è¦‹ã¦ å—å‹•ã§ è¨­ç½®ã™ã‚‹ã¨ ã—ã¾ã™.";
 
-$langs['inst_r'] = "‰Šú‰»";
-$langs['inst_sql_err'] = "<p><font color=\"#ff0000\"><b>DB ˜AŒ‹‚É Ž¸”s‚µ‚Ü‚µ‚½!<p>\nMySQL Root password‚ð<br>\nŠm”F‚µ‚Ä ‚­‚¾‚³‚¢\n</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ ‹A‚é‚±‚Æ ]</a><p>\n Copyleft 1999-2008 <a href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.net/' target=_blank>JSBoard Open Project</a>"; 
-$langs['inst_chk_varp'] = "DB‚Å Žg‚¤ ƒpƒXƒ[ƒh‚ð Žw’è‚·‚é‚Ì ‚È‚©‚Á‚½‚Å‚·.";
-$langs['inst_chk_varn'] = "DB‚Å DB –¼‘O‚ð Žw’è‚·‚é‚Ì ‚È‚©‚Á‚½‚Å‚·.";
-$langs['inst_chk_varu'] = "DB‚Å DB user‚ð Žw’è‚·‚é‚Ì ‚È‚©‚Á‚½‚Å‚·.";
+$langs['inst_r'] = "åˆæœŸåŒ–";
+$langs['inst_sql_err'] = "<p><font color=\"#ff0000\"><b>DB é€£çµã« å¤±æ•—ã—ã¾ã—ãŸ!<p>\nMySQL Root passwordã‚’<br>\nç¢ºèªã—ã¦ ãã ã•ã„\n</b></font>\n\n<br><br>\n<a href=\"javascript:history.back()\">[ å¸°ã‚‹ã“ã¨ ]</a><p>\n Copyleft 1999-2008 <a href='http://j2k.naver.com/k2j_frame.php/korean/jsboard.kldp.net/' target=_blank>JSBoard Open Project</a>"; 
+$langs['inst_chk_varp'] = "DBã§ ä½¿ã† ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ æŒ‡å®šã™ã‚‹ã® ãªã‹ã£ãŸã§ã™.";
+$langs['inst_chk_varn'] = "DBã§ DB åå‰ã‚’ æŒ‡å®šã™ã‚‹ã® ãªã‹ã£ãŸã§ã™.";
+$langs['inst_chk_varu'] = "DBã§ DB userã‚’ æŒ‡å®šã™ã‚‹ã® ãªã‹ã£ãŸã§ã™.";
 
-$langs['inst_ndb'] = "”Žš‚Å Žn‚ß‚é DB –¼‘O‚Í Žw’è‚·‚é‚±‚Æ ‚È‚¢‚Å‚·.";
-$langs['isnt_udb'] = "”Žš‚Å Žn‚ß‚é DB user‘‚¦‚½ Žw’è‚·‚é‚±‚Æ ‚È‚¢‚Å‚·.";
-$langs['inst_adb'] = "Žw’è‚µ‚½ DB –¼‘O‚ª ‚à‚¤ ‘¶Ý‚µ‚Ü‚·.";
-$langs['inst_cudb'] = "Žw’è‚µ‚½ DB userŠX ‚à‚¤ ‘¶Ý‚µ‚Ü‚·.";
-$langs['inst_error'] = "‰½‚© •Ï‚È Žd‹Æ‚ð ‚È‚³‚ë‚¤‚Æ ‚·‚é ‚Å‚· :-)";
+$langs['inst_ndb'] = "æ•°å­—ã§ å§‹ã‚ã‚‹ DB åå‰ã¯ æŒ‡å®šã™ã‚‹ã“ã¨ ãªã„ã§ã™.";
+$langs['isnt_udb'] = "æ•°å­—ã§ å§‹ã‚ã‚‹ DB userå¢—ãˆãŸ æŒ‡å®šã™ã‚‹ã“ã¨ ãªã„ã§ã™.";
+$langs['inst_adb'] = "æŒ‡å®šã—ãŸ DB åå‰ãŒ ã‚‚ã† å­˜åœ¨ã—ã¾ã™.";
+$langs['inst_cudb'] = "æŒ‡å®šã—ãŸ DB userè¡— ã‚‚ã† å­˜åœ¨ã—ã¾ã™.";
+$langs['inst_error'] = "ä½•ã‹ å¤‰ãª ä»•æ¥­ã‚’ ãªã•ã‚ã†ã¨ ã™ã‚‹ ã§ã™ :-)";
 
-$langs['regi_ment'] = "DB name‰È DB user‘‚¦‚½ MySQL‚É “o˜^‚ª ‚È‚Á‚Ä ‚ ‚é‚Ì ‚È‚¢ ‚Ì‚ð Žw’è‚·‚é‚Æ ‚µ‚Ü‚·.";
-$langs['first_acc'] = "“o˜^‚ª Š®—¹‚µ‚Ü‚µ‚½.\nAdmin Page˜H ˆÚ“®‚ð ‚µ‚Ü‚·.\nAdmin User‹` ‰Šú Password‘‚¦‚½\n0000 ‚Å‚·.";
+$langs['regi_ment'] = "DB nameç§‘ DB userå¢—ãˆãŸ MySQLã« ç™»éŒ²ãŒ ãªã£ã¦ ã‚ã‚‹ã® ãªã„ ã®ã‚’ æŒ‡å®šã™ã‚‹ã¨ ã—ã¾ã™.";
+$langs['first_acc'] = "ç™»éŒ²ãŒ å®Œäº†ã—ã¾ã—ãŸ.\nAdmin Pageè·¯ ç§»å‹•ã‚’ ã—ã¾ã™.\nAdmin Userç¾© åˆæœŸ Passwordå¢—ãˆãŸ\n0000 ã§ã™.";
 
 # user.php
 $langs['u_nid'] = "ID";
-$langs['u_name'] = "–¼‘O";
-$langs['u_stat'] = "ƒŒƒxƒ‹";
-$langs['u_email'] = "“dŽqƒ[ƒ‹";
-$langs['u_pass'] = "ƒpƒXƒ[ƒh";
-$langs['u_url'] = "ƒz[ƒ€ƒy[ƒW";
-$langs['u_le1'] = "‘S‘Ì";
-$langs['u_le2'] = "ŠÇ—ŽÒ";
-$langs['u_le3'] = "ˆê”Ê ƒ†[ƒU[";
-$langs['u_no'] = "“o˜^‚³‚ê‚½ ƒ†[ƒU[‚ª ‚È‚¢‚Å‚·.";
-$langs['u_print'] = "ƒ†[ƒU[ŠÇ—";
-$langs['chk_id_y'] = "Žg‚¤‚±‚Æ ‚ ‚é ID ‚Å‚·.";
-$langs['chk_id_n'] = "IDŠX ‚à‚¤ ‘¶Ý‚µ‚Ü‚·.";
-$langs['chk_id_s'] = "ID‘‚¦‚½ ƒnƒ“ƒOƒ‹, ”Žš, ƒAƒ‹ƒpƒƒb‚¾‚¯‚Å Žw’è‚·‚é‚±‚Æ ‚ ‚è‚Ü‚·.";
+$langs['u_name'] = "åå‰";
+$langs['u_stat'] = "ãƒ¬ãƒ™ãƒ«";
+$langs['u_email'] = "é›»å­ãƒ¡ãƒ¼ãƒ«";
+$langs['u_pass'] = "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰";
+$langs['u_url'] = "ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸";
+$langs['u_le1'] = "å…¨ä½“";
+$langs['u_le2'] = "ç®¡ç†è€…";
+$langs['u_le3'] = "ä¸€èˆ¬ ãƒ¦ãƒ¼ã‚¶ãƒ¼";
+$langs['u_no'] = "ç™»éŒ²ã•ã‚ŒãŸ ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒ ãªã„ã§ã™.";
+$langs['u_print'] = "ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†";
+$langs['chk_id_y'] = "ä½¿ã†ã“ã¨ ã‚ã‚‹ ID ã§ã™.";
+$langs['chk_id_n'] = "IDè¡— ã‚‚ã† å­˜åœ¨ã—ã¾ã™.";
+$langs['chk_id_s'] = "IDå¢—ãˆãŸ ãƒãƒ³ã‚°ãƒ«, æ•°å­—, ã‚¢ãƒ«ãƒ‘ãƒ¡ãƒƒã ã‘ã§ æŒ‡å®šã™ã‚‹ã“ã¨ ã‚ã‚Šã¾ã™.";
 
-$langs['reg_id'] = "ID ‚ð Žw’è‚µ‚Ä ‚­‚¾‚³‚¢";
-$langs['reg_name'] = "ƒCƒ‹ƒ€ƒ‹ƒ‹ Žw’è‚µ‚Ä ‚­‚¾‚³‚¢";
-$langs['reg_email'] = "“dŽqƒ[ƒ‹‚ð Žw’è‚µ‚Ä ‚­‚¾‚³‚¢";
-$langs['reg_pass'] = "ˆÃ†‚ð Žw’è‚µ‚Ä ‚­‚¾‚³‚¢";
-$langs['reg_format_n'] = "–¼‘O‚Ì Œ`Ž®‚ª ˆá‚¢‚Ü‚·. –¼‘O‚Í ƒnƒ“ƒOƒ‹, ƒAƒ‹ƒtƒ@ƒxƒbƒg ‚»‚µ‚Ä “_‚Å Žw’è‚·‚é‚±‚Æ ‚ ‚è‚Ü‚·.";
-$langs['reg_format_e'] = "“dŽqƒ[ƒ‹‚Ì Œ`Ž®‚ª ˆá‚¢‚Ü‚·.";
-$langs['reg_dup'] = "d•¡Šm”F";
+$langs['reg_id'] = "ID ã‚’ æŒ‡å®šã—ã¦ ãã ã•ã„";
+$langs['reg_name'] = "ã‚¤ãƒ«ãƒ ãƒ«ãƒ« æŒ‡å®šã—ã¦ ãã ã•ã„";
+$langs['reg_email'] = "é›»å­ãƒ¡ãƒ¼ãƒ«ã‚’ æŒ‡å®šã—ã¦ ãã ã•ã„";
+$langs['reg_pass'] = "æš—å·ã‚’ æŒ‡å®šã—ã¦ ãã ã•ã„";
+$langs['reg_format_n'] = "åå‰ã® å½¢å¼ãŒ é•ã„ã¾ã™. åå‰ã¯ ãƒãƒ³ã‚°ãƒ«, ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆ ãã—ã¦ ç‚¹ã§ æŒ‡å®šã™ã‚‹ã“ã¨ ã‚ã‚Šã¾ã™.";
+$langs['reg_format_e'] = "é›»å­ãƒ¡ãƒ¼ãƒ«ã® å½¢å¼ãŒ é•ã„ã¾ã™.";
+$langs['reg_dup'] = "é‡è¤‡ç¢ºèª";
 
-$langs['reg_attention'] = "ŽŸ‚Í ‰Á“ü‚·‚é Žž ‹C‚ð•t‚¯‚é “_‚Å‚·.\n\n".
+$langs['reg_attention'] = "æ¬¡ã¯ åŠ å…¥ã™ã‚‹ æ™‚ æ°—ã‚’ä»˜ã‘ã‚‹ ç‚¹ã§ã™.\n\n".
                         "<B>[ ID ]</B>\n".
-                        "ID ‘‚¦‚½ ƒnƒ“ƒOƒ‹,”Žš,ƒAƒ‹ƒtƒ@ƒxƒbƒg‚¾‚¯‚Å Žw’è‚·‚é ” ‚ ‚è‚Ü‚·. ID ‚ð ­‚È‚¢ Œã‚É\n".
-                        "d•¡Šm”F ƒ{ƒ^ƒ“‚ð —˜—p‚µ‚Ä ‚à‚¤ ‰Á“ü‚³‚ê‚½ ID”F’m Šm”F‚µ‚Ä‚­‚¾‚³‚¢.\n\n".
-                        "<B>[ –¼‘O ]</B>\n".
-                        "–¼‘O‚Í ƒnƒ“ƒOƒ‹, ƒAƒ‹ƒtƒ@ƒxƒbƒg ‚»‚µ‚Ä .–œ‚ð —˜—p‚·‚é‚Ì ­‚È‚­‚Ä ‚­‚¾‚³‚é‚Æ ‚µ‚Ü‚·.\n\n".
-                        "<B>[ ƒpƒXƒ[ƒh ]</B>\n".
-                        "8’è–Ø ˆÈ“à‚Ì ƒpƒXƒ[ƒh‚ð Œˆ‚ß‚ê‚Î ‚È‚è‚Ü‚·. ƒpƒXƒ[ƒh‚Í ˆÃ†‰»‚ª ‚È‚Á‚Ä •Û‘¶\n".
-                        "‚±‚ê ‚È‚é‚Ì‚Å ŠÇ—ŽÒ‚É ˜R‰k‚·‚é S”z‚Í ‰ÄŽŠ ‚È‚­‚Ä‚à ‚È‚è‚Ü‚·.\n\n".
-                        "<B>[ “dŽqƒ[ƒ‹,ƒz[ƒ€ƒy[ƒW ]</B>\n".
-                        "ƒz[ƒ€ƒy[ƒW‚ª ‚È‚¢ •ûX‚Í “K’n ‚È‚­‚Ä‚à ‚È‚è‚Ü‚·‚ª “dŽqƒ[ƒ‹‚Í •K‚¸ “G\n".
-                        "‚¤‚ñ ‚­‚¾‚³‚é‚Æ ‚µ‚Ü‚·. ‰Á“ü‚ð ‚È‚³‚Á‚½Œã ƒƒOƒCƒ“‚ð ‚È‚³‚ê‚Î ‚±‚±‚Å Žw’è‚µ‚½ î•ñ\n".
-                        "•·‚­ C³‚·‚é ”‰¿ ‚ ‚è‚Ü‚·.\n";
+                        "ID å¢—ãˆãŸ ãƒãƒ³ã‚°ãƒ«,æ•°å­—,ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆã ã‘ã§ æŒ‡å®šã™ã‚‹ æ•° ã‚ã‚Šã¾ã™. ID ã‚’ å°‘ãªã„ å¾Œã«\n".
+                        "é‡è¤‡ç¢ºèª ãƒœã‚¿ãƒ³ã‚’ åˆ©ç”¨ã—ã¦ ã‚‚ã† åŠ å…¥ã•ã‚ŒãŸ IDèªçŸ¥ ç¢ºèªã—ã¦ãã ã•ã„.\n\n".
+                        "<B>[ åå‰ ]</B>\n".
+                        "åå‰ã¯ ãƒãƒ³ã‚°ãƒ«, ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆ ãã—ã¦ .ä¸‡ã‚’ åˆ©ç”¨ã™ã‚‹ã® å°‘ãªãã¦ ãã ã•ã‚‹ã¨ ã—ã¾ã™.\n\n".
+                        "<B>[ ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ ]</B>\n".
+                        "8å®šæœ¨ ä»¥å†…ã® ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ æ±ºã‚ã‚Œã° ãªã‚Šã¾ã™. ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã¯ æš—å·åŒ–ãŒ ãªã£ã¦ ä¿å­˜\n".
+                        "ã“ã‚Œ ãªã‚‹ã®ã§ ç®¡ç†è€…ã« æ¼æ´©ã™ã‚‹ å¿ƒé…ã¯ å¤è‡³ ãªãã¦ã‚‚ ãªã‚Šã¾ã™.\n\n".
+                        "<B>[ é›»å­ãƒ¡ãƒ¼ãƒ«,ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸ ]</B>\n".
+                        "ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸ãŒ ãªã„ æ–¹ã€…ã¯ é©åœ° ãªãã¦ã‚‚ ãªã‚Šã¾ã™ãŒ é›»å­ãƒ¡ãƒ¼ãƒ«ã¯ å¿…ãš æ•µ\n".
+                        "ã†ã‚“ ãã ã•ã‚‹ã¨ ã—ã¾ã™. åŠ å…¥ã‚’ ãªã•ã£ãŸå¾Œ ãƒ­ã‚°ã‚¤ãƒ³ã‚’ ãªã•ã‚Œã° ã“ã“ã§ æŒ‡å®šã—ãŸ æƒ…å ±\n".
+                        "èžã ä¿®æ­£ã™ã‚‹ æ•°ä¾¡ ã‚ã‚Šã¾ã™.\n";
 
 # ext
-$langs['nomatch_theme'] = "ƒe[ƒ} ƒo[ƒWƒ‡ƒ“‚ª “–‚½‚é‚Ì ‚È‚¢‚Å‚·. doc/en/README.THEME\n".
-                        "ƒtƒ@ƒCƒ‹‚Å ƒo[ƒWƒ‡ƒ“‚É ŠÖ‚·‚é •”•ª‚ð ŽQÆ ‚µ‚Ä‚­‚¾‚³‚¢";
-$langs['detable_search_link'] = "Ú× ŒŸõ";
-$langs['captstr'] = "¶‘¤‚Ì ƒCƒ[ƒW‚ð ƒNƒŠƒbƒN ‚µ‚Ä‚­‚¾‚³‚¢";
-$langs['captnokey'] = "•¶ “o˜^‚ð ‚½‚ß‚Ì ”w‚ª ‚È‚¢‚Å‚·.";
-$langs['captinvalid'] = "”Û’è“I‚È Ú‹ß‚Å‚·.";
+$langs['nomatch_theme'] = "ãƒ†ãƒ¼ãƒž ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãŒ å½“ãŸã‚‹ã® ãªã„ã§ã™. doc/en/README.THEME\n".
+                        "ãƒ•ã‚¡ã‚¤ãƒ«ã§ ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã« é–¢ã™ã‚‹ éƒ¨åˆ†ã‚’ å‚ç…§ ã—ã¦ãã ã•ã„";
+$langs['detable_search_link'] = "è©³ç´° æ¤œç´¢";
+$langs['captstr'] = "å·¦å´ã® ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’ ã‚¯ãƒªãƒƒã‚¯ ã—ã¦ãã ã•ã„";
+$langs['captnokey'] = "æ–‡ ç™»éŒ²ã‚’ ãŸã‚ã® èƒŒãŒ ãªã„ã§ã™.";
+$langs['captinvalid'] = "å¦å®šçš„ãª æŽ¥è¿‘ã§ã™.";
 ?>

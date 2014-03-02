@@ -1,6 +1,7 @@
 <?php
-# Id: $
+# $Id: spam_check.php,v 1.5 2014-03-02 17:11:31 oops Exp $
 
+// {{{ +-- public get_spam($table, $no)
 function get_spam($table, $no) {
   global $c;
   $result = sql_query("SELECT * FROM $table WHERE no = '$no'",$c);
@@ -21,4 +22,16 @@ function get_spam($table, $no) {
     printf("%s<BR>\n", $spam[$i]);
   }
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

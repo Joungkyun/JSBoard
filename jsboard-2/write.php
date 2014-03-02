@@ -1,5 +1,5 @@
 <?php
-# $Id: write.php,v 1.26 2009-11-19 05:29:49 oops Exp $
+# $Id: write.php,v 1.27 2014-03-02 17:11:28 oops Exp $
 include "include/header.php";
 
 if ( ! $_SERVER['HTTP_REFERER'] ) {
@@ -31,11 +31,11 @@ if((preg_match("/^(2|3|5|7)$/",$board['mode']) && $_SESSION[$jsboard]['id']) || 
   $pre_regist['url'] = str_replace("\\","",$_COOKIE['board_cookie']['url']);
 }
 
-# ¾²±â ±ÇÇÑÀ» °ü¸®ÀÚ¿¡°Ô¸¸ ÁÖ¾úÀ» °æ¿ì ÆÐ½º¿öµå Ã¼Å©
+# ì“°ê¸° ê¶Œí•œì„ ê´€ë¦¬ìžì—ê²Œë§Œ ì£¼ì—ˆì„ ê²½ìš° íŒ¨ìŠ¤ì›Œë“œ ì²´í¬
 $kind = "write";
 if($board['notice']) print_notice($board['notice']);
 
-# Browser°¡ LynxÀÏ¶§ multim form »èÁ¦
+# Browserê°€ Lynxì¼ë•Œ multim form ì‚­ì œ
 if($noup == 1) $board['formtype'] = "";
 else $board['formtype'] = " ENCTYPE=\"multipart/form-data\"";
 

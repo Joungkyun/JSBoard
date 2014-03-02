@@ -1,5 +1,5 @@
 <?php
-# $Id: header.php,v 1.16 2014-02-28 21:37:18 oops Exp $
+# $Id: header.php,v 1.17 2014-03-02 17:11:31 oops Exp $
 if(preg_match("/(write|edit|reply|read)\.php/i",$_SERVER['PHP_SELF']))
   session_cache_limiter('nocache');
 
@@ -11,7 +11,7 @@ if(version_compare(PHP_VERSION,'5.4.0','<')) {
 }
 ini_set(precision,15);
 
-# table º¯¼ö Ã¼Å©
+# table ë³€ìˆ˜ ì²´í¬
 $table = trim ($table);
 if ( preg_match ('!/\.+|%00$!', $table) ) {
   echo "<script>\nalert('Ugly access with table variable with \'{$table}\'');\n" .
@@ -22,7 +22,7 @@ if ( preg_match ('!/\.+|%00$!', $table) ) {
 include_once 'include/variable.php';
 include_once "include/error.php";
 include_once "include/print.php";
-# GET/POST º¯¼ö¸¦ Á¦¾î
+# GET/POST ë³€ìˆ˜ë¥¼ ì œì–´
 parse_query_str();
 
 if ( ! @file_exists("config/global.php") ) {
@@ -34,7 +34,7 @@ if ( ! @file_exists("config/global.php") ) {
 session_start();
 
 ##############################################################################
-#  ÀÌ Á¤º¸µéÀº °ÇµéÁö ¸»µµ·Ï ÇÑ´Ù!!!!!
+#  ì´ ì •ë³´ë“¤ì€ ê±´ë“¤ì§€ ë§ë„ë¡ í•œë‹¤!!!!!
 ##############################################################################
 if(trim($table)) {
   if(@file_exists("data/$table/config.php") && $board['uconf'])
@@ -50,10 +50,10 @@ if(trim($table)) {
     }
   }
 
-  # °Ô½ÃÆÇ °ü¸®ÀÚ°¡ null ÀÏ °æ¿ì¸¦ ´ëºñÇÏ¿© null ÀÏ¶§ admin À¸·Î °­Á¦ ¼³Á¤
+  # ê²Œì‹œíŒ ê´€ë¦¬ìê°€ null ì¼ ê²½ìš°ë¥¼ ëŒ€ë¹„í•˜ì—¬ null ì¼ë•Œ admin ìœ¼ë¡œ ê°•ì œ ì„¤ì •
   $board['ad'] = !$board['ad'] ? "admin" : $board['ad'];
 
-  # theme ÀÇ ¼³Á¤ ÆÄÀÏÀ» È£Ãâ
+  # theme ì˜ ì„¤ì • íŒŒì¼ì„ í˜¸ì¶œ
   if(!$path['type']) {
     include_once "./theme/{$print['theme']}/config.php";
   }
@@ -87,7 +87,7 @@ if(!js_wrapper('ini_get','file_uploads') || $agent['tx']) $noup = 1;
 if(preg_match("/(act|write|edit|reply)\.php/i",$_SERVER['PHP_SELF']))
   $upload['maxsize'] = get_upload_value($upload);
 
-# ¿ÜºÎ hyper link ¸¦ ¸·±â À§ÇÑ ¼³Á¤
+# ì™¸ë¶€ hyper link ë¥¼ ë§‰ê¸° ìœ„í•œ ì„¤ì •
 check_dhyper($board['usedhyper'],$board['endhyper'],$board['dhyper'],$enable['dhyper'],$enable['plink']);
 check_access($board['useipbl'],$board['ipbl'],$enable['ipbl']);
 
@@ -100,7 +100,7 @@ $size['uplo'] = !$size['uplo'] ? form_size(19) : form_size($size['uplo']);
 
 $referer = parse_referer ();
 
-# table ÀÌ ¾ø°Å³ª meta character Á¸Àç À¯¹« Ã¼Å©
+# table ì´ ì—†ê±°ë‚˜ meta character ì¡´ì¬ ìœ ë¬´ ì²´í¬
 if(!preg_match("/(user|session|regist|error|image)\.php/i",$_SERVER['PHP_SELF'])) {
   if($dn['tb']) $table = $dn['tb'];
   meta_char_check($table,0,1);
@@ -116,10 +116,10 @@ if(strtoupper($color['bgcol']) == strtoupper($color['l4_bg']) && preg_match("/li
   $form_border = "1x";
 } else $form_border = "2x";
 
-# ÀÌ¸ŞÀÏ ÁÖ¼Ò º¯Çü Ã¼Å©
+# ì´ë©”ì¼ ì£¼ì†Œ ë³€í˜• ì²´í¬
 $rmail['chars'] = !$rmail['chars'] ? "__at__" : $rmail['chars'];
 
-# ¶óÀÌ¼¾½º Ãâ·Â °ü·Ã ¼³Á¤
+# ë¼ì´ì„¼ìŠ¤ ì¶œë ¥ ê´€ë ¨ ì„¤ì •
 $gpl_link = "http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt";
 switch ($designer['license']) {
   case '0' :
@@ -130,7 +130,7 @@ switch ($designer['license']) {
     break;
 }
 
-# °ü¸®ÀÚ Á¤º¸
+# ê´€ë¦¬ì ì •ë³´
 if (isset($_SESSION[$jsboard])) {
   if($_SESSION[$jsboard]['pos'] == 1) $board['super'] = 1;
   if(strstr($board['ad'],";")) {
@@ -144,7 +144,7 @@ if(preg_match("/(read|list)\.php/i",$_SERVER['PHP_SELF'])) {
   if($theme['ver'] != $designer['ver']) print_error($langs['nomatch_theme'],250,150,1);
 }
 
-# login button Ãâ·Â
+# login button ì¶œë ¥
 if(isset($_SESSION[$jsboard])) {
   if(@file_exists("./theme/{$print['theme']}/img/logout.gif"))
     $print['lout'] = "<IMG SRC=./theme/{$print['theme']}/img/logout.gif BORDER=0 ALT='LOGOUT'>";
@@ -152,4 +152,15 @@ if(isset($_SESSION[$jsboard])) {
 
   $print['lout'] = "<A HREF=./session.php?m=logout&table=$table TITLE='LOGOUT'>{$print['lout']}</A>";
 }
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

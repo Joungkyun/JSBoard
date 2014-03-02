@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: preinstall,v 1.9 2014-02-28 21:25:45 oops Exp $
+# $Id: preinstall,v 1.10 2014-03-02 17:11:30 oops Exp $
 clear
 echo "########################################################"
 echo "# JSBoard Pre Installer v2.0                           #"
@@ -26,9 +26,9 @@ me=$(whoami)
 if [ "${me}" != "root" ]; then
   if [ "${langs}" = "ko" ]; then
     echo
-    echo "ÁÖÀÇ !!!"
-    echo "ÇöÀç ´ç½ÅÀº ${me} À¯Àú·Î ÀÌ ÆÄÀÏÀ» ½ÇÇàÇÏ°í ÀÖ½À´Ï´Ù."
-    echo "¸¸¾à ·çÆ®ÀÇ ±ÇÇÑÀÌ ÀÖÀ¸¸é ÀÌ ÆÄÀÏÀ» ·çÆ®ÀÇ ±ÇÇÑÀ¸·Î ½ÇÇàÇÏ½Ê½Ã¿À"
+    echo "ì£¼ì˜ !!!"
+    echo "í˜„ìž¬ ë‹¹ì‹ ì€ ${me} ìœ ì €ë¡œ ì´ íŒŒì¼ì„ ì‹¤í–‰í•˜ê³  ìžˆìŠµë‹ˆë‹¤."
+    echo "ë§Œì•½ ë£¨íŠ¸ì˜ ê¶Œí•œì´ ìžˆìœ¼ë©´ ì´ íŒŒì¼ì„ ë£¨íŠ¸ì˜ ê¶Œí•œìœ¼ë¡œ ì‹¤í–‰í•˜ì‹­ì‹œì˜¤"
     echo
   else
     echo
@@ -39,8 +39,8 @@ if [ "${me}" != "root" ]; then
   fi
 
   if [ "${langs}" = "ko" ]; then
-    echo "Root À¯Àú·Î ´Ù½Ã ÀÛ¾÷ ÇÏ½Ã°Ú½À´Ï±î?"
-    echo -n "Root ±ÇÇÑÀ» ¾òÀ»¼ö ¾ø´Ù¸é N À» ¼±ÅÃÇÏ½Ê½Ã¿À. [Y/N](default N) : "
+    echo "Root ìœ ì €ë¡œ ë‹¤ì‹œ ìž‘ì—… í•˜ì‹œê² ìŠµë‹ˆê¹Œ?"
+    echo -n "Root ê¶Œí•œì„ ì–»ì„ìˆ˜ ì—†ë‹¤ë©´ N ì„ ì„ íƒí•˜ì‹­ì‹œì˜¤. [Y/N](default N) : "
   else
     echo "Do you continue as root user?"
     echo -n "If you can't login as root, type N. [Y/N](default N) : "
@@ -57,7 +57,7 @@ if [ "${me}" != "root" ]; then
   if [ "${priv}" = "y" ]; then
     if [ "${langs}" = "ko" ]; then
       echo
-      echo "root ·Î ·Î±×ÀÎÀ» ÇÏ½Å ÈÄ¿¡ ´Ù½Ã ½ÇÇàÇØ ÁÖ½Ê½Ã¿À"
+      echo "root ë¡œ ë¡œê·¸ì¸ì„ í•˜ì‹  í›„ì— ë‹¤ì‹œ ì‹¤í–‰í•´ ì£¼ì‹­ì‹œì˜¤"
     else
       echo
       echo "Excute this file after login as root user"
@@ -80,8 +80,8 @@ if [ "${me}" = "root" ]; then
 
   if [ "${langs}" = "ko" ]; then
     echo
-    echo "À¥¼­¹ö°¡ ${AUSER} ÀÇ ±ÇÇÑÀ¸·Î ÀÛµ¿ÇÏ°í ÀÖ´Âµí ½Í½À´Ï´Ù."
-    echo -n "¸Â½À´Ï±î? ÀÖ´Â °ª°ú ÀÏÄ¡ÇØ¾ß ÇÕ´Ï´Ù. [Y/N](default Y) : "
+    echo "ì›¹ì„œë²„ê°€ ${AUSER} ì˜ ê¶Œí•œìœ¼ë¡œ ìž‘ë™í•˜ê³  ìžˆëŠ”ë“¯ ì‹¶ìŠµë‹ˆë‹¤."
+    echo -n "ë§žìŠµë‹ˆê¹Œ? ìžˆëŠ” ê°’ê³¼ ì¼ì¹˜í•´ì•¼ í•©ë‹ˆë‹¤. [Y/N](default Y) : "
   else
     echo
     echo "Maybe web server is running as ${AUSER} privilege."
@@ -106,7 +106,7 @@ if [ "${me}" = "root" ]; then
       else
         if [ "${langs}" = "ko" ]; then
           echo
-          echo -n "À¥¼­¹öÀÇ Group ±ÇÇÑÀ» ÀÔ·Â ÇÏ½Ê½Ã¿À : "
+          echo -n "ì›¹ì„œë²„ì˜ Group ê¶Œí•œì„ ìž…ë ¥ í•˜ì‹­ì‹œì˜¤ : "
         else
           echo
           echo -n "Input value of Group privilege on web server : "
@@ -128,8 +128,8 @@ if [ "${me}" = "root" ]; then
   if [ "${EXE}" = "1" ]; then
     if [ "${langs}" = "ko" ]; then
       echo
-      echo "${AUSER} ´Â Àß¸øµÈ °ªÀÔ´Ï´Ù. httpd.conf ¿¡¼­ Group Áö½ÃÀÚÀÇ"
-      echo "°ªÀ» È®ÀÎÇÏ½Ã°í ´Ù½Ã ½ÃµµÇÏ½Ê½Ã¿À"
+      echo "${AUSER} ëŠ” ìž˜ëª»ëœ ê°’ìž…ë‹ˆë‹¤. httpd.conf ì—ì„œ Group ì§€ì‹œìžì˜"
+      echo "ê°’ì„ í™•ì¸í•˜ì‹œê³  ë‹¤ì‹œ ì‹œë„í•˜ì‹­ì‹œì˜¤"
     else
       echo
       echo "Value ${AUSER} is incollect. Retry after confirms value of"
@@ -145,9 +145,9 @@ fi
 
 if [ "${langs}" = "ko" ]; then
   echo
-  echo "ÀÛ¾÷ÀÌ ¿Ï·á µÇ¾ú½À´Ï´Ù. jsboard/INSTALLER/include/passwd.phpÀÇ Á¤º¸¸¦"
-  echo "ÀûÀýÈ÷ ¼öÁ¤ÇÑ ÈÄ¿¡, ºê¶ó¿ìÁ®·Î jsboard/INSTALLER/ ·Î Á¢¼ÓÇÏ¿© echo ¼³"
-  echo "Ä¡¸¦ °è¼Ó ÇÏ½Ã±â ¹Ù¶ø´Ï´Ù."
+  echo "ìž‘ì—…ì´ ì™„ë£Œ ë˜ì—ˆìŠµë‹ˆë‹¤. jsboard/INSTALLER/include/passwd.phpì˜ ì •ë³´ë¥¼"
+  echo "ì ì ˆížˆ ìˆ˜ì •í•œ í›„ì—, ë¸Œë¼ìš°ì ¸ë¡œ jsboard/INSTALLER/ ë¡œ ì ‘ì†í•˜ì—¬ echo ì„¤"
+  echo "ì¹˜ë¥¼ ê³„ì† í•˜ì‹œê¸° ë°”ëžë‹ˆë‹¤."
 else
   echo
   echo "Complete this working. After Edit jsboard/INSTALLER/include/passwd.php and"

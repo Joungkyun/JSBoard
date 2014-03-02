@@ -1,5 +1,5 @@
 <?php
-# $Id: admin_head.php,v 1.7 2014-02-28 21:37:17 oops Exp $
+# $Id: admin_head.php,v 1.8 2014-03-02 17:11:30 oops Exp $
 $sadmin['pern']   = 10;
 if($path['type'] == "user_admin") {
   $dpath = "..";
@@ -25,12 +25,12 @@ if(!check_windows())
 include_once "{$dpath}/include/check.php";
 include_once "{$dpath}/include/first_reg.php";
 
-# GET/POST º¯¼ö¸¦ Á¦¾î
+# GET/POST ë³€ìˆ˜ë¥¼ ì œì–´
 parse_query_str();
 
 $agent = get_agent();
 
-# table ÀÌ¸§À» Ã¼Å©ÇÑ´Ù.
+# table ì´ë¦„ì„ ì²´í¬í•œë‹¤.
 if($path['type'] == "user_admin") table_name_check($table);
 
 if(!@file_exists("{$ipath}/config/global.php")) {
@@ -42,7 +42,7 @@ if(!@file_exists("{$ipath}/config/global.php")) {
 $sqlfunc = extension_loaded('mysqli') ? 'sqli' : 'sql';
 include_once "{$ipath}/include/{$sqlfunc}.php";
 
-# sessionÀ» ½ÃÀÛ
+# sessionì„ ì‹œìž‘
 session_start();
 
 if($path['type'] == "user_admin" && $table) {
@@ -50,10 +50,10 @@ if($path['type'] == "user_admin" && $table) {
     { include_once "{$ipath}/data/{$table}/config.php"; }
 }
 
-# ¿ÜºÎ È¸¿ø DB ¸¦ »ç¿ëÇÒ °æ¿ì ¼³Á¤ ÆÄÀÏ include
+# ì™¸ë¶€ íšŒì› DB ë¥¼ ì‚¬ìš©í•  ê²½ìš° ì„¤ì • íŒŒì¼ include
 if(file_exists("$ipath/config/external.php")) { include_once "{$ipath}/config/external.php"; }
 
-# ÀÌ¸ÞÀÏ ÁÖ¼Ò º¯Çü Ã¼Å©
+# ì´ë©”ì¼ ì£¼ì†Œ ë³€í˜• ì²´í¬
 $rmail['chars'] = !$rmail['chars'] ? "__at__" : $rmail['chars'];
 
 table_name_check($print['theme']);
@@ -62,7 +62,7 @@ include_once "{$ipath}/include/lang.php";
 include_once "{$ipath}/include/replicate.php";
 include_once "{$dpath}/include/print.php";
 
-# °ü¸®ÀÚ Á¤º¸
+# ê´€ë¦¬ìž ì •ë³´
 if (isset($_SESSION[$jsboard])) {
   if($_SESSION[$jsboard]['pos'] == 1) $board['super'] = 1;
   if(strstr($board['ad'],";")) {
@@ -73,4 +73,14 @@ if (isset($_SESSION[$jsboard])) {
 }
 
 $db = replication_mode($db);
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
 ?>

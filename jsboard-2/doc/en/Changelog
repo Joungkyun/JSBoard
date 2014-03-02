@@ -11,7 +11,7 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.292 2014-02-26 19:02:04 oops Exp $
+$Id: Changelog,v 1.293 2014-03-02 17:11:31 oops Exp $
 
 
 -----------------------------------------------------------------------------
@@ -254,33 +254,33 @@ Tue, Aug 23 2005
 	- release 2.0.11
 
 Mon, Aug 22 2005
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- update line design parser of theme config
 
 Sat, Aug 13 2005
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed don't incresed comment regist number
 
 Sat, May  7 2005
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- added firefox into user agent information
 	- fixed search failed on mysql 4.1
 
 Wed, Apr  6 2005
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed some of key control
 
 Wed, Mar 31 2005
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- add $prlist[starttag], $prlist[endtag] variables for preview function
 
 Wed, Mar 23 2005
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- add <link> tag for rss function
 	- update theme version to A8
 
 Sun, Feb 20 2005
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- HTML 4.01 Validation
 	- CSS 2.0 Validation
 
@@ -292,12 +292,12 @@ Mon, Jan 24 2005
 Version   : jsboard-2.0.10
 
 Sun, Jan 02 2005
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed injection security hole on session.php
 	- stronger variables of inclue path check
 
 Mon, Dec 20 2004
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- rewrite code that protected special charactor in hangul range
 	- fixed proxy server ip bug
 
@@ -306,7 +306,7 @@ Mon, Dec 20 2004
 Version   : jsboard-2.0.9
 
 Thu, Dec 09 2004
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- protected special charactor in hangul range
 	- added mime type attack protect code with multiple extensions
 	  when file uploading
@@ -316,7 +316,7 @@ Thu, Dec 09 2004
 Version   : jsboard-2.0.8
 
 Wed, Sep 22 2004
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- Support RSS version 2.0
 	- removed DEFAULT VALUE on auto_increment field.
 	  support mysql 4.1
@@ -324,11 +324,11 @@ Wed, Sep 22 2004
 	- fixed .ph subfix description problem
 
 Tue, Aug 17 2004
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- changed NORWAP tag to CSS
 
 Thu, Jul 15 2004
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- changed title tag order on html printing for search word
 
 
@@ -336,59 +336,59 @@ Thu, Jul 15 2004
 Version   : jsboard-2.0.7
 
 Fri, Mar 12 2004
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- update theme version A7
 	- changed file extension .ph to .php
 
 Fri, Mar 07 2004
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- rewrite rss.php with functon of jsboard
 
   by Eunjea Im <http://kldp.org/~eunjea/>
 	- added xml header in rss.php
 	- added charset problem on other charset mode
 
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed rss align bug
 
 Fri, Feb 27 2004
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed comm field error when update previous version and
 	  don't use comment table
 	- fixed rdf align
 
 Tue, Feb 24 2004
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed typo on delete.template on DEFAULT-EN theme
 
 Sat, Feb 18 2004
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed parsing bug of search word include slash
 
 Sat, Feb 14 2004
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed php unset() function
 
 Sat, Feb  7 2004
   by GiHoon Ham <cloou at scscian.net>
 	- added rss function
 
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed check_iframe function
 	- fixed parse error when use iframe tag
 	- fixed parse error with search word include []
 
 Tue, Dec  3 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- removed exec function and added unlink_r function
 	  for portable other OS
 
 Tue, Nov  5 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed parse error when send register article mail
 
 Tue, Sep  2 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- added remove white space in check_spac function
 
 
@@ -396,24 +396,24 @@ Tue, Sep  2 2003
 Version   : jsboard-2.0.6
 
 Mon, Jul 28 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- changed comment algorithm (needed convert db)
 	- remove security warnning function
 
 Wed, Jul 23 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed php injection bug on login.php
 
 Sun, Apr 13 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- added preview function on BMP file format
 
 Sat, Apr 05 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed IpBlocking/HyperLink edit bug
 
 Fri, Apr 04 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- used single quote with arrayh constant
 
 
@@ -421,74 +421,74 @@ Fri, Apr 04 2003
 Version   : jsboard-2.0.5
 
 Mon, Mar 31 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed bug of edit mode
 	- when edit attach file, fixed enable without modified article
 
 Wed, Mar 26 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed typo in doc/ko/README.OPERATE
 
 Sun, Mar 23 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed delete file of web server's ownership with invalid method
 	- modified emoticon function
 
 Thu, Mar 20 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed conditional sentence of detail search on used comment
 	- modified emoticon function
 
 Tue, Mar 18 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- prevented xml tag
 	- fixed typo on default theme
 
 Fri, Feb 28 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- removed image attack link
 	- modified emoticon function
 
 Sat, Feb 22 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- added shot tag attention
 
 Sat, Feb  1 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed emoticon bug of register name of comment
 
 Thu, Jan 30 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed ugly charactor under multibyte mode in admin page
-	- added emoticon type ¤Ð_¤Ð
+	- added emoticon type ã… _ã… 
 
 Thu, Jan 23 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed style sheet for mozilla, netscape
 	- forced configuration of magic quotes for admin area
 
 Wed, Jan 22 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed function name to print_keymenu form pirnt_keymenu
 	- fixed don't parse article title when board width include %
 	- modified textarea size function
 
 Thu, Jan 16 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- limit 30 charactors on name of comment
 
 Mon, Jan 13 2003
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed emoticon with 0.0
 
 Wed, Dec 28 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed setlocale bug on php 4.3.0
 	- removed TT, ? emoticon
 	- added :-P, :P emoticon
 
 Wed, Dec 25 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed display bad http protol by emoticon function
 
 
@@ -496,17 +496,17 @@ Wed, Dec 25 2002
 Version   : jsboard-2.0.4
 
 Wed, Dec 25 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- update theme version A5
 	- expended lsn style control code with keyboard
 	- added emoticon function
 
 Sun, Dec 22 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed typo in README
 
 Sun, Dec  1 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- added check_iframe function
 
 Sun, Dec  1 2002
@@ -518,7 +518,7 @@ Wed, Nov 27 2002
 	- modified human_fsize, get_hostname function
 
 Mon, Nov 20 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed miss url of user config page on admin page
 
 
@@ -526,7 +526,7 @@ Mon, Nov 20 2002
 Version   : jsboard-2.0.3
 
 Mon, Nov 18 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- released 2.0.3
 	- fixed security bug of file upload
 
@@ -535,21 +535,21 @@ Mon, Nov 18 2002
 Version   : jsboard-2.0.2
 
 Mon, Nov 18 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- released 2.0.2
 
 Sun, Nov 17 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed bug of textared tag on edit/write page
 	- fixed parsing bug of original text on reply mode
 
 Sat, Nov 16 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed post data bug if file_uploads value is OFF on php.ini
 	- fixed regex bug of --system-regex of php option
 
 Wed, Nov 13 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed java script error in case of name included ' charactor
 
 Wed, OCt 30 2002
@@ -561,7 +561,7 @@ Sun, OCt 27 2002
 	- update english manuals
 
 Mon, Oct 21 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- changed default value of logout page to login.php from lsit.php
 
 Mon, Oct 14 2002
@@ -569,21 +569,21 @@ Mon, Oct 14 2002
 	- fixed static width problem of detail search form
 
 Thu, Oct 10 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed wrong number of title charactors when use font tag
 
 Tue, Oct  8 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- modified dynamical add of language pack
 	- added Japaness theme
 
 Wed, Oct  2 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed problem that don't print error message when regist reply
 	  article with no password
 
 Tue, Oct  1 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed parse bug when end % charactor in html tag
 	- prevented iframe html tag on use html condition
 	- fixed preview of html attached file
@@ -594,41 +594,41 @@ Sat, Sep 7 2002
 	- fixed get_hostname function
 
 Thu, Sep 5 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed get_hostname function
 
 Tue, Sep  3 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed english language file
 
 Tue, Aug 27 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- modified language file
 
 Tue, Aug 27 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed urlencoded name of attach file
 	- if php conjuncted over gd 1.6, fixed preview problem with gif attach file
 
 Sat, Aug 17 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- support Zento Linux on Installer
 
 Fri, Aug  9 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed typo in sql_db_query() function
 
 Wed, Jul 31 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- added english install document
 
 Tue, Jul 30 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- rewrite prelist() function
 	- supported modify of shell script init on SunOS and Solaris
 
 Mon, Jul 29 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed auth problem with $edb[uses] = 0 when uses external.ph
 
 
@@ -636,72 +636,72 @@ Mon, Jul 29 2002
 Version   : jsboard-2.0.1
 
 Mon, Jul 29 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed problem of auth fail with $edb[uses] = 0 when use external.ph
 
 Sun, Jul 28 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed enable to use php with board administrator permission
 
 Wed, Jul 24 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- removed $AUCONF on conv_udate script
 	- fixed double quota problem of $ramil[mta] value on conv_udate script
 
 Tue, Jul 23 2002
-  by JoungKyun Kim <http://www.oops.org>
+  by JoungKyun Kim <http://oops.org>
 	- fixed mis operation of position of original article on reply mode
 
 
 -----------------------------------------------------------------------------
 Version   : jsboard-2.0.0
 
-Thu, Jul 18 2002 by JoungKyun Kim <http://www.oops.org>
+Thu, Jul 18 2002 by JoungKyun Kim <http://oops.org>
 	- If use IE, fixed problem of move other page when click email link
 
-Tue, Jul 16 2002 by JoungKyun Kim <http://www.oops.org>
+Tue, Jul 16 2002 by JoungKyun Kim <http://oops.org>
 	- fixed break bug of root script
 
-Wed, Jul 10 2002 by JoungKyun Kim <http://www.oops.org>
+Wed, Jul 10 2002 by JoungKyun Kim <http://oops.org>
 	- fixed total articles number of today's registration
 	- prevented upload of 0 byte file
 
-Sat, Jul 06 2002 by JoungKyun Kim <http://www.oops.org>
+Sat, Jul 06 2002 by JoungKyun Kim <http://oops.org>
 	- fixed configuration of crypt with external db auth
 
-Thu, Jul 04 2002 by JoungKyun Kim <http://www.oops.org>
+Thu, Jul 04 2002 by JoungKyun Kim <http://oops.org>
 	- added notice article in list
 
-Sun, Jun 30 2002 by JoungKyun Kim <http://www.oops.org>
+Sun, Jun 30 2002 by JoungKyun Kim <http://oops.org>
 	- fixed form size of mozilla v1.0.0 (Linux/Windows)
 
-Thu, Jun 27 2002 by JoungKyun Kim <http://www.oops.org>
+Thu, Jun 27 2002 by JoungKyun Kim <http://oops.org>
 	- added total number of comment in article list
 	- enable to use font tag in comment
 	- enable auto link in comment
 
-Sat, Jun 17 2002 by JoungKyun Kim <http://www.oops.org>
+Sat, Jun 17 2002 by JoungKyun Kim <http://oops.org>
 	- added link option of page after logout
 	- added logout link
 	- updated theme version to A3
 
-Sat, Jun 15 2002 by JoungKyun Kim <http://www.oops.org>
+Sat, Jun 15 2002 by JoungKyun Kim <http://oops.org>
 	- devided design of prelist function
 
-Thu, Jun 13 2002 by JoungKyun Kim <http://www.oops.org>
+Thu, Jun 13 2002 by JoungKyun Kim <http://oops.org>
 	- added rutine of except KSX 1001 ranges in comment
 	- added cookie to information of comment sort
 
-Mon, Jun 10 2002 by JoungKyun Kim <http://www.oops.org>
+Mon, Jun 10 2002 by JoungKyun Kim <http://oops.org>
 	- added image link of comment
 
-Sat, Jun  8 2002 by JoungKyun Kim <http://www.oops.org>
+Sat, Jun  8 2002 by JoungKyun Kim <http://oops.org>
 	- fixed config error of link of attach file
 
 Thu, Jun  7 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- fixed comment posting error if unconfigured admin check
 
-Fri, Jun  7 2002 by JoungKyun Kim <http://www.oops.org>
+Fri, Jun  7 2002 by JoungKyun Kim <http://oops.org>
 	- freeze 2.0.0
 	- fixed position of comment input and changed background color
 
@@ -709,37 +709,37 @@ Fri, Jun  7 2002 by JoungKyun Kim <http://www.oops.org>
 -----------------------------------------------------------------------------
 Version   : jsboard-2.0pre4
 
-Wed, Jun  5 2002 by JoungKyun Kim <http://www.oops.org>
+Wed, Jun  5 2002 by JoungKyun Kim <http://oops.org>
 	- updated document
 
-Sun, Jun  2 2002 by JoungKyun Kim <http://www.oops.org>
+Sun, Jun  2 2002 by JoungKyun Kim <http://oops.org>
 	- added path of httpd.conf of FreeBSD in port system
 
 Thu, May 30 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- added check of email, url field if modify mode
 
-Thu, May 30 2002 by JoungKyun Kim <http://www.oops.org>
+Thu, May 30 2002 by JoungKyun Kim <http://oops.org>
 	- fixed delete error when don't exists comment table
 	- added document type declaration in theme
 
-Tue, May 28 2002 by JoungKyun Kim <http://www.oops.org>
+Tue, May 28 2002 by JoungKyun Kim <http://oops.org>
 	- fixed bug of check of email of board admin
 
-Mon, May 27 2002 by JoungKyun Kim <http://www.oops.org>
+Mon, May 27 2002 by JoungKyun Kim <http://oops.org>
 	- added line up function in Comment
 
-Sun, May 26 2002 by JoungKyun Kim <http://www.oops.org>
+Sun, May 26 2002 by JoungKyun Kim <http://oops.org>
 	- added to enable multi administrator for each table
 	- added option of link of attach file
 
-Sat, May 25 2002 by JoungKyun Kim <http://www.oops.org>
+Sat, May 25 2002 by JoungKyun Kim <http://oops.org>
 	- added comment function
 	- fixed typo of check_article function in act.php
 
-Tue, May 14 2002 by JoungKyun Kim <http://www.oops.org>
+Tue, May 14 2002 by JoungKyun Kim <http://oops.org>
 	- modified license link
 
-Mon, May  6 2002 by JoungKyun Kim  <http://www.oops.org>
+Mon, May  6 2002 by JoungKyun Kim  <http://oops.org>
 	- fixed print of &nbsp; charactor
 
 Fri, May  3 2002 by Eunjea Im <http://kldp.org/~eunjea/>
@@ -752,33 +752,33 @@ Thu, Apr 25 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- fixed warnning message if allow_call_time_pass_reference
 	  of php.ini is off
 
-Tue, Apr 23 2002 by JoungKyun Kim  <http://www.oops.org>
+Tue, Apr 23 2002 by JoungKyun Kim  <http://oops.org>
 	- fixed error of spam register check in php 4.2.0
 	  This problem is change of php 4.2.0
 
-Mon, Apr 22 2002 by JoungKyun Kim  <http://www.oops.org>
+Mon, Apr 22 2002 by JoungKyun Kim  <http://oops.org>
 	- add regex search rutine if doesn't close [,( pattern
 
 Mon, Apr 22 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- changed 2 sql query to 1 query when get number of registed article
 
-Fri, Apr 19 2002 by JoungKyun Kim  <http://www.oops.org>
+Fri, Apr 19 2002 by JoungKyun Kim  <http://oops.org>
 	- fixed java script error cause preview string include \n charactor
 
 Mon, Apr 15 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- added Date Header on sendmail.ph in case of without mta
 	- fixed html error on KO-default/reply.template
 
-Sat, Apr 13 2002 by JoungKyun Kim  <http://www.oops.org>
+Sat, Apr 13 2002 by JoungKyun Kim  <http://oops.org>
 	- modified to devide several line if subject is longer than table width
 
 Fri, Apr 12 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- fixed problem of Message-Id on sendmail.ph
 
-Thu, Apr 11 2002 by JoungKyun Kim  <http://www.oops.org>
+Thu, Apr 11 2002 by JoungKyun Kim  <http://oops.org>
 	- rewrited cut_string() function
 
-Wed, Apr 10 2002 by JoungKyun Kim  <http://www.oops.org>
+Wed, Apr 10 2002 by JoungKyun Kim  <http://oops.org>
 	- removed reply link of mail of posted article in sendmail.ph
 	- changed function and design for text browser
 	- supported INSTALLER for text browser
@@ -786,7 +786,7 @@ Wed, Apr 10 2002 by JoungKyun Kim  <http://www.oops.org>
 Mon, Apr 8 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- changed print of error message
 
-Sun, Apr 7 2002 by JoungKyun Kim  <http://www.oops.org>
+Sun, Apr 7 2002 by JoungKyun Kim  <http://oops.org>
 	- fixed 0xA1A1 problem on null check
 	- changed form of changelog
 	- change image formsize button to text if language isn't ko
@@ -794,7 +794,7 @@ Sun, Apr 7 2002 by JoungKyun Kim  <http://www.oops.org>
 Sun, Apr 7 2002 by Eunjea Im <http://kldp.org/~eunjea/>
 	- fixed maildaemon class under qmail
 
-Sat, Apr 6 2002 by JoungKyun Kim <http://www.oops.org>
+Sat, Apr 6 2002 by JoungKyun Kim <http://oops.org>
 	- support over php 4.1.0
 	- fixed userlist administrate with internal user database
 	- fixed sql that get max no field value, When retist reply article

@@ -1,31 +1,31 @@
-$Id: SQL,v 1.5 2009-11-19 05:29:50 oops Exp $
+$Id: SQL,v 1.6 2014-03-02 17:11:31 oops Exp $
 
 JSBoard main table
 
 +--------+--------------+------+-----+---------+----------------+
 | Field  | Type         | Null | Key | Default | Extra          |
 +--------+--------------+------+-----+---------+----------------+
-| no     | int(6)       |      | PRI | 0       | auto_increment |  °íÀ¯¹øÈ£
-| num    | int(6)       |      | MUL | 0       |                |  °Ô½ÃÆÇ ±Û ¹øÈ£
-| idx    | int(6)       |      | MUL | 0       |                |  index ¹øÈ£
-| date   | int(11)      |      | MUL | 0       |                |  ³¯Â¥
-| host   | tinytext     | YES  |     | NULL    |                |  ±Û¾´ÀÌ ÁÖ¼Ò
-| name   | tinytext     | YES  |     | NULL    |                |  ±Û¾´ÀÌ NICK
-| rname  | tinytext     | YES  |     | NULL    |                |  ±Û¾´ÀÌ ½Ç¸í
-| passwd | varchar(56)  | YES  |     | NULL    |                |  ±Û¾´ÀÌ ¾ÏÈ£
-| email  | tinytext     | YES  |     | NULL    |                |  ±Û¾´ÀÌ ¸ŞÀÏ
-| url    | tinytext     | YES  |     | NULL    |                |  ±Û¾´ÀÌ È¨ÆäÀÌÁö
-| title  | tinytext     | YES  |     | NULL    |                |  ±Û Á¦¸ñ
-| text   | mediumtext   | YES  |     | NULL    |                |  ±Û º»¹®
-| refer  | int(6)       |      |     | 0       |                |  Á¶È¸¼ö
-| reyn   | int(1)       |      |     | 0       |                |  ´ñ±Û Á¸Àç ¿©ºÎ
-| reno   | int(6)       |      | MUL | 0       |                |  ºÎ¸ğ±Û ¹øÈ£
-| rede   | int(6)       |      |     | 0       |                |  ´ñ±Û ±íÀÌ
-| reto   | int(6)       |      | MUL | 0       |                |  ´ñ±ÛÁß ÃÖ»óÀ§ ºÎ¸ğ±Û
-| html   | int(1)       |      |     | 1       |                |  HTML tag »ç¿ë¿©ºÎ
-| bofile | varchar(100) | YES  |     | NULL    |                |  ¾÷·Îµå ÆÄÀÏ ÀÌ¸§
-| bcfile | varchar(100) | YES  |     | NULL    |                |  ¾÷·Îµå ÆÄÀÏ µğ·ºÅä¸®
-| bfsize | int(4)       | YES  |     | NULL    |                |  ÆÄÀÏ »çÀÌÁî
+| no     | int(6)       |      | PRI | 0       | auto_increment |  ê³ ìœ ë²ˆí˜¸
+| num    | int(6)       |      | MUL | 0       |                |  ê²Œì‹œíŒ ê¸€ ë²ˆí˜¸
+| idx    | int(6)       |      | MUL | 0       |                |  index ë²ˆí˜¸
+| date   | int(11)      |      | MUL | 0       |                |  ë‚ ì§œ
+| host   | tinytext     | YES  |     | NULL    |                |  ê¸€ì“´ì´ ì£¼ì†Œ
+| name   | tinytext     | YES  |     | NULL    |                |  ê¸€ì“´ì´ NICK
+| rname  | tinytext     | YES  |     | NULL    |                |  ê¸€ì“´ì´ ì‹¤ëª…
+| passwd | varchar(56)  | YES  |     | NULL    |                |  ê¸€ì“´ì´ ì•”í˜¸
+| email  | tinytext     | YES  |     | NULL    |                |  ê¸€ì“´ì´ ë©”ì¼
+| url    | tinytext     | YES  |     | NULL    |                |  ê¸€ì“´ì´ í™ˆí˜ì´ì§€
+| title  | tinytext     | YES  |     | NULL    |                |  ê¸€ ì œëª©
+| text   | mediumtext   | YES  |     | NULL    |                |  ê¸€ ë³¸ë¬¸
+| refer  | int(6)       |      |     | 0       |                |  ì¡°íšŒìˆ˜
+| reyn   | int(1)       |      |     | 0       |                |  ëŒ“ê¸€ ì¡´ì¬ ì—¬ë¶€
+| reno   | int(6)       |      | MUL | 0       |                |  ë¶€ëª¨ê¸€ ë²ˆí˜¸
+| rede   | int(6)       |      |     | 0       |                |  ëŒ“ê¸€ ê¹Šì´
+| reto   | int(6)       |      | MUL | 0       |                |  ëŒ“ê¸€ì¤‘ ìµœìƒìœ„ ë¶€ëª¨ê¸€
+| html   | int(1)       |      |     | 1       |                |  HTML tag ì‚¬ìš©ì—¬ë¶€
+| bofile | varchar(100) | YES  |     | NULL    |                |  ì—…ë¡œë“œ íŒŒì¼ ì´ë¦„
+| bcfile | varchar(100) | YES  |     | NULL    |                |  ì—…ë¡œë“œ íŒŒì¼ ë””ë ‰í† ë¦¬
+| bfsize | int(4)       | YES  |     | NULL    |                |  íŒŒì¼ ì‚¬ì´ì¦ˆ
 +--------+--------------+------+-----+---------+----------------+
 
 
@@ -35,13 +35,13 @@ JSBoard userdb table
 +----------+--------------+------+-----+---------+----------------+
 | Field    | Type         | Null | Key | Default | Extra          |
 +----------+--------------+------+-----+---------+----------------+
-| no       | int(6)       |      | PRI | NULL    | auto_increment | °íÀ¯¹øÈ£
-| nid      | varchar(100) |      | UNI |         |                | È¸¿ø ID(Áßº¹ ºÒ°¡´É)
-| name     | varchar(100) |      | MUL |         |                | È¸¿ø ÀÌ¸§(º»¸í)
-| email    | tinytext     |      |     |         |                | È¸¿ø ÀÌ¸ŞÀÏ
-| url      | tinytext     |      |     |         |                | È¸¿ø È¨ÆäÀÌÁö
-| passwd   | varchar(100) |      |     |         |                | È¸¿ø ÆĞ½º¿öµå(¾ÏÈ£È­)
-| position | int(1)       |      | MUL | 0       |                | ÀüÃ¼ °ü¸®ÀÚ¿©ºÎ
+| no       | int(6)       |      | PRI | NULL    | auto_increment | ê³ ìœ ë²ˆí˜¸
+| nid      | varchar(100) |      | UNI |         |                | íšŒì› ID(ì¤‘ë³µ ë¶ˆê°€ëŠ¥)
+| name     | varchar(100) |      | MUL |         |                | íšŒì› ì´ë¦„(ë³¸ëª…)
+| email    | tinytext     |      |     |         |                | íšŒì› ì´ë©”ì¼
+| url      | tinytext     |      |     |         |                | íšŒì› í™ˆí˜ì´ì§€
+| passwd   | varchar(100) |      |     |         |                | íšŒì› íŒ¨ìŠ¤ì›Œë“œ(ì•”í˜¸í™”)
+| position | int(1)       |      | MUL | 0       |                | ì „ì²´ ê´€ë¦¬ìì—¬ë¶€
 +----------+--------------+------+-----+---------+----------------+
 
 
@@ -51,12 +51,12 @@ JSBoard comment table
 +--------+-------------+------+-----+---------+----------------+
 | Field  | Type        | Null | Key | Default | Extra          |
 +--------+-------------+------+-----+---------+----------------+
-| no     | int(6)      |      | PRI | NULL    | auto_increment |    °íÀ¯ ¹øÈ£
-| reno   | int(20)     |      | MUL | 0       |                |    ºÎ¸ğ±Û ¹øÈ£
-| rname  | tinytext    | YES  |     | NULL    |                |    ±Û¾´ÀÌ º»¸í
-| name   | tinytext    | YES  |     | NULL    |                |    ±Û¾´ÀÌ NICK
-| passwd | varchar(56) | YES  |     | NULL    |                |    ÆĞ½º¿öµå
-| text   | mediumtext  | YES  |     | NULL    |                |    ÄÚ¸àÆ® º»¹®
-| host   | tinytext    | YES  |     | NULL    |                |    ÄÚ¸àÆ® µî·ÏÁö
-| date   | int(11)     |      |     | 0       |                |    ÄÚ¸àÆ® µî·ÏÀÏ
+| no     | int(6)      |      | PRI | NULL    | auto_increment |    ê³ ìœ  ë²ˆí˜¸
+| reno   | int(20)     |      | MUL | 0       |                |    ë¶€ëª¨ê¸€ ë²ˆí˜¸
+| rname  | tinytext    | YES  |     | NULL    |                |    ê¸€ì“´ì´ ë³¸ëª…
+| name   | tinytext    | YES  |     | NULL    |                |    ê¸€ì“´ì´ NICK
+| passwd | varchar(56) | YES  |     | NULL    |                |    íŒ¨ìŠ¤ì›Œë“œ
+| text   | mediumtext  | YES  |     | NULL    |                |    ì½”ë©˜íŠ¸ ë³¸ë¬¸
+| host   | tinytext    | YES  |     | NULL    |                |    ì½”ë©˜íŠ¸ ë“±ë¡ì§€
+| date   | int(11)     |      |     | 0       |                |    ì½”ë©˜íŠ¸ ë“±ë¡ì¼
 +--------+-------------+------+-----+---------+----------------+

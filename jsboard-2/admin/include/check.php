@@ -1,7 +1,7 @@
 <?php
-# $Id: check.php,v 1.4 2014-02-28 21:37:17 oops Exp $
+# $Id: check.php,v 1.5 2014-03-02 17:11:30 oops Exp $
 
-# °Ô½ÃÆÇ¿¡ »ç¿ëµÉ DB°¡ Á¦´ë·Î ÁöÁ¤ÀÌ µÇ¾ú´ÂÁö °Ë»ç ¿©ºÎ
+# ê²Œì‹œíŒì— ì‚¬ìš©ë  DBê°€ ì œëŒ€ë¡œ ì§€ì •ì´ ë˜ì—ˆëŠ”ì§€ ê²€ì‚¬ ì—¬ë¶€
 #
 function exsit_dbname_check($db) {
   global $langs;
@@ -13,7 +13,7 @@ function exsit_dbname_check($db) {
   }
 }
 
-# »ý¼ºÇÒ °Ô½ÃÆÇ ÀÌ¸§¿¡ ´ëÇÑ Á¸Àç¹× Àû°Ý ¿©ºÎ °Ë»ç ·çÆ¾
+# ìƒì„±í•  ê²Œì‹œíŒ ì´ë¦„ì— ëŒ€í•œ ì¡´ìž¬ë° ì ê²© ì—¬ë¶€ ê²€ì‚¬ ë£¨í‹´
 #
 function table_name_check($table,$ck=0) {
   global $langs;
@@ -37,20 +37,20 @@ function table_name_check($table,$ck=0) {
 
 function check_userlist_type($t) {
   if(is_hangul($t)) {
-    if($t == "°¡") $r['like'] = "³ª";
-    if($t == "³ª") $r['like'] = "´Ù";
-    if($t == "´Ù") $r['like'] = "¶ó";
-    if($t == "¶ó") $r['like'] = "¸¶";
-    if($t == "¸¶") $r['like'] = "¹Ù";
-    if($t == "¹Ù") $r['like'] = "»ç";
-    if($t == "»ç") $r['like'] = "¾Æ";
-    if($t == "¾Æ") $r['like'] = "ÀÚ";
-    if($t == "ÀÚ") $r['like'] = "Â÷";
-    if($t == "Â÷") $r['like'] = "Ä«";
-    if($t == "Ä«") $r['like'] = "Å¸";
-    if($t == "Å¸") $r['like'] = "ÆÄ";
-    if($t == "ÆÄ") $r['like'] = "ÇÏ";
-    if($t == "ÇÏ") $r['like'] = chr(0xfe);
+    if($t == "ê°€") $r['like'] = "ë‚˜";
+    if($t == "ë‚˜") $r['like'] = "ë‹¤";
+    if($t == "ë‹¤") $r['like'] = "ë¼";
+    if($t == "ë¼") $r['like'] = "ë§ˆ";
+    if($t == "ë§ˆ") $r['like'] = "ë°”";
+    if($t == "ë°”") $r['like'] = "ì‚¬";
+    if($t == "ì‚¬") $r['like'] = "ì•„";
+    if($t == "ì•„") $r['like'] = "ìž";
+    if($t == "ìž") $r['like'] = "ì°¨";
+    if($t == "ì°¨") $r['like'] = "ì¹´";
+    if($t == "ì¹´") $r['like'] = "íƒ€";
+    if($t == "íƒ€") $r['like'] = "íŒŒ";
+    if($t == "íŒŒ") $r['like'] = "í•˜";
+    if($t == "í•˜") $r['like'] = chr(0xfe);
     $r['like'] = "WHERE binary nid BETWEEN binary '$t' AND binary '{$r['like']}'";
   } else {
     $r['like'] = "WHERE nid LIKE '$t%'";
@@ -134,4 +134,15 @@ function sync_comment ($cmt, $mother) {
   }
   sql_free_result($res,$c);
 }
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

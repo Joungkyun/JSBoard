@@ -1,54 +1,54 @@
-$Id: Changelog.theme,v 1.25 2014-02-26 16:28:24 oops Exp $
+$Id: Changelog.theme,v 1.26 2014-03-02 17:11:32 oops Exp $
 
 Version: A9
-- reply.template ¿Í write.template ¿¡ <?php echo print_spam_trap()?> Ãß°¡
-- textarea tag ¿¡ class="resizable" Ãß°¡
+- reply.template ì™€ write.template ì— <?php echo print_spam_trap()?> ì¶”ê°€
+- textarea tag ì— class="resizable" ì¶”ê°€
 - include textarea.js
-- write/edit/reply ¿¡¼­ reset button À» button type À¸·Î º¯°æ
-- password field ÀÇ textarea Á¶Àı ÇÔ¼ö »èÁ¦
-- write/reply td colspan º¯°æ
-- write/reply captcha image Ãß°¡ (passwd ÇÊµå ¿·¿¡..)
-- tabindex Ãß°¡
+- write/edit/reply ì—ì„œ reset button ì„ button type ìœ¼ë¡œ ë³€ê²½
+- password field ì˜ textarea ì¡°ì ˆ í•¨ìˆ˜ ì‚­ì œ
+- write/reply td colspan ë³€ê²½
+- write/reply captcha image ì¶”ê°€ (passwd í•„ë“œ ì˜†ì—..)
+- tabindex ì¶”ê°€
 
 Version: A8
-- rss <link> tag Ãß°¡ (list.template)
-- title tag ¿¡¼­ ¹öÀüÀ» µÚ·Î ÀÌµ¿
+- rss <link> tag ì¶”ê°€ (list.template)
+- title tag ì—ì„œ ë²„ì „ì„ ë’¤ë¡œ ì´ë™
 
 Version: A7
-- .ph ºÒ·¯¿À±â¸¦ .php ÆÄÀÏ·Î º¯°æ
+- .ph ë¶ˆëŸ¬ì˜¤ê¸°ë¥¼ .php íŒŒì¼ë¡œ ë³€ê²½
 
 Version: A6
-- ÇÔ¼öÀÌ¸§ º¸Á¤ (pirnt_keymenu -> print_keymenu)
-- SYTLE SHEET º¸Á¤
-- edit.template ÀÇ
+- í•¨ìˆ˜ì´ë¦„ ë³´ì • (pirnt_keymenu -> print_keymenu)
+- SYTLE SHEET ë³´ì •
+- edit.template ì˜
   <INPUT TYPE=HIDDEN NAME=atc[fdelname] VALUE=\"$list[bofile]\">
   <INPUT TYPE=HIDDEN NAME=atc[fdeldir] VALUE=\"$list[bcfile]\">
-  ¶óÀÎ »èÁ¦.
+  ë¼ì¸ ì‚­ì œ.
 
 Version: A5
-- edit, replay, write template ÀÇ textarea ¿¡¼­ tab À» ´©¸£¸é µî·ÏÀ¸·Î
-  ÀÌµ¿µÇ°Ô ¼öÁ¤
+- edit, replay, write template ì˜ textarea ì—ì„œ tab ì„ ëˆ„ë¥´ë©´ ë“±ë¡ìœ¼ë¡œ
+  ì´ë™ë˜ê²Œ ìˆ˜ì •
 
 Version: A4
-- Å°º¸µå Á¦¾î ÄÚµå Ãß°¡ : <?php echo pirnt_keymenu()?>
-- edit.template, reply.template, write.template ÀÇ
+- í‚¤ë³´ë“œ ì œì–´ ì½”ë“œ ì¶”ê°€ : <?php echo pirnt_keymenu()?>
+- edit.template, reply.template, write.template ì˜
   if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
-  ¶óÀÎÀ»
+  ë¼ì¸ì„
   if ($upload[yesno] && $cupload[yesno] && $noup != 1) {
-  ·Î ¼öÁ¤
+  ë¡œ ìˆ˜ì •
 
 Version: A3
-- logout ¸µÅ© Ãß°¡ (<?php echo $print[lout]?> - list.template, read.template)
-- img/notice.gif Ãß°¡ (°øÁö±Û ICON)
-- °øÁö»çÇ× ¹è°æ,ÆùÆ® »ö»ó Ãß°¡ (config.ph)
+- logout ë§í¬ ì¶”ê°€ (<?php echo $print[lout]?> - list.template, read.template)
+- img/notice.gif ì¶”ê°€ (ê³µì§€ê¸€ ICON)
+- ê³µì§€ì‚¬í•­ ë°°ê²½,í°íŠ¸ ìƒ‰ìƒ ì¶”ê°€ (config.ph)
 
 Version: A2
-- INPUT ¹®ÀÇ password ¸¦ MAXLENGTH=8 ¿¡¼­ MAXLENGTH=16 À¸·Î ¼öÁ¤
-- INPUT ¹®ÀÇ password ¿¡ style sheet  STYLE=\"font: 10px tahoma\" Ãß°¡
-  (IE 6.x -xp¿ë- ÀÇ ÆĞ½º¿öµå ÇÊµå¸¦ ÀÌ»óÇÏ°Ô Ãâ·ÂÇÏ´Â °Í ¹æÁö)
-- mail ¹ß¼Û ¹æ½Ä º¯°æ¿¡ µû¸¥ mail html design ÅÛÇÃ¸´ ÆÄÀÏ Ãß°¡ (mail.template)
-- login.php ¿Í read.php ¿¡¼­ Ä¿¸àÆ® °ü·Ã ¼öÁ¤
-- reply design º¯°æ
+- INPUT ë¬¸ì˜ password ë¥¼ MAXLENGTH=8 ì—ì„œ MAXLENGTH=16 ìœ¼ë¡œ ìˆ˜ì •
+- INPUT ë¬¸ì˜ password ì— style sheet  STYLE=\"font: 10px tahoma\" ì¶”ê°€
+  (IE 6.x -xpìš©- ì˜ íŒ¨ìŠ¤ì›Œë“œ í•„ë“œë¥¼ ì´ìƒí•˜ê²Œ ì¶œë ¥í•˜ëŠ” ê²ƒ ë°©ì§€)
+- mail ë°œì†¡ ë°©ì‹ ë³€ê²½ì— ë”°ë¥¸ mail html design í…œí”Œë¦¿ íŒŒì¼ ì¶”ê°€ (mail.template)
+- login.php ì™€ read.php ì—ì„œ ì»¤ë©˜íŠ¸ ê´€ë ¨ ìˆ˜ì •
+- reply design ë³€ê²½
 
 Version: A1
-- theme °ü¸® ½ÃÀÛ
+- theme ê´€ë¦¬ ì‹œì‘

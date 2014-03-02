@@ -10,13 +10,13 @@
 #
 #################################################################################
 #
-# $Id: INSTALL.MANUALY,v 1.12 2014-02-28 21:34:39 oops Exp $
+# $Id: INSTALL.MANUALY,v 1.13 2014-03-02 17:11:31 oops Exp $
 #                              Quick Installation in JSBoard 2.0 v0.4
 #
 #################################################################################
 
 
-Writer : JoungKyun Kim <http://www.oops.org>, SIGTERM <younman@hanmail.net>
+Writer : JoungKyun Kim <http://oops.org>, SIGTERM <younman@hanmail.net>
 Date   : Dec 03 2003
 
 This is an installation manual for JSBoard 2.0 on Unix-Like Machines. jsboard comes 

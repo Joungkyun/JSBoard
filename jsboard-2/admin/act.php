@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.18 2014-02-28 21:37:17 oops Exp $
+# $Id: act.php,v 1.19 2014-03-02 17:11:30 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 include "../include/ostype.php";
@@ -16,20 +16,20 @@ if($db['rmode'] == "r")
   print_error("System Checking NOW !! \n\nSorry, Read only enable.",250,130,1);
 
 ###########################################
-#          DB¿¡ Á¢¼Ó
+#          DBì— ì ‘ì†
 ###########################################
 
 $c = @sql_connect($db['rhost'],$db['user'],$db['pass']);
 sql_select_db($db['name'],$c);
 
-# password ºñ±³ÇÔ¼ö - admin/include/auth.php
+# password ë¹„êµí•¨ìˆ˜ - admin/include/auth.php
 compare_pass($_SESSION[$jsboard]);
 
-# db_nameÀÌ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é ¾Æ·¡¸¦ Ãâ·ÂÇÕ´Ï´Ù.
+# db_nameì´ ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´ ì•„ë˜ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.
 exsit_dbname_check($db['name']);
 
-# ¾ËÆÄºª ±¸ºĞµÈ ÆäÀÌÁö¿¡¼­ ³Ñ¾î ¿ÔÀ» °æ¿ì ÆäÀÌÁö¸¦
-# µÇµ¹¸®±â À§ÇØ ÁöÁ¤
+# ì•ŒíŒŒë²³ êµ¬ë¶„ëœ í˜ì´ì§€ì—ì„œ ë„˜ì–´ ì™”ì„ ê²½ìš° í˜ì´ì§€ë¥¼
+# ë˜ëŒë¦¬ê¸° ìœ„í•´ ì§€ì •
 if($ts) $tslink = "?ts=$ts";
 
 if ($mode == "csync") {
@@ -41,14 +41,14 @@ if ($mode == "csync") {
 
   $mother_name = preg_replace("/_comm$/", "", $table_name);
 
-  # µ¿ÀÏÇÑ ÀÌ¸§ÀÇ °Ô½ÃÆÇÀÌ ÀÖ´ÂÁö È®ÀÎ
+  # ë™ì¼í•œ ì´ë¦„ì˜ ê²Œì‹œíŒì´ ìˆëŠ”ì§€ í™•ì¸
   $chk = db_table_list ($c, $db['name'], '', $table_name);
 
   if ($chk) {
     if ( ! field_exist_check ($c, $db['name'], $mother_name, "comm") ) {
-      # comm field Ãß°¡
+      # comm field ì¶”ê°€
       sql_query ('ALTER TABLE ' . $mother_name . ' add comm int(6) DEFAULT 0', $c);
-      # comm field key Ãß°¡
+      # comm field key ì¶”ê°€
       sql_query ('ALTER TABLE ' . $mother_name . ' add key (comm)', $c);
     }
 
@@ -64,7 +64,7 @@ if ($mode == "csync") {
 else if($mode=='db_del') {
   table_name_check($table_name);
 
-  # µ¿ÀÏÇÑ ÀÌ¸§ÀÇ °Ô½ÃÆÇÀÌ ÀÖ´ÂÁö È®ÀÎ
+  # ë™ì¼í•œ ì´ë¦„ì˜ ê²Œì‹œíŒì´ ìˆëŠ”ì§€ í™•ì¸
   $chk = db_table_list ($c, $db['name'], '', $table_name);
 
   if ($chk) {
@@ -76,7 +76,7 @@ else if($mode=='db_del') {
       $comm_del = "drop table {$table_name}_comm";
       sql_query($comm_del,$c);
 
-      # °Ô½ÃÆÇ °èÁ¤¿¡¼­ »ç¿ëµÇ´Â file »èÁ¦
+      # ê²Œì‹œíŒ ê³„ì •ì—ì„œ ì‚¬ìš©ë˜ëŠ” file ì‚­ì œ
       unlink_r ("../data/{$table_name}");
     }
   }
@@ -85,14 +85,14 @@ else if($mode=='db_del') {
 }
 
 else if($mode == 'db_create')  {
-  # °Ô½ÃÆÇ ÀÌ¸§ ±ÔÄ¢ -> A-Za-z0-9_-
+  # ê²Œì‹œíŒ ì´ë¦„ ê·œì¹™ -> A-Za-z0-9_-
   if ( preg_match ('/[^a-z0-9_-]/i', $new_table) )
     print_error ($langs['tb_rule'], 250, 150, 1);
 
-  # »õ·Î¸¸µé °èÁ¤ÀÌ¸§ÀÇ Á¸ÀçÀ¯¹« Ã¼Å©
+  # ìƒˆë¡œë§Œë“¤ ê³„ì •ì´ë¦„ì˜ ì¡´ì¬ìœ ë¬´ ì²´í¬
   table_name_check($new_table);
 
-  # µ¿ÀÏÇÑ ÀÌ¸§ÀÇ °Ô½ÃÆÇÀÌ ÀÖ´ÂÁö È®ÀÎ
+  # ë™ì¼í•œ ì´ë¦„ì˜ ê²Œì‹œíŒì´ ìˆëŠ”ì§€ í™•ì¸
   if ( $new_table == 'userdb' || db_table_list ($c, $db['name'], '', $new_table) )
     print_error ($_('a_acc'), 250, 150, 1);
 
@@ -153,7 +153,7 @@ else if($mode == 'db_create')  {
 
   sql_query($create_comm, $c);
 
-  # »õ·Î¿î °Ô½ÃÆÇ¿¡ ÇÊ¿äÇÑ ÆÄÀÏ¹× µğ·ºÅä¸® »ı¼º
+  # ìƒˆë¡œìš´ ê²Œì‹œíŒì— í•„ìš”í•œ íŒŒì¼ë° ë””ë ‰í† ë¦¬ ìƒì„±
   mkdir("../data/$new_table",0700);
   mkdir("../data/$new_table/{$upload['dir']}",0700);
   chmod("../data/$new_table",0755);
@@ -172,7 +172,7 @@ else if($mode == 'db_create')  {
 
 else if($mode == "global_chg") {
   sql_close($c);
-  # quot º¯È¯µÈ ¹®ÀÚ¸¦ un quot ÇÑ´Ù
+  # quot ë³€í™˜ëœ ë¬¸ìë¥¼ un quot í•œë‹¤
 
   $vars = "<?php\n".stripslashes($glob['vars'])."\n?>";
   $spam = stripslashes($glob['spam']);
@@ -192,4 +192,14 @@ else if($mode == "global_chg") {
 
 Header("Location:admin.php$tslink");
 
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
 ?>

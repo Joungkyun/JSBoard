@@ -1,7 +1,8 @@
 <?php
-# $Id: get.php,v 1.22 2014-02-28 21:37:18 oops Exp $
+# $Id: get.php,v 1.23 2014-03-02 17:11:31 oops Exp $
 
-# login Á¤º¸¸¦ ¾ò¾î¿À´Â ÇÔ¼ö
+# // {{{ +-- public get_authinfo($id,$nocry='')
+# login ì •ë³´ë¥¼ ì–»ì–´ì˜¤ëŠ” í•¨ìˆ˜
 #
 function get_authinfo($id,$nocry='') {
   global $edb, $db, $c;
@@ -39,11 +40,13 @@ function get_authinfo($id,$nocry='') {
 
   return $r;
 }
+// }}}
 
 
-# À¥ ¼­¹ö Á¢¼ÓÀÚÀÇ IP ÁÖ¼Ò È¤Àº µµ¸ŞÀÎ¸íÀ» °¡Á®¿À´Â ÇÔ¼ö
-# HTTP_X_FORWARDED_FOR - proxy server°¡ ¼³Á¤ÇÏ´Â È¯°æ º¯¼ö
-# gethostbyaddr - IP ÁÖ¼Ò¿Í ÀÏÄ¡ÇÏ´Â È£½ºÆ®¸íÀ» °¡Á®¿È
+# // {{{ +-- public get_hostname($reverse=0, $host=0)
+# ì›¹ ì„œë²„ ì ‘ì†ìì˜ IP ì£¼ì†Œ í˜¹ì€ ë„ë©”ì¸ëª…ì„ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
+# HTTP_X_FORWARDED_FOR - proxy serverê°€ ì„¤ì •í•˜ëŠ” í™˜ê²½ ë³€ìˆ˜
+# gethostbyaddr - IP ì£¼ì†Œì™€ ì¼ì¹˜í•˜ëŠ” í˜¸ìŠ¤íŠ¸ëª…ì„ ê°€ì ¸ì˜´
 #                 http://www.php.net/manual/function.gethostbyaddr.php
 function get_hostname($reverse=0, $host=0)
 {
@@ -62,26 +65,28 @@ function get_hostname($reverse=0, $host=0)
 
   return $check ? $check : $host;
 }
+// }}}
 
 
-# Á¢¼ÓÇÑ »ç¶÷ÀÌ »ç¿ëÇÏ´Â ºê¶ó¿ìÁ®¸¦ ¾Ë±â À§ÇØ »ç¿ëµÇ´Â ÇÔ¼ö, ÇöÀç´Â FORM
-# ÀÔ·ÂÃ¢ÀÇ Å©±â°¡ ºê¶ó¿ìÁ®¸¶´Ù Æ²¸®°Ô ¼³Á¤µÇ´Â °ÍÀ» º¸Á¤ÇÏ±â À§ÇØ »ç¿ëµÊ
+# // {{{ +-- public get_agent(void)
+# ì ‘ì†í•œ ì‚¬ëŒì´ ì‚¬ìš©í•˜ëŠ” ë¸Œë¼ìš°ì ¸ë¥¼ ì•Œê¸° ìœ„í•´ ì‚¬ìš©ë˜ëŠ” í•¨ìˆ˜, í˜„ì¬ëŠ” FORM
+# ì…ë ¥ì°½ì˜ í¬ê¸°ê°€ ë¸Œë¼ìš°ì ¸ë§ˆë‹¤ í‹€ë¦¬ê²Œ ì„¤ì •ë˜ëŠ” ê²ƒì„ ë³´ì •í•˜ê¸° ìœ„í•´ ì‚¬ìš©ë¨
 #
 function get_agent() {
   $agent_env = $_SERVER['HTTP_USER_AGENT'];
 
-  # $agent ¹è¿­ Á¤º¸ [br] ºê¶ó¿ìÁ® Á¾·ù
-  #                  [os] ¿î¿µÃ¼Á¦
-  #                  [ln] ¾ğ¾î (³İ½ºÄÉÀÌÇÁ)
-  #                  [vr] ºê¶ó¿ìÁ® ¹öÁ¯
-  #                  [co] ¿¹¿Ü Á¤º¸
+  # $agent ë°°ì—´ ì •ë³´ [br] ë¸Œë¼ìš°ì ¸ ì¢…ë¥˜
+  #                  [os] ìš´ì˜ì²´ì œ
+  #                  [ln] ì–¸ì–´ (ë„·ìŠ¤ì¼€ì´í”„)
+  #                  [vr] ë¸Œë¼ìš°ì ¸ ë²„ì ¼
+  #                  [co] ì˜ˆì™¸ ì •ë³´
   if(preg_match('/MSIE/', $agent_env)) {
     $agent['br'] = 'MSIE';
-    # OS º° ±¸ºĞ
+    # OS ë³„ êµ¬ë¶„
     if(preg_match('/NT/', $agent_env)) $agent['os'] = 'NT';
     else if(preg_match('/Win/', $agent_env)) $agent['os'] = 'WIN';
     else $agent['os'] = 'OTHER';
-    # version Á¤º¸
+    # version ì •ë³´
     $agent['vr'] = trim(preg_replace('/Mo.+MSIE ([^;]+);.+/i','\\1',$agent_env));
     $agent['vr'] = preg_replace('/[a-z]/i','',$agent['vr']);
   } else if(preg_match('/Gecko|Galeon/i',$agent_env) && !preg_match('/Netscape/i',$agent_env)) {
@@ -92,17 +97,17 @@ function get_agent() {
     else
       $agent['br'] = 'MOZL';
 
-    # client OS ±¸ºĞ
+    # client OS êµ¬ë¶„
     if(preg_match('/NT/', $agent_env)) $agent['os'] = 'NT';
     else if(preg_match('/Win/', $agent_env)) $agent['os'] = 'WIN';
     else if(preg_match('/Linux/', $agent_env)) $agent['os'] = 'LINUX';
     else $agent['os'] = 'OTHER';
-    # ¾ğ¾îÆÑ
+    # ì–¸ì–´íŒ©
     if(preg_match('/en-US/i',$agent_env)) $agent['ln'] = 'EN';
     elseif(preg_match('/ko-KR/i',$agent_env)) $agent['ln'] = 'KO';
     elseif(preg_match('/ja-JP/i',$agent_env)) $agent['ln'] = 'JA';
     else $agent['ln'] = 'OTHER';
-    # version Á¤º¸
+    # version ì •ë³´
     if ( $agent['br'] == 'Firefox' ) {
       $agent['vr'] = preg_replace('/.*Firefox\/([0-9.]+).*/i', '\\1', $agent_env);
     } else if ( $agent['br'] == 'Chrome' ) {
@@ -111,7 +116,7 @@ function get_agent() {
       $agent['vr'] = preg_replace('/Mozi[^(]+\([^;]+;[^;]+;[^;]+;[^;]+;([^)]+)\).*/i','\\1',$agent_env);
       $agent['vr'] = trim(str_replace('rv:','',$agent['vr']));
     }
-    # NS ¿ÍÀÇ °øÅë Á¤º¸
+    # NS ì™€ì˜ ê³µí†µ ì •ë³´
     $agent['co'] = 'mozilla';
     $agent['nco'] = 'moz';
   } else if(preg_match('/Konqueror/',$agent_env)) {
@@ -127,29 +132,29 @@ function get_agent() {
     $agent['tx'] = 1;
   } else if(preg_match("/^Mozilla/", $agent_env)) {
     $agent['br'] = 'NS';
-    # client OS ±¸ºĞ
+    # client OS êµ¬ë¶„
     if(preg_match('/NT/', $agent_env)) $agent['os'] = 'NT';
     else if(preg_match('/Win/', $agent_env)) $agent['os'] = 'WIN';
     else if(preg_match('/Linux/', $agent_env)) $agent['os'] = 'LINUX';
     else $agent['os'] = 'OTHER';
     if(preg_match('/\[ko\]/', $agent_env)) $agent['ln'] = 'KO';
-    # version Á¤º¸
+    # version ì •ë³´
     if(preg_match('/Gecko/i',$agent_env)) $agent['vr'] = 6;
     else $agent['vr'] = 4;
-    # Mozilla ¿ÍÀÇ °øÅë Á¤º¸
+    # Mozilla ì™€ì˜ ê³µí†µ ì •ë³´
     $agent['co'] = 'mozilla';
 
     if ( $agent['vr'] == 6 ) $agent['nco'] = 'moz';
   } else if(preg_match('/^Opera/', $agent_env)) {
     $agent['br'] = 'OPERA';
-    # ¾ğ¾î Á¤º¸
+    # ì–¸ì–´ ì •ë³´
     if(preg_match('/\[([^]]+)\]/', $agent_env, $_m))
       $agent['ln'] = strtoupper ($_m[1]);
     else if(preg_match('/;[ ]*([a-z]{2})\)/i', $agent_env, $_m))
       $agent['ln'] = strtoupper ($_m[1]);
     else $agent['ln'] = "OTHER";
 
-    # OS ±¸ºĞ
+    # OS êµ¬ë¶„
     if (preg_match('/Windows (NT|2000)/i', $agent_env))
       $agent['os'] = 'NT';
     else if (preg_match('/Windows/i', $agent_env))
@@ -159,74 +164,80 @@ function get_agent() {
     else
       $agent['os'] = 'OTHER';
 
-    # Mozilla ¿ÍÀÇ °øÅë Á¤º¸
+    # Mozilla ì™€ì˜ ê³µí†µ ì •ë³´
     $agent['co'] = 'mozilla';
 
-    # version Á¤º¸
+    # version ì •ë³´
     $agent['vr'] = preg_replace ('/^Opera\/([0-9]+(\.[0-9]+)?) .*/', '\\1', $agent_env);
   } else $agent['br'] = "OTHER";
 
   return $agent;
 }
+// }}}
 
-# ¿À´Ã ÀÚÁ¤À» ±âÁØÀ¸·Î UNIX_TIMESTAMPÀÇ ÇüÅÂ·Î ½Ã°¢À» »Ì¾Æ¿À´Â ÇÔ¼ö
+# // {{{ +-- public get_date(void)
+# ì˜¤ëŠ˜ ìì •ì„ ê¸°ì¤€ìœ¼ë¡œ UNIX_TIMESTAMPì˜ í˜•íƒœë¡œ ì‹œê°ì„ ë½‘ì•„ì˜¤ëŠ” í•¨ìˆ˜
 #
-# date    - UNIX TIMESTAMP¸¦ Áö¿ª ½Ã°£¿¡ ¸Â°Ô ÁöÁ¤ÇÑ Çü½ÄÀ¸·Î Ãâ·Â
+# date    - UNIX TIMESTAMPë¥¼ ì§€ì—­ ì‹œê°„ì— ë§ê²Œ ì§€ì •í•œ í˜•ì‹ìœ¼ë¡œ ì¶œë ¥
 #           http://www.php.net/manual/function.date.php
-# mktime  - ÁöÁ¤ÇÑ ½Ã°¢ÀÇ UNIX TIMESTAMP¸¦ °¡Á®¿È
+# mktime  - ì§€ì •í•œ ì‹œê°ì˜ UNIX TIMESTAMPë¥¼ ê°€ì ¸ì˜´
 #           http://www.php.net/manual/function.mktime.php
 #
 function get_date() {
   $today = mktime(date("H")-12,0,0);
   return $today;
 }
+// }}}
 
-# ±âº»ÀûÀÎ °Ô½ÃÆÇÀÇ Á¤º¸¸¦ °¡Á®¿À´Â ÇÔ¼ö
+# // {{{ +-- public get_board_info($table)
+# ê¸°ë³¸ì ì¸ ê²Œì‹œíŒì˜ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
 function get_board_info($table) {
   global $o, $c;
 
-  # ¿À´Ã ÀÚÁ¤ÀÇ UNIX_TIMESTAMP¸¦ ±¸ÇØ¿È
+  # ì˜¤ëŠ˜ ìì •ì˜ UNIX_TIMESTAMPë¥¼ êµ¬í•´ì˜´
   $today  = get_date();
 
-  # date ÇÊµå¸¦ ºñ±³ÇØ¼­ ¿À´Ã ¿Ã¶ó¿Â ±ÛÀÇ °¹¼ö¸¦ °¡Á®¿È
+  # date í•„ë“œë¥¼ ë¹„êµí•´ì„œ ì˜¤ëŠ˜ ì˜¬ë¼ì˜¨ ê¸€ì˜ ê°¯ìˆ˜ë¥¼ ê°€ì ¸ì˜´
   $sql    = search2sql($o);
   $result = sql_query("SELECT COUNT(1/(date > '$today')), COUNT(*) FROM $table $sql", $c);
   $A = sql_fetch_array($result, $c);
 
-  $count['all']    = $A[1];	# ÀüÃ¼ ±Û ¼ö
-  $count['today']  = $A[0];	# ¿À´Ã ±Û ¼ö
+  $count['all']    = $A[1];	# ì „ì²´ ê¸€ ìˆ˜
+  $count['today']  = $A[0];	# ì˜¤ëŠ˜ ê¸€ ìˆ˜
 
   return $count;
 }
+// }}}
 
-# °Ô½ÃÆÇÀÇ ÀüÃ¼ ÆäÀÌÁö ¼ö¸¦ ±¸ÇÏ´Â ÇÔ¼ö
+# // {{{ +-- public get_page_info($count, $page = 0)
+# ê²Œì‹œíŒì˜ ì „ì²´ í˜ì´ì§€ ìˆ˜ë¥¼ êµ¬í•˜ëŠ” í•¨ìˆ˜
 function get_page_info($count, $page = 0) {
-    global $board; # °Ô½ÃÆÇ ±âº» ¼³Á¤ (config/global.php)
+    global $board; # ê²Œì‹œíŒ ê¸°ë³¸ ì„¤ì • (config/global.php)
 
-    # º¸Åë ±Û ¼ö¸¦ ÆäÀÌÁö ´ç ±Û ¼ö·Î ³ª´©¾î ÀüÃ¼ ÆäÀÌÁö¸¦ ±¸ÇÔ
-    # ³ª´« °ªÀº Á¤¼öÇüÀ¸·Î º¯È¯ÇÏ¸ç Á¤È®È÷ ³ª´©¾î ¶³¾îÁöÁö ¾ÊÀ¸¸é 1À» ´õÇÔ
+    # ë³´í†µ ê¸€ ìˆ˜ë¥¼ í˜ì´ì§€ ë‹¹ ê¸€ ìˆ˜ë¡œ ë‚˜ëˆ„ì–´ ì „ì²´ í˜ì´ì§€ë¥¼ êµ¬í•¨
+    # ë‚˜ëˆˆ ê°’ì€ ì •ìˆ˜í˜•ìœ¼ë¡œ ë³€í™˜í•˜ë©° ì •í™•íˆ ë‚˜ëˆ„ì–´ ë–¨ì–´ì§€ì§€ ì•Šìœ¼ë©´ 1ì„ ë”í•¨
     if($count['all'] % $board['perno'])
       $pages['all'] = intval($count['all'] / $board['perno']) + 1;
     else
       $pages['all'] = intval($count['all'] / $board['perno']);
 
-    # $page °ªÀÌ ÀÖÀ¸¸é ±× °ªÀ» $pages['cur'] °ªÀ¸·Î ´ëÀÔÇÔ
+    # $page ê°’ì´ ìˆìœ¼ë©´ ê·¸ ê°’ì„ $pages['cur'] ê°’ìœ¼ë¡œ ëŒ€ì…í•¨
     if($page)
       $pages['cur'] = $page;
 
-    # $pages['cur'] °ªÀÌ ¾øÀ¸¸é 1·Î ´ëÀÔÇÔ
+    # $pages['cur'] ê°’ì´ ì—†ìœ¼ë©´ 1ë¡œ ëŒ€ì…í•¨
     if(!$pages['cur'])
       $pages['cur'] = 1;
-    # $pages['cur'] °ªÀÌ ÀüÃ¼ ÆäÀÌÁö ¼öº¸´Ù Å¬ °æ¿ì ÀüÃ¼ ÆäÀÌÁö °ªÀ» ´ëÀÔÇÔ
+    # $pages['cur'] ê°’ì´ ì „ì²´ í˜ì´ì§€ ìˆ˜ë³´ë‹¤ í´ ê²½ìš° ì „ì²´ í˜ì´ì§€ ê°’ì„ ëŒ€ì…í•¨
     if($pages['cur'] > $pages['all'])
       $pages['cur'] = $pages['all'];
 
-    # $pages['no'] °ªÀÌ ¾øÀ¸¸é $pages['cur'] °ªÀ» Âü°íÇÏ¿© ´ëÀÔÇÔ. ¸ñ·Ï¿¡¼­
-    # ºÒ·¯¿Ã ±ÛÀÇ ½ÃÀÛ ¹øÈ£·Î »ç¿ëµÊ
+    # $pages['no'] ê°’ì´ ì—†ìœ¼ë©´ $pages['cur'] ê°’ì„ ì°¸ê³ í•˜ì—¬ ëŒ€ì…í•¨. ëª©ë¡ì—ì„œ
+    # ë¶ˆëŸ¬ì˜¬ ê¸€ì˜ ì‹œì‘ ë²ˆí˜¸ë¡œ ì‚¬ìš©ë¨
     if(!$pages['no'])
       $pages['no'] = ($pages['cur'] - 1) * $board['perno'];
 
-    # $pages['cur'] °ª¿¡ µû¶ó ÀÌÀü(pre), ´ÙÀ½(nex) ÆäÀÌÁö °ªÀ» ´ëÀÔÇÔ
+    # $pages['cur'] ê°’ì— ë”°ë¼ ì´ì „(pre), ë‹¤ìŒ(nex) í˜ì´ì§€ ê°’ì„ ëŒ€ì…í•¨
     if($pages['cur'] > 1)
       $pages['pre'] = $pages['cur'] - 1;
     if($pages['cur'] < $pages['all'])
@@ -234,31 +245,35 @@ function get_page_info($count, $page = 0) {
 
     return $pages;
 }
+// }}}
 
-# ±ÛÀÌ ±Û ¸ñ·ÏÀÇ ¾î´À ÆäÀÌÁö¿¡ ÀÖ´Â ±ÛÀÎÁö ¾Ë¾Æ³»±â À§ÇÑ ÇÔ¼ö
+# // {{{ +-- public get_current_page($table, $idx)
+# ê¸€ì´ ê¸€ ëª©ë¡ì˜ ì–´ëŠ í˜ì´ì§€ì— ìˆëŠ” ê¸€ì¸ì§€ ì•Œì•„ë‚´ê¸° ìœ„í•œ í•¨ìˆ˜
 #
-# intval - º¯¼ö¸¦ Á¤¼öÇüÀ¸·Î º¯È¯ÇÔ
+# intval - ë³€ìˆ˜ë¥¼ ì •ìˆ˜í˜•ìœ¼ë¡œ ë³€í™˜í•¨
 #          http://www.php.net/manual/function.intval.php
 function get_current_page($table, $idx) {
-  global $board; # °Ô½ÃÆÇ ±âº» ¼³Á¤ (config/global.php)
+  global $board; # ê²Œì‹œíŒ ê¸°ë³¸ ì„¤ì • (config/global.php)
   global $o, $c;
 
   $sql = search2sql($o, 0);
   $count = get_board_info($table);
 
-  # ÁöÁ¤µÈ ±ÛÀÇ idxº¸´Ù Å« ¹øÈ£¸¦ °¡Áø ±ÛÀÇ °¹¼ö¸¦ °¡Á®¿È
+  # ì§€ì •ëœ ê¸€ì˜ idxë³´ë‹¤ í° ë²ˆí˜¸ë¥¼ ê°€ì§„ ê¸€ì˜ ê°¯ìˆ˜ë¥¼ ê°€ì ¸ì˜´
   $result     = sql_query("SELECT COUNT(*) FROM $table WHERE idx > '$idx' $sql", $c);
   $count['cur'] = sql_result($result, 0, 'COUNT(*)', $c);
   sql_free_result($result,$c);
 
-  # °¡Á®¿Â °ªÀ» ÆäÀÌÁö ´ç ±Û ¼ö·Î ³ª´©¾î ¸î ¹øÂ° ÆäÀÌÁöÀÎÁö °¡Á®¿È
-  # (ÆäÀÌÁö´Â 1ºÎÅÍ ½ÃÀÛÇÏ±â ¶§¹®¿¡ 1À» ´õÇÔ)
+  # ê°€ì ¸ì˜¨ ê°’ì„ í˜ì´ì§€ ë‹¹ ê¸€ ìˆ˜ë¡œ ë‚˜ëˆ„ì–´ ëª‡ ë²ˆì§¸ í˜ì´ì§€ì¸ì§€ ê°€ì ¸ì˜´
+  # (í˜ì´ì§€ëŠ” 1ë¶€í„° ì‹œì‘í•˜ê¸° ë•Œë¬¸ì— 1ì„ ë”í•¨)
   $page   = intval($count['cur'] / $board['perno']) + 1;
 
   return $page;
 }
+// }}}
 
-# ÁöÁ¤ÇÑ ±ÛÀÇ ´ÙÀ½, ÀÌÀü±ÛÀ» °¡Á®¿À´Â ÇÔ¼ö
+# // {{{ +-- public get_pos($table, $idx)
+# ì§€ì •í•œ ê¸€ì˜ ë‹¤ìŒ, ì´ì „ê¸€ì„ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
 function get_pos($table, $idx) {
     global $o, $c;
 
@@ -269,7 +284,7 @@ function get_pos($table, $idx) {
     $idxplus = $idx + 10;
     $idxminus = $idx - 10;
 
-    # ÁöÁ¤µÈ ±ÛÀÇ idxº¸´Ù ÀÛÀº ¹øÈ£¸¦ °¡Áø ±Û Áß¿¡ idx°¡ °¡Àå Å« ±Û (´ÙÀ½±Û)
+    # ì§€ì •ëœ ê¸€ì˜ idxë³´ë‹¤ ì‘ì€ ë²ˆí˜¸ë¥¼ ê°€ì§„ ê¸€ ì¤‘ì— idxê°€ ê°€ì¥ í° ê¸€ (ë‹¤ìŒê¸€)
     #$result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < '$idx' $sql",$c);
     $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxminus' AND '$idxdm') $sql",$c);
     $pos['next'] = sql_result($result, 0, 'idx',$c);
@@ -279,7 +294,7 @@ function get_pos($table, $idx) {
       $next   = sql_fetch_array($result,$c);
       sql_free_result($result,$c);
         $next['title'] = str_replace("&amp;","&",$next['title']);
-      $next['title'] = preg_replace("/(#|')/","\\\\1",convspecialchars($next['title']));
+      $next['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($next['title']));
 
       $pos['next'] = $next['no'];
       if($next['reto']) {
@@ -292,7 +307,7 @@ function get_pos($table, $idx) {
       }
     }
 
-    # ÁöÁ¤µÈ ±ÛÀÇ idxº¸´Ù Å« ¹øÈ£¸¦ °¡Áø ±Û Áß¿¡ idx°¡ °¡Àå ÀÛÀº ±Û (ÀÌÀü±Û)
+    # ì§€ì •ëœ ê¸€ì˜ idxë³´ë‹¤ í° ë²ˆí˜¸ë¥¼ ê°€ì§„ ê¸€ ì¤‘ì— idxê°€ ê°€ì¥ ì‘ì€ ê¸€ (ì´ì „ê¸€)
     #$result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > '$idx' $sql",$c);
     $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxdp' AND '$idxplus') $sql",$c);
     $pos['prev'] = sql_result($result, 0, "idx",$c);
@@ -302,7 +317,7 @@ function get_pos($table, $idx) {
       $prev   = sql_fetch_array($result,$c);
       sql_free_result($result,$c);
         $prev['title'] = str_replace("&amp;","&",$prev['title']);
-      $prev['title'] = preg_replace("/(#|')/","\\\\1",convspecialchars($prev['title']));
+      $prev['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($prev['title']));
 
       $pos['prev'] = $prev['no'];
       if($prev['reto']) {
@@ -317,10 +332,12 @@ function get_pos($table, $idx) {
 
     return $pos;
 }
+// }}}
 
-# PHPÀÇ microtime ÇÔ¼ö·Î ¾ò¾îÁö´Â °ªÀ» ºñ±³ÇÏ¿© °æ°ú ½Ã°£À» °¡Á®¿À´Â ÇÔ¼ö
+# // {{{ +-- public get_microtime($old, $new)
+# PHPì˜ microtime í•¨ìˆ˜ë¡œ ì–»ì–´ì§€ëŠ” ê°’ì„ ë¹„êµí•˜ì—¬ ê²½ê³¼ ì‹œê°„ì„ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
 #
-# explode - ±¸ºĞ ¹®ÀÚ¿­À» ±âÁØÀ¸·Î ¹®ÀÚ¿­À» ³ª´®
+# explode - êµ¬ë¶„ ë¬¸ìì—´ì„ ê¸°ì¤€ìœ¼ë¡œ ë¬¸ìì—´ì„ ë‚˜ëˆ”
 #           http://www.php.net/manual/function.explode.php
 function get_microtime($old, $new) {
   $start = explode(" ", $old);
@@ -328,17 +345,19 @@ function get_microtime($old, $new) {
 
   return sprintf("%.2f", ($end[1] + $end[0]) - ($start[1] + $start[0]));
 }
+// }}}
     
-# ¾Ë¸ÂÀº Á¦¸ñÀ» °¡Á®¿À±â À§ÇØ »ç¿ëµÊ (html/head.php)
+# // {{{ +-- public get_title(void)
+# ì•Œë§ì€ ì œëª©ì„ ê°€ì ¸ì˜¤ê¸° ìœ„í•´ ì‚¬ìš©ë¨ (html/head.php)
 #
-# basename - ÆÄÀÏ °æ·Î¿¡¼­ ÆÄÀÏ¸í¸¸À» °¡Á®¿È
+# basename - íŒŒì¼ ê²½ë¡œì—ì„œ íŒŒì¼ëª…ë§Œì„ ê°€ì ¸ì˜´
 #            http://www.php.net/manual/function.basename.php
 function get_title() {
-  global $board, $langs; # °Ô½ÃÆÇ ±âº» ¼³Á¤ (config/global.php)
+  global $board, $langs; # ê²Œì‹œíŒ ê¸°ë³¸ ì„¤ì • (config/global.php)
 
   $title  = $board['title'];
 
-  # SCRIPT_NAMEÀÌ¶ó´Â ¾ÆÆÄÄ¡ È¯°æ º¯¼ö¸¦ °¡Á®¿È (ÇöÀç PHP ÆÄÀÏ)
+  # SCRIPT_NAMEì´ë¼ëŠ” ì•„íŒŒì¹˜ í™˜ê²½ ë³€ìˆ˜ë¥¼ ê°€ì ¸ì˜´ (í˜„ì¬ PHP íŒŒì¼)
   $script = $_SERVER['SCRIPT_NAME'];
   $script = basename($script);
 
@@ -371,7 +390,9 @@ function get_title() {
 
   return $title;
 }
+// }}}
 
+// {{{ +-- public get_article($table, $no, $field0 = "*", $field1 = "no")
 function get_article($table, $no, $field0 = "*", $field1 = "no") {
   global $langs, $c;
   if(!$no)
@@ -386,24 +407,28 @@ function get_article($table, $no, $field0 = "*", $field1 = "no") {
 
   return $article;
 }
+// }}}
 
-# ÆÄÀÏ Å©±â Ãâ·Â ÇÔ¼ö by ±èÄ¥ºÀ <san2@linuxchannel.net>
-# $bfsize º¯¼ö´Â bytes ´ÜÀ§ÀÇ Å©±âÀÓ
+# // {{{ +-- public human_fsize($bfsize, $sub = "0")
+# íŒŒì¼ í¬ê¸° ì¶œë ¥ í•¨ìˆ˜ by ê¹€ì¹ ë´‰ <san2@linuxchannel.net>
+# $bfsize ë³€ìˆ˜ëŠ” bytes ë‹¨ìœ„ì˜ í¬ê¸°ì„
 #
-# number_formant() - 3ÀÚ¸®¸¦ ±âÁØÀ¸·Î ÄÄ¸¶¸¦ »ç¿ë
+# number_formant() - 3ìë¦¬ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì»´ë§ˆë¥¼ ì‚¬ìš©
 function human_fsize($bfsize, $sub = "0") {
-  $BYTES = number_format($bfsize) . " Bytes"; // 3ÀÚ¸®¸¦ ±âÁØÀ¸·Î ÄÄ¸¶
+  $BYTES = number_format($bfsize) . " Bytes"; // 3ìë¦¬ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì»´ë§ˆ
 
-  if($bfsize < 1024) return $BYTES; # Bytes ¹üÀ§
-  elseif($bfsize < 1048576) $bfsize = number_format($bfsize/1024,1) . " KB"; # KBytes ¹üÀ§
-  elseif($bfsize < 1073741827) $bfsize = number_format($bfsize/1048576,1) . " MB"; # MB ¹üÀ§
-  else $bfsize = number_format($bfsize/1073741827,1) . " GB"; # GB ¹üÀ§
+  if($bfsize < 1024) return $BYTES; # Bytes ë²”ìœ„
+  elseif($bfsize < 1048576) $bfsize = number_format($bfsize/1024,1) . " KB"; # KBytes ë²”ìœ„
+  elseif($bfsize < 1073741827) $bfsize = number_format($bfsize/1048576,1) . " MB"; # MB ë²”ìœ„
+  else $bfsize = number_format($bfsize/1073741827,1) . " GB"; # GB ë²”ìœ„
 
   if($sub) $bfsize .= "($BYTES)";
 
   return $bfsize;
 } 
+// }}}
 
+// {{{ +-- public viewfile($tail)
 function viewfile($tail) {
   global $board, $table, $list, $upload;
   global $langs, $icons, $agent;
@@ -441,7 +466,7 @@ function viewfile($tail) {
       }
     } else if (preg_match("/^(phps|txt|html?|shs)$/i",$tail)) {
       $view = file_operate($upload_file,"r",0,1200);
-      $view = convspecialchars(cut_string($view,1000));
+      $view = htmlspecialchars(cut_string($view,1000));
       if (filesize($upload_file) > 1000) $view = $view . " <p>\n ......{$langs['preview']}\n\n";
 
       $p['down'] = "$source1$view$source2";
@@ -480,20 +505,22 @@ EOF;
 
   return $p;
 }
+// }}}
 
-# ÆÄÀÏÀ» º¯¼ö·Î ¹Ş°í ¾²´Â ÇÔ¼ö
-# p -> ÆÄÀÏ °æ·Î
-# m -> ÆÄÀÏ ÀÛµ¿ ¸ğµå(r-ÀĞ±â,w-¾²±â,a-ÆÄÀÏ³¡ºÎÅÍ ¾²±â)
-# msg -> ½ÇÆĞ½Ã ¿¡·¯ ¸Ş¼¼Áö
-# s -> ¾²±â¸ğµå¿¡¼­´Â ¾µ³»¿ë
-# t -> ÀĞ±â¸ğµå¿¡¼­ »çÀÌÁî ¸¸Å­ ¹ŞÀ» °ÍÀÎÁö ¾Æ´Ï¸é ¹è¿­·Î ÆÄÀÏ
-#      ÀüÃ¼¸¦ ¹ŞÀ» °ÍÀÎÁö °áÁ¤
+# // {{{ +-- public file_operate($p,$m,$msg='',$s='',$t=0)
+# íŒŒì¼ì„ ë³€ìˆ˜ë¡œ ë°›ê³  ì“°ëŠ” í•¨ìˆ˜
+# p -> íŒŒì¼ ê²½ë¡œ
+# m -> íŒŒì¼ ì‘ë™ ëª¨ë“œ(r-ì½ê¸°,w-ì“°ê¸°,a-íŒŒì¼ëë¶€í„° ì“°ê¸°)
+# msg -> ì‹¤íŒ¨ì‹œ ì—ëŸ¬ ë©”ì„¸ì§€
+# s -> ì“°ê¸°ëª¨ë“œì—ì„œëŠ” ì“¸ë‚´ìš©
+# t -> ì½ê¸°ëª¨ë“œì—ì„œ ì‚¬ì´ì¦ˆ ë§Œí¼ ë°›ì„ ê²ƒì¸ì§€ ì•„ë‹ˆë©´ ë°°ì—´ë¡œ íŒŒì¼
+#      ì „ì²´ë¥¼ ë°›ì„ ê²ƒì¸ì§€ ê²°ì •
 #
 function file_operate($p,$m,$msg='',$s='',$t=0) {
   if($m == "r" || $m == "w" || $m == "a") {
     $m .= "b";
     
-    # file point ¸¦ open
+    # file point ë¥¼ open
     if(!$t && $f=@fopen($p,$m)) {
       if(check_windows()) {
         $src = array("/\n/i","/\r*\n/i");
@@ -513,14 +540,16 @@ function file_operate($p,$m,$msg='',$s='',$t=0) {
 
   if($m == "rb") return $var;
 }
+// }}}
 
-# http socket À¸·Î ¿¬°áÀ» ÇÏ¿© html source ¸¦ °¡Á®¿À´Â ÇÔ¼ö
-# ºñ°í : HTTP/1.1 Áö¿ø °¡´É
+# // {{{ +-- public get_html_src($url,$size=5000,$file="",$type="")
+# http socket ìœ¼ë¡œ ì—°ê²°ì„ í•˜ì—¬ html source ë¥¼ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
+# ë¹„ê³  : HTTP/1.1 ì§€ì› ê°€ëŠ¥
 #
-# $url -> ÇØ´ç ¼­¹öÀÇ ÁÖ¼Ò (http:// ´Â »ı·«)
-# $size -> ÇØ´ç ¹®¼­ÀÇ size
-# $file -> Çà´ç ¹®¼­ÀÇ URI
-# $type -> socket(1) ¹æ½Ä ¶Ç´Â fopen(null)
+# $url -> í•´ë‹¹ ì„œë²„ì˜ ì£¼ì†Œ (http:// ëŠ” ìƒëµ)
+# $size -> í•´ë‹¹ ë¬¸ì„œì˜ size
+# $file -> í–‰ë‹¹ ë¬¸ì„œì˜ URI
+# $type -> socket(1) ë°©ì‹ ë˜ëŠ” fopen(null)
 function get_html_src($url,$size=5000,$file="",$type="") {
   if(!$type) {
     $p = @fsockopen($url,80,$errno,$errstr);
@@ -534,14 +563,16 @@ function get_html_src($url,$size=5000,$file="",$type="") {
     return $s;
   } else return $f;
 }
+// }}}
 
-# upload °ü·Ã º¯¼öµéÀ» Á¶Á¤
+# // {{{ +-- public get_upload_value($up)
+# upload ê´€ë ¨ ë³€ìˆ˜ë“¤ì„ ì¡°ì •
 #
 function get_upload_value($up) {
   if($up['yesno']) {
     if($up['maxtime']) set_time_limit($up['maxtime']);
-    # JSBoard ¿¡¼­ Á¶Á¤ÇÒ ¼ö ÀÖ´Â ¾÷·Îµå ÃÖ´ë »çÀÌÁî
-    # ÃÖ´ë°ªÀº POST µ¥ÀÌÅ¸¸¦ À§ÇØ post_max_size º¸´Ù 1M ¸¦ ÀÛ°Ô Àâ´Â´Ù.
+    # JSBoard ì—ì„œ ì¡°ì •í•  ìˆ˜ ìˆëŠ” ì—…ë¡œë“œ ìµœëŒ€ ì‚¬ì´ì¦ˆ
+    # ìµœëŒ€ê°’ì€ POST ë°ì´íƒ€ë¥¼ ìœ„í•´ post_max_size ë³´ë‹¤ 1M ë¥¼ ì‘ê²Œ ì¡ëŠ”ë‹¤.
     $max = js_wrapper('ini_get', 'post_max_size');
     if(preg_match("/M$/i",$max)) {
       $max = (preg_replace("/M$/i","",$max) - 1) * 1024 * 1024;
@@ -556,7 +587,9 @@ function get_upload_value($up) {
     return $size;
   } else return 0;
 }
+// }}}
 
+// {{{ +-- public content_disposition ($n)
 function content_disposition ($n) {
   global $agent, $langs;
 
@@ -579,4 +612,16 @@ function content_disposition ($n) {
 
   return $r;
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

@@ -1,6 +1,6 @@
 <?php
 # MySQL extension API
-# $Id: sql.php,v 1.7 2014-02-28 21:37:18 oops Exp $
+# $Id: sql.php,v 1.8 2014-03-02 17:11:32 oops Exp $
 #
 
 // {{{ +-- public sql_connect($server,$user,$pass,$mode='w')
@@ -11,7 +11,7 @@ function sql_connect($server,$user,$pass,$mode='w') {
   $return = @mysql_connect($server,$user,$pass);
   sql_error(mysql_errno($return), mysql_error($return));
 
-  sql_query('SET NAMES euckr', $return);
+  sql_query('SET NAMES utf8', $return);
 
   return $return;
 }
@@ -143,11 +143,11 @@ function db_table_list ($c, $dbname, $prefix = '', $table = '') {
 
   for ( $i=0; $i<$list_num; $i++ ) {
     if ( ! $table ) {
-      # table ÀÌ¸§À» ±¸ÇÏ¿© ¹è¿­¿¡ ÀúÀå
+      # table ì´ë¦„ì„ êµ¬í•˜ì—¬ ë°°ì—´ì— ì €ìž¥
       $l[$i] = mysql_tablename ($list, $i);
 
-      # ¹è¿­¿¡ ÀúÀåµÈ ÀÌ¸§Áß ¾ËÆÄºªº° ±¸ºÐ º¯¼ö°¡ ÀÖÀ¸¸é ¼ÒÆ®µÈ
-      # ÀÌ¸§¸¸ ´Ù½Ã ¹è¿­¿¡ ÀúÀå
+      # ë°°ì—´ì— ì €ìž¥ëœ ì´ë¦„ì¤‘ ì•ŒíŒŒë²³ë³„ êµ¬ë¶„ ë³€ìˆ˜ê°€ ìžˆìœ¼ë©´ ì†ŒíŠ¸ëœ
+      # ì´ë¦„ë§Œ ë‹¤ì‹œ ë°°ì—´ì— ì €ìž¥
       if ( $prefix ) {
         if ( preg_match ("/^{$prefix}/i", $l[$i]) ) {
           $ll[$j] = $l[$i];

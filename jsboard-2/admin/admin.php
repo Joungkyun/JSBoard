@@ -1,9 +1,9 @@
 <?php
-# $Id: admin.php,v 1.20 2014-02-28 21:37:17 oops Exp $
+# $Id: admin.php,v 1.21 2014-03-02 17:11:30 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 
-# ¾ËÆÄºªº° ºĞ·ù¿¡ ´ëÇÑ ¸µÅ©
+# ì•ŒíŒŒë²³ë³„ ë¶„ë¥˜ì— ëŒ€í•œ ë§í¬
 if($ts) {
   $tslink = "?ts=$ts";
   $tslinks = "&ts=$ts";
@@ -12,18 +12,18 @@ if($ts) {
 if(!isset($_SESSION[$jsboard]) || $_SESSION[$jsboard]['pos'] != 1)
   print_error($langs['login_err']);
 
-# ÆĞ½º¿öµå°¡ ±âº»°ª¿¡¼­ º¯°æÀÌ µÇÁö ¾Ê¾ÒÀ» °æ¿ì °è¼Ó °æ°í¸¦ ÇÔ - admin/include/print.php
+# íŒ¨ìŠ¤ì›Œë“œê°€ ê¸°ë³¸ê°’ì—ì„œ ë³€ê²½ì´ ë˜ì§€ ì•Šì•˜ì„ ê²½ìš° ê³„ì† ê²½ê³ ë¥¼ í•¨ - admin/include/print.php
 print_chgpass($_SESSION[$jsboard]['pass']);
 
 htmlhead();
 java_scr();
 
-# input ¹®ÀÇ size¸¦ browserº°·Î ¸ÂÃß±â À§ÇÑ ¼³Á¤
+# input ë¬¸ì˜ sizeë¥¼ browserë³„ë¡œ ë§ì¶”ê¸° ìœ„í•œ ì„¤ì •
 $size = form_size(9);
 $langs['a_t41'] = ($langs['code'] == "en") ? strtoupper($langs['a_t4']) : $langs['a_t4'];
 $langs['a_t61'] = ($langs['code'] == "en") ? strtolower($langs['a_t6']) : $langs['a_t6'];
 
-# MySQL ¼­¹ö¿¡ ¿¬°áÇÑ´Ù
+# MySQL ì„œë²„ì— ì—°ê²°í•œë‹¤
 $c = sql_connect($db['server'],$db['user'],$db['pass']);
 sql_select_db($db['name'],$c);
 
@@ -44,7 +44,7 @@ if($agent['tx']) {
        "</td></tr>\n</table>\n\n";
 }
 
-# db_nameÀÌ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é ¾Æ·¡¸¦ Ãâ·ÂÇÕ´Ï´Ù.
+# db_nameì´ ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´ ì•„ë˜ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.
 exsit_dbname_check($db['name']);
 
 if($db['name'] && !$table) {
@@ -80,24 +80,24 @@ if($db['name'] && !$table) {
   $priv = $page-1;   
   $next = $page+1;
 
-  # ¿À´Ã ³¯Â¥¿¡ ´ëÇÑ data °ªÀ» ±¸ÇØ ¿À´Ã ³¯Â¥¿¡ µî·ÏµÈ °ªÀ» ±¸ÇÕ´Ï´Ù.
+  # ì˜¤ëŠ˜ ë‚ ì§œì— ëŒ€í•œ data ê°’ì„ êµ¬í•´ ì˜¤ëŠ˜ ë‚ ì§œì— ë“±ë¡ëœ ê°’ì„ êµ¬í•©ë‹ˆë‹¤.
   $current_time = mktime (0, 0, 0, date('m, d, Y'));
 
-  # scale º°·Î Ãâ·Â
+  # scale ë³„ë¡œ ì¶œë ¥
   if($tbl_num > 0) {
     for($i=$start; $i<$until; $i++) {
       if($i < $tbl_num && $table_name[$i] != "userdb") {
-        # jsboard¿¡¼­ »ç¿ëÇÏ´Â °Ô½ÃÆÇÀÎÁö¸¦ ÆÇ´Ü
+        # jsboardì—ì„œ ì‚¬ìš©í•˜ëŠ” ê²Œì‹œíŒì¸ì§€ë¥¼ íŒë‹¨
         $chk = "select idx from $table_name[$i] where idx = 1;";
         $chk_result = sql_query($chk,$c,true);
 
-        # °¢ table¿¡ µî·ÏµÈ ±Û ¼ö¸¦ check ÇÕ´Ï´Ù.
+        # ê° tableì— ë“±ë¡ëœ ê¸€ ìˆ˜ë¥¼ check í•©ë‹ˆë‹¤.
         $total = "select count(*) as cnt from $table_name[$i]";
         $result = sql_query($total,$c,true);
 
         $total_count = sql_result($result,0,'cnt',$c);
 
-        # °¢ table¿¡ µî·ÏµÈ ±ÛµéÀÇ ÇÕÀ» ±¸ÇÕ´Ï´Ù.
+        # ê° tableì— ë“±ë¡ëœ ê¸€ë“¤ì˜ í•©ì„ êµ¬í•©ë‹ˆë‹¤.
         if ($chk_result)
             $to += $total_count;
         $total = "select count(*) as cnt from $table_name[$i] where date > '$current_time'";
@@ -106,7 +106,7 @@ if($db['name'] && !$table) {
             $total_today = @sql_result($result,0,'cnt',$c);
         $total_today = !$total_today ? 0 : $total_today;
 
-        # ¿À´Ã µî·ÏµÈ ±ÛµéÀÇ ÇÕÀ» ±¸ÇÕ´Ï´Ù.
+        # ì˜¤ëŠ˜ ë“±ë¡ëœ ê¸€ë“¤ì˜ í•©ì„ êµ¬í•©ë‹ˆë‹¤.
         if ($chk_result)
           $to_today = $to_today + $total_today;
 
@@ -160,21 +160,21 @@ if($db['name'] && !$table) {
          "</tr>";
   }
 
-  # ÀüÃ¼ µî·ÏµÈ ±Û ¼ö¸¦ È®ÀÎ
+  # ì „ì²´ ë“±ë¡ëœ ê¸€ ìˆ˜ë¥¼ í™•ì¸
   for($t = 0; $t < $tbl_num; $t++) {
-    # jsboard¿¡¼­ »ç¿ëÇÏ´Â °Ô½ÃÆÇÀÎÁö¸¦ ÆÇ´Ü
+    # jsboardì—ì„œ ì‚¬ìš©í•˜ëŠ” ê²Œì‹œíŒì¸ì§€ë¥¼ íŒë‹¨
     $chk = "select idx from $table_name[$t] where idx = 1;";
     if (($chk_result = sql_query($chk,$c,true)) === false) {
       if (!preg_match('/_comm/', $table_name[$t]))
         continue;
     }
 
-    # °¢ table¿¡ µî·ÏµÈ ±Û ¼ö¸¦ check ÇÕ´Ï´Ù.
+    # ê° tableì— ë“±ë¡ëœ ê¸€ ìˆ˜ë¥¼ check í•©ë‹ˆë‹¤.
     $sql = "select count(*) as cnt from $table_name[$t]";
     $result = sql_query($sql,$c);
     $sum = sql_result($result, 0, 'cnt',$c);
 
-    # °¢ table¿¡ µî·ÏµÈ ±ÛµéÀÇ ÇÕÀ» ±¸ÇÕ´Ï´Ù.
+    # ê° tableì— ë“±ë¡ëœ ê¸€ë“¤ì˜ í•©ì„ êµ¬í•©ë‹ˆë‹¤.
     $to_t += $sum;
 
     unset ($sum);
@@ -183,7 +183,7 @@ if($db['name'] && !$table) {
       $sum = sql_result($result, 0, 'cnt',$c);
     $sum = isset($sum) ? $sum : 0;
 
-    # ¿À´Ã µî·ÏµÈ ±ÛµéÀÇ ÇÕÀ» ±¸ÇÕ´Ï´Ù.
+    # ì˜¤ëŠ˜ ë“±ë¡ëœ ê¸€ë“¤ì˜ í•©ì„ êµ¬í•©ë‹ˆë‹¤.
     $to_today_t += $sum;
   }
   $to = !$to ? "0" : $to;
@@ -191,7 +191,7 @@ if($db['name'] && !$table) {
   $to_today = !$to_today ? "0" : $to_today;
   $to_today_t = !$to_today_t ? "0" : $to_today_t;
 
-  # ¿ÜºÎ DB ¸¦ »ç¿ëÇÒ °æ¿ì JSBoard °ü¸®ÀÚ¿¡¼­ user °ü¸®¸¦ ÇÏÁö ¾ÊÀ½
+  # ì™¸ë¶€ DB ë¥¼ ì‚¬ìš©í•  ê²½ìš° JSBoard ê´€ë¦¬ìì—ì„œ user ê´€ë¦¬ë¥¼ í•˜ì§€ ì•ŠìŒ
   $userclick = $_SESSION[$jsboard]['external'] ? "window.alert('External user table Can\'t be Use')" : 
                             "document.location='./userlist.php?t=a'";
 
@@ -321,17 +321,17 @@ if($db['name'] && !$table) {
     if($page < 2) echo "&nbsp;";
     else {
       if($page > 5 && $pfoo == 2)
-        echo "<a href={$_SERVER['PHP_SELF']}?page=$priv&page_num=$p_page_num&scale_lastpage=$p_scale_lastpage$tslinks title=\"{$langs['a_act_pm']}\"><font color={$color['m_fg']}><b>¢·</b></font></a>";
+        echo "<a href={$_SERVER['PHP_SELF']}?page=$priv&page_num=$p_page_num&scale_lastpage=$p_scale_lastpage$tslinks title=\"{$langs['a_act_pm']}\"><font color={$color['m_fg']}><b>â—</b></font></a>";
       else
-        echo "<a href={$_SERVER['PHP_SELF']}?page=$priv&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks title=\"{$langs['a_act_pm']}\"><font color={$color['m_fg']}><b>¢·</b></font></a>";
+        echo "<a href={$_SERVER['PHP_SELF']}?page=$priv&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks title=\"{$langs['a_act_pm']}\"><font color={$color['m_fg']}><b>â—</b></font></a>";
     }
 
     if($lastpage-$page <= 0) echo "&nbsp;";
     else {
       if($page >= 5 && $pfoo == 0)
-        echo "<a href={$_SERVER['PHP_SELF']}?page=$next&page_num=$n_page_num&scale_lastpage=$n_scale_lastpage$tslinks title=\"{$langs['a_act_nm']}\"><font color={$color['m_fg']}><b>¢¹</b></font></a>";
+        echo "<a href={$_SERVER['PHP_SELF']}?page=$next&page_num=$n_page_num&scale_lastpage=$n_scale_lastpage$tslinks title=\"{$langs['a_act_nm']}\"><font color={$color['m_fg']}><b>â–·</b></font></a>";
       else
-        echo "<a href={$_SERVER['PHP_SELF']}?page=$next&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks title=\"{$langs['a_act_nm']}\"><font color={$color['m_fg']}><b>¢¹</b></font></a>";
+        echo "<a href={$_SERVER['PHP_SELF']}?page=$next&page_num=$page_num&scale_lastpage=$scale_lastpage$tslinks title=\"{$langs['a_act_nm']}\"><font color={$color['m_fg']}><b>â–·</b></font></a>";
     }
   }
 
@@ -387,4 +387,14 @@ echo "\n</td></tr>\n</table>\n";
 if($agent['tx']) echo "Powered By <A HREF=\"http://jsboard.kldp.net/\">JSBoard Open Project</A>\n";
 
 htmltail();
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
 ?>

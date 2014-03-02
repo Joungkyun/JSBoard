@@ -1,5 +1,5 @@
 <?php
-# $Id: edit.php,v 1.24 2014-02-28 21:37:17 oops Exp $
+# $Id: edit.php,v 1.25 2014-03-02 17:11:28 oops Exp $
 include "include/header.php";
 
 $board['super'] = $board['adm'] ? 1 : $board['super'];
@@ -7,10 +7,10 @@ $board['super'] = $board['adm'] ? 1 : $board['super'];
 if(preg_match("/^(1|3)$/",$board['mode'])) { if(!$board['super']) print_error($langs['perm_err'],250,150,1); }
 if(preg_match("/^(1|3|5)$/",$board['mode']) && !$_SESSION[$jsboard]['id']) print_error($langs['perm_err'],250,150,1);
 
-# ·Î±×ÀÎÀÌ µÇ¾î ÀÖ°í ÀüÃ¼¾îµå¹Î ·Î±×ÀÎ½Ã¿¡´Â ¸ğµç°ÍÀ» ¼öÁ¤ÇÒ¼ö ÀÖ°Ô.
+# ë¡œê·¸ì¸ì´ ë˜ì–´ ìˆê³  ì „ì²´ì–´ë“œë¯¼ ë¡œê·¸ì¸ì‹œì—ëŠ” ëª¨ë“ ê²ƒì„ ìˆ˜ì •í• ìˆ˜ ìˆê²Œ.
 if(preg_match("/^(2|5)$/",$board['mode']) && $_SESSION[$jsboard]['id'] && !$board['super']) $disable = " disabled";
 
-# upload['dir'] ¿¡ mata character Æ÷ÇÔ ¿©ºÎ Ã¼Å©
+# upload['dir'] ì— mata character í¬í•¨ ì—¬ë¶€ ì²´í¬
 meta_char_check($upload['dir']);
 
 $board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
@@ -34,7 +34,7 @@ if($board['notice']) print_notice($board['notice']);
 if($list['html']) $html_chk_ok = " CHECKED";
 else $html_chk_no = " CHECKED";
 
-# Browser°¡ LynxÀÏ¶§ multim form »èÁ¦
+# Browserê°€ Lynxì¼ë•Œ multim form ì‚­ì œ
 if($noup == 1) $board['formtype'] = "";
 else $board['formtype'] = " ENCTYPE=\"multipart/form-data\"";
 
@@ -48,7 +48,7 @@ if($list['bofile']) {
 if ($agent['br'] == "MSIE" || $agent['br'] == "MOZL" || ($agent['br'] == "NS" && $agent['vr'] == 6))
   $orig_option = " onClick=fresize(0)";
 
-# Page °¡ Á¸ÀçÇÒ °æ¿ì ¸ñ·ÏÀ¸·Î °¥¶§ ÇØ´ç ÆäÀÌÁö·Î ÀÌµ¿
+# Page ê°€ ì¡´ì¬í•  ê²½ìš° ëª©ë¡ìœ¼ë¡œ ê°ˆë•Œ í•´ë‹¹ í˜ì´ì§€ë¡œ ì´ë™
 $page = $page ? "&page=$page" : "";
 
 $print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=\"edit\">\n".
@@ -65,8 +65,8 @@ if($disable) {
                       "\n<INPUT TYPE=hidden NAME=\"atc[html]\" VALUE=\"{$list['html']}\">";
 }
 
-# º»¹®¿¡ html tag °¡ Á¸ÀçÇÒ °æ¿ì¸¦ ´ëºñ
-$list['text'] = convspecialchars($list['text']);
+# ë³¸ë¬¸ì— html tag ê°€ ì¡´ì¬í•  ê²½ìš°ë¥¼ ëŒ€ë¹„
+$list['text'] = htmlspecialchars($list['text']);
 
 sql_close($c);
 
@@ -77,7 +77,7 @@ $print['preview_script'] = <<<EOF
 </script>
 EOF;
 
-# Template file À» È£Ãâ
+# Template file ì„ í˜¸ì¶œ
 meta_char_check($print['theme'], 1, 1);
 include "theme/{$print['theme']}/edit.template";
 ?>

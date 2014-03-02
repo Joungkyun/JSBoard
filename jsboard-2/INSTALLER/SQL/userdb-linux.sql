@@ -21,5 +21,5 @@ CREATE TABLE userdb (
 # Dumping data for table 'userdb'
 #
 
-INSERT INTO userdb VALUES ('','admin','°ü¸®ÀÚ','','','lHJTjGW8VhHc.',1);
+INSERT INTO userdb VALUES ('','admin','ê´€ë¦¬ì','','','lHJTjGW8VhHc.',1);
 

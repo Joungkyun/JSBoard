@@ -1,9 +1,20 @@
 <?php
-# $Id: act.php,v 1.19 2014-02-28 21:37:17 oops Exp $
+# $Id: act.php,v 1.20 2014-03-02 17:11:28 oops Exp $
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
+
 include_once '../include/variable.php';
 include_once '../include/print.php';
 parse_query_str();
-session_start(); // sessionÀ» ½ÃÀÛÇÑ´Ù.
+session_start(); // sessionì„ ì‹œìž‘í•œë‹¤.
 $path['type'] = 'Install';
 
 if ($langss == 'ko') $langs['code'] = 'ko';
@@ -33,35 +44,35 @@ if($mysqlroot)
 else
   $c= sql_connect($mysql_sock,$mysqlusername,$passwd);
 
-# install.php ¿¡¼­ ³Ñ¾î¿Â º¯¼ö°ªµé Ã¼Å©
+# install.php ì—ì„œ ë„˜ì–´ì˜¨ ë³€ìˆ˜ê°’ë“¤ ì²´í¬
 $indb['check'] = inst_check($mysqlroot);
 
-# DB Á¤º¸ À¯¹« chek¿¡ Åë°ú½Ã MySQL¿¡ ¼ÂÆÃ
+# DB ì •ë³´ ìœ ë¬´ chekì— í†µê³¼ì‹œ MySQLì— ì…‹íŒ…
 if (!$indb['check'])
   print_error($langs['inst_error'],250,150,1);
 
 if($mysqlroot) {
-  # MySQL¿¡ DB »ý¼º
+  # MySQLì— DB ìƒì„±
   $create['dbname'] = "CREATE DATABASE {$dbinst['name']}";
   $result['dbname'] = sql_query($create['dbname'],$c);
   sql_select_db($dbinst['name'],$c);
 } else
   sql_select_db($dbinst['name']);
 
-# ¿ÜºÎ DB ÀÏ °æ¿ì¿¡´Â Á¢±Ù ±ÇÇÑÀ» ¿ÜºÎ·Î ÁöÁ¤ÇÑ´Ù.
+# ì™¸ë¶€ DB ì¼ ê²½ìš°ì—ëŠ” ì ‘ê·¼ ê¶Œí•œì„ ì™¸ë¶€ë¡œ ì§€ì •í•œë‹¤.
 if($mysql_sock != "127.0.0.1" && $mysql_sock != "localhost" && !preg_match("/mysql.sock/i",$mysql_sock))
   $access_permit = $mysql_sock;
 else $access_permit = "localhost";
 
 if($mysqlroot) {
-  # user ¹× db µî·Ï(grant ¹® ÀÌ¿ë)
+  # user ë° db ë“±ë¡(grant ë¬¸ ì´ìš©)
   $create['regis'] = "GRANT all privileges ON {$dbinst['name']}.*
                        TO {$dbinst['user']}@$access_permit
                        IDENTIFIED BY '{$dbinst['pass']}'";
   $result['regis'] = sql_query($create['regis'],$c);
 }
 
-# test °Ô½ÃÆÇÀ» »ý¼º
+# test ê²Œì‹œíŒì„ ìƒì„±
 $create['table'] = "CREATE TABLE test ( 
   	  no int(6) NOT NULL auto_increment,
   	  num int(6) DEFAULT '0' NOT NULL,
@@ -94,7 +105,7 @@ $create['table'] = "CREATE TABLE test (
   	  KEY comm (comm),
   	  PRIMARY KEY (no))";
 
-# comment table »ý¼º
+# comment table ìƒì„±
 $create['comment'] = "CREATE TABLE test_comm (
                 no int(6) NOT NULL auto_increment,
                 reno int(20) NOT NULL default '0',
@@ -140,7 +151,7 @@ $result['utable'] = sql_query($create['comment'], $c);
 #$result['data'] = sql_query($create['data'], $c);
 $result['udata'] = sql_query($create['udata'], $c);
 
-# ¼³Á¤ ÆÄÀÏ À§Ä¡
+# ì„¤ì • íŒŒì¼ ìœ„ì¹˜
 mkdir("../data/test",0775);
 mkdir("../data/test/files",0770);
 copy("sample/data/config.php","../data/test/config.php");
@@ -157,7 +168,7 @@ chmod("../data/test/stylesheet.php",0664);
 chmod("../config/global.php",0660);
 chmod("../config/spam_list.txt",0664);
 
-# ¼³Á¤ ÆÄÀÏ¿¡ DB Á¤º¸¸¦ ÀÔ·Â
+# ì„¤ì • íŒŒì¼ì— DB ì •ë³´ë¥¼ ìž…ë ¥
 $create['gfile'] = "../config/global.php";
 $create['str'] = file_operate($create['gfile'],"r","Can't open {$create['gfile']}");
 
@@ -166,7 +177,7 @@ $create['str'] = str_replace("@DBNAME@",$dbinst['name'],$create['str']);
 $create['str'] = str_replace("@DBPASS@",$dbinst['pass'],$create['str']);
 $create['str'] = str_replace("@DBUSER@",$dbinst['user'],$create['str']);
 
-# spam º¯¼ö ¼³Á¤
+# spam ë³€ìˆ˜ ì„¤ì •
 mt_srand((double) microtime() * 1000000);
 $create['spam1'] = mt_rand(10001,99999);
 $create['spam2'] = mt_rand(11,99);
@@ -175,13 +186,13 @@ $create['str'] = str_replace("@SPAM1@",$create['spam1'],$create['str']);
 $create['str'] = str_replace("@SPAM2@",$create['spam2'],$create['str']);
 $create['str'] = str_replace("@SPAM3@",$create['spam3'],$create['str']);
 
-# theme ¼³Á¤
+# theme ì„¤ì •
 $themes = ($langs['code'] == "ko") ? "KO-default" : "EN-default";
 $create['str'] = str_replace("@THEME@",$themes,$create['str']);
 
 file_operate($create['gfile'],"w","Can't update {$create['gfile']}",$create['str']);
 
-# µî·ÏÈÄ º¯¼ö°ªµé ÃÊ±âÈ­
+# ë“±ë¡í›„ ë³€ìˆ˜ê°’ë“¤ ì´ˆê¸°í™”
 $dbinst['name'] = "";
 $dbinst['user'] = "";
 $dbinst['pass'] = "";

@@ -1,6 +1,6 @@
 <?php
-# $Id: list.php,v 1.29 2014-02-28 21:37:17 oops Exp $
-# ÆäÀÌÁö ·Îµù ½Ã°£ ½ÃÀÛ
+# $Id: list.php,v 1.30 2014-03-02 17:11:28 oops Exp $
+# í˜ì´ì§€ ë¡œë”© ì‹œê°„ ì‹œì‘
 $p_time[] = microtime();
 include "include/header.php";
 
@@ -21,18 +21,18 @@ if($board['super'] == 1 || $board['adm']) {
                   "{$print['adpath']}</A>";
 }
 
-# SQL ½ÃÀÛ ½Ã°£ Ã¼Å©
+# SQL ì‹œì‘ ì‹œê°„ ì²´í¬
 $a_time[] = microtime();
 
 $c = sql_connect($db['server'], $db['user'], $db['pass']);
 sql_select_db($db['name'], $c);
 
-# °Ô½ÃÆÇÀÇ ÀüÃ¼, º¸Åë, ´äÀå, ¿À´Ã ¿Ã¶ó¿Â ±Û ¼ö µîÀ» °¡Á®¿È
+# ê²Œì‹œíŒì˜ ì „ì²´, ë³´í†µ, ë‹µì¥, ì˜¤ëŠ˜ ì˜¬ë¼ì˜¨ ê¸€ ìˆ˜ ë“±ì„ ê°€ì ¸ì˜´
 $count = get_board_info($table);
-# ÀüÃ¼ ÆäÀÌÁö¿Í ÇöÀç ÆäÀÌÁö¿¡ °ü·ÃµÈ Á¤º¸¸¦ °¡Á®¿È
+# ì „ì²´ í˜ì´ì§€ì™€ í˜„ì¬ í˜ì´ì§€ì— ê´€ë ¨ëœ ì •ë³´ë¥¼ ê°€ì ¸ì˜´
 $pages = get_page_info($count, $page);
 
-# SQL Á¾·á ½Ã°£ Ã¼Å©
+# SQL ì¢…ë£Œ ì‹œê°„ ì²´í¬
 $a_time[] = microtime();
 $sqltime1= get_microtime($a_time[0], $a_time[1]);
 
@@ -47,7 +47,7 @@ if($count['all']) {
                   "no article ..";
 }
 
-# RSS Ãâ·Â ·çÆ¾
+# RSS ì¶œë ¥ ë£¨í‹´
 if ( $rss['use'] ) {
   $rss['title'] = $_SERVER['SERVER_NAME'] . " {$board['title']}";
   $rss['link'] = "<link rel=\"Alternate\" type=\"application/rss+xml\" " .
@@ -65,10 +65,10 @@ if ( $rss['use'] ) {
 }
 
 
-# SQL ½ÃÀÛ ½Ã°£ Ã¼Å©
+# SQL ì‹œì‘ ì‹œê°„ ì²´í¬
 $b_time[] = microtime();
 
-# ±Û ¸®½ºÆ®
+# ê¸€ ë¦¬ìŠ¤íŠ¸
 $colspan_no = $upload['yesno'] ? "6" : "5";
 
 if(trim($notice['subject'])) {
@@ -86,7 +86,7 @@ if(trim($notice['subject'])) {
                   "<IMG ALT=\"\" SRC=\"./images/blank.gif\" WIDTH=\"5\" HEIGHT=\"{$lines['height']}\" BORDER=\"0\" ALIGN=\"middle\"></TD>\n".
                   "<TD COLSPAN=\"$notice_filno\">{$notice['subject']}</TD>\n</TR>\n\n";
 
-  # ±Û ¸®½ºÆ®µé »çÀÌ¿¡ µğÀÚÀÎÀ» ³Ö±â À§ÇÑ ÄÚµå
+  # ê¸€ ë¦¬ìŠ¤íŠ¸ë“¤ ì‚¬ì´ì— ë””ìì¸ì„ ë„£ê¸° ìœ„í•œ ì½”ë“œ
   if($lines['design']) {
     $lines['design'] = preg_replace("/=[\"']?AA[\"']?/","=\"$colspan_no\"",$lines['design']);
     $print['lists'] .= "<TR>\n{$lines['design']}\n</TR>\n";
@@ -95,32 +95,32 @@ if(trim($notice['subject'])) {
 
 $print['lists'] .= get_list($table, $pages);
 
-# °Ô½ÃÆÇ ¾ÕµÚ ÆäÀÌÁö ¸µÅ©
+# ê²Œì‹œíŒ ì•ë’¤ í˜ì´ì§€ ë§í¬
 $print['p_list'] = page_list($table, $pages, $count, $board['plist']);
 
-# SQL Á¾·á ½Ã°£ Ã¼Å©
+# SQL ì¢…ë£Œ ì‹œê°„ ì²´í¬
 $b_time[] = microtime();
 $sqltime2 = get_microtime($b_time[0], $b_time[1]);
 
-# SQL ½Ã°£
+# SQL ì‹œê°„
 $print['sqltime'] = $sqltime1 + $sqltime2;
 $print['sqltime'] = "SQL Time [ {$print['sqltime']} Sec ]";
 
-# »ó¼¼ °Ë»ö Å×ÀÌºí
+# ìƒì„¸ ê²€ìƒ‰ í…Œì´ë¸”
 if($o['at'] == "d" || $o['at'] == "dp") $print['dsearch'] = detail_searchform();
 else {
   $page = $page ? $page : "1";
   $print['dserlink'] = "<A HREF=\"{$_SERVER['PHP_SELF']}?table=$table&amp;page=$page&amp;o[at]=dp\">[ {$langs['detable_search_link']} ]</A>";
 }
 
-# °Ë»öÆû, ÆäÀÌÁöÆû °ü·Ã º¯¼ö
+# ê²€ìƒ‰í¼, í˜ì´ì§€í¼ ê´€ë ¨ ë³€ìˆ˜
 $sform = search_form($o);
 $pform = page_form($pages,$o);
 
-# °ü·Ã±Û ¸®½ºÆ® Ãâ·Â½Ã preview ±â´É »ç¿ëÇÒ¶§ ÇÊ¿äÇÑ JavaScript Ãâ·Â
+# ê´€ë ¨ê¸€ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥ì‹œ preview ê¸°ëŠ¥ ì‚¬ìš©í• ë•Œ í•„ìš”í•œ JavaScript ì¶œë ¥
 if ($enable['pre']) $print['preview_script'] = print_preview_src();
 
-# ±Ûµî·ÏÁö Ç¥½Ã ¿©ºÎ
+# ê¸€ë“±ë¡ì§€ í‘œì‹œ ì—¬ë¶€
 if($enable['dhost']) {
   $list['dhost'] = get_hostname($enable['dlook']);
   if($enable['dwho'])
@@ -129,7 +129,7 @@ if($enable['dhost']) {
   $print['times'] = "Access [ {$list['dhost']} ] {$print['sqltime']}";
 } else $print['times'] = "{$print['pagetime']} {$print['sqltime']}";
 
-# ÆäÀÌÁö ·Îµù ³¡ ½Ã°£
+# í˜ì´ì§€ ë¡œë”© ë ì‹œê°„
 $p_time[] = microtime();
 $print['pagetime'] = get_microtime($p_time[0], $p_time[1]);
 $print['pagetime'] = "Page Loading [ {$print['pagetime']} Sec ]";
