@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: ext.template,v 1.14 2014-02-26 17:09:13 oops Exp $ -->
+<!-- $Id: ext.template,v 1.15 2014-03-02 17:11:33 oops Exp $ -->
 <!-- ==================================================================== -->
-<!--   ¿Ø¸¸ ÇÏ¸é ±×³É »ç¿ëÇÏ±â¸£ :-) µðÀÚÀÎÀÌ º°·Î ÇÊ¿ä ¾øÀ½              -->
+<!--   ì™ ë§Œ í•˜ë©´ ê·¸ëƒ¥ ì‚¬ìš©í•˜ê¸°ë¥´ :-) ë””ìžì¸ì´ ë³„ë¡œ í•„ìš” ì—†ìŒ              -->
 <!-- ==================================================================== -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
 <TITLE><?php echo $print['head']?> - Jsboard <?php echo $board['ver']?></TITLE>
@@ -83,13 +83,13 @@ TEXTAREA {
 <BODY>
 
 <?php
-# ÀüÃ¼ °ü¸®ÀÚ¿¡ ÀÇÇØ °­Á¦ input µÇ´Â µðÀÚÀÎ
+# ì „ì²´ ê´€ë¦¬ìžì— ì˜í•´ ê°•ì œ input ë˜ëŠ” ë””ìžì¸
 include "html/head.php";
 
-# ¸ÞÀÎ Ãâ·Â
+# ë©”ì¸ ì¶œë ¥
 echo $print['body'];
 
-# ÀüÃ¼ °ü¸®ÀÚ¿¡ ÀÇÇØ °­Á¦ input µÇ´Â µðÀÚÀÎ
+# ì „ì²´ ê´€ë¦¬ìžì— ì˜í•´ ê°•ì œ input ë˜ëŠ” ë””ìžì¸
 include "html/tail.php";
 ?>
 

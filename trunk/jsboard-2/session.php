@@ -1,10 +1,10 @@
 <?php
-# $Id: session.php,v 1.24 2014-02-28 21:37:17 oops Exp $
+# $Id: session.php,v 1.25 2014-03-02 17:11:28 oops Exp $
 include_once 'include/variable.php';
 include_once "include/print.php";
 parse_query_str();
 
-# table º¯¼ö Ã¼Å©
+# table ë³€ìˆ˜ ì²´í¬
 $table = trim ($table);
 if ( preg_match ('!/\.+|%00$!', $table) ) {
   print_error ("Ugly access with table variable \"{$table}\"");
@@ -43,7 +43,7 @@ if ($m == "login") {
       else ${$jsboard}['super'] = $edb['super'];
     }
 
-    # ¼¼¼Ç µî·Ï
+    # ì„¸ì…˜ ë“±ë¡
     $_SESSION[$jsboard] = $$jsboard;
 
     if($type == "admin" && ${$jsboard}['pos'] == 1) {
@@ -57,7 +57,7 @@ if ($m == "login") {
   session_start();
   include_once "./config/global.php";
 
-  # ¼¼¼ÇÀ» »èÁ¦
+  # ì„¸ì…˜ì„ ì‚­ì œ
   unset ($_SESSION[$jsboard]);
 
   if($logins == "fail") {

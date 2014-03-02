@@ -1,5 +1,5 @@
 <?php
-# $Id: config.php,v 1.9 2014-02-26 17:09:13 oops Exp $
+# $Id: config.php,v 1.10 2014-03-02 17:11:32 oops Exp $
 ##############################################################
 # Copyright configuration
 ##############################################################
@@ -65,10 +65,10 @@ $color['d_fg'] = '#555555';	# Option filed Text
 # <IMG SRC=img/blank.gif WIDTH=0 HEIGHT=$line_height BORDER=0 ALT=''>
 $lines['height'] = '25';
 
-# ±Û ¸®½ºÆ®µé »çÀÌ¿¡ µðÀÚÀÎÀ» ³Ö±âÀ§ÇÑ ÄÚµå ÀÌ¼³Á¤Àº <TD></TD>
-# ¼³Á¤À¸·Î ÀÌ·ç¾î Áü. <TD> ¿¡´Â ²À COLSPAN="AA" °¡ µé¾î°¡¾ß ÇÔ. 
-# ÀÌ¼³Á¤Àº ¸®½ºÆ®ÀÇ colspan À» ¸ÂÃß±â À§ÇØ list.php ¿¡¼­ º¯È¯À»
-# ÇÏ°Ô µÇ¾î ÀÖÀ½ ´ÙÀ½ÀÇ ¿¹Á¦¸¦ ÀÌ¿ëÇÏ¿© Å×½ºÆ® ÇØ º¸±â ¹Ù¶÷
+# ê¸€ ë¦¬ìŠ¤íŠ¸ë“¤ ì‚¬ì´ì— ë””ìžì¸ì„ ë„£ê¸°ìœ„í•œ ì½”ë“œ ì´ì„¤ì •ì€ <TD></TD>
+# ì„¤ì •ìœ¼ë¡œ ì´ë£¨ì–´ ì§. <TD> ì—ëŠ” ê¼­ COLSPAN="AA" ê°€ ë“¤ì–´ê°€ì•¼ í•¨. 
+# ì´ì„¤ì •ì€ ë¦¬ìŠ¤íŠ¸ì˜ colspan ì„ ë§žì¶”ê¸° ìœ„í•´ list.php ì—ì„œ ë³€í™˜ì„
+# í•˜ê²Œ ë˜ì–´ ìžˆìŒ ë‹¤ìŒì˜ ì˜ˆì œë¥¼ ì´ìš©í•˜ì—¬ í…ŒìŠ¤íŠ¸ í•´ ë³´ê¸° ë°”ëžŒ
 #$line_design = '<TD COLSPAN="AA"><hr></TD>';
 $lines['design'] = '';
 $lines['comment_design'] = '<TR><TD COLSPAN=4 BACKGROUND="./images/dotline.gif">'.

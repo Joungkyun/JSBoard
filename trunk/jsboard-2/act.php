@@ -1,8 +1,8 @@
 <?php
-# $Id: act.php,v 1.81 2014-02-28 21:37:17 oops Exp $
+# $Id: act.php,v 1.82 2014-03-02 17:11:28 oops Exp $
 include_once 'include/variable.php';
 include_once "include/print.php";
-# GET/POST º¯¼ö¸¦ Á¦¾î
+# GET/POST ë³€ìˆ˜ë¥¼ ì œì–´
 parse_query_str();
 
 if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
@@ -12,7 +12,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
   sql_select_db($db['name'],$c);
 
   if($board['mode'] && isset($_SESSION[$jsboard])) {
-    # ·Î±×ÀÎÀ» ¾ÈÇßÀ» °æ¿ì ·Î±×ÀÎ È­¸éÀ¸·Î, ÇßÀ» °æ¿ì ÆĞ½º¿öµå ÀÎÁõ
+    # ë¡œê·¸ì¸ì„ ì•ˆí–ˆì„ ê²½ìš° ë¡œê·¸ì¸ í™”ë©´ìœ¼ë¡œ, í–ˆì„ ê²½ìš° íŒ¨ìŠ¤ì›Œë“œ ì¸ì¦
     if($board['mode'] != 1 && !isset($_SESSION[$jsboard])) print_error($langs['login_err']);
     else compare_pass($_SESSION[$jsboard]);
     $atc['passwd'] = $_SESSION[$jsboard]['pass'];
@@ -22,7 +22,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
   $atc['table']  = $table;
   $atc['agent']  = $agent;
 
-  # admin mode ÀÏ °æ¿ì admin mode ¸¦ Ã¼Å©  
+  # admin mode ì¼ ê²½ìš° admin mode ë¥¼ ì²´í¬  
   if($board['mode'] == 1 || $board['mode'] == 3)
     if(!$board['adm'] && $board['super'] != 1) print_error($langs['login_err']);
 
@@ -52,27 +52,27 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       print_error ($langs['captinvalid'],250,150,1);
   }
 
-  # °Ô½Ã¹° ÀÛ¼º ÇÔ¼ö
+  # ê²Œì‹œë¬¼ ì‘ì„± í•¨ìˆ˜
   function article_post(&$c, $table, $atc) {
     global $jsboard, $board, $upload, $cupload, $rmail, $langs, $agent;
     global $print, $max_file_size, $o;
 
     if($board['mode'] == 4 && $board['super'] != 1 && !$board['adm']) print_error($langs['login_err']);
 
-    $atc['date'] = time(); # ÇöÀç ½Ã°¢
-    $atc['host'] = get_hostname(0); # ±Û¾´ÀÌ ÁÖ¼Ò
+    $atc['date'] = time(); # í˜„ì¬ ì‹œê°
+    $atc['host'] = get_hostname(0); # ê¸€ì“´ì´ ì£¼ì†Œ
 
-    # Injection µîÀÇ À§Çè ¿ä¼Ò ¶§¹®¿¡ html ¾²±â Áö¿øÀ» Æ÷±âÇÑ´Ù.
-    # phpbb ÀÇ bb tag Ã³·³ ´ë¾ÈÀ» Á¦½Ã
+    # Injection ë“±ì˜ ìœ„í—˜ ìš”ì†Œ ë•Œë¬¸ì— html ì“°ê¸° ì§€ì›ì„ í¬ê¸°í•œë‹¤.
+    # phpbb ì˜ bb tag ì²˜ëŸ¼ ëŒ€ì•ˆì„ ì œì‹œ
     $atc['html']   = 2;
 
-    # ±Û µî·Ï È£È¯ ¸ğµå½Ã¿¡ html header tag¸¦ »ç¿ëÇÏ´Â °ÍÀ» ¹æÁöÇÑ´Ù.
+    # ê¸€ ë“±ë¡ í˜¸í™˜ ëª¨ë“œì‹œì— html header tagë¥¼ ì‚¬ìš©í•˜ëŠ” ê²ƒì„ ë°©ì§€í•œë‹¤.
     delete_tag($atc);
 
     $atc = article_check($c, $table, $atc);
     if(preg_match("/^0|4|6$/",$board['mode'])) $atc['passwd'] = crypt($atc['passwd']);
 
-    # ÀüÃ¼ °ü¸®ÀÚ°¡ Çã¶ôÇÏ¿´À»½Ã¿¡¸¸ upload ±â´ÉÀ» »ç¿ëÇÒ¼ö ÀÖÀ½
+    # ì „ì²´ ê´€ë¦¬ìê°€ í—ˆë½í•˜ì˜€ì„ì‹œì—ë§Œ upload ê¸°ëŠ¥ì„ ì‚¬ìš©í• ìˆ˜ ìˆìŒ
     if ($upload['yesno'] && $cupload['yesno'] && !$agent['tx']) {
       $bfilename = date("YmdHis",$atc['date']);
       $upfile = file_upload("userfile",$bfilename);
@@ -83,7 +83,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
         $upfile['name'] = "";
       }
     } else {
-      # winchild 99/11/26 fileupload = "no" ÀÏ °æ¿ì¿¡´Â ÃÊ±âÈ­¸¦ ½ÃÄÑÁÖ¾î¾ß ÇÑ´Ù.
+      # winchild 99/11/26 fileupload = "no" ì¼ ê²½ìš°ì—ëŠ” ì´ˆê¸°í™”ë¥¼ ì‹œì¼œì£¼ì–´ì•¼ í•œë‹¤.
       $bfilename = "";
       $upfile['size'] = 0;
       $upfile['name'] = "";
@@ -93,8 +93,8 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
 	sql_escape($atc,$c);
 
     $result = sql_query("SELECT MAX(num) AS num, MAX(idx) AS idx FROM $table",$c);
-    $atc['mxnum'] = sql_result($result, 0, 'num', $c) + 1; # ÃÖ°í ¹øÈ£
-    $atc['mxidx'] = sql_result($result, 0, 'idx', $c) + 1; # ÃÖ°í ÀÎµ¦½º ¹øÈ£
+    $atc['mxnum'] = sql_result($result, 0, 'num', $c) + 1; # ìµœê³  ë²ˆí˜¸
+    $atc['mxidx'] = sql_result($result, 0, 'idx', $c) + 1; # ìµœê³  ì¸ë±ìŠ¤ ë²ˆí˜¸
     sql_free_result($result, $c);
 
     sql_query("INSERT INTO $table (no,num,idx,date,host,name,rname,passwd,email,url,
@@ -105,7 +105,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
                          '{$atc['url']}','{$atc['title']}','{$atc['text']}',0,0,0,0,0,'{$atc['html']}', 0,
                          '{$upfile['name']}','{$bfilename}','{$upfile['size']}')", $c);
 
-    # mail º¸³»´Â ºÎºĞ
+    # mail ë³´ë‚´ëŠ” ë¶€ë¶„
     if ($rmail['uses']) {
       if ($rmail['admin'] || $rmail['user']) {
         $rmail['name'] = $atc['rtname'];
@@ -117,7 +117,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
         $rmail['path'] = $board['path'];
         $rmail['table'] = $table;
         $rmail['noquery'] = sql_query("SELECT MAX(no) AS no FROM $table",$c);
-        $rmail['no'] = sql_result($rmail['noquery'], 0, "no",$c); # ÃÖ°í ¹øÈ£
+        $rmail['no'] = sql_result($rmail['noquery'], 0, "no",$c); # ìµœê³  ë²ˆí˜¸
         $rmail['reply_orig_email'] = $rmail['origmail'];
         $rmail['theme'] = $print['theme'];
         $rmail['html'] = $atc['html'];
@@ -131,28 +131,28 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     return $page;
   }
 
-  # °Ô½Ã¹° ´äÀå ÇÔ¼ö
+  # ê²Œì‹œë¬¼ ë‹µì¥ í•¨ìˆ˜
   function article_reply(&$c, $table, $atc) {
     global $board,$upload,$cupload,$rmail,$langs,$agent,$jsboard,$page;
     global $print, $max_file_size, $o, $referer;
 
-    $atc['date'] = time(); # ÇöÀç ½Ã°¢
-    $atc['host'] = get_hostname(0); # ±Û¾´ÀÌ ÁÖ¼Ò
+    $atc['date'] = time(); # í˜„ì¬ ì‹œê°
+    $atc['host'] = get_hostname(0); # ê¸€ì“´ì´ ì£¼ì†Œ
 
-    # Injection µîÀÇ À§Çè ¿ä¼Ò ¶§¹®¿¡ html ¾²±â Áö¿øÀ» Æ÷±âÇÑ´Ù.
-    # phpbb ÀÇ bb tag Ã³·³ ´ë¾ÈÀ» Á¦½Ã
+    # Injection ë“±ì˜ ìœ„í—˜ ìš”ì†Œ ë•Œë¬¸ì— html ì“°ê¸° ì§€ì›ì„ í¬ê¸°í•œë‹¤.
+    # phpbb ì˜ bb tag ì²˜ëŸ¼ ëŒ€ì•ˆì„ ì œì‹œ
     $atc['html']   = 2;
 
-    # ±Û µî·Ï È£È¯ ¸ğµå½Ã¿¡ html header tag¸¦ »ç¿ëÇÏ´Â °ÍÀ» ¹æÁöÇÑ´Ù.
+    # ê¸€ ë“±ë¡ í˜¸í™˜ ëª¨ë“œì‹œì— html header tagë¥¼ ì‚¬ìš©í•˜ëŠ” ê²ƒì„ ë°©ì§€í•œë‹¤.
     delete_tag($atc);
 
-    # ´ñ±Û¿¡¼­ : ¶§¹®¿¡ ±ÛÀÌ ¹Ğ¸®´Â °ÍÀ» º¹±¸ÇÑ´Ù.
+    # ëŒ“ê¸€ì—ì„œ : ë•Œë¬¸ì— ê¸€ì´ ë°€ë¦¬ëŠ” ê²ƒì„ ë³µêµ¬í•œë‹¤.
     $atc['text'] = preg_replace("/(^[:]+ [^\r\n]+)\r?\n([^:\r\n]+\r?\n)/mi","\\1 \\2",$atc['text']);
 
     $atc = article_check($c, $table, $atc);
     if(preg_match("/^(0|4)$/",$board['mode']) || !isset($_SESSION[$jsboard])) $atc['passwd'] = crypt($atc['passwd']);
 
-    # ´äº¯½Ã file upload ¼³Á¤ ºÎºĞ, ÀüÃ¼ °ü¸®ÀÚ°¡ Çã¶ô½Ã¿¡¸¸ °¡´É
+    # ë‹µë³€ì‹œ file upload ì„¤ì • ë¶€ë¶„, ì „ì²´ ê´€ë¦¬ìê°€ í—ˆë½ì‹œì—ë§Œ ê°€ëŠ¥
     if ($upload['yesno'] && $cupload['yesno'] && !$agent['tx']) {
       $bfilename = date("YmdHis",$atc['date']);
       $upfile = file_upload("userfile",$bfilename);
@@ -162,29 +162,29 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
         $upfile['name'] = '';
       }
     } else {
-      # winchild 99/11/26 fileupload = "no" ÀÏ °æ¿ì¿¡´Â ÃÊ±âÈ­¸¦ ½ÃÄÑÁÖ¾î¾ß ÇÑ´Ù.
+      # winchild 99/11/26 fileupload = "no" ì¼ ê²½ìš°ì—ëŠ” ì´ˆê¸°í™”ë¥¼ ì‹œì¼œì£¼ì–´ì•¼ í•œë‹¤.
       $bfilename = "";
       $upfile['size'] = 0;
       $upfile['name'] = '';
     }
 
-    # referer ÀÇ ±Û ¹øÈ£¿Í ºÎ¸ğ±ÛÀÇ ¹øÈ£°¡ ´Ù¸¦ °æ¿ì ½ºÆÔ Ã³¸®
+    # referer ì˜ ê¸€ ë²ˆí˜¸ì™€ ë¶€ëª¨ê¸€ì˜ ë²ˆí˜¸ê°€ ë‹¤ë¥¼ ê²½ìš° ìŠ¤íŒ¸ ì²˜ë¦¬
     if ( $atc['reno'] != $referer['no'] )
       print_error($langs['act_s'],250,150,1);
 
 	sql_escape($table, $c);
 	sql_escape($atc, $c);
 
-    # ´äÀå±Û¿¡ ´ëÇÑ Á¤º¸¸¦ °¡Á®¿È
+    # ë‹µì¥ê¸€ì— ëŒ€í•œ ì •ë³´ë¥¼ ê°€ì ¸ì˜´
     sql_query("LOCK TABLES $table WRITE",$c);
     $reply = get_article($table, $atc['reno']);
-    $atc['rede'] = $reply['rede'] + 1; # ´äÀå±ÛÀÇ ±íÀÌ
-    $atc['idx']  = $reply['idx']; # ºÎ¸ğ±ÛÀÇ ÀÎµ¦½º ¹øÈ£ »ó¼Ó
+    $atc['rede'] = $reply['rede'] + 1; # ë‹µì¥ê¸€ì˜ ê¹Šì´
+    $atc['idx']  = $reply['idx']; # ë¶€ëª¨ê¸€ì˜ ì¸ë±ìŠ¤ ë²ˆí˜¸ ìƒì†
 
-    if($reply['reto']) $atc['reto'] = $reply['reto']; # ÃÖ»óÀ§ ºÎ¸ğ±Û ¹øÈ£
-    else $atc['reto'] = $reply['no']; # ºÎ¸ğ±Û ¹øÈ£
+    if($reply['reto']) $atc['reto'] = $reply['reto']; # ìµœìƒìœ„ ë¶€ëª¨ê¸€ ë²ˆí˜¸
+    else $atc['reto'] = $reply['no']; # ë¶€ëª¨ê¸€ ë²ˆí˜¸
 
-    # ºÎ¸ğ±Û ÀÌ»óÀÇ ÀÎµ¦½º ¹øÈ£¸¦ °¡Áø ±ÛµéÀÇ ÀÎµ¦½º¸¦ 1¾¿ ´õÇÔ
+    # ë¶€ëª¨ê¸€ ì´ìƒì˜ ì¸ë±ìŠ¤ ë²ˆí˜¸ë¥¼ ê°€ì§„ ê¸€ë“¤ì˜ ì¸ë±ìŠ¤ë¥¼ 1ì”© ë”í•¨
     sql_query("UPDATE $table SET idx = idx + 1 WHERE (idx + 0) >= '{$atc['idx']}'", $c);
     sql_query("UPDATE $table SET reyn = 1 WHERE no = '{$atc['reno']}'", $c);
     sql_query("INSERT INTO $table (no,num,idx,date,host,name,rname,passwd,email,url,
@@ -196,11 +196,11 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
                          '{$bfilename}','{$upfile['size']}')", $c);
     sql_query('UNLOCK TABLES', $c);
 
-    # mail º¸³»´Â ºÎºĞ
+    # mail ë³´ë‚´ëŠ” ë¶€ë¶„
     if ($rmail['uses']) {
       if ($rmail['admin'] || $rmail['user']) {
         $result = sql_query("SELECT MAX(no) AS no FROM $table", $c);
-        $rmail['no'] = sql_result($result, 0, 'no', $c); # ÃÖ°í ¹øÈ£
+        $rmail['no'] = sql_result($result, 0, 'no', $c); # ìµœê³  ë²ˆí˜¸
         $rmail['name'] = $atc['rtname'];
         $rmail['text'] = $atc['text'];
         $rmail['title'] = $atc['rtitle'];
@@ -223,31 +223,31 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     return $gopage;
   }
 
-  # °Ô½Ã¹° ¼öÁ¤ ÇÔ¼ö
+  # ê²Œì‹œë¬¼ ìˆ˜ì • í•¨ìˆ˜
   function article_edit(&$c, $table, $atc, $passwd) {
     global $max_file_size, $jsboard, $board, $langs, $agent, $rmail;
     global $upload, $cupload;
 
-    # ¾îµå¹Î ¸ğµå°¡ ¾Æ´Ò °æ¿ì ÆĞ½º¿öµå ÀÎÁõ
+    # ì–´ë“œë¯¼ ëª¨ë“œê°€ ì•„ë‹ ê²½ìš° íŒ¨ìŠ¤ì›Œë“œ ì¸ì¦
     if($board['super'] != 1 && !$board['adm']) {
       if(!check_passwd($table,$atc['no'],trim($passwd))) print_error($langs['act_pw'],250,150,1);
     }
 
-    $atc['date'] = time(); # ÇöÀç ½Ã°¢
-    $atc['host'] = get_hostname(0); # ±Û¾´ÀÌ ÁÖ¼Ò
+    $atc['date'] = time(); # í˜„ì¬ ì‹œê°
+    $atc['host'] = get_hostname(0); # ê¸€ì“´ì´ ì£¼ì†Œ
     if(eregi($rmail['chars'],$atc['email'])) $atc['email'] = str_replace($rmail['chars'],"@",$atc['email']);
     $atc = article_check($c, $table, $atc);
 
-    # ±Û µî·Ï È£È¯ ¸ğµå½Ã¿¡ html header tag¸¦ »ç¿ëÇÏ´Â °ÍÀ» ¹æÁöÇÑ´Ù.
+    # ê¸€ ë“±ë¡ í˜¸í™˜ ëª¨ë“œì‹œì— html header tagë¥¼ ì‚¬ìš©í•˜ëŠ” ê²ƒì„ ë°©ì§€í•œë‹¤.
     delete_tag($atc);
 
-    # ´ñ±Û¿¡¼­ : ¶§¹®¿¡ ±ÛÀÌ ¹Ğ¸®´Â °ÍÀ» º¹±¸ÇÑ´Ù.
+    # ëŒ“ê¸€ì—ì„œ : ë•Œë¬¸ì— ê¸€ì´ ë°€ë¦¬ëŠ” ê²ƒì„ ë³µêµ¬í•œë‹¤.
     $atc['text'] = preg_replace("/(^[:]+ [^\r\n]+)\r?\n([^:\r\n]+\r?\n)/mi","\\1 \\2",$atc['text']);
 
 	sql_escape($table, $c);
 	sql_escape($atc, $c);
 
-    # file »èÁ¦ ·çÆ¾
+    # file ì‚­ì œ ë£¨í‹´
     if($atc['fdel']) {
       $fdelqy = sql_query("SELECT bcfile, bofile FROM {$table} WHERE no = '{$atc['no']}'", $c);
       $fdelinfo = sql_fetch_array($fdelqy, $c);
@@ -260,9 +260,9 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       }
     }
 
-    # file ¼öÁ¤ ·çÆ¾
+    # file ìˆ˜ì • ë£¨í‹´
     if($upload['yesno'] && $cupload['yesno'] && !$agent['tx']) {
-      # file ¼öÁ¤ ·çÆ¾
+      # file ìˆ˜ì • ë£¨í‹´
       $bfilename = date("YmdHis",$atc['date']);
       $upfile = file_upload("userfile",$bfilename);
 
@@ -290,26 +290,26 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     return $atc['no'];
   }
 
-  # °Ô½Ã¹° »èÁ¦ ÇÔ¼ö
+  # ê²Œì‹œë¬¼ ì‚­ì œ í•¨ìˆ˜
   function article_delete(&$c, $table, $no, $passwd) {
     global $jsboard, $o, $langs, $board, $page;
     global $delete_filename, $delete_dir, $upload, $agent;
     $atc = get_article($table, $no);
 
-    # ¾îµå¹Î ¸ğµå°¡ ¾Æ´Ò °æ¿ì ÆĞ½º¿öµå ÀÎÁõ
+    # ì–´ë“œë¯¼ ëª¨ë“œê°€ ì•„ë‹ ê²½ìš° íŒ¨ìŠ¤ì›Œë“œ ì¸ì¦
     if($board['super'] != 1 && !$board['adm']) {
       $admchk = check_passwd($table,$atc['no'],trim($passwd));
       if(!$admchk) print_error($langs['act_pwm'],250,150,1);
     }
 
-    # °ü¸®ÀÚ ¸ğµå°¡ ¾Æ´Ò °æ¿ì ´ñ±ÛÀÌ Á¸ÀçÇÏ¸é ¿¡·¯¸Ş¼¼Áö
+    # ê´€ë¦¬ì ëª¨ë“œê°€ ì•„ë‹ ê²½ìš° ëŒ“ê¸€ì´ ì¡´ì¬í•˜ë©´ ì—ëŸ¬ë©”ì„¸ì§€
     if($atc['reyn'] && ($board['super'] != 1 && !$board['adm'] && $admchk != 2))
       print_error($langs['act_c'],250,150,1);
 
 	sql_escape($table,$c);
 	sql_escape($atc,$c);
 
-    # ºÎ¸ğ±ÛÀÇ ´äÀå±ÛÀÌ ÀÚ½Å ¹Û¿¡ ¾øÀ» ¶§ ºÎ¸ğ±ÛÀÇ reynÀ» ÃÊ±âÈ­ (´äÀå±Û ¿©ºÎ)
+    # ë¶€ëª¨ê¸€ì˜ ë‹µì¥ê¸€ì´ ìì‹  ë°–ì— ì—†ì„ ë•Œ ë¶€ëª¨ê¸€ì˜ reynì„ ì´ˆê¸°í™” (ë‹µì¥ê¸€ ì—¬ë¶€)
     if($atc['reno']) {
       $result = sql_query("SELECT COUNT(*) FROM $table WHERE reno = '{$atc['reno']}'",$c);
       if(sql_result($result, 0, "COUNT(*)",$c) == 1)
@@ -323,20 +323,20 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     sql_query("UPDATE $table SET idx = idx - 1 WHERE (idx + 0) > '{$atc['idx']}'",$c);
 
     if(!$atc['reyn']) {
-      # upload fileÀÌ Á¸ÀçÇÒ °æ¿ì »èÁ¦
+      # upload fileì´ ì¡´ì¬í•  ê²½ìš° ì‚­ì œ
       if ($delete_filename && file_exists("$delete_filename")) {
         unlink("$delete_filename");
         rmdir("$delete_dir");
       }
     }
 
-    # °ü·Ã±ÛÀÌ ÀÖÀ» °æ¿ì °ü·Ã±ÛÀ» ¸ğµÎ »èÁ¦ÇÔ (°ü¸®ÀÚ ¸ğµå)
+    # ê´€ë ¨ê¸€ì´ ìˆì„ ê²½ìš° ê´€ë ¨ê¸€ì„ ëª¨ë‘ ì‚­ì œí•¨ (ê´€ë¦¬ì ëª¨ë“œ)
     if($atc['reyn'] && ($board['super'] == 1 || $board['adm'] || $admchk == 2)) {
       $result = sql_query("SELECT no,bofile,bcfile FROM $table WHERE reno = '{$atc['no']}'",$c);
       while($list = sql_fetch_array($result,$c)) {
         sql_query("UNLOCK TABLES",$c);
         article_delete($table, $list['no'], $passwd);
-        # upload fileÀÌ Á¸ÀçÇÒ °æ¿ì »èÁ¦
+        # upload fileì´ ì¡´ì¬í•  ê²½ìš° ì‚­ì œ
         if ($list['bofile'] && file_exists("./data/$table/{$upload['dir']}/{$list['bcfile']}/{$list['bofile']}")) {
           unlink("./data/$table/{$upload['dir']}/{$list['bcfile']}/{$list['bofile']}");
           rmdir("./data/$table/{$upload['dir']}/{$list['bcfile']}");
@@ -361,7 +361,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     $nameChk = array("name","text");
     for($bc=0;$bc<2;$bc++) {
       if(!$atc[$nameChk[$bc]] || preg_match("/^$blankChk$/i",trim($atc[$nameChk[$bc]]))) {
-        $langs['act_in'] = preg_replace("/Á¦¸ñ,/i","",$langs['act_in']);
+        $langs['act_in'] = preg_replace("/ì œëª©,/i","",$langs['act_in']);
         print_error($langs['act_in'],250,150,1);
       }
     }
@@ -369,10 +369,10 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if (!empty($compare['name']) && eregi($compare['name'],$atc['name'])) $cmp['name'] = 1;
     if (!empty($ccompare['name']) && eregi($ccompare['name'],$atc['name'])) $ccmp['name'] = 1;
 
-    # °ü¸®ÀÚ »çÄª Ã¼Å©
+    # ê´€ë¦¬ì ì‚¬ì¹­ ì²´í¬
     if((!$board['mode'] || $board['mode'] == 4) && $board['super'] != 1 && !$board['adm']) {
 
-      # ÀüÃ¼ °ü¸®ÀÚ ÆĞ½º¿öµå
+      # ì „ì²´ ê´€ë¦¬ì íŒ¨ìŠ¤ì›Œë“œ
       $result = sql_query('SELECT passwd FROM userdb WHERE position = 1', $c);
       $r['su'] = sql_result($result,0,'passwd',$c);
       sql_free_result($result,$c);
@@ -387,7 +387,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
         $arrayadm = explode(";",$board['ad']);
 
         for($k=0;$k<sizeof($arrayadm);$k++) {
-          # °Ô½ÃÆÇ °ü¸®ÀÚ ÆĞ½º¿öµå
+          # ê²Œì‹œíŒ ê´€ë¦¬ì íŒ¨ìŠ¤ì›Œë“œ
           $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$k]'",$c);
           $r['ad'] = sql_result($result,0,'passwd',$c);
           sql_free_result($result,$c);
@@ -418,7 +418,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
   function comment_del($c,$table,$no,$cid,$pass) {
     global $jsboard, $langs, $board;
 
-    # ¾îµå¹Î ¸ğµå°¡ ¾Æ´Ò °æ¿ì ÆĞ½º¿öµå ÀÎÁõ
+    # ì–´ë“œë¯¼ ëª¨ë“œê°€ ì•„ë‹ ê²½ìš° íŒ¨ìŠ¤ì›Œë“œ ì¸ì¦
     if($board['super'] != 1 && !$board['adm']) {
       $admchk = check_passwd($table,$cid,trim($pass));
       if(!$admchk) print_error($langs['act_pw'],250,150,1);
@@ -429,24 +429,24 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     sql_query($sql,$c);
   }
 
-  # °Ô½Ã¹° °Ë»ç ÇÔ¼ö
+  # ê²Œì‹œë¬¼ ê²€ì‚¬ í•¨ìˆ˜
   #
-  # trim - ¹®ÀÚ¿­ ¾çÂÊÀÇ °ø¹é ¹®ÀÚ¸¦ ¾ø¾Ú
+  # trim - ë¬¸ìì—´ ì–‘ìª½ì˜ ê³µë°± ë¬¸ìë¥¼ ì—†ì•°
   #        http://www.php.net/manual/function.trim.php
-  # chop - ¹®ÀÚ¿­ µÚÂÊÀÇ °ø¹é ¹®ÀÚ¸¦ ¾ø¾Ú
+  # chop - ë¬¸ìì—´ ë’¤ìª½ì˜ ê³µë°± ë¬¸ìë¥¼ ì—†ì•°
   #        http://www.php.net/manual/function.chop.php
   function article_check(&$c, $table, $atc) {
-    # °Ë»ö µî °ü·Ã º¯¼ö (CGI °ª)
+    # ê²€ìƒ‰ ë“± ê´€ë ¨ ë³€ìˆ˜ (CGI ê°’)
     global $jsboard, $compare, $o, $ccompare, $langs, $rmail;
     global $board, $passwd, $agent;
 
-    # spam µî·Ï±â Ã¼Å©
+    # spam ë“±ë¡ê¸° ì²´í¬
     check_spamer($atc);
 
     # location check
     check_location(1);
 
-    # ÀÌ¸§, Á¦¸ñ, ³»¿ëÀÇ °ø¹éÀ» ¾ø¾Ú
+    # ì´ë¦„, ì œëª©, ë‚´ìš©ì˜ ê³µë°±ì„ ì—†ì•°
     $atc['name']  = trim($atc['name']);
     $atc['title'] = trim($atc['title']);
     $atc['text']  = chop($atc['text']);
@@ -472,7 +472,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if($atc['url']) $atc['url'] = check_url($atc['url']);
     if($atc['email']) $atc['email'] = check_email($atc['email'],1);
 
-    # ¾²±â,´äÀå ¸ğµå¿¡¼­ html »ç¿ë½Ã table tag °Ë»ç
+    # ì“°ê¸°,ë‹µì¥ ëª¨ë“œì—ì„œ html ì‚¬ìš©ì‹œ table tag ê²€ì‚¬
     if(($o['at'] == "write" || $o['at'] == "reply" || $o['at'] == "edit") && $atc['html'] == 1) {
       check_htmltable($atc['text']);
       check_iframe($atc['text']);
@@ -491,11 +491,11 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     if (eregi($ccompare['name'],$atc['name'])) $ccmp['name'] = 1;
     if (eregi($ccompare['email'],$atc['email'])) $ccmp['email'] = 1;
 
-    # °ü¸®ÀÚ »çÄª Ã¼Å©
+    # ê´€ë¦¬ì ì‚¬ì¹­ ì²´í¬
     if((!$board['mode'] || $board['mode'] == 4) && $board['super'] != 1 && !$board['adm']) {
       if($o['at'] == "edit") $atc['passwd'] = $passwd;
 
-      # ÀüÃ¼ °ü¸®ÀÚ ÆĞ½º¿öµå
+      # ì „ì²´ ê´€ë¦¬ì íŒ¨ìŠ¤ì›Œë“œ
       $result = sql_query('SELECT passwd FROM userdb WHERE position = 1', $c);
       $r['su'] = sql_result($result,0,'passwd',$c);
       sql_free_result($result,$c);
@@ -509,7 +509,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       if (($ccmp['name'] || $ccmp['email']) && $notsuper) {
         $arrayadm = explode(";",$board['ad']);
         for($k=0;$k<sizeof($arrayadm);$k++) {
-          # °Ô½ÃÆÇ °ü¸®ÀÚ ÆĞ½º¿öµå
+          # ê²Œì‹œíŒ ê´€ë¦¬ì íŒ¨ìŠ¤ì›Œë“œ
           $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$k]'",$c);
           $r['ad'] = sql_result($result,0,'passwd',$c);
           sql_free_result($result,$c);
@@ -523,21 +523,21 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       }
     }
 
-    # ½ºÆÔ Ã¼Å©
+    # ìŠ¤íŒ¸ ì²´í¬
     if($o['at'] == "write" || $o['at'] == "reply") check_captcha ($atc);
     if(check_spam($atc['text'])) print_error($langs['act_s'] . $GLOBALS['spamstr'],250,150,1);
     if(check_spam($atc['title'])) print_error($langs['act_s'] . $GLOBALS['spamstr'],250,150,1);
 
-    # ¸ŞÀÏ·Î º¸³¾ º¯¼ö ¹ŞÀ½
+    # ë©”ì¼ë¡œ ë³´ë‚¼ ë³€ìˆ˜ ë°›ìŒ
     $atc['rtname'] = $atc['name'];
     $atc['rtitle'] = $atc['title'];
 
-    # ÀÌ¸§, Á¦¸ñÀÇ HTML ÄÚµå ¹®ÀÚ¸¦ Ä¡È¯ÇÔ
-    # ugly_han() -> IE »ç¿ë½Ã¿¡ ÇÑ±Û ±úÁö´Â °ÍÀ» º¹¿øÇÔ
-    $atc['name']  = ugly_han(convspecialchars($atc['name']));
-    $atc['title'] = ugly_han(convspecialchars($atc['title']));
+    # ì´ë¦„, ì œëª©ì˜ HTML ì½”ë“œ ë¬¸ìë¥¼ ì¹˜í™˜í•¨
+    # ugly_han() -> IE ì‚¬ìš©ì‹œì— í•œê¸€ ê¹¨ì§€ëŠ” ê²ƒì„ ë³µì›í•¨
+    $atc['name']  = ugly_han(htmlspecialchars($atc['name']));
+    $atc['title'] = ugly_han(htmlspecialchars($atc['title']));
 
-    # ¸¶Áö¸·À¸·Î ¿Ã¶ó¿Â ±ÛÀÇ Á¤º¸¸¦ °¡Á®¿È (Áßº¹ Åõ°í °Ë»ç¿ë)
+    # ë§ˆì§€ë§‰ìœ¼ë¡œ ì˜¬ë¼ì˜¨ ê¸€ì˜ ì •ë³´ë¥¼ ê°€ì ¸ì˜´ (ì¤‘ë³µ íˆ¬ê³  ê²€ì‚¬ìš©)
     $result = sql_query("SELECT * FROM $table ORDER BY no DESC LIMIT 0, 1",$c);
     $list   = sql_fetch_array($result,$c);
     sql_free_result($result,$c);
@@ -549,7 +549,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       $atc['url'] == $list['url'] &&
       $atc['html'] == $list['html']) {
 
-      # ¼öÁ¤ ¸ğµå½Ã, ¼öÁ¤µÈ »çÇ×Àº ¾øÀ¸³ª, Ã·ºÎÆÄÀÏÀÇ º¯È­°¡ ÀÖÀ» °æ¿ì ¼öÁ¤ °¡´ÉÇÔ.
+      # ìˆ˜ì • ëª¨ë“œì‹œ, ìˆ˜ì •ëœ ì‚¬í•­ì€ ì—†ìœ¼ë‚˜, ì²¨ë¶€íŒŒì¼ì˜ ë³€í™”ê°€ ìˆì„ ê²½ìš° ìˆ˜ì • ê°€ëŠ¥í•¨.
       if ($o['at'] == 'edit') {
         if ($atc['fdel']) {
           $chkpass = 1;
@@ -573,7 +573,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     return $atc;
   }
 
-  # ÄíÅ° ¼³Á¤ ÇÔ¼ö
+  # ì¿ í‚¤ ì„¤ì • í•¨ìˆ˜
   function set_cookie($atc,$comment=0) {
     global $board,$agent;
     $month = 60 * 60 * 24 * $board['cookie'];
@@ -619,7 +619,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
 } elseif ($o['at'] == "dn") {
   include "include/header.php";
 
-  # ÇØ´ç º¯¼ö¿¡ meta character °¡ Á¸ÀçÇÏ´ÂÁö Ã¼Å©
+  # í•´ë‹¹ ë³€ìˆ˜ì— meta character ê°€ ì¡´ì¬í•˜ëŠ”ì§€ ì²´í¬
   meta_char_check($dn['tb'],0,1);
   meta_char_check($dn['cd']);
   meta_char_check($upload['dir']);

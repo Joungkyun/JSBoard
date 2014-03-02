@@ -1,163 +1,163 @@
 JSBoard v2.0 Upgrade document
-$Id: README.OPERATE,v 1.12 2014-02-26 17:50:18 oops Exp $
+$Id: README.OPERATE,v 1.13 2014-03-02 17:11:31 oops Exp $
 
-2001.12.19 ±èÁ¤±Õ <http://www.oops.org>
+2001.12.19 ê¹€ì •ê·  <http://oops.org>
 
 
-¸ñÂ÷
+ëª©ì°¨
 
-0. À¯Àú °¡ÀÔ
-1. ÀüÃ¼ °ü¸®ÀÚ ¸ðµå
-2. °Ô½ÃÆÇ °ü¸®ÀÚ ¸ðµå
-3. ·Î±×ÀÎ ¸ðµå
-4. È°¿ë
-  4.1 °Ô½ÃÆÇ ¸µÅ©ÇÏ±â
-  4.2 °Ô½ÃÆÇ µðÀÚÀÎ ºÙÀÌ±â
-  4.3 ÀüÃ¼ °ü¸®ÀÚ ¸µÅ©ÇÏ±â
-  4.4 ·Î±×ÀÎÃ¢ ¸¸µé±â
-  4.5 ·Î±×¾Æ¿ô ¸µÅ© ¸¸µé±â
-5. ¿ÜºÎÀÇ È¸¿ø DB »ç¿ëÇÏ±â
-  5.1 jsboard ¼³Á¤
-  5.2 ¿ÜºÎÀÇ login °ú ¿¬µ¿ÇÏ±â
-  5.3 ·Î±×¾Æ¿ô ¿¬µ¿ÇÏ±â
+0. ìœ ì € ê°€ìž…
+1. ì „ì²´ ê´€ë¦¬ìž ëª¨ë“œ
+2. ê²Œì‹œíŒ ê´€ë¦¬ìž ëª¨ë“œ
+3. ë¡œê·¸ì¸ ëª¨ë“œ
+4. í™œìš©
+  4.1 ê²Œì‹œíŒ ë§í¬í•˜ê¸°
+  4.2 ê²Œì‹œíŒ ë””ìžì¸ ë¶™ì´ê¸°
+  4.3 ì „ì²´ ê´€ë¦¬ìž ë§í¬í•˜ê¸°
+  4.4 ë¡œê·¸ì¸ì°½ ë§Œë“¤ê¸°
+  4.5 ë¡œê·¸ì•„ì›ƒ ë§í¬ ë§Œë“¤ê¸°
+5. ì™¸ë¶€ì˜ íšŒì› DB ì‚¬ìš©í•˜ê¸°
+  5.1 jsboard ì„¤ì •
+  5.2 ì™¸ë¶€ì˜ login ê³¼ ì—°ë™í•˜ê¸°
+  5.3 ë¡œê·¸ì•„ì›ƒ ì—°ë™í•˜ê¸°
 
 
 ###
-¿ÜºÎÀÇ È¸¿ø DB ¸¦ »ç¿ëÇÒ °æ¿ì¿¡´Â 0,3 ¹øÀº ¹«½ÃÇÏ°í ¹Ù·Î 5¹ø Ç×¸ñÀ» º¸µµ·Ï ÇÑ´Ù
+ì™¸ë¶€ì˜ íšŒì› DB ë¥¼ ì‚¬ìš©í•  ê²½ìš°ì—ëŠ” 0,3 ë²ˆì€ ë¬´ì‹œí•˜ê³  ë°”ë¡œ 5ë²ˆ í•­ëª©ì„ ë³´ë„ë¡ í•œë‹¤
 ###
 
-0. À¯Àú °¡ÀÔ
+0. ìœ ì € ê°€ìž…
 
-JSBoard ÀÇ ·Î±×ÀÎ ±â´ÉÀ» ÀÌ¿ëÇÏ±â À§ÇÑ À¯Àú °¡ÀÔ±â´ÉÀÌ´Ù.
-http://domain.com/jsboard/regist.php ·Î Á¢±ÙÀ» ÇÏ¸é µÈ´Ù.
+JSBoard ì˜ ë¡œê·¸ì¸ ê¸°ëŠ¥ì„ ì´ìš©í•˜ê¸° ìœ„í•œ ìœ ì € ê°€ìž…ê¸°ëŠ¥ì´ë‹¤.
+http://domain.com/jsboard/regist.php ë¡œ ì ‘ê·¼ì„ í•˜ë©´ ëœë‹¤.
 
-´Ü ÁÖÀÇ ÇÒ°ÍÀº ·Î±×ÀÎ ¸ðµå¸¦ »ç¿ëÇÏÁö ¾Ê´õ¶óµµ °Ô½ÃÆÇ °ü¸®ÀÚ ±ÇÇÑÀ» ´Ù¸¥ »ç¶÷¿¡°Ô
-ÁÖ±â À§ÇØ¼­´Â À¯Àú °¡ÀÔÀÌ µÇ¾î ÀÖ¾î¾ß ÇÑ´Ù. ÇØ´ç °Ô½ÃÆÇ ¼³Á¤¿¡¼­ ÁöÁ¤µÈ À¯Àú ID¸¦
-userdb ¿¡¼­ Ã£¾Æ¼­ ºñ±³ÇÏ±â ¶§¹®¿¡ ¿©±â¼­ µî·ÏÀÌ µÇ¾î ÀÖ¾î¾ß ÇÑ´Ù.
-
-
-1. ÀüÃ¼ °ü¸®ÀÚ ¸ðµå
-
-ÀüÃ¼ °ü¸®ÀÚ´Â ¾î¶² ·Î±×ÀÎ ¸ðµå¿¡ »ó°ü¾øÀÌ ¸ðµç±ÇÇÑÀ» Çà»çÇÒ¼ö ÀÖ´Ù. ½ÉÁö¾î´Â ¼öÁ¤
-»èÁ¦¿¡ ÀÎÁõÀ» ÇÊ¿ä·Î ÇÏÁö ¾Ê´Â´Ù.  ¶ÇÇÑ ÆÐ½º¿öµå¸¦ ¿ä±¸ÇÏ´Â °æ¿ì ¾îµå¹Î ·Î±×ÀÎ »ó
-ÅÂ°¡ ¾Æ´Ï¶óµµ ÀüÃ¼ °ü¸®ÀÚ ÆÐ½º¿öµå³ª ÇØ´ç °Ô½ÃÆÇ °ü¸®ÀÚÀÇ ÆÐ½º¿öµå·Î¸¸À¸·Îµµ ¼öÁ¤
-»èÁ¦°¡ °¡´ÉÇÏ´Ù.
-
-ÀüÃ¼ °ü¸®ÀÚÀÇ ¼³Á¤Àº Ã³À½ ¼³Ä¡¸¦ ÇÒ¶§ Installer ¸¦ »ç¿ëÇÏ¿´´Ù¸é ÀÓÀÇÀÇ À¯Àú ID ·Î
-·Î±×ÀÎÀ» ÇÒ¼ö ÀÖÀ¸³ª ¼öµ¿¼³Ä¡¸¦ ÇÏ¿´´Ù¸é Æ¯º°ÇÏ°Ô ¼öÁ¤ÇÏÁö ¾Ê´ÂÇÑ admin ÀÌ¶ó´Â ID
-·Î »ý¼ºÀÌ µÇ¾úÀ» °ÍÀÌ´Ù.
-
-ÀüÃ¼ °ü¸®ÀÚ ¼³Á¤À» ÇÏ±â À§ÇØ¼­´Â   http://domian.com/jsboard/login.php?type=admin
-À¸·Î ·Î±×ÀÎÀ» ÇÑ´Ù. ¾î¶² °æ¿ì ÆäÀÌÁö¸¦ ¿­¼ö ¾ø½À´Ï´Ù  ¶ó´Â ¸Þ¼¼Áö°¡ ³ª¿À´Â °æ¿ì°¡
-ÀÖ´Âµ¥ ÀÌ¶§¿£ ÆäÀÌÁö¸¦ ÇÑ¹ø ¸®·ÎµåÇØ ÁÖ¸é µé¾î°¡Áø´Ù.
-
-¶Ç´Â °ü¸®ÀÚ ¸ðµå·Î ÀÌ¹Ì ·Î±×ÀÎÀ» ÇØ ÀÖ´Â »óÅÂ¶ó¸é http:/domain.com/jsboard/admin/
-À¸·Î Á¢±ÙÀ» ÇÏ¸é µÈ´Ù.
-
-¾îµå¹Î¿¡ ·Î±×ÀÎÀ» ÇÏ¸é ´ÙÀ½°ú °°Àº È­¸éÀ» º¼¼ö°¡ ÀÖ´Ù.
-
-¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¨¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¨¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¨¦¡¦¡¦¡¦¤
-¦¢                    ¦¢         °Ô½Ã¹° µî·Ï¼ö      ¦¢                  ¦¢      ¦¢
-¦¢    °Ô½ÃÆÇ ÀÌ¸§     ¦§¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¨¦¡¦¡¦¡¦¡¦¡¦¡¦©      ¿É¼Ç        ¦¢ Á¦°Å ¦¢
-¦¢                    ¦¢    ¿À´Ã      ¦¢    ÇÕ°è    ¦¢                  ¦¢      ¦¢
-¦§¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦©
-¦¢ test               ¦¢          4   ¦¢         21 ¦¢[º¸±â][¼³Á¤][Åë°è]¦¢[»èÁ¦]¦¢
-¦§¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦©
-¦¢ test1              ¦¢          2   ¦¢         66 ¦¢[º¸±â][¼³Á¤][Åë°è]¦¢[»èÁ¦]¦¢
-¦§¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦©
-¦¢ test2              ¦¢          3   ¦¢         14 ¦¢[º¸±â][¼³Á¤][Åë°è]¦¢[»èÁ¦]¦¢
-¦§¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦ª¦¡¦¡¦¡¦©
-¦¢  ÇÕ°è [ ÀüÃ¼ ]     ¦¢      9 [ 13 ]¦¢  101 [129] ¦¢[ À¯Àú °ü¸® ] [ ·Î±×¾Æ¿ô ]¦¢
-¦§¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦ª¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦ª¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦©
-¦¢ °Ô½ÃÆÇ »ý¼º :  [                         ] µî·Ï  ¦¢     OOPS Development     ¦¢
-¦§¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦©                          ¦¢
-¦¢ °Ô½ÃÆÇ »èÁ¦ :  [                         ] »èÁ¦  ¦¢       Organization       ¦¢
-¦§¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦©
-¦¢              1 2 3 4 5 6 7 8 9 10                ¦¢     [ Àü¿ªº¯¼ö ¼³Á¤ ]    ¦¢
-¦§¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¨¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦ª¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦©
-¦¢      ¾ËÆÄºªº°      ¦¢   A B C D E F G H I J K L M N O P Q R S T U V W X Y Z  ¦¢
-¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦ª¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥
-
-ÇÑ±ÛÀ» ÀÐÀ»ÁÙ ¾Ë¸é ÇöÀç º¸ÀÌ´Â ÆäÀÌÁö¿¡¼­´Â º° ¾î·Á¿òÀÌ ¾øÀ»ÁÙ ¾È´Ù. ÀÏ´Ü Á¦ÀÏ ÇÏ
-´ÜÀÇ ¾ËÆÄºªº°ÀÌ¶ó´Â °ÍÀº °Ô½ÃÆÇÀÌ¸§À» ¾ËÆÄºª º°·Î ºÐ·ù¸¦ ÇÏ¿© º¸¿©ÁÖ°Ô µÈ´Ù. ¾ËÆÄ
-ºªº° À§ÀÇ 1-10±îÁöÀÇ ¼ýÀÚ´Â °Ô½ÃÆÇÀÌ ¸¹À» °æ¿ì¿¡ ÆäÀÌÁö º°·Î ºÐ¸®¸¦ ÇØ¼­ º¸¿©ÁÖ°Ô
-µÇ´Â °ÍÀÌ´Ù.
-
-ÇÕ°è¿¡¼­  9 [13] °ú °°ÀÌ Ãâ·ÂµÇ´Â ÀÌÀ¯´Â ÀÌ ¾îµå¹Î °ü¸®ÀÚ¿¡¼­´Â JSBoard ¿¡¼­ »ç¿ë
-ÇÏ´Â Å×ÀÌºí¸¸ º¸¿©ÁÖ±â ¶§¹®¿¡ ¿©±â¼­ ¾Èº¸ÀÌ´Â °ÍµéÁß ³ª¸ÓÁö´Â  [ ] ¿¡ ÇÕÃÄÁ®¼­ ³ª
-¿À°Ô µÇ´Â °ÍÀÌ´Ù.
-
-¿É¼Ç¿¡¼­´Â  [º¸±â] ´Â ÇØ´ç °Ô½ÃÆÇÀ» Á¢±ÙÇÑ´Ù. [¼³Á¤] Àº ÇØ´ç °Ô½ÃÆÇÀÇ °ü¸®ÀÚ ¸ðµå
-·Î µé¾î°¡°Ô µÈ´Ù. [Åë°è] ´Â ÇØ´ç °Ô½ÃÆÇÀÇ Åë°è¸¦ º¸¿©ÁÖ°Ô µÇ´Â °ÍÀÌ´Ù.
-
-´ÙÀ½ Áß¾ÓºÎºÐÀÇ ¿ìÃø¿¡ [ À¯Àú°ü¸® ] ´Â JSBoard ÀÇ À¯ÀúµéÀ» °ü¸®¸¦ ÇÑ´Ù. À¯Àú °ü¸®
-¿¡¼­´Â ÇØ´ç À¯ÀúÀÇ ÆÐ½º¿öµå, ÀÌ¸§, ÀÌ¸ÞÀÏ, È¨ÆäÀÌÁö¸¦ º¯°æÇÒ¼ö ÀÖ´Ù. ID ´Â ¼öÁ¤ÀÌ
-ºÒ°¡´É ÇÏ´Ù.
-
-[ ·Î±×¾Æ¿ô ] Àº ¸» ±×´ë·Î °ü¸®ÀÚ¸¦ Á¾·á ÇÏ´Âµ¥ »ç¿ëÇÑ´Ù. »ç¿ëÈÄ¿¡´Â ²À ·Î±×¾Æ¿ôÀ»
-ÇØ ÁÖ´Â °ÍÀÌ ÁÁ´Ù.
-
-[ Àü¿ªº¯¼ö ¼³Á¤ ] Àº ÀÌ ¹®¼­°¡ ÀÖ´Â µð·ºÅä¸®ÀÇ README.CONFIG ¸¦ Âü°íÇÏµµ·Ï ÇÑ´Ù.
+ë‹¨ ì£¼ì˜ í• ê²ƒì€ ë¡œê·¸ì¸ ëª¨ë“œë¥¼ ì‚¬ìš©í•˜ì§€ ì•Šë”ë¼ë„ ê²Œì‹œíŒ ê´€ë¦¬ìž ê¶Œí•œì„ ë‹¤ë¥¸ ì‚¬ëžŒì—ê²Œ
+ì£¼ê¸° ìœ„í•´ì„œëŠ” ìœ ì € ê°€ìž…ì´ ë˜ì–´ ìžˆì–´ì•¼ í•œë‹¤. í•´ë‹¹ ê²Œì‹œíŒ ì„¤ì •ì—ì„œ ì§€ì •ëœ ìœ ì € IDë¥¼
+userdb ì—ì„œ ì°¾ì•„ì„œ ë¹„êµí•˜ê¸° ë•Œë¬¸ì— ì—¬ê¸°ì„œ ë“±ë¡ì´ ë˜ì–´ ìžˆì–´ì•¼ í•œë‹¤.
 
 
+1. ì „ì²´ ê´€ë¦¬ìž ëª¨ë“œ
 
+ì „ì²´ ê´€ë¦¬ìžëŠ” ì–´ë–¤ ë¡œê·¸ì¸ ëª¨ë“œì— ìƒê´€ì—†ì´ ëª¨ë“ ê¶Œí•œì„ í–‰ì‚¬í• ìˆ˜ ìžˆë‹¤. ì‹¬ì§€ì–´ëŠ” ìˆ˜ì •
+ì‚­ì œì— ì¸ì¦ì„ í•„ìš”ë¡œ í•˜ì§€ ì•ŠëŠ”ë‹¤.  ë˜í•œ íŒ¨ìŠ¤ì›Œë“œë¥¼ ìš”êµ¬í•˜ëŠ” ê²½ìš° ì–´ë“œë¯¼ ë¡œê·¸ì¸ ìƒ
+íƒœê°€ ì•„ë‹ˆë¼ë„ ì „ì²´ ê´€ë¦¬ìž íŒ¨ìŠ¤ì›Œë“œë‚˜ í•´ë‹¹ ê²Œì‹œíŒ ê´€ë¦¬ìžì˜ íŒ¨ìŠ¤ì›Œë“œë¡œë§Œìœ¼ë¡œë„ ìˆ˜ì •
+ì‚­ì œê°€ ê°€ëŠ¥í•˜ë‹¤.
 
-2. °Ô½ÃÆÇ °ü¸®ÀÚ ¸ðµå
+ì „ì²´ ê´€ë¦¬ìžì˜ ì„¤ì •ì€ ì²˜ìŒ ì„¤ì¹˜ë¥¼ í• ë•Œ Installer ë¥¼ ì‚¬ìš©í•˜ì˜€ë‹¤ë©´ ìž„ì˜ì˜ ìœ ì € ID ë¡œ
+ë¡œê·¸ì¸ì„ í• ìˆ˜ ìžˆìœ¼ë‚˜ ìˆ˜ë™ì„¤ì¹˜ë¥¼ í•˜ì˜€ë‹¤ë©´ íŠ¹ë³„í•˜ê²Œ ìˆ˜ì •í•˜ì§€ ì•ŠëŠ”í•œ admin ì´ë¼ëŠ” ID
+ë¡œ ìƒì„±ì´ ë˜ì—ˆì„ ê²ƒì´ë‹¤.
 
-ÀüÃ¼ °ü¸®ÀÚ ¶Ç´Â °¢ °Ô½ÃÆÇ °ü¸®ÀÚ ¸ðµå·Î ·Î±×ÀÎÀ» ÇßÀ» °æ¿ì °Ô½ÃÆÇ¿¡ admin ¸µÅ©°¡
-³ªÅ¸³ª°Ô µÈ´Ù. ÀÌ°÷À¸·Î µé¾î°¡ ¼³Á¤À» ÇÏ¸é µÈ´Ù. ¶Ç´Â Á÷Àû data/*/config.php¸¦ ¼ö
-Á¤À» ÇÒ¼ö ÀÖ´Ù. ÀÌ¶§¿¡´Â README.CONFIG ¸¦ ÂüÁ¶ÇÏ¸é µÇ°Ú´Ù.
+ì „ì²´ ê´€ë¦¬ìž ì„¤ì •ì„ í•˜ê¸° ìœ„í•´ì„œëŠ”   http://domian.com/jsboard/login.php?type=admin
+ìœ¼ë¡œ ë¡œê·¸ì¸ì„ í•œë‹¤. ì–´ë–¤ ê²½ìš° íŽ˜ì´ì§€ë¥¼ ì—´ìˆ˜ ì—†ìŠµë‹ˆë‹¤  ë¼ëŠ” ë©”ì„¸ì§€ê°€ ë‚˜ì˜¤ëŠ” ê²½ìš°ê°€
+ìžˆëŠ”ë° ì´ë•Œì—” íŽ˜ì´ì§€ë¥¼ í•œë²ˆ ë¦¬ë¡œë“œí•´ ì£¼ë©´ ë“¤ì–´ê°€ì§„ë‹¤.
+
+ë˜ëŠ” ê´€ë¦¬ìž ëª¨ë“œë¡œ ì´ë¯¸ ë¡œê·¸ì¸ì„ í•´ ìžˆëŠ” ìƒíƒœë¼ë©´ http:/domain.com/jsboard/admin/
+ìœ¼ë¡œ ì ‘ê·¼ì„ í•˜ë©´ ëœë‹¤.
+
+ì–´ë“œë¯¼ì— ë¡œê·¸ì¸ì„ í•˜ë©´ ë‹¤ìŒê³¼ ê°™ì€ í™”ë©´ì„ ë³¼ìˆ˜ê°€ ìžˆë‹¤.
+
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”
+â”‚                    â”‚         ê²Œì‹œë¬¼ ë“±ë¡ìˆ˜      â”‚                  â”‚      â”‚
+â”‚    ê²Œì‹œíŒ ì´ë¦„     â”œâ”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”¤      ì˜µì…˜        â”‚ ì œê±° â”‚
+â”‚                    â”‚    ì˜¤ëŠ˜      â”‚    í•©ê³„    â”‚                  â”‚      â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”¤
+â”‚ test               â”‚          4   â”‚         21 â”‚[ë³´ê¸°][ì„¤ì •][í†µê³„]â”‚[ì‚­ì œ]â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”¤
+â”‚ test1              â”‚          2   â”‚         66 â”‚[ë³´ê¸°][ì„¤ì •][í†µê³„]â”‚[ì‚­ì œ]â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”¤
+â”‚ test2              â”‚          3   â”‚         14 â”‚[ë³´ê¸°][ì„¤ì •][í†µê³„]â”‚[ì‚­ì œ]â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”¤
+â”‚  í•©ê³„ [ ì „ì²´ ]     â”‚      9 [ 13 ]â”‚  101 [129] â”‚[ ìœ ì € ê´€ë¦¬ ] [ ë¡œê·¸ì•„ì›ƒ ]â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ ê²Œì‹œíŒ ìƒì„± :  [                         ] ë“±ë¡  â”‚     OOPS Development     â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤                          â”‚
+â”‚ ê²Œì‹œíŒ ì‚­ì œ :  [                         ] ì‚­ì œ  â”‚       Organization       â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚              1 2 3 4 5 6 7 8 9 10                â”‚     [ ì „ì—­ë³€ìˆ˜ ì„¤ì • ]    â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚      ì•ŒíŒŒë²³ë³„      â”‚   A B C D E F G H I J K L M N O P Q R S T U V W X Y Z  â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+í•œê¸€ì„ ì½ì„ì¤„ ì•Œë©´ í˜„ìž¬ ë³´ì´ëŠ” íŽ˜ì´ì§€ì—ì„œëŠ” ë³„ ì–´ë ¤ì›€ì´ ì—†ì„ì¤„ ì•ˆë‹¤. ì¼ë‹¨ ì œì¼ í•˜
+ë‹¨ì˜ ì•ŒíŒŒë²³ë³„ì´ë¼ëŠ” ê²ƒì€ ê²Œì‹œíŒì´ë¦„ì„ ì•ŒíŒŒë²³ ë³„ë¡œ ë¶„ë¥˜ë¥¼ í•˜ì—¬ ë³´ì—¬ì£¼ê²Œ ëœë‹¤. ì•ŒíŒŒ
+ë²³ë³„ ìœ„ì˜ 1-10ê¹Œì§€ì˜ ìˆ«ìžëŠ” ê²Œì‹œíŒì´ ë§Žì„ ê²½ìš°ì— íŽ˜ì´ì§€ ë³„ë¡œ ë¶„ë¦¬ë¥¼ í•´ì„œ ë³´ì—¬ì£¼ê²Œ
+ë˜ëŠ” ê²ƒì´ë‹¤.
+
+í•©ê³„ì—ì„œ  9 [13] ê³¼ ê°™ì´ ì¶œë ¥ë˜ëŠ” ì´ìœ ëŠ” ì´ ì–´ë“œë¯¼ ê´€ë¦¬ìžì—ì„œëŠ” JSBoard ì—ì„œ ì‚¬ìš©
+í•˜ëŠ” í…Œì´ë¸”ë§Œ ë³´ì—¬ì£¼ê¸° ë•Œë¬¸ì— ì—¬ê¸°ì„œ ì•ˆë³´ì´ëŠ” ê²ƒë“¤ì¤‘ ë‚˜ë¨¸ì§€ëŠ”  [ ] ì— í•©ì³ì ¸ì„œ ë‚˜
+ì˜¤ê²Œ ë˜ëŠ” ê²ƒì´ë‹¤.
+
+ì˜µì…˜ì—ì„œëŠ”  [ë³´ê¸°] ëŠ” í•´ë‹¹ ê²Œì‹œíŒì„ ì ‘ê·¼í•œë‹¤. [ì„¤ì •] ì€ í•´ë‹¹ ê²Œì‹œíŒì˜ ê´€ë¦¬ìž ëª¨ë“œ
+ë¡œ ë“¤ì–´ê°€ê²Œ ëœë‹¤. [í†µê³„] ëŠ” í•´ë‹¹ ê²Œì‹œíŒì˜ í†µê³„ë¥¼ ë³´ì—¬ì£¼ê²Œ ë˜ëŠ” ê²ƒì´ë‹¤.
+
+ë‹¤ìŒ ì¤‘ì•™ë¶€ë¶„ì˜ ìš°ì¸¡ì— [ ìœ ì €ê´€ë¦¬ ] ëŠ” JSBoard ì˜ ìœ ì €ë“¤ì„ ê´€ë¦¬ë¥¼ í•œë‹¤. ìœ ì € ê´€ë¦¬
+ì—ì„œëŠ” í•´ë‹¹ ìœ ì €ì˜ íŒ¨ìŠ¤ì›Œë“œ, ì´ë¦„, ì´ë©”ì¼, í™ˆíŽ˜ì´ì§€ë¥¼ ë³€ê²½í• ìˆ˜ ìžˆë‹¤. ID ëŠ” ìˆ˜ì •ì´
+ë¶ˆê°€ëŠ¥ í•˜ë‹¤.
+
+[ ë¡œê·¸ì•„ì›ƒ ] ì€ ë§ ê·¸ëŒ€ë¡œ ê´€ë¦¬ìžë¥¼ ì¢…ë£Œ í•˜ëŠ”ë° ì‚¬ìš©í•œë‹¤. ì‚¬ìš©í›„ì—ëŠ” ê¼­ ë¡œê·¸ì•„ì›ƒì„
+í•´ ì£¼ëŠ” ê²ƒì´ ì¢‹ë‹¤.
+
+[ ì „ì—­ë³€ìˆ˜ ì„¤ì • ] ì€ ì´ ë¬¸ì„œê°€ ìžˆëŠ” ë””ë ‰í† ë¦¬ì˜ README.CONFIG ë¥¼ ì°¸ê³ í•˜ë„ë¡ í•œë‹¤.
 
 
 
-3. ·Î±×ÀÎ ¸ðµå
 
-JSBoard ÀÇ ·Î±×ÀÎ ¸ðµå´Â ÃÑ 7°¡Áö ´Ü°è¸¦ °¡Áø´Ù. °¢ ´Ü°èÀÇ ¼³Á¤Àº ´ÙÀ½°ú °°´Ù. ¸ð
-µå 6 Àº ¾ÆÁ÷ Áö¿øÇÏÁö ¾ÊÀ¸¸ç °ð Ãß°¡ÇÒ ¿¹Á¤ÀÌ´Ù. ÇöÀç ±¸ÇöÀº 0-5 ±îÁö ÀÌ´Ù.
+2. ê²Œì‹œíŒ ê´€ë¦¬ìž ëª¨ë“œ
 
-0 : °ø°³ °Ô½ÃÆÇ
-    ·Î±×ÀÎÀ» ¾ÈÇØµµ »ó°üÀÌ ¾øÁö¸¸ admin ·Î±×ÀÎÀ» ÇßÀ» °æ¿ì¿¡´Â ÀÎÁõÀÌ ÇÊ¿ä¾øÀ½.
-
-1 : °ø°³ °Ô½ÃÆÇ(°øÁöÀü¿ë)
-    admin ÀÎÁõÀ» ÇÏÁö ¾Ê´Â ÇÑ ·Î±×ÀÎÀ» ÇÏµç ¸»µç read ¸¸ °¡´ÉÇÔ. admin ÀÇ °æ¿ì ¸ð
-    µç ±â´ÉÀ» »ç¿ë°¡´É
-
-2 : ·Î±×ÀÎ °Ô½ÃÆÇ
-    ·Î±×ÀÎ½Ã ¸ðµç ±â´É »ç¿ë°¡´É. ¼öÁ¤, »èÁ¦¿¡ ÇÑÇØ¼­´Â ÀÚ½ÅÀÇ ±Û¸¸ °¡´É (admin ÀÇ
-    °æ¿ì Á¦ÇÑ ¾øÀ½)
-
-3 : ·Î±×ÀÎ °Ô½ÃÆÇ(°øÁöÀü¿ë)
-    ·Î±×ÀÎ½Ã ÀÐ±â¸¸ °¡´É. admin ¿¡°Ô¸¸ ¸ðµç ±ÇÇÑÀÌ ÀÖÀ½.
-
-4 : °ø°³ °Ô½ÃÆÇ(ÀÐ±â¿Í ´äÀå, ±×¸®°í ÀÚ±â±Û¸¸ »èÁ¦ °¡´É)
-    admin ·Î±×ÀÎ ½Ã¿¡¸¸ ¾²±â°¡ °¡´ÉÇÔ. ÀÐ±â, ´ñ±ÛÀº ´©±¸³ª °¡´É. ±× ¿Ü¿¡´Â ÆÐ½º¿ö
-    µå·Î ¼öÁ¤ »èÁ¦°¡ °¡´ÉÇÔ.
-
-5 : ·Î±×ÀÎ °Ô½ÃÆÇ(ÀÐ±â¿Í ´äÀå, ±×¸®°í ÀÚ±â±Û¸¸ »èÁ¦ °¡´É)
-    admin ·Î±×ÀÎ ½Ã¿¡¸¸ ¾²±â°¡ °¡´É. ÀÐ±â¿Í ´ñ±ÛÀº ·Î±×ÀÎÀ» ÇÑ À¯Àúµé¸¸ °¡´É.  ±×
-    ¿Ü¿¡´Â ÀÚ½ÅÀÇ ±Û¸¸ ¼öÁ¤ »èÁ¦ °¡´É.
-
-6 : °ø°³ °Ô½ÃÆÇ(¾îµå¹Î¸¸ ´äÀå °¡´É)
-    admin ·Î±×ÀÎ ½Ã¿¡¸¸ ´äÀåÀÌ °¡´ÉÇÏ¸ç ±Û µî·ÏÀº ´©±¸³ª ÇÒ ¼ö ÀÖÀ½
-
-7 : ·Î±×ÀÎ °Ô½ÃÆÇ(¾îµå¹Î¸¸ ´äÀå °¡´É)
-    admin ·Î±×ÀÎ ½Ã¿¡¸¸ ´äÀåÀÌ °¡´ÉÇÏ¸ç ±Û µî·ÏÀº ·Î±×ÀÎ À¯Àú¸¸ °¡´É
+ì „ì²´ ê´€ë¦¬ìž ë˜ëŠ” ê° ê²Œì‹œíŒ ê´€ë¦¬ìž ëª¨ë“œë¡œ ë¡œê·¸ì¸ì„ í–ˆì„ ê²½ìš° ê²Œì‹œíŒì— admin ë§í¬ê°€
+ë‚˜íƒ€ë‚˜ê²Œ ëœë‹¤. ì´ê³³ìœ¼ë¡œ ë“¤ì–´ê°€ ì„¤ì •ì„ í•˜ë©´ ëœë‹¤. ë˜ëŠ” ì§ì  data/*/config.phpë¥¼ ìˆ˜
+ì •ì„ í• ìˆ˜ ìžˆë‹¤. ì´ë•Œì—ëŠ” README.CONFIG ë¥¼ ì°¸ì¡°í•˜ë©´ ë˜ê² ë‹¤.
 
 
-4. È°¿ë
+
+3. ë¡œê·¸ì¸ ëª¨ë“œ
+
+JSBoard ì˜ ë¡œê·¸ì¸ ëª¨ë“œëŠ” ì´ 7ê°€ì§€ ë‹¨ê³„ë¥¼ ê°€ì§„ë‹¤. ê° ë‹¨ê³„ì˜ ì„¤ì •ì€ ë‹¤ìŒê³¼ ê°™ë‹¤. ëª¨
+ë“œ 6 ì€ ì•„ì§ ì§€ì›í•˜ì§€ ì•Šìœ¼ë©° ê³§ ì¶”ê°€í•  ì˜ˆì •ì´ë‹¤. í˜„ìž¬ êµ¬í˜„ì€ 0-5 ê¹Œì§€ ì´ë‹¤.
+
+0 : ê³µê°œ ê²Œì‹œíŒ
+    ë¡œê·¸ì¸ì„ ì•ˆí•´ë„ ìƒê´€ì´ ì—†ì§€ë§Œ admin ë¡œê·¸ì¸ì„ í–ˆì„ ê²½ìš°ì—ëŠ” ì¸ì¦ì´ í•„ìš”ì—†ìŒ.
+
+1 : ê³µê°œ ê²Œì‹œíŒ(ê³µì§€ì „ìš©)
+    admin ì¸ì¦ì„ í•˜ì§€ ì•ŠëŠ” í•œ ë¡œê·¸ì¸ì„ í•˜ë“  ë§ë“  read ë§Œ ê°€ëŠ¥í•¨. admin ì˜ ê²½ìš° ëª¨
+    ë“  ê¸°ëŠ¥ì„ ì‚¬ìš©ê°€ëŠ¥
+
+2 : ë¡œê·¸ì¸ ê²Œì‹œíŒ
+    ë¡œê·¸ì¸ì‹œ ëª¨ë“  ê¸°ëŠ¥ ì‚¬ìš©ê°€ëŠ¥. ìˆ˜ì •, ì‚­ì œì— í•œí•´ì„œëŠ” ìžì‹ ì˜ ê¸€ë§Œ ê°€ëŠ¥ (admin ì˜
+    ê²½ìš° ì œí•œ ì—†ìŒ)
+
+3 : ë¡œê·¸ì¸ ê²Œì‹œíŒ(ê³µì§€ì „ìš©)
+    ë¡œê·¸ì¸ì‹œ ì½ê¸°ë§Œ ê°€ëŠ¥. admin ì—ê²Œë§Œ ëª¨ë“  ê¶Œí•œì´ ìžˆìŒ.
+
+4 : ê³µê°œ ê²Œì‹œíŒ(ì½ê¸°ì™€ ë‹µìž¥, ê·¸ë¦¬ê³  ìžê¸°ê¸€ë§Œ ì‚­ì œ ê°€ëŠ¥)
+    admin ë¡œê·¸ì¸ ì‹œì—ë§Œ ì“°ê¸°ê°€ ê°€ëŠ¥í•¨. ì½ê¸°, ëŒ“ê¸€ì€ ëˆ„êµ¬ë‚˜ ê°€ëŠ¥. ê·¸ ì™¸ì—ëŠ” íŒ¨ìŠ¤ì›Œ
+    ë“œë¡œ ìˆ˜ì • ì‚­ì œê°€ ê°€ëŠ¥í•¨.
+
+5 : ë¡œê·¸ì¸ ê²Œì‹œíŒ(ì½ê¸°ì™€ ë‹µìž¥, ê·¸ë¦¬ê³  ìžê¸°ê¸€ë§Œ ì‚­ì œ ê°€ëŠ¥)
+    admin ë¡œê·¸ì¸ ì‹œì—ë§Œ ì“°ê¸°ê°€ ê°€ëŠ¥. ì½ê¸°ì™€ ëŒ“ê¸€ì€ ë¡œê·¸ì¸ì„ í•œ ìœ ì €ë“¤ë§Œ ê°€ëŠ¥.  ê·¸
+    ì™¸ì—ëŠ” ìžì‹ ì˜ ê¸€ë§Œ ìˆ˜ì • ì‚­ì œ ê°€ëŠ¥.
+
+6 : ê³µê°œ ê²Œì‹œíŒ(ì–´ë“œë¯¼ë§Œ ë‹µìž¥ ê°€ëŠ¥)
+    admin ë¡œê·¸ì¸ ì‹œì—ë§Œ ë‹µìž¥ì´ ê°€ëŠ¥í•˜ë©° ê¸€ ë“±ë¡ì€ ëˆ„êµ¬ë‚˜ í•  ìˆ˜ ìžˆìŒ
+
+7 : ë¡œê·¸ì¸ ê²Œì‹œíŒ(ì–´ë“œë¯¼ë§Œ ë‹µìž¥ ê°€ëŠ¥)
+    admin ë¡œê·¸ì¸ ì‹œì—ë§Œ ë‹µìž¥ì´ ê°€ëŠ¥í•˜ë©° ê¸€ ë“±ë¡ì€ ë¡œê·¸ì¸ ìœ ì €ë§Œ ê°€ëŠ¥
 
 
-  4.1 °Ô½ÃÆÇ ¸µÅ©ÇÏ±â
-
-    °Ô½ÃÆÇÀ» »ý¼ºÈÄ °Ô½ÃÆÇÀ» ¸µÅ©ÇÏ±â À§ÇØ¼­´Â ¸µÅ©¸¦ ÇÏ·Á´Â ÆÄÀÏ¿¡
-    <a href=http://domain.com/jsboard/list.php?table=°Ô½ÃÆÇÀÌ¸§>°Ô½ÃÆÇ</a>¿Í °°ÀÌ
-    Ãß°¡ÇØ ÁÖ¸é µÈ´Ù.
+4. í™œìš©
 
 
-  4.2 °Ô½ÃÆÇ µðÀÚÀÎ ºÙÀÌ±â
+  4.1 ê²Œì‹œíŒ ë§í¬í•˜ê¸°
 
-    °Ô½ÃÆÇ¿¡ µðÀÚÀÎÀ» ºÙÀÌ´Â ¹æ¹ýÀº °¢ °Ô½ÃÆÇ °ü¸®ÀÚÀÇ ÇÏ´Ü¿¡ º¸¸é HTML Header/Tail
-    ÀÌ Á¸Àç¸¦ ÇÑ´Ù. ÀÌ°ÍÀ» ÀÌ¿ëÇÏ¿© ÇÒ¼ö ÀÖ´Ù. ÀÏ´Ü °£´ÜÇÏ°Ô ¿¹¸¦ µéÀÚ¸é
+    ê²Œì‹œíŒì„ ìƒì„±í›„ ê²Œì‹œíŒì„ ë§í¬í•˜ê¸° ìœ„í•´ì„œëŠ” ë§í¬ë¥¼ í•˜ë ¤ëŠ” íŒŒì¼ì—
+    <a href=http://domain.com/jsboard/list.php?table=ê²Œì‹œíŒì´ë¦„>ê²Œì‹œíŒ</a>ì™€ ê°™ì´
+    ì¶”ê°€í•´ ì£¼ë©´ ëœë‹¤.
+
+
+  4.2 ê²Œì‹œíŒ ë””ìžì¸ ë¶™ì´ê¸°
+
+    ê²Œì‹œíŒì— ë””ìžì¸ì„ ë¶™ì´ëŠ” ë°©ë²•ì€ ê° ê²Œì‹œíŒ ê´€ë¦¬ìžì˜ í•˜ë‹¨ì— ë³´ë©´ HTML Header/Tail
+    ì´ ì¡´ìž¬ë¥¼ í•œë‹¤. ì´ê²ƒì„ ì´ìš©í•˜ì—¬ í• ìˆ˜ ìžˆë‹¤. ì¼ë‹¨ ê°„ë‹¨í•˜ê²Œ ì˜ˆë¥¼ ë“¤ìžë©´
 
 
     <html>
@@ -169,64 +169,64 @@ JSBoard ÀÇ ·Î±×ÀÎ ¸ðµå´Â ÃÑ 7°¡Áö ´Ü°è¸¦ °¡Áø´Ù. °¢ ´Ü°èÀÇ ¼³Á¤Àº ´ÙÀ½°ú °°´Ù. ¸
     .......
 
     
-   ¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤
-   ¦¢                     °Ô½ÃÆÇ Å×ÀÌºí                                            ¦¢
-   ¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥
+   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+   â”‚                     ê²Œì‹œíŒ í…Œì´ë¸”                                            â”‚
+   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
     .......
     </body>
     </html>
 
 
-    ÀÌ ÇÏ³ªÀÇ  html file À» ÀÌ·ç¾î¾ß ÇÑ´Ù°í °¡Á¤À» ÇÏµµ·Ï ÇÏ°Ú´Ù. ±×·¸´Ù¸é °Ô½ÃÆÇ
-    Å×ÀÌºíÀ» ±âÁØÀ¸·Î ÇÏ¿© À§ÂÊÀÇ ÄÚµåµéÀº  HTML  Header ÀÇ ÀÚ¸®¿¡ ³Ö¾î ÁÖ¸é µÇ¸ç
-    ÇÏ´Ü ºÎºÐÀº HTML tail ¿¡ ³Ö¾îÁÖ¸é µÇ´Â °ÍÀÌ´Ù.
+    ì´ í•˜ë‚˜ì˜  html file ì„ ì´ë£¨ì–´ì•¼ í•œë‹¤ê³  ê°€ì •ì„ í•˜ë„ë¡ í•˜ê² ë‹¤. ê·¸ë ‡ë‹¤ë©´ ê²Œì‹œíŒ
+    í…Œì´ë¸”ì„ ê¸°ì¤€ìœ¼ë¡œ í•˜ì—¬ ìœ„ìª½ì˜ ì½”ë“œë“¤ì€  HTML  Header ì˜ ìžë¦¬ì— ë„£ì–´ ì£¼ë©´ ë˜ë©°
+    í•˜ë‹¨ ë¶€ë¶„ì€ HTML tail ì— ë„£ì–´ì£¼ë©´ ë˜ëŠ” ê²ƒì´ë‹¤.
 
-    ´Ü ÁÖÀÇ ÇÒ°ÍÀº »ó´Ü°ú ÇÏ´ÜÀ» ³Ö¾îÁÙ °æ¿ì¿¡ ÀÌ¹Ì  <html>~<body> ÀÇ °æ¿ì¿¡´Â °Ô
-    ½ÃÆÇ¿¡¼­ Á¦°øÀ» ÇÏ°í ÀÖ´Â°ÍÀÌ±â ¶§¹®¿¡ ±âÁ¸ÀÇ °Ô½ÃÆÇÀÇ html ¼Ò½º¸¦ Àß º¸°í ÆÇ
-    ´ÜÇØ¼­ ³Ö¾î¾ß ÇÑ´Ù. tail ÀÇ </body>~</html> ¿ª½Ã ³ÖÀ» ÇÊ¿ä´Â ¾ø´Ù.
+    ë‹¨ ì£¼ì˜ í• ê²ƒì€ ìƒë‹¨ê³¼ í•˜ë‹¨ì„ ë„£ì–´ì¤„ ê²½ìš°ì— ì´ë¯¸  <html>~<body> ì˜ ê²½ìš°ì—ëŠ” ê²Œ
+    ì‹œíŒì—ì„œ ì œê³µì„ í•˜ê³  ìžˆëŠ”ê²ƒì´ê¸° ë•Œë¬¸ì— ê¸°ì¡´ì˜ ê²Œì‹œíŒì˜ html ì†ŒìŠ¤ë¥¼ ìž˜ ë³´ê³  íŒ
+    ë‹¨í•´ì„œ ë„£ì–´ì•¼ í•œë‹¤. tail ì˜ </body>~</html> ì—­ì‹œ ë„£ì„ í•„ìš”ëŠ” ì—†ë‹¤.
 
-    °Ô½ÃÆÇ html source ¿¡¼­
-
-    <!-- ======================= A foreword  ======================= -->
+    ê²Œì‹œíŒ html source ì—ì„œ
 
     <!-- ======================= A foreword  ======================= -->
 
-    ÀÇ ºÎºÐ¿¡ Header ÀÇ ³»¿ëÀÌ µé¾î°¡°Ô µÇ´Â °ÍÀÌ°í
+    <!-- ======================= A foreword  ======================= -->
+
+    ì˜ ë¶€ë¶„ì— Header ì˜ ë‚´ìš©ì´ ë“¤ì–´ê°€ê²Œ ë˜ëŠ” ê²ƒì´ê³ 
 
     <!-- ========================= Tail ========================= -->
 
     <!-- ========================= Tail ========================= -->
 
-    ÀÇ ºÎºÐ¿¡ tail ÀÇ ³»¿ëÀÌ µé¾î°¡´Â °ÍÀÌ´Ï ²À html souce¸¦ È®ÀÎÇÑ ÈÄ¿¡ ÇÊ¿ä¾ø´Â
-    ÄÚµå´Â »èÁ¦¸¦ ÇÏ°í ³Öµµ·Ï ÇÑ´Ù.
+    ì˜ ë¶€ë¶„ì— tail ì˜ ë‚´ìš©ì´ ë“¤ì–´ê°€ëŠ” ê²ƒì´ë‹ˆ ê¼­ html souceë¥¼ í™•ì¸í•œ í›„ì— í•„ìš”ì—†ëŠ”
+    ì½”ë“œëŠ” ì‚­ì œë¥¼ í•˜ê³  ë„£ë„ë¡ í•œë‹¤.
 
 
 
-  4.3 ÀüÃ¼ °ü¸®ÀÚ ¸µÅ©ÇÏ±â
+  4.3 ì „ì²´ ê´€ë¦¬ìž ë§í¬í•˜ê¸°
 
-    ¾î´À°÷¿¡¼­³ª »ó°ü ¾øÀÌ http://domain.com/jsboard/login.php?type=admin À¸·Î ¸µ
-    Å©¸¦ ÇÏ¸é µÈ´Ù. ¸¸¾à admin login »óÅÂ ¿¡¼­¸¸ ÀüÃ¼ °ü¸®ÀÚ ¸µÅ©¸¦ º¸¿©ÁÖ°í ½Í´Ù
-    ¸é http://domain.com/jsboard/admin/ À¸·Î ¸µÅ©¸¦ ÇØ ÁÖ¸é µÈ´Ù.
+    ì–´ëŠê³³ì—ì„œë‚˜ ìƒê´€ ì—†ì´ http://domain.com/jsboard/login.php?type=admin ìœ¼ë¡œ ë§
+    í¬ë¥¼ í•˜ë©´ ëœë‹¤. ë§Œì•½ admin login ìƒíƒœ ì—ì„œë§Œ ì „ì²´ ê´€ë¦¬ìž ë§í¬ë¥¼ ë³´ì—¬ì£¼ê³  ì‹¶ë‹¤
+    ë©´ http://domain.com/jsboard/admin/ ìœ¼ë¡œ ë§í¬ë¥¼ í•´ ì£¼ë©´ ëœë‹¤.
 
-    ÀüÃ¼ ¾îµå¹Î ·Î±×ÀÎ »óÅÂ¸¦ ¾Ë°í ½Í´Ù¸é ´ÙÀ½ÀÇ ÄÚµå¸¦ È°¿ëÇÒ ¼ö ÀÖ´Ù. ÀÏ´Ü ÄÚµå
-    ¸¦ Àû±â Àü¿¡ ¾Ë¾ÆµÎ¾î¾ß ÇÒ ºÎºÐÀº config/global.php ÀÇ $jsboard º¯¼ö°ªÀ» ¾Ë¾Æ
-    ³õ¾Æ¾ß ÇÑ´Ù. ÀÌ°ª¿¡ µû¶ó ´Þ¶óÁö±â ¶§¹®ÀÌ´Ù. ¸¸¾à $jsboard = "login" ÀÌ¶ó°í Áö
-    Á¤ÀÌ µÇ¾î ÀÖ´Ù¸é ·Î±×ÀÎ¿¡ °ü·ÃµÈ º¯¼ö¸íÀº login+jsboard Áï $loginjsboard°¡ µÇ
-    ´Â °ÍÀÌ´Ù.
+    ì „ì²´ ì–´ë“œë¯¼ ë¡œê·¸ì¸ ìƒíƒœë¥¼ ì•Œê³  ì‹¶ë‹¤ë©´ ë‹¤ìŒì˜ ì½”ë“œë¥¼ í™œìš©í•  ìˆ˜ ìžˆë‹¤. ì¼ë‹¨ ì½”ë“œ
+    ë¥¼ ì ê¸° ì „ì— ì•Œì•„ë‘ì–´ì•¼ í•  ë¶€ë¶„ì€ config/global.php ì˜ $jsboard ë³€ìˆ˜ê°’ì„ ì•Œì•„
+    ë†“ì•„ì•¼ í•œë‹¤. ì´ê°’ì— ë”°ë¼ ë‹¬ë¼ì§€ê¸° ë•Œë¬¸ì´ë‹¤. ë§Œì•½ $jsboard = "login" ì´ë¼ê³  ì§€
+    ì •ì´ ë˜ì–´ ìžˆë‹¤ë©´ ë¡œê·¸ì¸ì— ê´€ë ¨ëœ ë³€ìˆ˜ëª…ì€ login+jsboard ì¦‰ $loginjsboardê°€ ë˜
+    ëŠ” ê²ƒì´ë‹¤.
 
     <?php
     if(isset($_SESSION[$loginjsboard]) && $loginjsboard['pos'] == 1) {
-      echo "<a href=http://domain.com/jsboard/admin/>ÀüÃ¼ °ü¸®ÀÚ</a>";
+      echo "<a href=http://domain.com/jsboard/admin/>ì „ì²´ ê´€ë¦¬ìž</a>";
     }
     ?>
 
-    ¿Í °°ÀÌ ÇØ ÁÖ¸é µÈ´Ù.
+    ì™€ ê°™ì´ í•´ ì£¼ë©´ ëœë‹¤.
 
 
-  4.4 ·Î±×ÀÎ Ã¢ ¸¸µé±â
+  4.4 ë¡œê·¸ì¸ ì°½ ë§Œë“¤ê¸°
 
-    ·Î±×ÀÎ È­¸éÀº ¾îµð¿¡¼­³ª ´ÙÀ½ÀÇ ÄÚµå¸¦ ¿øÇÏ´Â À§Ä¡¿¡ ³Ö¾îÁÖ¸é µÈ´Ù.
+    ë¡œê·¸ì¸ í™”ë©´ì€ ì–´ë””ì—ì„œë‚˜ ë‹¤ìŒì˜ ì½”ë“œë¥¼ ì›í•˜ëŠ” ìœ„ì¹˜ì— ë„£ì–´ì£¼ë©´ ëœë‹¤.
 
     <FORM METHOD=POST ACTION="http://domain.com/jsboard/session.php">
     <INPUT TYPE=text NAME=lu> ID
@@ -235,159 +235,159 @@ JSBoard ÀÇ ·Î±×ÀÎ ¸ðµå´Â ÃÑ 7°¡Áö ´Ü°è¸¦ °¡Áø´Ù. °¢ ´Ü°èÀÇ ¼³Á¤Àº ´ÙÀ½°ú °°´Ù. ¸
     <INPUT TYPE=HIDDEN NAME=m VALUE=login>
     </FORM>
 
-    ÀÇ ÄÚµå¸¸ ¿øÇÏ´Â ÆäÀÌÁö¿¡ ³Ö¾îÁÖ¸é µÈ´Ù. Áï ID ¸¦ $lu ¿¡ password ¸¦ lp ¿¡ ³Ö
-    ¾î¼­ session.php ¿¡ ³Ñ°Ü ÁÖ¸é µÈ´Ù. Á»´õ ÀÚ¼¼ÇÑ °ÍÀ» ¿øÇÏ¸é jsboard ¾È¿¡ µé¾î
-    ÀÖ´Â session.php ¸¦ ºÐ¼®ÇØ º¸µµ·Ï ÇÑ´Ù.
+    ì˜ ì½”ë“œë§Œ ì›í•˜ëŠ” íŽ˜ì´ì§€ì— ë„£ì–´ì£¼ë©´ ëœë‹¤. ì¦‰ ID ë¥¼ $lu ì— password ë¥¼ lp ì— ë„£
+    ì–´ì„œ session.php ì— ë„˜ê²¨ ì£¼ë©´ ëœë‹¤. ì¢€ë” ìžì„¸í•œ ê²ƒì„ ì›í•˜ë©´ jsboard ì•ˆì— ë“¤ì–´
+    ìžˆëŠ” session.php ë¥¼ ë¶„ì„í•´ ë³´ë„ë¡ í•œë‹¤.
 
-  4.5 ·Î±×¾Æ¿ô ¸µÅ© ¸¸µé±â
+  4.5 ë¡œê·¸ì•„ì›ƒ ë§í¬ ë§Œë“¤ê¸°
 
-    ·Î±×¾Æ¿ô ¸µÅ©´Â ÀÏ´Ü
+    ë¡œê·¸ì•„ì›ƒ ë§í¬ëŠ” ì¼ë‹¨
 
     <a href=./session.php?m=logout&table=table_name>logout</a>
 
-    ÀÌ °¡Àå ±âº»ÀûÀÌ´Ù. À§¿Í °°ÀÌ¸¸ ·Î±×¾Æ¿ôÀÌ ±¸¼ºµÇ¾î ÀÖÀ» °æ¿ì¿¡´Â ·Î±×¾Æ¿ô ÈÄ
-    ¿¡´Â °¢ °Ô½ÃÆÇÀÇ ·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿À» ÇÑ´Ù.
+    ì´ ê°€ìž¥ ê¸°ë³¸ì ì´ë‹¤. ìœ„ì™€ ê°™ì´ë§Œ ë¡œê·¸ì•„ì›ƒì´ êµ¬ì„±ë˜ì–´ ìžˆì„ ê²½ìš°ì—ëŠ” ë¡œê·¸ì•„ì›ƒ í›„
+    ì—ëŠ” ê° ê²Œì‹œíŒì˜ ë¡œê·¸ì¸ íŽ˜ì´ì§€ë¡œ ì´ë™ì„ í•œë‹¤.
 
-    ¸¸¾à ·Î±×¾Æ¿ô ÈÄ¿¡ °¢ °Ô½ÃÆÇÀÇ ·Î±×ÀÎ ÆäÀÌÁö°¡ ¾Æ´Ñ ´Ù¸¥ ÆäÀÌÁö·Î ÀÌµ¿À» ÇÏ°í
-    ½ÍÀ» °æ¿ì¿¡´Â ´ÙÀ½ÀÇ 2 °¡Áö ¹æ¹ý Áß ÇÏ³ª¸¦ »ç¿ëÇÑ´Ù.
+    ë§Œì•½ ë¡œê·¸ì•„ì›ƒ í›„ì— ê° ê²Œì‹œíŒì˜ ë¡œê·¸ì¸ íŽ˜ì´ì§€ê°€ ì•„ë‹Œ ë‹¤ë¥¸ íŽ˜ì´ì§€ë¡œ ì´ë™ì„ í•˜ê³ 
+    ì‹¶ì„ ê²½ìš°ì—ëŠ” ë‹¤ìŒì˜ 2 ê°€ì§€ ë°©ë²• ì¤‘ í•˜ë‚˜ë¥¼ ì‚¬ìš©í•œë‹¤.
 
-    1. °¢ °Ô½ÃÆÇ °ü¸®ÀÚ¿¡¼­ Logout Page ¸¦ ÁöÁ¤ÇÑ´Ù. (¼³Á¤ ÆÄÀÏÀ» Á÷Á¢ ¼öÁ¤ ÇÒ °æ
-       ¿ì¿¡´Â $print[dopage] ¸¦ ÁöÁ¤À» ÇÑ´Ù.
+    1. ê° ê²Œì‹œíŒ ê´€ë¦¬ìžì—ì„œ Logout Page ë¥¼ ì§€ì •í•œë‹¤. (ì„¤ì • íŒŒì¼ì„ ì§ì ‘ ìˆ˜ì • í•  ê²½
+       ìš°ì—ëŠ” $print[dopage] ë¥¼ ì§€ì •ì„ í•œë‹¤.
 
-    2. ·Î±×¾Æ¿ô ÆäÀÌÁö¸¦ ´ÙÀ½°ú °°ÀÌ ¸¸µç´Ù.
+    2. ë¡œê·¸ì•„ì›ƒ íŽ˜ì´ì§€ë¥¼ ë‹¤ìŒê³¼ ê°™ì´ ë§Œë“ ë‹¤.
        <?php
        $url = rawurlencode("http://domain.com/test/test.html");
        echo "<a href=./session.php?m=logout&urls=$url>logout</a>\n";
        ?>
 
-    1 ¹ø°ú 2 ¹øÀÇ °æ¿ìÁß 2¹øÀÇ °æ¿ì°¡ 1 ¹øÀÇ °æ¿ìº¸´Ù ¿ì¼±ÇÑ´Ù.
+    1 ë²ˆê³¼ 2 ë²ˆì˜ ê²½ìš°ì¤‘ 2ë²ˆì˜ ê²½ìš°ê°€ 1 ë²ˆì˜ ê²½ìš°ë³´ë‹¤ ìš°ì„ í•œë‹¤.
 
 
-5. ¿ÜºÎÀÇ È¸¿ø DB »ç¿ëÇÏ±â
+5. ì™¸ë¶€ì˜ íšŒì› DB ì‚¬ìš©í•˜ê¸°
 
-  ¸¸¾à ÀÌ ±â´ÉÀ» »ç¿ëÇÏ°Ô µÇ¸é, ±âÁ¸ÀÇ jsboard ÀÇ È¸¿ø DB ´Â ¹«Á¶°Ç ¹«½ÃÇÏ°í »ý°¢
-  À» ÇØ¾ß ÇÑ´Ù.
+  ë§Œì•½ ì´ ê¸°ëŠ¥ì„ ì‚¬ìš©í•˜ê²Œ ë˜ë©´, ê¸°ì¡´ì˜ jsboard ì˜ íšŒì› DB ëŠ” ë¬´ì¡°ê±´ ë¬´ì‹œí•˜ê³  ìƒê°
+  ì„ í•´ì•¼ í•œë‹¤.
 
-  5.1 jsboard ¼³Á¤
+  5.1 jsboard ì„¤ì •
 
-    ¿ÜºÎÀÇ È¸¿ø DB ¸¦ »ç¿ëÇÏ±â À§ÇØ¼­´Â »ç¿ë ÇÏ·Á´Â È¸¿ø DB ¿¡ ID, ÀÌ¸§, ÆÐ½º¿öµå
-    ÀÌ¸ÞÀÏ, È¨ÆäÀÌÁö ¿Í °°ÀÌ 5°³ÀÇ ÇÊµå°¡ Á¸ÀçÇØ¾ß ÇÑ´Ù. ÀÌ°ÍÀ» ¸í½ÉÇÏ°í ÁøÇàÇÏÀÚ. 
+    ì™¸ë¶€ì˜ íšŒì› DB ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ì„œëŠ” ì‚¬ìš© í•˜ë ¤ëŠ” íšŒì› DB ì— ID, ì´ë¦„, íŒ¨ìŠ¤ì›Œë“œ
+    ì´ë©”ì¼, í™ˆíŽ˜ì´ì§€ ì™€ ê°™ì´ 5ê°œì˜ í•„ë“œê°€ ì¡´ìž¬í•´ì•¼ í•œë‹¤. ì´ê²ƒì„ ëª…ì‹¬í•˜ê³  ì§„í–‰í•˜ìž. 
 
-    ¿ÜºÎÈ¸¿ø DB ÀÇ ¼³Á¤Àº jsboard/config/external.php¿¡¼­ ÇÏµµ·ÏÇÑ´Ù. ¾øÀ¸¸é »õ·Î
-    ¸¸µé¸é µÇ¸ç ÀÌ ÆÄÀÏÀÇ ¼ÒÀ¯±Ç°ú ÆÛ¹Ì¼ÇÀº global.php¿Í µ¿ÀÏÇÏ°Ô ÇÑ´Ù. ÀÌ ÆÄÀÏÀº
-    ±âº»ÀûÀ¸·Î À§Ä¡°¡ ¾ÈµÇ¾î ÀÖÀ¸´Ï ÇÊ¿äÇÏ¸é 
+    ì™¸ë¶€íšŒì› DB ì˜ ì„¤ì •ì€ jsboard/config/external.phpì—ì„œ í•˜ë„ë¡í•œë‹¤. ì—†ìœ¼ë©´ ìƒˆë¡œ
+    ë§Œë“¤ë©´ ë˜ë©° ì´ íŒŒì¼ì˜ ì†Œìœ ê¶Œê³¼ í¼ë¯¸ì…˜ì€ global.phpì™€ ë™ì¼í•˜ê²Œ í•œë‹¤. ì´ íŒŒì¼ì€
+    ê¸°ë³¸ì ìœ¼ë¡œ ìœ„ì¹˜ê°€ ì•ˆë˜ì–´ ìžˆìœ¼ë‹ˆ í•„ìš”í•˜ë©´ 
 
     jsboard/INSTALLER/sample/admin/external.php.orig
 
-    ¸¦ jsboard/config/external.php·Î º¹»çÇÏ¿© »ç¿ëÀ» ÇÏ¸é µÈ´Ù. ¿ÜºÎ È¸¿ø DB¸¦ »ç
-    ¿ëÇÒ °æ¿ì¿¡´Â °ü¸®ÀÚ ÆäÀÌÁö¿¡¼­ È¸¿ø Á¤º¸¸¦ °ü¸®ÇÒ ¼ö ¾ø°Ô µÈ´Ù.
+    ë¥¼ jsboard/config/external.phpë¡œ ë³µì‚¬í•˜ì—¬ ì‚¬ìš©ì„ í•˜ë©´ ëœë‹¤. ì™¸ë¶€ íšŒì› DBë¥¼ ì‚¬
+    ìš©í•  ê²½ìš°ì—ëŠ” ê´€ë¦¬ìž íŽ˜ì´ì§€ì—ì„œ íšŒì› ì •ë³´ë¥¼ ê´€ë¦¬í•  ìˆ˜ ì—†ê²Œ ëœë‹¤.
 
-    ÀÏ´Ü JSBoard ¿¡¼­ ¿ÜºÎ È¸¿ø  DB ¿Í ¿¬µ¿À» ÇÒ¶§ ÇÊ¿äÇÑ external.phpÀÇ º¯¼öµéÀ»
-    ³ª¿­ÇÏ°Ú´Ù
+    ì¼ë‹¨ JSBoard ì—ì„œ ì™¸ë¶€ íšŒì›  DB ì™€ ì—°ë™ì„ í• ë•Œ í•„ìš”í•œ external.phpì˜ ë³€ìˆ˜ë“¤ì„
+    ë‚˜ì—´í•˜ê² ë‹¤
 
     <?php
     ###############################################################################
-    #  ¿ÜºÎ DB ¸¦ ÀÌ¿ëÇÑ ÀÎÁõ Á¤º¸
-    #  JSBoard ÀÇ ÀÎÁõÀ» JSBoard ÀÇ user table À» ÀÌ¿ëÇÏÁö ¾Ê°í ½ÍÀ» °æ¿ì
-    #  »ç¿ëÇÏ´Â ±â´É
+    #  ì™¸ë¶€ DB ë¥¼ ì´ìš©í•œ ì¸ì¦ ì •ë³´
+    #  JSBoard ì˜ ì¸ì¦ì„ JSBoard ì˜ user table ì„ ì´ìš©í•˜ì§€ ì•Šê³  ì‹¶ì„ ê²½ìš°
+    #  ì‚¬ìš©í•˜ëŠ” ê¸°ëŠ¥
     ###############################################################################
-    # ¿ÜºÎ DB »ç¿ë¿©ºÎ Ç¥½Ã
+    # ì™¸ë¶€ DB ì‚¬ìš©ì—¬ë¶€ í‘œì‹œ
     $edb[uses] = 1;
 
-    # ¿ÜºÎ DB Á¤º¸
+    # ì™¸ë¶€ DB ì •ë³´
     $edb[server] = "$db[server]";  # DB address
     $edb[user] = "test";           # DB user name
     $edb[pass] = "test";           # DB password
     $edb[name] = "test";           # DB database name
-    $edb[table] = "user_info";     # È¸¿ø°ü¸® DB Å×ÀÌºí ÀÌ¸§
+    $edb[table] = "user_info";     # íšŒì›ê´€ë¦¬ DB í…Œì´ë¸” ì´ë¦„
 
 
-    À§ÀÇ °ªµéÀº È¸¿ø Á¤º¸°¡ µé¾îÀÖ´Â DB ÀÇ Á¤º¸µéÀÌ´Ù.  À§ÀÇ JSBoard °ü·Ã DB Á¤º¸
-    ¿Í º° ´Ù¸¦¹Ù´Â ¾øÀ» °ÍÀÌ³ª ¿©±â¼­´Â table ÀÌ¸§±îÁö ÁöÁ¤ÇØ Áà¾ß ÇÑ´Ù´Â Á¡ÀÌ Á¶
-    ±Ý Æ²¸®´Ù.
+    ìœ„ì˜ ê°’ë“¤ì€ íšŒì› ì •ë³´ê°€ ë“¤ì–´ìžˆëŠ” DB ì˜ ì •ë³´ë“¤ì´ë‹¤.  ìœ„ì˜ JSBoard ê´€ë ¨ DB ì •ë³´
+    ì™€ ë³„ ë‹¤ë¥¼ë°”ëŠ” ì—†ì„ ê²ƒì´ë‚˜ ì—¬ê¸°ì„œëŠ” table ì´ë¦„ê¹Œì§€ ì§€ì •í•´ ì¤˜ì•¼ í•œë‹¤ëŠ” ì ì´ ì¡°
+    ê¸ˆ í‹€ë¦¬ë‹¤.
 
 
-    # ÇÊ¿äÇÑ ÇÊµå Á¤ÀÇ
+    # í•„ìš”í•œ í•„ë“œ ì •ì˜
     $edb[userid] = "id";
     $edb[username] = "name";
     $edb[useremail] = "mail";
     $edb[userurl] = "homepage";
     $edb[userpasswd] = "pass";
 
-    ¿©±â¼­´Â ¸¸¾à ÇÊ¿äÇÑ ÇÊµå ÀÌ¸§ÀÌ jsboard ¿Í Æ²¸± °æ¿ì ¸ÅÇÎÀ» ½ÃÅ°±â À§ÇÑ º¯¼ö
-    µéÀ» ÁöÁ¤ÇÑ´Ù. 
+    ì—¬ê¸°ì„œëŠ” ë§Œì•½ í•„ìš”í•œ í•„ë“œ ì´ë¦„ì´ jsboard ì™€ í‹€ë¦´ ê²½ìš° ë§¤í•‘ì„ ì‹œí‚¤ê¸° ìœ„í•œ ë³€ìˆ˜
+    ë“¤ì„ ì§€ì •í•œë‹¤. 
 
-    [userid]     : È¸¿ø DB ¿¡¼­ »ç¿ëÇÏ´Â È¸¿ø ID ÇÊµå ÀÌ¸§À» ÁöÁ¤ÇÑ´Ù.
-    [username]   : È¸¿ø DB ¿¡¼­ »ç¿ëÇÏ´Â È¸¿ø ÀÌ¸§ ÇÊµå ÀÌ¸§À» ÁöÁ¤ÇÑ´Ù.
-    [useremail]  : È¸¿ø DB ¿¡¼­ »ç¿ëÇÏ´Â È¸¿ø ÀÌ¸ÞÀÏ  ÇÊµå ÀÌ¸§À» ÁöÁ¤ÇÑ´Ù.
-    [userurl]    : È¸¿ø DB ¿¡¼­ »ç¿ëÇÏ´Â È¸¿ø  È¨ÆäÀÌÁö ÇÊµå ÀÌ¸§À» ÁöÁ¤ÇÑ´Ù.
-    [userpasswd] : È¸¿ø DB ¿¡¼­ »ç¿ëÇÏ´Â È¸¿ø  ¾ÏÈ£ ÇÊµå ÀÌ¸§À» ÁöÁ¤ÇÑ´Ù.
+    [userid]     : íšŒì› DB ì—ì„œ ì‚¬ìš©í•˜ëŠ” íšŒì› ID í•„ë“œ ì´ë¦„ì„ ì§€ì •í•œë‹¤.
+    [username]   : íšŒì› DB ì—ì„œ ì‚¬ìš©í•˜ëŠ” íšŒì› ì´ë¦„ í•„ë“œ ì´ë¦„ì„ ì§€ì •í•œë‹¤.
+    [useremail]  : íšŒì› DB ì—ì„œ ì‚¬ìš©í•˜ëŠ” íšŒì› ì´ë©”ì¼  í•„ë“œ ì´ë¦„ì„ ì§€ì •í•œë‹¤.
+    [userurl]    : íšŒì› DB ì—ì„œ ì‚¬ìš©í•˜ëŠ” íšŒì›  í™ˆíŽ˜ì´ì§€ í•„ë“œ ì´ë¦„ì„ ì§€ì •í•œë‹¤.
+    [userpasswd] : íšŒì› DB ì—ì„œ ì‚¬ìš©í•˜ëŠ” íšŒì›  ì•”í˜¸ í•„ë“œ ì´ë¦„ì„ ì§€ì •í•œë‹¤.
 
 
-    # È¸¿ø Á¤º¸¸¦ °¡Á®¿À´Â SQL ¹®À» Á÷Á¢ ÀÛ¼ºÇÒ °æ¿ì ¶Ç´Â
-    # È¸¿ø Á¤º¸¸¦ Á¶ÀÎÀ» ÇØ¼­ °¡Á®¿Í¾ß ÇÒ °æ¿ì »ç¿ë
+    # íšŒì› ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ëŠ” SQL ë¬¸ì„ ì§ì ‘ ìž‘ì„±í•  ê²½ìš° ë˜ëŠ”
+    # íšŒì› ì •ë³´ë¥¼ ì¡°ì¸ì„ í•´ì„œ ê°€ì ¸ì™€ì•¼ í•  ê²½ìš° ì‚¬ìš©
     $edb[sql] = "";
 
-    ÀÌ ºÎºÐÀº ¸¸¾à ÇÊ¿äÇÑ ÇÊµå°¡ ¸ðÀÚ¸£´Ù°Å³ª ¶Ç´Â È¸¿ø DB ¸¦ join À» ÇØ¾ßÇÒ °æ¿ì
-    ¿¡ Á÷Á¢ ÇÊ¿äÇÑ °á°úµéÀº ºÒ·¯ ¿Ã SQL ¹®À» ÁöÁ¤À» ÇÑ´Ù. ¸¸¾à È¸¿ø table ÀÌ ÇÏ³ª
-    ÀÌ°í JSBoard ¿¡ ÇÊ¿äÇÑ 5°³ÀÇ ÇÊµå¸¦ ¸ðµÎ °¡Áö°í ÀÖ´Ù¸é ±»ÀÌ $edb[sql] Àº ÁöÁ¤
-    ÇÒ ÇÊ¿ä°¡ ¾ø´Ù.
+    ì´ ë¶€ë¶„ì€ ë§Œì•½ í•„ìš”í•œ í•„ë“œê°€ ëª¨ìžë¥´ë‹¤ê±°ë‚˜ ë˜ëŠ” íšŒì› DB ë¥¼ join ì„ í•´ì•¼í•  ê²½ìš°
+    ì— ì§ì ‘ í•„ìš”í•œ ê²°ê³¼ë“¤ì€ ë¶ˆëŸ¬ ì˜¬ SQL ë¬¸ì„ ì§€ì •ì„ í•œë‹¤. ë§Œì•½ íšŒì› table ì´ í•˜ë‚˜
+    ì´ê³  JSBoard ì— í•„ìš”í•œ 5ê°œì˜ í•„ë“œë¥¼ ëª¨ë‘ ê°€ì§€ê³  ìžˆë‹¤ë©´ êµ³ì´ $edb[sql] ì€ ì§€ì •
+    í•  í•„ìš”ê°€ ì—†ë‹¤.
 
-    ¿¹¸¦ µé¸é ´ÙÀ½°ú °°ÀÌ ÇÒ ¼ö ÀÖ´Ù.
+    ì˜ˆë¥¼ ë“¤ë©´ ë‹¤ìŒê³¼ ê°™ì´ í•  ìˆ˜ ìžˆë‹¤.
 
     SELECT id AS nid,name AS name,mail AS email,homepage AS url
            password AS passwd
       FROM user_info WHERE id = '$id'
 
-    ¿©±â¼­ ÁÖÀÇÇØ¾ß ÇÒ °ÍÀº Äõ¸®°á°ú·Î ³ª¿À´Â ÇÊµåÀÌ¸§µéÀ» jsboard ¿¡ ÇÊ¿äÇÑ ÀÌ¸§
-    À¸·Î alias ¸¦ ÇØ¾ß ÇÑ´Ù. °¢°¢Àº ´ÙÀ½°ú °°´Ù.
+    ì—¬ê¸°ì„œ ì£¼ì˜í•´ì•¼ í•  ê²ƒì€ ì¿¼ë¦¬ê²°ê³¼ë¡œ ë‚˜ì˜¤ëŠ” í•„ë“œì´ë¦„ë“¤ì„ jsboard ì— í•„ìš”í•œ ì´ë¦„
+    ìœ¼ë¡œ alias ë¥¼ í•´ì•¼ í•œë‹¤. ê°ê°ì€ ë‹¤ìŒê³¼ ê°™ë‹¤.
 
-    nid -> È¸¿ø ID
-    name -> È¸¿øÀÌ¸§
-    email -> È¸¿ø ÀÌ¸ÞÀÏ
-    url -> È¸¿ø È¨ÆäÀÌÁö
-    passwd -> È¸¿ø ÆÐ½º¿öµå
+    nid -> íšŒì› ID
+    name -> íšŒì›ì´ë¦„
+    email -> íšŒì› ì´ë©”ì¼
+    url -> íšŒì› í™ˆíŽ˜ì´ì§€
+    passwd -> íšŒì› íŒ¨ìŠ¤ì›Œë“œ
 
 
-    # super user ÀÇ id Á¤ÀÇ
+    # super user ì˜ id ì •ì˜
     $edb[super] = "admin";
 
-    JSBoard ÀüÃ¼¸¦ °ü¸®ÇÒ À¯ÀúÀÇ id ¸¦ Àû´Â´Ù.  ¹°·Ð È¸¿ø DB ¿¡ Á¸ÀçÇÏ´Â °ü¸®ÀÚ¸¦
-    ÁöÁ¤ÇØ¾ß ÇÑ´Ù. ÀÌ À¯Àú´Â JSBoard ¿¡ ´ëÇØ¼­´Â ¸·°­ÇÑ ±Ç·ÂÀ» °¡Áö°Ô µÈ´Ù.
+    JSBoard ì „ì²´ë¥¼ ê´€ë¦¬í•  ìœ ì €ì˜ id ë¥¼ ì ëŠ”ë‹¤.  ë¬¼ë¡  íšŒì› DB ì— ì¡´ìž¬í•˜ëŠ” ê´€ë¦¬ìžë¥¼
+    ì§€ì •í•´ì•¼ í•œë‹¤. ì´ ìœ ì €ëŠ” JSBoard ì— ëŒ€í•´ì„œëŠ” ë§‰ê°•í•œ ê¶Œë ¥ì„ ê°€ì§€ê²Œ ëœë‹¤.
 
 
 
-    # ÆÐ½º¿öµå ÇÊµå ¾ÏÈ£È­ ¿©ºÎ
-    # crypt() ¾ÏÈ£È­ÀÏ °æ¿ì 0, PLAIN ÀÏ °æ¿ì 1
+    # íŒ¨ìŠ¤ì›Œë“œ í•„ë“œ ì•”í˜¸í™” ì—¬ë¶€
+    # crypt() ì•”í˜¸í™”ì¼ ê²½ìš° 0, PLAIN ì¼ ê²½ìš° 1
     $edb[crypts] = 0;
 
-    È¸¿ø DB ÀÇ ÆÐ½º¿öµå°¡ ¾ÏÈ£È­°¡ µÇ¾î ÀúÀåÀÌ µÇ´ÂÁö ¾Æ´ÑÁö¸¦ °áÁ¤ÇÑ´Ù. ¾ÏÈ£È­´Â
-    php ÀÇ crypt() ÇÔ¼ö¸¦ ±âÁØÀ¸·Î ÇÑ´Ù. ±× ¿Ü¿¡´Â ÇÊÀÚ°¡ ¾î¶»°Ô ÇÒ ¿ª·®ÀÌ ¾ø´Ù.
+    íšŒì› DB ì˜ íŒ¨ìŠ¤ì›Œë“œê°€ ì•”í˜¸í™”ê°€ ë˜ì–´ ì €ìž¥ì´ ë˜ëŠ”ì§€ ì•„ë‹Œì§€ë¥¼ ê²°ì •í•œë‹¤. ì•”í˜¸í™”ëŠ”
+    php ì˜ crypt() í•¨ìˆ˜ë¥¼ ê¸°ì¤€ìœ¼ë¡œ í•œë‹¤. ê·¸ ì™¸ì—ëŠ” í•„ìžê°€ ì–´ë–»ê²Œ í•  ì—­ëŸ‰ì´ ì—†ë‹¤.
 
     ?>
 
 
-  5.2 ¿ÜºÎÀÇ login °ú ¿¬µ¿ÇÏ±â
+  5.2 ì™¸ë¶€ì˜ login ê³¼ ì—°ë™í•˜ê¸°
 
-    ÀÏ´Ü ±âÁ¸ÀÇ È¸¿øÀÎÁõ ·Î±×ÀÎ ÆäÀÌÁö¿¡¼­ ÀÎÁõÀ» ¼º°øÀ» ÇÏ¸é ´ÙÀ½°ú °°ÀÌ °ªÀ» ¼¼
-    ¼Ç¿¡ °°ÀÌ ¿Ã·Á ÁÖ¸é µÈ´Ù.
+    ì¼ë‹¨ ê¸°ì¡´ì˜ íšŒì›ì¸ì¦ ë¡œê·¸ì¸ íŽ˜ì´ì§€ì—ì„œ ì¸ì¦ì„ ì„±ê³µì„ í•˜ë©´ ë‹¤ìŒê³¼ ê°™ì´ ê°’ì„ ì„¸
+    ì…˜ì— ê°™ì´ ì˜¬ë ¤ ì£¼ë©´ ëœë‹¤.
 
     session_start();
 
-    # JSBoard session µî·Ï
+    # JSBoard session ë“±ë¡
     $jsboardoopslogin = array("id"=>"$USER_ID","pass"=>"$USER_PASSWORD",
                               "name"=>"$USER_NAME","email"=>"$USER_EMAIL",
-                              "url"=>"$USER_HOMEPAGE","pos"=>"$°ü¸®ÀÚ¿©ºÎ",
-                              "super"=>"$ÀüÃ¼°ü¸®ÀÚ_ID","external"=>1);
+                              "url"=>"$USER_HOMEPAGE","pos"=>"$ê´€ë¦¬ìžì—¬ë¶€",
+                              "super"=>"$ì „ì²´ê´€ë¦¬ìž_ID","external"=>1);
 
-    ¿©±â¼­ ÁÖÀÇÇÒ °ÍÀº pos ¿¡´Â ÀüÃ¼°ü¸®ÀÚ·Î ·Î±×ÀÎÀ» ÇßÀ» °æ¿ì¿¡´Â 1ÀÇ °ªÀÌ µé¾î
-    °¡¾ß ÇÏ¸ç, ÀüÃ¼ °ü¸®ÀÚ°¡ ¾Æ´Ò °æ¿ì¿¡´Â 0 À» ÁÖµµ·Ï ÇÑ´Ù. ¶ÇÇÑ À¯Àú ÆÐ½º¿öµå´Â
-    crypt() ¾ÏÈ£È­¸¦ ÇÑ ´ÙÀ½ ¼¼¼Ç¿¡ ¿Ã·Á ÁÖµµ·Ï ÇÑ´Ù.
+    ì—¬ê¸°ì„œ ì£¼ì˜í•  ê²ƒì€ pos ì—ëŠ” ì „ì²´ê´€ë¦¬ìžë¡œ ë¡œê·¸ì¸ì„ í–ˆì„ ê²½ìš°ì—ëŠ” 1ì˜ ê°’ì´ ë“¤ì–´
+    ê°€ì•¼ í•˜ë©°, ì „ì²´ ê´€ë¦¬ìžê°€ ì•„ë‹ ê²½ìš°ì—ëŠ” 0 ì„ ì£¼ë„ë¡ í•œë‹¤. ë˜í•œ ìœ ì € íŒ¨ìŠ¤ì›Œë“œëŠ”
+    crypt() ì•”í˜¸í™”ë¥¼ í•œ ë‹¤ìŒ ì„¸ì…˜ì— ì˜¬ë ¤ ì£¼ë„ë¡ í•œë‹¤.
 
-    $_SESSION[¼¼¼ÇÀÌ¸§] = $¼¼¼ÇÀÌ¸§;
+    $_SESSION[ì„¸ì…˜ì´ë¦„] = $ì„¸ì…˜ì´ë¦„;
 
-    ¼¼¼Ç µî·Ï½Ã¿¡ À§ÀÇ ¿¹Á¦¿¡¼­ ¼¼¼ÇÀÌ¸§Àº jsboardÀÇ global.php ÀÇ $jsboard ÀÇ º¯
-    ¼ö°ªÀ» ³Ö¾îÁÖµµ·Ï ÇÑ´Ù. Áï global.php ¿¡
+    ì„¸ì…˜ ë“±ë¡ì‹œì— ìœ„ì˜ ì˜ˆì œì—ì„œ ì„¸ì…˜ì´ë¦„ì€ jsboardì˜ global.php ì˜ $jsboard ì˜ ë³€
+    ìˆ˜ê°’ì„ ë„£ì–´ì£¼ë„ë¡ í•œë‹¤. ì¦‰ global.php ì—
 
     ##############################################################################
     #  login mode Configuration
@@ -398,21 +398,21 @@ JSBoard ÀÇ ·Î±×ÀÎ ¸ðµå´Â ÃÑ 7°¡Áö ´Ü°è¸¦ °¡Áø´Ù. °¢ ´Ü°èÀÇ ¼³Á¤Àº ´ÙÀ½°ú °°´Ù. ¸
     # Don't touch this line.
     $jsboard         = "jsboard".$jsboard;
 
-    ¶ó°í ÁöÁ¤ÀÌ µÇ¾î ÀÖ´Ù¸é ¼¼¼ÇÀÌ¸§Àº jsboardummha °¡ µÈ´Ù. Áï ¼¼¼Ç µî·ÏÀº
+    ë¼ê³  ì§€ì •ì´ ë˜ì–´ ìžˆë‹¤ë©´ ì„¸ì…˜ì´ë¦„ì€ jsboardummha ê°€ ëœë‹¤. ì¦‰ ì„¸ì…˜ ë“±ë¡ì€
 
     $_SESSION[$jsboard] = $$jsboard;
 
-    ¿Í °°ÀÌ µÇ¾î¾ß ÇÑ´Ù.
+    ì™€ ê°™ì´ ë˜ì–´ì•¼ í•œë‹¤.
 
-5.3 ·Î±×¾Æ¿ô ¿¬µ¿ÇÏ±â
+5.3 ë¡œê·¸ì•„ì›ƒ ì—°ë™í•˜ê¸°
 
-    ·Î±× ¾Æ¿ô½Ã¿¡´Â ÀÏ´Ü global.php¿¡¼­ À§¿¡¼­ ¼³¸íÀ» ÇßµíÀÌ $edb[logout] À» ÁöÁ¤
-    ÇÏ¿© ·Î±×¾Æ¿ôÀ» º¸³»µµ·Ï ÇÑ´Ù. ·Î±×¾Æ¿ô ÇÒ¶§ jsboard ¸¦ À§ÇØ ¿Ã·È´ø ¼¼¼Ç°ú Äí
-    Å°´Â ¾Æ·¡¿Í °°ÀÌ »èÁ¦¸¦ ÇÑ´Ù.    
+    ë¡œê·¸ ì•„ì›ƒì‹œì—ëŠ” ì¼ë‹¨ global.phpì—ì„œ ìœ„ì—ì„œ ì„¤ëª…ì„ í–ˆë“¯ì´ $edb[logout] ì„ ì§€ì •
+    í•˜ì—¬ ë¡œê·¸ì•„ì›ƒì„ ë³´ë‚´ë„ë¡ í•œë‹¤. ë¡œê·¸ì•„ì›ƒ í• ë•Œ jsboard ë¥¼ ìœ„í•´ ì˜¬ë ¸ë˜ ì„¸ì…˜ê³¼ ì¿ 
+    í‚¤ëŠ” ì•„ëž˜ì™€ ê°™ì´ ì‚­ì œë¥¼ í•œë‹¤.    
 
-    # ¼¼¼ÇÀ» »èÁ¦
-    unset($_SESSION['¼¼¼ÇÀÌ¸§']);
+    # ì„¸ì…˜ì„ ì‚­ì œ
+    unset($_SESSION['ì„¸ì…˜ì´ë¦„']);
 
-    ¼¼¼ÇÀÌ¸§Àº ¼¼¼Ç µî·Ï½ÃÀÇ ¼¼¼ÇÀÌ¸§°ú µ¿ÀÏÇÏ´Ù.
+    ì„¸ì…˜ì´ë¦„ì€ ì„¸ì…˜ ë“±ë¡ì‹œì˜ ì„¸ì…˜ì´ë¦„ê³¼ ë™ì¼í•˜ë‹¤.
 
-    ¶Ç´Â 4.5 ·Î±×¾Æ¿ô ¸µÅ© ¸¸µé±â¸¦ Âü°íÇÑ´Ù.
+    ë˜ëŠ” 4.5 ë¡œê·¸ì•„ì›ƒ ë§í¬ ë§Œë“¤ê¸°ë¥¼ ì°¸ê³ í•œë‹¤.

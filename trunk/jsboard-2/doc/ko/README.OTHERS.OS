@@ -1,9 +1,9 @@
-$Id: README.OTHERS.OS,v 1.3 2009-11-19 05:29:50 oops Exp $
+$Id: README.OTHERS.OS,v 1.4 2014-03-02 17:11:31 oops Exp $
 
-$ Redhat, Debian, FreeBSD, Windog 2K or NT ÀÌ¿ÜÀÇ OS¿¡¼­ÀÇ ¼³Ä¡
+$ Redhat, Debian, FreeBSD, Windog 2K or NT ì´ì™¸ì˜ OSì—ì„œì˜ ì„¤ì¹˜
 
 Do It Yourself!!!!! ^.^
 
-Ã¼Å©»çÇ×
+ì²´í¬ì‚¬í•­
 
-1. ¾Æ¸¶ INSTALLER´Â Á¦´ë·Î ÀÛµ¿À» ÇÏÁö ¾ÊÀ» °ÍÀ¸·Î ¿¹»ó.
+1. ì•„ë§ˆ INSTALLERëŠ” ì œëŒ€ë¡œ ìž‘ë™ì„ í•˜ì§€ ì•Šì„ ê²ƒìœ¼ë¡œ ì˜ˆìƒ.

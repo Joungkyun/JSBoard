@@ -1,6 +1,8 @@
 <?php
-# $Id: check.php,v 1.3 2014-02-28 21:37:17 oops Exp $
-# Password Ã¼Å© ºÎºÐ
+# $Id: check.php,v 1.4 2014-03-02 17:11:29 oops Exp $
+
+# // {{{ +-- public inst_pwcheck($pass,$mypass,$msg)
+# Password ì²´í¬ ë¶€ë¶„
 function inst_pwcheck($pass,$mypass,$msg) {
   global $langs;
   if ($pass != $mypass) {
@@ -15,16 +17,22 @@ function inst_pwcheck($pass,$mypass,$msg) {
     exit;
   }
 }
+// }}}
 
-# DB¿¡¼­ »ç¿ëÇÒ º¯¼ö°ª ÁöÁ¤ À¯¹« Ã¼Å©
+# // {{{ +-- public inst_chk_var($db,$msg)
+# DBì—ì„œ ì‚¬ìš©í•  ë³€ìˆ˜ê°’ ì§€ì • ìœ ë¬´ ì²´í¬
 function inst_chk_var($db,$msg) {
   if (!$db) print_error($msg,250,150,1);
 }
+// }}}
 
+// {{{ +-- public inst_chk_numberic($name,$msg)
 function inst_chk_numberic($name,$msg) {
   if (preg_match("/^[0-9]/",$name)) print_error($msg,250,150,1);
 }
+// }}}
 
+// {{{ +-- public inst_chk_dbname($name,$msg)
 function inst_chk_dbname($name,$msg) {
   global $indb, $c;
 
@@ -33,7 +41,9 @@ function inst_chk_dbname($name,$msg) {
 	  if ($name == $r[0]) print_error($msg,250,150,1);
   }
 }
+// }}}
 
+// {{{ +-- public inst_chk_dbuser($name,$msg)
 function inst_chk_dbuser($name,$msg) {
   global $langs, $c;
   $check = "select user from user where user = '$name'";
@@ -42,7 +52,9 @@ function inst_chk_dbuser($name,$msg) {
   $row = sql_fetch_array($result,$c);
   if ($row) print_error($msg,250,150,1);
 }
+// }}}
 
+// {{{ +-- public inst_check($chk='')
 function inst_check($chk='') {
   global $dbinst, $langs;
   inst_chk_var($dbinst['name'],$langs['inst_chk_varn']);
@@ -58,4 +70,16 @@ function inst_check($chk='') {
 
   return 1;
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

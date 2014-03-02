@@ -1,8 +1,9 @@
 <?php
-# $Id: print.php,v 1.43 2014-02-28 21:37:18 oops Exp $
+# $Id: print.php,v 1.44 2014-03-02 17:11:31 oops Exp $
 #
 # Wrapper function
 #
+// {{{ +-- public js_wrapper ($func, $var1 = '', $var2 = '')
 function js_wrapper ($func, $var1 = '', $var2 = '') {
   switch ($func) {
     case 'php_info' :
@@ -45,10 +46,12 @@ EOF;
   eval ($code);
   return $ret;
 }
+// }}}
 
 
-# ¼­¹öÀÇ request_method ÇüÅÂ¿¡ µû¶ó º¯¼ö¸¦ Ã¼Å©ÇÏ´Â ÇÔ¼ö
-# register_globals °ªÀÌ off ÀÏ °æ¿ì Æí¸®ÇÏ°Ô »ç¿ë
+# // {{{ +-- public parse_query_str(void)
+# ì„œë²„ì˜ request_method í˜•íƒœì— ë”°ë¼ ë³€ìˆ˜ë¥¼ ì²´í¬í•˜ëŠ” í•¨ìˆ˜
+# register_globals ê°’ì´ off ì¼ ê²½ìš° í¸ë¦¬í•˜ê²Œ ì‚¬ìš©
 #
 function parse_query_str() {
   if(js_wrapper('ini_get','register_globals')) return;
@@ -69,15 +72,19 @@ function parse_query_str() {
     }
   }
 }
+// }}}
 
-# ¿øÇÏ´Â ÆäÀÌÁö·Î ÀÌµ¿½ÃÅ°´Â ÇÔ¼ö
+# // {{{ +-- public move_page($path,$time = 0)
+# ì›í•˜ëŠ” í˜ì´ì§€ë¡œ ì´ë™ì‹œí‚¤ëŠ” í•¨ìˆ˜
 function move_page($path,$time = 0) {
   $path = str_replace(" ","%20",$path);
   echo "<META http-equiv=\"refresh\" content=\"$time;URL=$path\">";
 }
+// }}}
 
-# ³İ½ºÄÉÀÌÇÁ¿Í ÀÍ½º°£ÀÇ FORM ÀÔ·ÂÃ¢ÀÇ Å©±â Â÷ÀÌ¸¦ º¸Á¤ÇÏ±â À§ÇÑ ÇÔ ¼ö
-# intval - º¯¼ö¸¦ Á¤¼öÇüÀ¸·Î º¯È¯ÇÔ
+# // {{{ +-- public form_size($size, $print = 0)
+# ë„·ìŠ¤ì¼€ì´í”„ì™€ ìµìŠ¤ê°„ì˜ FORM ì…ë ¥ì°½ì˜ í¬ê¸° ì°¨ì´ë¥¼ ë³´ì •í•˜ê¸° ìœ„í•œ í•¨ ìˆ˜
+# intval - ë³€ìˆ˜ë¥¼ ì •ìˆ˜í˜•ìœ¼ë¡œ ë³€í™˜í•¨
 #          http://www.php.net/manual/function.intval.php
 function form_size($size, $print = 0) {
   global $langs, $agent;
@@ -85,16 +92,16 @@ function form_size($size, $print = 0) {
   # for Nescape
   if($agent['br'] == 'NS' && $agent['vr'] <= 4) {
     if($agent['os'] == 'NT') {
-      if($agent['ln'] == 'KO') $size *= 1.1; # ÇÑ±ÛÆÇ
+      if($agent['ln'] == 'KO') $size *= 1.1; # í•œê¸€íŒ
       else {
         if ($langs['code'] == 'ko') $size *= 2.6;
         else $size *= 1.4;
       }
     } else if($agent['os'] == 'WIN') {
-      if($agent['ln'] == 'KO') $size *= 1.1; # ÇÑ±ÛÆÇ
+      if($agent['ln'] == 'KO') $size *= 1.1; # í•œê¸€íŒ
       else $size *= 1.3;
     } elseif($agent['os'] == 'LINUX') {
-      if($agent['ln'] == 'KO') $size *= 2.8; # ÇÑ±ÛÆÇ
+      if($agent['ln'] == 'KO') $size *= 2.8; # í•œê¸€íŒ
       else $size *= 1.0;
     }
   }
@@ -102,7 +109,7 @@ function form_size($size, $print = 0) {
   # Nescape 6 or Mozilla
   else if($agent['br'] == 'MOZL' || ($agent['br'] == 'NS' && $agent['vr'] >= 6)) {
     if($agent['os'] == 'NT') {
-      if($agent['ln'] == 'KO') $size *= 2.2; # ÇÑ±ÛÆÇ
+      if($agent['ln'] == 'KO') $size *= 2.2; # í•œê¸€íŒ
       else {
         if ($langs['code'] == 'ko') $size *= 2.3;
         else $size *= 1.8;
@@ -110,7 +117,7 @@ function form_size($size, $print = 0) {
     } else $size *= 1.9;
   }
 
-  # ÀÎÅÍ³İ ÀÍ½ºÇÃ·Î·¯
+  # ì¸í„°ë„· ìµìŠ¤í”Œë¡œëŸ¬
   else if($agent['br'] == 'MSIE' || $agent['br'] == 'Firefox' || $agent['br'] == 'Chrome') {
     if ($agent['os'] == 'NT')
       if ($langs['code'] == 'ko') $size *= 2.3;
@@ -126,11 +133,13 @@ function form_size($size, $print = 0) {
 
   return $size;
 }
+// }}}
 
-# ÇöÀç ÆäÀÌÁöÀÇ ¾Õ, µÚ ÆäÀÌÁö¸¦ Á¤ÇØÁØ °¹¼ö($num)¸¸Å­ Ãâ·ÂÇÏ´Â ÇÔ¼ö
+# // {{{ +-- public page_list($table, $pages, $count, $num, $print = 0)
+# í˜„ì¬ í˜ì´ì§€ì˜ ì•, ë’¤ í˜ì´ì§€ë¥¼ ì •í•´ì¤€ ê°¯ìˆ˜($num)ë§Œí¼ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜
 function page_list($table, $pages, $count, $num, $print = 0) {
-  global $color; # °Ô½ÃÆÇ ±âº» ¼³Á¤ (config/global.php)
-  global $o;   # °Ë»ö µî °ü·Ã º¯¼ö
+  global $color; # ê²Œì‹œíŒ ê¸°ë³¸ ì„¤ì • (config/global.php)
+  global $o;   # ê²€ìƒ‰ ë“± ê´€ë ¨ ë³€ìˆ˜
 
   $search = search2url($o);
 
@@ -153,13 +162,13 @@ function page_list($table, $pages, $count, $num, $print = 0) {
     $num_m = -$num;
   }
 
-  # Ã³À½ ÆäÀÌÁö ¸µÅ©
+  # ì²˜ìŒ í˜ì´ì§€ ë§í¬
   $str .= "\n<!-- ============================ Page List Form ========================== -->\n";
   if ($pages['cur'] != "1" && $d0 > 0)
     $str .= "<A HREF=\"list.php?table=$table&amp;page=1$search\" title='First Page'>".
             "<FONT style=\"font-size:10px;font-family:tahoma,sans-serif;color:{$color['text']}\">[F]..</FONT></A>\n";
 
-  # ÁöÁ¤µÈ ¼ö ¸¸Å­ ÆäÀÌÁö ¸µÅ©
+  # ì§€ì •ëœ ìˆ˜ ë§Œí¼ í˜ì´ì§€ ë§í¬
   if($pages['all'] < $num*2+1) {
     $pagechk = $num*2;
     for($co = $num_m; $co <= $num_p; $co++) {
@@ -185,7 +194,7 @@ function page_list($table, $pages, $count, $num, $print = 0) {
     }
   }
 
-  # ¸¶Áö¸· ÆäÀÌÁö ¸µÅ©
+  # ë§ˆì§€ë§‰ í˜ì´ì§€ ë§í¬
   if($pages['cur'] != $pages['all'] && $d1 > 0)
       $str .= "<A HREF=\"list.php?table=$table&amp;page={$pages['all']}$search\" title='Last Page'>".
               "<FONT style=\"font-size:10px;font-family:tahoma,sans-serif;color:{$color['text']}\">".
@@ -198,19 +207,23 @@ function page_list($table, $pages, $count, $num, $print = 0) {
 
   return $str;
 }
+// }}}
 
+// {{{ +-- public page_form($pages,$o)
 function page_form($pages,$o) {
   $s['post'] = search2url($o, "post");
   $s['value'] = !$pages['cur'] ? "" : $pages['cur'];
 
   return $s;
 }
+// }}}
 
+// {{{ +-- public search_form($o)
 function search_form($o) {
-  $s['ss'] = convspecialchars(stripslashes($o['ss']));
+  $s['ss'] = htmlspecialchars(stripslashes($o['ss']));
 
   if($o['er']) {
-    # Á¤±Ô Ç¥Çö½Ä: °Ë»ö¾î°¡ "[,("·Î ½ÃÀÛÇßÁö¸¸ "],)"·Î ´İÁö ¾ÊÀº °æ¿ì Ã¼Å©
+    # ì •ê·œ í‘œí˜„ì‹: ê²€ìƒ‰ì–´ê°€ "[,("ë¡œ ì‹œì‘í–ˆì§€ë§Œ "],)"ë¡œ ë‹«ì§€ ì•Šì€ ê²½ìš° ì²´í¬
     $chk = preg_replace("/\\\([\]\[()])/i","",$s['ss']);
     $chk = preg_replace("/[^\[\]()]/i","",$chk);
 
@@ -229,7 +242,9 @@ function search_form($o) {
 
   return $s;
 }
+// }}}
 
+// {{{ +-- public print_reply($table, $list, $print = 0)
 function print_reply($table, $list, $print = 0) {
   if($list['reto']) {
     $result = get_article($table, $list['reto'], "num");
@@ -240,10 +255,12 @@ function print_reply($table, $list, $print = 0) {
   if($print) echo $num;
   return $num;
 }
+// }}}
 
-# ¼Óµµ Å×½ºÆ®¿ë µğ¹ö±× ÇÔ¼ö
+# // {{{ +-- public debug($color, $str = "")
+# ì†ë„ í…ŒìŠ¤íŠ¸ìš© ë””ë²„ê·¸ í•¨ìˆ˜
 #
-# microtime - ÇöÀç À¯´Ğ½º Å¸ÀÓ½ºÆÔÇÁ¿Í ¸¶ÀÌÅ©·Î ÃÊ¸¦ Ãâ·Â
+# microtime - í˜„ì¬ ìœ ë‹‰ìŠ¤ íƒ€ì„ìŠ¤íŒ¸í”„ì™€ ë§ˆì´í¬ë¡œ ì´ˆë¥¼ ì¶œë ¥
 #             http://www.php.net/manual/function.microtime.php
 function debug($color, $str = "") {
   global $debug;
@@ -251,8 +268,10 @@ function debug($color, $str = "") {
   $time   = microtime();
   printf("<CENTER><FONT COLOR=\"$color\">%s [%s][%s]</FONT></CENTER>\n", $time, $str, ++$debug);
 }
+// }}}
 
-# list pageÀÇ »ó,ÇÏ´ÜÀÇ ÆäÀÌÁö ¸µÅ©¶õ Ãâ·Â ÇÔ¼ö
+# // {{{ +-- public list_cmd($img=0,$prt=0)
+# list pageì˜ ìƒ,í•˜ë‹¨ì˜ í˜ì´ì§€ ë§í¬ë€ ì¶œë ¥ í•¨ìˆ˜
 function list_cmd($img=0,$prt=0) {
   global $jsboard, $o, $color, $table, $pages, $enable;
   global $board, $langs, $page, $print;
@@ -284,18 +303,20 @@ function list_cmd($img=0,$prt=0) {
      $str['today'] = "<A HREF=\"list.php?table=$table&amp;o[at]=s&amp;o[st]=t\" TITLE=\"{$langs['cmd_today']}\">{$menu['today']}</A>\n";
 
   if($board['mode'] != 0 && $board['mode'] != 2 && $board['mode'] != 6 && $board['mode'] != 7) {
-    # ¾îµå¹ÎÀÌ ¾Æ´Ï¸é ¾²±â ¸µÅ©¸¦ Á¦°Å
+    # ì–´ë“œë¯¼ì´ ì•„ë‹ˆë©´ ì“°ê¸° ë§í¬ë¥¼ ì œê±°
     if($_SESSION[$jsboard]['pos'] != 1 && !$board['adm']) $str['write'] = "";
   }
 
-  # °Ô½ÃÆÇ ¸ñ·Ï »ó,ÇÏ´Ü¿¡ ´ÙÀ½, ÀÌÀü ÆäÀÌÁö, ±Û¾²±â µîÀÇ ¸µÅ©¸¦ Ãâ·ÂÇÔ¼ö
+  # ê²Œì‹œíŒ ëª©ë¡ ìƒ,í•˜ë‹¨ì— ë‹¤ìŒ, ì´ì „ í˜ì´ì§€, ê¸€ì“°ê¸° ë“±ì˜ ë§í¬ë¥¼ ì¶œë ¥í•¨ìˆ˜
   $link = "{$str['all']}{$str['prev']}{$str['next']}{$str['write']}{$str['today']}";
 
   if($prt) echo $link;
   return $link;
 }
+// }}}
 
-# read pageÀÇ »ó,ÇÏ´ÜÀÇ ÆäÀÌÁö ¸µÅ©¶õ Ãâ·Â ÇÔ¼ö
+# // {{{ +-- public read_cmd($img=0,$prt=0)
+# read pageì˜ ìƒ,í•˜ë‹¨ì˜ í˜ì´ì§€ ë§í¬ë€ ì¶œë ¥ í•¨ìˆ˜
 function read_cmd($img=0,$prt=0) {
   global $jsboard, $o, $color, $table, $pages, $enable, $board;
   global $pos, $list, $no, $page, $langs, $print, $alert;
@@ -355,7 +376,7 @@ function read_cmd($img=0,$prt=0) {
     $str['rep'] = "<A HREF=\"list.php?table=$table&amp;o[at]=s&amp;o[sc]=r&amp;o[no]=$reto\">{$menu['conj']}</A>";
   } else $str['rep'] = "";
 
-  # ·Î±×ÀÎ mode ¿¡¼­ °ü¸®ÀÚ°¡ ¾Æ´Ï°í ÀÚ½ÅÀÇ ±ÛÀÌ ¾Æ´Ò°æ¿ì ¼öÁ¤°ú »èÁ¦¸µÅ©¸¦ Á¦°Å
+  # ë¡œê·¸ì¸ mode ì—ì„œ ê´€ë¦¬ìê°€ ì•„ë‹ˆê³  ìì‹ ì˜ ê¸€ì´ ì•„ë‹ê²½ìš° ìˆ˜ì •ê³¼ ì‚­ì œë§í¬ë¥¼ ì œê±°
   if(preg_match("/^(1|2|3|5|7)$/i",$board['mode']) && isset($_SESSION[$jsboard])) {
     if($_SESSION[$jsboard]['id'] != $list['name'] && $_SESSION[$jsboard]['pos'] != 1 && !$board['adm']) {
       $str['edit'] = "";
@@ -363,7 +384,7 @@ function read_cmd($img=0,$prt=0) {
     }
   }
 
-  # admin only mode ¿¡¼­ anonymous ³ª °ü¸®ÀÚ°¡ ¾Æ´Ò °æ¿ì ¾²±â ¼öÁ¤ »èÁ¦ ¸µÅ©¸¦ Á¦°Å
+  # admin only mode ì—ì„œ anonymous ë‚˜ ê´€ë¦¬ìê°€ ì•„ë‹ ê²½ìš° ì“°ê¸° ìˆ˜ì • ì‚­ì œ ë§í¬ë¥¼ ì œê±°
   if(!preg_match("/^(0|2|6|7)$/i",$board['mode']) && $_SESSION[$jsboard]['pos'] != 1 && !$board['adm']) {
     $str['write'] = "";
     if($board['mode'] != 4 && $board['mode'] != 5) {
@@ -373,7 +394,7 @@ function read_cmd($img=0,$prt=0) {
     }
   }
 
-  # reply Á¦ÇÑ ¸ğµåÀÏ °æ¿ì °ü¸®ÀÚ°¡ ¾Æ´Ï¸é reply ¸µÅ©¸¦ »èÁ¦
+  # reply ì œí•œ ëª¨ë“œì¼ ê²½ìš° ê´€ë¦¬ìê°€ ì•„ë‹ˆë©´ reply ë§í¬ë¥¼ ì‚­ì œ
   if(preg_match("/^(6|7)$/i",$board['mode']) && $_SESSION[$jsboard]['pos'] != 1 && !$board['adm'])
     $str['reply'] = "";
 
@@ -394,9 +415,11 @@ function read_cmd($img=0,$prt=0) {
   if($prt) echo $t;
   else return $t;
 }
+// }}}
 
 
-# ÇØ´ç±ÛÀÇ °ü·Ã±Û ¸®½ºÆ®¸¦ »Ñ·ÁÁØ´Ù.
+# // {{{ +-- public article_reply_list($table,$pages,$print=0)
+# í•´ë‹¹ê¸€ì˜ ê´€ë ¨ê¸€ ë¦¬ìŠ¤íŠ¸ë¥¼ ë¿Œë ¤ì¤€ë‹¤.
 function article_reply_list($table,$pages,$print=0) {
   global $list, $langs, $upload, $td_width, $lines, $td_array;
 
@@ -431,7 +454,7 @@ function article_reply_list($table,$pages,$print=0) {
   $o['sc']=r;
   $o['no']=$reto;
   $o['ss']="";
-  $o['ln']=4; # read¿¡¼­ ¸®½ºÆ® Ãâ·Â½Ã cellpadding°ª¸¸Å­ Á¦¸ñÀ» ÁÙ¿©¾ß ÇÔ
+  $o['ln']=4; # readì—ì„œ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥ì‹œ cellpaddingê°’ë§Œí¼ ì œëª©ì„ ì¤„ì—¬ì•¼ í•¨
   $o['idx'] = !$list['reto'] ? $list['idx'] : 0;
   $o['reto'] = !$o['idx'] ? $list['reto'] : 0;
 
@@ -455,9 +478,11 @@ function article_reply_list($table,$pages,$print=0) {
   if($print) echo $t;
   else return $t;
 }
+// }}}
 
 
-# preview ¸¦ À§ÇÑ java script Ãâ·Â
+# // {{{ +-- public print_preview_src($print=0)
+# preview ë¥¼ ìœ„í•œ java script ì¶œë ¥
 function print_preview_src($print=0) {
   global $color, $agent;
 
@@ -648,7 +673,9 @@ function print_preview_src($print=0) {
   if($print) echo $t;
   else return $t;
 }
+// }}}
 
+// {{{ +-- public print_newwindow_src($upload,$cupload,$dwho)
 function print_newwindow_src($upload,$cupload,$dwho) {
   if(($upload && $cupload) || $dwho) {
     echo "<script type=\"text/javascript\">\n".
@@ -695,8 +722,10 @@ function print_newwindow_src($upload,$cupload,$dwho) {
          "  </script>\n";
   }
 }
+// }}}
 
-# ¶óÀÌ¼¾½º °ü·Ã Ãâ·Â
+# // {{{ +-- public print_license(void)
+# ë¼ì´ì„¼ìŠ¤ ê´€ë ¨ ì¶œë ¥
 function print_license() {
   global $board, $color, $gpl_link, $designer;
 
@@ -716,7 +745,9 @@ function print_license() {
          "</TABLE>\n";
   }
 }
+// }}}
 
+// {{{ +-- public detail_searchform($p='')
 function detail_searchform($p='') {
   global $table,$board,$color,$langs,$o,$c;
 
@@ -726,7 +757,7 @@ function detail_searchform($p='') {
   $max = explode(".",date("Y.m.d",$period['max']));
   $min = explode(".",date("Y.m.d",$period['min']));
 
-  # °Ë»ö±â°£ ½ÃÀÛ ³âµµ ÇÁ¸°Æ®
+  # ê²€ìƒ‰ê¸°ê°„ ì‹œì‘ ë…„ë„ í”„ë¦°íŠ¸
   for($i=$max[0];$i>=$min[0];$i--) {
     if(!$o['y1']) $CHECK = ($i == $min[0]) ? " SELECTED" : "";
     else $CHECK = ($i == $o['y1']) ? " SELECTED" : "";
@@ -734,7 +765,7 @@ function detail_searchform($p='') {
     $print['peys'] .= "$nxthang<OPTION VALUE=$i$CHECK> $i\n";
   }
 
-  # °Ë»ö±â°£ ½ÃÀÛ ¿ù ÇÁ¸°Æ®
+  # ê²€ìƒ‰ê¸°ê°„ ì‹œì‘ ì›” í”„ë¦°íŠ¸
   for($i=1;$i<13;$i++) {
     if(!$o['m1']) $CHECK = ($i == $min[1]) ? " SELECTED" : "";
     else $CHECK = ($i == $o['m1']) ? " SELECTED" : "";
@@ -742,7 +773,7 @@ function detail_searchform($p='') {
     $print['pems'] .= "$nxthang<OPTION VALUE=$i$CHECK> $i\n";
   }
 
-  # °Ë»ö±â°£ ½ÃÀÛ ÀÏ ÇÁ¸°Æ®
+  # ê²€ìƒ‰ê¸°ê°„ ì‹œì‘ ì¼ í”„ë¦°íŠ¸
   for($i=1;$i<32;$i++) {
     if(!$o['d1']) $CHECK = ($i == $min[2]) ? " SELECTED" : "";
     else $CHECK = ($i == $o['d1']) ? " SELECTED" : "";
@@ -750,7 +781,7 @@ function detail_searchform($p='') {
     $print['peds'] .= "$nxthang<OPTION VALUE=$i$CHECK> $i\n";
   }
 
-  # °Ë»ö±â°£ ³¡ ³âµµ ÇÁ¸°Æ®
+  # ê²€ìƒ‰ê¸°ê°„ ë ë…„ë„ í”„ë¦°íŠ¸
   for($i=$max[0];$i>=$min[0];$i--) {
     if(!$o['y2']) $CHECK = ($i == $max[0]) ? " SELECTED" : "";
     else $CHECK = ($i == $o['y2']) ? " SELECTED" : "";
@@ -758,7 +789,7 @@ function detail_searchform($p='') {
     $print['peye'] .= "$nxthang<OPTION VALUE=$i$CHECK> $i\n";
   }
 
-  # °Ë»ö±â°£ ³¡ ¿ù ÇÁ¸°Æ®
+  # ê²€ìƒ‰ê¸°ê°„ ë ì›” í”„ë¦°íŠ¸
   for($i=1;$i<13;$i++) {
     if(!$o['m2']) $CHECK = ($i == $max[1]) ? " SELECTED" : "";
     else $CHECK = ($i == $o['m2']) ? " SELECTED" : "";
@@ -766,7 +797,7 @@ function detail_searchform($p='') {
     $print['peme'] .= "$nxthang<OPTION VALUE=$i$CHECK> $i\n";
   }
 
-  # °Ë»ö±â°£ ³¡ ÀÏ ÇÁ¸°Æ®
+  # ê²€ìƒ‰ê¸°ê°„ ë ì¼ í”„ë¦°íŠ¸
   for($i=1;$i<32;$i++) {
     if(!$o['d2']) $CHECK = ($i == $max[2]) ? " SELECTED" : "";
     else $CHECK = ($i == $o['d2']) ? " SELECTED" : "";
@@ -863,7 +894,9 @@ function detail_searchform($p='') {
   if($p) echo $form;
   else return $form;
 }
+// }}}
 
+// {{{ +-- public print_comment($table,$no,$print=0)
 function print_comment($table,$no,$print=0) {
   global $board, $color, $size, $rname, $page, $langs;
   global $pre_regist;
@@ -913,7 +946,9 @@ function print_comment($table,$no,$print=0) {
   if($print) echo $t;
   else return $t;
 }
+// }}}
 
+// {{{ +-- public print_keymenu($type=0)
 function print_keymenu($type=0) {
   global $table, $pages, $pos, $page, $no, $nolenth;
 
@@ -1055,13 +1090,17 @@ function print_keymenu($type=0) {
        "//-->\n".
        "</script>\n";
 }
+// }}}
 
+// {{{ +-- public print_spam_trap(void)
 function print_spam_trap() {
   echo "<form method=\"POST\" action=\"{$_SERVER['PHP_SELF']}\">\n" .
        "<input type=\"hidden\" name=\"goaway\" value=\"1\">\n" .
        "</form>\n";
 }
+// }}}
 
+// {{{ +-- public debug_block ($ipaddr, $var)
 function debug_block ($ipaddr, $var) {
   if($_SERVER['REMOTE_ADDR'] === $ipaddr) {
     echo "<pre>\n";
@@ -1070,7 +1109,9 @@ function debug_block ($ipaddr, $var) {
     exit;
   }
 }
+// }}}
 
+// {{{ +-- public new_reply_read_format (&$buf, $html)
 function new_reply_read_format (&$buf, $html) {
   $src[] = '/\[[\s]*quote[\s]*\]/i';
   if ( $html != 1 )
@@ -1090,7 +1131,9 @@ function new_reply_read_format (&$buf, $html) {
 
   $buf = preg_replace ($src, $dsc, $buf);
 }
+// }}}
 
+// {{{ +-- public utf8_fallback (&$obj, $charset, $skip = false)
 function utf8_fallback (&$obj, $charset, $skip = false) {
   if ( $skip === false ) {
     if ( check_utf8_conv ($charset) === false )
@@ -1104,8 +1147,16 @@ function utf8_fallback (&$obj, $charset, $skip = false) {
     $obj = iconv ($charset, 'utf-8//ignore', $obj);
   }
 }
+// }}}
 
-function convspecialchars ($v) {
-  return htmlspecialchars($v, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
-}
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

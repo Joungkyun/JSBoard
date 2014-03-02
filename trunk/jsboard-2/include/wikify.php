@@ -1,7 +1,7 @@
 <?php
 #
 # minimal wikify module for jsboard by wkpark@kldp.org
-# $Id: wikify.php,v 1.3 2009-11-19 05:29:51 oops Exp $
+# $Id: wikify.php,v 1.4 2014-03-02 17:11:32 oops Exp $
 #
 
 $_config=array();
@@ -11,6 +11,7 @@ $_config['shared_intermap']='';
 $_config['query_prefix']='/';
 $_config['imgs_dir_interwiki']='images/interwiki/';
 
+// {{{ +-- public get_scriptname(void)
 function get_scriptname() {
   // Return full URL of current page.
   // $_SERVER["SCRIPT_NAME"] has bad value under CGI mode
@@ -18,17 +19,23 @@ function get_scriptname() {
   // apache 2.0.x + php4.2.x Win32
   return $_SERVER["SCRIPT_NAME"];
 }
+// }}}
 
+// {{{ +-- public qualifiedUrl($url)
 function qualifiedUrl($url) {
   if (substr($url,0,7)=="http://")
     return $url;
   return "http://$_SERVER[HTTP_HOST]$url";
 }
+// }}}
 
+// {{{ +-- public _urlencode($url)
 function _urlencode($url) {
   return preg_replace("/([^a-z0-9\/\?\.\+~#&:;=%\-_]{1})/ie","'%'.strtoupper(dechex(ord(substr('\\1',-1))))",$url);
 }
+// }}}
 
+// {{{ +-- public macro_interwiki($options=array(void))
 function macro_interwiki($options=array()) {
   global $_config;
 
@@ -91,7 +98,9 @@ function macro_interwiki($options=array()) {
   }
   if ($options['init']) return;
 }
+// }}}
 
+// {{{ +-- public interwiki_repl($url,$text='',$attr='',$extra='')
 function interwiki_repl($url,$text='',$attr='',$extra='') {
   global $_config;
 
@@ -164,7 +173,9 @@ function interwiki_repl($url,$text='',$attr='',$extra='') {
 
   return $img. "<a href='".$url."' $attr title='$wiki:$page'>$text</a>$extra";
 }
+// }}}
 
+// {{{ +-- public link_repl($url,$attr='')
 function link_repl($url,$attr='') {
   #if ($url[0]=='<') { print $url;return $url;}
   $url=str_replace('\"','"',$url);
@@ -206,7 +217,9 @@ function link_repl($url,$attr='') {
   }
   return $url;
 }
+// }}}
 
+// {{{ +-- public wikify(&$line,$options=array(void))
 function wikify(&$line,$options=array()) {
   global $_config;
 
@@ -222,6 +235,7 @@ function wikify(&$line,$options=array()) {
 
   $line=preg_replace("/(".$_config['wordrule'].")/e","link_repl('\\1')",$line);
 }
+// }}}
 
 # test
 #macro_interwiki();
@@ -231,4 +245,14 @@ function wikify(&$line,$options=array()) {
 #
 #echo $line;
 
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

@@ -2,16 +2,16 @@
 ########################################################################
 # JSBoard Pre List v0.4
 # Scripted By JoungKyun Kim 2002.07.30
-# $Id: prelist.php,v 1.8 2014-02-28 21:37:18 oops Exp $
+# $Id: prelist.php,v 1.9 2014-03-02 17:11:31 oops Exp $
 ########################################################################
 
-# JSBoard°¡ ¼³Ä¡µÇ¾î ÀÖ´Â Àı´ë °æ·Î
-# ¸¶Áö¸·¿¡ /¸¦ ºÙÀÌ¸é ¾ÈµÊ
+# JSBoardê°€ ì„¤ì¹˜ë˜ì–´ ìˆëŠ” ì ˆëŒ€ ê²½ë¡œ
+# ë§ˆì§€ë§‰ì— /ë¥¼ ë¶™ì´ë©´ ì•ˆë¨
 $prlist['path'] = "/webroot/jsboard-version";
 
-# JSBoard°¡ ¼³Ä¡µÇ¾î ÀÖ´Â À¥ °æ·Î
-# ¸¶Áö¸·¿¡ /¸¦ ºÙÀÌ¸é ¾ÈµÊ
-$prlist['wpath'] = "http://µµ¸ŞÀÎ/jsboard-version";
+# JSBoardê°€ ì„¤ì¹˜ë˜ì–´ ìˆëŠ” ì›¹ ê²½ë¡œ
+# ë§ˆì§€ë§‰ì— /ë¥¼ ë¶™ì´ë©´ ì•ˆë¨
+$prlist['wpath'] = "http://ë„ë©”ì¸/jsboard-version";
 
 $sqltype = extension_loaded('mysqli') ? 'sqli' : 'sql';
 
@@ -32,19 +32,20 @@ print_preview_src(1);
 if ( $prlist['endtag'] )
   echo $prlist['endtag'];
 
-# ±Û¸®½ºÆ®µéÀ» Ãâ·ÂÇÏ´Â design
-#   echo ¹®ÀÇ "" »çÀÌ¿¡¼­ µğÀÚÀÎÀ» ³ÖÀ¸¸é µÊ
-#   ´Ü ÁÖÀÇ ÇÒ°ÍÀº µû¿ÈÇ¥(")´Â \" ·Î Ç¥±â¸¦ ÇØ¾ß ÇÔ
-#   $p['link']  -> ±Û ¸®½ºÆ®ÀÇ ¸µÅ©
-#   $p['name']  -> ±Û¾´ÀÌ
-#   $p['date']  -> µî·ÏÀÏ
-#   $p['count'] -> Á¶È¸¼ö
+# // {{{ +-- public print_prlist($p)
+# ê¸€ë¦¬ìŠ¤íŠ¸ë“¤ì„ ì¶œë ¥í•˜ëŠ” design
+#   echo ë¬¸ì˜ "" ì‚¬ì´ì—ì„œ ë””ìì¸ì„ ë„£ìœ¼ë©´ ë¨
+#   ë‹¨ ì£¼ì˜ í• ê²ƒì€ ë”°ì˜´í‘œ(")ëŠ” \" ë¡œ í‘œê¸°ë¥¼ í•´ì•¼ í•¨
+#   $p['link']  -> ê¸€ ë¦¬ìŠ¤íŠ¸ì˜ ë§í¬
+#   $p['name']  -> ê¸€ì“´ì´
+#   $p['date']  -> ë“±ë¡ì¼
+#   $p['count'] -> ì¡°íšŒìˆ˜
 #
-# table tag¸¦ »ç¿ëÇÏ±â À§ÇØ¼­´Â ¾Æ·¡ÀÇ prelist() ÇÔ¼ö¸¦
-# Àß ¿¬°èÇØ¾ßÇÔ
+# table tagë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ì„œëŠ” ì•„ë˜ì˜ prelist() í•¨ìˆ˜ë¥¼
+# ì˜ ì—°ê³„í•´ì•¼í•¨
 #
-# $prlistTemplate ¶ó´Â º¯¼ö°¡ Á¤ÀÇ µÇ¾î ÀÖÀ» °æ¿ì¿¡´Â ÀÌ º¯¼öÀÇ
-# µğÀÚÀÎÀ» ÀÌ¿ëÇÏ¿© Ãâ·Â
+# $prlistTemplate ë¼ëŠ” ë³€ìˆ˜ê°€ ì •ì˜ ë˜ì–´ ìˆì„ ê²½ìš°ì—ëŠ” ì´ ë³€ìˆ˜ì˜
+# ë””ìì¸ì„ ì´ìš©í•˜ì—¬ ì¶œë ¥
 #
 function print_prlist($p) {
   $temp = trim($GLOBALS['prlistTemplate']) ? $GLOBALS['prlistTemplate'] : "";
@@ -72,11 +73,13 @@ function print_prlist($p) {
     echo "{$p['link']} {$p['name']} {$p['date']} {$p['count']}<BR>\n";
   }
 }
+// }}}
 
-# PHP¿¡ ´ëÇØ¼­ Àß ¸ğ¸£½Å´Ù°í »ı°¢ÇÏ½Ã´Â ºĞµéÀº °Çµå¸®Áö ¸»°Í!!!
-# table ÀÌ¸§
-# $limit ±Û¼ö
-# $cut Ãâ·Â±ÛÀÚ¼ö
+# // {{{ +-- public prelist($t,$limit=3,$cut=30)
+# PHPì— ëŒ€í•´ì„œ ì˜ ëª¨ë¥´ì‹ ë‹¤ê³  ìƒê°í•˜ì‹œëŠ” ë¶„ë“¤ì€ ê±´ë“œë¦¬ì§€ ë§ê²ƒ!!!
+# table ì´ë¦„
+# $limit ê¸€ìˆ˜
+# $cut ì¶œë ¥ê¸€ììˆ˜
 #
 function prelist($t,$limit=3,$cut=30) {
   global $prlist, $db;
@@ -98,9 +101,9 @@ function prelist($t,$limit=3,$cut=30) {
     if ( $GLOBALS['prlistOpt'] )
       $p['l'] = " ".$GLOBALS['prlistOpt'];
 
-    $p['preview'] = cut_string(convspecialchars($row['text']),100);
+    $p['preview'] = cut_string(htmlspecialchars($row['text']),100);
     $p['preview'] = preg_replace_callback ('/[#\'\x5c]/','escape_callback',$p['preview']);
-    $p['preview'] = convspecialchars(convspecialchars($p['preview']));
+    $p['preview'] = htmlspecialchars(htmlspecialchars($p['preview']));
     $p['preview'] = preg_replace("/\r?\n/i","<br>",$p['preview']);
     $p['preview'] = trim(str_replace("&amp;amp;","&amp;",$p['preview']));
     $p['preview'] = " onMouseOver=\"drs('{$p['preview']}'); return true;\" onMouseOut=\"nd(); return true;\"";
@@ -112,15 +115,29 @@ function prelist($t,$limit=3,$cut=30) {
 
     $p['link'] = "<a href=\"{$prlist['wpath']}/read.php?table=$t&amp;no={$p['no']}{$p['l']}\" {$p['preview']}>{$p['title']}</a>";
 
-    #¸®½ºÆ® Ãâ·Â
+    #ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
     print_prlist($p);
   }
 
   sql_free_result($result,$c);
   sql_close($c);
 }
+// }}}
 
+// {{{ +-- public escape_callback ($matches)
 function escape_callback ($matches) {
   return '&#x' . strtoupper (dechex (ord ($matches[0]))) . ';';
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

@@ -1,6 +1,6 @@
 <?php
 # MySQLi extension API
-# $Id: sqli.php,v 1.1 2014-02-28 21:37:18 oops Exp $
+# $Id: sqli.php,v 1.2 2014-03-02 17:11:32 oops Exp $
 #
 
 // {{{ +-- public sql_connect($server,$user,$pass,$mode='w')
@@ -26,7 +26,7 @@ function sql_connect($server,$user,$pass,$mode='w') {
   sql_error (mysqli_connect_errno (), mysqli_connect_error ());
 
   //if ( is_object ($r) && $db['charset'] )
-  sql_query ('set names euckr', $r, 1);
+  sql_query ('set names utf8', $r, 1);
 
   return $r;
 }

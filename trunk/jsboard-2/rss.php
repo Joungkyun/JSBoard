@@ -1,9 +1,9 @@
 <?php
 # JSboard RSS Feed
-# $Id: rss.php,v 1.26 2014-02-28 21:37:17 oops Exp $
+# $Id: rss.php,v 1.27 2014-03-02 17:11:28 oops Exp $
 #
 
-# header file »ğÀÔ
+# header file ì‚½ì…
 #
 if ( ! @file_exists ("include/header.php") ) {
   echo "<script>\nalert('Don\'t exist header file');\n" .
@@ -13,30 +13,30 @@ if ( ! @file_exists ("include/header.php") ) {
   include 'include/header.php';
 }
 
-# RSS »ç¿ë ¿©ºÎ Ã¼Å© (user config file ·Î ºÎÅÍ)
+# RSS ì‚¬ìš© ì—¬ë¶€ ì²´í¬ (user config file ë¡œ ë¶€í„°)
 #
 if ( ! $rss['use'] ) {
   echo "Don't rss support on this board\n";
   exit();
 }
 
-# rss ¿¡¼­ Ãâ·ÂÇÒ ¸®½ºÆ®ÀÇ ¼ö¸¦ ÁöÁ¤
+# rss ì—ì„œ ì¶œë ¥í•  ë¦¬ìŠ¤íŠ¸ì˜ ìˆ˜ë¥¼ ì§€ì •
 #
 $rss['default_article_number'] = '30';
 
-# °Ô½ÃÆÇ ÁÖ¼Ò
+# ê²Œì‹œíŒ ì£¼ì†Œ
 #
 $rss['link'] = $board['path'] . "list.php?table=" . $table;
 
 if (!$no)
   $no = $rss['default_article_number'];
 
-# DB Á¤º¸ °¡Á®¿À±â
+# DB ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 #
 $c = sql_connect ($db['server'], $db['user'], $db['pass']);
 sql_select_db ($db['name'], $c);
 
-# Description Á¤º¸°¡ ÀÖ°Ô ÇÒ °ÍÀÎÁö ¾Æ´ÑÁö ¿©ºÎ Ã¼Å© (config file ¿¡¼­ Ã¼Å©)
+# Description ì •ë³´ê°€ ìˆê²Œ í•  ê²ƒì¸ì§€ ì•„ë‹Œì§€ ì—¬ë¶€ ì²´í¬ (config file ì—ì„œ ì²´í¬)
 #
 if ($rss['is_des'])
   $sql = "select no, date, name, rname, title, text from {$table} order by date DESC limit {$no}";
@@ -47,7 +47,7 @@ $result = sql_query ($sql, $c);
 $i = 0;
 
 while( $rss_article[$i] = sql_fetch_array($result,$c) ) {
-  $rss_article[$i]['title'] = convspecialchars ($rss_article[$i]['title'], ENT_QUOTES);
+  $rss_article[$i]['title'] = htmlspecialchars ($rss_article[$i]['title'], ENT_QUOTES);
   $rss_article[$i]['link'] = "{$board['path']}read.php?table={$table}&amp;no={$rss_article[$i]['no']}";
   $rss_article[$i]['date'] = date ("r", $rss_article[$i]['date']);
   #$rss_article[$i]['date'] = date("Y-m-d",$rss_article[$i]['date'] ) . 'T' . date("H:i:sO", $rss_article[$i]['date']);
@@ -55,13 +55,13 @@ while( $rss_article[$i] = sql_fetch_array($result,$c) ) {
   if ( $rss['is_des'] ) {
     #$rss_article[$i]['text'] = preg_replace ("!\n!", "<br />\n", $rss_article[$i]['text']);
     $rss_article[$i]['text'] = preg_replace ("!^[([0-9]+;[0-9]+m)?!", "", $rss_article[$i]['text']);
-    $rss_article[$i]['text'] = convspecialchars ($rss_article[$i]['text']);
+    $rss_article[$i]['text'] = htmlspecialchars ($rss_article[$i]['text']);
     $rss_article[$i]['text'] = auto_link ($rss_article[$i]['text']);
 
     $_body = "<table width=\"100%\" border=0 cellpadding=0 cellspacing=1>\n" .
              "<tr><td bgcolor=#000000>\n" .
              "<table width=\"100%\" border=0 cellpadding=3 cellspacing=1>\n" .
-             "<tr><td style=\"font: 12px ±¼¸²Ã¼; font-weight: bold; color: #ffffff\">\n" .
+             "<tr><td style=\"font: 12px êµ´ë¦¼ì²´; font-weight: bold; color: #ffffff\">\n" .
              "REPLY : <a href={$board['path']}reply.php?table={$table}&no={$rss_article[$i]['no']} style=\"color: #ffffff; text-decoration: none;\">" .
              "{$board['path']}reply.php?table={$table}&no={$rss_article[$i]['no']}</a><br />\n" .
              "DELETE: <a href={$board['path']}delete.php?table={$table}&no={$rss_article[$i]['no']} style=\"color: #ffffff; text-decoration: none;\">" .
@@ -78,7 +78,7 @@ while( $rss_article[$i] = sql_fetch_array($result,$c) ) {
              "</td></tr>\n" .
              "</table>\n";
 
-    $_body = convspecialchars ($_body, ENT_QUOTES);
+    $_body = htmlspecialchars ($_body, ENT_QUOTES);
     $rss_article[$i]['text'] = $_body;
   }
 
@@ -100,7 +100,7 @@ $_charset = strtolower ($langs['charset']);
 $gotoUTF8 = check_utf8_conv ($_charset);
 $cset = $gotoUTF8 ? 'utf-8' : $_charset;
 
-# ¿©±â ±îÁö ÀÌ»óÀÌ ¾øÀ¸¸é, ½ÇÁ¦ RSS Ãâ·Â
+# ì—¬ê¸° ê¹Œì§€ ì´ìƒì´ ì—†ìœ¼ë©´, ì‹¤ì œ RSS ì¶œë ¥
 #
 header ('Cache-Control: no-cache, pre-check=0, post-check=0, max-age=0');
 header ('Expires: ' . gmdate('D, d M Y H:i:s', time()) . ' GMT');

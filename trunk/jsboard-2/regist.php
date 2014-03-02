@@ -1,6 +1,6 @@
 <?php
-# $Id: regist.php,v 1.19 2014-02-28 21:37:17 oops Exp $
-$p_time[] = microtime(); # ¼Óµµ Ã¼Å©
+# $Id: regist.php,v 1.20 2014-03-02 17:11:28 oops Exp $
+$p_time[] = microtime(); # ì†ë„ ì²´í¬
 include "include/header.php";
 include "admin/include/check.php";
 
@@ -8,7 +8,7 @@ if(!$board['regist']) {
   if($_SESSION[$jsboard]['pos'] != 1) print_error("ADMIN {$langs['login_err']}");
 }
 
-$a_time[] = microtime(); # ¼Óµµ Ã¼Å©
+$a_time[] = microtime(); # ì†ë„ ì²´í¬
 if($m == "act" || $m == "chkid") {
   if($m == "chkid") {
     $db['rhost'] = $db['server'];
@@ -32,13 +32,13 @@ if($m == "act") {
   if(!$email) print_error($langs['reg_format_e'],250,150,1);
   $url = str_replace("http://","",$url);
 
-  # À¯Àú°¡ ÀÌ¹Ì µî·ÏµÇ¾î ÀÖ´ÂÁö È®ÀÎ
+  # ìœ ì €ê°€ ì´ë¯¸ ë“±ë¡ë˜ì–´ ìžˆëŠ”ì§€ í™•ì¸
   $query = "SELECT nid FROM userdb WHERE nid = '$id'";
   sql_query($query,$c);
   $row = sql_affected_rows($c);
   if($row) print_error($langs['chk_id_n'],250,150,1);
 
-  # À¯Àú°¡ µî·ÏÀÌ ¾ÈµÇ¾î ÀÖÀ¸¸é µî·Ï
+  # ìœ ì €ê°€ ë“±ë¡ì´ ì•ˆë˜ì–´ ìžˆìœ¼ë©´ ë“±ë¡
   $pass = str_replace("\$","\\\$",crypt($pass));
   $query = "INSERT INTO userdb (no,nid,name,email,url,passwd)
                  VALUES ('','$id','$name','$email','$url','$pass')";

@@ -1,6 +1,7 @@
 <?php
-# $Id: list.php,v 1.10 2014-02-28 21:37:18 oops Exp $
+# $Id: list.php,v 1.11 2014-03-02 17:11:31 oops Exp $
 
+// {{{ +-- public print_list($table, $list, $r=0)
 function print_list($table, $list, $r=0)
 {
   global $color, $board, $langs, $enable, $print, $td_array;
@@ -14,8 +15,9 @@ function print_list($table, $list, $r=0)
   if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode'])) {
     $list['name'] = $list['rname'] ? $list['rname'] : $list['name'];
   }
+
   $list['name'] = unhtmlspecialchars($list['name']);
-  $list['name']  = convspecialchars(cut_string($list['name'],$board['nam_l']));
+  $list['name']  = htmlspecialchars(cut_string($list['name'],$board['nam_l']));
   $list['name'] = trim(ugly_han($list['name']));
   $list['title'] = unhtmlspecialchars($list['title']);
 
@@ -25,9 +27,9 @@ function print_list($table, $list, $r=0)
     $board['tit_l'] += 28;
   }
 
-  # read½ÃÀÇ °ü·Ã±Û Ãâ·Â½Ã Á¦¸ñ±æÀÌ Á¶Á¤
-  if(!$r['ln']) $list['title'] = convspecialchars(cut_string($list['title'],$board['tit_l']-$list['rede']*2));
-  else $list['title'] = convspecialchars(cut_string($list['title'],$board['tit_l']-$r['ln']-$list['rede']*2));
+  # readì‹œì˜ ê´€ë ¨ê¸€ ì¶œë ¥ì‹œ ì œëª©ê¸¸ì´ ì¡°ì •
+  if(!$r['ln']) $list['title'] = htmlspecialchars(cut_string($list['title'],$board['tit_l']-$list['rede']*2));
+  else $list['title'] = htmlspecialchars(cut_string($list['title'],$board['tit_l']-$r['ln']-$list['rede']*2));
 
   if ($fchk == 1) {
     $fchk = 0;
@@ -72,11 +74,11 @@ function print_list($table, $list, $r=0)
     $list['name'] = "<FONT STYLE=\"color:$fg\">{$list['name']}</FONT>";
   }
 
-  # ±Û ³»¿ë ¹Ì¸® º¸±â ¼³Á¤
+  # ê¸€ ë‚´ìš© ë¯¸ë¦¬ ë³´ê¸° ì„¤ì •
   if($enable['pre']) {
     $list['ptext'] = cut_string($list['text'],$enable['preren']);
     $list['ptext'] = preg_replace("/#|'|\\\\/i","\\\\\\0",$list['ptext']);
-    $list['ptext'] = convspecialchars(convspecialchars($list['ptext']));
+    $list['ptext'] = htmlspecialchars(htmlspecialchars($list['ptext']));
     $list['ptext'] = preg_replace("/\r*\n/i","<BR>",$list['ptext']);
     $list['ptext'] = trim(str_replace("&amp;amp;","&amp;",$list['ptext']));
     $list['preview'] = " onMouseOver=\"drs('{$list['ptext']}'); return true;\" onMouseOut=\"nd(); return true;\"";
@@ -85,7 +87,7 @@ function print_list($table, $list, $r=0)
   if($enable['comment'] && $list['comm'] > 0)
     $comment_size = "<FONT STYLE=\"font: 9px tahoma,sans-serif;\">[{$list['comm']}]</FONT>";
 
-  # UPLOAD °ü·Ã ¼³Á¤
+  # UPLOAD ê´€ë ¨ ì„¤ì •
   if($upload['yesno']) {
     if($cupload['yesno']) {
       if($list['bofile']) {
@@ -116,7 +118,7 @@ function print_list($table, $list, $r=0)
   $field['refer'] = "<TD ALIGN=right><FONT STYLE=\"color:$fg;\">{$list['refer']}&nbsp;</FONT></TD>";
   $field['nulls'] = "<TD><IMG SRC=\"./images/blank.gif\" WIDTH=1 HEIGHT={$lines['height']} BORDER=0 ALT=''>";
 
-  # td field ¸¦ ÁöÁ¤ÇÏÁö ¾Ê¾ÒÀ» °æ¿ì ±âº»°ªÀ» ÁöÁ¤ÇÑ´Ù.
+  # td field ë¥¼ ì§€ì •í•˜ì§€ ì•Šì•˜ì„ ê²½ìš° ê¸°ë³¸ê°’ì„ ì§€ì •í•œë‹¤.
   $td_array = !$td_array ? "nTNFDR" : $td_array;
   $prints = "\n<TR bgcolor=\"$bg\" onMouseOver=\"this.style.backgroundColor='{$color['ms_ov']}'\" onMouseOut=\"this.style.backgroundColor=''\">\n";
   for($i=0;$i<strlen($td_array);$i++) {
@@ -146,13 +148,15 @@ function print_list($table, $list, $r=0)
   }
   $prints .= "</TR>\n";
 
-  # ±Û ¸®½ºÆ®µé »çÀÌ¿¡ µğÀÚÀÎÀ» ³Ö±â À§ÇÑ ÄÚµå
-  # theme ÀÇ config.php ÀÇ $lines['desing'] ¿¡¼­ ¼³Á¤
+  # ê¸€ ë¦¬ìŠ¤íŠ¸ë“¤ ì‚¬ì´ì— ë””ìì¸ì„ ë„£ê¸° ìœ„í•œ ì½”ë“œ
+  # theme ì˜ config.php ì˜ $lines['desing'] ì—ì„œ ì„¤ì •
   if($lines['design']) $prints .= "###LINE-DESIGN###\n";
 
   return $prints;
 }
+// }}}
 
+// {{{ +-- public get_list($table,$pages,$reply=0,$print=0)
 function get_list($table,$pages,$reply=0,$print=0)
 {
   global $color,$board,$lines,$upload,$page;
@@ -182,7 +186,7 @@ function get_list($table,$pages,$reply=0,$print=0)
     else $lists = print_narticle($table, $color['l2_fg'], $color['l2_bg']);
   }
 
-  # ±Û ¸®½ºÆ®µé »çÀÌ¿¡ µğÀÚÀÎÀ» ³Ö±â À§ÇÑ ÄÚµå
+  # ê¸€ ë¦¬ìŠ¤íŠ¸ë“¤ ì‚¬ì´ì— ë””ìì¸ì„ ë„£ê¸° ìœ„í•œ ì½”ë“œ
   if($lines['design'] && !$print) {
     $colspan_no = $upload['yesno'] ? "6" : "5";
     $lines['design'] = preg_replace("/=[\"']?AA[\"']?/i","=\"$colspan_no\"",$lines['design']);
@@ -193,7 +197,9 @@ function get_list($table,$pages,$reply=0,$print=0)
   sql_free_result($result,$c);
   return $lists;
 }
+// }}}
 
+// {{{ +-- public print_narticle($table, $fg, $bg, $print = 0)
 function print_narticle($table, $fg, $bg, $print = 0)
 {
   global $o, $colspan, $langs;
@@ -212,7 +218,9 @@ function print_narticle($table, $fg, $bg, $print = 0)
 
   return $article;
 }
+// }}}
 
+// {{{ +-- public get_comment($table,$no,$prints=0)
 function get_comment($table,$no,$prints=0) {
   global $lines, $corder, $langs, $page, $print, $c;
 
@@ -255,14 +263,16 @@ function get_comment($table,$no,$prints=0) {
   if($prints) echo $lists;
   else return $lists;
 }
+// }}}
 
+// {{{ +-- public print_comment_art($table,$list,$prints=0,$delimg)
 function print_comment_art($table,$list,$prints=0,$delimg) {
   global $jsboard, $board, $page, $no, $delimgcheck, $print;
   global $_config;
 
-  $list['name'] = ugly_han(convspecialchars(trim($list['name'])));
+  $list['name'] = ugly_han(htmlspecialchars(trim($list['name'])));
   $list['name'] = preg_replace("/&amp;(lt|gt|quot)/i","&\\1",$list['name']);
-  $list['text'] = ugly_han(convspecialchars(trim($list['text'])));
+  $list['text'] = ugly_han(htmlspecialchars(trim($list['text'])));
   $list['text'] = preg_replace("/&amp;(lt|gt|quot)/i","&\\1",$list['text']);
   $list['text'] = str_replace("&quot;","\"",$list['text']);
   $list['text'] = preg_replace("/&lt;(\/?FONT[^&]*)&gt;/i","<\\1>",$list['text']);
@@ -301,4 +311,16 @@ function print_comment_art($table,$list,$prints=0,$delimg) {
   if($prints) echo $ret;
   else return $ret;
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

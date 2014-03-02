@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: root,v 1.10 2014-02-28 21:25:45 oops Exp $
+# $Id: root,v 1.11 2014-03-02 17:11:30 oops Exp $
 clear
 echo "########################################################"
 echo "# JSBoard Config File Installer v2.1                   #"
@@ -37,8 +37,8 @@ else
   do
     if [ "${langs}" = "ko" ]; then
       echo
-      echo "[1;31mERROR[7;0m : httpd.conf ¸¦ Ã£À» ¼ö°¡ ¾ø½À´Ï´Ù."
-      echo -n "httpd.conf ÀÇ Àý´ë °æ·Î¸¦ ÁöÁ¤ÇØ ÁÖ½Ê½Ã¿À : "
+      echo "[1;31mERROR[7;0m : httpd.conf ë¥¼ ì°¾ì„ ìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤."
+      echo -n "httpd.conf ì˜ ì ˆëŒ€ ê²½ë¡œë¥¼ ì§€ì •í•´ ì£¼ì‹­ì‹œì˜¤ : "
     else
       echo
       echo "[1;31mERROR[7;0m : Can't find httpd.conf"

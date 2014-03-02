@@ -1,11 +1,11 @@
 <?php
-# $Id: whois.php,v 1.12 2014-02-26 17:09:10 oops Exp $
+# $Id: whois.php,v 1.13 2014-03-02 17:11:28 oops Exp $
 include 'include/variable.php';
 include 'include/print.php';
-# register_globals ¿É¼ÇÀÇ ¿µÇâÀ» ¹ŞÁö ¾Ê±â À§ÇÑ ÇÔ¼ö
+# register_globals ì˜µì…˜ì˜ ì˜í–¥ì„ ë°›ì§€ ì•Šê¸° ìœ„í•œ í•¨ìˆ˜
 parse_query_str();
 
-# table º¯¼ö Ã¼Å©
+# table ë³€ìˆ˜ ì²´í¬
 $table = trim ($table);
 if ( preg_match ('!/\.+|%00$!', $table) ) {
   print_error ("Ugly access with table variable \"{$table}\"");
@@ -53,7 +53,7 @@ include "include/lang.php";
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
-<TITLE><?php echo $host ?> WHOIS Á¤º¸</TITLE>
+<TITLE><?php echo $host ?> WHOIS ì •ë³´</TITLE>
 <STYLE TYPE="text/css">
 <!--
 A:link, A:visited, A:active { text-decoration: none; }
@@ -77,15 +77,15 @@ if ($fp) {
   while(!feof($fp)) {
       $list = fgets($fp, 1024);
       if($count > 11) {
-        $list = preg_replace("/((Phone|ÀüÈ­ ¹øÈ£).*:)(.*)/i", "\\1<FONT STYLE=\"color:{$color['t_bg']};font-weight:bold\">\\3</FONT>", $list);
-        $list = preg_replace("/((IP Address|IP ÁÖ¼Ò).*:)(.*)/i", "\\1<FONT STYLE=\"color:{$color['m_bg']};font-weight:bold\">\\3</FONT>", $list);
-        $list = preg_replace("/((Network Name|³×Æ®¿öÅ© ÀÌ¸§).*:)(.*)/i", "\\1<FONT STYLE=\"color:red;font-weight:bold\">\\3</FONT>", $list);
+        $list = preg_replace("/((Phone|ì „í™” ë²ˆí˜¸).*:)(.*)/i", "\\1<FONT STYLE=\"color:{$color['t_bg']};font-weight:bold\">\\3</FONT>", $list);
+        $list = preg_replace("/((IP Address|IP ì£¼ì†Œ).*:)(.*)/i", "\\1<FONT STYLE=\"color:{$color['m_bg']};font-weight:bold\">\\3</FONT>", $list);
+        $list = preg_replace("/((Network Name|ë„¤íŠ¸ì›Œí¬ ì´ë¦„).*:)(.*)/i", "\\1<FONT STYLE=\"color:red;font-weight:bold\">\\3</FONT>", $list);
         echo "$list";
       }
       $count++;
   }
   fclose($fp);
-} else echo "$errno $errstr whois.krnic.netÀÇ ¿¬°á¿¡ ½ÇÆĞ Çß½À´Ï´Ù.";
+} else echo "$errno $errstr whois.krnic.netì˜ ì—°ê²°ì— ì‹¤íŒ¨ í–ˆìŠµë‹ˆë‹¤.";
 ?>
 
 </PRE>

@@ -1,5 +1,16 @@
 <?php
-# $Id: uadmin.php,v 1.40 2014-02-26 18:55:11 oops Exp $
+# $Id: uadmin.php,v 1.41 2014-03-02 17:11:30 oops Exp $
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
+
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
@@ -20,7 +31,7 @@ if($board['super'] == 1)
 else
   $board['adput'] = "{$board['ad']}\n<INPUT TYPE=hidden name=ua[ad] VALUE=\"{$board['ad']}\">";
 
-# SELECT check ºĞ·ù
+# SELECT check ë¶„ë¥˜
 if(!$board['mode']) $smode0 = " SELECTED";
 elseif($board['mode'] == 1) $smode1 = " SELECTED";
 elseif($board['mode'] == 2) $smode2 = " SELECTED";
@@ -33,7 +44,7 @@ elseif($board['mode'] == 7) $smode7 = " SELECTED";
 # check of logout page
 $print['dopage'] = trim($print['dopage']) ? $print['dopage'] : "{$board['path']}list.php?table=$table";
 
-# Radio Box check ºĞ·ù
+# Radio Box check ë¶„ë¥˜
 if($enable['ore']) $ore_no = "checked";
 else $ore_ok = "checked";
 
@@ -119,10 +130,10 @@ if(!$board['usedhyper']) {
 $board['hls'] = preg_replace("/<FONT COLOR=/i","",$board['hl']);
 $board['hls'] = preg_replace("/><B><U>STR<\/U><\/B><\/FONT>/i","",$board['hls']);
 
-# html headerÀÇ Á¤º¸¸¦ °¡Á® ¿Â´Ù
+# html headerì˜ ì •ë³´ë¥¼ ê°€ì ¸ ì˜¨ë‹¤
 $top_head = file_operate("../../html/head.php","r");
 
-$top_head = convspecialchars($top_head);
+$top_head = htmlspecialchars($top_head);
 $top_head = str_replace("&lt;? echo ","",$top_head);
 $top_head = preg_replace("/ \?&gt;(;|\}|&lt;|&quot;| -)/i","\\1",$top_head);
 $top_head = str_replace("\$table",$table,$top_head);
@@ -145,7 +156,7 @@ $top_head = trim($top_head);
 
 $html_head = file_operate("../../data/$table/html_head.php","r");
 
-# html tailÀÇ Á¤º¸¸¦ °¡Á®¿Â´Ù
+# html tailì˜ ì •ë³´ë¥¼ ê°€ì ¸ì˜¨ë‹¤
 $html_tail = file_operate("../../data/$table/html_tail.php","r");
 
 if($agent['tx']) {
@@ -158,10 +169,10 @@ if($agent['tx']) {
 $bottom_tail = file_operate("../../html/tail.php","r");
 $bottom_tail = preg_replace("/<\?(.*)\?>/i","",$bottom_tail);
 $bottom_tail = trim($bottom_tail);
-$bottom_tail = convspecialchars($bottom_tail);
+$bottom_tail = htmlspecialchars($bottom_tail);
 $bottom_tail = nl2br($bottom_tail);
 
-# »ç¿ëÀÚ Á¤ÀÇ styel sheet
+# ì‚¬ìš©ì ì •ì˜ styel sheet
 if(file_exists("../../data/$table/stylesheet.php")) {
   include "../../data/$table/stylesheet.php";
 }
@@ -323,7 +334,7 @@ function fresize(value,name) {
 <TR><TD BGCOLOR=<?php echo $color['b_bg']?>>
 
 <BR><BR>
-<center><FONT sytle="font-family:tahoma;"><B>¢Á <?php echo $user?> User Configuration ¢Á</B></font></center>
+<center><FONT sytle="font-family:tahoma;"><B>âŠ™ <?php echo $user?> User Configuration âŠ™</B></font></center>
 
 <!-------------------------- Main ---------------------------->
 

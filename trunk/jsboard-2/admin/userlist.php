@@ -1,5 +1,16 @@
 <?php
-# $Id: userlist.php,v 1.13 2014-02-28 21:37:17 oops Exp $
+# $Id: userlist.php,v 1.14 2014-03-02 17:11:30 oops Exp $
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
+
 $path['type'] = "admin";
 include "include/admin_head.php";
 
@@ -22,7 +33,7 @@ if($m == "delete") {
   if($do) move_page("{$_SERVER['PHP_SELF']}$do");
 }
 
-# SQL ÁúÀÇ Å¸ÀÔ
+# SQL ì§ˆì˜ íƒ€ì…
 $lin = check_userlist_type($t);
 
 $page = !$page ? "1" : $page;
@@ -65,14 +76,14 @@ if(sql_num_rows($result,$c)) {
 
   sql_free_result($result,$c);
 
-  # ¸¶Áö¸· ÆäÀÌÁö¸¦ ±¸ÇÔ
-  # ceil -> ¿Ã¸²À» ÇØ ÁÖ´Â ÇÔ¼ö
+  # ë§ˆì§€ë§‰ í˜ì´ì§€ë¥¼ êµ¬í•¨
+  # ceil -> ì˜¬ë¦¼ì„ í•´ ì£¼ëŠ” í•¨ìˆ˜
   $result = sql_query("SELECT COUNT(*) AS total FROM userdb {$lin['like']}",$c);
   $total = sql_result($result,0,"total",$c);
   sql_free_result($result,$c);
   $last = ceil($total/20);
 
-  # ÃÑ µî·Ï¼ö¸¦ ±¸ÇÔ
+  # ì´ ë“±ë¡ìˆ˜ë¥¼ êµ¬í•¨
   if($lin['like']) {
     $result = sql_query("SELECT COUNT(*) AS total FROM userdb",$c);
     $atotal = sql_result($result,0,"total",$c);
@@ -81,7 +92,7 @@ if(sql_num_rows($result,$c)) {
 
   sql_close($c);
 
-  # PAGE ¸µÅ© ±¸¼º
+  # PAGE ë§í¬ êµ¬ì„±
   $sno = $page-2;
   $eno = $page+2;
 

@@ -1,11 +1,11 @@
 <?php
-# $Id: en.php,v 1.11 2009-11-19 05:29:51 oops Exp $
+# $Id: en.php,v 1.12 2014-03-02 17:11:32 oops Exp $
 # Language Charactor Set
-$langs['charset'] = "iso-8859-1";
+$langs['charset'] = "utf-8";
 
 # Header file Message
 $table_err = "Table name Missing! You must select a table";
-$langs['ln_titl'] = "JSBoard $board[ver] Admin Page";
+$langs['ln_titl'] = "JSBoard {$board['ver']} Admin Page";
 $langs['login_err'] = "Please login first";
 $langs['perm_err'] = "Sorry, you don't have access permission on this page";
 

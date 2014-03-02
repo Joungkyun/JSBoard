@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is a part of Secure URI pear packages.
- * $Id: sURI.php,v 1.4 2009-11-19 05:29:51 oops Exp $
+ * $Id: sURI.php,v 1.5 2014-03-02 17:11:31 oops Exp $
  *
  * sURI class
  *
@@ -18,6 +18,7 @@
  * @since      File available since Release 0.1
  */
 
+// {{{ +-- public block_devided ($string, $block = null)
 function block_devided ($string, $block = null) {
   if ( ! is_array ($block) )
     return false;
@@ -46,7 +47,9 @@ function block_devided ($string, $block = null) {
 
   return $r;
 }
+// }}}
 
+// {{{ +-- public array_pos ($haystack, $needle = null)
 function array_pos ($haystack, $needle = null) {
   if ( ! is_array ($needle) )
     return false;
@@ -82,4 +85,16 @@ function array_pos ($haystack, $needle = null) {
 
   return $r;
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

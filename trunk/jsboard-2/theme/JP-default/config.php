@@ -14,7 +14,7 @@ $designer['ver'] = 'A9';
 # Language configuration
 ##############################################################
 $langs['code'] = 'jp';		# webboard language
-$langs['font'] = 'люд╚';	# Fixed width font
+$langs['font'] = 'О╬▄О╬─О╬└О╫╚';	# Fixed width font
 $langs['vfont'] = 'tahoma';	# Variable width font
 
 ##############################################################
@@ -64,10 +64,10 @@ $color['d_fg'] = '#555555';	# Option filed Text
 # <IMG SRC=img/blank.gif WIDTH=0 HEIGHT=$line_height BORDER=0 ALT=''>
 $lines['height'] = '25';
 
-# ∙╤ ┐┼┐X┐g ┼т┌и ┐f┐U┐C┐⌠┌П ⌠Э┌Й┌И┌╫┌ъ┌л ┐R│[┐h ≈⌡░щ▓Х┌м <TD></TD>
-# ░щ▓Х┌е ░╛┌╣┌д ┴в. <TD> ┌и┌м ∙K┌╦ COLSPAN="AA" ┼X ⌠Э┌а┌д█s┌╜┌ф ┐n┐─. 
-# ≈⌡░щ▓Х┌м ┐┼┐X┐g┌л colspan ┌П █┤┌М┌╧ ┌л┌╫┌ъ┌и list.php ┌е ∙о┼╥┌П
-# ┌╥┌И┌Ф┌╓┌и ┌х┌а┌д ┌═┌Х ▌÷┌л ≈А▒Х┌П ≈≤≈p┌╣┌д ┐e┐X┐g ⌠З ∙\▌╕ ∙≈
+# Ф√┤ Ц┐╙Ц┌╧Ц┐┬ И√⌠Ц│╚ Ц┐┤Ц┌╤Ц┌╓Ц┐ЁЦ┌▓ Е┘╔Ц┌▄Ц┌▀Ц│÷Ц┌│Ц│╝ Ц┌ЁЦ┐╪Ц┐┴ Ф²▌Х╗╜Е╝ Ц│╞ <TD></TD>
+# Х╗╜Е╝ Ц│╖ Ф┬░Ц│≈Ц│╕ Х█╥. <TD> Ц│╚Ц│╞ Е©┘Ц│  COLSPAN="AA" Х║≈ Е┘╔Ц│ёЦ│╕Х║▄Ц│▐Ц│╗ Ц┐▐Ц┐═. 
+# Ф²▌Х╗╜Е╝ Ц│╞ Ц┐╙Ц┌╧Ц┐┬Ц│╝ colspan Ц┌▓ Е░┬Ц┌▐Ц│⌡ Ц│╝Ц│÷Ц┌│Ц│╚ list.php Ц│╖ Е╓┴Ф▐⌡Ц┌▓
+# Ц│≥Ц┌▀Ц┌┬Ц│├Ц│╚ Ц│╙Ц│ёЦ│╕ Ц│┌Ц┌┼ Ф╛║Ц│╝ Д╬▀И║▄Ц┌▓ Е┬╘Г■╗Ц│≈Ц│╕ Ц┐├Ц┌╧Ц┐┬ Ф≈╔ Х║╗Г╓╨ И╒╗
 #$line_design = '<TD COLSPAN="AA"><hr></TD>';
 $lines['design'] = '';
 $lines['comment_design'] = '<TR><TD COLSPAN=4 BACKGROUND="./images/dotline.gif">'.

@@ -1,5 +1,5 @@
 <?php
-# $Id: delete.php,v 1.26 2014-02-28 21:37:17 oops Exp $
+# $Id: delete.php,v 1.27 2014-03-02 17:11:28 oops Exp $
 require_once "./include/header.php";
 require_once "./include/wikify.php";
 
@@ -8,7 +8,7 @@ $board['super'] = $board['adm'] ? 1 : $board['super'];
 if(preg_match("/^(1|3)$/",$board['mode'])) { if($board['super'] != 1) print_error($langs['perm_err'],250,150,1); }
 if(preg_match("/^(2|5)$/",$board['mode']) && !isset($_SESSION[$jsboard])) print_error($langs['perm_err'],250,150,1);
 
-# upload['dir'] ¿¡ mata character Æ÷ÇÔ ¿©ºÎ Ã¼Å©
+# upload['dir'] ì— mata character í¬í•¨ ì—¬ë¶€ ì²´í¬
 meta_char_check($upload['dir']);
 
 $board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
@@ -23,7 +23,7 @@ if(preg_match("/^(2|3|5|7)$/",$board['mode']) && $board['super'] != 1)
 
 $size = form_size(4);
 
-# ¿öµå·¦ÀÌ ¼³Á¤ÀÌ ¾ÈµÇ¾î ÀÖÀ» °æ¿ì ±âº»°ªÀ» ÁöÁ¤
+# ì›Œë“œë©ì´ ì„¤ì •ì´ ì•ˆë˜ì–´ ìˆì„ ê²½ìš° ê¸°ë³¸ê°’ì„ ì§€ì •
 $board['wwrap'] = !$board['wwrap'] ? 120 : $board['wwrap'];
 
 $list['date']  = date("Y-m-d H:i:s", $list['date']);
@@ -34,7 +34,7 @@ macro_interwiki();
 wikify($list['text']);
 $list['num']   = print_reply($table, $list);
 
-# Á¦¸ñÀ» Å×ÀÌºí Å©±â¿¡ ¸ÂÃç ´ÙÀ½ÁÙ·Î ³Ñ±è
+# ì œëª©ì„ í…Œì´ë¸” í¬ê¸°ì— ë§ì¶° ë‹¤ìŒì¤„ë¡œ ë„˜ê¹€
 $_width = preg_match ('/%/', $board['width']) ? '550' : $board['width'];
 $title_width = $_width / 8;
 settype($title_width,"integer");
@@ -78,16 +78,16 @@ if($list['url']) {
 if($board['super'] != 1 && $_SESSION[$jsboard]['id'] != $list['name']) { 
   if(!$board['mode']) {
     $warning = $langs['d_wa'];
-    # ÆĞ½º¿öµå°¡ ¾ø´Â °Ô½Ã¹°ÀÏ  °æ¿ì °ü¸®ÀÚ ÀÎÁõÀ» °ÅÄ§
+    # íŒ¨ìŠ¤ì›Œë“œê°€ ì—†ëŠ” ê²Œì‹œë¬¼ì¼  ê²½ìš° ê´€ë¦¬ì ì¸ì¦ì„ ê±°ì¹¨
     if(!$list['passwd'] || $list['reyn']) $warning = $langs['d_waa'];
     $print['passform'] = "{$langs['w_pass']}: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" MAXLENGTH=\"16\" STYLE=\"font: 10px tahoma;\">&nbsp;\n";
   } else $warning = "&nbsp;";
 } else $warning = "&nbsp;";
 
-# Page °¡ Á¸ÀçÇÒ °æ¿ì ¸ñ·ÏÀ¸·Î °¥¶§ ÇØ´ç ÆäÀÌÁö·Î ÀÌµ¿
+# Page ê°€ ì¡´ì¬í•  ê²½ìš° ëª©ë¡ìœ¼ë¡œ ê°ˆë•Œ í•´ë‹¹ í˜ì´ì§€ë¡œ ì´ë™
 $page = $page ? $page : 1;
 
-# ÆĞ½º¿öµå Æû Ãâ·ÂÀ» À§ÇÑ º¯¼ö
+# íŒ¨ìŠ¤ì›Œë“œ í¼ ì¶œë ¥ì„ ìœ„í•œ ë³€ìˆ˜
 $print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" value=\"del\">\n".
                    "<INPUT TYPE=hidden NAME=\"page\" value=\"$page\">\n".
                    "<INPUT TYPE=hidden NAME=\"no\" VALUE=\"$no\">\n".
@@ -96,12 +96,12 @@ $print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" value=\"del\">\n".
                    "<INPUT TYPE=hidden NAME=\"delete_filename\" VALUE=\"$delfile\">\n".
                    "{$print['passform']}";
 
-# Page °¡ Á¸ÀçÇÒ °æ¿ì ¸ñ·ÏÀ¸·Î °¥¶§ ÇØ´ç ÆäÀÌÁö·Î ÀÌµ¿
+# Page ê°€ ì¡´ì¬í•  ê²½ìš° ëª©ë¡ìœ¼ë¡œ ê°ˆë•Œ í•´ë‹¹ í˜ì´ì§€ë¡œ ì´ë™
 $page = $page ? "&amp;page=$page" : "1";
 
 sql_close($c);
 
-# Template file À» È£Ãâ
+# Template file ì„ í˜¸ì¶œ
 meta_char_check($print['theme'], 1, 1);
 include "theme/{$print['theme']}/delete.template";
 ?>

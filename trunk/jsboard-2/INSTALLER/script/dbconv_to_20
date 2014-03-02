@@ -1,25 +1,25 @@
 #!/bin/sh
-# $Id: dbconv_to_20,v 1.5 2009-11-19 05:29:50 oops Exp $
+# $Id: dbconv_to_20,v 1.6 2014-03-02 17:11:30 oops Exp $
 
-# ¾Æ·¡ÀÇ Á¤º¸µéÀº global.php ÀÇ DB Á¤º¸¿Í µ¿ÀÏÇÏ°Ô ÀÔ·ÂÇÔ.
-# jsboard ¿¡ Á¢±ÙÇÒ À¯ÀúÀÌ¸§
+# ì•„ë˜ì˜ ì •ë³´ë“¤ì€ global.php ì˜ DB ì •ë³´ì™€ ë™ì¼í•˜ê²Œ ì…ë ¥í•¨.
+# jsboard ì— ì ‘ê·¼í•  ìœ ì €ì´ë¦„
 DB_USER=
 
-# jsboard ¿¡ Á¢±ÙÇÒ À¯Àú ÆĞ½º¿öµå
+# jsboard ì— ì ‘ê·¼í•  ìœ ì € íŒ¨ìŠ¤ì›Œë“œ
 DB_PASS=
 
-# jsboard °¡ »ç¿ëÇÒ database ÀÌ¸§
+# jsboard ê°€ ì‚¬ìš©í•  database ì´ë¦„
 DB_NAME=
 
-# ¸¸¾à »ç¿ëÇÏ´Â database ¿¡ JSBoard °¡ »ç¿ëÇÏ´Â table ¿ÜÀÇ ´Ù¸¥
-# Å×ÀÌºíÀÌ Á¸ÀçÇÒ °æ¿ì¿¡´Â JSBoard °¡ »ç¿ëÇÒ table µéÀ» Á÷Á¢ Áö
-# Á¤ÇØ Áà¾ß ÇÑ´Ù.
+# ë§Œì•½ ì‚¬ìš©í•˜ëŠ” database ì— JSBoard ê°€ ì‚¬ìš©í•˜ëŠ” table ì™¸ì˜ ë‹¤ë¥¸
+# í…Œì´ë¸”ì´ ì¡´ì¬í•  ê²½ìš°ì—ëŠ” JSBoard ê°€ ì‚¬ìš©í•  table ë“¤ì„ ì§ì ‘ ì§€
+# ì •í•´ ì¤˜ì•¼ í•œë‹¤.
 # ex> TARGET="qna faq freeboard"
 #
 TARGET=""
 
 # mysql client path
-# find /usr -name mysql ·Î Ã£µµ·Ï ÇÑ´Ù.
+# find /usr -name mysql ë¡œ ì°¾ë„ë¡ í•œë‹¤.
 MPATH=/usr/bin/mysql
 
 if [ "${TARGET}" = "" ]; then

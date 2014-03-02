@@ -1,15 +1,26 @@
 <?php
-# $Id: install.php,v 1.13 2014-02-28 21:37:17 oops Exp $
+# $Id: install.php,v 1.14 2014-03-02 17:11:28 oops Exp $
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
+
 include_once '../include/variable.php';
 include_once '../include/print.php';
 parse_query_str();
-session_start(); // sessionÀ» ½ÃÀÛÇÑ´Ù.
+session_start(); // sessionì„ ì‹œìž‘í•œë‹¤.
 $path['type'] = 'Install';
 
 if ($langss == 'ko') {
   $langs['code'] = 'ko';
   $charset = 'EUC-KR';
-  $charfont = '±¼¸²Ã¼,monospace';
+  $charfont = 'êµ´ë¦¼ì²´,monospace';
 } else {
   $langs['code'] = 'en';
   $charset = 'ISO-8859-1';

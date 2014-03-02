@@ -20,4 +20,4 @@ CREATE TABLE userdb (
 # Dumping data for table 'userdb'
 #
 
-INSERT INTO userdb VALUES ('','admin','∞¸∏Æ¿⁄','','','\$1\$Cx\$.2OyfWZCiPTc4sSw0vswc/',1);
+INSERT INTO userdb VALUES ('','admin','Í¥ÄÎ¶¨Ïûê','','','\$1\$Cx\$.2OyfWZCiPTc4sSw0vswc/',1);

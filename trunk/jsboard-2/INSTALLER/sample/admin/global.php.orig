@@ -1,5 +1,5 @@
 <?php
-# $Id: global.php.orig,v 1.6 2014-02-28 21:37:17 oops Exp $
+# $Id: global.php.orig,v 1.7 2014-03-02 17:11:29 oops Exp $
 ##############################################################################
 #  DATABASE Configuration
 ##############################################################################
@@ -115,6 +115,6 @@ $list['preren']    = 100;   # if enable preview, lenth of contents
 ##############################################################################
 #  If registed article as follow information, requried passwd of super user
 ##############################################################################
-$compare['name']   = 'ÁåÀå';
+$compare['name']   = 'ì¥”ìž¥';
 $compare['email']  = 'user@localhost.com';
 ?>

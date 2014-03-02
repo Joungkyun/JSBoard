@@ -1,5 +1,5 @@
 <?php
-# $Id: login.php,v 1.13 2009-11-19 05:29:49 oops Exp $
+# $Id: login.php,v 1.14 2014-03-02 17:11:28 oops Exp $
 require_once './include/variable.php';
 require_once './include/version.php';
 require_once './include/print.php';
@@ -25,7 +25,7 @@ if($table && file_exists("data/$table/config.php")) {
   include "data/$table/config.php";
 }
 
-# input ¹®ÀÇ size¸¦ browserº°·Î ¸ÂÃß±â À§ÇÑ ¼³Á¤
+# input ë¬¸ì˜ sizeë¥¼ browserë³„ë¡œ ë§žì¶”ê¸° ìœ„í•œ ì„¤ì •
 $size = form_size(6);
 
 $opt = !$table ? "" : "&amp;table=$table";

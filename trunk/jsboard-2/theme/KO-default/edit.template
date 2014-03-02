@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<!-- $Id: edit.template,v 1.28 2014-02-26 17:09:13 oops Exp $ -->
+<!-- $Id: edit.template,v 1.29 2014-03-02 17:11:33 oops Exp $ -->
 <!-- ==================================================================== -->
-<!-- $langs['charset'] : °Ô½ÃÆÇÀÇ ¾ğ¾î Å¸ÀÔ¿¡ µû¶ó charset À» °¡Á®¿Â´Ù.   -->
-<!-- $board['ver']     : °Ô½ÃÆÇÀÇ ¹öÁ¯ Á¤º¸¸¦ °¡Áö°í ¿Â´Ù.                -->
-<!-- get_title()     : °Ô½ÃÆÇÀÇ Çì´õ Å¸ÀÌÆ²À» °¡Áö°í ¿Â´Ù.                -->
-<!-- $user_stylesheet : »ç¿ëÀÚ Á¤ÀÇ ½ºÅ¸ÀÏ ½ÃÆ®                           -->
+<!-- $langs['charset'] : ê²Œì‹œíŒì˜ ì–¸ì–´ íƒ€ì…ì— ë”°ë¼ charset ì„ ê°€ì ¸ì˜¨ë‹¤.   -->
+<!-- $board['ver']     : ê²Œì‹œíŒì˜ ë²„ì ¼ ì •ë³´ë¥¼ ê°€ì§€ê³  ì˜¨ë‹¤.                -->
+<!-- get_title()     : ê²Œì‹œíŒì˜ í—¤ë” íƒ€ì´í‹€ì„ ê°€ì§€ê³  ì˜¨ë‹¤.                -->
+<!-- $user_stylesheet : ì‚¬ìš©ì ì •ì˜ ìŠ¤íƒ€ì¼ ì‹œíŠ¸                           -->
 <!-- ==================================================================== -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
 <TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
@@ -68,25 +68,25 @@ form { display: inline; }
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
 
-<!-- ======================= Çì´õ µğÀÚÀÎ ½ÃÀÛ ======================= -->
+<!-- ======================= í—¤ë” ë””ìì¸ ì‹œì‘ ======================= -->
 <?php
 print_keymenu(2);
 echo $print['preview_script'] . "\n";
 
 if(!$np) {
-  # °¢ À¯Àúº° Design
+  # ê° ìœ ì €ë³„ Design
   include "{$board['headpath']}";
-  # ÀüÃ¼ °ü¸®ÀÚ¿¡ ÀÇÇØ °­Á¦ input µÇ´Â Design
+  # ì „ì²´ ê´€ë¦¬ìì— ì˜í•´ ê°•ì œ input ë˜ëŠ” Design
   include "html/head.php";
  }
 ?>
-<!-- ======================= Çì´õ µğÀÚÀÎ ³¡   ======================= -->
+<!-- ======================= í—¤ë” ë””ìì¸ ë   ======================= -->
 
 <!-- ==================================================================== -->
-<!-- $board['align'] : °Ô½ÃÆÇÀÇ align À» Á¤ÀÇÇÑ´Ù. ÀÌ´Â °Ô½ÃÆÇ °ü¸®ÀÚ¿¡¼­ -->
-<!--                 ¼³Á¤À» ÇÒ¼ö ÀÖ´Ù.                                    -->
-<!-- $board['width'] : °Ô½ÃÆÇÀÇ ³ĞÀÌ¸¦ ÁöÁ¤ÇÑ´Ù. °Ô½ÃÆÇ °ü¸®ÀÚ¿¡¼­ Á¶Á¤   -->
-<!-- $board['formtype'] : ÀÌ¹ÌÁö ¾÷·Îµå¸¦ Áö¿ø ¿©ºÎ¸¦ À§ÇØ ²À ÇÊ¿ä        -->
+<!-- $board['align'] : ê²Œì‹œíŒì˜ align ì„ ì •ì˜í•œë‹¤. ì´ëŠ” ê²Œì‹œíŒ ê´€ë¦¬ìì—ì„œ -->
+<!--                 ì„¤ì •ì„ í• ìˆ˜ ìˆë‹¤.                                    -->
+<!-- $board['width'] : ê²Œì‹œíŒì˜ ë„“ì´ë¥¼ ì§€ì •í•œë‹¤. ê²Œì‹œíŒ ê´€ë¦¬ìì—ì„œ ì¡°ì •   -->
+<!-- $board['formtype'] : ì´ë¯¸ì§€ ì—…ë¡œë“œë¥¼ ì§€ì› ì—¬ë¶€ë¥¼ ìœ„í•´ ê¼­ í•„ìš”        -->
 <!-- ==================================================================== -->
 <DIV ALIGN="<?php echo $board['align']?>">
 <FORM NAME="editp" METHOD="post" ACTION="act.php"<?php echo $board['formtype']?>>
@@ -119,23 +119,23 @@ if(!$np) {
 </TR>
 
 <!-- ==================================================================== -->
-<!-- $size['name']  : input ¹®ÀÇ »çÀÌÁî theme config ¿¡¼­ ¼³Á¤            -->
-<!-- $list['name']  : ¼öÁ¤ÇÒ ÀÌ¸§À» Ãâ·Â                                  -->
+<!-- $size['name']  : input ë¬¸ì˜ ì‚¬ì´ì¦ˆ theme config ì—ì„œ ì„¤ì •            -->
+<!-- $list['name']  : ìˆ˜ì •í•  ì´ë¦„ì„ ì¶œë ¥                                  -->
 <!-- ==================================================================== -->
 <TR>
-<TD WIDTH=80>ÀÌ¸§</TD>
+<TD WIDTH=80>ì´ë¦„</TD>
 <TD><INPUT TYPE="text" NAME="atc[name]" SIZE="<?php echo $size['name']?>" MAXLENGTH=50 VALUE="<?php echo $list['name']?>"<?php echo $disable?> tabindex="1"></TD>
 </TR>
 
 <!-- ==================================================================== -->
-<!-- $view['email']          : email µî·Ï ¿©ºÎ °áÁ¤                       -->
-<!-- $list['email']          : ¼öÁ¤ÇÒ ÀÌ¸ŞÀÏÀ» Ãâ·Â                       -->
+<!-- $view['email']          : email ë“±ë¡ ì—¬ë¶€ ê²°ì •                       -->
+<!-- $list['email']          : ìˆ˜ì •í•  ì´ë©”ì¼ì„ ì¶œë ¥                       -->
 <!-- ==================================================================== -->
 <?php
 if($view['email'] || trim($list['email'])) {
   echo <<<EOF
 <TR>
-<TD>¸ŞÀÏ</TD>
+<TD>ë©”ì¼</TD>
 <TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['email']}"{$disable} tabindex="2"></TD>
 </TR>
 EOF;
@@ -143,14 +143,14 @@ EOF;
 ?>
 
 <!-- ==================================================================== -->
-<!-- $view['url']             : url µî·Ï ¿©ºÎ °áÁ¤                        -->
-<!-- $list['url']             : ¼öÁ¤ÇÒ url À» Ãâ·Â                        -->
+<!-- $view['url']             : url ë“±ë¡ ì—¬ë¶€ ê²°ì •                        -->
+<!-- $list['url']             : ìˆ˜ì •í•  url ì„ ì¶œë ¥                        -->
 <!-- ==================================================================== -->
 <?php
 if($view['url'] || trim($list['url'])) {
   echo <<<EOF
 <TR>
-<TD>È¨ÆäÀÌÁö</TD>
+<TD>í™ˆí˜ì´ì§€</TD>
 <TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['url']}"{$disable} tabindex="3"></TD>
 </TR>
 EOF;
@@ -158,18 +158,18 @@ EOF;
 ?>
 
 <!-- ==================================================================== -->
-<!-- upload ºÎºĞ Ãâ·Â¿©ºÎ ¼³Á¤ (¿Ø¸¸ÇÏ¸é ±×³É ¾²¸é µÊ)                    -->
+<!-- upload ë¶€ë¶„ ì¶œë ¥ì—¬ë¶€ ì„¤ì • (ì™ ë§Œí•˜ë©´ ê·¸ëƒ¥ ì“°ë©´ ë¨)                    -->
 <!-- ==================================================================== -->
 <?php
 if($list['bofile']) {
   echo <<<EOF
 <TR>
-<TD>ÆÄÀÏ</TD>
+<TD>íŒŒì¼</TD>
 <TD>
 <A HREF="$down_link">
 <IMG SRC="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" valign="middle">
 <FONT style="color:{$color['text']}">{$list['bofile']}</FONT></A> - $hfsize &nbsp; &nbsp;
-<INPUT TYPE="CHECKBOX" NAME="atc[fdel]" VALUE=1 tabindex="4"> ÆÄÀÏ»èÁ¦
+<INPUT TYPE="CHECKBOX" NAME="atc[fdel]" VALUE=1 tabindex="4"> íŒŒì¼ì‚­ì œ
 </TD>
 </TR>
 EOF;
@@ -178,7 +178,7 @@ EOF;
 if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
   echo <<<EOF
 <TR>
-<TD>ÆÄÀÏ¼öÁ¤</TD>
+<TD>íŒŒì¼ìˆ˜ì •</TD>
 <TD>
 <INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
 <INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256 tabindex="5">
@@ -189,23 +189,23 @@ EOF;
 ?>
 
 <!-- ==================================================================== -->
-<!-- $size['titl']  : title input ¹®ÀÇ »çÀÌÁî                             -->
-<!-- $list['title'] : ¼öÁ¤ÇÒ ±Û Á¦¸ñ                                      -->
+<!-- $size['titl']  : title input ë¬¸ì˜ ì‚¬ì´ì¦ˆ                             -->
+<!-- $list['title'] : ìˆ˜ì •í•  ê¸€ ì œëª©                                      -->
 <!-- ==================================================================== -->
 <TR>
-<TD>Á¦¸ñ</TD>
+<TD>ì œëª©</TD>
 <TD><INPUT TYPE="text" NAME="atc[title]" SIZE="<?php echo $size['titl']?>" MAXLENGTH=100 VALUE="<?php echo $list['title']?>" tabindex="6"></TD>
 </TR>
 
 <TR>
 <!-- ==================================================================== -->
-<!-- admin login »óÅÂÀÏ °æ¿ì ÆĞ½º¿öµå¸¦ ¾ÈÀû¾îµµ µÇ°Ô²û ÇÏ´Â ·çÆ¾         -->
-<!-- IE, NS6 ÀÇ °æ¿ì¿¡´Â textarea Ã¢ »çÀÌÁî Á¶Á¤ ¹öÆ°µµ °°ÀÌ Ãâ·Â         -->
+<!-- admin login ìƒíƒœì¼ ê²½ìš° íŒ¨ìŠ¤ì›Œë“œë¥¼ ì•ˆì ì–´ë„ ë˜ê²Œë” í•˜ëŠ” ë£¨í‹´         -->
+<!-- IE, NS6 ì˜ ê²½ìš°ì—ëŠ” textarea ì°½ ì‚¬ì´ì¦ˆ ì¡°ì • ë²„íŠ¼ë„ ê°™ì´ ì¶œë ¥         -->
 <!-- ==================================================================== -->
 <?php
 if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
   echo <<<EOF
-<TD>ÆĞ½º¿öµå</TD>
+<TD>íŒ¨ìŠ¤ì›Œë“œ</TD>
 <TD>
 $passment
 </TD>
@@ -227,50 +227,50 @@ EOF;
 <TR><TD BGCOLOR="<?php echo $color['l5_bg']?>" ALIGN="CENTER">
 
 <!-- ==================================================================== -->
-<!-- $size['text'] : textarea ÀÇ size Ãâ·Â                                -->
-<!-- $list['text'] : ¼öÁ¤ÇÒ ±Û º»¹®À» Ãâ·Â                                -->
+<!-- $size['text'] : textarea ì˜ size ì¶œë ¥                                -->
+<!-- $list['text'] : ìˆ˜ì •í•  ê¸€ ë³¸ë¬¸ì„ ì¶œë ¥                                -->
 <!-- ==================================================================== -->
-<!-- =============================== ±Û³»¿ë =============================== -->
+<!-- =============================== ê¸€ë‚´ìš© =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
 <TEXTAREA NAME="epost" CLASS="resizable" tabindex="8"><?php echo "{$list['text']}\n\n"?></TEXTAREA>
-<!-- =============================== ±Û³»¿ë =============================== -->
+<!-- =============================== ê¸€ë‚´ìš© =============================== -->
 
 </TD></TR>
 </TABLE>
 
 
 <!-- ==================================================================== -->
-<!-- $table.$page      : ¸ñ·ÏÀ¸·Î µ¹¾Æ°¡´Â ¸µÅ©¿¡ ÇÊ¿äÇÑ º¯¼öµé           -->
-<!-- $print['passform']: ¼öÁ¤ÇÑ ±Û µî·ÏÇÏ´Âµ¥ ÇÊ¿äÇÑ hidden º¯¼öµé        -->
-<!-- $orig_option      : ±Û¾²±â Ã¢ Á¶Àı½Ã ¿ø·¡ Å©±â·Î µ¹¾Æ°¡´Â ¿É¼Ç       -->
+<!-- $table.$page      : ëª©ë¡ìœ¼ë¡œ ëŒì•„ê°€ëŠ” ë§í¬ì— í•„ìš”í•œ ë³€ìˆ˜ë“¤           -->
+<!-- $print['passform']: ìˆ˜ì •í•œ ê¸€ ë“±ë¡í•˜ëŠ”ë° í•„ìš”í•œ hidden ë³€ìˆ˜ë“¤        -->
+<!-- $orig_option      : ê¸€ì“°ê¸° ì°½ ì¡°ì ˆì‹œ ì›ë˜ í¬ê¸°ë¡œ ëŒì•„ê°€ëŠ” ì˜µì…˜       -->
 <!-- ==================================================================== -->
 <TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
 <TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
 <?php echo $print['passform']?>
-<INPUT TYPE="submit" VALUE="µî·Ï" tabindex="9">
-<INPUT TYPE="button" VALUE="´Ù½Ã" onClick="document.location.reload(); return false;" tabindex="10">
-<INPUT TYPE="button" onClick="document.location='./list.php?table=<?php echo $table.$pages?>'" VALUE="¸ñ·Ï" tabindex="11">
-<INPUT TYPE="button" onClick="history.back()" VALUE="ÀÌÀü" tabindex="12">
+<INPUT TYPE="submit" VALUE="ë“±ë¡" tabindex="9">
+<INPUT TYPE="button" VALUE="ë‹¤ì‹œ" onClick="document.location.reload(); return false;" tabindex="10">
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?php echo $table.$pages?>'" VALUE="ëª©ë¡" tabindex="11">
+<INPUT TYPE="button" onClick="history.back()" VALUE="ì´ì „" tabindex="12">
 </TD></TR>
 </TABLE>
 
 <!-- ==================================================================== -->
-<!-- print_license()  : ¶óÀÌ¼¾½º Ãâ·Â                                     -->
+<!-- print_license()  : ë¼ì´ì„¼ìŠ¤ ì¶œë ¥                                     -->
 <!-- ==================================================================== -->
 <?php echo print_license()?>
 
 </FORM>
 </DIV>
 
-<!-- ======================= ²¿¸® µğÀÚÀÎ ½ÃÀÛ ======================= -->
+<!-- ======================= ê¼¬ë¦¬ ë””ìì¸ ì‹œì‘ ======================= -->
 <?php
 if(!$np) {
-  # ÀüÃ¼ °ü¸®ÀÚ¿¡ ÀÇÇØ °­Á¦ input µÇ´Â Design
+  # ì „ì²´ ê´€ë¦¬ìì— ì˜í•´ ê°•ì œ input ë˜ëŠ” Design
   include "html/tail.php";
-  # °¢ À¯Àúº° Design
+  # ê° ìœ ì €ë³„ Design
   include "{$board['tailpath']}";
 }
 ?>
-<!-- ======================= ²¿¸® µğÀÚÀÎ ³¡   ======================= -->
+<!-- ======================= ê¼¬ë¦¬ ë””ìì¸ ë   ======================= -->
 </BODY>
 </HTML>

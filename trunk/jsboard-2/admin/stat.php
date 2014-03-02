@@ -1,6 +1,6 @@
 <?php
 # This flie applied under GPL License
-# $Id: stat.php,v 1.13 2014-02-28 21:37:17 oops Exp $
+# $Id: stat.php,v 1.14 2014-03-02 17:11:30 oops Exp $
 if(preg_match("/user_admin/",$_SERVER['HTTP_REFERER'])) $path['type'] = "user_admin";
 else $path['type'] = "admin";
 include "./include/admin_head.php";
@@ -8,7 +8,7 @@ include "./include/admin_head.php";
 if(!isset($_SESSION[$jsboard]) && $_SESSION[$jsboard]['pos'] != 1)
   print_error($langs['login_err']);
 
-# table À» Ã¼Å©ÇÑ´Ù.
+# table ì„ ì²´í¬í•œë‹¤.
 table_name_check($table);
 
 if($path['type'] != "admin") {
@@ -26,7 +26,7 @@ echo "<table width=100% border=0 align=center>\n".
      "JSBoard [ $table DB ] Statistics</font>\n".
      "</td></tr>\n\n".
      "<tr align=center><td>\n".
-     "<!----------------- Åë°è ½ÃÀÛ ------------------->\n\n<p><br>";
+     "<!----------------- í†µê³„ ì‹œì‘ ------------------->\n\n<p><br>";
 
 $c = sql_connect($db['server'],$db['user'],$db['pass']);
 sql_select_db($db['name'], $c);
@@ -38,25 +38,25 @@ function get_stat(&$c, $table, $interval) {
     if($interval == 0) $intv = 0;
     else $intv = time() - $interval;
 
-    # ÀüÃ¼ ±Û °¹¼ö
+    # ì „ì²´ ê¸€ ê°¯ìˆ˜
     $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$intv'",$c);
     $count['all'] = sql_result($result,0,"COUNT(*)",$c);
     sql_free_result($result,$c);
 
-    # ´äÀå ±Û °¹¼ö
+    # ë‹µì¥ ê¸€ ê°¯ìˆ˜
     $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$intv' AND reno != 0",$c);
     $count['rep'] = sql_result($result,0,"COUNT(*)",$c);
     sql_free_result($result,$c);
 
-    # º¸Åë ±Û °¹¼ö
+    # ë³´í†µ ê¸€ ê°¯ìˆ˜
     $count['nor'] = $count['all'] - $count['rep'];
 
-    # Ã³À½ ±Û
+    # ì²˜ìŒ ê¸€
     $result = sql_query("SELECT * FROM $table WHERE date > '$intv' ORDER BY no LIMIT 0, 1",$c);
     $article['min'] = sql_fetch_array($result,$c);
     sql_free_result($result,$c);
 
-    # ¸¶Áö¸· ±Û
+    # ë§ˆì§€ë§‰ ê¸€
     $result = sql_query("SELECT * FROM $table WHERE date > '$intv' ORDER BY no DESC LIMIT 0, 1",$c);
     $article['max'] = sql_fetch_array($result,$c);
     sql_free_result($result,$c);
@@ -64,29 +64,29 @@ function get_stat(&$c, $table, $interval) {
     if($interval) $article['time'] =  $interval;
     else $article['time'] =  $article['max']['date'] - $article['min']['date'];
 
-    # ÃÖ°í Á¶È¸¼ö
+    # ìµœê³  ì¡°íšŒìˆ˜
     $result = sql_query("SELECT MAX(refer) FROM $table WHERE date > '$intv'",$c);
     $refer['max'] = sql_result($result,0,"MAX(refer)",$c);
     sql_free_result($result,$c);
 
-    # ÃÖ°í Á¶È¸¼ö ±Û ¹øÈ£
+    # ìµœê³  ì¡°íšŒìˆ˜ ê¸€ ë²ˆí˜¸
     if($refer['max']) {
       $result = sql_query("SELECT no FROM $table WHERE refer = '{$refer['max']}' AND date > '$intv'",$c);
       $refer['mno'] = sql_result($result,0,"no",$c);
       sql_free_result($result,$c);
     }
 
-    # ÃÖÀú Á¶È¸¼ö
+    # ìµœì € ì¡°íšŒìˆ˜
     $result = sql_query("SELECT MIN(refer) FROM $table WHERE date > '$intv'",$c);
     $refer['min'] = sql_result($result,0,"MIN(refer)",$c);
     sql_free_result($result,$c);
 
-    # Á¶È¸¼ö ÇÕ°è
+    # ì¡°íšŒìˆ˜ í•©ê³„
     $result = sql_query("SELECT SUM(refer) FROM $table WHERE date > '$intv'",$c);
     $refer['total'] = sql_result($result,0,"SUM(refer)",$c);
     sql_free_result($result,$c);
     
-    # Æò±Õ Á¶È¸¼ö
+    # í‰ê·  ì¡°íšŒìˆ˜
     if($count['all']) $refer['avg'] = intval($refer['total'] / $count['all']);
 
     $stat['count'] = $count;
@@ -210,23 +210,23 @@ function display_stat($stat, $title) {
 </TABLE>\n",$str['count'],$str['refer'],$str['avg']);
 }
 
-# ÁÖº°
+# ì£¼ë³„
 $stat = get_stat($c, $table, 60*60*24*7);
 display_stat($stat,$langs['st_lweek']);
 
-# ¿ùº°
+# ì›”ë³„
 $stat = get_stat($c, $table, 60*60*24*30);
 display_stat($stat,$langs['st_lmonth']);
 
-# ¹İ³âº°
+# ë°˜ë…„ë³„
 $stat = get_stat($c, $table, 60*60*24*30*6);
 display_stat($stat,$langs['st_lhalfyear']);
 
-# ³âº°
+# ë…„ë³„
 $stat = get_stat($c, $table, (60*60*24*30*12) + (60*60*24*5));
 display_stat($stat,$langs['st_lyear']);
 
-# ÀüÃ¼
+# ì „ì²´
 $stat = get_stat($c, $table, 0);
 display_stat($stat,$langs['st_ltot']);
 
@@ -236,4 +236,14 @@ echo "\n<br>\n</td></tr>\n\n".
      "and all right reserved\n</font>\n</td></tr>\n</table>\n";
 
 require("include/html_atail.php");
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
 ?>

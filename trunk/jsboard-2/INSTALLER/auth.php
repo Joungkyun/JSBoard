@@ -1,5 +1,16 @@
 <?php
-# $Id: auth.php,v 1.19 2014-02-28 21:37:17 oops Exp $
+# $Id: auth.php,v 1.20 2014-03-02 17:11:28 oops Exp $
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
+
 include_once '../include/variable.php';
 include_once '../include/print.php';
 parse_query_str();
@@ -24,7 +35,7 @@ if($agent['tx'])
 
 if($langs['code'] == 'ko') {
   $charset = 'euc-kr';
-  $charfont = '±¼¸²Ã¼';
+  $charfont = 'êµ´ë¦¼ì²´';
 } else {
   $charset = 'iso-8859-1';
   $charfont = 'tahoma,arial';
@@ -158,17 +169,17 @@ EOF;
   if ($dbtype) {
     $mcon = @$dbconnfunc($mysql_dock, $user, $passwd);
 
-    # mysql login °¡´É ¿©ºÎ
+    # mysql login ê°€ëŠ¥ ì—¬ë¶€
 	$mcheck = $mcon ? 1 : 0;
   } else $mcheck = 0;
 
-  # jsboard/data ¿¡ ¾²±â ±ÇÇÑÀÌ ÀÖ´ÂÁö ¿©ºÎ
+  # jsboard/data ì— ì“°ê¸° ê¶Œí•œì´ ìžˆëŠ”ì§€ ì—¬ë¶€
   if(@touch("../data/aaa.test")) {
     $p1 = 1;
     @unlink("../data/aaa.test");
   }
 
-  # jsboard/config ¿¡ ¾²±â ±ÇÇÑÀÌ ÀÖ´ÂÁö ¿©ºÎ
+  # jsboard/config ì— ì“°ê¸° ê¶Œí•œì´ ìžˆëŠ”ì§€ ì—¬ë¶€
   if(@touch("../config/aaa.test")) {
     $p2 = 1;
     @unlink("../config/aaa.test");

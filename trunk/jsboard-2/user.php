@@ -1,12 +1,12 @@
 <?php
-# $Id: user.php,v 1.18 2014-02-28 21:37:17 oops Exp $
-$p_time[] = microtime(); # �ӵ� üũ
+# $Id: user.php,v 1.19 2014-03-02 17:11:28 oops Exp $
+$p_time[] = microtime(); # 속도 체크
 include "include/header.php";
 include "admin/include/check.php";
 
 if(!isset($_SESSION[$jsboard])) print_error("{$langs['login_err']}");
 
-$a_time[] = microtime(); # �ӵ� üũ
+$a_time[] = microtime(); # 속도 체크
 
 if($m != "act") {
   $db['rhost'] = $db['server'];

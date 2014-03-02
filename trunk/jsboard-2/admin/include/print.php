@@ -1,7 +1,7 @@
 <?php
-# $Id: print.php,v 1.2 2009-11-19 05:29:50 oops Exp $
+# $Id: print.php,v 1.3 2014-03-02 17:11:30 oops Exp $
 
-# html head ÀĞ¾î¿À±â
+# html head ì½ì–´ì˜¤ê¸°
 function htmlhead() {
   global $version,$color,$langs,$board;
 
@@ -17,7 +17,7 @@ function htmlhead() {
   include "./include/html_ahead.php";
 }
 
-# html tail ÀĞ¾î¿À±â
+# html tail ì½ì–´ì˜¤ê¸°
 function htmltail() {
   include "./include/html_atail.php";
 }
@@ -44,7 +44,7 @@ function java_scr() {
        "}\n\n// -->\n</script>";
 }
 
-# Admin Center º¯°æ ¿Ï·á ¸Ş¼¼Áö
+# Admin Center ë³€ê²½ ì™„ë£Œ ë©”ì„¸ì§€
 #
 function complete_adminpass() {
   global $langs;
@@ -54,21 +54,21 @@ function complete_adminpass() {
   exit;
 }
 
-# theme list¸¦ ºÒ·¯¿À´Â ÇÔ¼ö
+# theme listë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ” í•¨ìˆ˜
 #
-# opendir() - µğ·ºÅä¸®ÀÇ Æ÷ÀÎµå¸¦ ¿­À½
-# readdir() - µğ·ºÅä¸® ¸ñ·ÏÀ» ÀĞÀ½
-# is_dir()  - µğ·ºÅä¸®ÀÎÁö ÆÇ´Ü
-# sizeof()  - ¹è¿­ÀÇ °¹¼ö¸¦ ±¸ÇÔ
+# opendir() - ë””ë ‰í† ë¦¬ì˜ í¬ì¸ë“œë¥¼ ì—´ìŒ
+# readdir() - ë””ë ‰í† ë¦¬ ëª©ë¡ì„ ì½ìŒ
+# is_dir()  - ë””ë ‰í† ë¦¬ì¸ì§€ íŒë‹¨
+# sizeof()  - ë°°ì—´ì˜ ê°¯ìˆ˜ë¥¼ êµ¬í•¨
 #
 function get_theme_list($pt,$current="") {
   if(!$current) $current = "default";
 
-  # ÀüÃ¼ ¾îµå¹ÎÀÎÁö °Ô½ÃÆÇ ¾îµå¹Î¿¡¼­ ÀÎÁö¿¡ µû¶ó °æ·Î¸¦ ±¸ºĞ
+  # ì „ì²´ ì–´ë“œë¯¼ì¸ì§€ ê²Œì‹œíŒ ì–´ë“œë¯¼ì—ì„œ ì¸ì§€ì— ë”°ë¼ ê²½ë¡œë¥¼ êµ¬ë¶„
   if($pt == "user_admin") $path = "../../theme";
   else $path = "../theme";
 
-  # theme directory ¿¡¼­ °¢ theme µéÀÇ µğ·ºÅä¸® ÀÌ¸§À» ¹ŞÀ½
+  # theme directory ì—ì„œ ê° theme ë“¤ì˜ ë””ë ‰í† ë¦¬ ì´ë¦„ì„ ë°›ìŒ
   $p = opendir($path);
   while($i = readdir($p)) {
     if($i != "." && $i != ".." && is_dir("$path/$i")) {
@@ -96,7 +96,7 @@ function err_msg($str = "Ocourrenct unknown error",$mode = 0) {
   if (!$mode) die;
 }
 
-# ÆĞ½º¿öµå º¯°æÀ» ¾ÈÇÏ¸é º¯°æÀ» ÇÏ°Ô²û ±ÍÂú°Ô ¸Ş½ÃÁö »Ñ¸®±â :-)
+# íŒ¨ìŠ¤ì›Œë“œ ë³€ê²½ì„ ì•ˆí•˜ë©´ ë³€ê²½ì„ í•˜ê²Œë” ê·€ì°®ê²Œ ë©”ì‹œì§€ ë¿Œë¦¬ê¸° :-)
 function print_chgpass($pass) {
   global $langs;
   if ($pass == crypt("0000",$pass)) print_notice($langs['p_chm'],250,35);
@@ -113,10 +113,10 @@ function userlist_sortlink($t,$c='') {
     if($t) $index .= "<A HREF={$_SERVER['PHP_SELF']}><FONT STYLE=\"color:{$color['text']}\">ALL</FONT></A>\n";
     else $index .= "<FONT STYLE=\"color:{$color['t_bg']};font-weight:bold\">ALL</FONT>\n";
   } else {
-    $p = array("1" => "°¡", "2" => "³ª", "3" => "´Ù", "4" => "¶ó",
-               "5" => "¸¶", "6" => "¹Ù", "7" => "»ç", "8" => "¾Æ",
-               "9" => "ÀÚ", "10" => "Â÷", "11" => "Ä«", "12" => "Å¸",
-               "13" => "ÆÄ", "14" => "ÇÏ");
+    $p = array("1" => "ê°€", "2" => "ë‚˜", "3" => "ë‹¤", "4" => "ë¼",
+               "5" => "ë§ˆ", "6" => "ë°”", "7" => "ì‚¬", "8" => "ì•„",
+               "9" => "ì", "10" => "ì°¨", "11" => "ì¹´", "12" => "íƒ€",
+               "13" => "íŒŒ", "14" => "í•˜");
     for($i=1;$i<=14;$i++) {
       if($t != $p[$i]) $index .= "<A HREF={$_SERVER['PHP_SELF']}?t={$p[$i]}><FONT STYLE=\"color:{$color['text']}\">{$p[$i]}</FONT></A>\n";
       else $index .= "<FONT STYLE=\"color:{$color['t_bg']};font-weight:bold\">{$p[$i]}</FONT>\n";
@@ -124,4 +124,15 @@ function userlist_sortlink($t,$c='') {
   }
   return $index;
 }
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>
