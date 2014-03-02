@@ -11,11 +11,15 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.293 2014-03-02 17:11:31 oops Exp $
+$Id: Changelog,v 1.294 2014-03-02 17:19:21 oops Exp $
 
 
 -----------------------------------------------------------------------------
 Version   : jsboard 2.0.16
+
+Mon, Mar,  3 2014
+by JoungKyun.Kim
+	- change charset to utf-8
 
 Thu, Feb, 27 2014
 by JoungKyun.Kim
