@@ -11,7 +11,7 @@ Any one who wants install this package on any other platform must revise
 it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
-$Id: Changelog,v 1.310 2014-03-02 17:11:31 oops Exp $
+$Id: Changelog,v 1.311 2014-03-02 17:19:21 oops Exp $
 
 ******************************************************************************
 
@@ -19,6 +19,10 @@ $Id: Changelog,v 1.310 2014-03-02 17:11:31 oops Exp $
 
 -----------------------------------------------------------------------------
 버전   : jsboard 2.0.16
+
+2014.03.03
+  by 김정균
+	- 문자셋 utf-8 로 변경
 
 2014.02.27
   by 김정균
