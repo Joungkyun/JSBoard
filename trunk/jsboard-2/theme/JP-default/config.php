@@ -8,7 +8,7 @@ $designer['name'] = 'IDOO';
 # 1 - my license
 # 0 - GPL
 $designer['license'] = '1';
-$designer['ver'] = 'A9';
+$designer['ver'] = 'A10';
 
 ##############################################################
 # Language configuration

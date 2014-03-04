@@ -1,4 +1,7 @@
-$Id: Changelog.theme,v 1.26 2014-03-02 17:11:32 oops Exp $
+$Id: Changelog.theme,v 1.27 2014-03-04 13:09:13 oops Exp $
+
+Version: A10
+- charset을 utf-8로 변경
 
 Version: A9
 - reply.template 와 write.template 에 <?php echo print_spam_trap()?> 추가

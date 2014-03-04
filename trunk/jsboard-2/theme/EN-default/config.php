@@ -1,5 +1,5 @@
 <?php
-# $Id: config.php,v 1.10 2014-03-02 17:11:32 oops Exp $
+# $Id: config.php,v 1.11 2014-03-04 13:09:13 oops Exp $
 ##############################################################
 # Copyright configuration
 ##############################################################
@@ -9,7 +9,7 @@ $designer['name'] = 'IDOO';
 # 1 - my license
 # 0 - GPL
 $designer['license'] = '1';
-$designer['ver'] = 'A9';
+$designer['ver'] = 'A10';
 
 ##############################################################
 # Language configuration
