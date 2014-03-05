@@ -1,5 +1,5 @@
 <?php
-# $Id: en.php,v 1.12 2014-03-02 17:11:32 oops Exp $
+# $Id: en.php,v 1.13 2014-03-05 15:46:27 oops Exp $
 # Language Charactor Set
 $langs['charset'] = "utf-8";
 
@@ -92,7 +92,7 @@ $langs['sh_ment'] = "+ Search covers every articles unless otherwise specified.\
 
 # check.ph
 $langs['chk_wa'] = "MM Admin restricts KK function.\nCheck the MM Admin Password.";
-$langs['chk_lo'] = "Can't permit invalid access. If this access was done by valid method, confirm \$board[path] in global.ph";
+$langs['chk_lo'] = "Can't permit invalid access. If this access was done by valid method, confirm \$board[path] in global.php";
 $langs['chk_ta'] = "Wrong usage of TABEL tag";
 $langs['chk_tb'] = "Don't match number of open or close table tag";
 $langs['chk_if'] = "Don't open or close IFRAME tag.";
