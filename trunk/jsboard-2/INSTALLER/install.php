@@ -1,5 +1,5 @@
 <?php
-# $Id: install.php,v 1.14 2014-03-02 17:11:28 oops Exp $
+# $Id: install.php,v 1.15 2014-03-06 17:31:40 oops Exp $
 
 /*
  * Local variables:
@@ -10,6 +10,12 @@
  * End:
  * vim: filetype=php et ts=2 sw=2
  */
+
+if (file_exists('../config/global.php')) {
+  Header ('Content-Type: text/plain; charset=utf-8');
+  printf ('Already installed!!!');
+  exit;
+}
 
 include_once '../include/variable.php';
 include_once '../include/print.php';
