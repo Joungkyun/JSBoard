@@ -1,5 +1,5 @@
 <?php
-# $Id: session.php,v 1.13 2014-03-02 17:11:28 oops Exp $
+# $Id: session.php,v 1.14 2014-03-06 17:31:40 oops Exp $
 
 /*
  * Local variables:
@@ -10,6 +10,12 @@
  * End:
  * vim: filetype=php et ts=2 sw=2
  */
+
+if (file_exists('../config/global.php')) {
+  Header ('Content-Type: text/plain; charset=utf-8');
+  printf ('Already installed!!!');
+  exit;
+}
 
 session_start(); // session을 시작한다.
 include_once '../include/variable.php';
