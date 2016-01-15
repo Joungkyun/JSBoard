@@ -1,5 +1,5 @@
 <?php
-# $Id: auth.php,v 1.22 2016-01-15 07:45:53 oops Exp $
+# $Id: auth.php,v 1.23 2016-01-15 08:44:50 oops Exp $
 
 /*
  * Local variables:
@@ -303,7 +303,7 @@ EOF;
         <span style="color:#555;font: 20px tahoma; font-weight:bold">JSBoard Installer</span>
       </td></tr>
       <tr><td align="center">
-        <span style="font-size:12px;color:#555;">MySQL password</span>
+        <span style="font-size:12px;color:#555;">MySQL root password</span>
         <form name="auth" method="post" action="session.php">
           <input type="password" name="mysqlpass" size="{$fsize}">
           <input type="hidden" name="mode" value="login">
