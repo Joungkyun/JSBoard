@@ -1,5 +1,5 @@
 <?php
-# $Id: session.php,v 1.14 2014-03-06 17:31:40 oops Exp $
+# $Id: session.php,v 1.15 2016-01-15 08:39:14 oops Exp $
 
 /*
  * Local variables:
@@ -11,17 +11,17 @@
  * vim: filetype=php et ts=2 sw=2
  */
 
-if (file_exists('../config/global.php')) {
-  Header ('Content-Type: text/plain; charset=utf-8');
-  printf ('Already installed!!!');
-  exit;
-}
-
 session_start(); // session을 시작한다.
 include_once '../include/variable.php';
 require_once '../include/print.php';
 parse_query_str();
 if ($mode == "login") {
+  if (file_exists('../config/global.php')) {
+    Header ('Content-Type: text/plain; charset=utf-8');
+    printf ('Already installed!!!');
+    exit;
+  }
+
   $_SESSION['mysqlpass'] = $mysqlpass; //세션 등록한다.
   header("Location: install.php?langss=$langss");
   exit;

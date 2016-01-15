@@ -11,7 +11,7 @@ Any one who wants install this package on any other platform must revise
 it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
-$Id: Changelog,v 1.313 2016-01-15 08:28:12 oops Exp $
+$Id: Changelog,v 1.314 2016-01-15 08:39:14 oops Exp $
 
 ******************************************************************************
 
@@ -24,6 +24,7 @@ $Id: Changelog,v 1.313 2016-01-15 08:28:12 oops Exp $
   by 김정균
 	- [#318679] INSTALLER에서 mysqli 확장 사용시에 DB 접속 안되는 문제 수정
 	- [#318681] fixed PHP Fatal error: Function name must be a string
+	- [#318680] install 정상 완료시에도 에러 메시지 출력되는 문제 수정
 
 
 -----------------------------------------------------------------------------

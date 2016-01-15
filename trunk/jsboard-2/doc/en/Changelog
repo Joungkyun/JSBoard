@@ -11,7 +11,7 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.296 2016-01-15 08:28:12 oops Exp $
+$Id: Changelog,v 1.297 2016-01-15 08:39:14 oops Exp $
 
 
 -----------------------------------------------------------------------------
@@ -21,6 +21,7 @@ Fri, Jan, 15 2016
 by Joungkyun.KIm
 	- [#318679] fixed db connect error with mysqli extension on INSTALLER
 	- [#318681] fixed PHP Fatal error: Function name must be a string
+	- [#318680] fixed print error messages When complete installation
 
 
 -----------------------------------------------------------------------------
