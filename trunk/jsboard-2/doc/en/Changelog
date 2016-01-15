@@ -11,7 +11,7 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.298 2016-01-15 12:16:01 oops Exp $
+$Id: Changelog,v 1.299 2016-01-15 13:10:34 oops Exp $
 
 
 -----------------------------------------------------------------------------
@@ -23,6 +23,7 @@ by Joungkyun.KIm
 	- [#318681] fixed PHP Fatal error: Function name must be a string
 	- [#318680] fixed print error messages When complete installation
 	- support Microsoft Edge
+	- [#318682] support PHP 7
 
 
 -----------------------------------------------------------------------------
