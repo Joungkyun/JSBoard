@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.82 2014-03-02 17:11:28 oops Exp $
+# $Id: act.php,v 1.83 2016-01-15 08:28:12 oops Exp $
 include_once 'include/variable.php';
 include_once "include/print.php";
 # GET/POST 변수를 제어
@@ -460,7 +460,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
 
     # blank check
 	if ( ! $atc['name'] || ! $atc['title'] || ! trim ($atc['text']) )
-      print_error($_('act_in'),250,150,1);
+      print_error($langs['act_in'],250,150,1);
 
     $blankChk = "(\xA1A1|\s|&nbsp;)+";
     $nameChk = array("name","title","text");
