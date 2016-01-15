@@ -11,10 +11,18 @@ Any one who wants install this package on any other platform must revise
 it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
-$Id: Changelog,v 1.311 2014-03-02 17:19:21 oops Exp $
+$Id: Changelog,v 1.312 2016-01-15 07:45:54 oops Exp $
 
 ******************************************************************************
 
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard 2.0.17
+
+2016.01.15
+  by 김정균
+  	- [#318679] INSTALLER에서 mysqli 확장 사용시에 DB 접속 안되는 문제 수정
 
 
 -----------------------------------------------------------------------------

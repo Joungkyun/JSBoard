@@ -11,7 +11,15 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.294 2014-03-02 17:19:21 oops Exp $
+$Id: Changelog,v 1.295 2016-01-15 07:45:54 oops Exp $
+
+
+-----------------------------------------------------------------------------
+version   : jsboard 2.0.17
+
+Fri, Jan, 15 2016
+by Joungkyun.KIm
+	- [#318679] fixed db connect error with mysqli extension on INSTALLER
 
 
 -----------------------------------------------------------------------------
