@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.19 2014-03-02 17:11:30 oops Exp $
+# $Id: act.php,v 1.20 2016-01-15 08:28:12 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 include "../include/ostype.php";
@@ -94,7 +94,7 @@ else if($mode == 'db_create')  {
 
   # 동일한 이름의 게시판이 있는지 확인
   if ( $new_table == 'userdb' || db_table_list ($c, $db['name'], '', $new_table) )
-    print_error ($_('a_acc'), 250, 150, 1);
+    print_error ($langs['a_acc'], 250, 150, 1);
 
   #include "include/first_reg.php";
   $create_table = "CREATE TABLE $new_table ( 
