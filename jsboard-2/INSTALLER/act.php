@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.21 2014-03-06 17:31:40 oops Exp $
+# $Id: act.php,v 1.22 2016-01-15 12:16:01 oops Exp $
 
 /*
  * Local variables:
@@ -158,8 +158,10 @@ $result['utable'] = sql_query($create['comment'], $c);
 $result['udata'] = sql_query($create['udata'], $c);
 
 # 설정 파일 위치
-mkdir("../data/test",0775);
-mkdir("../data/test/files",0770);
+if ( ! is_dir ('../data/test') )
+	mkdir("../data/test",0775);
+if ( ! is_dir ('../data/test/files') )
+	mkdir("../data/test/files",0770);
 copy("sample/data/config.php","../data/test/config.php");
 copy("sample/data/html_head.php","../data/test/html_head.php");
 copy("sample/data/html_tail.php","../data/test/html_tail.php");
