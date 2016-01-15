@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.20 2016-01-15 08:28:12 oops Exp $
+# $Id: act.php,v 1.21 2016-01-15 14:15:53 oops Exp $
 $path['type'] = "admin";
 include "./include/admin_head.php";
 include "../include/ostype.php";
@@ -158,8 +158,21 @@ else if($mode == 'db_create')  {
   mkdir("../data/$new_table/{$upload['dir']}",0700);
   chmod("../data/$new_table",0755);
   chmod("../data/$new_table/{$upload['dir']}",0755);
-  copy("../INSTALLER/sample/data/config.php","../data/$new_table/config.php");
+
+  $curURL = sprintf ("http%s://%s%s",
+    $_SERVER['HTTPS'] ? 's' : '',
+    $_SERVER['HTTP_HOST'],
+    preg_replace ('/\/admin\/.*/', '', $_SERVER['REQUEST_URI'])
+  );
+
+  $buf = file_operate('../INSTALLER/sample/data/config.php','r','Can\'t open user configuration');
+  $buf = str_replace('@ADMIN@', $_SESSION[$jsboard]['id'], $buf);
+  $buf = str_replace('@JSBOARD_LOCATE@', $curURL, $buf);
+  $buf = str_replace('@TABLE@', $new_table, $buf);
+  file_operate("../data/{$new_table}/config.php",'w','Can\'t update user configuration',$buf);
+  unset ($buf);
   chmod("../data/$new_table/config.php",0644);
+
   copy("../INSTALLER/sample/data/html_head.php","../data/$new_table/html_head.php");
   chmod("../data/$new_table/html_head.php",0644);
   copy("../INSTALLER/sample/data/html_tail.php","../data/$new_table/html_tail.php");

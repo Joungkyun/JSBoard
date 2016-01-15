@@ -1,5 +1,5 @@
 <?php
-# $Id: auth.php,v 1.23 2016-01-15 08:44:50 oops Exp $
+# $Id: auth.php,v 1.24 2016-01-15 14:15:52 oops Exp $
 
 /*
  * Local variables:
@@ -297,13 +297,15 @@ EOF;
   if ($agent['co'] == "mozilla") $fsize = form_size(7);
   else $fsize = form_size(9);
 
+  $user = $mysqlroot ? 'root' : $mysqlusername;
+
   echo <<<EOF
     <table width="400" border="0" cellpadding="5">
       <tr><td class="dash_board">
         <span style="color:#555;font: 20px tahoma; font-weight:bold">JSBoard Installer</span>
       </td></tr>
       <tr><td align="center">
-        <span style="font-size:12px;color:#555;">MySQL root password</span>
+        <span style="font-size:12px;color:#555;">MySQL {$user} password</span>
         <form name="auth" method="post" action="session.php">
           <input type="password" name="mysqlpass" size="{$fsize}">
           <input type="hidden" name="mode" value="login">
