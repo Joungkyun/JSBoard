@@ -1,5 +1,5 @@
 <?php
-# $Id: get.php,v 1.23 2014-03-02 17:11:31 oops Exp $
+# $Id: get.php,v 1.24 2016-01-15 12:16:01 oops Exp $
 
 # // {{{ +-- public get_authinfo($id,$nocry='')
 # login 정보를 얻어오는 함수
@@ -89,6 +89,10 @@ function get_agent() {
     # version 정보
     $agent['vr'] = trim(preg_replace('/Mo.+MSIE ([^;]+);.+/i','\\1',$agent_env));
     $agent['vr'] = preg_replace('/[a-z]/i','',$agent['vr']);
+  } else if(preg_match ('/Edge\//', $agent_env)) {
+    $agent['br'] = 'Edge';
+    $agent['os'] = 'NT';
+    $agent['vr'] = preg_replace ('/.* Edge\/([0-9.]+).*/', '\\1', $agent_env);
   } else if(preg_match('/Gecko|Galeon/i',$agent_env) && !preg_match('/Netscape/i',$agent_env)) {
     if ( preg_match ('/Firefox/i', $agent_env) )
       $agent['br'] = 'Firefox';
