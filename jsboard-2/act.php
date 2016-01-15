@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.83 2016-01-15 08:28:12 oops Exp $
+# $Id: act.php,v 1.84 2016-01-15 13:10:34 oops Exp $
 include_once 'include/variable.php';
 include_once "include/print.php";
 # GET/POST 변수를 제어
@@ -235,7 +235,7 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
 
     $atc['date'] = time(); # 현재 시각
     $atc['host'] = get_hostname(0); # 글쓴이 주소
-    if(eregi($rmail['chars'],$atc['email'])) $atc['email'] = str_replace($rmail['chars'],"@",$atc['email']);
+    $atc['email'] = str_replace($rmail['chars'],"@",$atc['email']);
     $atc = article_check($c, $table, $atc);
 
     # 글 등록 호환 모드시에 html header tag를 사용하는 것을 방지한다.
@@ -366,8 +366,8 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
       }
     }
 
-    if (!empty($compare['name']) && eregi($compare['name'],$atc['name'])) $cmp['name'] = 1;
-    if (!empty($ccompare['name']) && eregi($ccompare['name'],$atc['name'])) $ccmp['name'] = 1;
+    if (!empty($compare['name']) && preg_match('/'.preg_quote($compare['name']).'/i',$atc['name'])) $cmp['name'] = 1;
+    if (!empty($ccompare['name']) && preg_match('/'.preg_quote($ccompare['name']).'/i',$atc['name'])) $ccmp['name'] = 1;
 
     # 관리자 사칭 체크
     if((!$board['mode'] || $board['mode'] == 4) && $board['super'] != 1 && !$board['adm']) {
@@ -486,10 +486,10 @@ if ($o['at'] != "dn" && $o['at'] != "sm" && $o['at'] != "ma") {
     $compare['name'] = trim($compare['name']) ? $compare['name'] : "name check";
     $ccompare['name'] = trim($ccompare['name']) ? $ccompare['name'] : "name check";
 
-    if (eregi($compare['name'],$atc['name'])) $cmp['name'] = 1;
-    if (eregi($compare['email'],$atc['email'])) $cmp['email'] = 1;
-    if (eregi($ccompare['name'],$atc['name'])) $ccmp['name'] = 1;
-    if (eregi($ccompare['email'],$atc['email'])) $ccmp['email'] = 1;
+    if (preg_match('/'.preg_quote($compare['name']).'/i',$atc['name'])) $cmp['name'] = 1;
+    if (preg_match('/'.preg_quote($compare['email']).'/i',$atc['email'])) $cmp['email'] = 1;
+    if (preg_match('/'.preg_quote($ccompare['name']).'/i',$atc['name'])) $ccmp['name'] = 1;
+    if (preg_match('/'.preg_quote($ccompare['email']).'/i',$atc['email'])) $ccmp['email'] = 1;
 
     # 관리자 사칭 체크
     if((!$board['mode'] || $board['mode'] == 4) && $board['super'] != 1 && !$board['adm']) {

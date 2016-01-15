@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.31 2014-03-02 17:11:30 oops Exp $
+# $Id: act.php,v 1.32 2016-01-15 13:10:34 oops Exp $
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
@@ -387,7 +387,7 @@ $wfile = "../../data/$table/html_tail.php";
 file_operate("$wfile","w","Can't update $wfile",$tail);
 
 # style sheet file 생성
-$ua['style'] = eregi_replace("\\\\\"|\"","",$ua['style']);
+$ua['style'] = preg_replace('/\\\\"|"/','',$ua['style']);
 $ua['style'] = check_invalid($ua['style']);
 $wstyle = "<?php
 \$user_stylesheet = \"{$ua['style']}\";

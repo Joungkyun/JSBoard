@@ -1,5 +1,5 @@
 <?php
-# $Id: parse.php,v 1.21 2014-03-02 17:11:31 oops Exp $
+# $Id: parse.php,v 1.22 2016-01-15 13:10:34 oops Exp $
 
 # // {{{ +-- public ugly_han($text,$html=0)
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
@@ -311,7 +311,7 @@ function wordwrap_js (&$buf, $len = 80) {
       $buf = $ss;
   }
 
-  $_buf = split ("\r?\n", $buf);
+  $_buf = preg_split("/\r?\n/",$buf);
   $size = count ($_buf);
   $buf = '';
 

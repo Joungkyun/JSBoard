@@ -1,7 +1,7 @@
 <?php
 #
 # minimal wikify module for jsboard by wkpark@kldp.org
-# $Id: wikify.php,v 1.4 2014-03-02 17:11:32 oops Exp $
+# $Id: wikify.php,v 1.5 2016-01-15 13:10:34 oops Exp $
 #
 
 $_config=array();
@@ -233,7 +233,12 @@ function wikify(&$line,$options=array()) {
   $_config['baserepl']="<b></b>";
   $line=preg_replace("/(".$_config['baserule'].")/",$_config['baserepl'],$line);
 
-  $line=preg_replace("/(".$_config['wordrule'].")/e","link_repl('\\1')",$line);
+  #$line=preg_replace("/(".$_config['wordrule'].")/e","link_repl('\\1')",$line);
+  $line=preg_replace_callback(
+    '/('.$_config['wordrule'].')/',
+    function ($m) { return link_repl($m[1]); },
+    $line
+  );
 }
 // }}}
 
