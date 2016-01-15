@@ -1,5 +1,5 @@
 <?php
-# $Id: auth.php,v 1.21 2014-03-06 17:31:40 oops Exp $
+# $Id: auth.php,v 1.22 2016-01-15 07:45:53 oops Exp $
 
 /*
  * Local variables:
@@ -159,25 +159,28 @@ EOF;
 
 EOF;
 
+  $user = $mysqlroot ? 'root' : $mysqlusername;
+  $mcheck = 0;
+
   if (extension_loaded('mysqli')) {
-	  $dbconnfunc = 'mysqli_connect';
-	  $dbtype = 'mysqli';
+    if (preg_match ('/^:?\//', $mysql_sock)) {
+      $host = null;
+      $sock = preg_replace ('/^:/', '', $mysql_sock);
+    } else {
+      $host = $mysql_sock;
+      $sock = null;
+    }
+
+    $mcon = mysqli_connect ($host, $user, $passwd, null, 0, $sock);
+    $dbtype = 'mysqli';
   } else if (extension_loaded('mysql')) {
-	  $dbconnfunc = 'mysql_connect';
-	  $dbtype = 'mysql';
+    $mcon = mysql_connect ($mysql_sock, $user, $passwd);
+    $dbtype = 'mysql';
   } else {
-	  $dbconnfunc = '';
-	  $dbtype = '';
+    $mcon = null;
   }
 
-  $user = $mysqlroot ? 'root' : $mysqlusername;
-
-  if ($dbtype) {
-    $mcon = @$dbconnfunc($mysql_dock, $user, $passwd);
-
-    # mysql login 가능 여부
-	$mcheck = $mcon ? 1 : 0;
-  } else $mcheck = 0;
+  $mcheck = $mcon ? 1 : 0;
 
   # jsboard/data 에 쓰기 권한이 있는지 여부
   if(@touch("../data/aaa.test")) {
