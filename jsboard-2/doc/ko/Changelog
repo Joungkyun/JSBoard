@@ -11,7 +11,7 @@ Any one who wants install this package on any other platform must revise
 it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
-$Id: Changelog,v 1.316 2016-01-15 13:10:34 oops Exp $
+$Id: Changelog,v 1.317 2016-01-15 14:15:53 oops Exp $
 
 ******************************************************************************
 
@@ -27,6 +27,7 @@ $Id: Changelog,v 1.316 2016-01-15 13:10:34 oops Exp $
 	- [#318680] install 정상 완료시에도 에러 메시지 출력되는 문제 수정
 	- support Microsoft Edge
 	- [#318682] PHP 7 지원
+	- 신규 설치시 또는 새 게시판 등록시에 게시판 location을 자동으로 등록
 
 
 -----------------------------------------------------------------------------

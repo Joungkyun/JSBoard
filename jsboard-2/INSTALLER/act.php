@@ -1,5 +1,5 @@
 <?php
-# $Id: act.php,v 1.22 2016-01-15 12:16:01 oops Exp $
+# $Id: act.php,v 1.23 2016-01-15 14:15:52 oops Exp $
 
 /*
  * Local variables:
@@ -63,7 +63,7 @@ if($mysqlroot) {
   $result['dbname'] = sql_query($create['dbname'],$c);
   sql_select_db($dbinst['name'],$c);
 } else
-  sql_select_db($dbinst['name']);
+  sql_select_db($dbinst['name'],$c);
 
 # 외부 DB 일 경우에는 접근 권한을 외부로 지정한다.
 if($mysql_sock != "127.0.0.1" && $mysql_sock != "localhost" && !preg_match("/mysql.sock/i",$mysql_sock))
@@ -157,6 +157,12 @@ $result['utable'] = sql_query($create['comment'], $c);
 #$result['data'] = sql_query($create['data'], $c);
 $result['udata'] = sql_query($create['udata'], $c);
 
+$curURL = sprintf ("http%s://%s%s",
+  $_SERVER['HTTPS'] ? 's' : '',
+  $_SERVER['HTTP_HOST'],
+  preg_replace ('/\/INSTALLER.*/', '', $_SERVER['REQUEST_URI'])
+);
+
 # 설정 파일 위치
 if ( ! is_dir ('../data/test') )
 	mkdir("../data/test",0775);
@@ -184,6 +190,7 @@ $create['str'] = str_replace("@DBSERVER@",$mysql_sock,$create['str']);
 $create['str'] = str_replace("@DBNAME@",$dbinst['name'],$create['str']);
 $create['str'] = str_replace("@DBPASS@",$dbinst['pass'],$create['str']);
 $create['str'] = str_replace("@DBUSER@",$dbinst['user'],$create['str']);
+$create['str'] = str_replace("@JSBOARD_LOCATE@",$curURL,$create['str']);
 
 # spam 변수 설정
 mt_srand((double) microtime() * 1000000);
@@ -199,6 +206,14 @@ $themes = ($langs['code'] == "ko") ? "KO-default" : "EN-default";
 $create['str'] = str_replace("@THEME@",$themes,$create['str']);
 
 file_operate($create['gfile'],"w","Can't update {$create['gfile']}",$create['str']);
+unset ($create);
+
+$buf = file_operate('../data/test/config.php','r','Can\'t open user configuration');
+$buf = str_replace('@ADMIN@', $dbinst['aid'], $buf);
+$buf = str_replace('@JSBOARD_LOCATE@', $curURL, $buf);
+$buf = str_replace('@TABLE@', 'test', $buf);
+file_operate('../data/test/config.php','w','Can\'t update user configuration',$buf);
+unset ($buf);
 
 # 등록후 변수값들 초기화
 $dbinst['name'] = "";

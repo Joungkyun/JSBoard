@@ -1,5 +1,5 @@
 <?php
-# $Id: global.php.orig,v 1.7 2014-03-02 17:11:29 oops Exp $
+# $Id: global.php.orig,v 1.8 2016-01-15 14:15:53 oops Exp $
 ##############################################################################
 #  DATABASE Configuration
 ##############################################################################
@@ -31,7 +31,7 @@ $board['hl'] = '<FONT STYLE="text-decoration:underline;color;#000000;font-weight
 $board['align']    = 'center';
 
 # board web path
-$board['path']     = 'http://localhost/jsboard/';
+$board['path']     = '@JSBOARD_LOCATE@/';
 
 
 ##############################################################################
@@ -44,10 +44,10 @@ $jsboard         = 'login';
 $jsboard         = 'jsboard'.$jsboard;
 
 # location of default page after login
-$print['dpage'] = 'http://localhost/jsboard/list.php?table=test';
+$print['dpage'] = '@JSBOARD_LOCATE@/list.php?table=test';
 
 # location of default page after logout
-$print['dopage'] = 'http://localhost/jsboard/login.php?table=test';
+$print['dopage'] = '@JSBOARD_LOCATE@/login.php?table=test';
 
 # permition of user registration
 # 1 -> everyone

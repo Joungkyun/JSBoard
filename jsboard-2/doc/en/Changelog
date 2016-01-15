@@ -11,7 +11,7 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.299 2016-01-15 13:10:34 oops Exp $
+$Id: Changelog,v 1.300 2016-01-15 14:15:53 oops Exp $
 
 
 -----------------------------------------------------------------------------
@@ -24,6 +24,9 @@ by Joungkyun.KIm
 	- [#318680] fixed print error messages When complete installation
 	- support Microsoft Edge
 	- [#318682] support PHP 7
+	- 신규 설치시 또는 새 게시판 등록시에 게시판 location을 자동으로 등록
+	- auto regist board location whten complete installation or regist new
+	  board
 
 
 -----------------------------------------------------------------------------

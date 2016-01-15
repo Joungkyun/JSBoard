@@ -1,6 +1,6 @@
 <?php
 ###############################################################################
-#  $Id: config.php,v 1.4 2014-03-02 17:11:29 oops Exp $
+#  $Id: config.php,v 1.5 2016-01-15 14:15:53 oops Exp $
 #  게시판 관리 모드
 #   ad   -> 게시판 관리자 id
 #   mode -> 게시판 관리 모드
@@ -22,7 +22,7 @@ $board['mode'] = 0;
 $board['rnname'] = 0;
 
 # 로그아웃 후에 이동할 페이지를 지정
-$print['dopage'] = 'http://domain.com/jsboard/login.php?table=test';
+$print['dopage'] = '@JSBOARD_LOCATE@/login.php?table=test';
 
 ###############################################################################
 #  게시판 허가 설정
