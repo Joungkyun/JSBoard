@@ -1,37 +1,43 @@
-<?php
-# $Id: form.php,v 1.2 2009-11-16 21:52:45 oops Exp $
-include "./include/header.php";
-$nocopy = 0;
+<HTML>
+<?
+include_once "include/print.ph";
+# register_globals 옵션의 영향을 받지 않기 위한 함수
+parse_query_str();
 
-if ( $mode == 'photo' ) {
-  $nocopy = 1;
-  if ( preg_match ('/^(2|3|5)$/', $board['mode']) && ! session_is_registered ($jsboard) )
-    print_error ($_('login_err'));
+if (!@file_exists("config/global.ph")) {
+  echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
+       "history.back();\nexit;\n</script>\n";
+} else { include_once "config/global.ph"; }
 
-  meta_char_check ($table, 0, 1);
-  meta_char_check ($f['c']);
-  meta_char_check ($upload['dir']);
-  upload_name_chk ($f['n']);
+if($mode == "photo") {
+  include_once "include/lang.ph";
+  include_once "include/get.ph";
+  include_once "include/error.ph";
+  include_once "include/check.ph";
 
-  $f['n'] = urlencode ($f['n']);
-  $print['head'] = "VIEW ORIGINAL IMAGE";
-  $print['body'] = "<a href=\"javascript:window.close()\">".
-           "<img alt=\"\" src=\"./data/$table/{$upload['dir']}/{$f['c']}/{$f['n']}\" ".
-           "width=\"{$f['w']}\" height=\"{$f['h']}\" border=0>".
+  meta_char_check($table,0,1);
+  meta_char_check($f[c]);
+  meta_char_check($upload[dir]);
+  upload_name_chk($f[n]);
+
+  $f[n] = urlencode($f[n]);
+  $pr[head] = "VIEW ORIGINAL IMAGE";
+  $pr[body] = "<a href=javascript:window.close()>".
+           "<img src=./data/$table/$upload[dir]/$f[c]/$f[n] width=$f[w] height=$f[h] border=0>".
            "</a>\n";
-} elseif ( $mode == 'version' ) {
-  $print['head'] = "Version Numbering";
-  $print['body'] = "<table width=\"100%\" border=0 align=\"center\" style=\"height: 100%;\">\n".
-                 "<tr><td class=\"versionprint\">-= [ JSBoard v{$board['ver']} ] =-</td></tr>\n".
-                 "</table>\n";
+} elseif($mode == "version") {
+  include_once "include/version.ph";
+  $pr[head] = "Version Numbering";
+  $pr[body] = "JSBoard v$board[ver]";
 }
 
-if ( $mode ) {
-  if ( ! $print['theme'] )
-    $print['theme'] = "EN-default";
-
-  meta_char_check ($print['theme'], 1, 1);
-  $bodyType = 'ext';
-  include "theme/{$print['theme']}/index.template";
-}
+echo "<HEAD>\n".
+     "<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=$langs[charset]\">\n".
+     "<TITLE>JSBoard - $pr[head]</TITLE>\n".
+     "</HEAD>\n".
+     "<BODY bgcolor=white leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>\n".
+     "$pr[body]";
 ?>
+
+</BODY>
+</HTML>
