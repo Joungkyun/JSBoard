@@ -1,12 +1,11 @@
 <?php
 # JSboard RSS Feed
-# $Id: rss.php,v 1.13 2009-11-16 21:52:45 oops Exp $
 #
 
 # header file ª¿‘
 #
 if ( ! @file_exists ("include/header.php") ) {
-  echo "<script type=\"text/javascript\">\nalert('Don\'t exist header file');\n" .
+  echo "<script>\nalert('Don\'t exist header file');\n" .
        "history.back();\nexit;\n</script>\n";
   exit();
 } else {
@@ -33,7 +32,7 @@ if (!$no)
 
 # DB ¡§∫∏ ∞°¡Æø¿±‚
 #
-$c = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
+sql_connect ($db['server'], $db['user'], $db['pass']);
 
 # Description ¡§∫∏∞° ¿÷∞‘ «“ ∞Õ¿Œ¡ˆ æ∆¥—¡ˆ ø©∫Œ √º≈© (config file ø°º≠ √º≈©)
 #
@@ -42,44 +41,13 @@ if ($rss['is_des'])
 else
   $sql = "select no, date, name, rname, title from {$table} order by date DESC limit $no";
 
-$result = sql_query ($sql, $c);
+$result = sql_db_query ($db['name'], $sql);
 $i = 0;
 
 while( $rss_article[$i] = sql_fetch_array($result) ) {
-  $rss_article[$i]['title'] = htmlspecialchars ($rss_article[$i]['title'], ENT_QUOTES);
-  $rss_article[$i]['link'] = "{$board['path']}read.php?table={$table}&amp;no={$rss_article[$i]['no']}";
-  $rss_article[$i]['date'] = date ("r", $rss_article[$i]['date']);
-  #$rss_article[$i]['date'] = date("Y-m-d",$rss_article[$i]['date'] ) . 'T' . date("H:i:sO", $rss_article[$i]['date']);
-
-  if ( $rss['is_des'] ) {
-    #$rss_article[$i]['text'] = preg_replace ("!\n!", "<br />\n", $rss_article[$i]['text']);
-    $rss_article[$i]['text'] = preg_replace ("!([0-9]+;[0-9]+m)?!", "", $rss_article[$i]['text']);
-    $rss_article[$i]['text'] = htmlspecialchars ($rss_article[$i]['text']);
-    $rss_article[$i]['text'] = auto_link ($rss_article[$i]['text']);
-
-    $_body = "<table width=\"100%\" border=0 cellpadding=0 cellspacing=1>\n" .
-             "<tr><td bgcolor=\"#000000\">\n" .
-             "<table width=\"100%\" border=0 cellpadding=3 cellspacing=1>\n" .
-             "<tr><td style=\"font-weight: bold; color: #ffffff\">\n" .
-             "REPLY : <a href={$board['path']}reply.php?table={$table}&no={$rss_article[$i]['no']} style=\"color: #ffffff; text-decoration: none;\">" .
-             "{$board['path']}reply.php?table={$table}&no={$rss_article[$i]['no']}</a><br />\n" .
-             "DELETE: <a href={$board['path']}delete.php?table={$table}&no={$rss_article[$i]['no']} style=\"color: #ffffff; text-decoration: none;\">" .
-             "{$board['path']}delete.php?table={$table}&no={$rss_article[$i]['no']}</a>\n" .
-             "</td></tr>\n" .
-             "</table>\n" .
-             "</td></tr>\n" .
-             "<tr><td bgcolor=\"#000000\">\n" .
-             "<table width=\"100%\" border=0 cellpadding=3 cellspacing=1>\n" .
-             "<tr><td bgcolor=\"#ffffff\" style=\"font-size: 11px;\"><pre>\n" .
-             "{$rss_article[$i]['text']}\n" .
-             "</pre></td></tr>\n" .
-             "</table>\n" .
-             "</td></tr>\n" .
-             "</table>\n";
-
-    $_body = htmlspecialchars ($_body, ENT_QUOTES);
-    $rss_article[$i]['text'] = $_body;
-  }
+  $rss_article[$i]['link'] = "{$board['path']}read.php?table={$table}&no={$rss_article[$i]['no']}";
+  $rss_article[$i]['text'] = "<span style=\"font-size:11px;\"><pre>{$rss_article[$i]['text']}</pre></span>";
+  $rss_article[$i]['date'] = date("Y-m-d",$rss_article[$i]['date'] ) . 'T' . date("H:i:sO", $rss_article[$i]['date']);
 
   if (!$rss_article[$i]['name'])
     $rss_article[$i]['name'] = $rss_article[$i]['rname'];
@@ -89,59 +57,56 @@ while( $rss_article[$i] = sql_fetch_array($result) ) {
 
 $rss_article_num = $i;
 unset($result, $i);
-sql_close($c);
-
-$now = time ();
-$cYear = date ("Y", $now);
-$bdate = date ("r", $now);
-$_charset = strtolower ($_('charset'));
-
-$gotoUTF8 = check_utf8_conv ($_charset);
-$cset = $gotoUTF8 ? 'utf-8' : $_charset;
+mysql_close();
 
 # ø©±‚ ±Ó¡ˆ ¿ÃªÛ¿Ã æ¯¿∏∏È, Ω«¡¶ RSS √‚∑¬
 #
-header ('Cache-Control: no-cache, pre-check=0, post-check=0, max-age=0');
+header ('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
 header ('Expires: ' . gmdate('D, d M Y H:i:s', time()) . ' GMT');
 header ('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-header ('Content-Type: text/xml; charset=' . $cset);
+header ('Content-Type: text/xml');
 
-utf8_fallback ($rss['channel'], $_charset);
-utf8_fallback ($board['title'], $_charset);
-
-echo "<?xml version=\"1.0\" encoding=\"{$cset}\"?>\n";
+echo "<?xml version=\"1.0\" encoding=\"{$langs[charset]}\"?>\n";
 ?>
-<rss version="2.0"
-  xml:base="<?=$board['path']?>"
-  xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <atom:link href="http://<?=$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']?>" rel="self" type="application/rss+xml" />
+<rdf:RDF xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://purl.org/rss/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:wiki="http://purl.org/rss/1.0/modules/wiki/">
+  <channel rdf:about="<?=$rss['link']?>">
     <title><?=$rss['channel']?></title>
     <link><?=$rss['link']?></link>
     <description><?=$board['title']?></description>
-    <language><?=$_code?></language>
-    <copyright>1999-<?=$cYear?> JSBoard Open Project</copyright>
-    <lastBuildDate><?=$bdate?></lastBuildDate>
-    <generator>JSBoard <?=$board['ver']?></generator>
-
+    <items>
+     <rdf:Seq>
 <?php
-for ( $i=0; $i<$rss_article_num; $i++ ) {
-  utf8_fallback ($rss_article[$i], $_charset);
-  echo "<item>\n" .
-       "  <title>{$rss_article[$i]['title']}</title>\n" .
-       "  <link>{$rss_article[$i]['link']}</link>\n" .
-       "  <guid>{$rss_article[$i]['link']}</guid>\n";
-
-  if ( $rss['is_des'] ) {
-    echo "  <description>{$rss_article[$i]['text']}</description>\n";
-  }
-
-  echo "  <pubDate>{$rss_article[$i]['date']}</pubDate>\n" .
-       "  <dc:creator>{$rss_article[$i]['name']}</dc:creator>\n" .
-       "</item>\n";
+for ($i = 0;  $i < $rss_article_num ; $i ++){
+	$rss_article[$i]['link'] = str_replace("&", "&amp;", $rss_article[$i]['link']);
+?>
+      <rdf:li rdf:resource="<?=$rss_article[$i]['link']?>" /> 
+<?php
 }
 ?>
-
-  </channel>
-</rss>
+     </rdf:Seq>
+    </items>
+   </channel>
+<?php
+for ($i = 0 ; $i < $rss_article_num; $i ++){
+?>
+<item rdf:about="<?=$rss_article[$i]['link']?>">
+ <title><?=$rss_article[$i]['title']?></title> 
+ <link><?=$rss_article[$i]['link']?></link> 
+<?php
+	if ($rss['is_des']) {
+?>
+ <description><?=htmlspecialchars($rss_article[$i]['text'])?></description>
+<?php
+	}
+?>
+ <dc:date><?=$rss_article[$i]['date']?></dc:date> 
+ <dc:contributor>
+ <rdf:Description>
+ <rdf:value><?=$rss_article[$i]['name']?></rdf:value> 
+ </rdf:Description>
+ </dc:contributor>
+</item>
+<?php
+}
+?>
+</rdf:RDF>

@@ -1,62 +1,105 @@
-<?php 
+<?
 ##############################################################
-# Theme Version
+# Copyright configuration
 ##############################################################
-$designer['ver'] = "A9";
+$designer['url'] = "http://idoo.net";
+$designer['name'] = "IDOO";
+# License configuration
+# 1 - my license
+# 0 - GPL
+$designer['license'] = "1";
+$designer['ver'] = "A7";
 
 ##############################################################
 # Language configuration
 ##############################################################
-$_code          = "ja";				# Œf¦”Â Œ¾Œê
+$langs['code'] = "jp";		# webboard language
+$langs['font'] = "arial";		# Fixed width font
+$langs['vfont'] = "tahoma";	# Variable width font
 
 ##############################################################
-# Addon Design configuration
+# Color configuration
 ##############################################################
-# •¶ ƒŠƒXƒg tr ‹` ‚‚³ İ’è
-# list table ‚Å‚Í image ‹` height ˜H ’²®. —á‚ğ ‚ ‚°‚Ä
-# <img src="img/blank.gif" width=0 height=$line_height border=0 alt=''>
+
+# HTML default color configuration
+$color['text']  = "#555555";      # TEXT
+$color['n1_fg'] = "#999999";      # Can't Use
+
+# Color configuration
+$color['nr_bg'] = "#D3DAC3";      # notice background
+$color['nr_fg'] = "#000000";      # notice font
+$color['l2_bg'] = "#F5FBE6";      # regular article background
+$color['l2_fg'] = "#000000";      # regular article text
+$color['l3_bg'] = "#D3DAC3";      # reply article background
+$color['l3_fg'] = "#000000";      # reply article text
+$color['l4_bg'] = "#ffffff";      # search form background
+$color['l4_fg'] = "#555555";	# search form text
+$color['l4_gu'] = "#555555";	# search form guide line
+$color['l5_bg'] = $color['l2_bg'];  # article body background
+$color['l5_fg'] = $color['l2_fg'];  # article body text
+
+# Color of search string
+$board['hl']    = "<FONT STYLE=\"color:#000000;font-weight:bold;text-decoration:underline;\"><U>STR</U></FONT>";
+
+$color['ms_ov'] = "#E3F9AB";      # Mouse over
+$color['td_co'] = "#d2691e";      # articles color of today
+$color['cp_co'] = "#ffd700";      # present page color
+
+# Preview configuration
+$color['p_gu']  = "#FFAE00";	# Preview guide line
+$color['p_bg']  = "#FFFFFF";	# Preview background
+$color['p_fg']  = "#555555";	# Preview text
+
+# admin page color configuration
+$color['b_bg'] = "#FFFFFF";	# Background Color
+$color['t_bg'] = "#FFAE00";	# Title Color
+$color['t_fg'] = "#FFFFFF";	# Title Text
+$color['m_bg'] = "#D3DAC3";	# Menu filed Bg
+$color['m_fg'] = "#555555";	# Menu field Text
+$color['d_bg'] = "#F5FBE6";	# Option filed Bg
+$color['d_fg'] = "#555555";	# Option filed Text
+
+# height configuration of tr tag in list page
+# It's height configured with image height. For example,
+# <IMG SRC=img/blank.gif WIDTH=0 HEIGHT=$line_height BORDER=0 ALT=''>
 $lines['height'] = "25";
 
-# •¶ ƒŠƒXƒg ‚ÌŠÔ‚É ƒfƒUƒCƒ“‚ğ “ü‚ê‚é‚½‚ß‚Ì ƒR[ƒh
-# $lines['design'] İ’è‚Í <TD></TD> İ’è‚Å ¬‚µ‚Ä ‰×•¨. <TD> ‚É
-# ‘‚¦‚½ •K‚¸ COLSPAN=AA ŠX “ü‚Á‚Äs‚­‚Æ ƒnƒ€. —›İ’è‚Í ƒŠƒXƒg‚Ì colspan ‚ğ
-# ‡‚í‚¹ ‚Ì‚½‚ß‚É list.php ‚Å •ÏŠ·‚ğ ‚·‚é‚æ‚¤‚É ‚È‚Á‚Ä ‚ ‚Á‚½‚ç Ÿ‚Ì —á‘è‚ğ
-# —˜—p‚µ‚Ä ƒeƒXƒg “ú •\¦ •—
-# $lines['comment'] ‚Í comment rows ‚É g‚í‚ê‚Ä <tr></tr> ˜H ‚¨³Œ
-# î ƒnƒ€. COLSPAN=AA ‚Í •K—v ‚È‚µ.
-#$lines['design'] = "<TD COLSPAN=AA><hr></TD>";
+# ±Û ¸®½ºÆ®µé »çÀÌ¿¡ µğÀÚÀÎÀ» ³Ö±âÀ§ÇÑ ÄÚµå ÀÌ¼³Á¤Àº <TD></TD>
+# ¼³Á¤À¸·Î ÀÌ·ç¾î Áü. <TD> ¿¡´Â ²À COLSPAN=AA °¡ µé¾î°¡¾ß ÇÔ. 
+# ÀÌ¼³Á¤Àº ¸®½ºÆ®ÀÇ colspan À» ¸ÂÃß±â À§ÇØ list.php ¿¡¼­ º¯È¯À»
+# ÇÏ°Ô µÇ¾î ÀÖÀ½ ´ÙÀ½ÀÇ ¿¹Á¦¸¦ ÀÌ¿ëÇÏ¿© Å×½ºÆ® ÇØ º¸±â ¹Ù¶÷
+#$line_design = "<TD COLSPAN=AA><hr></TD>";
 $lines['design'] = "";
-$lines['comment_design'] = "<tr>\n" .
-  "<td colspan=4 style=\"background-image: url(./images/dotline.gif)\">" .
-  "<img src=\"./images/blank.gif\" width=1 height=4 border=0 alt=''>" .
-  "</td></tr>";
+$lines['comment_design'] = "<TR><TD COLSPAN=4 BACKGROUND=./images/dotline.gif>".
+                         "<IMG SRC=./images/blank.gif WIDTH=1 HEIGHT=4 BORDER=0 ALT=''>".
+                         "<TD></TR>";
 
 ##############################################################
 # Width Configuration
 ##############################################################
 
 # list paget table ratio ===================================
-$td_width['no'] = "5%";				# ”Ô† ƒtƒB[ƒ‹ƒh •
+$td_width['no'] = "5%";           # No field width
 
-# ‘è–Ú ƒtƒB[ƒ‹ƒh •
-if ($upload['yesno'] && $cupload['yesno']) $td_width['title'] = "54%";
-else $td_width['title'] = "63%";
+# title filed width
+if ($upload['yesno']) $td_width['title'] = "54%";
+else $td_width['title'] = "65%";
 
-$td_width['name']   = "14%";		# ’˜Ò ƒtƒB[ƒ‹ƒh •
-$td_width['upload'] = "9%";			# ƒtƒ@ƒCƒ‹ ƒtƒB[ƒ‹ƒh •
-$td_width['dates']  = "13%";		# “ú•t ƒtƒB[ƒ‹ƒh •
-$td_width['refer']  = "5%";			# ƒCƒbƒNƒEƒ“ƒX ƒtƒB[ƒ‹ƒh •
+$td_width['name']   = "14%";      # writer field width
+$td_width['upload'] = "9%";       # upload file filed width
+$td_width['dates']  = "13%";      # date field width
+$td_width['refer']  = "5%";       # read field width
 
 ##############################################################
 # Field Array Configuration
 ##############################################################
-# •¶ ƒŠƒXƒg‚Ì ƒtƒB[ƒ‹ƒh è‡‚ğ ’è‹`‚·‚é.
-# n  -> •¶”Ô†
-# T  -> •¶‘è–Ú
-# N  -> ’˜Ò
-# F  -> ƒAƒbƒvƒ[ƒh ƒtƒ@ƒCƒ‹
-# D  -> •¶“o˜^ “ú•t
-# R  -> “Ç‚ñ‚¾ ”
+# Config field order in article lists
+# n  -> Number of Article
+# T  -> Subject of Article
+# N  -> Register of Article
+# F  -> Attached file
+# D  -> Date of Article Registration
+# R  -> Read of Article
 #
 $td_array = "nTNFDR";
 ?>
