@@ -1,1 +1,1 @@
-<?php header("location:admin.php") ?>
+<?php header("location:auth.php") ?>
