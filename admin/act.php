@@ -1,171 +1,160 @@
 <?php
-# $Id: act.php,v 1.4 2009-11-17 17:40:16 oops Exp $
-$path['type'] = "admin";
-require_once './include/admin_head.php';
-require_once '../include/ostype.php';
-require_once '../include/parse.php';
+@include("./include/admin_head.ph");
+@include("../include/ostype.ph");
 
-if ( ! session_is_registered ($jsboard) || $_SESSION[$jsboard]['pos'] != 1 )
-  print_error ($_('login_err'));
+// password 비교함수 - admin/include/auth.ph
+compare_pass($sadmin,$login);
 
-if ( $mode == 'global_chg' ) {
-  $db['rhost'] = $db['server'];
-  $db['rmode'] = "";
-}
+$connect=mysql_connect($db[server],$db[user] ,$db[pass])  or  
+              die("$langs[sql_na]" ); 
 
-if ($db['rmode'] == 'r' ) 
-  print_error ("System Checking NOW !! \n\nSorry, Read only enable.", 250, 130, 1);
+/* db_name이 존재하지 않으면 아래를 출력합니다. */
+exsit_dbname_check($db[name]);
 
-###########################################
-#          DB에 접속
-###########################################
+mysql_select_db($db[name],$connect);
 
-$c = sql_connect($db['rhost'], $db['user'], $db['pass'], $db['name']);
+if ( $mode != "manager_config") {
 
-# password 비교함수 - admin/include/auth.php
-compare_pass ($_SESSION[$jsboard]);
+  /******************************************
+            DB에 접속을 합니다.
+   *****************************************/
 
-# db_name이 존재하지 않으면 아래를 출력합니다.
-exsit_dbname_check ($db['name']);
+  if ($mode=='db_del') {
+    table_name_check($table_name);
 
-# 알파벳 구분된 페이지에서 넘어 왔을 경우 페이지를
-# 되돌리기 위해 지정
-$tslink = $ts ? "?ts=$ts" : '';
-
-if ( $mode == 'csync' ) {
-  table_name_check ($table_name);
-
-  if ( ! preg_match ("/_comm$/", $table_name) ) {
-    print_error ("$table_name is not comment table", 250, 150, 1);
-  }
-
-  $mother_name = preg_replace ('/_comm$/', '', $table_name);
-
-  # 동일한 이름의 게시판이 있는지 확인
-  $chk = db_table_list ($c, $db['name'], '', $table_name);
-
-  if ( $chk ) {
-    if ( ! field_exist_check ($c, $db['name'], $mother_name, "comm") ) {
-      # comm field 추가
-      sql_query ('ALTER TABLE ' . $mother_name . ' add comm int(6) DEFAULT 0', $c);
-      # comm field key 추가
-      sql_query ('ALTER TABLE ' . $mother_name . ' add key (comm)', $c);
-    }
-
-    sync_comment ($table_name, $mother_name);
-
-    sql_close ($c);
-  } else {
-    sql_close ($c);
-    print_error ("$table_name is not found", 250, 150, 1);
-  }
-}
-
-else if ( $mode == 'db_del' ) {
-  table_name_check ($table_name);
-
-  # 동일한 이름의 게시판이 있는지 확인
-  $chk = db_table_list ($c, $db['name'], '', $table_name);
-
-  if ( $chk ) {
-    # table delete
+    /* table delete */
     $table_del = "drop table $table_name";
-    sql_query ($table_del, $c);
+    $result = mysql_query($table_del,$connect);
 
-    if ( ! preg_match ('/_comm$/', $table_name) ) {
-      $comm_del = "drop table {$table_name}_comm";
-      sql_query($comm_del,$c, 1);
-
-      # 게시판 계정에서 사용되는 file 삭제
-      unlink_r ("../data/{$table_name}");
-    }
+    /* 게시판 계정에서 사용되는 file 삭제 */
+    exec("$exec[rm] ../data/$table_name");
+    mysql_close();
   }
 
-  sql_close ($c);
-}
+  if ($mode == 'db_create')  {
+    $tbl_list = mysql_list_tables($db[name]);
 
-else if ( $mode == 'db_create' )  {
-  # 게시판 이름 규칙 -> A-Za-z0-9_
-  if ( preg_match ('/[^a-z0-9_]/i', $new_table) )
-    print_error ($_('tb_rule'), 250, 150, 1);
+    /* 새로만들 계정이름의 존재유무 체크 */
+    table_name_check($new_table);
+    /* table list 존재 유무 체크 */
+    table_list_check($db[name]);
+    /* 동일한 이름의 게시판이 있는지 확인 */
+    same_db_check($tbl_list,$new_table);
 
-  # 새로만들 계정이름의 존재유무 체크
-  table_name_check ($new_table);
+    $create_table = "CREATE TABLE $new_table ( 
+			  no int(6) DEFAULT '0' NOT NULL auto_increment,
+			  num int(6) DEFAULT '0' NOT NULL,
+			  idx int(6) DEFAULT '0' NOT NULL,
+			  date int(11) DEFAULT '0' NOT NULL,
+			  host tinytext,
+			  name tinytext,
+			  passwd varchar($ostypes[pfield]),
+			  email tinytext,
+			  url tinytext,
+			  title tinytext,
+			  text mediumtext,
+			  refer int(6) DEFAULT '0' NOT NULL,
+			  reyn int(1) DEFAULT '0' NOT NULL,
+			  reno int(6) DEFAULT '0' NOT NULL,
+			  rede int(6) DEFAULT '0' NOT NULL,
+			  reto int(6) DEFAULT '0' NOT NULL,
+			  html int(1) DEFAULT '1' NOT NULL,
+			  moder int(1) DEFAULT '0' NOT NULL,
+			  bofile varchar(100),
+			  bcfile varchar(100),
+			  bfsize int(4),
+			  KEY no (no),
+			  KEY num (num),
+			  KEY idx (idx),
+			  KEY reno (reno),
+			  KEY date (date),
+			  KEY reto (reto),
+			  PRIMARY KEY (no))";
 
-  # 동일한 이름의 게시판이 있는지 확인
-  if ( $new_table == 'userdb' || db_table_list ($c, $db['name'], '', $new_table) )
-    print_error ($_('a_acc'), 250, 150, 1);
+    $passwd_ext = crypt($passwd_ext);
 
-  $_sql['r'] = array ('b', 'c');
-  $_sql['b'] = sql_parser ($db['type'], 'board', $new_table, 1);
-  $_sql['c'] = sql_parser ($db['type'], 'comment', $new_table, 1);
+    $insert_data = "insert into $new_table values ('',1,1,$date,'$host_ext','$name_ext','$passwd_ext',
+                    '$email_ext','$url_ext','$subj_msg','$text_msg',0,0,0,0,0,0,0,'','','')";
 
-  # create table
-  foreach ( $_sql['r'] as $_o ) {
-    if ( is_array ($_sql[$_o]) ) {
-      foreach ( $_sql[$_o] as $_s ) {
-        sql_query ($_s, $c);
-      }
-    }
+    $result = mysql_query($create_table, $connect);
+    $result_insert = mysql_query($insert_data, $connect);
+
+    // 새로운 게시판에 필요한 파일및 디렉토리 생성
+    mkdir("../data/$new_table",0700);
+    mkdir("../data/$new_table/files",0700);
+    chmod("../data/$new_table",0755);
+    chmod("../data/$new_table/files",0755);
+    copy("../Installer/sample/$ostypes[name]/config.ph","../data/$new_table/config.ph");
+    chmod("../data/$new_table/config.ph",0644);
+    copy("../Installer/sample/$ostypes[name]/html_head.ph","../data/$new_table/html_head.ph");
+    chmod("../data/$new_table/html_head.ph",0644);
+    copy("../Installer/sample/$ostypes[name]/html_tail.ph","../data/$new_table/html_tail.ph");
+    chmod("../data/$new_table/html_tail.ph",0644);
+
+    // 현재 디렉토리를 변경
+    chdir("../data/$new_table");
+    if(file_exists("default.themes")) unlink("default.themes");
+    symlink("../../config/themes/basic.themes","default.themes");
+    chdir("../../admin");
+
+    mysql_close();
   }
 
-  /*
-  require_once "include/first_reg.php";
-  $_dr['p'] = crypt($passwd_ext);
-  $_cr['b'] = "INSERT INTO test (num, idx, date, host, name, passwd, email, url, title," . 
-              "                  text, refer, reyn, reno, rede, reto, html, comm, bofile," .
-              "                  bcfile, bfsize)" .
-              "VALUES (1, 1, '{$_dr['d']}', '127.0.0.1', '{$_dr['n']}', '{$_dr['p']}'," . 
-              "        '{$_dr['e']}', '{$_dr['u']}', '{$_dr['s']}', '{$_dr['b']}', 0, 0," .
-              "        0, 0, 0, 0, 0, '', '', '')";
+  if ($mode == "global_chg") {
 
-  sql_query ($_cr['b'], $c);
-  */
-  sql_close ($c);
+    // quot 변환된 문자를 un quot 한다
+    $vars = stripslashes($glob[vars]);
+    $spam = stripslashes($glob[spam]);
+    $br   = stripslashes($glob[brlist]);
 
-  # 새로운 게시판에 필요한 파일및 디렉토리 생성
-  mkdir("../data/{$new_table}",0770);
-  mkdir("../data/{$new_table}/{$upload['dir']}",0770);
-  chmod("../data/{$new_table}",0775);
-  chmod("../data/{$new_table}/{$upload['dir']}",0775);
+    $fp = fopen("../config/global.ph","w"); 
+    fwrite($fp,$vars); 
+    fclose($fp);
 
-  $_co = readfile_r ("../utils/sample/data/config.php");
-  $_sr = array ('/@theme@/', '/@table@/', '/@wpath@/');
-  $_dr = array ($print['theme'], $new_table, $board['path']);
-  $_co = preg_replace ($_sr, $_dr, $_co);
+    $gp = fopen("../config/spam_list.txt", "w"); 
+    fwrite($gp,$spam); 
+    fclose($gp);
 
-  writefile_r ("../data/{$new_table}/config.php", $_co);
-  chmod("../data/{$new_table}/config.php",0644);
+    $bp = fopen("../config/allow_browser.txt", "w"); 
+    fwrite($bp,$br); 
+    fclose($bp);
 
-  copy("../utils/sample/data/html_head.php","../data/$new_table/html_head.php");
-  chmod("../data/{$new_table}/html_head.php",0644);
-  copy("../utils/sample/data/html_tail.php","../data/$new_table/html_tail.php");
-  chmod("../data/{$new_table}/html_tail.php",0644);
-  copy("../utils/sample/data/stylesheet.php","../data/$new_table/stylesheet.php");
-  chmod("../data/{$new_table}/stylesheet.php",0644);
+    // 현재 디렉토리를 변경
+    chdir("../config");
+    if(file_exists("default.themes")) unlink("default.themes");
+    symlink("themes/$glob[theme].themes","default.themes");
+
+    echo "<script>\n" .
+         "alert('$langs[act_complete]')\n" .
+         "window.close()\n</script>";
+    exit;
+
+  }
+
+  Header("Location:admin.php");
+
+} else {
+  if ($admincenter_pass && $readmincenter_pass) {
+    if ($admincenter_pass == $readmincenter_pass) {
+
+      // 입력 받은 패스워드를 crypt 암호화
+      $ad_pass = crypt($admincenter_pass);
+      $ad_pass = str_replace("\$","\\\$",$ad_pass);
+
+      $configfile = "./include/config.ph";
+      $fp = fopen($configfile,"r");
+      $admininfo = fread($fp,filesize($configfile));
+      fclose($fp);
+
+      $admininfo = eregi_replace("sadmin\[passwd\] = (\"[a-z0-9\.\/\$]*\")","sadmin[passwd] = \"$ad_pass\"",$admininfo);
+
+      $fp = fopen($configfile,"w"); 
+      fwrite($fp, $admininfo); 
+      fclose($fp);
+
+      complete_adminpass();
+    } else admin_pass_error();
+  } else print_error($langs[a_act_cp]);
 }
-
-else if( $mode == 'global_chg' ) {
-  sql_close ($c);
-  # quot 변환된 문자를 un quot 한다
-
-  $vars = "<?\n" . stripslashes ($glob['vars']) . "\n?>";
-  $spam = stripslashes ($glob['spam']);
-
-  writefile_r ('../config/global.php', $vars);
-  writefile_r ('../config/spam_list.txt', $spam);
-
-  $_lang['act_complete'] = str_replace ("\n", "\\n", $_('act_complete'));
-  $_lang['act_complete'] = str_replace ("'", "\'", $_lang['act_complete']);
-
-  echo "<script type=\"text/javascript\">\n" .
-       "alert('{$_lang['act_complete']}')\n" .
-       "window.close()\n</script>\n".
-       "<NOSCRIPT>Complete this Job. Click <A HREF=./admin.php>here go to admin page!</A></NOSCRIPT>";
-  exit;
-
-}
-
-Header("Location:admin.php$tslink");
 
 ?>

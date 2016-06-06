@@ -1,76 +1,139 @@
-<?php
-# $Id: write.php,v 1.9 2009-11-16 21:52:45 oops Exp $
-include "include/header.php";
+<?
+@include("include/header.ph");
+@include("./admin/include/config.ph");
 
-if ( ! $_SERVER['HTTP_REFERER'] ) { 
-  header('HTTP/1.1 403 Forbidden');
-  exit;
-}
-
-$board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
-$board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php";
-
-$board['super'] = $board['adm'] ? 1 : $board['super'];
-
-if ( preg_match ('/^(1|3|4|5)$/', $board['mode']) )
-  if ( $board['super'] != 1)
-    print_error ($_('perm_err'), 250, 150, 1);
-
-if ( ! preg_match ('/^(0|6)/', $board['mode']) && !$_SESSION[$jsboard]['id'] )
-  print_error($_('perm_err'), 250, 150, 1);
-
-if ( $board['mode'] && $_SESSION[$jsboard]['id'] ) {
-  if ( ! preg_match ('/^(1|4)$/', $board['mode']) && $_SESSION[$jsboard]['pos'] != 1 ) $disable = " disabled";
-  else $nodisable = 1;
-} else $nodisable = 1;
-
-if ( (preg_match ('/^(2|3|5|7)$/',$board['mode']) && $_SESSION[$jsboard]['id']) || $board['super'] ) {
-  $pre_regist['name'] = $_SESSION[$jsboard]['id'];
-  $pre_regist['rname'] = $_SESSION[$jsboard]['name'];
-  $pre_regist['email'] = $_SESSION[$jsboard]['email'];
-  $pre_regist['url'] = $_SESSION[$jsboard]['url'];
-} else {
-  $pre_regist['name'] = str_replace ("\\","",$_COOKIE['board_cookie']['name']);
-  $pre_regist['email'] = str_replace ("\\","",$_COOKIE['board_cookie']['email']);
-  $pre_regist['url'] = str_replace ("\\","",$_COOKIE['board_cookie']['url']);
-}
+if ($board_cookie[name])
+  $board_cookie[name] = eregi_replace("[\]","",$board_cookie[name]);
 
 # 쓰기 권한을 관리자에게만 주었을 경우 패스워드 체크
 $kind = "write";
-if($board['notice']) print_notice($board['notice']);
+enable_write($sadmin[passwd],$admin[passwd],$pcheck,$enable[$kind], $cenable[$kind]);
 
-# Browser가 text browser 일때 multim form 삭제
-if($noup == 1) $board['formtype'] = "";
-else $board['formtype'] = " enctype=\"multipart/form-data\"";
+@include("html/head.ph");
 
-$print['passform'] = "<input type=\"hidden\" name=\"o[at]\" value=\"write\">\n".
-                   "<input type=\"hidden\" name=\"table\" value=\"$table\">\n";
+if($board[notice]) print_notice($board[notice]);
 
-$pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<input type=\"hidden\" name=\"atc[rname]\" value=\"{$pre_regist['rname']}\">";
+# Browser가 Lynx일때 multim form 삭제
+$agent = get_agent();
+if($agent[br] == "LYNX") $board[formtype] = "";
+else $board[formtype] = " ENCTYPE=\"multipart/form-data\"";
 
-if(!$nodisable) {
-  $print['passform'] .= "<input type=\"hidden\" name=\"atc[name]\" value=\"{$pre_regist['name']}\">".
-                      "{$pre_regist['rname']}".
-                      "\n<input type=\"hidden\" name=\"atc[email]\" value=\"{$pre_regist['email']}\">".
-                      "\n<input type=\"hidden\" name=\"atc[url]\" value=\"{$pre_regist['url']}\">\n";
-} elseif($_SESSION[$jsboard]['pos'] == 1) {
-  $print['passform'] .= "{$pre_regist['rname']}\n";
+# TEXTAREA의 wrap option check
+$wrap = form_wrap();
+
+// image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
+if ($board[img] == "yes" && !eregi("%",$board[width])) 
+  $board[width] = $board[width]-$icons[size]*2;
+else $size[text] += 4;
+
+echo "
+<DIV ALIGN=$board[align]>
+<TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"0\" BGCOLOR=\"$color[r0_bg]\"><TR><TD>
+<TABLE WIDTH=\"100%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
+<FORM METHOD=\"post\" ACTION=\"act.php\"$board[formtype]>
+<TR>
+  <TD BGCOLOR=\"$color[r1_bg]\" width=13%><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[w_name]</FONT></TD>
+  <TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[name]\" SIZE=\"$size[name]\" MAXLENGTH=\"50\" VALUE=\"$board_cookie[name]\"></TD>
+  <TD BGCOLOR=\"$color[r2_bg]\" width=35%><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_name_m]</FONT></TD>\n";
+
+if($view[email] == "yes") {
+  echo "</TR><TR>\n" .
+       "<TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[w_mail]</FONT></TD>\n" .
+       "<TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[email]\" SIZE=\"$size[name]\" MAXLENGTH=\"255\" VALUE=\"$board_cookie[email]\"></TD>\n" .
+       "<TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_mail_m]</FONT></TD>\n";
 }
 
-$pages = $page ? "&amp;page=$page" : "";
+if($view[url] == "yes") {
+  echo "</TR><TR>\n" .
+       "<TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]><NOBR>$langs[ln_url]</NOBR></FONT></TD>\n" .
+       "<TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[url]\" SIZE=\"$size[name]\" MAXLENGTH=\"255\" VALUE=\"$board_cookie[url]\"></TD>\n" .
+       "<TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_url_m]</FONT></TD>\n";
+}
 
-if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode']) && $_SESSION[$jsboard]['pos'] != 1) 
-  $pre_regist['name'] = $_SESSION[$jsboard]['name'] ? $_SESSION[$jsboard]['name'] : $pre_regist['name'];
+echo "
+</TR><TR>
+  <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[w_pass]</FONT></TD>
+  <TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"password\" NAME=\"atc[passwd]\" SIZE=\"$size[pass]\" MAXLENGTH=\"8\"></TD>
+  <TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_passwd_m]</FONT></TD>
+</TR><TR>
+  <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>HTML</FONT></TD>
+  <TD BGCOLOR=\"$color[r2_bg]\">
+    <FONT COLOR=\"$color[r2_fg]\" $board[css]>
+    <INPUT TYPE=\"radio\" NAME=\"atc[html]\" VALUE=\"1\">$langs[u_html]
+    <INPUT TYPE=\"radio\" NAME=\"atc[html]\" VALUE=\"0\" CHECKED>$langs[un_html]
+    </FONT>
+  </TD>
+  <TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_html_m]</FONT></TD>";
 
-$print['preview_script'] = <<<EOF
-<script type="text/javascript">
-  var tarea_width = '{$board['width']}';
-  var tarea_cols  = '{$size['text']}';
-</script>
-EOF;
+if ($upload[yesno] == "yes" && $cupload[yesno] == "yes" && $agent[br] != "LYNX") {
+  echo "</TR><TR>\n".
+       "<TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[file]</FONT>\n" .
+       "<INPUT TYPE=HIDDEN NAME=max_file_size VALUE=\"$upload[maxsize]\"></TD>\n" .
+       "<TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\">".
+       "<INPUT TYPE=file NAME=userfile SIZE=\"$size[uplo]\" MAXLENGTH=256></TD>";
+} else if ($upload[yesno] == "no" && $cupload[yesno] == "yes") {
+  echo "</TR><TR>\n".
+       "<TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[file]</FONT></TD>\n" .
+       "<TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\"><font color=red><b>$langs[upload]</b></font></TD>";
+}
 
-meta_char_check($print['theme'], 1, 1);
-$bodyType = 'write';
-require_once 'captcha/captchacommon.php';
-require_once "theme/{$print['theme']}/index.template";
+echo "
+</TR><TR>
+  <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[titl]</FONT></TD>
+  <TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[title]\" SIZE=\"$size[titl]\" MAXLENGTH=\"100\"></TD>
+</TR><TR>
+  <TD COLSPAN=\"3\" ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">
+    <TEXTAREA NAME=\"atc[text]\" $wrap[op] ROWS=\"10\" COLS=\"$size[text]\"></TEXTAREA>
+  </TD>
+</TR><TR>
+  <TD COLSPAN=\"3\" ALIGN=\"right\" BGCOLOR=\"$color[r1_bg]\">
+    $wrap[ment]
+  </TD>
+</TR>
+</TABLE>
+
+</TD></TR>
+<TR><TD>
+
+<TABLE WIDTH=\"100%\" BORDER=\"0\" CELLPADDING=\"6\" CELLSPACING=\"0\">
+<TR>
+  <TD ALIGN=\"center\">
+    <FONT SIZE=\"-1\" COLOR=\"$color[l0_fg]\" $board[css]>
+    <INPUT TYPE=\"hidden\" NAME=\"o[at]\" VALUE=\"p\">
+    <INPUT TYPE=\"hidden\" NAME=\"table\" VALUE=\"$table\">
+    <INPUT TYPE=\"submit\" VALUE=\"$langs[b_send]\">&nbsp;
+    <INPUT TYPE=\"reset\" VALUE=\"$langs[b_reset]\">&nbsp;
+    <INPUT TYPE=\"button\" onClick=\"history.back()\" VALUE=\"$langs[b_can]\">
+    </FONT>
+  </TD>
+</TR>
+</TABLE>
+
+</TD></TR></FORM>
+</TABLE>
+
+<TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
+<TR><TD>
+<TABLE ALIGN=\"center\" WIDTH=\"1%\" BORDER=\"0\" CELLSPACING=\"4\" CELLPADDING=\"0\">
+<TR>\n";
+
+if ($board[img] == "yes") {
+  if ($color[theme]) $themes[img] = get_theme_img($table);
+  else $themes[img] = "images";
+  echo "<td><nobr>" .
+       "<A HREF=\"list.php?table=$table&page=$page\"><img src=./$themes[img]/list.gif width=$icons[size] height=$icons[size] border=0 alt=\"$langs[cmd_list]\"></a>" .
+       "<A HREF=\"javascript:history.back()\"><img src=./$themes[img]/back.gif width=$icons[size] height=$icons[size] border=0 alt=\"$langs[cmd_priv]\"></a>" .
+       "</nobr></td>";
+} else {
+  echo "
+  <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>
+  <TD WIDTH=\"1%\"><A HREF=\"list.php?table=$table\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_list]</NOBR></FONT></A></TD>
+  <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>
+  <TD WIDTH=\"1%\"><A HREF=\"javascript:history.back()\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_priv]</NOBR></FONT></A></TD>
+  <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>\n";
+}
+
+echo "</TR>\n</TABLE>\n</TD></TR>\n</TABLE>\n</DIV>\n";
+
+@include("html/tail.ph");
 ?>

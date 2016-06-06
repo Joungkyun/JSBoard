@@ -1,37 +1,49 @@
-<?php
-# $Id: error.php,v 1.2 2009-11-16 21:52:45 oops Exp $
-include "include/header.php";
-
+<?
+@include("config/global.ph");
+if (@file_exists("data/$table/config.ph")) { @include("data/$table/config.ph"); }
+@include("include/lang.ph");
 $str = urldecode($str);
 $str = stripslashes($str);
 
-$title = $notice ? $_('er_msg') : $_('er_msgs');
+if($notice) {
+  $title = "$langs[er_msg]";
+  $image = "images/t.gif";
+} else {
+  $title = "$langs[er_msgs]";
+  $image = "images/e.gif";
+}
+
+echo "
+<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"
+                    \"http://www.w3.org/TR/REC-html40/loose.dtd\">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=$langs[charset]\">
+<TITLE>JSboard $version - $title</TITLE>
+<STYLE TYPE=\"text/css\">
+<!--
+A:link, A:visited, A:active { TEXT-DECORATION: none; }
+A:hover { TEXT-DECORATION: underline; }
+TD { FONT: 10pt $langs[font]; }
+BODY { BACKGROUND: #efefef url($image) no-repeat}
+-->
+</STYLE>
+</HEAD>
+
+<BODY BGCOLOR=\"#efefef\">
+
+<TABLE>
+<TR>
+  <TD>
+    <FONT COLOR=\"#000000\" $board[css]>$str</FONT>
+  </TD>
+</TR><TR><FORM>
+  <TD ALIGN=\"right\">
+    <INPUT TYPE=\"button\" VALUE=\"$langs[b_sm]\" onClick=\"window.close()\">
+  </TD>
+</FORM></TR>
+</TABLE>
+
+</BODY>
+</HTML>\n";
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=<?=$_('charset')?>">
-<title>JSboard <?=$version?> - <?=$title?></title>
-<link rel="stylesheet" type="text/css" href="./theme/<?=$print['theme']?>/default.css">
-</head>
-
-<body>
-
-&nbsp;<br>
-<table align="center" width="95%" cellpadding="1" cellspacing="0"><tr><td class="err_bg">
-<table width="100%" cellpadding="3" cellspacing="0">
-<tr>
-  <td class="err_fg">
-    <?=$str?>
-    <br><br>
-  </td>
-</tr><tr>
-  <td align="right">
-    <form action="<?=$_pself?>"><input type="button" value= "<?=$_('b_sm')?>" onClick = "window.close()"></form>
-  </td>
-</tr>
-</table>
-</td></tr></table>
-
-</body>
-</html>
