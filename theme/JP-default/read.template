@@ -1,190 +1,272 @@
+<HTML>
+<HEAD>
+<!-#######################################################################-->
+<!-  $langs[charset] : print charset code                                 -->
+<!-  $board[ver]     : bersion information in webboard                    -->
+<!-  get_title()     : print header title in webbared                     -->
+<!-  $user_stylesheet : User Defined StyleSheet                           -->
+<!-#######################################################################-->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs[charset]?>">
+<TITLE>Jsboard <?=$board[ver]?> - <?=get_title()?></TITLE>
 
-<!--  ====================================================================  -->
-<!--  print_keymenu() : keyboard 路 掲示板を 制御                           -->
-<!--                    'n or +' = 上文                                     -->  
-<!--                    'b or -' = の下文                                   -->  
-<!--  ====================================================================  -->
+<STYLE TYPE=text/css>
+<!--
+BODY,TD {font-size:12px;font-family:tahoma;color:#555555;}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+INPUT {font: 11px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; padding-right:1px; background-color:#FFFFFF; }
+SELECT {font: 11px tahoma; color:#555555; border-width:1; border-style:solid; border-color:#555555; background-Color: #FFFFFF}
+TEXTAREA {font: 13px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; background-Color:#ffffff;}
+
+<?=$user_stylesheet?>
+-->
+</style>
+
+<!-#######################################################################-->
+<!-  print_newwindow_src()  : print java script for open new window to    -->
+<!-                           use in jsboard                              -->
+<!-  $print[preview_script] : print jsva script for preview function in   -->
+<!-                           list page                                   -->
+<!-#######################################################################-->
+<? print_newwindow_src($upload[yesno],$cupload[yesno],$enable[dwho]) ?>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
+<?=$print[preview_script]?>
+
+<!-------------------- Start Header design -------------------->
+<?
+if(!$np) {
+  # Design per user
+  include "$board[headpath]";
+  # Input by whole admin
+  include "html/head.ph";
+}
+?>
+<!-------------------- End   Header design -------------------->
+
+<!-#######################################################################-->
+<!-  print_keymenu() : controled board with keyboard                      -->
+<!-                    'n or +' = upper article                           -->
+<!-                    'b or -' = follw article                           -->
+<!-#######################################################################-->
 <?=print_keymenu(1)?>
 
-<!--  ====================================================================  -->
-<!--  $print['dsearch'] : 詳細 検索 テーブル 出力                             -->
-<!--  $board['width'] : 掲示板の 広さを 指定する. 掲示板 管理者で 調整    -->
-<!--  $list['num']    : 左側 上端の 掲示板 文 番号                          -->
-<!--  $print['admin'] : 掲示板 右側の admin リンクを 出力 おこる admin link これ  -->
-<!--                  未知を 呼んで 来る ので 必ず admin.gif街 存在すると たいてい    -->
-<!--                  だ. 掲示板 管理者で 見えないように 設定を することができる    -->
-<!--  $print['lout']  : ログ寅時 ログアウト ボタンを 出力                       -->
-<!--  ====================================================================  -->
-<?=$print['dsearch']?>
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td valign="bottom" width=44><img src="./theme/JP-default/img/icon_over.gif" align="middle" alt=""></td>
-<td class="counter" width="95%"> &gt;&gt; Read <?=$list['num']?> article</td>
-<td class="admin"><?=$print['lout']?><?=$print['admin']?></td>
-</tr>
+<!-#######################################################################-->
+<!-  $board[align] : print align of webboard. It's config in board admin  -->
+<!-  $print[dsearch] : print detail search table                          -->
+<!-  $board[width] : print width of webboard. It's config in board admin  -->
+<!-  $print[admin] : print admin link.                                    -->
+<!-  $list[num]    : Number of article                                    -->
+<!-  $print[lout]  : print logout link.                                   -->
+<!-#######################################################################-->
+<DIV ALIGN=<?=$board[align]?>>
+<?=$print[dsearch]?>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN=bottom>
+<IMG SRC=./theme/EN-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
+<FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Read <?=$list[num]?> article</FONT>
+</TD>
+<TD ALIGN=right VALIGN=bottom><?=$print[lout]?><?=$print[admin]?></TD>
+</TR>
 
-<!--  ====================================================================  -->
-<!--  $list['title']  : 掲示板 文 題目                                      -->
-<!--  ====================================================================  -->
-<? $list['title'] = preg_replace ("/<br>\n/i", "\\0<img src=\"images/blank.gif\" width=40 height=1 alt=\"\">", $list['title']); ?>
-<tr bgcolor="#a0dc10">
-<td colspan=3>
-<img src="./theme/JP-default/img/board_no.gif" align="middle" alt="TITLE: ">
-<span class="rtitle"><?=$list['title']?></span>
-</td>
-</tr>
+<!-#######################################################################-->
+<!-  $list[title]  : Subject of article                                   -->
+<!-#######################################################################-->
+<? $list[title] = preg_replace("/<BR>\n/i","\\0<IMG SRC=$board[path]images/blank.gif width=40 height=1>",$list[title]); ?>
+<TR BGCOLOR=#FFAE00>
+<TD COLSPAN=2>
+<IMG SRC=./theme/EN-default/img/board_no.gif ALIGN=absmiddle ALT='TITLE: '>
+<FONT STYLE="color:#FFFFFF font-weight:bold;"><?=$list[title]?></FONT>
+</TD>
+</TR>
 
-<tr>
-<td colspan=3><img src="images/blank.gif" width=1 height=3 border=0 alt=""></td>
-</tr>
-</table>
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
 
 
-<!--  ====================================================================  -->
-<!--  $list['date']   : 文 登録 日付                                        -->
-<!--  $list['refer']  : 文 ヒット数                                           -->
-<!--  $list['name']   : 著者 名前                                         -->
-<!--  $list['uname']  : 著者 名前 (homepage link 含み)                    -->
-<!--  $list['attach'] : 添付 ファイル リンク                                      -->
-<!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=""></td>
-<td width=4 bgcolor="#6d7bc9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=""></td>
-<td width=5><img src="images/blank.gif" width=5 height=1 border=0 alt=""></td>
-<td>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=""><br>
-<span class="ritem">登録</span> <?=$list['date']?> &nbsp; &nbsp; 
-<span class="ritem">読み</span> <?=$list['refer']?><br>
-<span class="ritem">名前</span> <?=$list['uname']?> &nbsp; &nbsp;
-<?=$list['attach'] ? "<span class=\"ritem\">ファイル</span> {$list['attach']}" : "" ?><br>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=""><br>
-</td>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=""></td>
-</tr>
-</table>
+<!-#######################################################################-->
+<!-  $list[date]   : Regist date of article                               -->
+<!-  $list[refer]  : Read Number of article                               -->
+<!-  $list[name]   : Register Name                                        -->
+<!-  $list[uname]  : Register Name ( include homepage url )               -->
+<!-  $list[attach] : Attach file link                                     -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=5><IMG SRC=images/blank.gif WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+<FONT Style="font-weight:bold">Date</FONT> <?=$list[date]?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">Read</FONT> <?=$list[refer]?><BR>
+<FONT Style="font-weight:bold">Name</FONT> <?=$list[uname]?> &nbsp; &nbsp;
+<? if($list[attach]) echo "<FONT Style=\"font-weight:bold\">File</FONT> $list[attach]" ?><BR>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+</TD>
+<TD WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
 
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="images/blank.gif" width=1 height=3 border=0 alt=""></td></tr>
-</table>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
 
-<!--  ====================================================================  -->
-<!--  $preview['up']   : 添付された イメージ ファイルが gif/jpg/png 仕事 場合 出力      -->
-<!--  $list['text']    : 文 本文 出力                                       -->
-<!--  $preview['down'] : 添付された ファイルが ascii 仕事 場合 出力                   -->
-<!--  $print['rlists'] : 本文の デッグルが 存在する 場合 デッグル リスト 出力         -->
-<!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td class="rbodybg">
-<div class="rbody">
-<?=$preview['up']?>
-<!--  =============================== 文内容 ===============================  -->
-<?=$list['text']?>
+<!-#######################################################################-->
+<!-  $preview[up]   : print attach file if file is gif/jpg/png format     -->
+<!-  $list[text]    : print text of article                               -->
+<!-  $preview[down] : print attach file if file is ascii type             -->
+<!-  $print[rlists] : print reply list if exist reply article in this     -->
+<!-                   article                                             -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR=<?=$color[l5_bg]?>>
+<FONT style="color:<?=$color[l5_fg]?>;font-family:comic">
+<?=$preview[up]?>
+<!-- =============================== BODY =============================== -->
+<?=$list[text]?>
 
-<!--  =============================== 文内容 ===============================  -->
-<?=$preview['down']?>
-</DIV>
+<!-- =============================== BODY =============================== -->
+<?=$preview[down]?>
+</FONT>
 
-<!--  =============================== コメント ===============================  -->
-<?=$print['comment']?>
-<!--  =============================== コメント ===============================  -->
-</td></tr>
-</table>
+<!-- ============================= comment ============================== -->
+<?=$print[comment]?>
+<!-- ============================= comment ============================== -->
+</TD></TR>
+</TABLE>
 
-<? if ($print['rlists']) { ?>
-<br>
-<table width="<?=$board['width']?>" border=0 cellpadding=1 cellspacing=0>
-<tr><td class="row1"><img src="./images/blank.gif" width=1 height=1 border=0 alt=""></td></tr>
-<tr>
-<td>
-<img src="./images/blank.gif" width=1 height=3 border=0 alt=""><br>
-&gt;&gt; <?=$_('conj')?>
-<!--  =============================== 回答文 ===============================  -->
-<?=$print['rlists']?>
-<!--  =============================== 回答文 ===============================  -->
-</td></tr>
-<tr><td class="row1"><img src="./images/blank.gif" width=1 height=1 border=0 alt=""></td></tr>
-</table>
+<? if ($print[rlists]) { ?>
+<P>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR><TD BGCOLOR=<?=$color[l3_bg]?>><IMG SRC=./images/blank.gif WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+<TR>
+<TD>
+<IMG SRC=./images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+&gt;&gt; <?=$langs[conj]?>
+<!-- ============================== reply ============================== -->
+<?=$print[rlists]?>
+<!-- ============================== reply ============================== -->
+</TD></TR>
+<TR><TD BGCOLOR=<?=$color[l3_bg]?>><IMG SRC=./images/blank.gif WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+</TABLE>
 <? } ?>
 
-<!--  ====================================================================  -->
-<!--  $print['regist']  : 文 登録誌を 出力. (掲示板 Adminで 管理が 可能  -->
-<!--                    夏期 だから 設定を 日 与えること!                         -->
-<!--  read_cmd(0,1)   : list page 義  list_cmd(0,1) 参照 (右側 下端 メニュー)   -->
-<!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td class="sqltime">
-<?=$print['regist']?><img src="images/blank.gif" width=1 height=25 border=0 align="middle" alt=""></td>
-<td align="right"><? read_cmd(0,1) ?></td>
-</tr>
-</table>
+<!-#######################################################################-->
+<!-  $print[regist]  : registed ipaddress                               -->
+<!-  read_cmd(0,1)  : print menu link. default type is used text menu     -->
+<!-                   if U use image menu,                                -->
+<!-                                                                       -->
+<!-                   prev.gif        - previous article or page          -->
+<!-                   next.gif        - next article or page              -->
+<!-                   list.gif        - articles list                     -->
+<!-                   write.gif       - write article                     -->
+<!-                   today.gif       - articles before last 12 hour      -->
+<!-                   delete.gif      - delete article                    -->
+<!-                   edit.gif        - modify article                    -->
+<!-                   reply.gif       - reply article                     -->
+<!-                   conj.gif        - conjunction article               -->
+<!-                                                                       -->
+<!-                   upper image is located in theme/theme_name/img      -->
+<!-                   and use read_cmd option with read_cmd(1,1)          -->
 
-<!--  ====================================================================  -->
-<!--  ゴムセックポムと ページ フォームは doc/en/README.THEME 参照                         -->
-<!--  $print['dserlink'] : 詳細 検索 リンク 出力                              -->
-<!--  $print['pagetime']  : 右側 下端 ページ ローディング 時間 出力                 -->
-<!--  $print['sqltime']   : 右側 下端 sql ローディング 時間 出力                    -->
-<!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td>
-<!--  =============================== ゴムセックポム ===============================  -->
-<form method="post" action="locate.php?table=<?=$table?>">
-<table width="100%" border=0 cellpadding=0 cellspacing=1>
-<tr>
-<td>
-<select name="o[sc]">
-<option value="t"<?=$sform['sc']['t']?>>Title</option>
-<option value="c"<?=$sform['sc']['c']?>>Contents</option>
-<option value="n"<?=$sform['sc']['n']?>>Writer</option>
-<option value="a"<?=$sform['sc']['a']?>>All</option>
-</select>
-<input type="text" name="o[ss]" size="<?=form_size(8)?>" maxlength=255 value="<?=$sform['ss']?>">
-<input type="submit" value="Search">
-</td>
-</tr><tr>
-<td>
-<select name="o[st]">
-<option value="m"<?=$sform['st']['m']?>>A Month</option>
-<option value="w"<?=$sform['st']['w']?>>A Week</option>
-<option value="a"<?=$sform['st']['a']?>>All</option>
-</select>
-<input type="checkbox" name="o[er]" value="y"<?=$sform['er']['y']?>>
-正規表現式 <?=$print['dserlink']?>
-</td>
-</tr>
-</table>
-<input type="hidden" name="o[at]" value="s">
-<input type="hidden" name="o[go]" value="p">
-<input type="hidden" name="o[sct]" value="s">
-<input type="hidden" name="o[stt]" value="s">
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD>
+<FONT style="font-face:tahoma;font-size:11px;"><?=$print[regist]?></FONT><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=25 BORDER=0 ALIGN=absmiddle ALT=''></TD>
+<TD ALIGN=right><? read_cmd(0,1) ?></TD>
+</TR>
+</TABLE>
+
+<!-#######################################################################-->
+<!-  See also doc/en/README.THEME for Search and Page form                -->
+<!-  $print[dserlink]  : print detail search link                         -->
+<!-  $print[pagetime]  : print page loading time                          -->
+<!-  $print[sqltime]   : print sql loading time                           -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD>
+<!-- =============================== SEARCH FORM =============================== -->
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
+<TR>
+<TD>
+<SELECT NAME=o[sc] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<OPTION VALUE=t<?=$sform[sc][t]?>>Title
+<OPTION VALUE=c<?=$sform[sc][c]?>>Contents
+<OPTION VALUE=n<?=$sform[sc][n]?>>Writer
+<OPTION VALUE=a<?=$sform[sc][a]?>>All
+</SELECT>
+<INPUT TYPE=text NAME=o[ss] SIZE=<?=form_size(8)?> MAXLENGTH=255 style="border:1x solid #555555;background-Color:#ffffff;font:12px;color:#555555;" VALUE="<?=$sform[ss]?>">
+<INPUT TYPE=submit VALUE=Search style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555;">
+</TD>
+</TR><TR>
+<TD>
+<SELECT NAME=o[st] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<OPTION VALUE=m<?=$sform[st][m]?>>A Month
+<OPTION VALUE=w<?=$sform[st][w]?>>A Week
+<OPTION VALUE=a<?=$sform[st][a]?>>All
+</SELECT>
+<INPUT TYPE=checkbox NAME=o[er] VALUE=y<?=$sform[er][y]?> style="border:1x solid #555555;background-Color:#ffffff">
+<FONT STYLE="font-face:tahoma;color:#555555;font-weight:bold">REGEX</FONT> <?=$print[dserlink]?>
+</TD>
+</TR>
+<INPUT TYPE=hidden NAME=o[at] VALUE=s>
+<INPUT TYPE=hidden NAME=o[go] VALUE=p>
+<INPUT TYPE=hidden NAME=o[sct] VALUE=s>
+<INPUT TYPE=hidden NAME=o[stt] VALUE=s>
 </FORM>
-<!--  =============================== ゴムセックポム ===============================  -->
-</td>
-<td align="right">
-<span class="sqltime">
-Page Loading [ <?=$print['pagetime']?> Sec ]
-SQL Time [ <?=$print['sqltime']?> Sec ]<br>
-</span>
-<!--  ============================== ペイジポム ==============================  -->
-<form method="post" action="locate.php?table=<?=$table?>">
-<table width="100%" border=0 cellpadding=0 cellspacing=1>
-<tr>
-<td align="right">
-<?=$pform['post']?>
-<select name="o[go]">
-<option value="p" selected="selected">Page No.</option>
-<option value="n">Article No.</option>
-</select>
-<input type="text" name="o[no]" size="<?=form_size(2)?>" maxlength=6 value="<?=$pform['value']?>">
-<input type="submit" value="Go!">
-</td>
-</tr>
-</table></form>
-<!--  ============================== ペイジポム ==============================  -->
-</td>
-</tr>
-</table>
+</TABLE>
+<!-- =============================== SEARCH FORM=============================== -->
+</TD>
+<TD ALIGN=right>
+<FONT style="font-size:11px;font-family:tahoma;">
+Page Loading [ <?=$print[pagetime]?> Sec ]
+SQL Time [ <?=$print[sqltime]?> Sec ]<BR>
+</FONT>
+<!-- ============================== PAGE FORM ============================== -->
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<FORM METHOD=post ACTION=locate.php?table=<?=$table?>>
+<TR>
+<TD ALIGN=right>
+<FONT STYLE="font-size:10px;font-family:tahoma;">
+<?=$pform[post]?>
+<SELECT NAME=o[go] style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<OPTION VALUE=p SELECTED>Page No.
+<OPTION VALUE=n>Article No.
+</SELECT>
+<INPUT TYPE=text NAME=o[no] SIZE=<?=form_size(2)?> MAXLENGTH=6 style="border:1x solid #555555;background-Color:#ffffff;font:12px;color:#555555" VALUE='<?=$pform[value]?>'>
+<INPUT TYPE=submit VALUE=Go! style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+</FONT>
+</TD>
+</TR></FORM>
+</TABLE>
+<!-- ============================== PAGE FORM ============================== -->
+</TD>
+</TR>
+</TABLE>
 
+<!-#######################################################################-->
+<!-  print_license()  : Printed Licese table                              -->
+<!-#######################################################################-->
+<?=print_license()?>
 
+</DIV>
+
+<!-------------------- Start Tail Design ------------------->
+<?
+if(!$np) {
+  # Input by whole admin
+  include "html/tail.ph";
+  # Design per user
+  include "$board[tailpath]";
+}
+?>
+<!-------------------- End   Tail Design ------------------->
+</BODY>
+</HTML>

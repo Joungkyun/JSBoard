@@ -1,12 +1,9 @@
 <?php
-# $Id: locate.php,v 1.2 2009-11-16 21:52:45 oops Exp $
-include "include/header.php";
+include "include/header.ph";
 
-$go = $o['go'];
-$url = search2url ($o);
-$url = str_replace ('&amp;', '&', $url);
+$url = search2url($o);
 
-switch($go) {
+switch($o['go']) {
   case "p":
     Header("Location: list.php?table=$table&page={$o['no']}$url");
     break;

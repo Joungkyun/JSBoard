@@ -1,179 +1,238 @@
+<HTML>
+<HEAD>
+<!-#######################################################################-->
+<!-  $langs[charset] : print charset code                                 -->
+<!-  $board[ver]     : version information in webboard                    -->
+<!-  get_title()     : print header title in webbared                     -->
+<!-  $user_stylesheet : User Defined StyleSheet                           -->
+<!-#######################################################################-->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs[charset]?>">
+<TITLE>Jsboard <?=$board[ver]?> - <?=get_title()?></TITLE>
 
-<!--  ====================================================================  -->
-<!--  print_keymenu() : keyboard 路 掲示板を 制御                           -->
-<!--                    'b' = 以前 ページ                                   -->
-<!--  ====================================================================  -->
-<?=print_keymenu(2)?>
+<STYLE TYPE=text/css>
+<!--
+BODY,TD {font-size:12px;font-family:tahoma;color:#555555;}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+INPUT {font: 11px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; padding-right:1px; background-color:#FFFFFF; }
+TEXTAREA {font: 13px ｱｼｸｲﾃｼ; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; background-Color:#ffffff;}
 
-<form name="editp" method=post target=_top action='act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td valign="bottom" width=44><img src="./theme/JP-default/img/icon_over.gif" align="middle" alt=''></td>
-<td class="counter"> &gt;&gt; Edit article</td>
-</tr>
+<?=$user_stylesheet?>
+-->
+</style>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
 
-<tr bgcolor="#a0dc10">
-<td colspan=2>
-<img src="./theme/JP-default/img/board_no.gif" align="middle" alt=''>
-<span style="color: #ffffff; font-weight: bold;">文 修正</span>
-</td>
-</tr>
-
-<tr>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td>
-</tr>
-</table>
-
-<table width="<?=$board['width']?>" border=0 cellpadding=1 cellspacing=0>
-<tr>
-<td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
-<td rowspan=9 width=4 bgcolor="#6D7BC9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=''></td>
-<td rowspan=9 width=10><img src="images/blank.gif" width=10 height=1 border=0 alt=''></td>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''><br></td>
-<td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
-</tr>
-
-<!--  ====================================================================  -->
-<!--  $size['name']  : input お問い合わせ サイズ theme config で 設定             -->
-<!--  $list['name']  : 修正する 名前を 出力                                   -->
-<!--  ====================================================================  -->
-<tr>
-<td width=80>名前</td>
-<td><input type="text" id="name" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$list['name']?>"<?=$disable?> tabindex="1"></td>
-</tr>
-
-<!--  ====================================================================  -->
-<!--  $view['email']          : email 登録 可否 決定                        -->
-<!--  $list['email']          : 修正する 電子メールを 出力                        -->
-<!--  ====================================================================  -->
+<!-------------------- Start Header Design -------------------->
 <?
-if($view['email'] || trim($list['email'])) {
-  echo <<<EOF
+if(!$np) {
+  # Design per user
+  include "$board[headpath]";
+  # Input by whole admin
+  include "html/head.ph";
+}
+?>
+<!-------------------- End Header Design   -------------------->
 
-<tr>
-<td>メール</td>
-<td><input type="text" id="email" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$list['email']}"{$disable} tabindex="2"></td>
-</tr>
+<!-#######################################################################-->
+<!-  $board[align] : print align of webboard. It's config in board admin  -->
+<!-  $board[width] : print width of webboard. It's config in board admin  -->
+<!-  $board[formtype] : print form option to use upload image             -->
+<!-#######################################################################-->
+<DIV ALIGN=<?=$board[align]?>>
+<FORM NAME=editp METHOD=post ACTION=act.php<?=$board[formtype]?>>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN=bottom COLSPAN=2>
+<IMG SRC=./theme/EN-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
+<FONT style="font-size:11px;">&gt;&gt; <B>Edit</B> article</FONT>
+</TD>
+</TR>
 
-EOF;
+<TR BGCOLOR=#FFAE00>
+<TD COLSPAN=2>
+<IMG SRC=./theme/EN-default/img/board_no.gif ALIGN=absmiddle ALT=''>
+<FONT STYLE="color:#FFFFFF"><IMG SRC=theme/EN-default/img/edit_title.gif BORDER=0></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=10><IMG SRC=images/blank.gif WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $size[name]  : print size of input of name filed                     -->
+<!-  $list[name]  : print registed name                                   -->
+<!-#######################################################################-->
+<TR>
+<TD WIDTH=80><B>Name</B></TD>
+<TD><INPUT TYPE=text NAME=atc[name] SIZE=<?=$size[name]?> MAXLENGTH=50 VALUE="<?=$list[name]?>"<?=$disable?>></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $view[email]          : print email field                            -->
+<!-  $list[email]          : print registed email                         -->
+<!-#######################################################################-->
+<?
+if($view[email] || trim($list[email])) {
+  echo "
+<TR>
+<TD><B>Email</B></TD>
+<TD><INPUT TYPE=text NAME=atc[email] SIZE=$size[name] MAXLENGTH=255 VALUE=\"$list[email]\"$disable></TD>
+</TR>\n";
 }
 ?>
 
-<!--  ====================================================================  -->
-<!--  $view['url']             : url 登録 可否 決定                         -->
-<!--  $list['url']             : 修正する url を 出力                         -->
-<!--  ====================================================================  -->
+<!-#######################################################################-->
+<!-  $view[url]             : print url field                             -->
+<!-  $list[url]             : print registed url                          -->
+<!-#######################################################################-->
 <?
-if($view['url'] || trim($list['url'])) {
-  echo <<<EOF
-
-<tr>
-<td>ホームページ</td>
-<td><input type="text" id="url" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$list['url']}"{$disable} tabindex="3"></td>
-</tr>
-
-EOF;
+if($view[url] || trim($list[url])) {
+  echo "
+<TR>
+<TD><B>Homepage</B></TD>
+<TD><INPUT TYPE=text NAME=atc[url] SIZE=$size[name] MAXLENGTH=255 VALUE=\"$list[url]\"$disable></TD>
+</TR>\n";
 }
 ?>
 
-<!--  ====================================================================  -->
-<!--  upload 部分 出力可否 設定 (まあまあの程ならば そのまま 使えば なり)                     -->
-<!--  ====================================================================  -->
-<?
-if($list['bofile']) {
-  echo <<<EOF
-<tr>
-<td>ファイル</td>
-<td>
-<a target=_top href='$down_link'>
-<img src="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" align="middle">
-<span class="attachfn">{$list['bofile']}</span></a> - $hfsize &nbsp; &nbsp;
-<input type="checkbox" name="atc[fdel]" value=1 tabindex="4"> ファイル削除
-</td>
-</tr>
+<!-#######################################################################-->
+<!-  $html_chk_ok  : print CHECKED if parent article use HTML option      -->
+<!-  $html_chk_no  : print CHECKED if parent article don't use HTML option-->
+<!-#######################################################################-->
+<TR>
+<TD><B>HTML</B></TD>
+<TD>
+<INPUT TYPE=radio NAME=atc[html] VALUE=1<?=$html_chk_ok?>> Use
+<INPUT TYPE=radio NAME=atc[html] VALUE=0<?=$html_chk_no?>> Don't Use
+</TD>
+</TR>
 
-EOF;
+<!-#######################################################################-->
+<!-  print upload field                                                   -->
+<!-#######################################################################-->
+<?
+if($list[bofile]) {
+  echo "<TR>\n".
+       "<TD><B>File</B></TD>\n".
+       "<TD>\n".
+       "<A HREF=$down_link>\n".
+       "<IMG SRC=images/$icon width=16 height=16 border=0 alt=$list[bofile] align=absmiddle>\n".
+       "<FONT style=\"color:$color[text]\">$list[bofile]</FONT></A> - $hfsize &nbsp; &nbsp;\n".
+       "<INPUT TYPE=CHECKBOX NAME=atc[fdel] VALUE=1> Delete File\n";
 }
 
-if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
-  echo <<<EOF
-<tr>
-<td>ファイル修正</td>
-<td>
-<input type="hidden" name="max_file_size" value="{$upload['maxsize']}">
-<input type="file" name="userfile" size="{$size['uplo']}" maxlength=256 tabindex="5">
-</td>
-</tr>
-
-EOF;
+if ($upload[yesno] && $cupload[yesno] && $noup != 1) {
+  echo "<TR>\n".
+       "<TD><B>Edit File</B></TD>\n".
+       "<TD>\n".
+       "<INPUT TYPE=HIDDEN NAME=max_file_size VALUE=$upload[maxsize]>\n".
+       "<INPUT TYPE=file NAME=userfile SIZE=$size[uplo] MAXLENGTH=256>\n".
+       "</TD>\n".
+       "</TR>\n";
 }
 ?>
 
-<!--  ====================================================================  -->
-<!--  $size['titl']  : title input お問い合わせ サイズ                              -->
-<!--  $list['title'] : 修正する 文 題目                                       -->
-<!--  ====================================================================  -->
-<tr>
-<td>題目</td>
-<td><input type="text" id="title" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 value="<?=$list['title']?>" tabindex="6"></td>
-</tr>
+<!-#######################################################################-->
+<!-  $size[titl]  : size of title input form                              -->
+<!-  $list[title] : print for modified subject                            -->
+<!-#######################################################################-->
+<TR>
+<TD><B>Subject</B></TD>
+<TD><INPUT TYPE=text NAME=atc[title] SIZE=<?=$size[titl]?> MAXLENGTH=100 VALUE="<?=$list[title]?>"></TD>
+</TR>
 
-<tr>
-<!--  ====================================================================  -->
-<!--  admin login 状態である 場合 パスワードを 少なくなくても なるように する ルチン          -->
-<!--  IE, NS6 義 場合には textarea 窓 サイズ 調整 ボタンも 一緒に 出力          -->
-<!--  ====================================================================  -->
+<TR>
+<!-#######################################################################-->
+<!-  if login admin, don't need password                                  -->
+<!-  if IE and NS6 case, print textarea size operation button             -->
+<!-#######################################################################-->
 <?
-if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
-  echo <<<EOF
-<td>パスワード</td>
-<td>
-$passment
-<img src="./images/blank.gif" width=15 height=1 border=0 alt=''>
-</td>
-EOF;
+if(eregi("^(0|4|6)$",$board[mode]) && !$board[super]) {
+  echo "<TD><B>Password</B></TD>\n".
+       "<TD>\n".
+       "$passment\n".
+       "<IMG SRC=./images/blank.gif WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>\n".
+       "TextSize Operation $print[operate]\n".
+       "</TD>\n";
+} else {
+  echo "<TD COLSPAN=2 ALIGN=right>\n".
+       "TextSize Operation $print[operate]\n".
+       "</TD>\n";
 }
 ?>
-</tr>
+</TR>
 
-<tr>
-<td colspan=2><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
-</tr>
-</table>
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+</TABLE>
 
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td></tr>
-</table>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
 
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td class="rbodybg">
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR=<?=$color[l5_bg]?> ALIGN=CENTER>
 
-<!--  ====================================================================  -->
-<!--  $size['text'] : textarea 義 size 出力                                 -->
-<!--  $list['text'] : 修正する 文 本文を 出力                                 -->
-<!--  ====================================================================  -->
-<!--  =============================== 文内容 ===============================  -->
-<script type="text/javascript" src="theme/common/textarea.js"></script>
-<textarea id="epost" class="resizable" name="atc[text]" tabindex="8"><?="{$list['text']}\n\n"?></textarea>
-<!--  =============================== 文内容 ===============================  -->
+<!-#######################################################################-->
+<!-  $wrap[op]   : print wrap option of textarea                          -->
+<!-  $size[text] : print size of textarea                                 -->
+<!-  $list[text] : print content of original content for modified         -->
+<!-#######################################################################-->
+<!-- =============================== Contents =============================== -->
+<TEXTAREA NAME=epost <?=$wrap[op]?> ROWS=10 COLS=<?=$size[text]?>><?="$list[text]\n\n"?></TEXTAREA>
+<!-- =============================== Contents =============================== -->
 
-</td></tr>
-</table>
+</TD></TR>
+</TABLE>
 
 
-<!--  ====================================================================  -->
-<!--  $table.$page      : リストで 帰る リンクに 必要な 変数たち            -->
-<!--  $print['passform']: 修正した 文 登録するのに 必要な hidden 変数たち         -->
-<!--  $orig_option      : 書き込み 窓 調節の時 元々 大きさで 帰る オプション        -->
-<!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td bgcolor="#a0dc10" align="center">
-<?=$print['passform']?>
-<input type="submit" value="登録" tabindex="9">
-<input type="button" value="再び" onclick="document.location.reload(); return true;" tabindex="10">
-<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト" tabindex="11">
-<input type="button" onclick="history.back()" value="以前" tabindex="12">
-</td></tr>
-</table>
-</form>
+<!-#######################################################################-->
+<!- $wrap[ment] : if wrap option isn't hard, print warn message           -->
+<!- $table.$page      : print link option to back list                    -->
+<!- $print[passform]  : hidden value for regist reply article             -->
+<!- $orig_option      : back to original size of textarea                 -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN=right><?=$wrap[ment]?></TD></TR>
+<TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
+<?=$print[passform]?>
+<INPUT TYPE=submit VALUE=Modify>
+<INPUT TYPE=reset VALUE="Reset"<?=$orig_option?>>
+<INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List">
+<INPUT TYPE=button onClick=history.back() VALUE="Back">
+</TD></TR>
+</TABLE>
 
+<!-#######################################################################-->
+<!-  print_license()  : Printed Licese table                              -->
+<!-#######################################################################-->
+<?=print_license()?>
+
+</FORM>
+</DIV>
+
+<!-------------------- Start Tail Design ------------------->
+<?
+if(!$np) {
+  # Input by whole admin
+  include "html/tail.ph";
+  # Design per user
+  include "$board[tailpath]";
+}
+?>
+<!-------------------- End   Tail Design ------------------->
+</BODY>
+</HTML>
