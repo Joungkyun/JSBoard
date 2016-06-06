@@ -1,18 +1,6 @@
-<?php
-# $Id: whois.php,v 1.4 2009-11-16 21:52:45 oops Exp $
-include 'include/variable.php';
-include 'include/print.php';
-# register_globals 옵션의 영향을 받지 않기 위한 함수
-parse_query_str();
-
-# table 변수 체크
-$table = trim ($table);
-if ( preg_match ('!/\.+|%00$!', $table) ) {
-  print_error ("Ugly access with table variable \"{$table}\"");
-}
-
+<?
 if($window) {
-  echo "<script type=\"text/javascript\">\n" .
+  echo("<SCRIPT LANGUAGE = \"Javascript\">\n" .
        "<!--\nvar farwindow = null;\n" .
        "function remoteWindow() {\n" .
        "  farwindow = window.open(\"\",\"Whois\",\"width=600,height=480,scrollbars=1,resizable=1\");\n" .
@@ -24,45 +12,41 @@ if($window) {
        "  }\n" .
        "}\n" .
        "//-->\nremoteWindow();\nhistory.back();\n" .
-       "</script>\n";
+       "</SCRIPT>\n");
   exit;
 }
 
-if (!trim($table) || !trim($host)) {
-  echo "<script type=\"text/javascript\">\n".
+if (!$table || !$host) {
+  echo "<script>\n".
        "alert('U attempted invalid method in this program!');\n".
        "history.back();\n".
        "</script>\n";
   exit;
 }
 
-if ( ! @file_exists("config/global.php") ) {
-  echo "<script type=\"text/javascript\">\nalert('Don\'t exist global\\nconfiguration file');\n" .
-       "history.back();\nexit;\n</script>\n";
-} else { include_once "config/global.php"; }
-
-if(file_exists("data/$table/config.php")) { include "data/$table/config.php"; }
-if(file_exists("theme/{$print['theme']}/config.php")) { include "theme/{$print['theme']}/config.php"; }
-else { include "theme/KO-default/config.php"; }
-
-putenv ("JSLANG={$_code}");
-include "language/lang.php";
-
-$ohost= $host;
-$host = gethostbyname ($host);
+@include("config/global.ph");
+@include("data/$table/config.ph");
+@include("include/lang.ph");
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
                         "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=<?=$_('charset')?>">
-<title><? echo $host ?> WHOIS Information</title>
-<link rel="stylesheet" type="text/css" href="./theme/<?=$print['theme']?>/default.css">
-</head>
+		      
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<? echo $langs[charset] ?>">
+<TITLE>WHOIS 정보</TITLE>
+<STYLE TYPE="text/css">
+<!--
+A:link, A:visited, A:active { text-decoration: none; }
+A:hover { text-decoration:underline; }
+TD { font-size: 10pt; }
+-->
+</STYLE>
+</HEAD>
 
-<body>
-<pre>
 <?
+echo "<BODY BGCOLOR=$color[bgcol] TEXT=$color[text] LINK=$color[link] VLINK=$color[vlink] ALINK=$color[alink]><PRE>";
+
 $server = "whois.krnic.net";
 $port   = "43";
 
@@ -72,21 +56,20 @@ if ($fp) {
   fputs($fp,"$host\n");
 
   while(!feof($fp)) {
-      $list = fgets ($fp, 1024);
-      //if($count > 11) {
-      if ( $count > 0 ) {
-        $list = preg_replace("/^((Phone|전화[ ]*번호)[\s]*:[ ]*)(.*)/mi", "\\1<span class=\"whois_tel\">\\3</span>", $list);
-        $list = preg_replace("/((Service Name|Name|서비스명|이름).*:)(.*)/mi", "\\1<span class=\"whois_addr\">\\3</span>", $list);
-        $list = preg_replace("/((Org Name|기[ ]*관[ ]*명).*:)(.*)/mi", "\\1<span class=\"whois_net\">\\3</span>", $list);
-        echo $list;
+      $list = fgets($fp, 1024);
+      if($count > 11) {
+        $list = eregi_replace("((Phone|전화 번호).*:)(.*)", "\\1<FONT COLOR=\"orange\" $board[css]>\\3</FONT>", $list);
+        $list = eregi_replace("((IP Address|IP 주소).*:)(.*)", "\\1<FONT COLOR=\"$color[r0_bg]\" $board[css]><b>\\3</b></FONT>", $list);
+        $list = eregi_replace("((Network Name|네트워크 이름).*:)(.*)", "\\1<FONT COLOR=\"red\" $board[css]><b>\\3</b></FONT>", $list);
+        echo("$list");
       }
       $count++;
   }
   fclose($fp);
-} else echo "$errno $errstr whois.krnic.net의 연결에 실패 했습니다.";
+} else echo "whois.krnic.net의 연결에 실패 했습니다.";
 ?>
 
-</pre>
+</PRE>
 
-</body>
-</html>
+</BODY>
+</HTML>
