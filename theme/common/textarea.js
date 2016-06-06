@@ -1,4 +1,4 @@
-// $Id: textarea.js,v 1.2 2008-12-12 19:40:14 oops Exp $
+// $Id: textarea.js,v 1.4 2008-12-23 21:16:49 oops Exp $
 // $origId: textarea.js,v 1.9 2006/04/14 13:48:56 killes Exp $
 // from drupal
 // many functions are imported from drupal.js to eliminate dependency
@@ -10,6 +10,25 @@ if (document.jsEnabled == undefined) {
    !document.createElement        ||
    !document.createTextNode       ||
    !document.getElementById);
+}
+
+function browserSize (type) {
+  if (typeof(window.innerWidth) == 'number') {
+    //Non-IE
+    width = window.innerWidth;
+    height = window.innerHeight;
+  } else if (document.documentElement &&
+            (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
+    //IE 6+ in 'standards compliant mode'
+    width = document.documentElement.clientWidth;
+    height = document.documentElement.clientHeight;
+  } else if( document.body && (document.body.clientWidth || document.body.clientHeight)) {
+    //IE 4 compatible
+    width = document.body.clientWidth;
+    height = document.body.clientHeight;
+  }
+
+  return (type == 'width') ? width : height;
 }
 
 function textarea_cols(obj) {

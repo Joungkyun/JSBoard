@@ -1,5 +1,4 @@
 <?
-# $Id: captcha.php,v 1.2 2009-11-16 21:52:46 oops Exp $
 $incpath = ini_get ('include_path');
 ini_set ('include_path', "$incpath:" . dirname (__FILE__));
 if ( version_compare (PHP_VERSION, '6.0.0', '<') ) {

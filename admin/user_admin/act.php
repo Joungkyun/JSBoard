@@ -1,5 +1,4 @@
 <?php
-# $Id: act.php,v 1.3 2009-11-16 21:52:46 oops Exp $
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
@@ -9,34 +8,40 @@ $ua['tail']   = $uatail;
 $ua['style']  = $uastyle;
 
 if(!session_is_registered("$jsboard") || (!$board['adm'] && $board['super'] != 1))
-  print_error($_('login_err'));
+  print_error($langs['login_err']);
 
-$c = sql_connect($db['rhost'], $db['user'], $db['pass'], $db['name']);
-
+sql_connect($db['rhost'], $db['user'], $db['pass']);
+sql_select_db($db['name']);
 # password 비교함수 - admin/include/auth.php
-compare_pass ($_SESSION[$jsboard]);
+compare_pass($_SESSION[$jsboard]);
 
-## checking @@
-if( $ua['comment'] ) {
-  require_once '../../include/parse.php';
-
-  if ( ! db_table_list ($c, $db['name'], '', $table.'_comm') ) {
-    $cret_comm = sql_parser ($db['type'], 'comment', $table, 2);
-    foreach ( $cret_comm as $_sql )
-      sql_query ($_sql, $c);
+if($ua['comment']) {
+  if (!get_tblist($db['name'],"",$table."_comm")) {
+    $cret_comm = "CREATE TABLE {$table}_comm (\n".
+                 "       no int(6) NOT NULL auto_increment,\n".
+                 "       reno int(20) NOT NULL default '0',\n".
+                 "       rname tinytext,\n".
+                 "       name tinytext,\n".
+                 "       passwd varchar(56) default NULL,\n".
+                 "       text mediumtext,\n".
+                 "       host tinytext,\n".
+                 "       date int(11) NOT NULL default '0',\n".
+                 "       PRIMARY KEY  (no),\n".
+                 "       KEY parent (reno))";
+    sql_query($cret_comm);
   }
 
-  if ( ! field_exist_check ($c, $db['name'], $table, 'comm')) {
+  if (!field_exist_check ($table, "comm")) {
     # comm field 추가
-    sql_query ('ALTER TABLE ' . $table . ' add comm int(6) DEFAULT 0', $c);
+    sql_query ('ALTER TABLE ' . $table . ' add comm int(6) DEFAULT 0');
     # comm field key 추가
-    sql_query ('ALTER TABLE ' . $table . ' add key (comm)', $c);
+    sql_query ('ALTER TABLE ' . $table . ' add key (comm)');
   }
 
   sync_comment ($table."_comm", $table);
 }
 
-sql_close($c);
+mysql_close();
 
 # auth value check
 $ua['ad'] = !trim($ua['ad']) ? "admin" : $ua['ad'];
@@ -120,6 +125,7 @@ else $chg['toadmin'] = "{$rmail['toadmin']}";
 $chg['rss_use'] = !$ua['rss_use'] ? 0 : 1;
 $chg['rss_is_des'] = !$ua['rs_is_des'] ? 0 : 1;
 $chg['rss_align'] = !$ua['rss_align'] ? 0 : 1;
+$chg['rss_color'] = !trim($ua['rss_color']) ? "red" : $ua['rss_color'];
 $chg['rss_channel'] = !trim($ua['rss_channel']) ? "JSBoard {$table} Board" : $ua['rss_channel'];
 
 # ETC Configuration
@@ -183,79 +189,66 @@ $chg_conf = "<?
 #           7 -> 회원 전용 게시판 (reply only admin)
 ###############################################################################
 #
-\$board['ad']        = '{$ua['ad']}';
-\$board['mode']      = {$ua['mode']};
+\$board['ad'] = '{$ua['ad']}';
+\$board['mode'] = {$ua['mode']};
 
 # 로그인 모드시에 이름 출력을 실명으로 할지 Nickname 으로 할지 결정
 # 이 변수값이 설정이 안되어 있으면 Nickname 으로 출력
-\$board['rnname']    = {$ua['rnname']};
+\$board['rnname'] = {$ua['rnname']};
 
 # 로그아웃 후에 이동할 페이지를 지정
-\$print['dopage']    = '{$ua['dopage']}';
+\$print['dopage'] = '{$ua['dopage']}';
 
 ###############################################################################
 #  게시판 허가 설정
 ###############################################################################
 #
-# 미리 보기 허가
-\$enable['pre']      = {$chg['pre']};
-# 미리 보기 허가시 글 길이
-\$enable['preren']   = {$chg['pren']};
+\$enable['pre']     = {$chg['pre']};		# 미리 보기 허가
+\$enable['preren']  = {$chg['pren']};		# 미리 보기 허가시 글 길이
 
 # 답장시 원본글 포함을 선택사항으로 설정
-# 0 - 무조건 출력  1 - 선택사항
 #
-\$enable['ore']      = {$chg['ore']};
+\$enable['ore'] = {$chg['ore']};		# 0 - 무조건 출력  1 - 선택사항
 
 # 글읽기에서 관련글이 있을 경우 관련글 리스트를 보여줄지 여부 설정
-# 0 - 보여주지 않음 1 - 보여줌
 #
-\$enable['re_list']  = {$chg['re_list']};
+\$enable['re_list'] = {$chg['re_list']};		# 0 - 보여주지 않음 1 - 보여줌
 
 # 커멘트 기능 사용여부
-# 0 - 보여주지 않음 1 - 보여줌
 #
-\$enable['comment']  = {$chg['comment']};
+\$enable['comment'] = {$chg['comment']};		# 0 - 보여주지 않음 1 - 보여줌
 
 # 이모티콘 기능 사용여부
-# 0 - 보여주지 않음 1 - 보여줌
 #
-\$enable['emoticon'] = {$chg['emoticon']};
+\$enable['emoticon'] = {$chg['emoticon']};		# 0 - 보여주지 않음 1 - 보여줌
 
 
 ###############################################################################
 #  사용 허가할 HTML tag
 ###############################################################################
 #
-\$enable['tag']     = '{$ua['tag']}';
+\$enable['tag'] = '{$ua['tag']}';
 
 
 ###############################################################################
 #  게시판 정렬 상태를 설정
-# <DIV align=\"\$board['align']\">
 ###############################################################################
 #
-\$board['align']     = '{$ua['align']}';
+\$board['align'] = '{$ua['align']}';	# <DIV align=\"\$board['align']\">
 
 
 ###############################################################################
 #  게시판 기본 설정
 ###############################################################################
 #
-# 게시판 제목
-\$board['title']     = '{$chg['title']}';
+\$board['title'] = '{$chg['title']}';	# 게시판 제목
 # 글 읽기 시에 한 줄당 표시할 글자 수
-\$board['wwrap']     = {$ua['wwrap']};
-# 게시판 너비
-\$board['width']     = '{$chg['width']}';
-# 제목 필드 최대 길이
-\$board['tit_l']     = {$chg['tit_l']};
-# 글쓴이 필드 최대 길이
-\$board['nam_l']     = {$chg['nam_l']};
-# 페이지 당 게시물 수
-\$board['perno']     = {$chg['perno']};
-# 페이지 목록 출력 갯수 (x2)
-\$board['plist']     = {$chg['plist']};
+\$board['wwrap'] = {$ua['wwrap']};
+\$board['width'] = '{$chg['width']}';		# 게시판 너비
+\$board['tit_l'] = {$chg['tit_l']};		# 제목 필드 최대 길이
+\$board['nam_l'] = {$chg['nam_l']};		# 글쓴이 필드 최대 길이
+\$board['perno'] = {$chg['perno']};		# 페이지 당 게시물 수
+\$board['plist'] = {$chg['plist']};		# 페이지 목록 출력 갯수 (x2)
 
 # 쿠키 기간 설정 (日)
 \$board['cookie'] = {$chg['cookie']};
@@ -264,30 +257,26 @@ $chg_conf = "<?
 #  FORM SIZE
 ###############################################################################
 #
-\$size['name']       = {$ua['s_name']};               # 이름 폼 길이
-\$size['pass']       = {$ua['s_pass']};                # submit button 길이
-\$size['titl']       = {$ua['s_titl']};               # 제목 폼 길이
-\$size['text']       = {$ua['s_text']};               # TEXTAREA 길이
-\$size['uplo']       = {$ua['s_uplo']};               # UPLOAD 폼 길이
+\$size['name'] = {$ua['s_name']};		# 이름 폼 길이
+\$size['pass'] = {$ua['s_pass']};		# submit button 길이
+\$size['titl'] = {$ua['s_titl']};		# 제목 폼 길이
+\$size['text'] = {$ua['s_text']};		# TEXTAREA 길이
+\$size['uplo'] = {$ua['s_uplo']};		# UPLOAD 폼 길이
 
 ###############################################################################
 #  호스트 정보 출력 설정 0 - Failed, 1 - True 
 ###############################################################################
 #
-# IP address 출력 여부(상단 메뉴 출력 안할시)
-\$enable['dhost']    = {$ua['dhost']};
-# DNS lookup 여부
-\$enable['dlook']    = {$ua['dlook']};
-# WHOIS 검색 여부
-\$enable['dwho']     = {$ua['dwho']};
+\$enable['dhost'] = {$ua['dhost']};		# IP address 출력 여부(상단 메뉴 출력 안할시)
+\$enable['dlook'] = {$ua['dlook']};		# DNS lookup 여부
+\$enable['dwho']  = {$ua['dwho']};		# WHOIS 검색 여부
 
 
 ###############################################################################
 #  Theme Configuration
 ###############################################################################
 #
-# Theme Name
-\$print['theme']     = '{$ua['theme_c']}';
+\$print['theme'] = '{$ua['theme_c']}';	# Theme 이름 
 
 
 ###############################################################################
@@ -295,16 +284,16 @@ $chg_conf = "<?
 #  전체 관리자가 허락 하지 않으면 여기서 yes를 선택해도 이기능을 사용할수 없다
 ###############################################################################
 #
-\$cupload['yesno']   = {$chg['upload']};                # upload 사용 여부
-\$cupload['dnlink']  = {$chg['uplink']};                # 0: 헤더를통해 1: 다이렉트 링크
+\$cupload['yesno'] = {$chg['upload']};	# upload 사용 여부
+\$cupload['dnlink'] = {$chg['uplink']};	# 0: 헤더를통해 1: 다이렉트 링크
 
 
 ###############################################################################
 #  url,email 사용 여부 설정
 ###############################################################################
 #
-\$view['url']        = {$chg['url']};
-\$view['email']      = {$chg['email']};
+\$view['url']	= {$chg['url']};
+\$view['email']	= {$chg['email']};
 
 
 ###############################################################################
@@ -312,18 +301,17 @@ $chg_conf = "<?
 #  전체 관리자의 기능 on에 의해 사용을 할수 있다
 ###############################################################################
 #
-\$rmail['admin']     = {$chg['admin']};
-\$rmail['user']      = {$chg['user']};
-# 메일을 받을 게시판 관리자의 메일 주소
-\$rmail['toadmin']   = '{$chg['toadmin']}';
+\$rmail['admin']   = {$chg['admin']};
+\$rmail['user']    = {$chg['user']};
+\$rmail['toadmin'] = '{$chg['toadmin']}';	# 메일을 받을 게시판 관리자의 메일 주소
 
 
 ###############################################################################
 #  아래의 정보를 사용하여 글 등록시 관리자의 password를 요구
 ###############################################################################
 #
-\$ccompare['name']   = '{$chg['d_name']}';
-\$ccompare['email']  = '{$chg['d_email']}';
+\$ccompare['name']  = '{$chg['d_name']}';
+\$ccompare['email'] = '{$chg['d_email']}';
 
 
 ###############################################################################
@@ -331,7 +319,7 @@ $chg_conf = "<?
 #  설정값의 구분자는 ';' 로 한다.
 #  설정 예) 1.1.1.1;2.2.2.2;3.3.3.3
 ###############################################################################
-\$enable['ipbl']     = '{$chg['ipbl']}';
+\$enable['ipbl'] = '{$chg['ipbl']}';
 
 
 ###############################################################################
@@ -343,8 +331,8 @@ $chg_conf = "<?
 #  설정 예) 1.1.1.1;2.2.2.2;3.3.3.3
 ###############################################################################
 #
-\$enable['dhyper']   = {$chg['dhyper']};
-\$enable['plink']    = '{$chg['plink']}';
+\$enable['dhyper'] = {$chg['dhyper']};
+\$enable['plink']  = '{$chg['plink']}';
 
 ###############################################################################
 # 게시판 공지사항
@@ -355,28 +343,29 @@ $chg_conf = "<?
 # 공지사항 내용이 없을 경우에는 제목 링크가 안되게 출력
 ###############################################################################
 #
-\$notice['subject']  = '{$chg['notice_s']}';
+\$notice['subject'] = '{$chg['notice_s']}';
 \$notice['contents'] = {$chg['notice_c']};
 
 ###############################################################################
 # 게시판 RSS 설정
 #
-# \$rss['use']     -> rss 사용여부
-# \$rss['channel'] -> rss 리더의 채널목록 이름
-# \$rss['is_des']  -> 기사의 설명 출력 여부
-# \$rss['align']   -> rss link 의 위치 ( 0: left / 1: right )
-# \$rss['color']   -> rss link 의 color
+# \$rss['use']    -> rss 사용여부
+# \$rss['channel']    -> rss 리더의 채널목록 이름
+# \$rss['is_des'] -> 기사의 설명 출력 여부
+# \$rss['align']  -> rss link 의 위치 ( 0: left / 1: right )
+# \$rss['color']  -> rss link 의 color
 ###############################################################################
 #
-\$rss['use']         = {$chg['rss_use']};
-\$rss['is_des']      = {$chg['rss_is_des']};
-\$rss['align']       = {$chg['rss_align']};
-\$rss['channel']     = '{$chg['rss_channel']}';
+\$rss['use']     = {$chg['rss_use']};
+\$rss['is_des']  = {$chg['rss_is_des']};
+\$rss['align']   = {$chg['rss_align']};
+\$rss['color']   = '{$chg['rss_color']}';
+\$rss['channel'] = '{$chg['rss_channel']}';
 ?>";
 
 # 변경된 설정 값을 config.php 에 쓴다.
 $wfile = "../../data/$table/config.php";
-writefile_r ($wfile, $chg_conf);
+file_operate("$wfile","w","Can't update $wfile",$chg_conf);
 
 # quot 변환된 문자를 un quot 한다
 $head = $ua['header'];
@@ -391,10 +380,10 @@ if($_SESSION[$jsboard]['pos'] != 1) {
 }
 
 $wfile = "../../data/$table/html_head.php";
-writefile_r ($wfile, $head);
+file_operate("$wfile","w","Can't update $wfile",$head);
 
 $wfile = "../../data/$table/html_tail.php";
-writefile_r ($wfile, $tail);
+file_operate("$wfile","w","Can't update $wfile",$tail);
 
 # style sheet file 생성
 $ua['style'] = eregi_replace("\\\\\"|\"","",$ua['style']);
@@ -404,15 +393,13 @@ $wstyle = "<?
 ?>";
 
 $wfile = "../../data/$table/stylesheet.php";
-writefile_r ($wfile, $wstyle);
+file_operate("$wfile","w","Can't update $wfile",$wstyle);
 
-$_lang['act_complete'] = str_replace("\n","\\n",$_('act_complete'));
-$_lang['act_complete'] = str_replace("'","\'",$_lang['act_complete']);
-
-header ('Content-Type: text/html;charset=' . $_('charset'));
-echo "<script type=\"text/javascript\">\n" .
-     "  alert('{$_lang['act_complete']}')\n" .
+$langs['act_complete'] = str_replace("\n","\\n",$langs['act_complete']);
+$langs['act_complete'] = str_replace("'","\'",$langs['act_complete']);
+echo "<script>\n" .
+     "alert('{$langs['act_complete']}')\n" .
      "</script>";
 
-move_page ("../../list.php?table=$table");
+move_page("../../list.php?table=$table");
 ?>

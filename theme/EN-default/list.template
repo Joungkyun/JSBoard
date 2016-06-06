@@ -1,3 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!-- ==================================================================== -->
+<!-- $langs['charset'] : print charset code                               -->
+<!-- $board['ver']     : version information in webboard                  -->
+<!-- get_title()     : print header title in webbared                     -->
+<!-- $user_stylesheet : User Defined StyleSheet                           -->
+<!-- ==================================================================== -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+BODY,TD {
+  font-size: 12px;
+  font-family: tahoma,arial,sans-serif;
+  color: #555555;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font: 11px tahoma,sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #FFFFFF;
+}
+TEXTAREA {
+  font: 13px comic,sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  background-Color: #ffffff;
+}
+
+<?=$user_stylesheet?>
+-->
+</style>
+
+<!-- ==================================================================== -->
+<!-- print_newwindow_src()  : print java script for open new window to    -->
+<!--                          use in jsboard                              -->
+<!-- $print['preview_script'] : print jsva script for preview function in -->
+<!--                          list page                                   -->
+<!-- ==================================================================== -->
+<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?=$rss['link']?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<?=$print['preview_script']?>
+
+<!-- ======================= Start Header Design ======================= -->
+<?
+if(!$np) {
+  # Design per user
+  include "{$board['headpath']}";
+  # Input by whole admin
+  include "html/head.php";
+}
+?>
+<!-- ======================= End Header Design   ======================= -->
 
 <!-- ==================================================================== -->
 <!-- print_keymenu() : controled board with keyboard                      -->
@@ -7,54 +80,60 @@
 <?=print_keymenu(0)?>
 
 <!-- ==================================================================== -->
+<!-- $board['align'] : print align of webboard. It's config in board admin-->
 <!-- $print['dsearch'] : print detail search table                        -->
 <!-- $board['width'] : print width of webboard. It's config in board admin-->
 <!-- $print['admin'] : print admin link.                                  -->
 <!-- $print['count'] : registed article & page count                      -->
 <!-- $print['lout']  : print logout link.                                 -->
 <!-- ==================================================================== -->
+<DIV ALIGN="<?=$board['align']?>">
 <?=$print['dsearch']?>
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td valign="bottom" class="counter"><img src="./theme/EN-default/img/icon_over.gif"
- align="middle" alt=""> &gt;&gt; <?=$print['count']?></td>
-<td class="admin">&nbsp;<?=$print['lout']?><?=$print['admin']?></td>
-</tr>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#55555;"> &gt;&gt; <?=$print['count']?></FONT></TD>
+<TD ALIGN="right" VALIGN="bottom">&nbsp;<?=$print['lout']?><?=$print['admin']?></TD>
+</TR>
 
-<tr><td colspan=2>
+<TR><TD COLSPAN=3>
+
 <!-- ==================================================================== -->
 <!-- $td_width[ ] : print width ratio on table                            -->
 <!--                config in theme/theme_name/config.php                 -->
 <!-- ==================================================================== -->
 <!--   Start main table    -->
-<table width="100%" border=0 cellspacing=0 cellpadding=0>
-<tr>
-  <td width="<?=$td_width['no']?>" class="ltitle"><img src="./theme/EN-default/img/board_no.gif" alt='No.'></td>
-  <td width="<?=$td_width['title']?>" class="ltitle">Subject</td>
-  <td width="<?=$td_width['name']?>" class="ltitle">Name</td>
+<TABLE WIDTH="100%" BORDER=0 CELLSPACING=0 CELLPADDING=0>
+<TR>
+  <TD WIDTH="<?=$td_width['no']?>" ALIGN="left" BGCOLOR="#FFAE00"><IMG SRC="./theme/EN-default/img/board_no.gif" ALT='No.'></TD>
+  <TD WIDTH="<?=$td_width['title']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Subject</FONT></TD>
+  <TD WIDTH="<?=$td_width['name']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Name</FONT></TD>
 
 <!-- ==================================================================== -->
 <!-- if($upload['yesno'] && $cupload['yesno']) : If use                   -->
 <!--             file upload function, this printed                       -->
 <!-- ==================================================================== -->
 <?
-  if($upload['yesno'] && $cupload['yesno'])
-    echo "<td width=\"{$td_width['upload']}\" class=\"ltitle\">File</td>\n";
+  if($upload['yesno'] && $cupload['yesno']) {
+    echo <<<EOF
+  <TD WIDTH="{$td_width['upload']}" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">File</FONT></TD>
+EOF;
+  }
 ?>
-  <td width="<?=$td_width[dates]?>" class="ltitle">Date</td>
-  <td width="<?=$td_width[refer]?>" class="ltitle">Read</td>
-</tr>
+  <TD WIDTH="<?=$td_width['dates']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Date</FONT></TD>
+  <TD WIDTH="<?=$td_width['refer']?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">Read</FONT></TD>
+</TR>
 
 <!-- ==================================================================== -->
 <!-- $print['lists'] : print article list                                 -->
 <!-- ==================================================================== -->
 <?=$print['lists']?>
-</table>
+</TABLE>
 
 <!--   End main tale    -->
 
-</td></tr>
-</table>
+</TD></TR>
+</TABLE>
 
 <!-- ==================================================================== -->
 <!-- $print['p_list'] : print page link                                   -->
@@ -74,72 +153,93 @@
 <!--                  upper image is located in theme/theme_name/img      -->
 <!--                  and use list_cmd option with list_cmd(1,1)          -->
 <!-- ==================================================================== -->
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td class="fast">&gt;&gt; Fast Page Link : <?=$print['p_list']?>
-<img src="images/blank.gif" width="1" height=25 align="middle" alt=''></td>
-<td align="right"><? list_cmd(0,1) ?></td>
-</tr>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD><FONT style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?=$print['p_list']?></FONT>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
+<TD ALIGN="right"><? list_cmd(0,1) ?></TD>
+</TR>
 
 <!-- ==================================================================== -->
 <!-- See also doc/en/README.THEME for Search and Page form                -->
 <!-- $print['dserlink']  : print detail search link                       -->
 <!-- $print['times']  : Webboard Loading time                             -->
 <!-- ==================================================================== -->
-<tr>
-<td>
-<!-- =========================== SEARCH FORM ============================ -->
-<form method="post" action="locate.php?table=<?=$table?>">
-<table width="100%" border=0 cellpadding=0 cellspacing=1>
-<tr>
-<td>
-<select name="o[sc]">
-<option value="t"<?=$sform['sc']['t']?>>Title</option>
-<option value="c"<?=$sform['sc']['c']?>>Contents</option>
-<option value="n"<?=$sform['sc']['n']?>>Writer</option>
-<option value="a"<?=$sform['sc']['a']?>>All</option>
-</select>
-<input type="text" name="o[ss]" size=<?=form_size(8)?> maxlength=255 value="<?=$sform['ss']?>">
-<input type="submit" value="Search">
-</td>
-</tr><tr>
-<td>
-<select name="o[st]">
-<option value="m"<?=$sform['st']['m']?>>A Month</option>
-<option value="w"<?=$sform['st']['w']?>>A Week</option>
-<option value="a"<?=$sform['st']['a']?>>All</option>
-</select>
-<input type="checkbox" name="o[er]" value="y"<?=$sform['er']['y']?>>
-REGEX <?=$print['dserlink']?>
-</td>
-</tr>
-</table>
-<input type="hidden" name="o[at]" value="s">
-<input type="hidden" name="o[go]" value="p">
-<input type="hidden" name="o[sct]" value="s">
-<input type="hidden" name="o[stt]" value="s">
-</form>
-<!-- =========================== SEARCH FORM ============================ -->
-</td>
-<td align="right">
-<span class="sqltime"><?=$print['times']?></span><br>
-<!-- =========================== PAGE FORM   ============================ -->
-<form method="post" action="locate.php?table=<?=$table?>">
-<table width="100%" border=0 cellpadding=0 cellspacing=1>
-<tr>
-<td align="right">
+<TR>
+<TD>
+<!-- =============================== SEARCH FORM =============================== -->
+<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD>
+<SELECT NAME="o[sc]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<OPTION VALUE="t"<?=$sform['sc']['t']?>>Title
+<OPTION VALUE="c"<?=$sform['sc']['c']?>>Contents
+<OPTION VALUE="n"<?=$sform['sc']['n']?>>Writer
+<OPTION VALUE="a"<?=$sform['sc']['a']?>>All
+</SELECT>
+<INPUT TYPE="text" ID="searchstr" NAME="o[ss]" SIZE="<?=form_size(8)?>" MAXLENGTH=255 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555;" VALUE="<?=$sform['ss']?>">
+<INPUT TYPE="submit" VALUE="Search" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555;">
+</TD>
+</TR><TR>
+<TD>
+<SELECT NAME="o[st]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<OPTION VALUE="m"<?=$sform['st']['m']?>>A Month
+<OPTION VALUE="w"<?=$sform['st']['w']?>>A Week
+<OPTION VALUE="a"<?=$sform['st']['a']?>>All
+</SELECT>
+<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?=$sform['er']['y']?> style="border:1px solid #555555;background-Color:#ffffff">
+<FONT STYLE="font-family:tahoma,sans-serif;color:#555555;font-weight:bold">REGEX</FONT> <?=$print['dserlink']?>
+</TD>
+</TR>
+</TABLE>
+<INPUT TYPE="hidden" NAME="o[at]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[go]" VALUE="p">
+<INPUT TYPE="hidden" NAME="o[sct]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[stt]" VALUE="s">
+</FORM>
+<!-- =============================== SEARCH FORM=============================== -->
+</TD>
+<TD ALIGN="right">
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"><?=$print['times']?></FONT><BR>
+<!-- ============================== PAGE FORM ============================== -->
+<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD ALIGN="right">
+<FONT STYLE="font-size:10px;font-family:tahoma,sans-serif;">
 <?=$pform['post']?>
-<select name="o[go]">
-<option value="p" selectED>Page No.</option>
-<option value="n">Article No.</option>
-</select>
-<input type="text" name="o[no]" size=<?=form_size(2)?> maxlength=6 value='<?=$pform['value']?>'>
-<input type="submit" value="Go!">
-</td>
-</tr>
-</table></form>
-<!-- =========================== PAGE FORM   ============================ -->
-</td>
-</tr>
-</table>
+<SELECT NAME="o[go]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<OPTION VALUE="p" SELECTED>Page No.
+<OPTION VALUE="n">Article No.
+</SELECT>
+<INPUT TYPE="text" NAME="o[no]" SIZE="<?=form_size(2)?>" MAXLENGTH=6 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555" VALUE='<?=$pform['value']?>'>
+<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+</FONT>
+</TD>
+</TR>
+</TABLE></FORM>
+<!-- ============================== PAGE FORM ============================== -->
+</TD>
+</TR>
+</TABLE>
 
+<!-- ==================================================================== -->
+<!-- print_license()  : Printed Licese table                              -->
+<!-- ==================================================================== -->
+<?=print_license()?>
+
+</DIV>
+
+<!-- ======================= Start Tail Design ====================== -->
+<?
+if(!$np) {
+  # Input by whole admin
+  include "html/tail.php";
+  # Design per user
+  include "{$board['tailpath']}";
+}
+?>
+<!-- ======================= End   Tail Design ====================== -->
+</BODY>
+</HTML>

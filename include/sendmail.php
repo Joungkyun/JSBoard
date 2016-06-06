@@ -1,6 +1,5 @@
 <?php
 # mail 보내기 함수 2001.11.30 김정균
-# $Id: sendmail.php,v 1.2 2009-11-16 21:52:47 oops Exp $
 
 # 서버상의 smtp daemon 에 의존하지 않고 직접 발송하는 smtp class
 #
@@ -90,7 +89,7 @@ class maildaemon {
 
     # DEBUG 모드가 아닐때, 에러 메세지 출력
     if(!$p && $this->failed) {
-      if($this->ofhtml) echo "<script type=\"text/javascript\">\nalert('$str')\n</script>\n";
+      if($this->ofhtml) echo "<SCRIPT>\nalert('$str')\n</SCRIPT>\n";
       else "ERROR: $str\n";
     }
   }
@@ -128,11 +127,11 @@ class maildaemon {
 }
 
 function mailcheck($to,$from,$title,$body) {
-  global $_;
-  if(!trim($to)) print_error($_('mail_to_chk_err'),250,150,1);
-  if(!trim($from)) print_error($_('mail_from_chk_err'),250,150,1);
-  if(!trim($title)) print_error($_('mail_title_chk_err'),250,150,1);
-  if(!trim($body)) print_error($_('mail_body_chk_drr'),250,150,1);
+  global $langs;
+  if(!trim($to)) print_error($langs['mail_to_chk_err'],250,150,1);
+  if(!trim($from)) print_error($langs['mail_from_chk_err'],250,150,1);
+  if(!trim($title)) print_error($langs['mail_title_chk_err'],250,150,1);
+  if(!trim($body)) print_error($langs['mail_body_chk_drr'],250,150,1);
 }
 
 function get_boundary_msg() {
@@ -160,9 +159,9 @@ function body_encode_lib($str) {
 function html_to_plain_lib($str) {
   $src[] = "/\n|\r\n/i";
   $des[] = "||ENTER||";
-  $src[] = "/^.*<body[^>]*>/i";
+  $src[] = "/^.*<BODY[^>]*>/i";
   $des[] = "";
-  $src[] = "/<\/body>.*$/i";
+  $src[] = "/<\/BODY>.*$/i";
   $des[] = "";
   $src[] = "/\|\|ENTER\|\|/i";
   $des[] = "\r\n";
@@ -172,28 +171,23 @@ function html_to_plain_lib($str) {
 }
 
 function get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm) {
-  global $_;
+  global $langs,$color;
 
   if($nofm) $nofm = auto_link($nofm);
   if($rmail['url']) $homeurl = "HomeURL           : ".auto_link($rmail['url'])."\r\n";
   if($rmail['email']) {
     $rmail['pemail'] = (preg_match("/^nobody@/i",$rmail['email'])) ? "" : $rmail['email'];
     if($rmail['pemail']) {
-      $rmail['pemail'] = preg_replace("/{$rmail['pemail']}/i","mailto:<a href=mailto:\\0>\\0</a>",$rmail['pemail']);
+      $rmail['pemail'] = preg_replace("/{$rmail['pemail']}/i","mailto:<A HREF=mailto:\\0>\\0</A>",$rmail['pemail']);
       $mailurl = "Email             : {$rmail['pemail']}\r\n";
     }
   }
-  $addressinfo = trim($mailurl.$homeurl);
+  $addressinfo = $mailurl.$homeurl;
   $rmail['text'] = !$rmail['html'] ? html_to_plain_lib($rmail['text']) : $rmail['text'];
   $servername = strtoupper($_SERVER['SERVER_NAME']);
 
   $themepath = "theme/{$rmail['theme']}/mail.template";
-  $htmltext = readfile_r ($themepath);
-
-  $htmltext = str_replace ("\$_('charset')", $_('charset'), $htmltext);
-  $htmltext = str_replace ("\$_('html_msg')", $_('html_msg'), $htmltext);
-  $htmltext = str_replace ("\$_('u_name')", $_('u_name'), $htmltext);
-  $htmltext = str_replace ("\$_('reg')", $_('reg'), $htmltext);
+  $htmltext = file_operate("$themepath","r","can't open $themepath",sizeof($themepath));
   $htmltext = str_replace ("\"", "\\\"", $htmltext);
   eval("\$htmltext = \"$htmltext\";");
 
@@ -201,7 +195,7 @@ function get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm) {
 }
 
 function mail_header($to,$from,$title,$mta=0) {
-  global $_, $boundary;
+  global $langs,$boundary;
 
   # mail header 를 작성 
   $boundary = get_boundary_msg();
@@ -220,12 +214,12 @@ function mail_header($to,$from,$title,$mta=0) {
 }
 
 function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
-  global $_,$boundary;
+  global $langs,$boundary;
 
   # 빈 문자열 체크
   mailcheck($to,$from,$title,$pbody);
 
-  $title = "=?" . $_('charset') . "?B?".trim(base64_encode($title))."?=";
+  $title = "=?{$langs['charset']}?B?".trim(base64_encode($title))."?=";
   $title = preg_replace("/[\s]+/i"," ",str_replace("\r\n","\n",$title));
   
   # mail header 를 작성 
@@ -234,11 +228,11 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
   # body 를 구성
   $body = "This is a multi-part message in MIME format.\r\n".
           "\r\n--$boundary\r\n".
-          "Content-Type: text/plain; charset=" . $_('charset') . "\r\n".
+          "Content-Type: text/plain; charset={$langs['charset']}\r\n".
           "Content-Transfer-Encoding: base64\r\n\r\n".
           body_encode_lib($pbody).
           "\r\n\r\n--$boundary\r\n".
-          "Content-Type: text/html; charset=" . $_('charset') . "\r\n".
+          "Content-Type: text/html; charset={$langs['charset']}\r\n".
           "Content-Transfer-Encoding: base64\r\n\r\n".
           body_encode_lib($hbody).
           "\r\n--$boundary--\r\n";
@@ -260,13 +254,13 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
 }
 
 function sendmail($rmail) {
-  global $_, $_code;
+  global $langs;
 
   if($rmail['smtp']) $rmail['mta'] = $rmail['smtp'];
   $rmail['mta'] = $rmail['mta'] ? $rmail['mta'] : 0;
-  $mail_msg_head = $_('sm_dr');
+  $mail_msg_head = $langs['sm_dr'];
 
-  if ($_code == "ko") $time = date("Y/m/d (D) a h시i분");
+  if ($langs['code'] == "ko") $time = date("Y/m/d (D) a h시i분");
   else $time = date("Y/m/d (D) a h:i");
 
   $time=explode(" ",$time);
@@ -286,7 +280,7 @@ function sendmail($rmail) {
 
   $rmail['pemail'] = (preg_match("/^nobody@/i",$rmail['email'])) ? "" : "mailto:{$rmail['email']}";
 
-  if ($_code == "ko") {
+  if ($langs['code'] == "ko") {
     if ($day == "(Mon)") $day="(월)";
     else if ($day == "(Tue)") $day="(화)";
     else if ($day == "(Wed)") $day="(수)";
@@ -294,7 +288,7 @@ function sendmail($rmail) {
     else if ($day == "(Fri)") $day="(금)";
     else if ($day == "(Sat)") $day="(토)";
     else if ($day == "(Sun)") $day="(일)";
-  } else if ($__code == "jp") {
+  } else if ($langs['code'] == "jp") {
     if ($day == "(Mon)") $day="(月)";
     else if ($day == "(Tue)") $day="(火)";
     else if ($day == "(Wed)") $day="(水)";
@@ -304,8 +298,8 @@ function sendmail($rmail) {
     else if ($day == "(Sun)") $day="(日)";
   }
 
-  $webboard_address =  sprintf("%s%s",$rmail['path'],"read.php?table={$rmail['table']}&amp;no={$rmail['no']}");
-  $reply_article    =  sprintf("%s%s",$rmail['path'],"reply.php?table={$rmail['table']}&amp;no={$rmail['no']}");
+  $webboard_address =  sprintf("%s%s",$rmail['path'],"read.php?table={$rmail['table']}&no={$rmail['no']}");
+  $reply_article    =  sprintf("%s%s",$rmail['path'],"reply.php?table={$rmail['table']}&no={$rmail['no']}");
 
   $dbname  = "DB Name           : {$rmail['table']}";
   $dbloca  = "DB Location       : $webboard_address";
@@ -326,10 +320,10 @@ function sendmail($rmail) {
              "\r\n".
              "\r\n".
              "[ Article Infomation ]-----------------------------------------------------\r\n".
-             $_('u_name') . "               : {$rmail['name']}\r\n".
+             "{$langs['u_name']}              : {$rmail['name']}\r\n".
              "$mailurl".
              "$homeurl".
-             $_('a_t13') . "               : $year $day $ampm $hms\r\n".
+             "{$langs['a_t13']}              : $year $day $ampm $hms\r\n".
              "---------------------------------------------------------------------------\r\n".
              "\r\n".
              html_to_plain_lib($rmail['text'])."\r\n".

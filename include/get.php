@@ -1,47 +1,40 @@
 <?php
-# $Id: get.php,v 1.12 2009-11-16 21:52:47 oops Exp $
-
 # login 정보를 얻어오는 함수
 #
-function get_authinfo ($id, $nocry='') {
-  global $edb, $db, $c;
+function get_authinfo($id,$nocry='') {
+  global $edb, $db;
+  if(preg_match("/user_admin/i",$_SERVER['PHP_SELF'])) { $path = "../.."; }
+  elseif(preg_match("/admin/i",$_SERVER['PHP_SELF'])) { $path = ".."; }
+  else { $path = "."; }
 
-  if ( preg_match ("/user_admin/i", $_SERVER['PHP_SELF']) ) {
-    $path = "../..";
-  } elseif ( preg_match ("/admin/i", $_SERVER['PHP_SELF']) ) {
-    $path = "..";
-  } else {
-    $path = ".";
-  }
+  if($edb['uses'] || $_SESSION[$jsboard]['external']) {
+    $connect = sql_connect($edb['server'],$edb['user'],$edb['pass']);    
 
-  if ( $edb['uses'] || $_SESSION[$jsboard]['external'] ) {
-    $c = sql_connect($edb['server'], $edb['user'], $edb['pass'], $edb['name']);
-
-    if ( $edb['sql'] ) $sql = $edb['sql'];
+    if($edb['sql']) $sql = $edb['sql'];
     else
       $sql = "SELECT {$edb['userid']} AS nid,{$edb['username']} AS name,{$edb['useremail']} AS email,
-                   {$edb['userurl']} AS url,{$edb['userpasswd']} AS passwd, position
-              FROM {$edb['table']} WHERE {$edb['userid']} = '{$id}'";
+                   {$edb['userurl']} AS url,{$edb['userpasswd']} AS passwd
+              FROM {$edb['table']} WHERE {$edb['userid']} = '$id'";
 
-    $_r = sql_query ($sql, $c);
-    $r = sql_fetch_array ($_r);
-    sql_free_result ($_r);
-    sql_close ($c);
+    $result = sql_db_query($edb['name'],$sql,$connect);
+    $r = sql_fetch_array($result);
+    sql_free_result($result);
+    mysql_close($connect);
 
-    if ( is_array ($r) ) {
-      if ( $edb['crypts'] && ! $nocry && $r['passwd'] )
-        $r['passwd'] = crypt ($r['passwd']);
+    if(is_array($r)) {
+      if($edb['crypts'] && !$nocry && $r['passwd']) $r['passwd'] = crypt($r['passwd']);
     }
 
-    $c = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
+    sql_connect($db['server'], $db['user'], $db['pass']);
+    sql_select_db($db['name']);
   } else {
     $sql = "SELECT no,nid,name,email,url,passwd,position
-              FROM userdb WHERE nid = '{$id}'";
+              FROM userdb WHERE nid = '$id'";
 
-    $_r = sql_query ($sql, $c);
-    $r = sql_fetch_array ($_r);
+    $result = sql_query($sql);
+    $r = sql_fetch_array($result);
 
-    sql_free_result ($_r);
+    sql_free_result($result);
   }
 
   return $r;
@@ -107,7 +100,7 @@ function get_agent() {
     # 언어팩
     if(preg_match('/en-US/i',$agent_env)) $agent['ln'] = 'EN';
     elseif(preg_match('/ko-KR/i',$agent_env)) $agent['ln'] = 'KO';
-    elseif(preg_match('/ja-JP/i',$agent_env)) $agent['ln'] = 'JP';
+    elseif(preg_match('/ja-JP/i',$agent_env)) $agent['ln'] = 'JA';
     else $agent['ln'] = 'OTHER';
     # version 정보
     if ( $agent['br'] == 'Firefox' ) {
@@ -190,17 +183,18 @@ function get_date() {
 
 # 기본적인 게시판의 정보를 가져오는 함수
 function get_board_info($table) {
-  global $o, $c;
+  global $o;
 
   # 오늘 자정의 UNIX_TIMESTAMP를 구해옴
   $today  = get_date();
 
   # date 필드를 비교해서 오늘 올라온 글의 갯수를 가져옴
   $sql    = search2sql($o);
+  $result = sql_query("SELECT COUNT(1/(date > '$today')), COUNT(*) FROM $table $sql");
+  $A = sql_fetch_array($result);
 
-  $A      = get_counter ($c, $table, $today, $sql);
-  $count['all']   = $A['A'];	# 전체 글 수
-  $count['today'] = $A['T'];	# 오늘 글 수
+  $count['all']    = $A[1];	# 전체 글 수
+  $count['today']  = $A[0];	# 오늘 글 수
 
   return $count;
 }
@@ -247,14 +241,14 @@ function get_page_info($count, $page = 0) {
 #          http://www.php.net/manual/function.intval.php
 function get_current_page($table, $idx) {
   global $board; # 게시판 기본 설정 (config/global.php)
-  global $o, $c;
+  global $o;
 
   $sql = search2sql($o, 0);
   $count = get_board_info($table);
 
   # 지정된 글의 idx보다 큰 번호를 가진 글의 갯수를 가져옴
-  $result     = sql_query("SELECT COUNT(*) as cnt FROM $table WHERE idx > '$idx' $sql", $c);
-  $count['cur'] = sql_result($result, 0, 'cnt');
+  $result     = sql_query("SELECT COUNT(*) FROM $table WHERE idx > '$idx' $sql");
+  $count['cur'] = sql_result($result, 0, "COUNT(*)");
   sql_free_result($result);
 
   # 가져온 값을 페이지 당 글 수로 나누어 몇 번째 페이지인지 가져옴
@@ -266,34 +260,30 @@ function get_current_page($table, $idx) {
 
 # 지정한 글의 다음, 이전글을 가져오는 함수
 function get_pos($table, $idx) {
-    global $o, $c, $db;
+    global $o;
 
     $sql    = search2sql($o, 0);
     
-    $idxdp    = $idx + 1;
-    $idxdm    = $idx - 1;
-    $idxplus  = $idx + 10;
+    $idxdp = $idx + 1;
+    $idxdm = $idx - 1;
+    $idxplus = $idx + 10;
     $idxminus = $idx - 10;
 
     # 지정된 글의 idx보다 작은 번호를 가진 글 중에 idx가 가장 큰 글 (다음글)
-    #$query     = "SELECT MAX(idx) AS idx FROM $table WHERE idx < '$idx' $sql";
-    #$result    = sql_query($query, $c);
-    $query     = "SELECT MAX(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxminus' AND '$idxdm') $sql";
-    $result    = sql_query($query, $c);
+    #$result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE idx < '$idx' $sql");
+    $result    = sql_query("SELECT MAX(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxminus' AND '$idxdm') $sql");
     $pos['next'] = sql_result($result, 0, "idx");
     sql_free_result($result);
-    if ( $pos['next'] ) { 
-      $query  = "SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['next']}'";
-      $result = sql_query($query, $c);
+    if($pos['next']) { 
+      $result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['next']}'");
       $next   = sql_fetch_array($result);
       sql_free_result($result);
-      $next['title'] = str_replace("&amp;","&",$next['title']);
+        $next['title'] = str_replace("&amp;","&",$next['title']);
       $next['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($next['title']));
 
       $pos['next'] = $next['no'];
       if($next['reto']) {
-        $query     = "SELECT num FROM $table WHERE no = '{$next['reto']}'";
-        $result    = sql_query($query, $c);
+        $result    = sql_query("SELECT num FROM $table WHERE no = '{$next['reto']}'");
         $next['num'] = sql_result($result, 0, "num");
         sql_free_result($result);
         $pos['next_t'] = "Reply of No.{$next['num']}: {$next['title']}";
@@ -303,30 +293,26 @@ function get_pos($table, $idx) {
     }
 
     # 지정된 글의 idx보다 큰 번호를 가진 글 중에 idx가 가장 작은 글 (이전글)
-    #$query     = "SELECT MIN(idx) AS idx FROM $table WHERE idx > '$idx' $sql";
-    #$result    = sql_query($query, $c);
-    $query     = "SELECT MIN(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxdp' AND '$idxplus') $sql";
-    $result    = sql_query($query, $c);
+    #$result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE idx > '$idx' $sql");
+    $result    = sql_query("SELECT MIN(idx) AS idx FROM $table WHERE (idx BETWEEN '$idxdp' AND '$idxplus') $sql");
     $pos['prev'] = sql_result($result, 0, "idx");
     sql_free_result($result);
     if($pos['prev']) { 
-        $query  = "SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['prev']}'";
-        $result = sql_query($query, $c);
-        $prev   = sql_fetch_array($result);
-        sql_free_result($result);
+      $result = sql_query("SELECT no, title, num, reto FROM $table WHERE idx = '{$pos['prev']}'");
+      $prev   = sql_fetch_array($result);
+      sql_free_result($result);
         $prev['title'] = str_replace("&amp;","&",$prev['title']);
-        $prev['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($prev['title']));
+      $prev['title'] = preg_replace("/(#|')/","\\\\1",htmlspecialchars($prev['title']));
 
-        $pos['prev'] = $prev['no'];
-        if($prev['reto']) {
-            $query     = "SELECT num FROM $table WHERE no = '{$prev['reto']}'";
-            $result    = sql_query($query, $c);
-            $prev['num'] = sql_result($result, 0, "num");
-            sql_free_result($result);
-            $pos['prev_t'] = "Reply of No.{$prev['num']}: {$prev['title']}";
-        } else {
-            $pos['prev_t'] = "No.{$prev['num']}: {$prev['title']}";
-        }
+      $pos['prev'] = $prev['no'];
+      if($prev['reto']) {
+        $result    = sql_query("SELECT num FROM $table WHERE no = '{$prev['reto']}'");
+        $prev['num'] = sql_result($result, 0, "num");
+        sql_free_result($result);
+        $pos['prev_t'] = "Reply of No.{$prev['num']}: {$prev['title']}";
+      } else {
+        $pos['prev_t'] = "No.{$prev['num']}: {$prev['title']}";
+      }
     }
 
     return $pos;
@@ -348,7 +334,7 @@ function get_microtime($old, $new) {
 # basename - 파일 경로에서 파일명만을 가져옴
 #            http://www.php.net/manual/function.basename.php
 function get_title() {
-  global $board, $_; # 게시판 기본 설정 (config/global.php)
+  global $board, $langs; # 게시판 기본 설정 (config/global.php)
 
   $title  = $board['title'];
 
@@ -358,28 +344,28 @@ function get_title() {
 
   switch($script) {
     case "list.php":
-      $title .= " " . $_('get_v');
+      $title .= " {$langs['get_v']}";
       break;
     case "read.php":
-      $title .= " " . $_('get_r');
+      $title .= " {$langs['get_r']}";
       break;
     case "edit.php":
-      $title .= " " . $_('get_e');
+      $title .= " {$langs['get_e']}";
       break;
     case "write.php":
-      $title .= " " . $_('get_w');
+      $title .= " {$langs['get_w']}";
       break;
     case "reply.php":
-      $title .= " " . $_('get_re');
+      $title .= " {$langs['get_re']}";
       break;
     case "delete.php":
-      $title .= " " . $_('get_d');
+      $title .= " {$langs['get_d']}";
       break;
     case "user.php":
-      $title .= " " . $_('get_u');
+      $title .= " {$langs['get_u']}";
       break;
     case "regist.php":
-      $title .= " " . $_('get_rg');
+      $title .= " {$langs['get_rg']}";
       break;
   }
 
@@ -387,16 +373,16 @@ function get_title() {
 }
 
 function get_article($table, $no, $field0 = "*", $field1 = "no") {
-  global $_, $c, $db;
+  global $langs;
   if(!$no)
-    print_error($_('get_no'),250,150,1);
+    print_error($langs['get_no'],250,150,1);
 
-  $result  = sql_query("SELECT $field0 FROM $table WHERE $field1 = '$no'", $c);
+  $result  = sql_query("SELECT $field0 FROM $table WHERE $field1 = '$no'");
   $article = sql_fetch_array($result);
   sql_free_result($result);
 
   if(!$article)
-    print_error($_('get_n'),250,150,1);
+    print_error($langs['get_n'],250,150,1);
 
   return $article;
 }
@@ -420,12 +406,12 @@ function human_fsize($bfsize, $sub = "0") {
 
 function viewfile($tail) {
   global $board, $table, $list, $upload;
-  global $_, $icons, $agent;
+  global $langs, $icons, $agent;
 
   $upload_file = "./data/$table/{$upload['dir']}/{$list['bcfile']}/{$list['bofile']}";
   $wupload_file = "./data/$table/{$upload['dir']}/{$list['bcfile']}/".urlencode($list['bofile']);
 
-  $source1 = "<br>\n---- {$list['bofile']} " . $_('inc_file') . " -------------------------- \n<br>\n<pre>\n";
+  $source1 = "<p><br>\n---- {$list['bofile']} {$langs['inc_file']} -------------------------- \n<p>\n<pre>\n";
   $source2 = "\n</pre>\n<br><br>";
   $source3 = "   <font color=\"#ff0000\">{$list['bofile']}</font> file is broken link!!\n\n";
 
@@ -436,28 +422,27 @@ function viewfile($tail) {
     if (preg_match("/^(gif|jpg|png{$bmpchk})$/i",$tail)) {
       $imginfo = GetImageSize($upload_file);
       if($agent['co'] == "mozilla") $list['bofile'] = urlencode($list['bofile']);
-      $uplink_file = "./form.php?table=$table&mode=photo&f[c]={$list['bcfile']}&f[n]={$list['bofile']}&f[w]={$imginfo[0]}&f[h]={$imginfo[1]}";
-      $uplink_file = htmlspecialchars ($uplink_file);
+      $uplink_file = "./form.php?mode=photo&amp;table=$table&amp;f[c]={$list['bcfile']}&amp;f[n]={$list['bofile']}&amp;f[w]={$imginfo[0]}&amp;f[h]={$imginfo[1]}";
       if($imginfo[0] > $board['width'] - 6 && !preg_match("/%/",$board['width'])) {
         $p['vars'] = $imginfo[0]/$board['width'];
         $p['width'] = $board['width'] - 6;
         $p['height'] = intval($imginfo[1]/$p['vars']);
 
         if(extension_loaded("gd") && $tail != "gif" && $tail != "bmp") {
-          $ImgUrl = rawurlencode($wupload_file);
-          $ImgPath = "<img src=\"./image.php?path=$ImgUrl&amp;width={$p['width']}&amp;height={$p['height']}\" width={$p['width']} height={$p['height']} border=0 alt=\"\">";
+          $ImgUrl = rawurlencode("$wupload_file");
+          $ImgPath = "<IMG SRC=\"./image.php?path=$ImgUrl&amp;width={$p['width']}&amp;height={$p['height']}\" WIDTH={$p['width']} HEIGHT={$p['height']} BORDER=0 ALT=''>";
         } else
-          $ImgPath = "<img src=\"$wupload_file\" width={$p['width']} height={$p['height']} border=0 alt=\"\">";
+          $ImgPath = "<IMG SRC=\"$wupload_file\" WIDTH={$p['width']} HEIGHT={$p['height']} BORDER=0 ALT=''>";
 
-        $p['up']  = "[ <b>Original Size</b> {$imginfo[0]} * {$imginfo[1]} ]<br>\n";
-        $p['up'] .= "<a href=\"javascript:new_windows('$uplink_file','photo',0,0,$imginfo[0],$imginfo[1]);\">$ImgPath</a>\n<p>\n";
+        $p['up']  = "[ <B>Original Size</B> $imginfo[0] * $imginfo[1] ]<br>\n";
+        $p['up'] .= "<A HREF=\"javascript:new_windows('$uplink_file','photo',0,0,$imginfo[0],$imginfo[1])\">$ImgPath</A>\n<P>\n";
       } else {
-        $p['up'] = "<img src=\"$wupload_file\" $imginfo[3] border=0 alt=\"\">\n<p>\n";
+        $p['up'] = "<IMG SRC=\"$wupload_file\" $imginfo[3] BORDER=0 ALT=''>\n<p>\n";
       }
     } else if (preg_match("/^(phps|txt|html?|shs)$/i",$tail)) {
-      $view = readfile_r ($upload_file);
+      $view = file_operate($upload_file,"r",0,1200);
       $view = htmlspecialchars(cut_string($view,1000));
-      if (filesize($upload_file) > 1000) $view = $view . " <p>\n ......" . $_('preview') . "\n\n";
+      if (filesize($upload_file) > 1000) $view = $view . " <p>\n ......{$langs['preview']}\n\n";
 
       $p['down'] = "$source1$view$source2";
     } elseif (preg_match("/^(mid|wav|mp3)$/i",$tail)) {
@@ -488,12 +473,45 @@ EOF;
       $p['up'] = "<embed src=\"$upload_file\" autostart=\"true\" width=300 height=300 align=\"center\">";
     } elseif ($tail == "swf") {
       $flash_size = $board['width'] - 10;
-      if($agent['br'] == 'MSIE' || $agent['nco'] == 'moz')
+      if($agent['br'] == "MSIE" || $agent['nco'] == "moz")
         $p['up'] = "<embed src=\"$upload_file\" width=\"$flash_size\" height=\"$flash_size\" align=\"center\">";
     }
   } else $p['down'] = "$source1$source3$source2";
 
   return $p;
+}
+
+# 파일을 변수로 받고 쓰는 함수
+# p -> 파일 경로
+# m -> 파일 작동 모드(r-읽기,w-쓰기,a-파일끝부터 쓰기)
+# msg -> 실패시 에러 메세지
+# s -> 쓰기모드에서는 쓸내용
+# t -> 읽기모드에서 사이즈 만큼 받을 것인지 아니면 배열로 파일
+#      전체를 받을 것인지 결정
+#
+function file_operate($p,$m,$msg='',$s='',$t=0) {
+  if($m == "r" || $m == "w" || $m == "a") {
+    $m .= "b";
+    
+    # file point 를 open
+    if(!$t && $f=@fopen($p,$m)) {
+      if(check_windows()) {
+        $src = array("/\n/i","/\r*\n/i");
+        $tar = array("\r\n","\r\n");
+      } else {
+        $src = array("/^M/i","/\r\n/i");
+        $tar = array("","\n");
+      }
+      $s = preg_replace($src,$tar,$s);
+      if($m != "rb") @fwrite($f,$s);
+      else $var = @fread($f,filesize($p));
+      @fclose($f);
+    }
+    elseif ($t && $m == "rb" && @file_exists($p)) $var = file($p);
+    else { if(trim($msg)) print_error($msg,250,150,1); }
+  }
+
+  if($m == "rb") return $var;
 }
 
 # http socket 으로 연결을 하여 html source 를 가져오는 함수
@@ -524,7 +542,7 @@ function get_upload_value($up) {
     if($up['maxtime']) set_time_limit($up['maxtime']);
     # JSBoard 에서 조정할 수 있는 업로드 최대 사이즈
     # 최대값은 POST 데이타를 위해 post_max_size 보다 1M 를 작게 잡는다.
-    $max = ini_get('post_max_size');
+    $max = ini_get(post_max_size);
     if(preg_match("/M$/i",$max)) {
       $max = (preg_replace("/M$/i","",$max) - 1) * 1024 * 1024;
     } elseif (preg_match("/K$/i",$max)) {
@@ -532,69 +550,30 @@ function get_upload_value($up) {
     } else {
       $max -= 1024;
     }
-    ini_set('upload_max_filesize',$max);
+    ini_set(upload_max_filesize,$max);
     $size = ($up['maxsize'] > $max) ? $max : $up['maxsize'];
 
     return $size;
   } else return 0;
 }
 
-function readfile_r ($_f, $_array = 0) {
-  if ( ! file_exists ($_f) )
-    print_error ("$_f not found", 250, 250, 1);
-
-  if ( $_array ) {
-    $_r = @file ($_f);
-    $_r = preg_replace ("/\n$/", '', $_r);
-  } else {
-    ob_start ();
-    readfile ($_f);
-    $_r = ob_get_contents ();
-    ob_end_clean ();
-  }
-
-  return $_r;
-}
-
-function writefile_r ($_file, $_text, $attach = 0) {
-  $_m = $attach ? 'ab' : 'wb';
-
-  $p = fopen ($_file, $_m);
-
-  if ( ! is_resource ($p) )
-    print_error ("Can't not open {$_file}\n", 250, 250, 1);
-
-  if ( check_windows () ) {
-    $_s = array ("/\n/", "/\r*\n/");
-    $_t = array ("\r\n", "\r\n");
-  } else {
-    $_s = array ("//", "/\r\n/");
-    $_t = array ('', "\n");
-  }
-
-  $s = preg_replace ($_s, $_t, $_text);
-
-  fwrite ($p, $s);
-  fclose ($p);
-}
-
 function content_disposition ($n) {
-  global $agent, $_, $_code;
+  global $agent, $langs;
 
   switch ($n) {
     case 'Firefox' :
       # RFC 2231
-      $r = 'filename*0*' . $_code . '*' . $_('charset') . '*=' . rawurlencode ($n);
+      $r = 'filename*0*' . $langs['code'] . '*' . $langs['charset'] . '*=' . rawurlencode ($n);
       break;
     case 'Opera' :
       if ($agent['vr'] > 6)
-        $r = 'filename*0*' . $_code . '*' . $_('charset') . '*=' . rawurlencode ($n);
+        $r = 'filename*0*' . $langs['code'] . '*' . $langs['charset'] . '*=' . rawurlencode ($n);
       else
         $r = 'filename="' . $n . '"';
       break;
     default:
       # RFC 2047
-      #$r = '=?'.$_('charset').'?B?'.base64_encode($dn['name']).'?=';
+      #$r = '=?'.$langs['charset'].'?B?'.base64_encode($dn['name']).'?=';
       $r = 'filename="' . $n . '"';
   }
 

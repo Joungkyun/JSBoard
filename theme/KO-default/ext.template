@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!-- ==================================================================== -->
+<!--   왠만 하면 그냥 사용하기르 :-) 디자인이 별로 필요 없음              -->
+<!-- ==================================================================== -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE><?=$print['head']?> - Jsboard <?=$board['ver']?></TITLE>
+<STYLE TYPE="text/css">
+<!--
+BODY {
+  font-size: 12px;
+  font-family: <?=$langs['font']?>, sans-serif;
+  color: <?=$color['text']?>;
+  margin: 0px 0px 0px 0px;
+  background-color: #FFFFFF;
+}
+TD {
+  font-size: 12px;
+  font-family: <?=$langs['font']?>, sans-serif;
+  color: #555555;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: <?=$color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?=$color['l4_bg']?>;
+}
+SELECT {
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: <?=$color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  background-Color: <?=$color['l4_bg']?>;
+}
+TEXTAREA {
+  font-size: 13px;
+  font-family: <?=$langs['font']?>, sans-serif;
+  color: <?=$color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  padding-left: 1px;
+  background-Color: <?=$color['l4_bg']?>;
+}
+ .radio {
+  font: 9pt <?=$langs['font']?>,sans-serif;
+  background-color: <?=$color['bgcol']?>;
+  color: <?=$color['text']?>;
+  border: 2px solid <?=$color['bgcol']?>;
+}
+ .title {
+  font: 15pt <?=$langs['font']?>,sans-serif;
+  color: <?=$color['n0_fg']?>;
+  font-weight: bold
+}
+ .en {
+  font: 15pt Tahoma, sans-serif;
+  font-weight: bold;
+  COLOR: <?=$color['text']?>;
+}
+<?=$user_stylesheet?>
+-->
+</STYLE>
+</HEAD>
+
+<BODY>
+
+<?
+# 전체 관리자에 의해 강제 input 되는 디자인
+include "html/head.php";
+
+# 메인 출력
+echo $print['body'];
+
+# 전체 관리자에 의해 강제 input 되는 디자인
+include "html/tail.php";
+?>
+
+</BODY>
+</HTML>
