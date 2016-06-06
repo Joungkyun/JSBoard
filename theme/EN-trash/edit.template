@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $langs['charset']?>">
+<title><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></title>
+
+<style type="text/css">
+<!--
+body,td {
+  font-size: 12px;
+  font-family: <?php echo $langs['vfont']?>,monospace;
+  color: #555555;
+  line-height: 15pt;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #555555;
+}
+a:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+input {
+  font: 11px tahoma, sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #ffffff;
+}
+textarea {
+  font-size: 13px;
+  font-family: <?php echo $langs['vfont']?>, monospace;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  background-color: #ffffff;
+  width: 100%;
+  height: 150px;
+}
+
+.resizable-textarea .grippie {
+  height: 14px;
+  background: #ECE9D6 url(theme/EN-diary/img/grippie.png) no-repeat 100% 100%;
+  border: 1px solid #DFDBCA;
+  border-top-width: 0;
+  cursor: se-resize;
+}
+
+.resizable-textarea {
+  width: 100% !important;
+  width: 98%; /* for IE */
+}
+form { display: inline; }
+.abs { vertical-align: middle; }
+
+<?php echo $user_stylesheet?>
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+
+<?php
+print_keymenu(2);
+echo $print['preview_script'] . "\n";
+
+if(!$np) {
+  include "{$board['headpath']}";
+  include "html/head.php";
+ }
+?>
+
+<div align="<?php echo $board['align']?>">
+<form name="editp" method="post" action="act.php"<?php echo $board['formtype']?>>
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="44" valign="bottom"><img alt="" src="./theme/EN-trash/img/icon_over.gif" class="abs"></td>
+<td width="95%">
+<span style="font-size:11px;font-family:tahoma;">&gt;&gt; Edit article</span>
+</td>
+</tr>
+
+<tr bgcolor="#5A7192">
+<td colspan="2">
+<img alt="" src="./theme/EN-trash/img/board_no.gif" class="abs">
+<span style="color:#FFFFFF"><span style="FONT-WEIGHT:bold">Edit Article</span></span>
+</td>
+</tr>
+
+<tr>
+<td colspan="2"><img alt="" src="images/blank.gif" width="1" height="3" border="0"></td>
+</tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td rowspan="9" width="20"><img alt="" src="images/blank.gif" width="20" height="1" border="0"></td>
+<td rowspan="9" width="4" bgcolor="#6D7BC9" valign="middle"><img alt="" src="images/blank.gif" width="4" height="1" border="0"></td>
+<td rowspan="9" width="10"><img alt="" src="images/blank.gif" width="10" height="1" border="0"></td>
+<td colspan="2"><img alt="" src="images/blank.gif" width="1" height="3" border="0"><br></td>
+<td rowspan="9" width="20"><img alt="" src="images/blank.gif" width="20" height="1" border="0"><br></td>
+</tr>
+
+<tr>
+<td width="80">Name</td>
+<td><input type="text" name="atc[name]" size="<?php echo $size['name']?>" maxlength="50" value="<?php echo $list['name']?>"<?php echo $disable?> tabindex="1"></td>
+</tr>
+
+<?php
+if($view['email'] || trim($list['email'])) {
+  echo <<<EOF
+<tr>
+<td>eMail</td>
+<td><input type="text" name="atc[email]" size="{$size['name']}" maxlength="255" value="{$list['email']}"{$disable} tabindex="2"></td>
+</tr>
+EOF;
+}
+?>
+
+<?php
+if($view['url'] || trim($list['url'])) {
+  echo <<<EOF
+<tr>
+<td>URL</td>
+<td><input type="text" name="atc[url]" size="{$size['name']}" maxlength="255" value="{$list['url']}"{$disable} tabindex="3"></td>
+</tr>
+EOF;
+}
+?>
+
+<?php
+if($list['bofile']) {
+  echo <<<EOF
+<tr>
+<td>Files</td>
+<td>
+<a href="$down_link">
+<img alt="{$list['bofile']}" src="images/$icon" width="16" height="16" border="0" class="abs">
+<span style="color:{$color['text']}">{$list['bofile']}</span></a> - $hfsize &nbsp; &nbsp;
+<input type="CHECKBOX" name="atc[fdel]" value="1" tabindex="4"> Remove File
+</td>
+</tr>
+EOF;
+}
+
+if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
+  echo <<<EOF
+<tr>
+<td>Change Files</td>
+<td>
+<input type="HIDDEN" name="max_file_size" value="{$upload['maxsize']}">
+<input type="file" name="userfile" size="{$size['uplo']}" maxlength="256" tabindex="5">
+</td>
+</tr>
+EOF;
+}
+?>
+
+<tr>
+<td>Subject</td>
+<td><input type="text" name="atc[title]" size="<?php echo $size['titl']?>" maxlength="100" value="<?php echo $list['title']?>" tabindex="6"></td>
+</tr>
+
+<tr>
+<?php
+if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
+  echo <<<EOF
+<td>Password</td>
+<td>
+$passment
+</td>
+EOF;
+}
+?>
+</tr>
+
+<tr>
+<td colspan="2"><img alt="" src="images/blank.gif" width="20" height="1" border="0"><br></td>
+</tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr><td><img alt="" src="images/blank.gif" width="1" height="3" border="0"></td></tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="5" cellspacing="0">
+<tr><td bgcolor="<?php echo $color['l5_bg']?>" align="center">
+
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<textarea name="epost" class="resizable" tabindex="8"><?php echo "{$list['text']}\n\n"?></textarea>
+
+</td></tr>
+</table>
+
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="5" cellspacing="0">
+<tr><td bgcolor="#5A7192" align="center">
+<?php echo $print['passform']?>
+<input type="submit" value="Regist" tabindex="9">
+<input type="button" value="Reset" onclick="document.location.reload(); return false;" tabindex="10">
+<input type="button" onclick="document.location='./list.php?table=<?php echo $table.$pages?>'" value="List" tabindex="11">
+<input type="button" onclick="history.back()" value="Back" tabindex="12">
+</td></tr>
+</table>
+
+<?php echo print_license()?>
+
+</form>
+</div>
+
+<?php
+if(!$np) {
+  include "html/tail.php";
+  include "{$board['tailpath']}";
+}
+?>
+</body>
+</html>

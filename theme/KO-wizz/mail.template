@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET={$langs['charset']}">
+<TITLE>JSBoard Reply Notice</TITLE>
+<LINK rel="Stylesheet" href="./theme/jstheme.css" type="text/css">
+</HEAD>
+
+<BODY LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0>
+<DIV ALIGN="center">
+<TABLE WIDTH="95%" BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR><TD class="blackhead">
+
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD>
+<FONT STYLE="font: 20px tahoma; font-weight: bold; color:#66CC33;">
+<FONT STYLE="font: 30px tahoma; font-weight: bold;">J</FONT>SBoard Reply Notice</FONT>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD BGCOLOR="{$color['l3_bg']}">
+<PRE><FONT STYLE="color:{$color['l3_fg']}">
+
+{$langs['html_msg']}
+
+Server Name       : {$servername}{$nofm}
+</FONT></PRE>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG ALT="" SRC="{$board['path']}/images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD BGCOLOR="{$color['l2_bg']}">
+<PRE><FONT STYLE="color:{$color['l2_fg']}">
+
+{$langs['u_name']}              : {$rmail['name']}
+{$addressinfo
+{$langs['a_t13']}              : $year $day $ampm $hms
+</FONT></PRE>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG ALT="" SRC="{$board['path']}/images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD>
+<PRE><FONT STYLE="{$color['text']}">
+{$rmail['text']}
+</FONT></PRE>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD ALIGN="right">
+<A HREF="http://jsboard.kldp.net" TARGET="_blnak">
+<FONT STYLE="font: 12px tahoma; font-weight: bold; color: #000000">Scripted by JSBoard Open Project</FONT>
+</A>
+</TD></TR>
+</TABLE>
+</TD></TR>
+</TABLE>
+</DIV>
+</BODY>
+</HTML>

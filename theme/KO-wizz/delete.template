@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc-kr">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+body,td {
+  font-size: 12px;
+  font-family: 굴림, sans-serif;
+  color: #292929;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #292929;
+}
+a:hover {
+  text-decoration: underline;
+  color: #292929}
+pre {
+  font-family: 굴림체, monospace;
+  font-size: 12px;
+}
+input {
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: #292929;
+  border-width: 1;
+  border-style: solid;
+  border-color: #292929;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #ffffff;
+}
+select {
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: #292929;
+  border-width: 1;
+  border-style: solid;
+  border-color: #292929;
+  background-Color: #ffffff;
+}
+input.img { border: 0px; }
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
+
+form { display: inline; }
+
+<?php echo $user_stylesheet?>
+-->
+</style>
+<LINK REL="stylesheet" HREF="./theme/<?php echo $print['theme']?>/design.css" TYPE="text/css">
+<?php print_newwindow_src($upload[yesno],$cupload[yesno],$enable[dwho]) ?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<?php
+if(!$np) {
+  # 각 유저별 Design
+  include "$board[headpath]";
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.php";
+ }
+ ?>
+
+<DIV ALIGN="<?php echo $board['align']?>">
+<FORM NAME="writep" METHOD="post" ACTION="act.php"<?php echo $board['formtype']?>>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom">
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Read <?php echo $list['num']?> article</FONT>
+
+</TD>
+<TD ALIGN="right" VALIGN="bottom"><?php echo $print['admin']?>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="#292929" STYLE="height: 20px;">
+<TD COLSPAN=2>
+<IMG ALT="" SRC="theme/<?php echo $print['theme']?>/img/writer.gif"><FONT STYLE="color:#FFFFFF"><B><?php echo $list['name']?></B>
+<?php
+if ($list[url]) {
+  echo <<<EOF
+<FONT STYLE="font:8pt Tahoma,sans-serif;">(<A HREF="$list[url]"><FONT STYLE="color:#FFFFFF">$list[url]</FONT></A>)</FONT>\n
+EOF;
+}
+?>
+</FONT>
+</TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN="center">
+<B><FONT STYLE="color:#000000"><?php echo $list['title']?></FONT></B>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>">
+<DIV style="color:<?php echo $color['l5_fg']?>;font-family:굴림체,monospace">
+<?php echo $preview['up']?>
+<!-- =============================== 글내용 =============================== -->
+<?php echo $list['text']?>
+<!-- =============================== 글내용 =============================== -->
+<?php echo $preview['down']?>
+</DIV>
+<?php echo $print['rlists']?>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN="right">
+<FONT STYLE="font:11px Tahoma,sans-serif; color:#292929"><?php echo $print['regist']?><BR><?php echo $list['date']?><BR></FONT>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD BGCOLOR="#292929"></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN="CENTER">
+<FONT STYLE="font:11px Tahoma,sans-serif; position:relative; top:-5px">
+<?php echo str_replace("패스워드", "password", $print[passform])?>
+</FONT>
+<INPUT TYPE="image" SRC="theme/<?php echo $print['theme']?>/img/delete.gif" CLASS="img">
+<A HREF="javascript:history.back()" ONCLICK="history.back()"><IMG ALT="" SRC="theme/<?php echo $print['theme']?>/img/back.gif" BORDER=0></A>
+</TD></TR>
+</TABLE>
+
+<BR>
+<?php echo print_license()?>
+
+</FORM>
+</DIV>
+
+<?php
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.php";
+  # 각 유저별 Design
+  include "$board[tailpath]";
+}
+ ?>
+</BODY>
+</HTML>

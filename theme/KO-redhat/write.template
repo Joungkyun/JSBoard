@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+body,td {
+  font-size: 12px;
+  font-family: 굴림체, monospace;
+  color: #333333;
+  line-height: 15pt;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #333333;
+}
+a:hover {
+  text-decoration: underline;
+  color: #333333;
+}
+input {
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?php echo $color['l4_bg']?>;
+}
+textarea {
+  font-size: 13px;
+  font-family: 굴림체, monospace;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?php echo $color['l4_bg']?>;
+  width: 100%;
+  height: 150px;
+}
+
+.resizable-textarea .grippie {
+  height: 14px;
+  background: #ECE9D6 url(theme/KO-redhat/img/grippie.png) no-repeat 100% 100%;
+  border: 1px solid #DFDBCA;
+  border-top-width: 0;
+  cursor: se-resize;
+}
+
+.resizable-textarea {
+  width: 100% !important;
+  width: 98%; /* for IE */
+}
+form { display: inline; }
+.absu {
+  vertical-align: middle;
+  margin-bottom: -1px;
+}
+.abs {
+  vertical-align: middle;
+}
+<?php echo $user_stylesheet?>
+-->
+</style>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<?php
+print_keymenu(3);
+echo $print['preview_script'] . "\n";
+
+if(!$np) {
+  # 각 유저별 Design
+  include $board['headpath'];
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.php";
+ }
+?>
+
+<DIV ALIGN="<?php echo $board['align']?>">
+<FORM NAME="writep" METHOD="post" ACTION="act.php"<?php echo $board['formtype']?>>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom" COLSPAN=2>
+<IMG ALT="" SRC="./theme/KO-redhat/img/icon_over.gif" class="absu">
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Write new article</FONT>
+</TD>
+</TR>
+
+<TR BGCOLOR="#cc0000">
+<TD COLSPAN=2>
+<IMG ALT="" SRC="./theme/KO-redhat/img/board_no.gif" class="abs">
+<FONT STYLE="color:#FFFFFF;FONT-WEIGHT:bold">글쓰기</FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD ROWSPAN=9 WIDTH=20><IMG ALT="" SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG ALT="" SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0></TD>
+<TD ROWSPAN=9 WIDTH=10><IMG ALT="" SRC="images/blank.gif" WIDTH=10 HEIGHT=1 BORDER=0></TD>
+<TD COLSPAN=4><IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG ALT="" SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0><BR></TD>
+</TR>
+
+<TR>
+<TD WIDTH=80>이름</TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[name]" SIZE="<?php echo $size['name']?>" MAXLENGTH=50 VALUE="<?php echo $pre_regist['name']?>"<?php echo $disable?> tabindex="1"></TD>
+</TR>
+
+<?php
+if($view['email']) {
+  echo <<<EOF
+
+<TR>
+<TD>메일</TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['email']}"$disable tabindex="2"></TD>
+</TR>
+
+EOF;
+}
+?>
+
+<?php
+if($view['url']) {
+  echo <<<EOF
+
+<TR>
+<TD>홈페이지</TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$pre_regist['url']}"$disable tabindex="3"></TD>
+</TR>
+
+EOF;
+}
+?>
+
+<?php
+if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
+  echo <<<EOF
+<TR>
+<TD>파일</TD>
+<TD COLSPAN=3>
+<INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
+<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256 tabindex="4">
+</TD>
+</TR>
+
+EOF;
+} elseif(!$upload['yesno'] && $cupload['yesno']) {
+  echo <<<EOF
+<TR>
+<TD>파일</TD>
+<TD COLSPAN=3><FONT STYLE="color:red;font-weight:bold">{$langs['upload']}<FONT></TD>
+</TR>
+
+EOF;
+}
+?>
+
+<TR>
+<TD>제목</TD>
+<TD COLSPAN=3><INPUT TYPE="text" NAME="atc[title]" SIZE="<?php echo $size['titl']?>" MAXLENGTH=100 tabindex="5"></TD>
+</TR>
+
+<TR>
+<?php
+if((!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1) {
+  echo <<<EOF
+<TD VALIGN="top">패스워드</TD>
+<TD VALIGN="top"{$pcaptcharcolspan}>
+<INPUT TYPE="password" NAME="atc[passwd]" SIZE="{$size['pass']}" MAXLENGTH=16 STYLE="font: 10px tahoma,sans-serif;" tabindex="6">
+{$pcaptcha}
+</TD>
+
+EOF;
+}
+?>
+</TR>
+<TR>
+<TD COLSPAN=4><IMG ALT="" SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0><BR></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>" ALIGN="CENTER">
+
+<!-- =============================== 글내용 =============================== -->
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<TEXTAREA NAME="wpost" CLASS="resizable" tabindex="8"></TEXTAREA>
+<!-- =============================== 글내용 =============================== -->
+</TD></TR>
+</TABLE>
+
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="#cc0000" ALIGN="CENTER">
+<?php echo $print['passform']?>
+<INPUT TYPE="submit" VALUE="등록" tabindex="9">
+<INPUT TYPE="button" VALUE="다시" onClick="document.location.reload(); return false;" tabindex="10">
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?php echo $table.$pages?>'" VALUE="목록" tabindex="11">
+<INPUT TYPE="button" onClick="history.back()" VALUE="이전" tabindex="12">
+</TD></TR>
+</TABLE>
+
+<?php echo print_license()?>
+
+</FORM>
+<?php echo print_spam_trap()?>
+</DIV>
+
+<?php
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.php";
+  # 각 유저별 Design
+  include $board['tailpath'];
+}
+?>
+</BODY>
+</HTML>

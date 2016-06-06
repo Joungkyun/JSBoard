@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+body,td {
+  font-size: 12px;
+  font-family: 굴림, sans-serif;
+  color: #292929;
+  line-height: 15pt;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #292929;
+}
+a:hover {
+  text-decoration: underline;
+  color: #292929;
+}
+input {
+  font: 11px tahoma, sans-serif;
+  color: #292929;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #292929;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #ffffff; 
+}
+select {
+  font: 11px tahoma, sans-serif;
+  color: #292929;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #292929;
+  background-Color: #ffffff;
+}
+input.img { border: 0px; }
+pre { font: 11px 굴림체, monospace; }
+form { display: inline; }
+
+<?php echo $user_stylesheet?>
+-->
+</style>
+<LINK REL="stylesheet" HREF="./theme/<?php echo $print['theme']?>/design.css" TYPE="text/css">
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?php echo $rss['link']?>
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<?php echo $print['preview_script']?>
+
+<?php
+if(!$np) {
+  # 각 유저별 Design
+  include $board['headpath'];
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.php";
+ }
+?>
+
+<?php echo print_keymenu(0)?>
+
+<DIV ALIGN="<?php echo $board['align']?>">
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom">
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"> &gt;&gt; <?php echo $print['count']?></FONT></TD>
+<TD ALIGN="right" VALIGN="bottom"><?php echo $print['lout']?><?php echo $print['admin']?></TD>
+</TR>
+
+<TR><TD COLSPAN=3>
+
+<!--   게시판 메인 테이블 시작    -->
+<TABLE WIDTH="100%" BORDER=0 CELLSPACING=0 CELLPADDING=0>
+<TR>
+  <TD WIDTH="<?php echo $td_width['no']?>" ALIGN="center" BGCOLOR="#292929"><IMG ALT="" SRC="./theme/<?php echo $print['theme']?>/img/no.gif"></TD>
+  <TD WIDTH="<?php echo $td_width['title']?>" ALIGN="center" BGCOLOR="#292929"><IMG ALT="" SRC="./theme/<?php echo $print['theme']?>/img/subject.gif"></TD>
+  <TD WIDTH="<?php echo $td_width['name']?>" ALIGN="center" BGCOLOR="#292929"><IMG ALT="" SRC="./theme/<?php echo $print['theme']?>/img/name.gif"></TD>
+
+<?php
+  if($upload['yesno'] && $cupload['yesno'])
+    echo <<<EOF
+  <TD WIDTH="{$td_width['upload']}" ALIGN="center" BGCOLOR="#292929" NOWRAP><FONT STYLE=\"color:#ffffff;font-weight:bold\"><IMG ALT="" SRC="./theme/{$print['theme']}/img/file.gif"></FONT></TD>\n
+EOF;
+?>
+  <TD WIDTH="<?php echo $td_width['dates']?>" ALIGN="center" BGCOLOR="#292929"><IMG ALT="" SRC="./theme/<?php echo $print['theme']?>/img/date.gif"></TD>
+  <TD WIDTH="<?php echo $td_width['refer']?>" ALIGN="center" BGCOLOR="#292929"><IMG ALT="" SRC="./theme/<?php echo $print['theme']?>/img/read.gif"></TD>
+</TR>
+
+<?php
+$print['lists'] = strtr($print['lists'], array(" ALIGN=\"right\"" => " ALIGN=\"center\"", "</A>&nbsp;</FONT>" => "</A></FONT>"));
+$print['lists'] = eregi_replace("\">([0-9]*)<\/FONT>", " font:8pt Tahoma,sans-serif;\">\\1</FONT>", $print['lists']);
+$print['lists'] = eregi_replace("\"><NOBR>([0-9]*/[0-9]*/[0-9]*)&nbsp;<\/NOBR>", " font:8pt Tahoma,sans-serif\"><NOBR>\\1</NOBR>", $print['lists']);
+$print['lists'] = eregi_replace("\"><FONT STYLE=\"color:#[0-9A-Za-z]*\">\.*<\/FONT>([0-9]*)&nbsp;", " font:8pt Tahoma,sans-serif;\">\\1", $print['lists']);
+echo $print['lists'];
+?>
+<TR>
+<?php echo $lines['design']?>
+</TR>
+</TABLE>
+<!--   게시판 메인 테이블 끝    -->
+
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD>
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#292929">
+&gt;&gt; Fast Page Link :
+<?php echo $print['p_list']?>
+</FONT>
+<IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 STYLE="vertical-align: middle;">
+</TD>
+<TD ALIGN="right"><?php list_cmd(1,1) ?></TD>
+</TR>
+
+<TR>
+<TD ALIGN="center" COLSPAN=2>
+  <FORM METHOD="post" ACTION="list.php?table=<?php echo $table?>">
+  <SELECT NAME="o[sc]" style="border:1px solid #292929;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#292929; position:relative; top:-4px">
+  <OPTION VALUE="t"<?php echo $sform['sc']['t']?>>Title
+  <OPTION VALUE="c"<?php echo $sform['sc']['c']?>>Contents
+  <OPTION VALUE="n"<?php echo $sform['sc']['n']?>>Writer
+  <OPTION VALUE="a"<?php echo $sform['sc']['a']?>>All
+  </SELECT>
+  <INPUT TYPE="text" NAME="o[ss]" id="searchstr" SIZE="<?php echo form_size(8)?>" MAXLENGTH=255 style="border:1px solid #292929;background-Color:#ffffff;font-size:12px;color:#292929; position:relative; top:-5px" VALUE="<?php echo $sform['ss']?>">
+  <INPUT TYPE="image" SRC="./theme/<?php echo $print['theme']?>/img/search.gif" CLASS="img">
+  <INPUT TYPE="hidden" NAME="o[st]" VALUE="a">
+  <INPUT TYPE="hidden" NAME="o[at]" VALUE="s">
+  <INPUT TYPE="hidden" NAME="o[sct]" VALUE="s">
+  <INPUT TYPE="hidden" NAME="o[stt]" VALUE="s">
+  </FORM>
+</TD>
+</TR>
+</TABLE>
+
+<BR>
+<?php echo print_license()?>
+
+</DIV>
+
+<?php
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.php";
+  # 각 유저별 Design
+  include $board['tailpath'];
+}
+?>
+</BODY>
+</HTML>

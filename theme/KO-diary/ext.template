@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $langs['charset']?>">
+<title><?php echo $print['head']?> - Jsboard <?php echo $board['ver']?></title>
+<style type="text/css">
+<!--
+body {
+  font-size: 12px;
+  font-family: <?php echo $langs['font']?>, sans-serif;
+  color: <?php echo $color['text']?>;
+  line-height: 15pt;
+  margin: 0 0 0 0;
+  background-color: #ffffff;
+}
+td {
+  font-size: 12px;
+  font-family: <?php echo $langs['font']?>, sans-serif;
+  color: <?php echo $color['text']?>;
+  line-height: 15pt;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: <?php echo $color['text']?>;
+}
+a:hover {
+  text-decoration: underline;
+  color: <?php echo $color['text']?>;
+}
+input {
+  font: 11px tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?php echo $color['l4_bg']?>;
+}
+SELECT {
+  font: 11px tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  background-color: <?php echo $color['l4_bg']?>;
+}
+.radio {
+  font: 9pt <?php echo $langs['font']?>,monospace;
+  background-color: <?php echo $color['bgcol']?>;
+  color: <?php echo $color['text']?>;
+  border:2px solid <?php echo $color['bgcol']?>;
+}
+.title {
+  font: 15pt <?php echo $langs['font']?>;
+  color: <?php echo $color['n0_fg']?>;
+  font-weight: bold;
+}
+.en {
+  font: 15pt Tahoma, sans-serif;
+  font-weight: bold;
+  color: <?php echo $color['text']?>;
+}
+<?php echo $user_stylesheet?>
+-->
+</style>
+</head>
+
+<body>
+
+<?php
+# 전체 관리자에 의해 강제 input 되는 디자인
+include "html/head.php";
+
+# 메인 출력
+echo $print['body'];
+
+# 전체 관리자에 의해 강제 input 되는 디자인
+include "html/tail.php";
+?>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+INPUT {
+  font: 11px tahoma,sans-serif;
+  color: #000000;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #000000;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #ffffff;
+}
+pre {
+  font-family: 굴림체, monospace;
+  font-size:12px;
+}
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
+
+/* Quote block */
+blockquote {
+  background: #ebebeb none 6px 8px no-repeat;
+  background-image: url("./images/quote.gif");
+  border: 1px solid #dbdbdb;
+  font-size: 1em;
+  margin: 0.5em 1px 0 25px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+blockquote blockquote {
+  /* Nested quotes */
+  background-color: #bababa;
+  font-size: 1em;
+  margin: 0.5em 1px 0 15px;
+}
+
+blockquote blockquote blockquote {
+  /* Nested quotes */
+  background-color: #e4e4e4;
+}
+
+blockquote cite {
+  /* Username/source of quoter */
+  font-style: normal;
+  font-weight: bold;
+  margin-left: 20px;
+  display: block;
+  font-size: 0.95em;
+}
+
+blockquote cite cite {
+  font-size: 1em;
+}
+
+blockquote.uncited {
+  padding-top: 25px;
+}
+
+<?php echo $user_stylesheet?>
+-->
+</style>
+<LINK REL="stylesheet" HREF="./theme/<?php echo $print['theme']?>/design.css" TYPE="text/css">
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<?php echo $print['preview_script']?>
+
+<?php
+if(!$np) {
+  # 각 유저별 Design
+  include $board['headpath'];
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.php";
+ }
+?>
+
+<?php echo print_keymenu(1)?>
+
+<DIV ALIGN="<?php echo $board['align']?>">
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom">
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Read <?php echo $list['num']?> article</FONT>
+
+</TD>
+<TD ALIGN="right" VALIGN="bottom"><?php echo $print['lout']?><?php echo $print['admin']?></TD>
+</TR>
+<TR BGCOLOR="#292929" STYLE="height: 20px;">
+<TD COLSPAN=2>
+<IMG ALT="" SRC="theme/<?php echo $print['theme']?>/img/writer.gif"><FONT STYLE="color:#FFFFFF"><B><?php echo $list['name']?></B>
+<?php
+if ($list['url'])
+  echo <<<EOF
+<FONT STYLE="font:8pt Tahoma,sans-serif;">(<A HREF="{$list['url']}"><FONT STYLE="color:#FFFFFF">{$list['url']}</FONT></A>)</FONT>
+EOF;
+?>
+</FONT>
+</TD>
+</TR>
+<?php if($list['attach']) 
+{
+?>
+<TR>
+<TD style="padding-left:30px">
+<FONT Style="font-weight:bold">파일</FONT> <?php echo $list['attach']?><BR>
+</TD>
+</TR>
+<TR>
+<TD COLSPAN=2 STYLE="background-image: url(./images/dotline.gif)"><IMG ALT="" SRC="./images/blank.gif" WIDTH=1 HEIGHT=4 BORDER=0></TD>
+</TR>
+<?php
+}
+?>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN="center">
+<B><FONT STYLE="color:#000000"><?php echo $list['title']?></FONT></B>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>">
+<DIV style="color:<?php echo $color['l5_fg']?>;font-family:굴림체,monospace;">
+<?php echo $preview['up']?>
+<!-- =============================== 글내용 =============================== -->
+<?php echo $list['text']?>
+<!-- =============================== 글내용 =============================== -->
+<?php echo $preview['down']?>
+</DIV>
+<!-- =============================== 코멘트 =============================== -->
+<?php echo $print['comment']?>
+<!-- =============================== 코멘트 =============================== -->
+<?php echo $print['rlists']?>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN="right">
+<FONT STYLE="font:11px Tahoma,sans-serif;; color:#292929"><?php echo $print['regist']?><BR><?php echo $list['date']?><BR></FONT>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD BGCOLOR="#FFFFFF" STYLE="background-image: url(theme/<?php echo $print['theme']?>/img/vertline.gif)"><IMG ALT="" SRC="./images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0></TD>
+</TR>
+<TR>
+<TD ALIGN="right"><?php read_cmd(1,1) ?></TD>
+</TR>
+</TABLE>
+<BR>
+
+<?php echo print_license()?>
+
+</DIV>
+
+<?php
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.php";
+  # 각 유저별 Design
+  include $board['tailpath'];
+}
+?>
+</BODY>
+</HTML>

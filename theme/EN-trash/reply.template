@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $langs['charset']?>">
+<title><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></title>
+
+<style type="text/css">
+<!--
+body,td {
+  font-size: 12px;
+  font-family: <?php echo $langs['vfont']?>,monospace;
+  color: #555555;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #555555;
+}
+a:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+input {
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: #333333; 
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #ffffff;
+  margin: 1px 1px;
+}
+textarea {
+  font-size: 13px;
+  font-family: <?php echo $langs['vfont']?>, monospace;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  background-color: #ffffff;
+  width: 100%;
+  height: 150px;
+}
+
+.resizable-textarea .grippie {
+  height: 14px;
+  background: #ECE9D6 url(theme/EN-trash/img/grippie.png) no-repeat 100% 100%;
+  border: 1px solid #DFDBCA;
+  border-top-width: 0;
+  cursor: se-resize;
+}
+
+.resizable-textarea {
+  width: 100% !important;
+  width: 98%; /* for IE */
+}
+form { display: inline; }
+.abs { vertical-align: middle; }
+
+<?php echo $user_stylesheet?>
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+
+<?php
+print_keymenu(2);
+echo $print['preview_script'] . "\n";
+
+if(!$np) {
+  include "{$board['headpath']}";
+  include "html/head.php";
+ }
+?>
+
+<div align="<?php echo $board['align']?>">
+<form name="replyp" method="post" action="act.php"<?php echo $board['formtype']?>>
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="44" valign="bottom"><img alt="" src="./theme/EN-trash/img/icon_over.gif" CLASS="abs"></td>
+<td>
+<span style="font-size:11px;font-family:tahoma;">&gt;&gt; Write reply article</span>
+</td>
+</tr>
+
+<tr bgcolor="#5A7192">
+<td colspan="2">
+<img alt="" src="./theme/EN-trash/img/board_no.gif" CLASS="abs">
+<span style="color:#FFFFFF;FONT-WEIGHT:bold">Reply Article</span>
+</td>
+</tr>
+
+<tr>
+<td colspan="2"><img alt="" src="images/blank.gif" width="1" height="3" border="0"></td>
+</tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td rowspan="9" width="20"><img alt="" src="images/blank.gif" width="20" height="1" border="0"></td>
+<td rowspan="9" width="4" bgcolor="#6D7BC9" valign="middle"><img alt="" src="images/blank.gif" width="4" height="1" border="0"></td>
+<td rowspan="9" width="10"><img alt="" src="images/blank.gif" width="10" height="1" border="0"></td>
+<td colspan="4"><img alt="" src="images/blank.gif" width="1" height="3" border="0"><br></td>
+<td rowspan="9" width="20"><img alt="" src="images/blank.gif" width="20" height="1" border="0"><br></td>
+</tr>
+
+<tr>
+<td width="80">Name</td>
+<td colspan="3"><input type="text" name="atc[name]" size="<?php echo $size['name']?>" maxlength="50" value="<?php echo $pre_regist['name']?>"<?php echo $disable?> tabindex="1"></td>
+</tr>
+
+<?php
+if($view['email']) {
+  echo <<<EOF
+<tr>
+<td>eMail</td>
+<td colspan="3"><input type="text" name="atc[email]" size="{$size['name']}" maxlength="255" value="{$pre_regist['email']}"{$disable} tabindex="2"></td>
+</tr>
+EOF;
+}
+?>
+
+<?php
+if($view['url']) {
+  echo <<<EOF
+<tr>
+<td>URL</td>
+<td colspan="3"><input type="text" name="atc[url]" size="{$size['name']}" maxlength="255" value="{$pre_regist['url']}"{$disable} tabindex="3"></td>
+</tr>
+EOF;
+}
+?>
+
+<?php
+if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
+  echo <<<EOF
+<tr>
+<td>Files</td>
+<td colspan="3">
+<input type="HIDDEN" name="max_file_size" value="{$upload['maxsize']}">
+<input type="file" name="userfile" size="{$size['uplo']}" maxlength="256" tabindex="4">
+</td>
+</tr>
+EOF;
+} elseif(!$upload['yesno'] && $cupload['yesno']) {
+  echo <<<EOF
+<tr>
+<td>Files</td>
+<td colspan="3"><span style="color:red;font-weight:bold">{$langs['upload']}<span></td>
+</tr>
+EOF;
+}
+?>
+
+<tr>
+<td>Subject</td>
+<td colspan="3"><input type="text" name="atc[title]" size="<?php echo $size['titl']?>" maxlength="100" value="<?php echo "Re$reti: {$list['title']}"?>" tabindex="5"></td>
+</tr>
+
+<tr>
+<?php
+if(preg_match("/^[04]$/",$board['mode']) && !$board['super']) {
+  echo <<<EOF
+<td valign="top">Password</td>
+<td valign="top"{$pcaptcharcolspan}>
+<input type="password" name="atc[passwd]" size="{$size['pass']}" maxlength="16" style="font: 10px tahoma" tabindex="6">
+{$pcaptcha}
+</td>
+EOF;
+}
+?>
+</tr>
+
+<tr>
+<td colspan="4"><img alt="" src="images/blank.gif" width="20" height="1" border="0"><br></td>
+</tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr><td><img alt="" src="images/blank.gif" width="1" height="3" border="0"></td></tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="5" cellspacing="0">
+<tr><td bgcolor="<?php echo $color['l5_bg']?>" align="center">
+
+
+<script type="text/javascript" src="./theme/common/textarea.js"></script>
+<?php echo $text_area?>
+
+</td></tr>
+</table>
+
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="5" cellspacing="0">
+<tr><td bgcolor="#5A7192" align="center">
+<?php echo $print['passform']?>
+<input type="submit" value="Regist" tabindex="8">
+<input type="button" value="Reset" onclick="document.location.reload(); return false;" tabindex="9"><?php echo $orig_button?>
+<input type="button" onclick="document.location='./list.php?table=<?php echo $table.$pages?>'" value="List" tabindex="11">
+<input type="button" onclick="history.back()" value="Back" tabindex="12">
+</td></tr>
+</table>
+
+<?php echo print_license()?>
+
+</form>
+</div>
+
+<?php
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.php";
+  # 각 유저별 Design
+  include "{$board['tailpath']}";
+}
+?>
+</body>
+</html>

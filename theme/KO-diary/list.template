@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $langs['charset']?>">
+<title><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></title>
+
+<style type="text/css">
+<!--
+body,td {
+  font-size: 12px;
+  font-family: 굴림체,monospace;
+  color: #555555;
+  line-height: 15pt;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #555555;
+}
+a:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+input {
+  font: 11px tahoma, sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #ffffff;
+}
+SELECT {
+  font: 11px tahoma, sans-serif;
+  color: #555555;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  background-Color: #ffffff;
+}
+form { display: inline; }
+.abs { vertical-align: middle; }
+.art {
+  font-size: 10px;
+  font-family: tahoma, sans-serif;
+  color: #555555;
+}
+<?php echo $user_stylesheet?>
+-->
+</style>
+
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?php echo $rss['link']?>
+</head>
+<body bgcolor="#FFFFFF">
+<?php echo $print['preview_script']?>
+
+<?php
+if(!$np) {
+  # 각 유저별 Design
+  include $board['headpath'];
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.php";
+ }
+?>
+
+<?php echo print_keymenu(0)?>
+
+<div align="<?php echo $board['align']?>">
+<?php echo $print['dsearch']?>
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="44" valign="bottom"><img alt="" src="./theme/KO-diary/img/icon_over.gif" class="abs" border="0"></td>
+<td width="95%" class="art">&nbsp;&gt;&gt; <?php echo $print['count']?></td>
+<td align="right" valign="bottom">&nbsp;<?php echo $print['lout']?><?php echo $print['admin']?></td>
+</tr>
+
+<tr><td colspan="3">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+  <td width="<?php echo $td_width['no']?>" align="left" bgcolor="#A0DC10" NOWRAP><img alt="" src="./theme/KO-diary/img/board_no.gif"></td>
+  <td width="<?php echo $td_width['title']?>" align="center" bgcolor="#A0DC10" NOWRAP><span style="color:#FFFFFF;font-weight:bold">제목</span></td>
+  <td width="<?php echo $td_width['name']?>" align="center" bgcolor="#A0DC10" NOWRAP><span style="color:#FFFFFF;font-weight:bold">이름</span></td>
+
+<?php
+if($upload['yesno'] && $cupload['yesno'])
+  echo <<<EOF
+  <td width="{$td_width['upload']}" align="center" bgcolor="#A0DC10" NOWRAP><span style="color:#FFFFFF;font-weight:bold">파일</span></td>
+
+EOF;
+?>
+  <td width="<?php echo $td_width['dates']?>" align="center" bgcolor="#A0DC10" NOWRAP><span style="color:#FFFFFF;font-weight:bold">날짜</span></td>
+  <td width="<?php echo $td_width['refer']?>" align="center" bgcolor="#A0DC10" NOWRAP><span style="color:#FFFFFF;font-weight:bold">조회</span></td>
+</tr>
+
+<?php echo $print['lists']?>
+</table>
+
+</td></tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td><span style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?php echo $print['p_list']?></span>
+<img alt="" src="images/blank.gif" width="1" height="25" border="0" class="abs"></td>
+<td align="right"><?php list_cmd(0,1) ?></td>
+</tr>
+
+<tr>
+<td>
+<!-- =============================== 검색폼 =============================== -->
+<form method="post" action="locate.php?table=<?php echo $table?>">
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+<tr>
+<td>
+<select name="o[sc]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma;color:#555555">
+<OPTION value="t"<?php echo $sform['sc']['t']?>>Title
+<OPTION value="c"<?php echo $sform['sc']['c']?>>Contents
+<OPTION value="n"<?php echo $sform['sc']['n']?>>Writer
+<OPTION value="a"<?php echo $sform['sc']['a']?>>All
+</select>
+<input type="text" name="o[ss]" id="searchstr" size="<?php echo form_size(8)?>" maxlength="255" value="<?php echo $sform['ss']?>">
+<input type="submit" value="Search">
+</td>
+</tr><tr>
+<td>
+<select name="o[st]">
+<OPTION value="m"<?php echo $sform['st']['m']?>>A Month
+<OPTION value="w"<?php echo $sform['st']['w']?>>A Week
+<OPTION value="a"<?php echo $sform['st']['a']?>>All
+</select>
+<input type="checkbox" name="o[er]" value="y"<?php echo $sform['er']['y']?>>
+<span style="font-family:굴림,sans-serif;color:#555555">정규표현식</span> <?php echo $print['dserlink']?>
+</td>
+</tr>
+</table>
+<input type="hidden" name="o[at]" value="s">
+<input type="hidden" name="o[go]" value="p">
+<input type="hidden" name="o[sct]" value="s">
+<input type="hidden" name="o[stt]" value="s">
+</form>
+<!-- =============================== 검색폼 =============================== -->
+</td>
+<td align="right">
+<span style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"><?php echo $print['times']?></span><br>
+<!-- ============================== 페이지폼 ============================== -->
+<form method="post" action="locate.php?table=<?php echo $table?>">
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+<tr>
+<td align="right">
+<span style="font-size:10px;font-family:tahoma,sans-serif;">
+<?php echo $pform['post']?>
+<select name="o[go]">
+<option value="p" selected="selected">Page No.
+<option value="n">Article No.
+</select>
+<input type="text" name="o[no]" size="<?php echo form_size(2)?>" maxlength="6" value='<?php echo $pform['value']?>'>
+<input type="submit" value="Go!">
+</span>
+</td>
+</tr>
+</table>
+</form>
+<!-- ============================== 페이지폼 ============================== -->
+</td>
+</tr>
+</table>
+
+<?php echo print_license()?>
+
+</div>
+
+<?php
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.php";
+  # 각 유저별 Design
+  include $board['tailpath'];
+}
+?>
+</body>
+</html>

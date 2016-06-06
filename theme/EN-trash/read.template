@@ -1,0 +1,268 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $langs['charset']?>">
+<title><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></title>
+
+<style type="text/css">
+<!--
+body,td {
+  font-size: 12px;
+  font-family: <?php echo $langs['vfont']?>, monospace;
+  color:#555555;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #555555;
+}
+a:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+input {
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #ffffff;
+}
+select {
+  font: 11px tahoma,sans-serif;
+  color: #555555;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  background-color: #ffffff;
+}
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
+
+/* Quote block */
+blockquote {
+  background: #ebebeb none 6px 8px no-repeat;
+  background-image: url("./images/quote.gif");
+  border: 1px solid #dbdbdb;
+  font-size: 1em;
+  margin: 0.5em 1px 0 25px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+blockquote blockquote {
+  /* Nested quotes */
+  background-color: #bababa;
+  font-size: 1em;
+  margin: 0.5em 1px 0 15px;
+}
+
+blockquote blockquote blockquote {
+  /* Nested quotes */
+  background-color: #e4e4e4;
+}
+
+blockquote cite {
+  /* Username/source of quoter */
+  font-style: normal;
+  font-weight: bold;
+  margin-left: 20px;
+  display: block;
+  font-size: 0.95em;
+}
+
+blockquote cite cite {
+  font-size: 1em;
+}
+
+blockquote.uncited {
+  padding-top: 25px;
+}
+
+form { display: inline; }
+.abs { vertical-align: middle; }
+
+<?php echo $user_stylesheet?>
+-->
+</style>
+
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</head>
+<body bgcolor="#FFFFFF">
+<?php echo $print['preview_script']?>
+
+<?php
+if(!$np) {
+  include "{$board['headpath']}";
+  include "html/head.php";
+ }
+?>
+
+<?php echo print_keymenu(1)?>
+
+<div align="<?php echo $board['align']?>">
+<?php echo $print['dsearch']?>
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="44" valign="bottom"><img alt="" src="./theme/EN-trash/img/icon_over.gif" CLASS="abs"></td>
+<td width="95%">
+<span style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Read <?php echo $list['num']?> article</span>
+</td>
+<td align="right" valign="bottom"><?php echo $print['lout']?>&nbsp;<?php echo $print['admin']?></td>
+</tr>
+
+<?php $list['title'] = preg_replace("/<br>\n/i","\\0<img alt=\"\" src=\"{$board['path']}images/blank.gif\" width=\"48\" height=\"1\">",$list['title']); ?>
+<tr bgcolor="#5A7192">
+<td colspan="3">
+<img alt="" src="./theme/EN-trash/img/board_no.gif" CLASS="abs">
+<span style="color:#FFFFFF"><?php echo $list['title']?></span>
+</td>
+</tr>
+
+<tr>
+<td colspan="3"><img alt="" src="images/blank.gif" width="1" height="3" border="0"></td>
+</tr>
+</table>
+
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="20"><img alt="" src="images/blank.gif" width="20" height="1" border="0"></td>
+<td width="4" bgcolor="#6D7BC9" valign="middle"><img alt="" src="images/blank.gif" width="4" height="1" border="0"></td>
+<td width="5"><img alt="" src="images/blank.gif" width="5" height="1" border="0"></td>
+<td>
+<img alt="" src="images/blank.gif" width="1" height="3" border="0"><br>
+<span Style="font-weight:bold">Date</span> <?php echo $list['date']?> &nbsp; &nbsp; 
+<span Style="font-weight:bold">Read</span> <?php echo $list['refer']?><br>
+<span Style="font-weight:bold">Name</span> <?php echo $list['uname']?> &nbsp; &nbsp;
+<?php if($list['attach']) echo "<span Style=\"font-weight:bold\">Files</span> {$list['attach']}" ?><br>
+<img alt="" src="images/blank.gif" width="1" height="3" border="0"><br>
+</td>
+<td width="20"><img alt="" src="images/blank.gif" width="20" height="1" border="0"></td>
+</tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr><td><img alt="" src="images/blank.gif" width="1" height="3" border="0"></td></tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="5" cellspacing="0">
+<tr><td bgcolor="<?php echo $color['l5_bg']?>">
+<div style="color:<?php echo $color['l5_fg']?>;font-family:<?php echo $langs['vfont']?>, monospace">
+<?php echo $preview['up']?>
+<?php echo $list['text']?>
+
+<?php echo $preview['down']?>
+</div>
+
+<?php echo $print['comment']?>
+</td></tr>
+</table>
+
+<?php if ($print['rlists']) { ?>
+<br>
+<table width="<?php echo $board['width']?>" border="0" cellpadding="1" cellspacing="0">
+<tr><td bgcolor="<?php echo $color['l3_bg']?>"><img alt="" src="./images/blank.gif" width="1" height="1" border="0"></td></tr>
+<tr>
+<td>
+<img alt="" src="./images/blank.gif" width="1" height="3" border="0"><br>
+&gt;&gt; <?php echo $langs['conj']?>
+<?php echo $print['rlists']?>
+</td></tr>
+<tr><td bgcolor="<?php echo $color['l3_bg']?>"><img alt="" src="./images/blank.gif" width="1" height="1" border="0"></td></tr>
+</table>
+<?php } ?>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td>
+<span style="font-face:tahoma;font-size:11px;"><?php echo $print['regist']?>&nbsp;</span><img alt="" src="images/blank.gif" width="1" height="25" border="0" CLASS="abs"></td>
+<td align="right"><?php read_cmd(0,1) ?></td>
+</tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td>
+<form method="post" action="locate.php?table=<?php echo $table?>">
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+<tr>
+<td>
+<select name="o[sc]" style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<option value="t"<?php echo $sform['sc']['t']?>>Title
+<option value="c"<?php echo $sform['sc']['c']?>>Contents
+<option value="n"<?php echo $sform['sc']['n']?>>Writer
+<option value="a"<?php echo $sform['sc']['a']?>>All
+</select>
+<input type="text" name="o[ss]" id="searchstr" size="<?php echo form_size(8)?>" maxlength="255" style="border:1x solid #555555;background-Color:#ffffff;font-size:12px;color:#555555;" value="<?php echo $sform['ss']?>"
+>
+<input type="submit" value="Search" style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555;">
+</td>
+</tr><tr>
+<td>
+<select name="o[st]" style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<option value="m"<?php echo $sform['st']['m']?>>A Month
+<option value="w"<?php echo $sform['st']['w']?>>A Week
+<option value="a"<?php echo $sform['st']['a']?>>All
+</select>
+<input type="checkbox" name="o[er]" value="y"<?php echo $sform['er']['y']?> style="border:1x solid #555555;background-Color:#ffffff">
+<span style="font-face:<?php echo $langs['vfont']?>;color:#555555">Regex</span> <?php echo $print['dserlink']?>
+</td>
+</tr>
+</table>
+<input type="hidden" name="o[at]" value="s">
+<input type="hidden" name="o[go]" value="p">
+<input type="hidden" name="o[sct]" value="s">
+<input type="hidden" name="o[stt]" value="s">
+</form>
+</td>
+<td align="right">
+<span style="font-size:11px;font-family:tahoma,sans-serif;">
+Page Loading [ <?php echo $print['pagetime']?> Sec ]
+SQL Time [ <?php echo $print['sqltime']?> Sec ]<br>
+</span>
+
+<form method="post" action="locate.php?table=<?php echo $table?>">
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+<tr>
+<td align="right">
+<span style="font-size:10px;font-family:tahoma,sans-serif;">
+<?php echo $pform['post']?>
+<select name="o[go]" style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<option value="p" selected="selected">Page No.
+<option value="n">Article No.
+</select>
+<input type="text" name="o[no]" size="<?php echo form_size(2)?>" maxlength="6" style="border:1x solid #555555;background-Color:#ffffff;font-size:12px;color:#555555" value='<?php echo $pform['value']?>'>
+<input type="submit" value="Go!" style="border:1x solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+</span>
+</td>
+</tr>
+</table>
+</form>
+
+</td>
+</tr>
+</table>
+
+<?php echo print_license()?>
+
+</div>
+
+<?php
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.php";
+  # 각 유저별 Design
+  include "{$board['tailpath']}";
+}
+?>
+</body>
+</html>

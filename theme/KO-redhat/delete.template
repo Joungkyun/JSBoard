@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+body,td {
+  font-size: 12px;
+  font-family: 굴림체, monospace;
+  color: #333333;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #333333;
+}
+a:hover {
+  text-decoration: underline;
+  color: #333333;
+}
+input {
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?php echo $color['l4_bg']?>;
+}
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
+
+form { display: inline; }
+.abs {
+  vertical-align: middle;
+}
+<?php echo $user_stylesheet?>
+-->
+</style>
+
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<?php
+if(!$np) {
+  # 각 유저별 Design
+  include $board['headpath'];
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.php";
+ }
+?>
+
+<DIV ALIGN="<?php echo $board['align']?>">
+<FORM METHOD="post" ACTION="act.php">
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom" COLSPAN=2>
+<IMG ALT="" SRC="./theme/KO-redhat/img/icon_over.gif" CLASS="abs">
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Delete <?php echo $list['num']?> article</FONT>
+</TD>
+</TR>
+
+<?php $list['title'] = preg_replace("/<BR>\n/i","\\0<IMG ALT=\"\" SRC=\"./images/blank.gif\" width=48 height=1>",$list['title']); ?>
+<TR BGCOLOR="#cc0000">
+<TD COLSPAN=2>
+<IMG ALT="" SRC="./theme/KO-redhat/img/board_no.gif" CLASS="abs">
+<FONT STYLE="color:#FFFFFF"><?php echo $list['title']?></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0></TD>
+</TR>
+</TABLE>
+
+<?php if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=20><IMG ALT="" SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0></TD>
+<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG ALT="" SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0></TD>
+<TD WIDTH=5><IMG ALT="" SRC="images/blank.gif" WIDTH=5 HEIGHT=1 BORDER=0></TD>
+<TD>
+<IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0><BR>
+<FONT Style="font-weight:bold">등록</FONT> <?php echo $list['date']?> <?php echo $list['dhost']?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">조회</FONT> <?php echo $list['refer']?><BR>
+<FONT Style="font-weight:bold">이름</FONT> <?php echo $list['uname']?> &nbsp; &nbsp;
+<?php
+if($list['attach'])
+  echo <<<EOF
+<FONT Style="font-weight:bold">파일</FONT> {$list['attach']}
+EOF;
+?><BR>
+<IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0><BR>
+</TD>
+<TD WIDTH=20><IMG ALT="" SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>">
+<DIV style="color:<?php echo $color['l5_fg']?>;font-family:굴림체,monospace">
+<?php echo $preview['up']?>
+<!-- =============================== 글내용 =============================== -->
+<?php echo $list['text']?>
+
+<!-- =============================== 글내용 =============================== -->
+<?php echo $preview['down']?>
+</DIV>
+</TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN="right">
+<?php echo $warning?>
+[ <A HREF="list.php?table=<?php echo $table.$page?>"><FONT STYLE="color:#555555">목록</FONT></A> | <A HREF="javascript:history.back()"><FONT STYLE="color:#555555">이전</FONT></A> ]
+</TD></TR>
+<TR><TD BGCOLOR="#cc0000" ALIGN="CENTER">
+<FONT STYLE="color:#FFFFFF;font-weight:bold">
+<?php echo $print['passform']?>
+<INPUT TYPE="submit" VALUE="삭제">&nbsp;
+<INPUT TYPE="button" onClick="history.back()" VALUE="취소">
+</FONT>
+</TD></TR>
+</TABLE>
+
+<?php echo print_license()?>
+
+</FORM>
+</DIV>
+
+<?php
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.php";
+  # 각 유저별 Design
+  include $board['tailpath'];
+}
+?>
+</BODY>
+</HTML>

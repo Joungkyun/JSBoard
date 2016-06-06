@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $langs['charset']?>">
+<title><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></title>
+
+<style type="text/css">
+<!--
+body,td {
+  font-size: 12px;
+  font-family: <?php echo $langs['vfont']?>,monospace;
+  color: #555555;
+  line-height: 15pt;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #555555;
+}
+a:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+input {
+  font: 11px tahoma, sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #ffffff;
+}
+select {
+  font: 11px tahoma, sans-serif;
+  color: #555555;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  background-Color: #ffffff;
+}
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
+
+form { display: inline; }
+.abs { vertical-align: middle; }
+
+<?php echo $user_stylesheet?>
+-->
+</style>
+
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</head>
+<body bgcolor="#FFFFFF">
+<?php
+if(!$np) {
+  # 각 유저별 Design
+  include "{$board['headpath']}";
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.php";
+ }
+?>
+
+<div align="<?php echo $board['align']?>">
+<form method="post" action="act.php">
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="44" valign="bottom"><img alt="" src="./theme/EN-trash/img/icon_over.gif" CLASS="abs"></td>
+<td width="95%">
+<span style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Delete <?php echo $list['num']?> article</span>
+</td>
+</tr>
+
+<?php $list['title'] = preg_replace("/<br>\n/i","\\0<img alt=\"\" src=\"{$board['path']}images/blank.gif\" width=\"48\" height=\"1\">",$list[title]); ?>
+<tr bgcolor="#5A7192">
+<td colspan="2">
+<img alt="" src="./theme/EN-trash/img/board_no.gif" CLASS="abs">
+<span style="color:#FFFFFF"><?php echo $list['title']?></span>
+</td>
+</tr>
+
+<tr>
+<td colspan="2"><img alt="" src="images/blank.gif" width="1" height="3" border="0"></td>
+</tr>
+</table>
+
+<?php if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="20"><img alt="" src="images/blank.gif" width="20" height="1" border="0"></td>
+<td width="4" bgcolor="#6D7BC9" valign="middle"><img alt="" src="images/blank.gif" width="4" height="1" border="0"></td>
+<td width="5"><img alt="" src="images/blank.gif" width="5" height="1" border="0"></td>
+<td>
+<img alt="" src="images/blank.gif" width="1" height="3" border="0"><br>
+<span Style="font-weight:bold">Date</span> <?php echo $list['date']?> <?php echo $list[dhost]?> &nbsp; &nbsp; 
+<span Style="font-weight:bold">Read</span> <?php echo $list['refer']?><br>
+<span Style="font-weight:bold">Name</span> <?php echo $list['uname']?> &nbsp; &nbsp;
+<?php if($list['attach']) echo "<span Style=\"font-weight:bold\">Files</span> {$list['attach']}" ?><br>
+<img alt="" src="images/blank.gif" width="1" height="3" border="0"><br>
+</td>
+<td width="20"><img alt="" src="images/blank.gif" width="20" height="1" border="0"></td>
+</tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr><td><img alt="" src="images/blank.gif" width="1" height="3" border="0"></td></tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="5" cellspacing="0">
+<tr><td bgcolor="<?php echo $color['l5_bg']?>">
+<div style="color:<?php echo $color['l5_fg']?>;font-family:<?php echo $langs['vfont']?>,monospace;">
+<?php echo $preview['up']?>
+<?php echo $list['text']?>
+
+<?php echo $preview['down']?>
+</div>
+</td></tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="5" cellspacing="0">
+<tr><td align="right">
+<?php echo $warning?>
+[ <a href="list.php?table=<?php echo $table.$page?>"><span style="color:#555555;">List</span></a> | <a href="javascript:history.back()"><span style="color:#555555">Back</span></a> ]
+</td></tr>
+<tr><td bgcolor="#5A7192" align="CENTER">
+<span style="color:#FFFFFF;font-weight:bold">
+<?php echo $print['passform']?>
+<input type="submit" value="Remove">&nbsp;
+<input type="button" onclick="history.back()" value="Back">
+</span>
+</td></tr>
+</table>
+
+<?php echo print_license()?>
+
+</form>
+</div>
+
+<?php
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.php";
+  # 각 유저별 Design
+  include "{$board['tailpath']}";
+}
+?>
+</body>
+</html>

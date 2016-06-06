@@ -1,0 +1,19 @@
+body {
+	margin : 5px 5px 5px 5px;
+	font : 11px Tahoma, 돋움, sans-serif;
+	color : #333333;
+	background : #ffffff;
+	line-height : 10px;
+}
+table {
+	font : 11px Tahoma, 돋움, sans-serif;
+	line-height:150%;
+}
+a:visited, a:link, a:active {
+	text-decoration: none;
+	color: #000000;
+}
+a:hover {
+	text-decoration: underline;
+	color: #666666;
+}

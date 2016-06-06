@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $langs['charset']?>">
+<title><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></title>
+
+<style type="text/css">
+<!--
+body,td {
+  font-size: 12px;
+  font-family: <?php echo $langs['vfont']?>,monospace;
+  color: #555555;
+  line-height: 15pt;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #555555;
+}
+a:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+input {
+  font: 11px tahoma, sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #ffffff;
+}
+SELECT {
+  font: 11px tahoma, sans-serif;
+  color: #555555;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  background-Color: #ffffff;
+}
+
+form { display: inline; }
+.absu {
+  vertical-align: middle;
+<?php if ( $agent['br'] != "MSIE" ) { ?>
+  margin-bottom: -5px;
+<?php } ?>
+}
+.abs { vertical-align: middle; }
+
+<?php echo $user_stylesheet?>
+-->
+</style>
+
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?php echo $rss['link']?>
+</head>
+<body bgcolor="#ffffff">
+<?php echo $print['preview_script']?>
+
+<?php
+if(!$np) {
+  include "{$board['headpath']}";
+  include "html/head.php";
+ }
+?>
+
+<?php echo print_keymenu(0)?>
+
+<div align="<?php echo $board['align']?>">
+<?php echo $print['dsearch']?>
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="bottom">
+<img alt="" src="./theme/EN-trash/img/icon_over.gif" CLASS="absu">
+<span style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"> &gt;&gt; <?php echo $print['count']?></span></td>
+<td align="right" valign="bottom"><?php echo $print['lout']?><?php echo $print['admin']?></td>
+</tr>
+
+<tr><td colspan=3>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+  <td width="<?php echo $td_width['no']?>" align="left" bgcolor="#5A7192"><img alt="" src="./theme/EN-trash/img/board_no.gif"></td>
+  <td width="<?php echo $td_width['title']?>" align="center" bgcolor="#5A7192"><span style="color:#ffffff;font-weight:bold">Subejct</span></td>
+  <td width="<?php echo $td_width['name']?>" align="center" bgcolor="#5A7192"><span style="color:#ffffff;font-weight:bold">Name</span></td>
+
+<?php
+  if($upload['yesno'] && $cupload['yesno'])
+    echo "<td width=\"{$td_width['upload']}\" align=\"center\" bgcolor=\"#5A7192\"><span style=\"color:#ffffff;font-weight:bold\">Files</span></td>";
+?>
+  <td width="<?php echo $td_width['dates']?>" align="center" bgcolor="#5A7192"><span style="color:#ffffff;font-weight:bold">Date</span></td>
+  <td width="<?php echo $td_width['refer']?>" align="center" bgcolor="#5A7192"><span style="color:#ffffff;font-weight:bold">Read</span></td>
+</tr>
+
+<?php echo $print['lists']?>
+</table>
+
+</td></tr>
+</table>
+
+<table width="<?php echo $board['width']?>" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td><span style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?php echo $print['p_list']?></span>
+<img alt="" src="images/blank.gif" width="1" height=25 border="0" CLASS="abs"></td>
+<td align="right"><?php list_cmd(0,1) ?></td>
+</tr>
+
+<tr>
+<td>
+<form method="post" action="locate.php?table=<?php echo $table?>">
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+<tr>
+<td>
+<select name="o[sc]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<option value="t"<?php echo $sform['sc']['t']?>>Title
+<option value="c"<?php echo $sform['sc']['c']?>>Contents
+<option value="n"<?php echo $sform['sc']['n']?>>Writer
+<option value="a"<?php echo $sform['sc']['a']?>>All
+</select>
+<input type="text" name="o[ss]" id="searchstr" size="<?php echo form_size(8)?>" maxlength=255 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555;" value="<?php echo $sform['ss']?>">
+<input type="submit" value="Search" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555;">
+</td>
+</tr><tr>
+<td>
+<select name="o[st]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<option value="m"<?php echo $sform['st']['m']?>>A Month
+<option value="w"<?php echo $sform['st']['w']?>>A Week
+<option value="a"<?php echo $sform['st']['a']?>>All
+</select>
+<input type="checkbox" name="o[er]" value="y"<?php echo $sform['er']['y']?> style="border:1px solid #555555;background-Color:#ffffff">
+<span style="font-family:<?php echo $langs['vfont']?>,sans-serif;color:#555555">Regex</span> <?php echo $print['dserlink']?>
+</td>
+</tr>
+</table>
+<input type="hidden" name="o[at]" value="s">
+<input type="hidden" name="o[go]" value="p">
+<input type="hidden" name="o[sct]" value="s">
+<input type="hidden" name="o[stt]" value="s">
+</form>
+</td>
+<td align="right">
+<span style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"><?php echo $print['times']?></span><br>
+
+<form method="post" action="locate.php?table=<?php echo $table?>">
+<table width="100%" border="0" cellpadding="0" cellspacing="1">
+<tr>
+<td align="right">
+<span style="font-size:10px;font-family:tahoma,sans-serif;">
+<?php echo $pform['post']?>
+<select name="o[go]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<option value="p" SELECTED>Page No.
+<option value="n">Article No.
+</select>
+<input type="text" name="o[no]" size="<?php echo form_size(2)?>" maxlength=6 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555" value='<?php echo $pform['value']?>'>
+<input type="submit" value="Go!" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+</span>
+</td>
+</tr>
+</table>
+</form>
+
+</td>
+</tr>
+</table>
+
+<?php echo print_license()?>
+
+</div>
+
+<?php
+if(!$np) {
+  include "html/tail.php";
+  include "{$board['tailpath']}";
+}
+?>
+</body>
+</html>
