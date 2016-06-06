@@ -1,14 +1,13 @@
 <?php
-# $Id: login.php,v 1.5 2009-11-16 21:52:45 oops Exp $
-require_once './include/variable.php';
-require_once './include/version.php';
-require_once './include/print.php';
-require_once './include/get.php';
-require_once './include/check.php';
-require_once './include/error.php';
-parse_query_str ();
+include "./include/version.php";
+include "./include/print.php";
+include "./include/get.php";
+include "./include/check.php";
+include "./include/error.php";
+parse_query_str();
 
-$agent = get_agent ();
+$agent = get_agent();
+if(preg_match("/links|w3m|lynx/i",$agent['br'])) $textBrowser = 1;
 
 $table = trim ($table);
 
@@ -22,20 +21,20 @@ if ($table) {
 }
 
 if($table && file_exists("data/$table/config.php")) {
-  require_once "data/{$table}/config.php";
+  include "data/$table/config.php";
 }
 
 # input 문의 size를 browser별로 맞추기 위한 설정
-$size = form_size (6);
+$size = form_size(6);
 
-$opt = ! $table ? '' : "&amp;table={$table}";
-$hin = ! $table ? '' : "<input type=\"hidden\" name=\"table\" value=\"{$table}\">";
-$tin = ( $type == 'admin' ) ? "<input type=\"hidden\" name=\"type\" value=\"{$type}\">" : "";
+$opt = !$table ? "" : "&amp;table=$table";
+$hin = !$table ? "" : "<INPUT TYPE=hidden NAME=table VALUE=\"$table\">";
+$tin = ($type == "admin") ? "<INPUT TYPE=hidden NAME=type VALUE=\"$type\">" : "";
 $board['align'] = $board['align'] ? $board['align'] : "center";
-$print['theme'] = ! $print['theme'] ? 'KO-default' : $print['theme'];
+$print['theme'] = !$print['theme'] ? "KO-default" : $print['theme'];
 
-meta_char_check ($print['theme'], 1, 1);
+meta_char_check($print['theme'], 1, 1);
 
-require_once "./theme/{$print['theme']}/config.php";
-require_once "./theme/{$print['theme']}/login.template";
+include "./theme/{$print['theme']}/config.php";
+include "./theme/{$print['theme']}/login.template";
 ?>

@@ -1,6 +1,4 @@
 <?php
-# $Id: parse.php,v 1.20 2009-11-19 04:05:32 oops Exp $
-
 # html사용을 안할 경우 IE에서 문법에 맞지 않는 글자 표현시 깨지는 것을 수정
 function ugly_han($text,$html=0) {
   if (!$html) $text = preg_replace("/&amp;(#|amp)/i","&\\1",$text);
@@ -29,7 +27,7 @@ function search2url($o, $method = "get") {
     if($method == "get") {
       $value = rawurlencode($value);
       $url  .= "&amp;o[$key]=$value";
-    } else $url  .= "\n<input type=\"hidden\" name=\"o[$key]\" value=\"$value\">";
+    } else $url  .= "\n<INPUT TYPE=\"hidden\" NAME=\"o[$key]\" VALUE=\"$value\">";
 
     next($o);
   }
@@ -45,7 +43,7 @@ function search2url($o, $method = "get") {
 # rawurldecode - 암호화된 URL를 복호화
 #                http://www.php.net/manual/function.rawurldecode.php
 function search2sql($o, $wh = 1, $join = 0) {
-  global $_;
+  global $langs;
   if($o['at'] != "s" && $o['at'] != "d") return;
 
   $str = rawurldecode($o['ss']); # 검색 문자열을 복호화
@@ -54,7 +52,7 @@ function search2sql($o, $wh = 1, $join = 0) {
 
   if(strlen(stripslashes($str)) < 3 && !$o['op']) {
     if($o['sc'] != "r" && $o['st'] != "t")
-      print_error($_('nsearch'),250,150,1);
+      print_error($langs['nsearch'],250,150,1);
   }
 
   if(!$o['er']) {
@@ -66,7 +64,7 @@ function search2sql($o, $wh = 1, $join = 0) {
     }
     $str = addslashes($str);
 
-    if (preg_match("/[\"']/",$str)) print_error($_('nochar'),250,150,1);
+    if (preg_match("/[\"']/",$str)) print_error($langs['nochar'],250,150,1);
   } else {
     # 정규 표현식: 검색어가 "[,("로 시작했지만 "],)"로 닫지 않은 경우 체크
     $chk = preg_replace("/\\\([\]\[()])/i","",$str);
@@ -77,8 +75,8 @@ function search2sql($o, $wh = 1, $join = 0) {
     $chkBOpen = strlen(preg_replace("/\)/i","",$chk));
     $chkBClos = strlen(preg_replace("/\(/i","",$chk));
 
-    if($chkAOpen !== $chkAClos) $str .= "]";
-    elseif($chkBOpen !== $chkBClos) $str .= ")";
+		if($chkAOpen !== $chkAClos) $str .= "]";
+		elseif($chkBOpen !== $chkBClos) $str .= ")";
   }
 
   if($o['at'] == "d") {
@@ -92,7 +90,7 @@ function search2sql($o, $wh = 1, $join = 0) {
 
     for($i=0;$i<sizeof($strs);$i++) {
       $lenchk = strlen(trim(preg_replace("/!(m|p)!/i","",$strs[$i])));
-      if($lenchk < 3) print_error($_('nsearch'),250,150,1);
+      if($lenchk < 3) print_error($langs['nsearch'],250,150,1);
     }
   }
 
@@ -118,7 +116,8 @@ function search2sql($o, $wh = 1, $join = 0) {
   }
 
   if($o['at'] != "d") {
-    $str = get_like ($o['er'], $str);
+    if($o['er']) $str = "REGEXP \"$str\"";
+    else $str = "LIKE \"%$str%\"";
 
     switch($o['sc']) {
       case 'a': $sql .= "({$join}title $str OR {$join}text $str OR {$join}name $str)";
@@ -133,12 +132,12 @@ function search2sql($o, $wh = 1, $join = 0) {
         break;
     }
   } else {
-    $likeregex = get_like ($o['er']);
-    $pchar = !$o['er'] ? '%' : '';
+    $likeregex = $o['er'] ? "REGEXP" : "LIKE";
+    $pchar = !$o['er'] ? "%" : "";
     switch($o['sc']) {
       case 'a':
         for($i=0;$i<sizeof($strs);$i++) {
-          $strs[$i] = "$likeregex '$pchar".trim($strs[$i])."$pchar'";
+          $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
           $sqltitle .= "{$join}title $strs[$i]";
           $sqltext .= "{$join}text $strs[$i]";
           $sqlname .= "{$join}name $strs[$i]";
@@ -147,29 +146,29 @@ function search2sql($o, $wh = 1, $join = 0) {
         break;
       case 'c':
         for($i=0;$i<sizeof($strs);$i++) {
-          $strs[$i] = "$likeregex '$pchar".trim($strs[$i])."$pchar'";
+          $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
           $sqltext .= "{$join}text $strs[$i]";
         }
         $sql .= "($sqltext)";
         break;
       case 'n':
         for($i=0;$i<sizeof($strs);$i++) {
-          $strs[$i] = "$likeregex '$pchar".trim($strs[$i])."$pchar'";
+          $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
           $sqlname .= "{$join}name $strs[$i]";
         }
         $sql .= "($sqlname)";
         break;
       case 't':
         for($i=0;$i<sizeof($strs);$i++) {
-          $strs[$i] = "$likeregex '$pchar".trim($strs[$i])."$pchar'";
+          $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
           $sqltitle .= "{$join}title $strs[$i]";
         }
         $sql .= "($sqltitle)";
         break;
     }
 
-    $sql = preg_replace("/((tb\.)?(title|name|text) (LIKE|REGEXP) (\"|')%?)!p![ ]*/i"," AND \\1",$sql);
-    $sql = preg_replace("/((tb\.)?(title|name|text) (LIKE|REGEXP) (\"|')%?)!m![ ]*/i"," OR \\1",$sql);
+    $sql = preg_replace("/((tb\.)?(title|name|text) (LIKE|REGEXP) \"%?)!p![ ]*/i"," AND \\1",$sql);
+    $sql = preg_replace("/((tb\.)?(title|name|text) (LIKE|REGEXP) \"%?)!m![ ]*/i"," OR \\1",$sql);
   }
 
   return $sql;
@@ -180,7 +179,7 @@ function search2sql($o, $wh = 1, $join = 0) {
 function search_hl($list) {
   global $board ,$o;
 
-  $hl = array ('<font class="hilight">', '</font>');
+  $hl = explode("STR", $board['hl']);
   if(!$o['ss']) return $list;
 
   $str = rawurldecode($o['ss']);
@@ -282,139 +281,9 @@ function search_hl($list) {
   return $list;
 }
 
-function quote_len ($buf) {
-  $no = 0;
-  preg_match_all ('/\[\/?quote[^\]]+\]/', $buf, $matches);
-  foreach ($matches[0] as $v)
-    $no += strlen (trim ($v));
-  return $no;
-}
-
-function wordwrap_js (&$buf, $len = 80) {
-  $buf = unhtmlspecialchars ($buf);
-  $_buf = split ("\r?\n", $buf);
-  $size = count ($_buf);
-  $buf = '';
-  for ( $i=0; $i<$size; $i++ ) {
-    $_buf[$i] = rtrim ($_buf[$i]);
-    $_bufs = preg_replace ('/\[(\/)?quote[^\]]*\]/i', '', $_buf[$i]);
-    $_bufs_size = strlen ($_bufs);
-
-    if ( $_bufs_size > $len ) {
-      if ( ord ($_bufs[$len - 1]) & 0x80 ) {
-        $z = strlen(preg_replace ('/[\x00-\x7F]/', '', substr ($_bufs, 0, $len)));
-        $cut = ( $z % 2 ) ? $len - 1 : $len;
-      } else
-        $cut = $len;
-
-      $_bufs = substr ($_buf[$i], 0, $cut);
-      $_bufsno = quote_len ($_bufs);
-      $cut += $_bufsno;
-      $buf .= substr ($_buf[$i], 0, $cut) . "\n";
-
-      if ( preg_match ('/^(: )+/', $_buf[$i], $matches) ) {
-        $next = $matches[0] . substr ($_buf[$i], $cut);
-        if ( ! strncmp ($matches[0], $_buf[$i+1], strlen ($matches[0])) )
-          $_buf[$i+1] = $next . ' ' .  preg_replace ('/^(: )+/', '', $_buf[$i+1]);
-        else
-          $buf .= $next . "\n";
-      } else {
-        if ( preg_match ('/^[\s]*$/', $_buf[$i+1]) ) {
-          $next = substr ($_buf[$i], $cut);
-          if ( strlen ($next) > $len ) {
-            $_buf[$i] = $next;
-            $i--;
-          } else
-            $buf .= $next . "\n";
-        } else
-          $_buf[$i+1] = substr ($_buf[$i], $cut) . ' ' . $_buf[$i+1];
-      }
-    } else
-      $buf .= $_buf[$i] . "\n";
-  }
-  $buf = htmlspecialchars ($buf);
-}
-
-function js_htmlcode(&$buf) {
-  global $enable, $agent;
-
-  if(!is_object($enable['tag']))
-    return;
-
-  foreach($enable['tag'] as $v) {
-    if($v == 'code')
-      continue;
-    $reg .= $v . '|';
-  }
-  $reg = preg_replace ('/\|$/', '', $reg);
-  $reg = "!\[(/?({$reg}))\]!i";
-
-  $buf = preg_replace ($reg, '<\\1>', $buf);
-  unset($reg);
-  $reg[] = "/\[code\][\r\n]*/i";
-  $reg[] = "/[\r\n]*\[\/code\]/i";
-  $reg[] = '/^[: ]*: <li/m';
-  if ( $agent['br'] == "MSIE" || $agent['tx'] ) {
-    $conv[] = '<div class="jsCodeBlock"><pre>';
-    $conv[] = '<pre></div>';
-  } else {
-    $conv[] = '\\1<div class="jsCodeBlock" style="white-space: pre;">';
-    $conv[] = '</div>';
-  }
-  $conv[] = '<li';
-  $buf = preg_replace ($reg, $conv, $buf);
-}
-
-function new_read_format(&$buf) {
-  global $enable, $board;
-
-  $buf = preg_replace ("/\r?\n/", "\n", $buf);
-  if(!is_object($enable['tag']))
-    return;
-
-  $req_code = array ('[code]', '[table]', '[ul]', '[ol]');
-  foreach ($enable['tag'] as $v) {
-    $v = trim($v);
-    switch ($v) {
-      case 'code' :
-      case 'table' :
-      case 'ul' :
-      case 'ol' :
-        break;
-      default :
-        if (preg_match('/:$/', $v))
-          $req_code[] = '[' . $v . ']';
-    }
-  }
-
-  $buf_r = block_devided($buf, $req_code);
-
-  if(!is_array($buf_r) || count($buf_r) < 1) {
-    $buf = "<pre>{$buf}</pre>";
-    return;
-  }
-
-  $buf = '';
-  foreach($buf_r as $v) {
-    $block = false;
-    if(preg_match('/^[:\s]*(\[[^\]]+\])/', $v, $matches))
-      if(array_search($matches[1], $req_code) !== FALSE)
-        $block = true;
-
-    if(!$block) {
-      wordwrap_js($v, $board['wwrap']);
-      $v = preg_replace ("/\n$/", '', $v);
-      $buf .= "<pre>{$v}</pre>";
-    } else
-      $buf .= $v;
-  }
-
-  js_htmlcode ($buf);
-}
-
-function text_nl2br(&$text, $html) {
-  global $_code;
-  if($html == 1) {
+function text_nl2br($text, $html) {
+  global $langs;
+  if($html) {
     $source = array("/<(\?|%)/i","/(\?|%)>/i","/<img .*src=[a-z0-9\"']*script:[^>]+>/i","/\r\n/",
                     "/<(\/*(script|style|pre|xmp|xml|base|span|html)[^>]*)>/i","/(=[0-9]+%)&gt;/i");
     $target = array("&lt;\\1","\\1&gt;","","\n","&lt;\\1&gt;","\\1>");
@@ -422,26 +291,21 @@ function text_nl2br(&$text, $html) {
     if(!preg_match("/<--no-autolink>/i",$text)) $text = auto_link($text);
     else $text = chop(str_replace("<--no-autolink>","",$text));
 
-    $text = preg_replace("/(\n)?<table/i","</pre><table",$text);
-    $text = preg_replace("/<\/table>(\n)?/i","</table><pre>",$text);
+    $text = preg_replace("/(\n)?<table/i","</PRE><TABLE",$text);
+    $text = preg_replace("/<\/table>(\n)?/i","</TABLE><PRE>",$text);
     $text = !$text ? "No Contents" : $text;
-    $text = "<pre>$text</pre>";
+    $text = "<PRE>$text</PRE>";
   } else {
     $text = htmlspecialchars($text);
     # 한글 깨지는것 보정
-    if ($_code == 'ko') $text = ugly_han($text);
-    if ($html)
-      new_read_format($text);
-    else
-      $text = "<pre>\n$text\n</pre>";
+    if ($langs['code'] == "ko") $text = ugly_han($text);
+    $text = "<PRE>\n$text\n</PRE>";
     $text = auto_link($text);
   }
+  return $text;
 }
 
-function delete_tag(&$var) {
-  if ( $var['html'] != 1 )
-    return;
-
+function delete_tag($text) {
   $src = array("/\n/i","/<html.*<body[^>]*>/i","/<\/body.*<\/html>.*/i",
                "/<\/*(div|span|layer|body|html|head|meta|input|select|option|form)[^>]*>/i",
                "/<(style|script|title).*<\/(style|script|title)>/i",
@@ -449,7 +313,9 @@ function delete_tag(&$var) {
                "/#\^--ENTER--\^#/i");
   $tar = array("#^--ENTER--^#","","","","","","&lt;\\1","\\1&gt;","\\1>","\n");
 
-  $var['text'] = chop(preg_replace($src,$tar,$var['text']));
+  $text = chop(preg_replace($src,$tar,$text));
+
+  return $text;
 }
 
 # 문자열을 일정한 길이로 자르는 함수
@@ -470,7 +336,7 @@ function cut_string($s,$l) {
 # preg_replace  - 펄 형식의 정규표현식을 이용한 치환
 #                 http://www.php.net/manual/function.preg-replace.php
 function auto_link($str) {
-  global $agent,$rmail,$print;
+  global $agent,$rmail;
 
   $regex['file'] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
   $regex['file'] = "(\.({$regex['file']})\") TARGET=\"_blank\"";
@@ -495,21 +361,21 @@ function auto_link($str) {
   $src[] = "/&(quot|gt|lt)/i";
   $tar[] = "!\\1";
   $src[] = "/<a([^>]*)href=[\"' ]*({$regex['http']})[\"']*[^>]*>/i";
-  $tar[] = "<A\\1href=\"\\3_orig://\\4\" TARGET=\"_blank\">";
+  $tar[] = "<A\\1HREF=\"\\3_orig://\\4\" TARGET=\"_blank\">";
   $src[] = "/href=[\"' ]*mailto:({$regex['mail']})[\"']*>/i";
-  $tar[] = "href=\"mailto:\\2#-#\\3\">";
+  $tar[] = "HREF=\"mailto:\\2#-#\\3\">";
   $src[] = "/<([^>]*)(background|codebase|src)[ \n]*=[\n\"' ]*({$regex['http']})[\"']*/i";
   $tar[] = "<\\1\\2=\"\\4_orig://\\5\"";
 
   # 링크가 안된 url및 email address 자동링크
   $src[] = "/((SRC|HREF|BASE|GROUND)[ ]*=[ ]*|[^=]|^)({$regex['http']})/i";
-  $tar[] = "\\1<a href=\"\\3\" target=\"_blank\">\\3</a>";
+  $tar[] = "\\1<A HREF=\"\\3\" TARGET=\"_blank\">\\3</a>";
   $src[] = "/({$regex['mail']})/i";
-  $tar[] = "<a href=\"mailto:\\1\">\\1</a>";
-  $src[] = "/<a href=[^>]+>(<a href=[^>]+>)/i";
+  $tar[] = "<A HREF=\"mailto:\\1\">\\1</a>";
+  $src[] = "/<A HREF=[^>]+>(<A HREF=[^>]+>)/i";
   $tar[] = "\\1";
-  $src[] = "/<\/a><\/a>/i";
-  $tar[] = "</a>";
+  $src[] = "/<\/A><\/A>/i";
+  $tar[] = "</A>";
 
   # 보호를 위해 치환한 것들을 복구
   $src[] = "/!(quot|gt|lt)/i";
@@ -522,26 +388,21 @@ function auto_link($str) {
   $tar[] = "\\1";
 
   # email 주소를 변형시킴
-  $src[] = "/mailto:[ ]*{$regex['mail']}/i";
-  $tar[] = "javascript:sendform('\\1','\\2','');";
   $src[] = "/{$regex['mail']}/i";
-  #$tar[] = "\\1<img src=\"./images/at.gif\" width=9 height=13 border=0 alt='at'>\\2";
-  $tar[] = "\\1<img src=\"./theme/{$print['theme']}/img/at.gif\" width=9 height=13 border=0 alt='at'>\\2";
-  $src[] = "/<</";
-  $tar[] = "&lt;<";
-  $src[] = "/>>/";
-  $tar[] = ">&gt;";
+  $tar[] = "\\1 at \\2";
+  $src[] = "/<A HREF=\"mailto:([^ ]+) at ([^\">]+)/i";
+  $tar[] = "<A HREF=\"act.php?o[at]=ma&amp;target=\\1{$rmail['chars']}\\2";
 
   # email 주소를 변형한 뒤 URL 속의 @ 을 복구
   $src[] = "/_HTTPAT_/";
   $tar[] = "@";
 
   # 이미지에 보더값 0 을 삽입
-  $src[] = "/<(img src=\"[^\"]+\")>/i";
-  $tar[] = "<\\1 border=0>";
+  $src[] = "/<(IMG SRC=\"[^\"]+\")>/i";
+  $tar[] = "<\\1 BORDER=0>";
 
   # IE 가 아닌 경우 embed tag 를 삭제함
-  if($agent['br'] != "MSIE" && $agent['br'] != 'Firefox') {
+  if($agent['br'] != "MSIE") {
     $src[] = "/<embed/i";
     $tar[] = "&lt;embed";
   }
@@ -551,26 +412,27 @@ function auto_link($str) {
 }
 
 # Email 링크를 만들기 위한 함수
-function url_link($url, $str = '') {
+function url_link($url, $str = "", $no = 0) {
   global $table, $board, $rmail, $o, $agent;
   $str = $str ? $str : $url;
 
+  if($agent['br'] == "MSIE") {
+    $mailTarget = " Target=noPage";
+    $mailFrame = "<IFRAME NAME=\"noPage\" SRC=\"\" STYLE=\"display:none;\"></IFRAME>";
+  }
+
   if(check_email($url) && $rmail['uses']) {
-    $_estr = urlencode ($str);
-    if ( preg_match ('/^s|d$/i', $o['at']) && ($o['sc'] == "n" || $o['sc'] == "a")) {
-      $strs = preg_replace ('/<[^>]+>/i', '', $str);
-    } else {
-      $strs = $str;
-    }
+    if(preg_match("/^s|d$/i",$o['at']) && ($o['sc'] == "n" || $o['sc'] == "a")) {
+      $strs = preg_replace("/<[^>]+>/i","",$str);
+    } else $strs = $str;
+    $strs = str_replace("'", "\'", $strs);
 
-    $strs = str_replace ("'", "\'", $strs);
-    $_div = explode ('@', $url);
-
-    $str = "<a href=\"javascript:sendform('{$_div[0]}','{$_div[1]}','{$_estr}');\" " .
+    $url = str_replace("@",$rmail['chars'],$url);
+    $str = "<A HREF=./act.php?o[at]=ma&amp;target=$url ".
            "onMouseOut=\"window.status=''; return true;\" ".
-           "onMouseOver=\"window.status='Send mail to $strs'; return true;\">$str</a>";
+           "onMouseOver=\"window.status='Send mail to $strs'; return true;\"{$mailTarget}>$str</A>{$mailFrame}";
   } else if(check_url($url)) {
-    $str = "<a href=\"{$url}\" target=\"_blank\">{$str}</a>";
+    $str = "<A HREF=\"$url\" target=\"_blank\">$str</A>";
   } else {
     if($str == $url) $str = "";
     $str = "$str";
@@ -588,7 +450,7 @@ function url_link($url, $str = '') {
 # chmod            -> file, direcoty의 권한 변경
 #
 function file_upload($fn,$updir) {
-  global $upload, $_, $table;
+  global $upload, $langs, $table;
 
   $ufile['name'] = $_FILES[$fn]['name'];
   $ufile['size'] = $_FILES[$fn]['size'];
@@ -597,7 +459,7 @@ function file_upload($fn,$updir) {
 
   if(is_uploaded_file($ufile['tmp_name']) && $ufile['size'] > 0) {
     if ($ufile['size'] > $upload['maxsize']) {
-      print_error($_('act_md'),250,150,1);
+      print_error($langs['act_md'],250,150,1);
       exit;
     }
 
@@ -636,9 +498,9 @@ function file_upload($fn,$updir) {
     $up = 1;
   } elseif($ufile['name']) {
     if($ufile['size'] == '0') {
-      print_error($_('act_ud'),250,150,1);
+      print_error($langs['act_ud'],250,150,1);
     } else {
-      print_error($_('act_ed'),250,150,1);
+      print_error($langs['act_ed'],250,150,1);
     }
     exit;
   }
@@ -661,44 +523,45 @@ function unhtmlspecialchars($t) {
 }
 
 # Emoticon 변환 함수
-function conv_emoticon(&$str, $opt=0) {
+function conv_emoticon($str, $opt=0) {
   if (!$opt) return $str;
 
   $src[] = "/\^\^|\^\.\^/";
-  $con[] = "<img src=\"./emoticon/icon1.gif\" border=0 alt='emoticon'>";
+  $con[] = "<IMG SRC=./emoticon/icon1.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/([^0-9a-z])T\.T([^0-9a-z])/i';
-  $con[] = "\\1<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/\?\.\?/';
-  $con[] = "<img src=\"./emoticon/icon3.gif\" border=0 alt='emoticon'>";
+  $con[] = "<IMG SRC=./emoticon/icon3.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/([^0-9a-z]):-?(\(|<)([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon4.gif\" border=0 alt='emoticon'>\\3";
+  $con[] = "\\1<IMG SRC=./emoticon/icon4.gif BORDER=0 ALT='emoticon'>\\3";
   $src[] = '/([^0-9a-z])(:-?(\)|>)|n\.n)([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon5.gif\" border=0 alt='emoticon'>\\4";
+  $con[] = "\\1<IMG SRC=./emoticon/icon5.gif BORDER=0 ALT='emoticon'>\\4";
   $src[] = '/([^0-9])0\.0([^0-9])/';
-  $con[] = "\\1<img src=\"./emoticon/icon6.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon6.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/([^0-9a-z])O\.O([^0-9a-z])/i';
-  $con[] = "\\1<img src=\"./emoticon/icon6.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon6.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/-\.?-V/';
-  $con[] = "<img src=\"./emoticon/icon7.gif\" border=0 alt='emoticon'>";
+  $con[] = "<IMG SRC=./emoticon/icon7.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/([^0-9a-z])(-_-|-\.-)([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon8.gif\" border=0 alt='emoticon'>\\3";
+  $con[] = "\\1<IMG SRC=./emoticon/icon8.gif BORDER=0 ALT='emoticon'>\\3";
   $src[] = '/-0-|^0^|-O-|^O^/';
-  $con[] = "<img src=\"./emoticon/icon9.gif\" border=0 alt='emoticon'>";
+  $con[] = "<IMG SRC=./emoticon/icon9.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/([^0-9a-z]):-?D([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon10.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon10.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/([^0-9a-z]);-?\)([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon11.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon11.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/([^0-9a-z])\^_\^([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon12.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon12.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/([^0-9a-z]):-P|:P([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon14.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon14.gif BORDER=0 ALT='emoticon'>\\2";
 
-  $str = preg_replace($src, $con, $str);
-  $str = str_replace("ㅜ.ㅜ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
-  $str = str_replace("ㅠ.ㅠ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
-  $str = str_replace("ㅠ_ㅠ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
-  $str = str_replace("ㅜㅜ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
-  $str = str_replace("ㅠㅠ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
+  $ret = preg_replace($src, $con, $str);
+  $ret = str_replace("ㅜ.ㅜ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
+  $ret = str_replace("ㅠ.ㅠ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
+  $ret = str_replace("ㅠ_ㅠ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
+  $ret = str_replace("ㅜㅜ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
+  $ret = str_replace("ㅠㅠ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $ret);
+  return $ret;
 }
 
 function checkquote ( $str ) {
@@ -706,91 +569,5 @@ function checkquote ( $str ) {
   $str = str_replace ("\\\\/", "\\/", $str);
 
   return $str;
-}
-
-function sql_parser () {
-  $_argno = func_num_args ();
-  $_arg   = func_get_args (); 
-
-  $type  = $_arg[0];
-  $table = $_arg[1];
-
-  switch ( $_argno) {
-    case 4 :
-      if ( is_numeric ($_arg[2]) ) {
-        $acc = $_arg[2];
-        $name = $_arg[3];
-      } else {
-        $acc = $_arg[3];
-        $name = $_arg[2];
-      }
-      break;
-    case 3 :
-      if ( is_numeric ($_arg[2]) ) {
-        $acc = $_arg[2];
-        $name = '';
-      } else {
-        $acc = 0;
-        $name = $_arg[2];
-      }
-      break;
-    default :
-      $acc = 0;
-      $name = '';
-  }
-
-
-  switch ( $acc ) {
-    case 2  : $_base = '../../SQL'; break;
-    case 1  : $_base = '../SQL'; break;
-    default : $_base = './SQL';
-  }
-
-  $_file = "{$_base}/{$type}/{$table}.sql";
-
-  #$_rr = trim (readfile_r ($_file));
-  #if ( ! $_rr ) return '';
-  #$_rr = preg_replace ('/#.*|[\s]+$/', '', $_rr);
-  #$_r = explode (';', $_rr);
-  #$_r = preg_replace ('/^[\s]+/', '', $_r);
-
-  $_rr = @file ($_file);
-  $_rr = preg_replace ('/[\s]+$|#.*/', '', $_rr);
-
-  $i = -1;
-  foreach ( $_rr as $_v ) {
-    if ( $_v == '')
-      continue;
-
-    if ( $_v[0] == "\t" || $_v[0] == ' ' )
-       $_r[$i] .= "\n" . $_v;
-    else {
-       if ( $_r[$i] )
-         $_r[$i] = preg_replace ('/;$/', '', trim ($_r[$i]));
-
-       $i++;
-       $_r[$i] = trim ($_v);
-    }
-  }
-
-  if ( $name )
-    $_r = preg_replace ('/@table@/', $name, $_r);
-
-  return $_r;
-}
-
-function parse_referer () {
-  $referer = parse_url ($_SERVER['HTTP_REFERER']);
-  $referer['basename'] = basename ($referer['path']);
-
-  if ( ! is_array ($referer) )
-    return;
-
-  parse_str ($referer['query'], $ref);
-
-  if ( ! is_array ($ref) )
-    return;
-
-  return array_merge ($ref, $referer);
 }
 ?>
