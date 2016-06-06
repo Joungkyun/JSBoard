@@ -1,0 +1,11 @@
+Known Bug
+
+2001.11.21
+
+1. In writing, if you will write ' or " charactor, value of follow directive is
+   On in php.ini
+
+   magic_quotes_gpc        =       On
+
+   Case of any users, is not located in right path of php.ini.
+

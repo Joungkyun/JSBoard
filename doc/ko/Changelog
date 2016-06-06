@@ -1,232 +1,804 @@
-** JSBoard 2.1 Changelog
-**
-** Maintainer : 김정균 <http://oops.org>
-**
-** $Id: Changelog,v 1.64 2014-01-01 09:30:38 oops Exp $
+***** JSBOARD + OOPS administartion Center *********************************
+
+Original Developer              : Byung Chan Kim <redhands at linux.sarang.net>
+Maintainer                      : Joung Kyun Kim <admin at oops.org>
+Windog Version                  : Ki Soo Choi <choiks at nuri.net>
+
+## Warning ##
+
+This package turned out to work in Redhat Debian FreeBSD Windows systems.
+Any one who wants install this package on any other platform must revise
+it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
+file.
+
+******************************************************************************
 
 
--------------------------------------------------------------------------------
-버전 2.1.0
 
-2014.01.01
-by 김정균
-	- 이름, 제목, 내용을 공백 문자로 등록가능한 버그 수정
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.11
 
-2012.10.24
-by 김정균
-	- [#318355] PHP 5.4 및 magic_quotes_runtime = OFF 시의 글등록 문제 해결
+2005.08.23
+  by 장현성
+   - release 2.0.11
 
-2012.10.03
-by 김정균
-	- [#318316] captcha image 출력 잘못 되는 현상 수정
-
-2012.10.03
-by 김정균
-	- [#301263] windows 5.3 이전 버전에서 checkdnsrr 함수 지원하지 못하는
-	  문제 해결
-
-2012.01.25
-by 김정균
-	- variable.php에서 URL parameter 체크시에 object parameter 공격 가능성
-	  여부 차단
-
-2009.11.22
-by 김정균
-	- 게시판 모드 6에서 글 등록시 captcha 작동 하지 않는 문제 수정
-
-2009.11.17
-by 김정균
-	- 외부에서 JSBoard link로 XSS 유도 가능한 버그 수정
-	  http://oops.org/SERVICE/jsboard/read.php?table=jsboard_oopsQnA&no=52055
-
-2009.11.14
-by 김정균
-	- 에러 메시지 popup창에서 XSS 가능성 방지
-
-2009.09.03
-by 김정균
-	- SSL 접근시에 스팸 등록기로 판단되는 문제 수정
-
-2009.08.24
-by 김정균
-	- wrodwrap_js parsing 버그 수정
-
-2009.08.18
-by 김정균
-	- wrodwrap_js parsing 품질을 더 좋게 수정
-
-2009.07.03
-by 김정균
-	- Linux용 Firefox form size 조정
-
-2009.04.16
-By 김정균
-	- Feed 에서 <> 로 쌓여진 문자열 출력 안되는 문제 해결
-
-2009.04.09
-By 김정균
-	- RSS feed validator
-	- iconv 사용 가능시에 RSS를 utf8 로 출력하도록 변경
-
-2009.03.20
-By 김정균
-	- prelist javascript 오류 수정
-
-2009.02.01
-By 김정균
-	- block_devided function 에서 해당 블럭 시작이 0 일 경우 2번 파싱 되는 문제 수정
-	- block_devided function 에서 첫번째 블럭의 마지막 1byte 잘리는 문제 수정
-
-2009.01.19
-By 김정균
-	- old html format 에서 서식이 잘못 출력되는 문제 수정
-
-2008.12.31
-By 김정균
-	- 글 작성/수정 실패 시에 기입된 폼 정보 사라지는 문제 처리 추가
-
-2008.12.24
-By 김정균
-	- print_keymenu 에서 document.all 대신 docuemtn.getElementById 를 우선 사용
-	  하도록 변경
-	- captureEvent 만료로 addEventListener 로 변경
-
-2008.12.23
-By 김정균
-	- reply format 변경
-	- write/edit/reply page 에서 b key 를 이용해서 이전 페이지 이동
-
-by 박원규
-	- jsboard wikify patch (from http://ktug.kldp.org)
-
-2008.12.13
-By 김정균
-	- textarea 의 wrap 옵션 제거
-	  글 등록시에 강제로 라인 breaking 하던 것을 view page 하도록 변경
-	- html 쓰기 옵션 제거
-	  기본적으로 html 을 사용할 수 있도록 변경
-	  허가할 HTML tag 를 지정해 줘야 함. (BB code 처럼 <> 대신 []를 사용)
-	  [b]굵은 글씨[/b]
-	- code block 지원
-	  [code] ~ [/code] 에서 원본 형태 유지
-	  CSS 에서 jsCodeBlock id 로 design 제어 가능
-
-2008.12.04
-By 김정균
-	- IE 에서 document.location 에서 referer 남지 않는 문제 수정
-	- write/reply 에 referer 없는 접근 막음
-	- board['width'] 에 %가 존재할 경우 삭제 페이지의 타이틀 포맷이 깨지는
-	  문제 수정
-
-2008.12.02
-By 김정균
-	- textarea 크기 조절 기능 변경
-	- captcha 지원. doc/ko/README.CAPTCHA 참조
-
-2008.08.26
-By 김정균
-	- 댓글 작성시에 referer 의 글번호와 부모글 번호가 다를 경우 스팸 처리
-
-2008.07.27
-By 김정균
-	- IE 외의 브라우저에서 mp3 첨부 파일 자동 실행 지원
-
-2008.03.04
-By 김정균
-	- RSS 에서 안시 문자나 ESCAPE 의 ASCII 코드 출력시에 파싱안되는 문제 수정
-
-2007.07.19
-By 김정균
-	- IE7 에서의 RSS 출력 버그 수정
-
-2007.02.27
-By 김정균
-	- spam 체크 알고리즘 변경
-	- textBrowser 처리 변경
-
-2007.02.05
-By 김정균
-	- RSS feed 에 guid tag 지원
-
-2006.07.14
-By 김정균
-	- Opera 브라우저 정보 추가
-	- 첨부 파일 스트리밍시 브라우저별 encoding 지원 (RFC2231,RFC2047,RAW)
-	- 첨부파일 inline link encoding
-
-2006.07.13
-By 김정균
-	- php stream 을 이용한 다운로드시, fileinfo extension 이용하여 mime type 결정
-	- 첨부 파일 다운로드시 파일에 공백문자가 있을 경우 문제 수정
-
-2006.07.04
-By 김정균
-	- 글 등록시 스팸 등록기로 처리되는 버그 수정
-	- 자바스크립트 단위 오류 문제 수정
-
-2006.04.30
-By 김정균
-	- login.php 의 $table 변수의 전역화로 XSS attack 가능성 수정
-
-2006.04.18
-By 김정균
-	- image.php 에서 무조건 JPEG 형식으로 출력되던 버그수정
-
-2006.02.27
-By 김정균
-	- regular expression delimiter 버그 수정
-
-2005.10.26
-By 김정균
-	- 폼 정보를 유지하기 위한 session limiter 의 잘못된 값 수정
-
-2005.10.12
-By 김정균
-	- 글쓰기 시에, 이름/제목/암호 필드 null 체크를 javascript 로 수행
-	- 삭제 페이지에서 암호 필드에 기본으로 마우스 포커스 위치
-
-2005.10.05
-By 김정균
-	- 스팸 필터링된 문자열 알려주게 수정
-
-2005.08.29
-By 김정균
-	- 테마 config 디자인 파서 수정
-
-2005.08.15
-By 장현성
-	- sessionInit 함수 추가 (check.php)
-	- admin_head.php parse 에러 수정
-	- mkdir_p 함수 parse 에러 수정
-
-2005.08.14
-By 장현성
-	- 최근 12시간내 코멘트 숫자 볼드처리 기능 삭제
+2005.08.22
+  by 김정균
+	- 테마 설정의 라인 design 파서 수정
 
 2005.08.13
-By 김정균
-	- changelog 형식 변경
-	- comment 등록시에 comment count 올라가지 않는 버그 수정
-	- print_p 함수 추가
+  by 김정균
+	- 커멘트 등록시에 커멘트 등록 카운터 증가 하지 않는 버그 수정
 
-2005.08.11
-By 장현성
-	- 세션템프 파일의 디렉토리를 php 공통 세션 템프 디렉토리에서 JSboard 전용 세
-	  션 디렉토리로 빼옴
-	- user.php 파일 html 태크 오류 수정
-	- 각 게시판 sample config 파일의 로그아웃 후 이동 페이지 링크 파싱오류 수정
-	- theme 글쓰기 폼의 이미지 파일 링크 오류 수정
-	- installer 테마설정 부분 default 값 선정 오류 수정
-	- 코멘트 사용시에 최근 12시간내에 달린 코멘트가 있을경우 코멘트 카운트 볼드
-	  처리
-	- 문서화를 위한 doc 디렉토리 생성
+2005.05.07
+  by 김정균
+	- Agent 정보에 Firefox 추가
+	- MySQL 4.1 에서 검색 에러 수정
 
-2005.07.24
-By 김정균
-	- jsboard 2.1 트리 시작
-	- 언어구조 변경
-	- 테마 구조 변경
-	- sqlite / pgsql / mysql / mysqli 지원
-	- web 설치 모드 제거
-	- 쉘 모드 설치 스크립트 지원
+2005.04.06
+  by 김정균
+	- 일부 단축키 오작동 수정
+
+2005.03.31
+  by 김정균
+	- prelist 에 $prlist[starttag], $prlist[endtag] 변수 추가
+
+2005.03.23
+  by 김정균
+ 	- rss <link> tag 추가
+	- 테마 버전 A8 로 업데이트
+
+2005.02.20
+  by 김정균
+	- HTML 4.01 Validation
+	- CSS 2.0 Validation
+
+2005.01.24
+  by 장현성
+	- 인스톨시 웹서버 설정파일에서 index.php가 등록되어 있는지 체크하는
+	  부분에서 설정파일의 경로를 여러개 입력할 수 있도록 수정
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.10
+
+2005.01.02
+  by 김정균 <http://www.oops.org>
+	- session.php 의 일부 코드에서 서버의 임의의 파일을 열 수 있는 보안
+	  버그 수정
+	- include 의 경로에 사용되는 변수 체크 루틴 강화
+
+2004.12.20
+  by 김정균 <http://www.oops.org>
+	- 업로드 파일 체크에서 한글 영역의 특수 문자 처리 루틴 재작성
+	- proxy server IP 를 잘못 가져오는 버그 수정
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.9
+
+2004.12.09
+  by 김정균 <http://www.oops.org>
+	- 업로드 파일 체크에서 한글 영역의 특수 문자 사용가는 한 것을 막음
+	- 파일 업로드시 다중 확장자를 이용한 mime type attack 방지 코드 추가
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.8
+
+2004.09.22
+  by 김정균 <http://www.oops.org>
+	- rss.php 업데이트. RSS 2.0 지원
+	- auto_increment 시 DEFAULT VALUE 설정 삭제 (MySQL 4.1 지원)
+	- rss feed 의 글 제목에 특수 문자 삽입시 에러 수정
+	- 주석및 문서파일의 .ph 확장자 잘못 기술 된 것 수정
+
+2004.08.17
+  by 김정균 <http://www.oops.org>
+	- NOWRAP 을 CSS 로 변경
+
+2004.07.15
+  by 김정균 <http://www.oops.org>
+	- html title 위치 수정. (검색을 위하여)
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.7
+
+2004.03.12
+  by 김정균 <http://www.oops.org>
+	- .ph 파일을 .php 로 변경
+	- theme version A7 으로 올림
+
+2004.03.05
+  by 김정균 <http://www.oops.org>
+	- jsboard 의 함수를 재사용하여 rss.php 를 재작성
+
+  by 임은재 <http://kldp.org/~eunjea/>
+	- rss.php 에서 charset 을 설정 파일에서 받아오게 수정
+	- rss 의 XML 헤더 추가
+
+  by 김정균 <http://www.oops.org>
+	- RSS 링크 align 버그 수정
+
+2004.02.27
+  by 김정균 <http://www.oops.org>
+	- 이전 버전에서 업데이트를 하여, 커멘트를 사용하지 않을 경우
+	  comm field 관련 에러 나는 것을 수정
+	- RDF 링크 위치가 잘못 붙는 것 수정
+
+2004.02.24
+  by 김정균 <http://www.oops.org>
+	- 영문 테마 delete.template 오타 수정
+
+2004.02.18
+  by 김정균 <http://www.oops.org>
+	- 검색어 슬래쉬 파싱 에러 수정
+
+2004.02.14
+  by 김정균 <http://www.oops.org>
+	- php unset() 함수 버그 수정
+
+2004.02.07
+  by 함기훈 <cloou at scscian.net>
+	- RSS 기능 추가
+
+  by 김정균 <http://www.oops.org>
+	- check_iframe 함수 버그 수정
+	- iframe 태그 사용시 parsing 버그 수정
+	- 검색어 [] 를 사용시의 파싱 에러 수정
+
+2003.12.03
+  by 김정균 <http://www.oops.org>
+	- 타 OS 와의 호환성을 위하여 exec 함수 완전 제거
+          대체 함수로 unlink_r 함수 추가
+
+2003.11.05
+  by 김정균 <http://www.oops.org>
+	- 메일 발송 파싱 에러 수정
+
+2003.09.02
+  by 김정균 <http://www.oops.org>
+	- 스팸문자열 체크시에 각 라인의 앞뒤 공백라인 제거
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.6
+
+2003.07.28
+  by 김정균 <http://www.oops.org>
+	- comment 알고리즘 변경 (DB 변환 필요)
+	- security warning 기능 제거
+
+2003.07.23
+  by 김정균 <http://www.oops.org>
+	- login.php 의 php injection 보안버그 수정
+
+2003.04.13
+  by 김정균 <http://www.oops.org>
+	- IE 6.0 이상 버전 부터 BMP 파일에 미리보기 기능 추가
+
+2003.04.05
+  by 김정균 <http://www.oops.org>
+	- 게시판 관리자의 IP Blocking/HyperLink 기능 버그 수정
+
+2003.04.04
+  by 김정균 <http://www.oops.org>
+	- 테마의 배열 이름을 싱글 쿼터로 보호
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.5
+
+2003.03.31
+  by 김정균 <http://www.oops.org>
+	- 수정모드 버그 픽스
+	- 첨부파일만 수정 가능하도록 수정
+
+2003.03.26
+  by 김정균 <http://www.oops.org>
+	- README.OPERATE 의 오타 수정
+
+2003.03.23
+  by 김정균 <http://www.oops.org>
+	- 수정시 임의의 공격자가 웹서버 소유의 파일을 삭제할 수 있는 버그 수정
+	- 이모티콘 함수 수정
+
+2003.03.20
+  by 김정균 <http://www.oops.org>
+	- 코멘트 사용시 상세 검색에서 조건 에러나는 버그 수정
+	- 이모티콘 함수 수정
+
+2003.03.18
+  by 김정균 <http://www.oops.org>
+	- xml tag 를 막음
+	- 오타 수정
+
+2003.02.28
+  by 김정균 <http://www.oops.org>
+	- image 공격 태크 삭제하게 변경
+	- 이모티콘 함수 수정
+
+2003.02.21
+  by 김정균 <http://www.oops.org>
+	- shot tag 관련 업데이트
+
+2003.02.01
+  by 김정균 <http://www.oops.org>
+	- 커멘트 등록 이름의 이모티콘 버그 수정
+
+2003.01.30
+  by 김정균 <http://www.oops.org>
+	- 어드민 페이지에서 multibyte 언어모드시 문자 깨지는 것 수정
+	- 이모티콘 ㅠ_ㅠ 추가
+
+2003.01.23
+  by 김정균 <http://www.oops.org>
+	- mozilla netscape style sheet 보정
+	- admin 영역에 magic_quotes_gpc 처리
+
+2003.01.22
+  by 김정균 <http://www.oops.org>
+	- print_keymenu 함수 이름을 print_keymenu 로 보정
+	- 게시판 폭이 % 로 지정이 되었을 경우 글 제목 길이 보정 하지 않게 수정
+	- textarea 사이크 보정함수 수정
+
+2003.01.16
+  by 김정균 <http://www.oops.org>
+	- 코멘트 이름을 30자로 제한
+
+2003.01.13
+  by 김정균 <http://www.oops.org>
+	- emoticon 에서 0.0 의 버그 패치
+
+2002.12.28
+  by 김정균 <http://www.oops.org>
+	- 4.3.0 의 setlocale bug 수정
+	- emoticon 에서 TT, ? 를 삭제
+	- emoticon 에 :-P, :P, ㅠ.ㅠ ㅜ.ㅜ 추가
+
+2002.12.25
+  by 김정균 <http://www.oops.org>
+	- 이모티콘 기능에 의해 http 프로토콜 표시가 깨지는 것 수정
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.4
+
+2002.12.25
+  by 김정균 <http://www.oops.org>
+	- 테마 버전 A5 업데이트
+	- LSN style 단축키 확장
+	- emoticon 기능 추가
+
+2002.12.22
+  by 김정균 <http://www.oops.org>
+	- README 파일 오타 수정
+
+2002.12.01
+  by 김정균 <http://www.oops.org>
+	- check_iframe 함수 추가
+
+2002.12.01
+  by 김칠봉 <http://www.linuxchannel.net>
+	- check_htmltabel 함수 재작성
+
+2002.11.27
+  by 김칠봉 <http://www.linuxchannel.net>
+	- human_fsize, get_hostname 함수 수정
+
+2002.11.20
+  by 김정균 <http://www.oops.org>
+	- 어드민 페이지에서 user 설정 페이지의 링크가 잘못된 것 수정
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.3
+
+2002.11.18
+  by 김정균 <http://www.oops.org>
+	- 2.0.3 release
+	- 업로드 파일 체크 함수에서 잘못된 변수 수정 (보안 관련)
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.2
+
+2002.11.18
+  by 김정균 <http://www.oops.org>
+	- 2.0.2 release
+
+2002.11.17
+  by 김정균 <http://www.oops.org>
+	- 글 본문에 textarea 관련 태그가 존재할 경우 수정/답변 화면이 깨지는
+	  버그 수정
+	- 답장시 원본글 파실 에러 수정
+
+2002.11.16
+  by 김정균 <http://www.oops.org>
+	- php.ini 의 file_uploads 의 값이 Off 일 경우 글쓰기에서 POST 변수
+	  넘어가지 않는 버그 수정
+	- regex 가 system 일 경우 에러 발생 수정
+
+2002.11.13
+  by 김정균 <http://www.oops.org>
+	- 이름에 ' 문자가 들어갈 경우의 자바스크립트 에러 수정
+
+2002.10.30
+  by SIGTERM <youngman at hanmail.net>
+	- 영문 문서 업데이트
+
+2002.10.27
+  by SIGTERM <youngman at hanmail.net>
+	- 영문 문서 업데이트
+
+2002.10.21
+  by 김정균 <http://www.oops.org>
+	- 로그아웃 페이지의 기본값을 list.php 에서 login.php 로 변경
+
+2002.10.14
+  by 이정현 <http://junghyun.pe.kr>
+	- 상세 검색 페이지의 고정폭 문제 수정
+
+2002.10.10
+  by 김정균 <http://www.oops.org>
+	- 글리스트에 font tag 사용할 경우 제목 글수가 엉키는 현상 수정
+
+2002.10.08
+  by 김정균 <http://www.oops.org>
+	- 언어 추가를 유연하게 하도록 수정
+	- 일본어 테마 추가
+
+2002.10.02
+  by 김정균 <http://www.oops.org>
+	- 답글 등록시 패스워드 지정안할 경우 에러 메세지 출력 되지 않던것 수정
+
+2002.10.01
+  by 김정균 <http://www.oops.org>
+	- html tag 의 마지막이 % 로 끝날경우 파싱 에러 수정
+	- iframe tag 를 사용하지 못하게 수정
+	- html 첨부 파일 미리보기 안되던 것 수정
+	- keyborad 제어 코드 추가
+	- 테마 버젼 A4 업데이트
+
+2002.09.07
+  by 김칠봉 <http://www.linuxchannel.net>
+	- get_hostnmae 함수 수정
+
+2002.09.05
+  by 김정균 <http://www.oops.org>
+	- get_hostname 함수 수정
+
+2002.09.03
+  by 김정균 <http://www.oops.org>
+	- 영문 언어 설정 파일 수정
+
+2002.08.27
+  by 김정균 <http://www.oops.org>
+	- 첨부파일 이름이 urlencode 되었을 경우 문제 해결
+	- gd 1.6 이상 버젼과 연동이 되었을 경우 gif image 를 첨부파일로 올렸을
+	  경우 preview 이미지 깨지는 현상 수정
+
+2002.08.17
+  by 김정균 <http://www.oops.org>
+	- Installer 에서 Zento Linux 지원
+
+2002.08.09
+  by 김정균 <http://www.oops.org>
+	- sql_db_query() 함수의 오타 수정
+
+2002.07.31
+  by 김정균 <http://www.oops.org>
+	- 영문 INSTALL 파일 등록
+
+2002.07.30
+  by 김정균 <http://www.oops.org>
+	- 최신글 보기 기능 재작성
+	- SunOS, Solaris 의 쉘 스크립트 수정 메뉴얼 지원
+
+2002.07.29
+  by 김정균 <http://www.oops.org>
+	- external.ph 사용시 $edb[uses] = 0 의 경우 인증 실패 수정
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.1
+
+2002.07.28
+  by 김정균 <http://www.oops.org>
+	- 게시판 관리자가 게시판 head/tail 에 php 를 작성할 수 있는 문제 수정
+
+2002.07.24
+  by 김정균 <http://www.oops.org>
+	- global.ph 파일 업그레이드 스크립트에서 user config 파일 정보를 고정
+	- $rmail[mta] 값을 서버 주소로 지정할 경우 더블 쿼우트 문제 수정
+
+2002.07.23
+  by 김정균 <http://www.oops.org>
+	- 원본글 포함 옵션 오작동 수정
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0.0
+
+2002.07.20 by 김정균 <http://www.oops.org>
+	- OSTYPE 환경 변수 지원안할 경우의 OS type 구하는 루틴 추가
+	- 언어 파일의 잘못된 변수명 수정
+
+2002.07.18 by 김정균 <http://www.oops.org>
+	- IE 에서 메일 링크를 클릭했을 때, 다른 페이지로 넘어가는 것 수정
+
+2002.07.16 by 김정균 <http://www.oops.org>
+	- root script 버그 수정
+
+2002.07.10 by 김정균 <http://www.oops.org>
+	- 게시판 통계에서 오늘 올라온 글 통계 수정
+	- 0 byte 파일이 업로드 되는 것 막음
+
+2002.07.06 by 김정균 <http://www.oops.org>
+	- 외부 DB 를 이용한 인증시, 암호화 여부 설정이 반대로 된 것 수정
+
+2002.07.04 by 김정균 <http://www.oopw.org>
+	- 공지사항 글 추가
+
+2002.06.30 by 김정균 <http://www.oopw.org>
+	- mozilla 의 폼사이즈 조정 (Linux/Windows v1.0.0 기준)
+
+2002.06.27 by 김정균 <http://www.oops.org>
+	- 글 리스트에 코멘크 갯수 출력
+	- 코멘트에서 font tag 사용 가능하게 수정
+	- 코멘트에서 url 에 autolink 적용
+
+2002.06.17 by 김정균 <http://www.oops.org>
+	- logout 후의 이동 페이지를 여러곳으로 지정 가능하게 수정
+	- logout 링크 추가
+	- 테마 버젼을 A3 로 업데이트
+
+2002.06.15 by 김정균 <http://www.oops.org>
+	- 최신글 미리보기 기능의 디자인 분리
+
+2002.06.13 by 김정균 <http://www.oops.org>
+	- 커멘트에서 KSX 1001 범위외의 문자 처리
+	- 코멘트 정렬정보를 쿠키로 등록
+
+2002.06 10 by 김정균 <http://www.oops.org>
+	- 커멘트에서 삭제, 소트 링크에 이미지 링크 사용가능 하도록 수정
+
+2002.06.08 by 김정균 <http://www.oops.org>
+	- 게시판 관리자에서 첨부파일 링크 설정 에러 수정
+
+2002.06.07 by 임은재 <http://kldp.org/~eunjea/>
+	- 코멘트 등록시 관리자 사칭 설정이 안되어 있을 경우 에러 발생하는 것
+	  수정
+
+2002.06.07 by 김정균 <http://www.oops.org>
+	- freeze 2.0.0
+	- 코멘트 입렵창 위치 고정 및 배색 변경
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0pre4
+
+2002.06.05 by 김정균 <http://www.oops.org>
+	- document update
+
+2002.06.02 by 김정균 <http://www.oops.org>
+	- Install script 에 FreeBSD 의 httpd.conf 경로 추가 (PORT 사용시)
+
+2002.05.30 by 임은재 <http://kldp.org/~eunjea/>
+	- 수정시 변경사항 체크에 email 과 url 검사 추가
+
+2002.05.30 by 김정균 <http://www.oops.org>
+	- 코멘트 테이블이 존재하지 않을 경우, 글 삭제시 에러나던것 수정
+	- 테마에 문서 타입 정의 추가
+
+2002.05.28 by 김정균 <http://www.oops.org>
+	- 게시판 관리자 이메일 사칭 체크 버그수정
+
+2002.05.27 by 김정균 <http://www.oops.org>
+	- 코멘트에서 정렬을 유저가 직접 선택할 수 있도록 변경
+
+2002.05.26 by 김정균 <http://www.oops.org>
+	- 게시판 관리자를 여러명 지정할 수 있게 변경
+	- 첨부파일 링크 방식을 설정할 수 있도록 수정
+
+2002.05.25 by 김정균 <http://www.oops.org>
+	- comment 기능 추가
+	- act.php 의 check_article 함수의 오타 수정
+
+2002.05.14 by 김정균 <http://www.oops.org>
+	- license link 수정
+
+2002.05. 6 by 김정균 <http://www.oops.org>
+	- html 사용안함에서 &nbsp; 문자가 blank 문자로 출력되는 것 수정
+
+2002.05. 3 by 임은재 <http://kldp.org/~eunjea/>
+	- get_agent 함수에 links 와 w3m 추가
+
+2002.05. 1 by 김칠봉 <http://linuxchannel.net>
+	- get_microtim(), human_fsize() 함수 재작성
+
+2002.04.29 by 김정균 <http://www.oops.org>
+	- php.ini 의 precision 값을 15 로 고정.
+	- get_spam_value 함수 수정 (for php 4.2.0)
+
+2002.04.25 by 임은재 <http://kldp.org/~eunjea/>
+	- php.ini 에서 allow_call_time_pass_reference 의 값이 off 일 경우
+	  경고 메세지 출력되는 것 수정
+
+2002.04.23 by 김정균 <http://www.oops.org>
+	- php 4.2.0 에서 spam 등록기 등록 오류 수정
+	  4.2.0 에서의 큰 수의 숫자 연산값 표현방식 변경
+
+2002.04.22 by 김정균 <http://www.oops.org>
+	- 정규표현식 검색시 [,( 패턴을 제대로 닫지 않을 경우 처리 루틴 추가
+
+2002.04.22 by 임은재 <http://kldp.org/~eunjea/>
+	- 등록된 글수의 정보를 가져오는 sql 쿼리를 2번에서 1번으로 줄임
+
+2002.04.19 by 김정균 <http://www.oops.org>
+	- 미리보기 문자열에서 개행문자 때문에 발생하는 에러 수정
+
+2002.04.15 by 임은재 <http://kldp.org/~eunjea/>
+	- JSBoard 자체 발송의 경우 Date 헤더를 추가
+	- theme 의 html 오류 수정
+
+2002.04.13 by 김정균 <http://www.oops.org>
+	- 제목이 길 경우 테이블 크기에 맞춰 다음줄로 넘기게 수정
+
+2002.04.12 by 임은재 <http://kldp.org/~eunjea/>
+	- sendmail.ph 에서 Message-Id 문제 수정
+
+2002.04.11 by 김정균 <http://www.oops.org>
+	- cut_string() 함수 재작성
+
+2002.04.10 by 김정균 <http://www.oops.org>
+	- 등록된 글의 메일에서 답장 링크 삭제 (스팸방지 기능과 충돌)
+	- text 브라우져를 위한 기능및 디자인 수정
+	- INSTALLER text 브라우져 지원
+
+2002.04.08 by 임은재 <http://kldp.org/~eunjea/>
+	- 자바스트립트 지원않는 브라우져 위해 에러 메세지 출력 수정
+
+2002.04.07 by 김정균 < http://www.oops.org>
+	- 글등록시 이름,제목,본문의 null 체크시 0xA1A1 이 통과되는 것 수정
+	- Changelog 양식 변경
+	- 언어가 한국어가 아닐경우 폼사이즈 버튼이 image 로 출력되던것을 텍스트로 변경
+
+2002.04.07 by 임은재 <http://kldp.org/~eunjea/>
+	- qmail 에서 maildaemon class 작동 제대로 안되던 것 수정
+
+2002.04.06 by 김정균 < http://www.oops.org>
+	- 4.1.0 이상의 버젼을 요구
+	- 내부 회원 DB 사용시 유저관리 페이지 뜨지 않는 버그 수정
+	- 답장 등록시 의 최고 no 값 가져오는 SQL 버그 수정
+	- file_operate() 함수에서 windows 용일 경우 \r\n 사용할 수 있도록 수정
+	- get_hostname() 함수에서 proxy 의 환경변수들을 추가
+	- auto_link() 함수에서 URL 에 email 형태의 주소가 포함될 때 링크가 깨지는
+	  것 수정
+	- html 사용시에 table 태그 잘못 입력할 경우 디자인이 깨지는 것 방지
+	- 답장시 자신의 글에 답장을 할 경우 메일 발송 안되게 수정
+	- 검색단어 하이라이팅시 버그 수정
+	- 상세 검색에서 3 자 미만의 검색어가 필터링 되지 않던것 수정
+	- 테마에서 잘못된 tag 수정
+	- sendmail.cf 의 한글 하드코딩 수정
+	- prelist.ph 의 쓸모없는 코드 삭제
+	- exec 함수를 iis 만 체크 하던 것을 windows 체크로 변경
+	- 문서파일 정리
+	- 언어 파일에서 필요 없는 변수 삭제
+	- 외부 DB 사용시 패스워드가 암호화가 되어 있지 않을 경우 발생하는 문제 수정
+	- theme 버젼 A2 로 업데이트 (theme/Changelog.theme 참조)
+	- 패스워드 길이를 16자 까지 가능하게 변경
+	- 삭제 화면에서 이메일 주소를 포함한 글의 이름이 메일 주소로 나오는 것 수정
+	- register_global = Off 지원
+	- 이미지 사이즈가 화면 해상도와 동일하거나 거의 비슷할 경우 이미지 창이 화면
+	  을 덮어 모두 볼 수 없는 현상 수정
+	- 윈도우즈 버젼을 위해 헤더 파일에서 exec 함수 인클루드 하는 것 수정
+	- oops admincenter 타이틀및 하단 copyright 삭제
+	- Cookie 시간 표현 방식 변경
+	- register_globals = off 를 위해 upload file 처리 변경
+	- auto_link() 함수 버그 수정
+	- 테마 수정
+	- 등록 공지 메일을 plain 에서 base64 로 인코딩하여 발송하게 변경
+	- INSTALLER/script/dbconv_to_20 의 문법 에러 수정
+	- 게시판 관리자 실행시 html header 와 html tail 이 사라지는 것 수정
+	- 스팸체크 수정
+	- 인증 실패시 게시판을 table 변수가 제거 되는것 수정
+	- mail() 함수의 -f 옵션에서 쌍따옴표 제거
+	- 상세 검색에서 동일날자의 글을 검색시 12시 이후에 등록된 글이 검색되지
+	  않는것 수정
+	- spam check 에 글제목도 추가
+	- Installer 에서 외부 DB 를 지정했을 경우 global.ph 에 반영되지 않던것 수정
+	- session_unregisted() 함수를 session_destroy() 로 변경
+	- 상세 검색폼에서 오타 수정
+	- 글등록시 table 체크외에 iframe 체크 추가
+	- error.php 에서 $table 변수 체크 하던것 수정
+	- prelist 사용시 에러 출력에서 agent 정보가 전달되지 못하던것 수정
+	- 다운로드 헤더 변경
+	- register_globals = Off 상에서 보안 정보 페이지에서 목록 돌아오지 못하던것 수정
+	- register_globals = ON 상태에서 parse_query() 함수 작동하지 않도록 수정
+	- Install 시 mysql 에러 메세지의 경로 잘못 출력되는 것 수정
+	- mail.template 의 오타 수정
+	- 메일발송을 JSBoard 자체적으로 하게 변경 (시스템의 mail daemon 에 의존 안함)
+	- 정규 표현식 버그 수정
+	- 메일등록시 메일 서버가 유효한지 체크하도록 수정
+	- 인증에서 사용하는 쿠키 삭제.
+	- 빈 세션 파일 생성하는 것 수정
+	- image.php 추가
+	- 전체 어드민에서 jsboard 에서 사용하는 table 체크시 idx 필드를 전체 스캔하는
+	  것 수정
+	- 무단 링크 제어 기능 추가
+	- IP Blocking 기능 추가
+	- magic quotes 설정을 강제로 지정
+	- url 에 검색어가 여러개 존재할 때 검색어 하이라이트 기능이 깨지는 것 수정
+	- mbstring 함수 지원 - check_spam() function
+	- sql 쿼리에 악의적인 공격을 막기위해 쿼리에 사용되는 모든 변수를 '' 처리
+	- wordwrap 관련 syntax error 수정
+	- 수정/답장시 원본글을 변형해서 DB 에 넣는것 수정
+	- 외부 메일 서버 지정할 수 있도록 수정
+	- 스팸 등록기 체크 기능 추가
+	- php.ini 의 upload_max_filesize 의 값을 자동으로 post_max_size 보다 1M 보다 작게
+	  지정하도록 수정. (post_max_size 는 시스템 관리자만 수정이 가능)
+	- 업로드 최대용량이 post_max_size 보다 클 경우 자동으로 post_max_size 로 변경되게
+	  수정
+	- 대용량 업로드시를 위해 php excution time 을 지정할 수 있도록 수정
+	- URL 에 쉼표가 있을때, 이를 URL 로 인식하지 못하는 것 수정
+	- 리스트에서 글 본문 미리보기시 KSX 1001 범위외의 글자가 NCR 코드 그대로
+	  보이는 것을 수정
+	- meta_char_check() 함수 수정
+	- install script 수정
+	- auto_link() 함수 수정
+	- 검색 루틴 수정
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0pre3
+
+
+2001.12.31 by 김정균 <http://www.oops.org>
+	- README.THEME 추가 설명
+	- list.ph 에서 list field 에 null field 를 사용할 수 있도록 수정
+	- $board[path] 에 포트를 사용할 경우 오류 나는것 수정
+	- 한글 테마에서 오타 수정
+	- user 등록을 global.ph 에서 어드민만 또는 아무나 가능하게 설정
+	- 전체관리자에서 유저등록 페이지 연결
+	- 게시판 관리자에서 전체 관리자만 관리자를 변경할 수 있도록 수정
+	- 게시판 관리자가 null 로 설정되어 있을때 강제로 admin 으로 설정되게 수정
+	- check_url, check_email 함수 수정 (- 문자 필터링에 실패)
+	- 패스워드 없는 게시물 무단 수정/삭제 되던 문제 재발생및 수정
+	- 외부 DB 를 이용하여 INSTALLER 를 사용할 경우 유저 접근 권한 설정이
+	  localhost 로 제한 되는것 수정
+	- Email link 에 mouse over 할때 상태바에 Email link 를 보여주지 않게 수정
+	- get_agent 함수가 중복되어 사용되던 문제 수정
+	- IE 의 UTF8 사용시 한글 파일 업로드 문제 해결 (urlencode 처리)
+	- 이미지 업로드에서 이미지 사이즈(width, height) 잘못 표시 되던것 수정
+	- lynx 에서 글등록 안되던 버그 수정
+	- IE 5.5 미만 버젼에서 쿠키가 브라우져 종료시 삭제 되는 것 수정
+	- 게시판 관리자에서 권한 설정이 잘못 되는것 수정
+	- 이름 검색시 메일 링크되어 있는 이름의 링크가 깨지는 것 수정
+	- search_hl() 함수 완전 수정
+	- KnownBug 문서 update
+	- 유저추가시 유저이름에 공백 문자 사용 못하던것 수정
+	- 관리자 기능에서 유저 추가시 추가후 추가창이 리스트로 향하는것 수정
+	- 글읽기시 조회수가 읽고난 다음 추가되는 것을 읽을때 바로 추가되게 수정
+	- 게시판 관리자에서 중복되게 include 하는 루틴 제거
+	- png 의 icon type 이 잘못 나오는것 수정
+	- 메일주소 링크 형식을 변경 가능 하도록 수정
+	- 메일발송 함수의 FROM 처리 변경
+	- mysql replication 연동 기능 추가
+	- 로그인을 했을 경우만 session_start() 함수 사용(Cookie 이용 체크)
+	- 일반 모드에서 패스워드 없이 글 등록 못하게 수정
+	- 테마 버젼 표기 (include/version.ph)
+	- 상세 검색기능 추가
+	- 검색시 처음 변수값들이 post 로 넘어가는 것을 get 방식으로 전환
+	- mode 4,6 에서 일반 유저의 패스워드가 적용되지 않는 것 수정
+	- 설정 파일 convert 파일 수정
+	- 게시판 등록 안되는 문제 수정
+	- 이름검색시 에러 수정
+	- 유저 등록시 url 에 http:// 가 붙지 않도록 통일
+	- search_hl() 함수의 오타 수정
+	- prelist 의 include bug 수정
+	- whois 검색 기능 사용안할 경우 큰 이미지 원본보기 기능 안되는것 수정
+	- 원본 이미지 보기에서 IE 의 UTF-8(한글 파일 이름) 문제 해결
+	- 게시판 관리자의 include 파일 출력 순서 수정
+	- session_destory() 함수를 session_unregister() 함수로 변경
+	- 오탈자 수정
+	- PHP 4.1.0 에서 패스워드 길이가 변경된것 적용
+	- INSERT query 에서 file 명을 지정
+	- moder 필드 삭제
+	- login mode 시에 이름 출력을 닉네임 또는 리얼네임을 출력하도록 선택을
+	  할 수 있게 수정 (rname field 추가)
+	- IE 6.0 에서 cookie 적용되지 않던것 수정
+	- 외부 회원 DB 연동 가능하게 수정 (README.OPERATE 참고)
+	- 내부 보안버그 패치
+	- parse.ph 의 delete_tag(), nl2br() 함수 수정
+	- 1,000,000 건 이상의 레코드를 위해 SQL query 변경 (선택)
+	- admin center 라이센스를 GPL 로 변경
+	- Form mail header 변경
+	- url link 에서 & 가 &amp; 로 표기되던것 수정
+	- security 정보가 초기화 되는것 수정
+	- 관리자 로그인시 패스워드 묻는것 수정
+	- 보안을 위해 미리보기에서 embed, img tag 를 삭제
+	- db 변환 스크립트 추가
+	- auto_link() 함수 수정
+	- 미리보기시 html 방식 작성글의 경우 html parsing 을 하던 것을 하지
+	  않고 소스를 보여주게 변경
+	- INSTALLER 수정
+	- DOCUMENT 업데이트
+	- 등록화면의 nick name, real name 출력 부분 수정
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0pre2
+
+2001.11.04 by 김정균 <http://www.oops.org>
+	- auto_link 함수 수정 (eregi_replace 함수를 preg_replace 로 모두 대체)
+	- no login 모드시에 로그인이 되어 있을경우 글 삭제가 되지 않는것 수정
+	- list.php 의 쓸모없는 </FONT> tag 삭제
+	- login 모드의 게시판을 $board[dpath] 로 지정했을 경우, 로그인 안한 상
+	  태로 해당 게시판으로 접근했을때 무한루프 도는것 수정
+	- login.php 의 이미지 경로 잘못된것 수정
+	- 테마에서 마지막의 </HTML> 이 <HTML> 로 되어 있는 것들을 제대로 수정
+	- 테마에서 각 유저별 디자인과 전체 관리자의 디자인의 include 순서 변경
+	- act.php 에서 변수처리 잘못한것 수정
+	- return path 가 없는 경우를 위해 mail() 함수에서 -f 옵션 처리
+	- form size 크기를 테마 설정 파일에서 각 게시판 admin 으로 이동
+	- url 에 포트번호가 들어가는 경우 처리할 수 있게 수정
+	- 게시판 mode 6,7 추가
+	  mode 6 -> Reply only admin (No login mode)
+	  mode 7 -> Reply only admin (Login mode)
+	- IE 5.5 이상 버젼의 쿠키 적용 잘 안되던것 수정
+	- admin page 에서 로그인 실패시 로그인 페이지에 admin page 의 변수를 첨가
+	- 댓글의 화살표 이미지를 테마에서 수정 가능하도록 수정
+	- 글 list 의 강제 font size 제거
+	- 폰트체를 테마에서 각각 선택할 수 있도록 수정
+	- list 페이지의 필드 순서를 변경할 수 있도록 수정
+	- mail 발송 함수 수정
+	- README.CONFIG 업데이트
+	- list 화면에서 page link 출력 방식 변경
+	- 댓글을 쓸때 원본글이 원본글 표시 문자 때문에 다음줄로 밀리는 것 수정
+	- auto_link() 함수에서 mms:// protocol 처리 추가
+	- email, url check 함수 버그 수정
+	- 검색 폼과 페이지 이동 폼의 디자인을 테마에서 처리({list,read}.template)
+	- 라이센스 부분이 디자인과 충돌을 일으키는 것을 수정
+	- 검색시 이미지 링크가 깨져서 출력되는 현상 수정
+	- 패스워드가 지정되지 않은 게시물이 임의로 수정,삭제 가능한것 수정
+
+
+-----------------------------------------------------------------------------
+버전   : jsboard-2.0pre1
+
+2001.10.04 by 김정균 <http://www.oops.org>
+	- skin theme 기능 추가 (기존의 theme 삭제)
+	- language file 정리(skin 에 의해 필요 없는 부분 삭제)
+	- admin center skin 에 맞게 수정
+	- Installer 에서 db,user 추가를 insert 문에서 grant 문으로 변경
+	- iis 의 환경변수에 대한 부분을 체크
+	- 가장 최근글이 삭제 되었을때 mail 로 보내지는 글 번호가 엉뚱하게 붙는
+	  현상 수정
+	- theme readme file 작성완료 및 주석 등록 완료
+	- list table design 변경 가능하게 수정
+	- 글 제목에 font color 를 가능하게 변경
+	- url_link 함수 수정
+	- get_agent() 함수 수정. (NS 와 Mozilla 를 구분)
+	- mail 주소 출력 형식을 변경. @ 을 __at__ 로 변경
+	- form mail 방식 메일발송 삭제
+	- 계정 유저 INSTALLER 지원
+	- 댓글 딸때 깊이가 10 이 넘어갈 경우 Re: 가 계속 붙는것 수정
+	- Linux 용 NS 한글/영문 버젼간 form size 각각 지정
+	- 관련글 테이블 조정
+	- 사용자 정의 스타일 시트 추가
+	- 댓글에 이미지가 있을 경우 삭제시 에러나던것 수정
+	- 수정시 관리자 이름, 이메일 등록시 등록 안되는 것 수정
+	- 컨커러가 인식이 제대로 되지 않는것 수정
+	- 글 본문에서의 이메일 링크를 헤더를 통해 mail 프로그램이 실행되게 변경
+	- 글 등록시 referer 를  체크하여 게시판 글 등록기의 접근을 막음
+	- browser 체크 기능 삭제 (레퍼럴 체크로 인하여 필요성이 없어짐)
+	- 파일 업로그 가능시 업로드를 안해서 bcfile field 에 기록되는것 수정
+	- Galeon 지원 추가
+	- 메일 주소를 클릭했을 경우 Mozilla 의 경우 act 페이지로 넘어가는것 수정
+	- work wrap 이 나중에 적용되어 링크가 된 글이 잘리는 현상 수정
+	- 큰 사이즈 image 를 보는 것에서 인증 에러 나는것 수정
+	- 글 등록수 오타 수정
+	- auto_link() 함수 수정
 

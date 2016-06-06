@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE>Jsboard <?=$board['ver']?> - <?=$print['head']?></TITLE>
+<STYLE TYPE="text/css">
+<!--
+body {
+  font-size: 12px;
+  font-family: <?=$langs['font']?>, sans-serif;
+  color: <?=$color['text']?>;
+  margin: 0px 0px 0px 0px;
+  background-color: #FFFFFF;
+}
+td {
+  font-size: 12px;
+  font-family: <?=$langs['font']?>;
+  color: #555555;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font: 11px tahoma;
+  color: <?=$color['l4_fg']?> ;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?=$color['l4_bg']?>;
+}
+SELECT {
+  font: 11px tahoma;
+  color:<?=$color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  background-Color: <?=$color['l4_bg']?>;
+}
+TEXTAREA {
+  font: 13px <?=$langs['font']?>;
+  color: <?=$color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  padding-left: 1px;
+  background-Color: <?=$color['l4_bg']?>;
+}
+ .radio {
+  font: 9pt <?=$langs['font']?>;
+  background-color: <?=$color['bgcol']?>;
+  color: <?=$color['text']?>;
+  border: 2px solid <?=$color['bgcol']?>;
+}
+ .title {
+  font: 15pt <?=$langs['font']?>;
+  color: <?=$color['n0_fg']?>;
+  font-weight: bold;
+}
+ .en {
+  font: 15pt Tahoma;
+  font-weight: bold;
+  color: <?=$color['text']?>;
+}
+form { display: inline; }
+<?=$user_stylesheet?>
+-->
+</STYLE>
+</HEAD>
+
+<BODY>
+
+<?
+include "html/head.php";
+
+echo $print['body'];
+
+include "html/tail.php";
+?>
+
+</BODY>
+</HTML>

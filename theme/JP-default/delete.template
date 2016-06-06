@@ -1,95 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!-- ==================================================================== -->
+<!-- $langs['charset'] : print charset code                               -->
+<!-- $board['ver']     : bersion information in webboard                  -->
+<!-- get_title()     : print header title in webbared                     -->
+<!-- $user_stylesheet : User Defined StyleSheet                           -->
+<!-- ==================================================================== -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE>Jsboard <?=$board['ver']?> - <?=get_title()?></TITLE>
 
-<form method="post" target=_top action='act.php'>
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td width=44 valign="bottom"><img src="./theme/JP-default/img/icon_over.gif" align="middle" alt=''></td>
-<td class="counter" width="95%">&gt;&gt; Delete <?=$list['num']?> article</td>
-</tr>
+<STYLE TYPE="text/css">
+<!--
+BODY,TD {font-size:12px;font-family:tahoma;color:#555555;}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+INPUT {font: 11px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; padding-right:1px; background-color:#FFFFFF; }
+form { display: inline; }
 
-<!--  ====================================================================  -->
-<!--  $list['title']  : 掲示板 文 題目                                      -->
-<!--  ====================================================================  -->
-<? $list['title'] = preg_replace("/<br>\n/i","\\0<img src=\"images/blank.gif\" width=40 height=1 alt=\"\">",$list['title']); ?>
-<tr bgcolor="#a0dc10">
-<td colspan=2>
-<img src="./theme/JP-default/img/board_no.gif" align="middle" alt='No.'>
-<span class="rtitle"><?=$list['title']?></span>
-</td>
-</tr>
+<?=$user_stylesheet?>
+-->
+</style>
 
-<tr>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td>
-</tr>
-</table>
-
-<!--  ====================================================================  -->
-<!--  $list['date']   : 文 登録 日付                                        -->
-<!--  $list['dhost']  : 文 登録誌                                           -->
-<!--  $list['refer']  : 文 ヒット数                                           -->
-<!--  $list['name']   : 著者 名前                                         -->
-<!--  $list['uname']  : 著者 名前 (homepage url 含み)                     -->
-<!--  $list['attach'] : 添付 ファイル リンク                                      -->
-<!--  ====================================================================  -->
-<? if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
-<td width=4 bgcolor="#6d7bc9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=''></td>
-<td width=5><img src="images/blank.gif" width=5 height=1 border=0 alt=''></td>
-<td>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=''><br>
-<font Style="font-weight:bold">登録</font> <?=$list['date']?> <?=$list['dhost']?> &nbsp; &nbsp; 
-<font Style="font-weight:bold">読み</font> <?=$list['refer']?><br>
-<font Style="font-weight:bold">名前</font> <?=$list['uname']?> &nbsp; &nbsp;
+<!-- ==================================================================== -->
+<!-- print_newwindow_src()  : print java script for open new window to    -->
+<!--                          use in jsboard                              -->
+<!-- ==================================================================== -->
+<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!-- ======================= Start Header Design ======================= -->
 <?
-if($list['attach'])
-  echo <<<EOF
-<font Style="font-weight:bold">ファイル</font> {$list['attach']}
-EOF;
-?><br>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=''><br>
-</td>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
-</tr>
-</table>
+if(!$np) {
+  # Design per user
+  include "{$board['headpath']}";
+  # Input by whole admin
+  include "html/head.php";
+ }
+?>
+<!-- ======================= End Header Design   ======================= -->
 
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td></tr>
-</table>
+<!-- ==================================================================== -->
+<!-- $board['align'] : print align of webboard. It's config in board admin-->
+<!-- $board['width'] : print width of webboard. It's config in board admin-->
+<!-- $list['num']    : Number of article                                  -->
+<!-- ==================================================================== -->
+<DIV ALIGN="<?=$board['align']?>">
+<FORM METHOD="post" ACTION="act.php">
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom" COLSPAN=2>
+<IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''>
+<FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; <B>Delete</B> <?=$list['num']?> article</FONT>
+</TD>
+</TR>
 
-<!--  ====================================================================  -->
-<!--  $preview['up']   : 添付された イメージ ファイルが gif/jpg/png 仕事 場合 出力      -->
-<!--  $list['text']    : 文 本文 出力                                       -->
-<!--  $preview['down'] : 添付された ファイルが ascii 仕事 場合 出力                   -->
-<!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td class="rbodybg">
-<div class="rbody">
+<!-- ==================================================================== -->
+<!-- $list['title']  : subject of article                                 -->
+<!-- ==================================================================== -->
+<? $list['title'] = preg_replace("/<br>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
+<TR BGCOLOR="#FFAE00">
+<TD COLSPAN=2>
+<IMG SRC="./theme/EN-default/img/board_no.gif" ALIGN="middle" ALT='TITLE: '>
+<FONT STYLE="color:#FFFFFF; font-weight:bold"><?=$list['title']?></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- $list['date']   : Regist date                                        -->
+<!-- $list['dhost']  : Regist host                                        -->
+<!-- $list['refer']  : number of read article                             -->
+<!-- $list['name']   : name of writer                                     -->
+<!-- $list['uname']  : name of writer (include homepage url)              -->
+<!-- $list['attach'] : attached file                                      -->
+<!-- ==================================================================== -->
+<? if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=5><IMG SRC="images/blank.gif" WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+<FONT Style="font-weight:bold">Date</FONT> <?=$list['date']?> <?=$list['dhost']?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">Read</FONT> <?=$list['refer']?><BR>
+<FONT Style="font-weight:bold">Name</FONT> <?=$list['uname']?> &nbsp; &nbsp;
+<? if($list['attach']) echo "<FONT Style=\"font-weight:bold\">File</FONT> {$list['attach']}" ?><BR>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+</TD>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- $preview['up']   : print if attach file is gif/jpg/png format        -->
+<!-- $list['text']    : print content of article                          -->
+<!-- $preview['down'] : print if attach file is ascii type                -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?=$color['l5_bg']?>">
+<DIV style="color:<?=$color['l5_fg']?>;font-family:comic">
 <?=$preview['up']?>
-<!--  =============================== 文内容 ===============================  -->
+<!-- =============================== Content =============================== -->
 <?=$list['text']?>
 
-<!--  =============================== 文内容 ===============================  -->
+<!-- =============================== Content =============================== -->
 <?=$preview['down']?>
-</div>
-</td></tr>
-</table>
+</DIV>
+</TD></TR>
+</TABLE>
 
-<!--  ====================================================================  -->
-<!--  $warning          : 削除の時 必要な 警告文 出力                         -->
-<!--  $table.$page      : リストで 帰る リンクに 必要な 変数たち            -->
-<!--  $print['passform']  : 削除するのに 必要な hidden 変数たち                 -->
-<!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td align="right">
-<?=$warning?>
-[ <a href="list.php?table=<?=$table.$page?>"><span class="regip">リスト</span></a> | <a href="javascript:history.back()"><span class="regip">以前</span></a> ]
-</td></tr>
-<tr><td bgcolor="#a0dc10" align="center" class="delpassfd">
+<!-- ==================================================================== -->
+<!-- $warning          : print needed warn message when delete            -->
+<!-- $table.$page      : print link option to back list                   -->
+<!-- $print['passform']  : hidden value for delete                        -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN="right">
+<?=$warning?>&nbsp;
+[ <A HREF="list.php?table=<?=$table.$page?>"><FONT STYLE="color:#555555">List</FONT></A> | <A HREF="javascript:history.back()"><FONT STYLE="color:#555555">Back</FONT></A> ]
+</TD></TR>
+<TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
+<FONT STYLE="color:#FFFFFF;font-weight:bold">
 <?=$print['passform']?>
-<input type="submit" value="削除">&nbsp;
-<input type="button" onClick="history.back()" value="取り消し">
-</td></tr>
-</table>
-</form>
+<INPUT TYPE="submit" VALUE="Delete">&nbsp;
+<INPUT TYPE="button" onClick="history.back()" VALUE="Cancel">
+</FONT>
+</TD></TR>
+</TABLE>
 
+<!-- ==================================================================== -->
+<!-- print_license()  : Printed Licese table                              -->
+<!-- ==================================================================== -->
+<?=print_license()?>
+
+</FORM>
+</DIV>
+
+<!-- ======================= Start Tail Design ====================== -->
+<?
+if(!$np) {
+  # Input by whole admin
+  include "html/tail.php";
+  # Design per user
+  include "{$board['tailpath']}";
+}
+?>
+<!-- ======================= End   Tail Design ====================== -->
+</BODY>
+</HTML>

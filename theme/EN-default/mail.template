@@ -1,102 +1,96 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<meta http-equiv="Content-type" content="text/html; charset=$_('charset')">
-<title>JSBoard Reply Notice</title>
-<style type="text/css">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET={$langs['charset']}">
+<TITLE>JSBoard Reply Notice</TITLE>
+<STYLE TYPE="text/css">
 <!--
-body {
-  font-size: 12px;
-  font-family: "Lucida Console", monospace;
-  color: #555555;
-  background-color: #ffffff;
-  margin: 0px 0px;
-}
-
-td {
-  font-size: 12px;
-  font-family: "Lucida Console", monospace;
+BODY,TD {
+  font: 12px tahoma, sans-serif;
   color: #555555;
 }
-a:link, a:visited, a:active {
+A:LINK, A:VISITED, A:ACTIVE {
   text-decoration: none;
   color: #555555;
 }
-a:hover {
+A:hover {
   text-decoration: underline;
   color: #555555;
 }
+TD {
+  font: 12px tahoma, arial, sans-serif;
+  color: #555555;
+}
 -->
-</style>
+</STYLE>
 
-</head>
+</HEAD>
 
-<body>
-&nbsp;<br>
-<div align="center">
-<table width="95%" border=0 cellpadding=1 cellspacing=0>
-<tr><td style="background-color: #a0dc10;">
+<BODY BGCOLOR="#FFFFFF" LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0>
+&nbsp;<BR>
+<DIV ALIGN="center">
+<TABLE WIDTH=95% BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR><TD BGCOLOR="#FFAE00">
 
-<table width="100%" border=0 cellpadding=10 cellspacing=0>
-<tr><td style="font: 20px tahoma; font-weight: bold; color:#ffffff;">
-<span style="font: 30px tahoma; font-weight: bold;">J</span>SBoard Reply Notice
-</td></tr>
-</table>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD>
+<FONT STYLE="font: 20px tahoma; font-weight: bold; color:#FFFFFF;">
+<FONT STYLE="font: 30px tahoma; font-weight: bold;">J</FONT>SBoard Reply Notice</FONT>
+</TD></TR>
+</TABLE>
 
-<table width="100%" border=0 cellpadding=10 cellspacing=0>
-<tr><td style="background-color: #d3dac3;">
-<pre style="color:#000000;">
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD BGCOLOR="{$color['l3_bg']}">
+<PRE><FONT STYLE="color:{$color['l3_fg']}">
 
-$_('html_msg')
+{$langs['html_msg']}
 
 Server Name       : $servername$nofm
-</pre>
-</td></tr>
-</table>
+</FONT></PRE>
+</TD></TR>
+</TABLE>
 
-<table width="100%" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="{$board['path']}/images/blank.gif" width=1 height=1 border=0 alt=''></td></tr>
-</table>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG ALT="" SRC="{$board['path']}/images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0></TD></TR>
+</TABLE>
 
-<table width="100%" border=0 cellpadding=10 cellspacing=0>
-<tr><td style="background-color: #f5fbe6;">
-<pre style="color: #000000;">
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD BGCOLOR="{$color['l2_bg']}">
+<PRE><FONT STYLE="color:{$color['l2_fg']}">
 
-$_('u_name')              : {$rmail['name']}
+{$langs['u_name']}              : {$rmail['name']}
 $addressinfo
-$_('reg')              : $year $day $ampm $hms
-</pre>
-</td></tr>
-</table>
+{$langs['a_t13']}              : $year $day $ampm $hms
+</FONT></PRE>
+</TD></TR>
+</TABLE>
 
-<table width="100%" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="{$board['path']}/images/blank.gif" width=1 height=1 border=0 alt=''></td></tr>
-</table>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG ALT="" SRC="{$board['path']}/images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0></TD></TR>
+</TABLE>
 
-<table width="100%" border=0 cellpadding=10 cellspacing=0>
-<tr><td style="background-color: #ffffff;">
-<pre style="color: #555555;">
-
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD BGCOLOR="#FFFFFF">
+<PRE><FONT STYLE="{$color['text']}">
 {$rmail['text']}
+</FONT></PRE>
+</TD></TR>
+</TABLE>
 
-</pre>
-</td></tr>
-</table>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR><TD ALIGN="right">
+<A HREF="http://jsboard.kldp.net" TARGET="_blnak">
+<FONT STYLE="font: 12px tahoma; font-weight: bold; color: #FFFFFF">Scripted by JSBoard Open Project</FONT>
+</A>
+</TD></TR>
+</TABLE>
 
-<table width="100%" border=0 cellpadding=10 cellspacing=0>
-<tr><td align="right">
-<a href="http://jsboard.kldp.net" target="_blank">
-<span style="font: 12px tahoma; font-weight: bold; color: #ffffff">Scripted by JSBoard Open Project</span>
-</a>
-</td></tr>
-</table>
+</TD></TR>
+</TABLE>
+</DIV>
 
-</td></tr>
-</table>
-</div>
-
-<br>
-<br>
-<br>
-</body>
-</html>
+<BR>
+<BR>
+<BR>
+</BODY>
+</HTML>
