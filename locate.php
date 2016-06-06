@@ -1,10 +1,8 @@
 <?php
-# $Id: locate.php,v 1.2 2009-11-16 21:52:45 oops Exp $
 include "include/header.php";
 
 $go = $o['go'];
-$url = search2url ($o);
-$url = str_replace ('&amp;', '&', $url);
+$url = search2url($o);
 
 switch($go) {
   case "p":

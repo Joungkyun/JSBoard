@@ -1,171 +1,228 @@
+<HTML>
+<HEAD>
+<!-#######################################################################-->
+<!-  $langs['charset'] : print charset code                               -->
+<!-  $board['ver']     : version information in webboard                  -->
+<!-  get_title()     : print header title in webbared                     -->
+<!-  $user_stylesheet : User Defined StyleSheet                           -->
+<!-#######################################################################-->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
 
-<!--  ====================================================================  -->
-<!--  print_keymenu() : keyboard 路 掲示板を 制御                           -->
-<!--                    'b' = 以前 ページ                                   -->
-<!--  ====================================================================  -->
-<?=print_keymenu(3)?>
+<STYLE TYPE=text/css>
+<!--
+BODY,TD {font-size:12px;font-family:tahoma;color:#555555;}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+INPUT {font: 11px tahoma; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; padding-right:1px; background-color:#FFFFFF; }
+TEXTAREA {font: 13px comic; color:#333333; border-width:1; border-style:solid; border-color:#555555; padding-left:1px; background-Color:#ffffff;}
 
-<!--  ====================================================================  -->
-<!--  $board['width'] : 掲示板の 広さを 指定する. 掲示板 管理者で 調整    -->
-<!--  $board['formtype'] : イメージ アップロードを 支援 可否を のために 必ず 必要         -->
-<!--  ====================================================================  -->
+<?=$user_stylesheet?>
+-->
+</style>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
 
-<form name="writep" method="post" target=_top action='act.php'<?=$board['formtype']?> onsubmit="return registCheck();">
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td valign="bottom" width=44><img src="./theme/JP-default/img/icon_over.gif" align="middle" alt=''></td>
-<td class="counter"> &gt;&gt; Write new article</td>
-</tr>
-
-<tr bgcolor="#a0dc10">
-<td colspan=2>
-<img src="./theme/JP-default/img/board_no.gif" align="middle" alt=''>
-<span style="color: #ffffff; font-weight: bold;">文 書き取り</span>
-</td>
-</tr>
-
-<tr>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td>
-</tr>
-</table>
-
-<table width="<?=$board['width']?>" border=0 cellpadding=1 cellspacing=0>
-<tr>
-<td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
-<td rowspan=9 width=4 bgcolor="#6D7BC9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=''></td>
-<td rowspan=9 width=10><img src="images/blank.gif" width=10 height=1 border=0 alt=''></td>
-<td colspan=4><img src="images/blank.gif" width=1 height=3 border=0 alt=''><br></td>
-<td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
-</tr>
-
-<!--  ====================================================================  -->
-<!--  $size['name']         : input お問い合わせ サイズ theme config で 設定      -->
-<!--  $pre_regist['name']   : cookie に 登録された 名前が 自動 指定されるように       -->
-<!--  ====================================================================  -->
-<tr>
-<td width=80>名前</td>
-<td colspan="3"><input type="text" id="name" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$pre_regist['name']?>"<?=$disable?> tabindex="1"></td>
-</tr>
-
-<!--  ====================================================================  -->
-<!--  $view['email']          : email 登録 可否 決定                        -->
-<!--  $pre_regist['email']    : cookie に 登録された これ メールが 自動 指定されるように  -->
-<!--  ====================================================================  -->
+<!-------------------- Start Header Design -------------------->
 <?
-if ( $view['email'] ) {
-  echo <<<END
-<tr>
-<td>メール</td>
-<td colspan="3"><input type="text" id="email" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$pre_regist['email']}"{$disable} tabindex="2"></td>
-</tr>
-END;
+if(!$np) {
+  # Design per user
+  include "{$board['headpath']}";
+  # Input by whole admin
+  include "html/head.php";
+}
+?>
+<!-------------------- End Header Design   -------------------->
+
+
+<!-#######################################################################-->
+<!-  $board['align'] : print align of webboard. It's config in board admin-->
+<!-  $board['width'] : print width of webboard. It's config in board admin-->
+<!-  $board['formtype'] : print form option to use upload image           -->
+<!-#######################################################################-->
+<DIV ALIGN=<?=$board['align']?>>
+<FORM NAME=writep METHOD=post ACTION=act.php<?=$board['formtype']?>>
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN=bottom COLSPAN=2>
+<IMG SRC=./theme/EN-default/img/icon_over.gif ALIGN=absmiddle ALT=''>
+<FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; <B>Write</B> new article</FONT>
+</TD>
+</TR>
+
+<TR BGCOLOR=#FFAE00>
+<TD COLSPAN=2>
+<IMG SRC=./theme/EN-default/img/board_no.gif ALIGN=absmiddle ALT=''>
+<FONT STYLE="color:#FFFFFF"><IMG SRC=theme/EN-default/img/write_title.gif BORDER=0></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=10><IMG SRC=images/blank.gif WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $size['name']         : print size of input of name filed            -->
+<!-  $pre_regist['name']   : print name of registed cookie                -->
+<!-#######################################################################-->
+<TR>
+<TD WIDTH=80><B>Name</B></TD>
+<TD><INPUT TYPE=text NAME=atc[name] SIZE=<?=$size['name']?> MAXLENGTH=50 VALUE="<?=$pre_regist['name']?>"<?=$disable?>></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $view['email']          : print email field                          -->
+<!-  $pre_regist['email']    : print email of registed cookie             -->
+<!-#######################################################################-->
+<?
+if($view['email']) {
+  echo "
+<TR>
+<TD><B>Email</B></TD>
+<TD><INPUT TYPE=text NAME=atc[email] SIZE={$size['name']} MAXLENGTH=255 VALUE=\"{$pre_regist['email']}\"$disable></TD>
+</TR>\n";
 }
 ?>
 
-<!--  ====================================================================  -->
-<!--  $view['url']             : url 登録 可否 決定                         -->
-<!--  $pre_regist['url']       : cookie に 登録された urlこれ 自動 指定されるように     -->
-<!--  ====================================================================  -->
+<!-#######################################################################-->
+<!-  $view['url']             : print url field                           -->
+<!-  $pre_regist['url']       : print homepage of registed cookie         -->
+<!-#######################################################################-->
 <?
-if ( $view['url'] ) {
-  echo <<<END
-<tr>
-<td>ホームページ</td>
-<td colspan="3"><input type="text" id="url" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$pre_regist['url']}"{$disable} tabindex="3"></td>
-</tr>
-END;
+if($view['url']) {
+  echo "
+<TR>
+<TD><B>Homepage</B></TD>
+<TD><INPUT TYPE=text NAME=atc[url] SIZE={$size['name']} MAXLENGTH=255 VALUE=\"{$pre_regist['url']}\"$disable></TD>
+</TR>\n";
 }
 ?>
 
-<!--  ====================================================================  -->
-<!--  upload 部分 出力可否 設定 (まあまあの程ならば そのまま 使えば なり)                     -->
-<!--  ====================================================================  -->
+<TR>
+<TD><B>HTML</B></TD>
+<TD>
+<INPUT TYPE=radio NAME=atc[html] VALUE=1> Use
+<INPUT TYPE=radio NAME=atc[html] VALUE=0 CHECKED> Don't Use
+</TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  print upload field                                                   -->
+<!-#######################################################################-->
 <?
 if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
-  echo <<<EOF
-<tr>
-<td>ファイル</td>
-<td colspan="3">
-<input type="hidden" name="max_file_size" value="{$upload['maxsize']}">
-<input type="file" name="userfile" size="{$size['uplo']}" maxlength=256 tabindex="4">
-</td>
-</tr>
-
-EOF;
+  echo "<TR>\n".
+       "<TD><B>File</B></TD>\n".
+       "<TD>\n".
+       "<INPUT TYPE=HIDDEN NAME=max_file_size VALUE={$upload['maxsize']}>\n".
+       "<INPUT TYPE=file NAME=userfile SIZE={$size['uplo']} MAXLENGTH=256>\n".
+       "</TD>\n".
+       "</TR>\n";
 } elseif(!$upload['yesno'] && $cupload['yesno']) {
-  echo <<<EOF
-<tr>
-<td>ファイル</td>
-<td colspan="3"><span class="attachfn_m">" . $_('upload') . "</span></td>
-</tr>
-
-EOF;
+  echo "<TR>\n".
+       "<TD><B>File</B></TD>\n".
+       "<TD><FONT STYLE=\"color:red;font-weight:bold\">{$langs['upload']}<FONT></TD>\n".
+       "</TR>\n";
 }
 ?>
 
-<!--  ====================================================================  -->
-<!--  $size['titl']  : title input お問い合わせ サイズ                              -->
-<!--  ====================================================================  -->
-<tr>
-<td>題目</td>
-<td colspan="3"><input type="text" id="title" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 tabindex="5"></td>
-</tr>
+<!-#######################################################################-->
+<!-  $size['titl']  : size of title input form                            -->
+<!-#######################################################################-->
+<TR>
+<TD><B>Subject</B></TD>
+<TD><INPUT TYPE=text NAME=atc[title] SIZE=<?=$size['titl']?> MAXLENGTH=100></TD>
+</TR>
 
-<tr>
-<!--  ====================================================================  -->
-<!--  admin login 状態である 場合 パスワードを 少なくなくても なるように する ルチン          -->
-<!--  IE, NS6 義 場合には textarea 窓 サイズ 調整 ボタンも 一緒に 出力          -->
-<!--  ====================================================================  -->
+<TR>
+<!-#######################################################################-->
+<!-  if login admin, don't need password                                  -->
+<!-  if IE and NS6 case, print textarea size operation button             -->
+<!-#######################################################################-->
 <?
-if ( (!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1 ) {
-  echo <<<END
-<td valign="top">パスワード</td>
-<td valign="top"{$pcaptcharcolspan}>
-<input type="password" id="passwd" name="atc[passwd]" size="{$size['pass']}" maxlength=16 class="passwdbox" tabindex="6">
-{$pcaptcha}
-</td>
-END;
+if((!$board['mode'] || $board['mode'] == 6) && $board['super'] != 1) {
+  echo "<TD><B>Password</B></TD>\n".
+       "<TD>\n".
+       "<INPUT TYPE=password NAME=atc[passwd] SIZE={$size['pass']} MAXLENGTH=16>\n".
+       "<IMG SRC=./images/blank.gif WIDTH=15 HEIGHT=1 BORDER=0 ALT=''>\n".
+       "TextSize Operation {$print['operate']}\n".
+       "</TD>\n";
+} else {
+  echo "<TD COLSPAN=2 ALIGN=right>\n".
+       "TextSize Operation {$print['operate']}\n".
+       "</TD>\n";
 }
 ?>
-</tr>
+</TR>
 
-<tr>
-<td colspan=4><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
-</tr>
-</table>
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+</TABLE>
 
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td></tr>
-</table>
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
 
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td class="rbodybg">
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR=<?=$color['l5_bg']?> ALIGN=CENTER>
 
-<!--  ====================================================================  -->
-<!--  $size['text'] : textarea 義 size 出力                                 -->
-<!--  ====================================================================  -->
-<!--  =============================== 文内容 ===============================  -->
-<script type="text/javascript" src="theme/common/textarea.js"></script>
-<textarea id="wpost" class="resizable" name="atc[text]" tabindex="7"></textarea>
-<!--  =============================== 文内容 ===============================  -->
+<!-#######################################################################-->
+<!-  $wrap['op']   : print wrap option of textarea                        -->
+<!-  $size['text'] : print size of textarea                               -->
+<!-#######################################################################-->
+<!-- =============================== Contents =============================== -->
+<TEXTAREA NAME="wpost" <?=$wrap['op']?> ROWS=10 COLS=<?=$size['text']?>></TEXTAREA>
+<!-- =============================== Contents =============================== -->
 
-</td></tr>
-</table>
+</TD></TR>
+</TABLE>
 
 
-<!--  ====================================================================  -->
-<!--  $table.$pages     : リストで 帰る リンクに 必要な 変数たち            -->
-<!--  $print['passform']: 文 登録するのに 必要な hidden 変数たち                -->
-<!--  $orig_option      : 書き込み 窓 調節の時 元々 大きさで 帰る オプション        -->
-<!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td bgcolor="#a0dc10" align="center">
+<!-#######################################################################-->
+<!- $wrap['ment']       : if wrap option isn't hard, print warn message   -->
+<!- $table.$pages      : print link option to back list                   -->
+<!- $print['passform']  : hidden value for regist article                 -->
+<!- $orig_option      : back to original size of textarea                 -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board['width']?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN=right><?=$wrap['ment']?></TD></TR>
+<TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
 <?=$print['passform']?>
-<input type="submit" value="登録" tabindex="8">
-<input type="button" value="再び" onclick="document.location.reload(); return false;" tabindex="9">
-<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="リスト" tabindex="10">
-<input type="button" onclick="history.back()" value="以前" tabindex="11">
-</td></tr>
-</table>
-</form>
+<INPUT TYPE=submit VALUE="Regist">
+<INPUT TYPE=reset VALUE="Reset"<?=$orig_option?>>
+<INPUT TYPE=button onClick="document.location='./list.php?table=<?=$table.$pages?>'" VALUE="List">
+<INPUT TYPE=button onClick=history.back() VALUE="Back">
+</TD></TR>
+</TABLE>
 
+<!-#######################################################################-->
+<!-  print_license()  : Printed Licese table                              -->
+<!-#######################################################################-->
+<?=print_license()?>
+
+</FORM>
+</DIV>
+
+<!-------------------- ｲｿｸｮ ｵﾚﾀﾎ ｽﾃﾀﾛ -------------------->
+<?
+if(!$np) {
+  # Input by whole admin
+  include "html/tail.php";
+  # Design per user
+  include "{$board['tailpath']}";
+}
+?>
+<!-------------------- ｲｿｸｮ ｵﾚﾀﾎ ｳ｡   -------------------->
+</BODY>
+</HTML>
