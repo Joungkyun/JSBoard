@@ -1,109 +1,78 @@
 <?php
-# $Id: session.php,v 1.8 2009-11-16 21:52:45 oops Exp $
-include_once "include/variable.php";
-include_once "include/print.php";
-parse_query_str ();
+include_once "include/print.ph";
+parse_query_str();
 
-# table 변수 체크
-$table = trim ($table);
-if ( preg_match ('!/\.+|%00$!', $table) ) {
-  print_error ("Ugly access with table variable \"{$table}\"");
-}
+$opt = $table ? "&table=$table" : "";
+$opts = $table ? "?table=$table" : "";
 
-$opt  = $table ? "&amp;table={$table}" : '';
-$opts = $table ? "?table={$table}" : '';
+if ($m == "login") {
+  include "./include/header.ph";
+  $var = ($type == "admin") ? "&type=admin" : "";
 
-if ( $m == "login" ) {
-  require_once "./include/header.php";
-  $var = ( $type == "admin" ) ? '&amp;type=admin' : '';
-
-  if( ! $edb['uses'] ) {
-    $c = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
+  if(!$edb['uses']) {
+    sql_connect($db['server'], $db['user'], $db['pass']);
+    sql_select_db($db['name']);
   }
-  $r = $lu ? get_authinfo($lu) : '';
+  $r = $lu ? get_authinfo($lu) : "";
 
-  if ( $r['position'] == 1 && ! $edb['uses'] ) sql_close ($c);
+  if($r['position'] == 1 && !$edb['uses']) mysql_close();
 
-  if ( check_auth ($lp, $r['passwd']) ) {
-    if ( $edb['super'] == $r['nid'] ) $r['position'] = 1;
+  if(check_auth($lp,$r['passwd'])) {
+    if($edb['super'] == $r['nid']) $r['position'] = 1;
+    ${$jsboard} = array("id"=>$r['nid'],"pass"=>$r['passwd'],
+                        "name"=>$r['name'],"email"=>$r['email'],
+                        "url"=>$r['url'],"pos"=>$r['position'],"external"=>$edb['uses']);
 
-    ${$jsboard} = array('id'       => $r['nid'],  'pass'  => $r['passwd'],
-                        'name'     => $r['name'], 'email' => $r['email'],
-                        'url'      => $r['url'],  'pos'   => $r['position'],
-                        'external' => $edb['uses']);
-
-    if ( ! $edb['uses'] ) {
-      if ( ! ${$jsboard}['pos'] ) {
-        $result = sql_query ("SELECT nid FROM userdb WHERE position = 1", $c);
-        ${$jsboard}['super'] = sql_result ($result, 0, "nid");
-        sql_free_result ($result);
-        sql_close ($c);
-      } else
-        ${$jsboard}['super'] = ${$jsboard}['id'];
+    if(!$edb['uses']) {
+      if(!${$jsboard}['pos']) {
+        $result = sql_query("SELECT nid FROM userdb WHERE position = 1");
+        ${$jsboard}['super'] = sql_result($result,0,"nid");
+        sql_free_result($result);
+        mysql_close();
+      } else ${$jsboard}['super'] = ${$jsboard}['id'];
     } else {
-      if ( $r['position'] == 1 )
-        ${$jsboard}['super'] = $r['nid'];
-      else
-        ${$jsboard}['super'] = $edb['super'];
+      if($r['position'] == 1) ${$jsboard}['super'] = $r['nid'];
+      else ${$jsboard}['super'] = $edb['super'];
     }
 
     # 세션 등록
-    session_register ($jsboard);
-    $_SESSION[$jsboard] = $$jsboard;
+    session_register("$jsboard");
 
-    if( $type == "admin" && ${$jsboard}['pos'] == 1 ) {
-      header ("Location: admin/admin.php");
-    } else if ( ! $table ) {
-      header ("Location: {$print['dpage']}");
-    } else {
-      header ("Location: list.php?table={$table}");
-    }
+    if($type == "admin" && ${$jsboard}['pos'] == 1) {
+      header("Location: admin/admin.php");
+    } elseif(!$table) header("Location: {$print['dpage']}");
+    else header("Location: list.php?table=$table");
   } else {
-    move_page ("./session.php?m=logout&logins=fail{$opt}{$var}",0);
+    move_page("./session.php?m=logout&logins=fail$opt$var",0);
   }
-} else if ( $m == "logout" ) {
-  require_once './config/global.php';
-  require_once './include/check.php';
-
-  sessionInit($board['sessTmp']);
-  session_start ();
+} else if ($m == "logout") {
+  session_start();
+  include "./config/global.ph";
 
   # 세션을 삭제
-  session_destroy ();
+  session_destroy();
 
-  if ( $logins == 'fail' ) {
-    if ( $type == 'admin' )
-      $var = '?type=admin';
-    else if ( $table )
-      $var = "?table={$table}";
-
-    if ( ! trim ($var) && $print['dopage'] ) {
-      header ("Location: {$print['dopage']}");
+  if($logins == "fail") {
+    if($type == "admin") $var = "?type=admin";
+    elseif($table) $var = "?table=$table";
+    if(!trim($var) && $print['dopage']) {
+      header("Location: {$print['dopage']}");
     } else {
-      header ("Location: ./login.php{$var}");
+      header("Location: ./login.php$var");
     }
   } else {
-    require_once './include/error.php';
-    require_once './include/get.php';
-    require_once './include/check.php';
-
     $urls = $edb['logout'];
-
-    if ( $url && preg_match ("/^http:/i", $url) ) {
-      $urls = rawurldecode ($url);
+    if($url && preg_match("/^http:/i",$url)) {
+      $urls = rawurldecode($url);
     }
 
-    if ( ! trim ($urls) ) {
-      if ( $table ) {
-        meta_char_check ($table, 0, 1);
-        require_once "./data/{$table}/config.php";
-      }
-      $urls = trim ($print['dopage']) ? $print['dopage'] : "./login.php{$var}";
+    if(!trim($urls)) {
+      if($table) { include "./data/$table/config.ph"; }
+      $urls = trim($print['dopage']) ? $print['dopage'] : "./login.php$var";
     }
-
-    header ("Location: {$urls}");
+    header("Location: $urls");
   }
-} else if ( $m == 'back' ) {
-  header ('Location:admin.php');
+} else if ($m == "back") {
+  header("Location:admin.php");
 }
 ?>

@@ -1,96 +1,109 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<meta http-equiv="Cache-Control" content="No-Cache">
-<meta http-equiv="Pragma" content="No-Cache">
-<title>JSBoard <?=$board['ver']?> Login page</title>
-<script type="text/javascript" src="./theme/common/lib.js"></script>
-<link rel="stylesheet" type="text/css" href="./theme/KO-default/default.css">
-</head>
+<HTML>
+<HEAD>
+<META HTTP-EQUIV=Cache-Control CONTENT=No-Cache>
+<META HTTP-EQUIV=Pragma	CONTENT=No-Cache>
+<TITLE>JSBoard <?=$board['ver']?> Login page</TITLE>
+<STYLE TYPE="text/css">
+A:LINK, A:VISITED, A:ACTIVE { TEXT-DECORATION: NONE; COLOR:<?=$color['text']?>; }
+A:HOVER { TEXT-DECORATION:UNDERLINE; COLOR:<?=$color['text']?>; }
+TD { FONT: 12px tahoma; COLOR:#555555; }
+INPUT {font: 11px tahoma; color:<?=$color['m_fg']?>; border-width:1; border-style:solid; border-color:<?=$color['d_bg']?>; padding-left:1px; padding-right:1px; background-color:<?=$color['m_bg']?>; }
+</STYLE>
+<script language=JavaScript>
+<!--
+function InputFocus() {
+<? if($mode == "comment") { ?>
+  document.auth.lp.focus();
+<? } else { ?>
+  document.auth.lu.focus();
+<? } ?>
+  return;
+}
+//-->
+</script>
+</HEAD>
+<BODY BGCOLOR=<?=$color['b_bg']?> onLoad=InputFocus()>
 
 <?
-include "html/head.php";
-if($table) { include "data/$table/html_head.php"; }
+include "html/head.ph";
+if($table) { include "data/$table/html_head.ph"; }
 
 if($mode == "comment") {
   $actpage = "./act.php";
   $ment = "Comment Delete";
-  $focus = 'lp';
 } else {
   $actpage = "./session.php";
   $ment = "JSBoard Login";
-  $focus = 'lu';
 }
 ?>
-<body onLoad="InputFocus('<?=$focus?>')">
 
-<table width="100%" border=0 cellpadding=0 cellspacing=0 style="height: 100%">
-<tr><td align="center" valign="middle">
+<TABLE WIDTH=100% HEIGHT=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD ALIGN=center VALIGN=center>
 
-<form name="auth" method="post" action="<?=$actpage?>">
-<table width="200" border=0 cellpadding=3 cellspacing=0>
-<tr>
-<td class="logtitle"><?=$ment?></td>
-</tr>
+<FORM NAME=auth METHOD=POST ACTION=<?=$actpage?>>
+<TABLE WIDTH=200 BORDER=0 CELLPADDING=3 CELLSPACING=0>
+<TR>
+<TD BGCOLOR=<?=$color['t_bg']?> ALIGN=CENTER><FONT STYLE="FONT: 14px Tahoma; COLOR:<?=$color['t_fg']?>; FONT-WEIGHT:bold"><?=$ment?></FONT></TD>
+</TR>
 
-<tr>
-<td class="log_bg">
-<img src="images/blank.gif" width=1 height=4 alt=''><br>
+<TR>
+<TD BGCOLOR=<?=$color['m_bg']?> ALIGN=CENTER>
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=4 ALT=''><BR>
 
-<table border=0 cellpadding=0 cellspacing=0 width="100%">
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=100%>
 <? if($mode == "comment") { ?>
-<tr>
-<td class="log_td">
+<TR>
+<TD ALIGN=CENTER NOWRAP><NOBR>
 Password
-<input type="password" name="lp" id="lp" size="<?=$size?>" tabindex="1">
-<input type="submit" value="DELETE" tabindex="2">
-<br>
-</td>
-</tr>
+<INPUT TYPE=password NAME=lp SIZE=<?=$size?>>
+<INPUT TYPE=SUBMIT VALUE=DELETE>
+</NOBR>
+<BR>
+</TD>
+</TR>
 <? } else { ?>
-<tr>
-<td align="center">User</td>
-<td align="center"><input type="text" name="lu" id="lu" size="<?=$size?>" tabindex="1"></td>
-</tr>
+<TR>
+<TD ALIGN=CENTER>User</TD>
+<TD ALIGN=CENTER><INPUT TYPE=text NAME=lu SIZE=<?=$size?>></TD>
+</TR>
 
-<tr>
-<td align="center">Password</td>
-<td align="center"><input type="password" name="lp" id="lp" size="<?=$size?>" tabindex="2"></td>
-</tr>
+<TR>
+<TD ALIGN=CENTER>Password</TD>
+<TD ALIGN=CENTER><INPUT TYPE=password NAME=lp SIZE=<?=$size?>></TD>
+</TR>
 
-<tr>
-<td align="center" colspan=2>
-Session Reset <input type="button" value="RESET" onClick="document.location='./session.php?m=logout<?=$opt?>'" tabindex="4">
-<input type="submit" value="LogIn" tabindex="3">
-<br>
-</td>
-</tr>
+<TR>
+<TD ALIGN=CENTER COLSPAN=2>
+Session Reset <INPUT TYPE=BUTTON VALUE=RESET onClick="document.location='./session.php?m=logout<?=$opt?>'">
+<INPUT TYPE=SUBMIT VALUE=LogIn>
+<BR>
+</TD>
+</TR>
 <? } ?>
-</table>
+</TABLE>
 
-<img src="images/blank.gif" width=1 height=4><br>
-<input type="hidden" name="m" value="login">
+<IMG SRC=images/blank.gif WIDTH=1 HEIGHT=4><BR>
+<INPUT TYPE=HIDDEN NAME=m VALUE=login>
 <? if ($mode == "comment") { ?>
-<input type="hidden" name="table" value="<?=$table?>">
-<input type="hidden" name="atc[no]" value="<?=$no?>">
-<input type="hidden" name="atc[cid]" value="<?=$cid?>">
-<input type="hidden" name="o[at]" value="c_del">
-<input type="hidden" name="page" value="<?=$page?>">
+<INPUT TYPE=HIDDEN NAME=table VALUE=<?=$table?>>
+<INPUT TYPE=HIDDEN NAME=atc[no] VALUE=<?=$no?>>
+<INPUT TYPE=HIDDEN NAME=atc[cid] VALUE=<?=$cid?>>
+<INPUT TYPE=HIDDEN NAME=o[at] VALUE=c_del>
+<INPUT TYPE=HIDDEN NAME=page VALUE=<?=$page?>>
 <? } ?>
 
-</td>
-</tr>
-</table>
+</TD>
+</TR>
+</TABLE>
 <?=$hin?>
 <?=$tin?>
 </FORM>
 
-</td></tr>
-</table>
-
 <?
-if($table) { include "data/$table/html_tail.php"; }
-include "html/tail.php";
+if($table) { include "data/$table/html_tail.ph"; }
+include "html/tail.ph";
 ?>
 
-</body></html>
+</TD></TR>
+</TABLE>
+</BODY></HTML>

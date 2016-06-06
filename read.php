@@ -1,19 +1,17 @@
 <?php
-# $Id: read.php,v 1.5 2009-11-16 21:52:45 oops Exp $
 $p_time[] = microtime(); # 속도 체크
-require_once "include/header.php";
-require_once "include/wikify.php";
+include "include/header.ph";
   
 if(preg_match("/^(2|3|5)$/",$board['mode']) && !session_is_registered("$jsboard"))
-  print_error($_('login_err'));
+  print_error($langs['login_err']);
   
-$board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
-$board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php";
+$board['headpath'] = @file_exists("data/$table/html_head.ph") ? "data/$table/html_head.ph" : "html/nofile.ph";
+$board['tailpath'] = @file_exists("data/$table/html_tail.ph") ? "data/$table/html_tail.ph" : "html/nofile.ph";
 
 if($alert) {
   $list['title'] = $notice['subject'];
-  $list['text'] = "<pre>\n".auto_link($notice['contents'])."\n</pre>";
-  $list['date'] = filemtime("data/$table/config.php");
+  $list['text'] = "<PRE>\n".auto_link($notice['contents'])."\n</PRE>";
+  $list['date'] = filemtime("data/$table/config.ph");
   $list['date'] = date("Y.m.d H:i:s",$list['date']);
   $list['uname'] = "Board Admin";
   $list['refer'] = "Don't Check";
@@ -21,16 +19,14 @@ if($alert) {
   # Admin Link
   if($board['super'] == 1 || $board['adm']) {
     if(@file_exists("./theme/{$print['theme']}/img/admin.gif"))
-      $print['adpath'] = "<img src=\"./theme/{$print['theme']}/img/admin.gif\" border=0 alt='" . $_('ln_titl') . "'>";
-    else $print['adpath'] = "<span class=\"admintext\">[ admin ]</span>";
-    $print['admin'] = "<a href=\"javascript:new_windows('./admin/user_admin/uadmin.php?table=$table','admin','yes','yes',650,600);\" title='" . $_('ln_titl') . "'>".
-                    "{$print['adpath']}</a>";
+      $print['adpath'] = "<IMG SRC=./theme/{$print['theme']}/img/admin.gif BORDER=0 ALT='{$langs['ln_titl']}'>";
+    else $print['adpath'] = "<FONT STYLE=\"font:12px tahoma;color:{$color['text']}\">[ admin ]</FONT>";
+    $print['admin'] = "<A HREF=./admin/user_admin/uadmin.php?table=$table TITLE='{$langs['ln_titl']}'>".
+                    "{$print['adpath']}</A>";
   }
 
   # PAGE DISPLAY
-  meta_char_check($print['theme'], 1, 1);
-  $bodyType = 'read';
-  include "theme/{$print['theme']}/index.template";
+  include "theme/{$print['theme']}/read.template";
 } else{
   if((preg_match("/^(2|3|5|7)$/",$board['mode']) && $_SESSION[$jsboard]['id']) || $board['super']) {
     $pre_regist['name'] = $_SESSION[$jsboard]['id'];
@@ -54,7 +50,8 @@ if($alert) {
   }
   
   $a_time[] = microtime(); # 속도 체크
-  $c = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
+  sql_connect($db['server'], $db['user'], $db['pass']);
+  sql_select_db($db['name']);
   
   if($num && !$no) {
       $num = get_article($table, $num, "no", "num");
@@ -74,12 +71,8 @@ if($alert) {
   $list['num']  = print_reply($table, $list);
   $list['date'] = date("Y-m-d H:i:s", $list['date']);
   $list['text'] = $list['html'] ? $list['text'] : wordwrap($list['text'],$board['wwrap']);
-  text_nl2br($list['text'], $list['html']);
-  conv_emoticon($list['text'], $enable['emoticon']);
-  new_reply_read_format ($list['text'], $list['html']);
-
-  macro_interwiki();
-  wikify($list['text']);
+  $list['text'] = text_nl2br($list['text'], $list['html']);
+  $list['text'] = conv_emoticon($list['text'], $enable['emoticon']);
   
   # 제목 길이를 테이블 크기에 맞춰 다음줄로 넘김
   if (!preg_match("/%$/", $board['width'])) {
@@ -91,7 +84,7 @@ if($alert) {
   
   # title 에서 폰트 색상 지정할수 있게 함
   $list['title'] = preg_replace("/&lt;((\/)*font[^&]*)&gt;/i","<\\1>",$list['title']);
-  $list['title'] = preg_replace("/<font[^>]*color=([a-z0-9#]+)[^>]*>/i","<font color=\"\\1\">",$list['title']);
+  $list['title'] = preg_replace("/<font[^>]*color=([a-z0-9#]+)[^>]*>/i","<font color=\\1>",$list['title']);
   
   # 검색 문자열 색상 변경
   $list = search_hl($list);
@@ -100,30 +93,30 @@ if($alert) {
     $list['cname'] = $list['rname'] ? $list['rname'] : $list['name'];
   else $list['cname'] = $list['name'];
   
-  if($list['email']) $list['uname'] = url_link($list['email'], $list['cname']);
+  if($list['email']) $list['uname'] = url_link($list['email'], $list['cname'], $no);
   else $list['uname'] = $list['cname'];
   if($list['url']) {
-    if(preg_match("/^http:\/\//i", $list['url'])) $list['uname'] .= " [" . url_link($list['url'], $_('ln_url')) . "]";
-    else $list['uname'] .= " [" . url_link("http://{$list['url']}", $_('ln_url')) . "]";
+    if(preg_match("/^http:\/\//i", $list['url'])) $list['uname'] .= " [" . url_link($list['url'], "{$langs['ln_url']}", $color['r2_fg']) . "]";
+    else $list['uname'] .= " [" . url_link("http://{$list['url']}", "{$langs['ln_url']}") . "]";
   }
   
   # Admin Link
   if($board['super'] == 1 || $board['adm']) {
     if(@file_exists("./theme/{$print['theme']}/img/admin.gif"))
-      $print['adpath'] = "<img src=\"./theme/{$print['theme']}/img/admin.gif\" border=0 alt='" . $_('ln_titl') . "'>";
-    else $print['adpath'] = "<span class=\"admintext\">[ admin ]</span>";
-    $print['admin'] = "<a href=\"javascript:new_windows('./admin/user_admin/uadmin.php?table=$table','admin','yes','yes',650,600);\" title='" . $_('ln_titl') . "'>".
-                    "{$print['adpath']}</a>";
+      $print['adpath'] = "<IMG SRC=./theme/{$print['theme']}/img/admin.gif BORDER=0 ALT='{$langs['ln_titl']}'>";
+    else $print['adpath'] = "<FONT STYLE=\"font:12px tahoma;color:{$color['text']}\">[ admin ]</FONT>";
+    $print['admin'] = "<A HREF=./admin/user_admin/uadmin.php?table=$table TITLE='{$langs['ln_titl']}'>".
+                    "{$print['adpath']}</A>";
   }
   
   # 게시판 읽기 페이지 상단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
   if($enable['dhost']) {
     $list['dhost'] = get_hostname($enable['dlook'],$list['host']);
     if($enable['dwho'])
-      $_lang['hlinked'] = "<a href=\"javascript:new_windows('./whois.php?table=$table&amp;host={$list['host']}',0,1,0,600,480)\">".
-                      "<span class=\"regip\">{$list['dhost']}</span></a>";
-    else $_lang['hlinked'] = "<span class=\"regip\">{$list['dhost']}</span>";
-    $print['regist'] = "Register [ {$_lang['hlinked']} ]";
+      $langs['hlinked'] = "<A HREF=javascript:new_windows('./whois.php?table=$table&host={$list['host']}',0,1,0,600,480)>".
+                        "<font color={$color['text']}>{$list['dhost']}</font></a>";
+    else $langs['hlinked'] = "<font color={$color['text']}>{$list['dhost']}</font>";
+    $print['regist'] = "Register [ {$langs['hlinked']} ]";
   }
   
   # 첨부 파일 관련 변수
@@ -132,9 +125,9 @@ if($alert) {
     $tail = check_filetype($list['bofile']);
     $fileicon = icon_check($tail,$list['bofile']);
     $down_link = check_dnlink($table,$list);
-    $list['attach'] = "<a href=\"$down_link\">".
-                     "<img src=\"images/$fileicon\" width=16 height=16 border=0 alt=\"{$list['bofile']}\">".
-                     " <span class=\"attachfn\">{$list['bofile']}</span></a> - $hfsize";
+    $list['attach'] = "<A HREF=\"$down_link\">".
+                     "<IMG SRC=\"images/$fileicon\" width=16 height=16 border=0 alt=\"{$list['bofile']}\">".
+                     " <FONT style=\"color:{$color['text']}\">{$list['bofile']}</FONT></A> - $hfsize";
   }
   
   if ($list['bofile']) {
@@ -143,8 +136,7 @@ if($alert) {
   }
   
   # 관련글 리스트 출력시 preview 기능 사용할때 필요한 JavaScript 출력
-  if ($enable['pre'] && $enable['re_list'] && ($list['reto'] || $list['reyn']))
-    $print['preview_script'] = '<script type="text/javascript" src="./theme/common/preview.js"></script>';
+  if ($enable['pre'] && $enable['re_list'] && ($list['reto'] || $list['reyn'])) $print['preview_script'] = print_preview_src();
   
   $b_time[] = microtime(); # 속도 체크
   
@@ -155,7 +147,7 @@ if($alert) {
   $print['comment'] = $enable['comment'] ? print_comment($table,$no,0) : "";
   
   # 글 읽었을 경우 조회수 1 늘림
-  #if (get_hostname(0) != $list['host']) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'", $c);
+  #if (get_hostname(0) != $list['host']) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'");
   replication_addrefer($db);
   
   $b_time[] = microtime(); # 속도 체크
@@ -166,7 +158,7 @@ if($alert) {
     $print['dsearch'] = detail_searchform();
   else {
     $page = $page ? $page : "1";
-    $print['dserlink'] = "<a href=\"{$_SERVER['PHP_SELF']}?table=$table&amp;no=$no&amp;page=$page&amp;o[at]=dp\">[ " . $_('detable_search_link') . " ]</a>";
+    $print['dserlink'] = "<A HREF={$_SERVER['PHP_SELF']}?table=$table&no=$no&page=$page&o[at]=dp>[ {$langs['detable_search_link']} ]</A>";
   }
   
   # 검색폼, 페이지폼 관련 변수
@@ -179,14 +171,12 @@ if($alert) {
   # PAGE 로딩 시간
   $print['pagetime'] = get_microtime($p_time[0],$b_time[1]);
   
-  sql_close($c);
+  mysql_close();
   
   $sform['ss'] = preg_replace("/\\\\+/i","\\",$sform['ss']);
   
   # PAGE DISPLAY
-  meta_char_check($print['theme'], 1, 1);
-  $bodyType = 'read';
-  include "theme/{$print['theme']}/index.template";
+  include "theme/{$print['theme']}/read.template";
   echo $preview['bo'];
 }
 ?>
