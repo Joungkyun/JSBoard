@@ -1,8 +1,0 @@
-$Id: todo,v 1.2 2009-11-16 21:52:47 oops Exp $
-
-JSBoard 2.1 todo list
-
-1. 반업데이트형으로 전환
-2. upgrade db convert 만들기
-3. installer에 mysql 4.1 charset 설정 추가
-4. gallery mode (지원할까 말까..)
