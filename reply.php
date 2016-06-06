@@ -1,125 +1,213 @@
-<?php
-# $Id: reply.php,v 1.13 2009-11-16 21:52:45 oops Exp $
-include "include/header.php";
+<?
+session_cache_limiter('nocache, must-revalidate');
+session_start();
+if(!session_is_registered("login")) session_destroy();
 
-if ( ! $_SERVER['HTTP_REFERER'] ) { 
-  header('HTTP/1.1 403 Forbidden');
-  exit;
-}
+include "include/header.ph";
+include "./admin/include/config.ph";
 
-$board['super'] = $board['adm'] ? 1 : $board['super'];
+if ($board_cookie[name])
+  $board_cookie[name] = str_replace("\\","",$board_cookie[name]);
 
-if ( preg_match ('/^(1|3|6|7)$/', $board['mode']) )
-  if ( $board['super'] != 1 )
-    print_error ($_('perm_err'), 250, 150, 1);
+# 관련글 쓰기 권한을 관리자에게만 주었을 경우 패스워드 체크
+$kind = "reply";
+enable_write($sadmin[passwd],$admin[passwd],$pcheck,$enable[$kind],$cenable[$kind]);
 
-if ( preg_match ('/^(1|3|5)$/', $board['mode']) && ! $_SESSION[$jsboard]['id'] )
-  print_error($_('perm_err'),250,150,1);
+include "html/head.ph";
 
-# 로그인이 되어 있고 전체어드민 로그인시에는 모든것을 수정할수 있게.
-if ( preg_match ('/^(2|5)$/', $board['mode']) && $_SESSION[$jsboard]['id'] &&
-   $_SESSION[$jsboard]['pos'] != 1 ) $disable = ' disabled';
-else $nodisable = 1;
+if($board[notice]) print_notice($board[notice]);
 
-$kind = 'reply';
-$board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
-$board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php";
-
-if((preg_match("/^(2|3|5)$/",$board['mode']) && $_SESSION[$jsboard]['id']) || $board['super'] == 1) {
-  $pre_regist['name'] = $_SESSION[$jsboard]['id'];
-  $pre_regist['rname'] = $_SESSION[$jsboard]['name'];
-  $pre_regist['email'] = $_SESSION[$jsboard]['email'];
-  $pre_regist['url'] = $_SESSION[$jsboard]['url'];
-} else {
-  $pre_regist['name'] = str_replace("\\","",$_COOKIE['board_cookie']['name']);
-  $pre_regist['email'] = str_replace("\\","",$_COOKIE['board_cookie']['email']);
-  $pre_regist['url'] = str_replace("\\","",$_COOKIE['board_cookie']['url']);
-}
-
-if($board['notice']) print_notice($board['notice']);
-
-$c = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
+sql_connect($db[server], $db[user], $db[pass]);
+sql_select_db($db[name]);
 
 $list = get_article($table, $no);
 
-$list['title'] = preg_replace("/Re(\^[0-9]{0,10})*: /i", "", $list['title']);
-$reti = $list['rede'];
+$list[title] = preg_replace("/Re(\^[0-9]{0,10})*: /i", "", $list[title]);
+$reti = $list[rede];
 $reti = ++$reti;
 
 if ($reti == "1") $reti = "";
 else $reti = "^$reti";
 
-/*
-$conv_list[0] = "/<([^<>\n]+)\n([^\n<>]+)>/i";
-$resu_list[0] = "<\\1 \\2>";
-$conv_list[1] = "/^/";
-$resu_list[1] = ": ";
-$conv_list[2] = "/\n/";
-$resu_list[2] = "\n: ";
-$list['text'] = preg_replace($conv_list, $resu_list, $list['text']);
- */
-$list['text'] = <<<EOF
-[quote="{$list['name']}"]{$list['text']}[/quote]
-EOF;
+$list[text] = preg_replace("/<([^<>\n]+)\n([^\n<>]+)>/i", "<\\1 \\2>", $list[text]);
+$list[text] = preg_replace("/^/", ": ", $list[text]);
+$list[text] = preg_replace("/\n/", "\n: ", $list[text]);
 
-# 본문에 html tag 가 존재할 경우를 대비
-$list['text'] = htmlspecialchars($list['text']);
-
-if($list['html']) $html_chk_ok = " checked";
+if($list[html]) $html_chk_ok = " checked";
 else $html_chk_no = " checked";
 
-# Browser가 text browser 일때 multim form 삭제
-if($noup == 1) $board['formtype'] = "";
-else $board['formtype'] = " enctype=\"multipart/form-data\"";
+# Browser가 Lynx일때 multim form 삭제
+$agent = get_agent();
+if($agent[br] == "LYNX") $board[formtype] = "";
+else $board[formtype] = " ENCTYPE=\"multipart/form-data\"";
+
+# TEXTAREA에서 wrap option check
+$wrap = form_wrap();
+
+# image menu를 사용할시에 wirte 화면과 list,read 화면의 비율을 맞춤
+if ($board[img] == "yes" && !preg_match("/%/",$board[width])) 
+  $board[width] = $board[width]-$icons[size]*2;
+else $size[text] += 4;
 
 # 원본글 포함 선택 여부
-if ($enable['ore']) {
-  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\" tabindex=\"7\"></textarea>";
-  $orig_button = "<input type=\"hidden\" id=\"hidev\" name=\"hidev\" value=\"{$list['text']}\">\n" .
-                 "<input type=\"hidden\" name=\"cenable[ore]\" value=1>\n" .
-                 "<input tabindex=\"100\" type=\"button\" name=\"quote\" value=\"원본 포함\" ".
-                 "onClick=\"document.getElementById('rpost').value=document.getElementById('rpost').value + document.getElementById('hidev').value; document.getElementById('hidev').value ='';\">\n";
+if ($enable[ore]) {
+  $text_area = "<TEXTAREA NAME=\"rpost\" $wrap[op] ROWS=\"10\" COLS=\"$size[text]\"></TEXTAREA>";
+  $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"hide\" VALUE=\"\n\n$list[name] wrote..\n$list[text]\">\n" .
+                 "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=1>\n" .
+                 "    <INPUT TABINDEX=\"100\" TYPE=\"button\" NAME=\"quote\" VALUE=\"원본 포함\" onClick=\"this.form.rpost.value=this.form.rpost.value + this.form.hide.value; this.form.hide.value ='';\">";
 } else {
-  $text_area = "<textarea id=\"rpost\" class=\"resizable\" name=\"atc[text]\" tabindex=\"7\">{$list['text']}</textarea>";
-  $orig_button = "<input type=\"hidden\" name=\"cenable[ore]\" value=0>\n";
+  $text_area = "<TEXTAREA NAME=\"rpost\" $wrap[op] ROWS=\"10\" COLS=\"$size[text]\">\n\n\n$list[name] wrote..\n$list[text]</TEXTAREA>";
+  $orig_button = "<INPUT TYPE=\"hidden\" NAME=\"cenable[ore]\" VALUE=0>\n";
 }
 
-$page = $page ? $page : 1;
-$print['passform'] = "<input type=\"hidden\" name=\"o[at]\" value=\"reply\">\n".
-                   "<input type=\"hidden\" name=\"page\" value=\"$page\">\n".
-                   "<input type=\"hidden\" name=\"table\" value=\"$table\">\n".
-                   "<input type=\"hidden\" name=\"rmail[origmail]\" value=\"{$list['email']}\">\n".
-                   "<input type=\"hidden\" name=\"atc[reno]\" value=\"{$list['no']}\">".
-                   "<input type=\"hidden\" name=\"atc[html]\" value=\"{$list['html']}\">";
+echo "
+<DIV ALIGN=\"$board[align]\">
+<TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"0\" BGCOLOR=\"$color[r0_bg]\"><TR><TD>
+<TABLE WIDTH=\"100%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
+<FORM NAME=replyp METHOD=\"post\" ACTION=\"act.php\"$board[formtype]>
+<TR>
+  <TD BGCOLOR=\"$color[r1_bg]\" width=13%><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[w_name]</FONT></TD>
+  <TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[name]\" SIZE=\"$size[name]\" MAXLENGTH=\"50\" VALUE=\"$board_cookie[name]\"></TD>
+  <TD BGCOLOR=\"$color[r2_bg]\" width=35%><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_name_m]</FONT></TD>\n";
 
-$pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<input type=\"hidden\" name=\"atc[rname]\" value=\"{$pre_regist['rname']}\">";
-
-if(!$nodisable) {
-  $print['passform'] .= "\n<input type=\"hidden\" name=\"atc[name]\" value=\"{$pre_regist['name']}\">".
-                      "{$pre_regist['rname']}".
-                      "\n<input type=\"hidden\" name=\"atc[email]\" value=\"{$pre_regist['email']}\">".
-                      "\n<input type=\"hidden\" name=\"atc[url]\" value=\"{$pre_regist['url']}\">\n";
-}  elseif($_SESSION[$jsboard]['pos'] == 1) {
-  $print['passform'] .= "{$pre_regist['rname']}\n";
+if($view[email] == "yes") {
+  echo "</TR><TR>\n" .
+       "<TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[w_mail]</FONT></TD>\n" .
+       "<TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[email]\" SIZE=\"$size[name]\" MAXLENGTH=\"255\" VALUE=\"$board_cookie[email]\"></TD>\n" .
+       "<TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_mail_m]</FONT></TD>\n";
 }
 
-if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode']) && $_SESSION[$jsboard]['pos'] != 1)
-  $pre_regist['name'] = $_SESSION[$jsboard]['name'] ? $_SESSION[$jsboard]['name'] : $pre_regist['name'];
+if($view[url] == "yes") {
+  echo "</TR><TR>\n" .
+       "<TD BGCOLOR=\"$color[r1_bg]\" NOWRAP><FONT COLOR=\"$color[r1_fg]\" $board[css]><NOBR>$langs[ln_url]</NOBR></FONT></TD>\n" .
+       "<TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[url]\" SIZE=\"$size[name]\" MAXLENGTH=\"255\" VALUE=\"$board_cookie[url]\"></TD>\n" .
+       "<TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_url_m]</FONT></TD>\n";
+}
 
-$pages = "&amp;page=$page";
+if(!$pcheck && !$adminsession || $cenable[reply]) {
+echo "</TR><TR>\n".
+     "  <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[w_pass]</FONT></TD>\n".
+     "  <TD BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"password\" NAME=\"atc[passwd]\" SIZE=\"$size[pass]\" MAXLENGTH=\"8\" STYLE=\"font: 10px tahoma\"></TD>\n".
+     "  <TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_passwd_m]</FONT></TD>\n";
+}
 
-sql_close($c);
+echo "
+</TR><TR>
+  <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>HTML</FONT></TD>
+  <TD BGCOLOR=\"$color[r2_bg]\">
+    <FONT COLOR=\"$color[r2_fg]\" $board[css]>
+    <INPUT TYPE=\"radio\" NAME=\"atc[html]\" VALUE=\"1\"$html_chk_ok>$langs[u_html]
+    <INPUT TYPE=\"radio\" NAME=\"atc[html]\" VALUE=\"0\"$html_chk_no>$langs[un_html]
+    </FONT>
+  </TD>
+  <TD BGCOLOR=\"$color[r2_bg]\"><FONT SIZE=\"-1\" COLOR=\"$color[r2_fg]\" $board[css]>$langs[w_html_m]</FONT></TD>";
 
-$print['preview_script'] = <<<EOF
-<script type="text/javascript">
-  var tarea_width = '{$board['width']}';
-  var tarea_cols  = '{$size['text']}';
-</script>
-EOF;
+if ($upload[yesno] == "yes" && $cupload[yesno] == "yes" && $agent[br] != "LYNX") {
+  echo "</TR><TR>\n".
+       "<TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[file]</FONT>\n" .
+       "<INPUT TYPE=HIDDEN NAME=max_file_size VALUE=\"$upload[maxsize]\"></TD>\n" .
+       "<TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\">".
+       "<INPUT TYPE=file NAME=userfile SIZE=\"$size[uplo]\" MAXLENGTH=256></TD>";
+} else if ($upload[yesno] == "no" && $cupload[yesno] == "yes") {
+  echo "</TR><TR>\n".
+       "<TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[file]</FONT></TD>\n" .
+       "<TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\"><font color=red><b>$langs[upload]</b></font></TD>";
+}
 
-# Template file 을 호출
-meta_char_check($print['theme'], 1, 1);
-$bodyType = 'reply';
-require_once 'captcha/captchacommon.php';
-include "theme/{$print['theme']}/index.template";
+echo "
+</TR><TR>
+  <TD BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>$langs[titl]</FONT></TD>
+  <TD COLSPAN=\"2\" BGCOLOR=\"$color[r2_bg]\"><INPUT TYPE=\"text\" NAME=\"atc[title]\" SIZE=\"$size[titl]\" MAXLENGTH=\"100\" VALUE=\"Re$reti: $list[title]\"></TD>";
+
+if (preg_match("/MSIE/i",$agent[br]) || $agent[br] == "MOZL6") {
+  $orig_option = " onClick=fresize(0)";
+
+  echo "
+</TR><TR>
+  <TD COLSPAN=\"2\" BGCOLOR=\"$color[r1_bg]\"><FONT COLOR=\"$color[r1_fg]\" $board[css]>Textarea size config</FONT></TD>
+  <TD ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">
+
+<SCRIPT LANGUAGE=JavaScript>
+<!--
+function fresize(value) {
+if (value == 0) {
+  document.replyp.rpost.cols  = $size[text];
+  document.replyp.rpost.rows  = 10;
+}
+if (value == 1) document.replyp.rpost.cols += 5;
+if (value == 2) document.replyp.rpost.rows += 5;
+}
+// -->
+</SCRIPT>\n";
+
+  # 언어 코드에 따라 버튼을 text 로 처리 할것인지 이미지로 처리할 것인지를 결정
+  form_size_button($langs[code]);
+
+  echo "  </TD>";
+}
+
+$wkey = get_spam_value($board[antispam]);
+echo "
+</TR><TR>
+  <TD COLSPAN=\"3\" ALIGN=\"center\" BGCOLOR=\"$color[r2_bg]\">
+<!-- ---------- 글 내용 ---------- -->
+    $text_area
+<!-- ---------- 글 내용 ---------- -->
+  </TD>
+</TR><TR>
+  <TD COLSPAN=\"3\" ALIGN=\"right\" BGCOLOR=\"$color[r1_bg]\">
+    <FONT COLOR=\"$color[r1_fg]\" SIZE=\"-1\" $board[css]>
+    $wrap[ment]
+    </FONT>
+  </TD>
+</TR>
+</TABLE>
+
+</TD></TR>
+<TR><TD>
+
+<TABLE WIDTH=\"100%\" BORDER=\"0\" CELLPADDING=\"6\" CELLSPACING=\"0\">
+<TR>
+  <TD ALIGN=\"center\">
+    <FONT SIZE=\"-1\" COLOR=\"$color[l0_fg]\" $board[css]>
+    <INPUT TYPE=\"hidden\" NAME=\"o[at]\" value=\"r\">
+    <INPUT TYPE=\"hidden\" NAME=\"table\" VALUE=\"$table\">
+    <INPUT TYPE=\"hidden\" NAME=\"rmail[origmail]\" VALUE=\"$list[email]\">
+    <INPUT TYPE=\"hidden\" NAME=\"atc[reno]\" VALUE=\"$list[no]\">
+    <INPUT TYPE=hidden NAME=atc[wkey] VALUE=$wkey>
+    <INPUT TYPE=\"submit\" VALUE=\"$langs[b_re]\">&nbsp;
+    <INPUT TYPE=\"reset\" VALUE=\"$langs[b_reset]\"$orig_option>&nbsp;
+    <INPUT TYPE=\"button\" onClick=\"history.back()\" VALUE=\"$langs[b_can]\">
+    $orig_button
+    </FONT>
+  </TD>
+</TR>
+</TABLE>
+
+</TD></TR></FORM></TABLE>\n
+
+<TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
+<TR><TD>
+<TABLE ALIGN=\"center\" WIDTH=\"1%\" BORDER=\"0\" CELLSPACING=\"4\" CELLPADDING=\"0\">
+<TR>\n";
+
+if ($board[img] == "yes") {
+  if ($color[theme]) $themes[img] = get_theme_img($table);
+  else $themes[img] = "images";
+  echo "<td><nobr>" .
+       "<A HREF=\"list.php?table=$table&page=$page\"><img src=./$themes[img]/list.gif width=$icons[size] height=$icons[size] border=0 alt=\"$langs[cmd_list]\"></a>" .
+       "<A HREF=\"javascript:history.back()\"><img src=./$themes[img]/back.gif width=$icons[size] height=$icons[size] border=0 alt=\"$langs[cmd_priv]\"></a>" .
+       "</nobr></td>";
+} else {
+  echo "
+  <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>
+  <TD WIDTH=\"1%\" NOWRAP><A HREF=\"list.php?table=$table\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_list]</NOBR></FONT></A></TD>
+  <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>
+  <TD WIDTH=\"1%\" NOWRAP><A HREF=\"javascript:history.back()\"><FONT COLOR=\"$color[n0_fg]\" $board[css]><NOBR>$langs[cmd_priv]</NOBR></FONT></A></TD>
+  <TD WIDTH=\"1%\" BGCOLOR=\"#800000\"><IMG SRC=\"images/n.gif\" WIDTH=\"1\" HEIGHT=\"1\" ALT=\"|\"></TD>\n";
+}
+
+echo "</TR>\n</TABLE>\n</TD></TR>\n</TABLE>\n</DIV>\n";
+
+include "html/tail.ph";
 ?>
