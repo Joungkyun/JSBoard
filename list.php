@@ -1,148 +1,164 @@
-<?php
-# $Id: list.php,v 1.5 2009-11-16 21:52:45 oops Exp $
-# 페이지 로딩 시간 시작
-$p_time[] = microtime();
-include "include/header.php";
+<?
+include "include/header.ph";
+include "html/head.ph";
 
-$page = !$page ? 1 : $page;
-$nolenth = 0;
+if($enable[amark])
+  $admin_link = "[ <a href=./admin/user_admin/auth.php?table=$table title=\"$langs[ln_titl]\"><font color=$color[n0_fg]>admin</font></a> ]";
 
-if(!session_is_registered("$jsboard") && preg_match("/^(2|3|5|7)$/",$board['mode']))
-  print_error($_('login_err'));
-
-$board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
-$board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php"; 
-
-if($board['super'] == 1 || $board['adm']) {
-  if ( @file_exists ("./theme/{$print['theme']}/img/admin.gif") )
-    $print['adpath'] = "<img src=\"./theme/{$print['theme']}/img/admin.gif\" border=0 alt='" . $_('ln_titl') . "'>";
-  else $print['adpath'] = "&gt;&gt; admin ";
-  $print['admin'] = "<a href=\"javascript:new_windows('./admin/user_admin/uadmin.php?table=$table','admin','yes','yes',650,600);\" title='" . $_('ln_titl') . "'>".
-                    "<span class=\"admintext\">{$print['adpath']}</span></a>";
+if($table == $enable[security]) {
+  include "include/security.ph";
+  $board[secwarn] = get_security_info();
+  if($board[secwarn] == "warning")
+    $admin_link = "[ <a href=security.php?table=$table><font color=$color[n0_fg]>warnning</font></a> ]";
+} elseif(!$enable[security]) {
+  $langs[sec_error] = str_replace("\n","\\n",$langs[sec_error]);
+  echo "<SCRIPT>alert('$langs[sec_error]')</SCRIPT>";
 }
 
-# SQL 시작 시간 체크
-$a_time[] = microtime();
-
-$c = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
+sql_connect($db[server], $db[user], $db[pass]);
+sql_select_db($db[name]);
 
 # 게시판의 전체, 보통, 답장, 오늘 올라온 글 수 등을 가져옴
 $count = get_board_info($table);
 # 전체 페이지와 현재 페이지에 관련된 정보를 가져옴
 $pages = get_page_info($count, $page);
 
-# SQL 종료 시간 체크
-$a_time[] = microtime();
-$sqltime1= get_microtime($a_time[0], $a_time[1]);
+# 오늘 올라온 글이 있는 경우 $str[today]에 문자열을 넣어 목록을 출력할 때
+# 출력되도록 함
+$msg = count_msg();
 
-if($count['all']) {
-  if ($o['at'] == 's') $count['search'] = "searched";
-  else $count['search'] = "registered";
-  $count['today'] = !$count['today'] ? "" : "[ In 12H : {$count['today']} ] ";
-  $print['count'] = "<font id=\"num\" class=\"listkey\"></font>&nbsp;".
-                  "Total {$count['all']} articles / {$pages['all']} Pages {$count['search']} {$count['today']}";
+if($count[all]) {
+  $str[count] = "$msg[count1] ";
+  if ($o[at] == 's') $str[count] .= "$msg[count2] ";
+  else $str[count] .= "$msg[count3]";
+  if ($count[today]) $str[count] .= "$msg[count4]";
 } else {
-  $print['count'] = "<font id=\"num\" class=\"listkey\"></font>&nbsp;".
-                  "no article ..";
+  $str[count] = "$msg[count5]";
 }
 
-# RSS 출력 루틴
-if ( $rss['use'] ) {
-  $rss['title'] = $_SERVER['SERVER_NAME'] . " {$board['title']}";
-  $rss['link'] = "<link rel=\"Alternate\" type=\"application/rss+xml\" " .
-                 "title=\"{$rss['title']}\" href=\"{$board['path']}rss.php?table={$table}\">\n";
+$str[p_list] = page_list($table, $pages, $count, $board[plist]);
+$str[s_form] = search_form($table, $pages);
+$str[p_form] = page_form($table, $pages, $color[l0_fg]);
 
-  $rss['color'] = trim($rss['color']) ? " color: {$rss['color']};" : "";
-
-  if ( $rss['align'] ) {
-    $print['count'] .= " [<a href=\"{$board['path']}rss.php?table={$table}\">" .
-                       "<span class=\"rss\">RSS</span></a>]";
-  } else {
-    $print['count'] = "[<a href=\"{$board['path']}rss.php?table={$table}\">" .
-                      "<span class=\"rss\">RSS</span></a>] {$print['count']}";
-  }
+if ($board[img] == "yes") {
+  $icons[add] = "<img src=./images/blank.gif width=$icons[size] border=0>";
+  if (preg_match("/%/",$board[width])) $icons[td]  = "1%";
+  else $icons[td] = $icons[size];
 }
-
-
-# SQL 시작 시간 체크
-$b_time[] = microtime();
-
-# 글 리스트
-$colspan_no = $upload['yesno'] ? "6" : "5";
-
-if(trim($notice['subject'])) {
-  $notice_filno = $colspan_no - 1;
-
-  if($notice['contents']) {
-    $notice['subject'] = "<a href=\"read.php?table={$table}&amp;alert=1\">".
-                        "<span class=\"notice\">{$notice['subject']}</span></a>";
-  } else {
-    $notice['subject'] = "<span class=\"notice\">{$notice['subject']}</span>";
-  }
-
-  $print['lists'] = "<tr class=\"noticebg\">\n".
-                  "<td align=\"right\"><img src=\"./theme/{$print['theme']}/img/notice.gif\" border=0 alt=\"\">".
-                  "<img src=\"./images/blank.gif\" width=5 height=\"{$lines['height']}\" border=0 align=\"middle\" alt=''></td>\n".
-                  "<td colspan=\"$notice_filno\">{$notice['subject']}</td>\n</tr>\n\n";
-
-  # 글 리스트들 사이에 디자인을 넣기 위한 코드
-  if($lines['design']) {
-    $lines['design'] = preg_replace("/=[\"']?AA[\"']?/","=\"$colspan_no\"",$lines['design']);
-    $print['lists'] .= "<tr>\n{$lines['design']}\n</tr>\n";
-  }
-}
-
-$print['lists'] .= get_list($table, $pages);
-
-# 게시판 앞뒤 페이지 링크
-$print['p_list'] = page_list($table, $pages, $count, $board['plist']);
-
-# SQL 종료 시간 체크
-$b_time[] = microtime();
-$sqltime2 = get_microtime($b_time[0], $b_time[1]);
-
-# SQL 시간
-$print['sqltime'] = $sqltime1 + $sqltime2;
-$print['sqltime'] = "SQL Time [ {$print['sqltime']} Sec ]";
-
-# 상세 검색 테이블
-if($o['at'] == "d" || $o['at'] == "dp")
-  $print['dsearch'] = detail_searchform();
-else {
-  $page = $page ? $page : "1";
-  $print['dserlink'] = "<a href=\"{$_SERVER['PHP_SELF']}?table=$table&amp;page=$page&amp;o[at]=dp\">" .
-                       "[ " . $_('detable_search_link') . " ]</a>";
-}
-
-# 검색폼, 페이지폼 관련 변수
-$sform = search_form($o);
-$pform = page_form($pages,$o);
 
 # 관련글 리스트 출력시 preview 기능 사용할때 필요한 JavaScript 출력
-#if ($enable['pre']) $print['preview_script'] = print_preview_src();
-if ($enable['pre'])
-  $print['preview_script'] = '<script type="text/javascript" src="./theme/common/preview.js"></script>';
+if ($enable[pre]) print_preview_src();
 
-# 글등록지 표시 여부
-if($enable['dhost']) {
-  $list['dhost'] = get_hostname($enable['dlook']);
-  if($enable['dwho'])
-    $list['dhost'] = "<a href=\"javascript:new_windows('./whois.php?table=$table&amp;host={$list['dhost']}',0,1,0,600,480)\">".
-                   "<span class=\"sqltime\">{$list['dhost']}</span></a>";
-  $print['times'] = "Access [ {$list['dhost']} ] {$print['sqltime']}";
-} else $print['times'] = "{$print['pagetime']} {$print['sqltime']}";
+# 게시판 목록 제목줄 출력
+echo "
+<DIV ALIGN=\"$board[align]\">
+<!------ 상단 메뉴 시작 --------->
+<TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
+<TR>
+  <TD VALIGN=bottom><nobr>$icons[add]$admin_link</nobr></TD>
+  <TD ALIGN=right VALIGN=bottom>";
 
-# 페이지 로딩 끝 시간
-$p_time[] = microtime();
-$print['pagetime'] = get_microtime($p_time[0], $p_time[1]);
-$print['pagetime'] = "Page Loading [ {$print['pagetime']} Sec ]";
+# 게시판 목록 상단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
+if ($board[cmd] == "yes" && $board[img] != "yes") {
+  $str[align] = "";
+  list_cmd($str);
+} elseif($enable[dhost]) {
+  $list[dhost] = get_hostname($enable[dlook]);
+  if($enable[dwho]) 
+    $list[hlinked] = "<a href=javascript:new_windows('./whois.php?table=$table&host=$list[dhost]',0,1,0,600,480)>".
+                      "<font color=$color[text]>$list[dhost]</font></a>";
+  else $list[hlinked] = "<font color=$color[text]>$list[dhost]</font>";
+  echo "$langs[remote] [ $list[hlinked] ]$icons[add]";
+} else echo "&nbsp;";
 
-sql_close($c);
+echo "</TD>
+</TR>
+</TABLE>
+<!------ 상단 메뉴 끝 --------->
+<TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">
+<TR>";
 
-$sform['ss'] = preg_replace("/\\\\+/i","\\",$sform['ss']);
+# image menu bar 출력
+if ($board[img] == "yes") {
+  echo "<TD rowspan=2 width=$icons[td] align=right valign=top>";
+  img_lmenu($str,$icons[size]);
+  echo "</TD>\n";
+}
 
-# PAGE DISPLAY
-meta_char_check($print['theme'], 1, 1);
-$bodyType = 'list';
-include "./theme/{$print['theme']}/index.template";
+echo "<TD valign=top BGCOLOR=\"$color[l0_bg]\">
+<TABLE WIDTH=\"100%\" border=\"0\" CELLSPACING=\"1\" CELLPADDING=\"3\">
+<TR>
+  <TD WIDTH=\"$td_width[1]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\" NOWRAP><FONT COLOR=\"$color[l1_fg]\" $board[css]><NOBR>$langs[no]</NOBR></FONT></TD>
+  <TD WIDTH=\"$td_width[2]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\"><FONT COLOR=\"$color[l1_fg]\" $board[css]>$langs[titl]</FONT></TD>
+  <TD WIDTH=\"$td_width[3]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\"><FONT COLOR=\"$color[l1_fg]\" $board[css]>$langs[name]</FONT></TD>\n";
+  
+if ($upload[yesno] == "yes") {
+  if ($cupload[yesno] == "yes")
+    echo "  <TD WIDTH=\"$td_width[4]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\"><FONT COLOR=\"$color[l1_fg]\" $board[css]>$langs[file]</FONT></TD>";
+}
+
+echo "
+  <TD WIDTH=\"$td_width[5]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\"><FONT COLOR=\"$color[l1_fg]\" $board[css]>$langs[date]</FONT></TD>
+  <TD COLSPAN=\"2\" WIDTH=\"$td_width[6]\" ALIGN=\"center\" BGCOLOR=\"$color[l1_bg]\" NOWRAP><FONT COLOR=\"$color[l1_fg]\" $board[css]><NOBR>$langs[hit]</NOBR></FONT></TD>
+</TR>\n";
+
+$c_time[] = microtime(); # 속도 체크
+
+get_list($table, $pages);
+
+$c_time[] = microtime(); # 속도 체크
+$time = get_microtime($c_time[0], $c_time[1]);
+
+echo "
+<TR>
+  <TD COLSPAN=\"$colspan\" ALIGN=\"right\" BGCOLOR=\"$color[l1_bg]\">
+    <FONT COLOR=\"$color[l1_fg]\" SIZE=\"-1\" $board[css]>$str[count] [ $time sec ]</FONT>
+  </TD>
+</TR>
+</TABLE>
+
+</TD>\n";
+
+# image menu bar 출력
+if ($board[img] == "yes") {
+  if($color[bgcol] != $color[l4_bg]) $srowspan = " rowspan=2";
+  echo "<TD$srowspan width=$icons[td] valign=bottom>";
+  img_lmenu($str,$icons[size]);
+  echo "</TD>\n";
+}
+
+if($color[bgcol] == $color[l4_bg]) {
+  $board[cs] = "0";
+  $board[blank] = "<img src=images/blank.gif width=10 height=6 border=0><br>";
+} else $board[cs] = "6";
+
+echo "</TR>
+<TR><TD BGCOLOR=\"$color[l4_bg]\">
+$board[blank]
+<TABLE WIDTH=\"100%\" BORDER=\"0\" CELLPADDING=\"0\" CELLSPACING=\"$board[cs]\" ALIGN=\"center\">
+<TR>
+  <TD VALIGN=\"top\" ROWSPAN=\"2\">$str[s_form]</TD>
+  <TD VALIGN=\"top\" ALIGN=\"right\">$str[p_list]</TD>
+</TR><TR>
+  <TD ALIGN=\"right\" VALIGN=\"bottom\">$str[p_form]</TD>
+</TR>
+</TABLE>
+</TD>";
+
+if($board[img] == "yes" && $color[bgcol] == $color[l4_bg]) echo "\n<TD>&nbsp;</TD>\n";
+
+echo "</TR></TABLE>\n".
+     "<TABLE WIDTH=\"$board[width]\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\">\n".
+     "<TR><td>\n";
+
+if ($board[img] != "yes") {
+  # 게시판 목록 하단에 다음, 이전 페이지, 글쓰기 등의 링크를 출력
+  $str[align] = "ALIGN=\"center\"";
+  list_cmd($str);
+}
+
+echo "</TD></TR>\n".
+     "</TABLE>\n</DIV>\n";
+
+include "html/tail.ph";
 ?>
