@@ -1,6 +1,4 @@
 <?php
-# $Id: check.php,v 1.15 2012-10-02 17:44:17 oops Exp $
-
 # table 이름에 meta character 가 포함되어 있는지 검사하는 함수
 # $name -> 변수값
 # $i    -> null 이라도 상관없을 경우 1
@@ -16,13 +14,13 @@ function meta_char_check($name,$i=0,$t=0) {
 # 로그인에 사용되는 Password 비교 함수
 #
 function compare_pass($l) {
-  global $_, $edb;
+  global $langs,$edb;
   $r = get_authinfo($l['id'],$edb['crypts']);
 
   if($edb['uses'] && $edb['crypts']) {
-    if (crypt($r['passwd'],$l['pass']) != $l['pass']) print_pwerror($_('ua_pw_c'));
+    if (crypt($r['passwd'],$l['pass']) != $l['pass']) print_pwerror($langs['ua_pw_c']);
   } else {
-    if ($r['passwd'] != $l['pass']) print_pwerror($_('ua_pw_c'));
+    if ($r['passwd'] != $l['pass']) print_pwerror($langs['ua_pw_c']);
   }
 }
 
@@ -79,13 +77,8 @@ function check_email($email,$hchk=0) {
   if($hchk) {
     $host = explode("@",$url);
     if(preg_match("/^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$/i", $url)) {
-      if(!check_windows() || version_compare('5.3.0',phpversion(),'>=') {
-        if(checkdnsrr($host[1],"MX") || gethostbynamel($host[1])) return $url;
-        else return;
-      } else {
-        if(gethostbynamel($host[1])) return $url;
-        else return;
-      }
+      if(checkdnsrr($host[1],"MX") || gethostbynamel($host[1])) return $url;
+      else return;
     }
   } else {
     if(preg_match("/^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$/i", $url)) return $url;
@@ -98,8 +91,7 @@ function check_email($email,$hchk=0) {
 # crpyt - 문자열을 DES로 암호화함
 #         http://www.php.net/manual/function.crypt.php
 function check_passwd($table,$no,$passwd) {
-  global $jsboard, $board, $o, $c, $db;
-
+  global $jsboard, $board, $o;
   if($board['mode'] && session_is_registered("$jsboard")) $sql_field = "name";
   else $sql_field = "passwd";
 
@@ -108,7 +100,7 @@ function check_passwd($table,$no,$passwd) {
   $table = ($table && $o['at'] == "c_del") ? $table."_comm" : $table;
 
   if ($table && $no) {
-    $result = sql_query("SELECT $sql_field FROM $table WHERE no = '$no'", $c);
+    $result = sql_query("SELECT $sql_field FROM $table WHERE no = '$no'");
     $r['chk'] = sql_result($result,0,"$sql_field");
     sql_free_result($result);
   }
@@ -124,7 +116,7 @@ function check_passwd($table,$no,$passwd) {
 
   if(!$chk || $chk == 1) {
     # 전체 관리자 패스워드
-    $result = sql_query("SELECT passwd FROM userdb WHERE position = 1", $c);
+    $result = sql_query("SELECT passwd FROM userdb WHERE position = 1");
     $r['su'] = sql_result($result,0,"passwd");
     sql_free_result($result);
 
@@ -134,7 +126,7 @@ function check_passwd($table,$no,$passwd) {
       $arrayadm = explode(";",$board['ad']);
       for($i=0;$i<sizeof($arrayadm);$i++) {
         # 게시판 관리자 패스워드
-        $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$i]'", $c);
+        $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$i]'");
         $r['ad'] = sql_result($result,0,"passwd");
         sql_free_result($result);
 
@@ -161,11 +153,11 @@ function check_auth($user,$chk) {
 # 스팸 검사 함수
 #
 function check_spam($str, $spam_list = "config/spam_list.txt") {
-  global $_;
+  global $langs;
   $mbext = 0;
 
   $open_fail = "Don't open spam list file";
-  $list = readfile_r ($spam_list, 1);
+  $list = file_operate($spam_list,"r",$open_fail,0,1);
 
   # php versin check
   if ( function_exists ("version_compare") ) {
@@ -179,9 +171,9 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
 
   # mbstring 함수를 지원하면 문자열을 UTF-8 로 변환한다.
   if ( $mbt ) {
-    if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $_('charset')) ) {
+    if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $langs['charset']) ) {
       if ( $mbext ) {
-        $str = mb_convert_encoding ($str, "UTF-8", $_('charset'));
+        $str = mb_convert_encoding ($str, "UTF-8", $langs['charset']);
       } else {
         $str = mb_convert_encoding ($str, "UTF-8");
       }
@@ -206,9 +198,9 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
 
     # mbstring 을 지원하면 필터링 키워드를 UTF-8 로 변환
     if ( $mbt ) {
-      if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $_('charset')) ) {
+      if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $langs['charset']) ) {
         if ( $mbext ) {
-          $list[$co] = mb_convert_encoding ($list[$co], "UTF-8", $_('charset'));
+          $list[$co] = mb_convert_encoding ($list[$co], "UTF-8", $langs['charset']);
         } else {
           $list[$co] = mb_convert_encoding ($list[$co], "UTF-8");
         }
@@ -217,9 +209,9 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
 
     if(preg_match("/$list[$co]/i", $str, $spam_string)) {
       if ( $mbt ) {
-        if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $_('charset')) ) {
+        if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $langs['charset']) ) {
           if ( $mbext ) {
-            $spamstr_t = mb_convert_encoding ($spam_string[0], $_('charset'), "UTF-8");
+            $spamstr_t = mb_convert_encoding ($spam_string[0], $langs['charset'], "UTF-8");
           } else {
             $spamstr_t = "Unsupported";
           }
@@ -228,7 +220,6 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
         $spamstr_t = $spam_string[0];
       }
 
-      $spamstr_t = htmlentities ($spamstr_t);
       $GLOBALS['spamstr'] = "\nDetected: {$spamstr_t}";
       return 1;
       break;
@@ -286,7 +277,6 @@ function icon_check($t,$fn) {
 function check_dnlink($table,$list) {
   global $upload, $cupload;
 
-  $list['bofile'] = rawurlencode ($list['bofile']);
   if(!$cupload['dnlink']) {
     if (preg_match("/(\.phps|\.txt|\.gif|\.jpg|\.png|\.html|\.php|\.php3|\.phtml|\.sh|\.jsp|\.asp|\.htm|\.cgi|\.doc|\.hwp|\.pdf|\.rpm|\.patch|\.vbs|\.ppt|\.xls)$/i",$list['bofile'])) {
       $dn = "act.php?o[at]=dn&amp;dn[tb]=$table&amp;dn[cd]={$list['bcfile']}&amp;dn[name]={$list['bofile']}";
@@ -303,20 +293,20 @@ function check_dnlink($table,$list) {
 # upload file 이름에 특수 문자가 들어 가 있는지 검사
 #
 function upload_name_chk($f) {
-  global $_;
+  global $langs;
 
-  if(!trim($f)) print_error($_('act_de'),250,150,1);
+  if(!trim($f)) print_error($langs['act_de'],250,150,1);
 
   # file 이름에서 특수문자가 있으면 에러 출력
   # 한글 영역과 한자 영역은 허락 함
   if ( preg_replace ("/[\w\d._\-]|[\xB0-\xC8\xCA-\xFD][\xA1-\xFE]/",'', urldecode ($f)) ) {
-    print_error($_('act_de'),250,150,1);
+    print_error($langs['act_de'],250,150,1);
     exit;
   }
 
   # hidden file 이나 multiple dot 허락하지 않음
   if ( preg_match ("/^\.|\.\.+/", urldecode ($f)) ) {
-    print_error($_('act_de'), 250, 150, 1);
+    print_error($langs['act_de'], 250, 150, 1);
     exit;
   }
 }
@@ -326,9 +316,9 @@ function upload_name_chk($f) {
 # 허락됨
 #
 function check_location($n=0) {
-  global $board, $_, $agent;
+  global $board, $langs, $agent;
 
-  if($n && !$agent['tx']) {
+  if($n && $agent['br'] != "LYNX") {
     $board['referer'] = $_SERVER['HTTP_REFERER'];
 
     $sre[] = "/http[s]?:\/\/([^\/]+)\/.*/i";
@@ -340,7 +330,7 @@ function check_location($n=0) {
     $l = gethostbyname(preg_replace($sre,$tre,$board['path']));
 
     if ($r != $l) {
-      print_error($_('chk_lo'), 250, 150, 1);
+      print_error("{$langs['chk_lo']}",250,150,1);
       return 0;
     } else return 1;
   } else return 1;
@@ -355,16 +345,14 @@ function check_iis() {
 # 윈도우용 php 인지 아닌지를 판단.
 # 윈도우용 php 일 경우 turn 를 반환
 function check_windows() {
-  if ( preg_match ("/Windows/i", php_uname ()) )
-    return 1;
-
-  return 0;
+  if(preg_match("/Windows/i",php_uname())) return 1;
+  else return 0;
 }
 
 # TABLE 을 정확하게 사용했는지 체크하는 함수
 #
 function check_htmltable($str) {
-  global $_;
+  global $langs;
 
   if(!preg_match(';</?TABLE[^>]*>;i',$str)) return;
 
@@ -385,10 +373,10 @@ function check_htmltable($str) {
   $check = preg_replace($from,$to,$str);
 
   if(strlen($check)%3) {
-    print_error($_('chk_ta'), 250, 150, 1);
+    print_error($langs['chk_ta'], 250, 150, 1);
   }
   if(!preg_match('/^12(3|4).+9291$/',$check)) {
-    print_error($_('chk_tb'), 250, 150, 1);
+    print_error($langs['chk_tb'], 250, 150, 1);
   }
 
   while(preg_match('/([\d])9\1/',$check))
@@ -402,7 +390,7 @@ function check_htmltable($str) {
 # IFRAME 을 정확하게 사용했는지 체크하는 함수
 #
 function check_iframe($str) {
-  global $_;
+  global $langs;
 
   if (!preg_match(';</?iframe[^>]*>;i', $str)) return 0;
 
@@ -411,7 +399,7 @@ function check_iframe($str) {
   $check = preg_replace($from, $to, $str);
 
   if ($check) {
-    print_error($_('chk_if'), 250, 150, 1);
+    print_error($langs['chk_if'], 250, 150, 1);
   }
 }
 
@@ -420,7 +408,7 @@ function check_iframe($str) {
 #      1 : ips 에 등록된 Ip 에서의 링크만 막음
 #
 function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
-  global $_;
+  global $langs;
 
   # $c 설정이 있고, list read from write page 에서만 체크
   if($c && preg_match("/(list|read|form|write)\.php/i",$_SERVER['PHP_SELF'])) {
@@ -453,10 +441,10 @@ function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
       }
       switch($m_value) {
         case '1' :
-          if($val) print_error($_('chk_hy'),250,250,1);
+          if($val) print_error($langs['chk_hy'],250,250,1);
           break;
         default:
-          if(!$val) print_error($_('chk_hy'),250,250,1);
+          if(!$val) print_error($langs['chk_hy'],250,250,1);
           break;
       }
     }
@@ -466,7 +454,7 @@ function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
 # IP blocking 함수
 #
 function check_access($c=0,$wips='',$ips='') {
-  global $_;
+  global $langs;
 
   if($c) {
     # global.php 에 $board['ipbl'] 이 존재하면 함침
@@ -480,7 +468,7 @@ function check_access($c=0,$wips='',$ips='') {
     for($j=1;$j<4;$j++) $ipchk[$j] = $ipchk[$j] ? $ipchk[$j] : 0;
     # 각 자리수 마다 255 보다 크면 ip 주소를 벋어나므로 체크 
     if($ipchk[0] > 255 || $ipchk[1] > 255 || $ipchk[2] > 255 || $ipchk[3] > 255)
-      print_error($_('chk_sp'),250,250,1);
+      print_error($langs['chk_sp'],250,250,1);
  
     $addr = explode(";",$ips);
     for($i=0;$i<sizeof($addr);$i++) {
@@ -489,119 +477,16 @@ function check_access($c=0,$wips='',$ips='') {
       if(preg_match("/^$addr[$i]/i",$_SERVER['REMOTE_ADDR'])) $val = 1;
     }
 
-    if($val) print_error($_('chk_bl'),250,250,1);
+    if($val) print_error($langs['chk_bl'],250,250,1);
   }
 }
 
 # spam 등록기 체크 함수
-function check_rw_referer ($referer, $type) {
-  #if ($type != 'reply' && $type != 'write')
-  #  return 0;
-
-  if (preg_match("!{$type}\.php!", $referer))
-    return 0;
-
-  return 1;
-}
-
-function check_proxy() {
-  foreach($_POST as $k => $v) {
-    switch($k) {
-      case 'HTTP_VIA':
-      case 'HTTP_CLIENT_IP':
-      case 'HTTP_PROXY':
-      case 'HTTP_SP_HOST':
-      case 'HTTP_COMING_FROM':
-      case 'HTTP_X_COMING_FROM':
-      case 'HTTP_FORWARDED':
-      case 'HTTP_X_FORWARDED':
-      case 'HTTP_FORWARDED_FOR':
-      case 'HTTP_X_FORWARDED_FOR':
-        return 1;
-        break;
-    }
+function check_spamer($anti,$wkey) {
+  global $langs,$o;
+  if($o['at'] == "write" || $o['at'] == "reply") {
+    if(!$anti || !preg_match("/^[0-9]+:[0-9]+:[0-9]+$/i",$anti)) print_error($langs['chk_an'],250,250,1);
+    if($wkey != get_spam_value($anti)) print_error($langs['chk_sp'],250,250,1);
   }
-  return 0;
-}
-
-function check_rw_method ($agent) {
-  # if text browser, pass
-  if($agent['tx'])
-    return 0;
-
-  # only accept POST method
-  if($_SERVER['REQUEST_METHOD'] != 'POST')
-    return 1;
- 
-  # only accept HTTP/1.1 protocol
-  if($_SERVER['SERVER_PROTOCOL'] != 'HTTP/1.1') {
-    # if case proxy server, accept
-    if(check_proxy())
-      return 0;
-    return 2;
-  }
-
-  return 0;
-}
-
-function check_spamer($v) {
-  global $_, $o, $board;
-
-  if($o['at'] != 'write' && $o['at'] != 'reply')
-    return;
-
-  if ( $v['goaway'] )
-    print_error($_('chk_rp'),250,250,1);
-
-  if (check_rw_referer($_SERVER['HTTP_REFERER'],$o['at']))
-    print_error($_('chk_rp'),250,250,1);
-
-  $url = parse_url ($board['path']);
-  $reg = preg_quote ($url['host']);
-  if ( preg_match ('!www\x5c\.!', $reg) )
-    $reg = preg_replace ('!www\x5c\.!', '(\0)?', $reg);
-  else
-    $reg = '(www\.)?' . $reg;
-  $reg = '!^http[s]?://' . $reg . '!';
-
-  if ( ! preg_match ($reg, $_SERVER['HTTP_REFERER']) )
-    print_error($_('chk_rp'),250,250,1);
-
-  if (check_rw_method ($v['agent']))
-    print_error($_('chk_rp'),250,250,1);
-}
-
-# Session Temp Directory Init
-function sessionInit($dir) {
-  if ( ! is_dir ($dir) )
-    mkdir($dir);
-
-  session_save_path ($dir);
-}
-
-#
-# html code 뒤에 ':' 가 붙어 있으면 block 을 유지 시켜 줘야 하는
-# 태그로 인식한다. (wordwrap 이 되면 안되는 code)
-#
-function init_htmltag () {
-  global $enable;
-
-  if ( ! $eanble['tag'] )
-    $enable['tag'] = 'b,i,u,ul,ol,li,span,font,table,tr,td';
-
-  $enable['tag'] .= ',code';
-  $p = preg_replace ('/[\s]/', '', $enable['tag']);
-  $p = explode (',', $p);
-  $enable['tag'] = (object) $p;
-}
-
-function check_utf8_conv ($charset) {
-  if ( preg_match ('/^utf[-]?8$/i', $charset) )
-    return false;
-
-  if ( ! extension_loaded ('iconv') )
-    return false;
-
-  return true;
 }
 ?>

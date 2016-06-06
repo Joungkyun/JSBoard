@@ -1,0 +1,51 @@
+#!/bin/sh
+clear
+echo "########################################################"
+echo "# JSBoard Config File Installer v2.0                   #"
+echo "# Scripted By JoungKyun Kim < http://www.oops.org >    #"
+echo "########################################################"
+echo
+
+echo "STEP 1 Language Check"
+echo "---------------------"
+echo -n "Do you want to use Koean during the installation? [Y/N](default Y) : "
+read langs
+
+case "${langs}" in
+  N*|n*)
+    langs=en ;;
+  *)
+    langs=ko ;;
+esac
+
+if [ "${langs}" = "ko" ]; then
+  . ./LANG/ko.conf
+else
+  . ./LANG/en.conf
+fi
+
+cp -Rp ../sample/admin/global.php.orig ../../config/global.php
+cp -Rp ../sample/admin/spam_list.txt.orig ../../config/spam_list.txt
+if [ -d "../../data/test" ]; then
+  cp -Rp ../sample/data/* ../../data/test/
+else
+  cp -Rp ../sample/data/ ../../data/test
+fi
+
+# permission configuration
+chmod 707 ../../config
+chmod 707 ../../data
+chmod 707 ../../data/test
+chmod 707 ../../data/test/files
+chmod 660 ../../config/global.php
+chmod 660 ../../config/spam_list.txt
+chmod 606 ../../data/test/config.php
+chmod 606 ../../data/test/html_head.php
+chmod 606 ../../data/test/html_tail.php
+chmod 606 ../../data/test/stylesheet.php
+
+echo
+echo -e ${ACC_END_MSG}
+echo
+
+exit 0
