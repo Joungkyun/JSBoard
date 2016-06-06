@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!--  ====================================================================  -->
+<!--  $langs['charset'] : 掲示板の 言語 タイプに よって charset を 持って来る.    -->
+<!--  $board['ver']     : 掲示板の バージョン 情報を 持って 来る.                 -->
+<!--  get_title()     : 掲示板の ヘッダー タイトルを 持って 来る.                 -->
+<!--  $user_stylesheet : 使用者 正義 スタイル シーツ                            -->
+<!--  ====================================================================  -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!-- 
+BODY,TD {
+  font-size: 12px;
+  font-family: <?php echo $langs['vfont']?>, sans-serif;
+  color: #555555;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font: 11px tahoma,sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #FFFFFF;
+}
+TEXTAREA {
+  font: 13px <?php echo $langs['vfont']?>, sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  background-Color: #ffffff;
+  width: 100%;
+  height: 150px;
+}
+
+.resizable-textarea .grippie {
+  height: 14px;
+  background: #ECE9D6 url(theme/EN-default/img/grippie.png) no-repeat 100% 100%;
+  border: 1px solid #DFDBCA;
+  border-top-width: 0;
+  cursor: se-resize;
+}
+
+.resizable-textarea {
+  width: 100% !important;
+  width: 98%; /* for IE */
+}
+form { display: inline; }
+
+<?php echo $user_stylesheet?>
+ -->
+</style>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<!--  ======================= ヘッダー デザイン 手始め =======================  -->
+<?php
+print_keymenu(2);
+echo $print['preview_script'] . "\n";
+
+if(!$np) {
+  # 各 ユーザー別 Design
+  include "{$board['headpath']}";
+  # 全体 管理者に 義解 強制 input なる Design
+  include "html/head.php";
+ }
+?>
+<!--  ======================= ヘッダー デザイン 終り   =======================  -->
+
+<!--  ====================================================================  -->
+<!--  $board['align'] : 掲示板の align を 定義する. おこる 掲示板 管理者で  -->
+<!--                  設定を すること ある.                                     -->
+<!--  $board['width'] : 掲示板の 広さを 指定する. 掲示板 管理者で 調整    -->
+<!--  $board['formtype'] : イメージ アップロードを 支援 可否を のために 必ず 必要         -->
+<!--  ====================================================================  -->
+<DIV ALIGN="<?php echo $board['align']?>">
+<FORM NAME="editp" METHOD="post" target=_top action='act.php'<?php echo $board['formtype']?>>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/JP-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Edit article</FONT></TD>
+</TD>
+</TR>
+
+<TR BGCOLOR="#FFAE00">
+<TD COLSPAN=2>
+<IMG SRC="./theme/JP-default/img/board_no.gif" ALIGN="middle" ALT=''>
+<FONT STYLE="color:#FFFFFF"><IMG SRC="theme/JP-default/img/edit_title.gif" BORDER=0 ALT=''></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=10><IMG SRC="images/blank.gif" WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+
+<!--  ====================================================================  -->
+<!--  $size['name']  : input お問い合わせ サイズ theme config で 設定             -->
+<!--  $list['name']  : 修正する 名前を 出力                                   -->
+<!--  ====================================================================  -->
+<TR>
+<TD WIDTH=80>名前</TD>
+<TD><INPUT TYPE="text" NAME="atc[name]" SIZE="<?php echo $size['name']?>" MAXLENGTH=50 VALUE="<?php echo $list['name']?>"<?php echo $disable?> tabindex="1"></TD>
+</TR>
+
+<!--  ====================================================================  -->
+<!--  $view['email']          : email 登録 可否 決定                        -->
+<!--  $list['email']          : 修正する 電子メールを 出力                        -->
+<!--  ====================================================================  -->
+<?php
+if($view['email'] || trim($list['email'])) {
+  echo <<<EOF
+<TR>
+<TD>メール</TD>
+<TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['email']}"{$disable} tabindex="2"></TD>
+</TR>
+EOF;
+}
+?>
+
+<!--  ====================================================================  -->
+<!--  $view['url']             : url 登録 可否 決定                         -->
+<!--  $list['url']             : 修正する url を 出力                         -->
+<!--  ====================================================================  -->
+<?php
+if($view['url'] || trim($list['url'])) {
+  echo <<<EOF
+<TR>
+<TD>ホームページ</TD>
+<TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['url']}"{$disable} tabindex="3"></TD>
+</TR>
+EOF;
+}
+?>
+
+<!--  ====================================================================  -->
+<!--  upload 部分 出力可否 設定 (まあまあの程ならば そのまま 使えば なり)                     -->
+<!--  ====================================================================  -->
+<?php
+if($list['bofile']) {
+  echo <<<EOF
+<TR>
+<TD>ファイル</TD>
+<TD>
+<A target=_top href='$down_link'>
+<IMG SRC="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" valign="middle">
+<FONT style="color:{$color['text']}">{$list['bofile']}</FONT></A> - $hfsize &nbsp; &nbsp;
+<INPUT TYPE="CHECKBOX" NAME="atc[fdel]" VALUE=1 tabindex="4"> ファイル削除
+</TD>
+</TR>
+EOF;
+}
+
+if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
+  echo <<<EOF
+<TR>
+<TD>ファイル修正</TD>
+<TD>
+<INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
+<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256 tabindex="5">
+</TD>
+</TR>
+EOF;
+}
+?>
+
+<!--  ====================================================================  -->
+<!--  $size['titl']  : title input お問い合わせ サイズ                              -->
+<!--  $list['title'] : 修正する 文 題目                                       -->
+<!--  ====================================================================  -->
+<TR>
+<TD>題目</TD>
+<TD><INPUT TYPE="text" NAME="atc[title]" SIZE="<?php echo $size['titl']?>" MAXLENGTH=100 VALUE="<?php echo $list['title']?>" tabindex="6"></TD>
+</TR>
+
+<TR>
+<!--  ====================================================================  -->
+<!--  admin login 状態である 場合 パスワードを 少なくなくても なるように する ルチン          -->
+<!--  IE, NS6 義 場合には textarea 窓 サイズ 調整 ボタンも 一緒に 出力          -->
+<!--  ====================================================================  -->
+<?php
+if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
+  echo <<<EOF
+<TD>パスワード</TD>
+<TD>
+$passment
+</TD>
+EOF;
+}
+?>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>" ALIGN="CENTER">
+
+<!--  ====================================================================  -->
+<!--  $size['text'] : textarea 義 size 出力                                 -->
+<!--  $list['text'] : 修正する 文 本文を 出力                                 -->
+<!--  ====================================================================  -->
+<!--  =============================== 文内容 ===============================  -->
+<script type="text/javascript" src="theme/common/textarea.js"></script>
+<TEXTAREA NAME="epost" CLASS="resizable" tabindex="8"><?php echo "{$list['text']}\n\n"?></TEXTAREA>
+<!--  =============================== 文内容 ===============================  -->
+
+</TD></TR>
+</TABLE>
+
+
+<!--  ====================================================================  -->
+<!--  $table.$page      : リストで 帰る リンクに 必要な 変数たち            -->
+<!--  $print['passform']: 修正した 文 登録するのに 必要な hidden 変数たち         -->
+<!--  $orig_option      : 書き込み 窓 調節の時 元々 大きさで 帰る オプション        -->
+<!--  ====================================================================  -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
+<?php echo $print['passform']?>
+<INPUT TYPE="submit" VALUE="登録" tabindex="9">
+<INPUT TYPE="button" VALUE="再び" onClick="document.location.reload(); return false;" tabindex="10">
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?php echo $table.$pages?>'" VALUE="リスト" tabindex="11">
+<INPUT TYPE="button" onClick="history.back()" VALUE="以前" tabindex="12">
+</TD></TR>
+</TABLE>
+
+<!--  ====================================================================  -->
+<!--  print_license()  : ライセンス 出力                                      -->
+<!--  ====================================================================  -->
+<?php echo print_license()?>
+
+</FORM>
+</DIV>
+
+<!--  ======================= しっぽ デザイン 手始め =======================  -->
+<?php
+if(!$np) {
+  # 全体 管理者に 義解 強制 input なる Design
+  include "html/tail.php";
+  # 各 ユーザー別 Design
+  include "{$board['tailpath']}";
+}
+?>
+<!--  ======================= しっぽ デザイン 終り   =======================  -->
+</BODY>
+</HTML>

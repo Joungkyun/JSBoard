@@ -1,0 +1,21 @@
+JSBoard captcha Configuration
+$Id: README.CAPTCHA,v 1.2 2009/11/19 05:29:50 oops Exp $
+
+1. create captcha database
+
+   move captcha, and execute make_key.php with php cli binary.
+   shell> php make_key.php
+
+   if you don't have php cli binary, use follows method with web access.
+   shell> chmod 777 captcha
+   shell> chmod 644 captcha/make_key.php
+   browser> http://domain/jsboard/captcha/make_key.php
+   After access with web, confirm whether create or don't create captcha-number.db.
+   If captcha-number.db file is created, go next with follows.
+   shell> chmod 600 captcha/make_key.php
+   shell> chmod 755 captcha/
+
+2. add $board['captcha'] variable on config/global.php. Value of $board['captcha']
+   is created file name (captcha-number.db) except file path.
+
+On login mode, captcha don't print!

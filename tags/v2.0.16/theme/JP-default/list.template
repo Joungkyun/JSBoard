@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!--  ====================================================================  -->
+<!--  $langs['charset'] : 掲示板の 言語 タイプに よって charset を 持って来る.    -->
+<!--  $board['ver']     : 掲示板の バージョン 情報を 持って 来る.                 -->
+<!--  get_title()     : 掲示板の ヘッダー タイトルを 持って 来る.                 -->
+<!--  $user_stylesheet : 使用者 正義 スタイル シーツ                            -->
+<!--  ====================================================================  -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!-- 
+BODY,TD {
+  font-size: 12px;
+  font-family: <?php echo $langs['font']?>, monospace;
+  color: #555555;
+  line-height: 15pt;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font: 11px tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?php echo $color['l4_bg']?>; }
+SELECT {
+  font: 11px tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  background-Color: <?php echo $color['l4_bg']?>
+}
+form { display: inline; }
+
+<?php echo $user_stylesheet?>
+ -->
+</style>
+
+<!--  ====================================================================  -->
+<!--  print_newwindow_src()  : jsboard 義 機能で 必要な 新しいウィンドーを 浮かべる     -->
+<!--                           java script を 出力するように 日 与える.             -->
+<!--  $print['preview_script'] : list で 予め見るのを ための java scriptを    -->
+<!--                           出力する.                                    -->
+<!--  ====================================================================  -->
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+<?php echo $rss['link']?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<?php echo $print['preview_script']?>
+
+<!--  ======================= ヘッダー デザイン 手始め =======================  -->
+<?php
+if(!$np) {
+  # 各 ユーザー別 Design
+  include "{$board['headpath']}";
+  # 全体 管理者に 義解 強制 input なる Design
+  include "html/head.php";
+ }
+?>
+<!--  ======================= ヘッダー デザイン 終り   =======================  -->
+
+<!--  ====================================================================  -->
+<!--  print_keymenu() : keyboard 路 掲示板を 制御                           -->
+<!--                    'n or +' = 次 ページ                              -->         
+<!--                    'b or -' = 以前 ページ                              -->         
+<!--  ====================================================================  -->
+<?php echo print_keymenu(0)?>
+
+<!--  ====================================================================  -->
+<!--  $board['align'] : 掲示板の align を 定義する. おこる 掲示板 管理者で  -->
+<!--                  設定を すること ある.                                     -->
+<!--  $print['dsearch'] : 詳細 検索 テーブル 出力                             -->
+<!--  $board['width'] : 掲示板の 広さを 指定する. 掲示板 管理者で 調整    --> 
+<!--  $print['count'] : 掲示板の 左側 上端 カウンターを 出力する.               -->
+<!--  $print['admin'] : 掲示板 右側の admin リンクを 出力 おこる admin link これ  -->
+<!--                  未知を 呼んで 来る ので 必ず admin.gif街 存在すると たいてい    -->
+<!--                  だ. 掲示板 管理者で 見えないように 設定を することができる    -->
+<!--  $print['lout']  : ログ寅時 ログアウト ボタンを 出力                       -->
+<!--  ====================================================================  -->
+<DIV ALIGN="<?php echo $board['align']?>">
+<?php echo $print['dsearch']?>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/JP-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"> &gt;&gt; <?php echo $print['count']?></FONT></TD>
+<TD ALIGN="right" VALIGN="bottom"><?php echo $print['lout']?>&nbsp;<?php echo $print['admin']?></TD>
+</TR>
+
+<TR><TD COLSPAN=3>
+
+<!--  ====================================================================  -->
+<!--  $td_width[ ] : テーブル フィールドの 広さ 割合を 指定する. おこる               -->
+<!--                 theme/theme_name/config.php で 正義を する.          -->
+<!--  ====================================================================  -->
+<!--    掲示板 メイン テーブル 手始め     -->
+<TABLE WIDTH="100%" BORDER=0 CELLSPACING=0 CELLPADDING=0>
+<TR>
+  <TD WIDTH="<?php echo $td_width[no]?>" ALIGN="left" BGCOLOR="#FFAE00"><IMG SRC="./theme/JP-default/img/board_no.gif" ALT='No.'></TD>
+  <TD WIDTH="<?php echo $td_width[title]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">題目</FONT></TD>
+  <TD WIDTH="<?php echo $td_width[name]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">名前</FONT></TD>
+
+<!--  ====================================================================  -->
+<!--  if($upload['yesno'] && $cupload['yesno']) : ファイル                      -->
+<!--               アップロード 機能を 使う 場合 該当 フィールドを 出力を する.       -->
+<!--  ====================================================================  -->
+<?php
+  if($upload['yesno'] && $cupload['yesno']) {
+    echo <<<EOF
+  <TD WIDTH="$td_width[upload]" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">ファイル</FONT></TD>
+EOF;
+  }
+?>
+  <TD WIDTH="<?php echo $td_width[dates]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">日付</FONT></TD>
+  <TD WIDTH="<?php echo $td_width[refer]?>" ALIGN="center" BGCOLOR="#FFAE00"><FONT STYLE="color:#FFFFFF;font-weight:bold">読み</FONT></TD>
+</TR>
+
+<!--  ====================================================================  -->
+<!--  $print['lists'] : 掲示板 リストを 出力を する.                        -->
+<!--  ====================================================================  -->
+<?php echo $print['lists']?>
+</TABLE>
+
+<!--    掲示板 メイン テーブル 終り     -->
+
+</TD></TR>
+</TABLE>
+
+<!--  ====================================================================  -->
+<!--  $print['p_list'] : 左側 下端の ページ リンクを 出力する.                -->
+<!--  list_cmd(0,1)  : 右側 下端の メニュー リンクを 出力する. デフォルトでは text    -->
+<!--                   メニューで 構成される. もし イメージメニューを 使って たければ   -->
+<!--                                                                        -->
+<!--                   prev.gif        - 以前文 または 以前 ページ            -->
+<!--                   next.gif        - 次文 または 次 ページ            -->
+<!--                   list.gif        - 文 リスト                            -->
+<!--                   write.gif       - 文 書き取り                            -->
+<!--                   today.gif        - 最近 12時間以内 オルラオングル            -->
+<!--                   delete.gif      - 削除                               -->
+<!--                   edit.gif        - 修正                               -->
+<!--                   reply.gif       - 返事                               -->
+<!--                   conj.gif        - 関連文                             -->
+<!--                                                                        -->
+<!--                   を theme/theme_name/img に 上の イメージを 作って      -->
+<!--                   出て list_cmd(1,1) 路 指定を する.                   -->
+<!--  ====================================================================  -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD><FONT style="font-size:10px;font-family:tahoma,sans-serif;color:#555555">&gt;&gt; Fast Page Link : <?php echo $print['p_list']?></FONT>
+<IMG SRC="images/blank.gif" WIDTH="1" HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
+<TD ALIGN="right"><?php list_cmd(0,1) ?></TD>
+</TR>
+
+<!--  ====================================================================  -->
+<!--  ゴムセックポムと ページ フォームは doc/en/README.THEME 参照                         -->
+<!--  $print['dserlink'] : 詳細 検索 リンク 出力                              -->
+<!--  $print['times']  : 右側 下端の 処理時間 出力                          -->
+<!--  ====================================================================  -->
+<TR>
+<TD>
+<!--  =============================== ゴムセックポム ===============================  -->
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD>
+<SELECT NAME="o[sc]">
+<OPTION VALUE="t"<?php echo $sform['sc']['t']?>>Title
+<OPTION VALUE="c"<?php echo $sform['sc']['c']?>>Contents
+<OPTION VALUE="n"<?php echo $sform['sc']['n']?>>Writer
+<OPTION VALUE="a"<?php echo $sform['sc']['a']?>>All
+</SELECT>
+<INPUT TYPE="text" ID="searchstr" NAME="o[ss]" SIZE="<?php echo form_size(8)?>" MAXLENGTH=255 style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font-size:12px;color:<?php echo $color['l4_fg']?>;" VALUE="<?php echo $sform['ss']?>"
+>
+<INPUT TYPE="submit" VALUE="Search" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>;">
+</TD>
+</TR><TR>
+<TD>
+<SELECT NAME="o[st]">
+<OPTION VALUE="m"<?php echo $sform['st']['m']?>>A Month
+<OPTION VALUE="w"<?php echo $sform['st']['w']?>>A Week
+<OPTION VALUE="a"<?php echo $sform['st']['a']?>>All
+</SELECT>
+<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?php echo $sform['er']['y']?> style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>">
+<FONT STYLE="font-family: <?php echo $langs['vfont']?>,sans-serif;color:#555555">正規表現式</FONT> <?php echo $print['dserlink']?>
+</TD>
+</TR>
+</TABLE>
+<INPUT TYPE="hidden" NAME="o[at]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[go]" VALUE="p">
+<INPUT TYPE="hidden" NAME="o[sct]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[stt]" VALUE="s">
+</FORM>
+<!--  =============================== ゴムセックポム ===============================  -->
+</TD>
+<TD ALIGN="right">
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;color:#555555;"><?php echo $print['times']?></FONT><BR>
+<!--  ============================== ペイジポム ==============================  -->
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD ALIGN="right">
+<FONT STYLE="font-size:10px;font-family:tahoma,sans-serif;">
+<?php echo $pform['post']?>
+<SELECT NAME="o[go]">
+<OPTION VALUE="p" SELECTED>Page No.
+<OPTION VALUE="n">Article No.
+</SELECT>
+<INPUT TYPE="text" NAME="o[no]" SIZE="<?php echo form_size(2)?>" MAXLENGTH=6 style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font-size:12px;color:<?php echo $color['l4_fg']?>" VALUE='<?php echo $pform['value']?>'
+>
+<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:#555555">
+</FONT>
+</TD>
+</TR>
+</TABLE></FORM>
+<!--  ============================== ペイジポム ==============================  -->
+</TD>
+</TR>
+</TABLE>
+
+<!--  ====================================================================  -->
+<!--  print_license()  : ライセンス 出力                                      -->
+<!--  ====================================================================  -->
+<?php echo print_license()?>
+
+</DIV>
+
+<!--  ======================= しっぽ デザイン 手始め =======================  -->
+<?php
+if(!$np) {
+  # 全体 管理者に 義解 強制 input なる Design
+  include "html/tail.php";
+  # 各 ユーザー別 Design
+  include "{$board['tailpath']}";
+}
+?>
+<!--  ======================= しっぽ デザイン 終り   =======================  -->
+</BODY>
+</HTML>

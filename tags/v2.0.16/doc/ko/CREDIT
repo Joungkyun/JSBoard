@@ -1,0 +1,132 @@
+***** JSBOARD + OOPS administration Center *********************************
+$Id: CREDIT,v 1.6 2014/03/02 17:11:31 oops Exp $
+
+
+Original Developer	: 김병찬 <redhands at linux.sarang.net>
+------------------------------------------------------------
+
+JSBoard 의 모태를 만들어 주신 분이다. 한국 리눅스 사용자들에게는 적수라는 닉
+네임으로 더욱더 알려져 있으며 alzza linux packaging과 여러가지 application의
+한글 patch 를 해주신 분이다.
+
+http://linux.sarang.net/
+
+
+
+
+Maintainer              : 김정균 <admin at oops.org>
+------------------------------------------------------------
+
+JSBoard v0.6 부터 코딩을 맡아 왔으며, JSBoard의 관리 프로그램인 OOPS admini-
+stration Center를 JSBoard 에 연동을 시켰으며 현재는 JSBoard 의 개발버젼의 코
+딩을 맡고 있다.
+
+개인 홈페이지에서 Daemon에 대한 강좌및 rpm package를 배포하고 있으며 ProFTPd
+korean user gruop을 운영하고 있다.
+
+http://oops.org/
+
+
+
+
+Windog Version Distribute : 최기수 <choiks at nuri.net>
+------------------------------------------------------------
+
+profile은 잘 모르겠음. 메일 주소만 알고 win32 버젼을 관리하고 있다.
+
+
+
+
+
+Special Thanks		: 임은재 <eunjea at kldp.org>
+------------------------------------------------------------
+
+jsboard의 버그리포팅 및 수정을 해 주시고 있으며 가끔 비공인 patch 를 올려 주
+신다. 비공인 patch 인 이유는 왠만하면 임은재님의 patch 를 적용 하려고는 하나
+관리자의 게으름으로 적용이 안되는 경우가 많다.
+
+현재 한글 리눅스 팁 프로젝트와 php 한글 뉴스/포럼 시스템인 KorWeblog 를 개발
+하고 계시다.
+
+http://kltp.kldp.org/
+http://weblog.kldp.org/
+
+
+
+
+Special Thanks		: 권순선 <kss at kldp.org>
+------------------------------------------------------------
+
+JSBoard의 비공인 기능 추가및 패치를 해 주시며, JSBoard의 homepage 를 운영 할
+수있도록 서버를 제공해 주시고 있다. 현재 한국 리눅스 문서 프로젝트를 운영 하
+고 계시다.
+
+http://kldp.org/
+
+
+
+
+Special Thanks		: 차경묵 <dimanche at creple.com>
+------------------------------------------------------------
+
+FreeBSD 3.5 system 에서 JSBoard 가 작동할수 있도록 계정 테스트를 허락해 주셨
+습니다.
+
+http://www.creple.com/
+
+
+
+
+Special Thanks		: 방창현 <winchild at kldp.org>
+------------------------------------------------------------
+
+김병찬님이 만드신 게시판을 JSBoard라는 이름으로 open project 를 진행할 수 있
+도록 총대를 매신 분이며 JSBoard v0.3 개발을 하셨다. 한때 Qmail 한글 홈페이지
+를 운영하시다 현재는 잠적 하신것으로 보인다.
+
+http://kldp.org/~winchild/
+
+
+
+
+Special Thansks		: rOra <ksecurity at iland.co.kr>
+------------------------------------------------------------
+
+rOra(뢰) 또는 Ksecurity 보안사이트를 운영하며 JSBoard 의 보안 버그및 exploit
+을 reporting 해 주셨다.
+
+http://ksecurity.iland.co.kr/
+
+
+
+
+Special Thanks		: mat <mat at hacksware.com>
+------------------------------------------------------------
+
+hacksware 보안 사이트를 운영하며 JSBoard 의 보안 버그및 exploit 을 reporting
+해 주셨다.
+
+http://hacksware.com/
+
+
+
+
+역대 버젼 개발 참여자
+------------------------------------------------------------
+
+최기수 <choiks at nuri.net>		v1.3, v2.0
+차경묵 <dimanche at dimanche.net>	v0.6, v0.7
+김정균 <admin at oops.org>		v0.6, v0.7, v0.8, v1.0 v1.1
+                                        v1.2, v1.3, v2.0
+김영민 <blhole at hotmail.com>		v0.5
+이진우 <jinoos at hanmail.net>		v0.4
+방창현 <winchild at kldp.org>		v0.3, v0.5
+문태준 <taejun at taejun.pe.kr>		v0.2
+김병찬 <redhands at linux.sarang.net>	v0.1, v0.8
+
+* 0.9 version은 뛰어넘음.
+
+그외 JSBoard 를 응원하고 사용하고 버그 reporting을 해 주시는 여러 사용자
+들이 많은 도움을 주시고 계신다.
+
+******************************************************************************

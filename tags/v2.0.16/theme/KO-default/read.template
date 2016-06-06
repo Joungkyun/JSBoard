@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!-- $Id: read.template,v 1.30 2014/03/02 17:11:33 oops Exp $ -->
+<!-- ==================================================================== -->
+<!-- $langs['charset'] : 게시판의 언어 타입에 따라 charset 을 가져온다.   -->
+<!-- $board['ver']     : 게시판의 버젼 정보를 가지고 온다.                -->
+<!-- get_title()     : 게시판의 헤더 타이틀을 가지고 온다.                -->
+<!-- $user_stylesheet : 사용자 정의 스타일 시트                           -->
+<!-- ==================================================================== -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+BODY,TD {
+  font-size: 12px;
+  font-family: <?php echo $langs['font']?>, sans-serif;
+  color: #555555;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font:  11px tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?php echo $color['l4_bg']?>;
+}
+SELECT {
+  font:  11px tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  background-Color: <?php echo $color['l4_bg']?>;
+}
+TEXTAREA {
+  font: 13px <?php echo $langs['font']?>, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  padding-left: 1px;
+  background-Color: <?php echo $color['l4_bg']?>;
+}
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
+
+/* Quote block */
+blockquote {
+  background: #ebebeb none 6px 8px no-repeat;
+  background-image: url("./images/quote.gif");
+  border: 1px solid #dbdbdb;
+  font-size: 1em;
+  margin: 0.5em 1px 0 25px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+blockquote blockquote {
+  /* Nested quotes */
+  background-color: #bababa;
+  font-size: 1em;
+  margin: 0.5em 1px 0 15px;    
+}
+
+blockquote blockquote blockquote {
+  /* Nested quotes */
+  background-color: #e4e4e4;
+}
+
+blockquote cite {
+  /* Username/source of quoter */
+  font-style: normal;
+  font-weight: bold;
+  margin-left: 20px;
+  display: block;
+  font-size: 0.95em;
+}
+
+blockquote cite cite {
+  font-size: 1em;
+}
+
+blockquote.uncited {
+  padding-top: 25px;
+}
+form { display: inline; }
+
+<?php echo $user_stylesheet?>
+-->
+</style>
+
+<!-- ==================================================================== -->
+<!-- print_newwindow_src()  : jsboard 의 기능에서 필요한 새창을 띄우는    -->
+<!--                          java script 를 출력하게 해 준다.            -->
+<!-- $print['preview_script'] : list 에서 미리보기를 위한 java script를   -->
+<!--                          출력한다.                                   -->
+<!-- ==================================================================== -->
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<?php echo $print['preview_script']?>
+
+<!-- ======================= 헤더 디자인 시작 ======================= -->
+<?php
+if(!$np) {
+  # 각 유저별 Design
+  include "{$board['headpath']}";
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.php";
+ }
+?>
+<!-- ======================= 헤더 디자인 끝   ======================= -->
+
+<!-- ==================================================================== -->
+<!-- print_keymenu() : keyboard 로 게시판을 제어                          -->
+<!--                   'n or +' = 윗글                                    -->  
+<!--                   'b or -' = 아래글                                  -->  
+<!-- ==================================================================== -->
+<?php echo print_keymenu(1)?>
+
+<!-- ==================================================================== -->
+<!-- $board['align'] : 게시판의 align 을 정의한다. 이는 게시판 관리자에서 -->
+<!--                 설정을 할수 있다.                                    -->
+<!-- $print['dsearch'] : 상세 검색 테이블 출력                            -->
+<!-- $board['width'] : 게시판의 넓이를 지정한다. 게시판 관리자에서 조정   -->
+<!-- $list['num']    : 좌측 상단의 게시판 글 번호                         -->
+<!-- $print['admin'] : 게시판 우측의 admin 링크를 출력 이는 admin link 이 -->
+<!--                 미지를 불러 오는 것으로 꼭 admin.gif가 존재해야 한   -->
+<!--                 다. 게시판 관리자에서 안보이도록 설정을 할수가있다   -->
+<!-- $print['lout']  : 로그인시 로그아웃 버튼을 출력                      -->
+<!-- ==================================================================== -->
+<DIV ALIGN="<?php echo $board['align']?>">
+<?php echo $print['dsearch']?>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Read <?php echo $list['num']?> article</FONT></TD>
+<TD ALIGN="right" VALIGN="bottom"><?php echo $print['lout']?>&nbsp;<?php echo $print['admin']?></TD>
+</TR>
+
+<!-- ==================================================================== -->
+<!-- $list['title']  : 게시판 글 제목                                     -->
+<!-- ==================================================================== -->
+<?php $list['title'] = preg_replace("/<BR>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
+<TR BGCOLOR="#FFAE00">
+<TD COLSPAN=3>
+<IMG SRC="./theme/KO-default/img/board_no.gif" ALIGN="middle" ALT='TITLE: '>
+<FONT STYLE="color:#FFFFFF; font-weight:bold;"><?php echo $list['title']?></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=3><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+
+<!-- ==================================================================== -->
+<!-- $list['date']   : 글 등록 날짜                                       -->
+<!-- $list['refer']  : 글 조회수                                          -->
+<!-- $list['name']   : 글쓴이 이름                                        -->
+<!-- $list['uname']  : 글쓴이 이름 (homepage link 포함)                   -->
+<!-- $list['attach'] : 첨부 파일 링크                                     -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=5><IMG SRC="images/blank.gif" WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+<FONT Style="font-weight:bold">등록</FONT> <?php echo $list['date']?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">조회</FONT> <?php echo $list['refer']?><BR>
+<FONT Style="font-weight:bold">이름</FONT> <?php echo $list['uname']?> &nbsp; &nbsp;
+<?php if($list['attach']) echo "<FONT Style=\"font-weight:bold\">파일</FONT> {$list['attach']}" ?><BR>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+</TD>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- $preview['up']   : 첨부된 이미지 파일이 gif/jpg/png 일 경우 출력     -->
+<!-- $list['text']    : 글 본문 출력                                      -->
+<!-- $preview['down'] : 첨부된 파일이 ascii 일 경우 출력                  -->
+<!-- $print['rlists'] : 본글의 댓글이 존재할 경우 댓글 리스트 출력        -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>">
+<DIV style="color:<?php echo $color['l5_fg']?>;font-family:<?php echo $langs['font']?>,monospace">
+<?php echo $preview['up']?>
+<!-- =============================== 글내용 =============================== -->
+<?php echo $list['text']?>
+
+<!-- =============================== 글내용 =============================== -->
+<?php echo $preview['down']?>
+</DIV>
+
+<!-- =============================== 코멘트 =============================== -->
+<?php echo $print['comment']?>
+<!-- =============================== 코멘트 =============================== -->
+</TD></TR>
+</TABLE>
+
+<?php if ($print['rlists']) { ?>
+<P>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l3_bg']?>"><IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+<TR>
+<TD>
+<IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+&gt;&gt; <?php echo $langs['conj']?>
+<!-- =============================== 응답글 =============================== -->
+<?php echo $print['rlists']?>
+<!-- =============================== 응답글 =============================== -->
+</TD></TR>
+<TR><TD BGCOLOR="<?php echo $color['l3_bg']?>"><IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+<?php } ?>
+
+<!-- ==================================================================== -->
+<!-- $print['regist']  : 글 등록지를 출력. (게시판 어드민에서 관리가 가능 -->
+<!--                   하기 때문에 설정을 해 줄것!                        -->
+<!-- read_cmd(0,1)   : list page 의  list_cmd(0,1) 참조 (우측 하단 메뉴)  -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD>
+<FONT style="font-family:tahoma,sans-serif;font-size:11px;"><?php echo $print['regist']?>&nbsp;</FONT><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
+<TD ALIGN="right"><?php read_cmd(0,1) ?></TD>
+</TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- 검색폼과 페이지 폼은 doc/ko/README.THEME 참조                        -->
+<!-- $print['dserlink'] : 상세 검색 링크 출력                             -->
+<!-- $print['pagetime']  : 우측 하단 페이지 로딩 시간 출력                -->
+<!-- $print['sqltime']   : 우측 하단 sql 로딩 시간 출력                   -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD>
+<!-- =============================== 검색폼 =============================== -->
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD>
+<SELECT NAME="o[sc]" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>">
+<OPTION VALUE="t"<?php echo $sform['sc']['t']?>>Title
+<OPTION VALUE="c"<?php echo $sform['sc']['c']?>>Contents
+<OPTION VALUE="n"<?php echo $sform['sc']['n']?>>Writer
+<OPTION VALUE="a"<?php echo $sform['sc']['a']?>>All
+</SELECT>
+<INPUT TYPE="text" ID="searchstr" NAME="o[ss]" SIZE="<?php echo form_size(8)?>" MAXLENGTH=255 style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font-size:12px;color:<?php echo $color['l4_fg']?>;" VALUE="<?php echo $sform['ss']?>">
+<INPUT TYPE="submit" VALUE="Search" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>;">
+</TD>
+</TR><TR>
+<TD>
+<SELECT NAME="o[st]" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>">
+<OPTION VALUE="m"<?php echo $sform['st']['m']?>>A Month
+<OPTION VALUE="w"<?php echo $sform['st']['w']?>>A Week
+<OPTION VALUE="a"<?php echo $sform['st']['a']?>>All
+</SELECT>
+<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?php echo $sform['er']['y']?> style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>">
+<FONT STYLE="font-family:<?php echo $langs['vfont']?>,sans-serif;color:#555555">정규표현식</FONT> <?php echo $print['dserlink']?>
+</TD>
+</TR>
+</TABLE>
+<INPUT TYPE="hidden" NAME="o[at]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[go]" VALUE="p">
+<INPUT TYPE="hidden" NAME="o[sct]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[stt]" VALUE="s">
+</FORM>
+<!-- =============================== 검색폼 =============================== -->
+</TD>
+<TD ALIGN="right">
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;">
+Page Loading [ <?php echo $print['pagetime']?> Sec ]
+SQL Time [ <?php echo $print['sqltime']?> Sec ]<BR>
+</FONT>
+<!-- ============================== 페이지폼 ============================== -->
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD ALIGN="right">
+<FONT STYLE="font-size:10px;font-family:tahoma,sans-serif;">
+<?php echo $pform['post']?>
+<SELECT NAME="o[go]" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>">
+<OPTION VALUE="p" SELECTED>Page No.
+<OPTION VALUE="n">Article No.
+</SELECT>
+<INPUT TYPE="text" NAME="o[no]" SIZE="<?php echo form_size(2)?>" MAXLENGTH=6 style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font-size:12px;color:<?php echo $color['l4_fg']?>" VALUE='<?php echo $pform['value']?>'>
+<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>">
+</FONT>
+</TD>
+</TR>
+</TABLE></FORM>
+<!-- ============================== 페이지폼 ============================== -->
+</TD>
+</TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- print_license()  : 라이센스 출력                                     -->
+<!-- ==================================================================== -->
+<?php echo print_license()?>
+
+</DIV>
+
+<!-- ======================= 꼬리 디자인 시작 ======================= -->
+<?php
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.php";
+  # 각 유저별 Design
+  include "{$board['tailpath']}";
+}
+?>
+<!-- ======================= 꼬리 디자인 끝   ======================= -->
+</BODY>
+</HTML>
