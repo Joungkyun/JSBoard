@@ -1,0 +1,9 @@
+<?
+include("./include/db.ph");
+include("./include/misc.ph");
+include("./include/error.ph");
+include("./include/sql.ph");
+include("./include/html.ph");
+include("./include/list.ph");
+include("./include/spam.ph");
+?>
