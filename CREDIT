@@ -1,0 +1,75 @@
+***** JSBOARD + OOPS administration Center *********************************
+
+Attention : OOPS administration Center is not GPL.
+            See also admin/License !
+
+Original Developer	: 김병찬 < redhands@linux.sarang.net >
+
+JSBoard의 모태를 만들어 주신 분이다. 한국 리눅스 사용자들에게는
+적수라는 닉네임으로 더욱더 알려져 있으며 alzza linux packaging과
+여러가지 application의 한글 patch 를 해주신 분이다.
+
+http://linux.sarang.net
+
+Maintainer		: 방창현 < winchild@kldp.org >
+
+김병찬님이 만드신 게시판을 JSBoard라는 이름으로 open project를 진행
+할수 있도록 총대를 매신 분이며 JSBoard v0.3 개발을 하셨다. 현재 JSBoard
+open project 공식 homepage를 운영하고 계시며, JSBoard의 방향제시(?)를
+한다. 또한 Qmail 의 한글 홈페이지를 운영하고 계신다.
+
+http://kldp.org/~winchild
+
+개발 version corder	: 김정균 < admin@oops.org >
+
+JSBoard v0.6 부터 코딩을 맡아 왔으며, JSBoard의 관리 프로그램인
+OOPS administration Center를 제공했으며 현재는 JSBoard의 개발 버젼의
+코딩을 맡고 있다.
+
+개인 홈페이지에서 Daemon에 대한 강좌및 rpm package를 배포하고 있으며
+ProFTPd korean user gruop을 운영하고 있다.
+
+http://www.oops.org
+
+안정 version corder	: 차경묵 < dimanche@dimanche.net >
+
+JSBoard의 안정 버젼의 patch를 맡고 있다.
+
+http://www.dimanche.net
+
+CVS Server 관리		:  김영민 < blhole@hotmail.com >
+
+JSBoard v0.5를 개발하셨으며 JSBoard Open Project의 CVS 서버를 제공해
+주신다.
+
+http://network.uos.ac.kr
+
+Special Thanks		: 임은재 < eunjae@kldp.org >
+
+jsboard의 버그리포팅 및 수정을 해 주시고 있으며 가끔 비공인 patch를
+올려 주신다. 비공인 patch 인 이유는 왠만하면 임은재님의 patch를 적용
+하려고는 하나 관리자의 게으름으로 적용이 안되는 경우가 많다.
+
+http://kltp.kldp.org
+
+Homepage 공간 제공	: http://www.kldp.org
+
+한글 리눅스 문서 프로젝트를 운영하시는 권순선<kss@kldp.org>님의 서버로서
+여러 project의 후원을 하고 계시다.
+
+역대 버젼 개발 참여자
+
+차경묵 <dimanche@dimanche.net>		v0.6, v0.7
+김정균 <admin@oops.org>			v0.6, v0.7, v0.8, v1.0
+김영민 <blhole@hotmail.com>		v0.5
+이진우 <jinoos@hanmail.net>		v0.4
+방창현 <winchild@kldp.org>		v0.3, v0.5
+문태준 <taejun@taejun.pe.kr>		v0.2
+김병찬 <redhands@linux.sarang.net>	v0.1, v0.8
+
+
+
+그외 JSBoard 를 응원하고 사용하고 버그 reporting을 해 주시는 여러 사용자
+들이 많은 도움을 주시고 계신다.
+
+******************************************************************************

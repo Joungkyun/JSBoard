@@ -1,7 +1,54 @@
-$Id: README,v 1.3 2009-11-16 21:52:45 oops Exp $
+JSBoard 1.0 README
+------------------
 
-ENGLISH message
-goto doc/en
+소개
 
-KOREAN message
-goto doc/ko
+JSBoard는 김병찬<redhands@linux.sarang.net>님의 공개 게시판을
+토대로 하여 사용자들이 자신만의 기능을 추가한 것을 모아서 새로운
+기능을 추가한 웹상에서 사용을 할수 있는 게시판이다.
+
+JSBoard를 사용하기 위해서는 linux box와 apache, mysql, php4가
+요구되며 시스템 사양은 위의 것들이 돌아갈수만 있으면 누구나 사용을
+할수가 있다.
+
+Platform
+
+리눅스 박스가 설치되어 있는 모든 서버. 리눅스이외의 OS에서는
+공식적으로 test가 되어진바 없다. 현재 개발자들이 사용을 할수있는
+환경은 Linux밖에 없기 때문에 다른 OS로의 공식 포팅문제는 아직
+언급을 할수 있는 환경이 아니다. 이는 다른 업체및 개인의 후원이
+없이는 아직은 불가능한 것으로 판단이 되어진다.
+
+하지만 Apache와 PHP4, MySQL이 설치되어 있는 서버라면
+(NT에서도 구동이 가능할듯 하다) 약간의 손질만 보면 운영이 가능
+하리라 생각이 되어진다. 단 이 부분은 아직까지는 사용자들의 노력에
+달려 있다고 생각된다. (하지만 다른 OS로의 포팅에 관한 문제에 대해
+서는 최소한의 배려는 하고 있다)
+
+주의
+
+JSBoard v1.0은 PHP3 기반하에서는 Installer와 admin center를 사용
+할수가 없다. 이는 Installer와 admin center의 cookie 기능이 PHP4
+에서 부터 지원하는 session 기능으로 바뀌었기 때문이다.
+
+설치
+
+Root의 권한을 가지고 있는 사용자들에게는 Installer를 제공하고 있다.
+단 계정 유저라든지 Installer로 설치가 어려운 사용자들을 위하여
+Quick_INSTALL 문서를 제공하고 있다. 자신의 환경에 알맞은 Install문서를
+보기 바란다.
+
+개발자의 의무
+
+개발자는 설치에 있어 필요한 부분을 제공하기는 하나 이는 의무에 속하지는
+않는다. 그러니 개발자를 귀찮게 하지 말기 바란다. :-)
+
+라이센스
+
+JSBoard의 모든 code(OOPS Administration은 제외)는 GPL을 따른다. 이 코드를
+사용하여 상용화를 할 시에는 상용화 되는 상품의 코드 역시 공개를 해야 한다.
+OOPS Administration의 code의 경우에는 마음대로 사용을 할수도 있고 공개를
+안해도 상관은 없으나 상용화는 금한다. (주의 할것은 JSBoard에 들어가 있는
+OOPS Administration의 code중에는 일부 JSBoard code를 사용한 것이 있음)
+
+2000년 6월 16일 김정균 <admin@oops.org>
