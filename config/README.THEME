@@ -1,0 +1,17 @@
+Theme 추가하기
+
+theme를 추가하는 것은 간단하다. 일단 themes directory에서 기존의
+아무 theme file을 원하는이름.themes 로 copy를 한다음 각 사항들을
+적절히 수정해 주면 된다.
+
+그리고 나서 Admin center의 global 설정을 보면 추가한 theme가
+있는 것을 볼수 있을 것이다.
+
+중요한 것은 default.themes 라는 이름은 절대 사용해서는 안된다!
+
+또한 1.0에서는 image menu도 theme 별로 설정을 할수가 있다.
+이는 간단하게 jsbaord/images/THEME_NAME 이라는 디렉토리를 생성한
+후에 필요한 image들을 넣어 주면 된다
+
+김정균. <http://www.oops.org>
+2000.4.30
