@@ -1,5 +1,5 @@
 <?
-# $Id: captchaimg.php,v 1.3 2012-10-11 16:25:39 oops Exp $
+# $Id: captchaimg.php,v 1.2 2009-11-19 05:29:50 oops Exp $
 require_once ('../config/global.php');
 require_once ('./captcha.php');
 
@@ -11,7 +11,7 @@ $capt = new Captcha ($board['captcha']);
 
 if ( $_SERVER['argv'][0] )
 	$key = $_SERVER['argv'][0];
-else if ( is_numeric ($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] < 1000 ) {
+else if ( is_int ($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] < 1000 ) {
 	$key = $_SERVER['QUERY_STRING'];
 } else
 	$key = $capt->captchakey ();

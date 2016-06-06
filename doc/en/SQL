@@ -1,0 +1,63 @@
+$Id: SQL,v 1.4 2009-11-19 05:29:50 oops Exp $
+
+JSBoard main table
+
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| no     | int(6)       |      | PRI | 0       | auto_increment |  Unique Number
+| num    | int(6)       |      | MUL | 0       |                |  Number of Article
+| idx    | int(6)       |      | MUL | 0       |                |  Number of index(listing)
+| date   | int(11)      |      | MUL | 0       |                |  Date
+| host   | tinytext     | YES  |     | NULL    |                |  Address of writer
+| name   | tinytext     | YES  |     | NULL    |                |  NICK Name of writer
+| rname  | tinytext     | YES  |     | NULL    |                |  REAL Name of writer
+| passwd | varchar(56)  | YES  |     | NULL    |                |  Password of writer
+| email  | tinytext     | YES  |     | NULL    |                |  Email of writer
+| url    | tinytext     | YES  |     | NULL    |                |  Homepage of writer
+| title  | tinytext     | YES  |     | NULL    |                |  Subject of article
+| text   | mediumtext   | YES  |     | NULL    |                |  Content of article
+| refer  | int(6)       |      |     | 0       |                |  Number of Read
+| reyn   | int(1)       |      |     | 0       |                |  If exists reply article
+| reno   | int(6)       |      | MUL | 0       |                |  Number of parents article
+| rede   | int(6)       |      |     | 0       |                |  Depth of reply article
+| reto   | int(6)       |      | MUL | 0       |                |  Number of founder reply article
+| html   | int(1)       |      |     | 1       |                |  If use HTML tag
+| bofile | varchar(100) | YES  |     | NULL    |                |  Name of upload file
+| bcfile | varchar(100) | YES  |     | NULL    |                |  Name of upload directory
+| bfsize | int(4)       | YES  |     | NULL    |                |  Size of upload file
++--------+--------------+------+-----+---------+----------------+
+
+
+
+JSBoard userdb table
+
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| no       | int(6)       |      | PRI | NULL    | auto_increment | Unique Number
+| nid      | varchar(100) |      | UNI |         |                | ID of User(Unique)
+| name     | varchar(100) |      | MUL |         |                | Name of User
+| email    | tinytext     |      |     |         |                | Email of User
+| url      | tinytext     |      |     |         |                | Homepage of User
+| passwd   | varchar(100) |      |     |         |                | Password of User(encryption)
+| position | int(1)       |      | MUL | 0       |                | Whole admin check
++----------+--------------+------+-----+---------+----------------+
+
+
+
+JSBoard comment table
+
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| no     | int(6)      |      | PRI | NULL    | auto_increment |    Unique Number
+| reno   | int(20)     |      | MUL | 0       |                |    Number of parents article
+| rname  | tinytext    | YES  |     | NULL    |                |    name of writer
+| name   | tinytext    | YES  |     | NULL    |                |    ID of writer
+| passwd | varchar(56) | YES  |     | NULL    |                |    password
+| text   | mediumtext  | YES  |     | NULL    |                |    comment body
+| host   | tinytext    | YES  |     | NULL    |                |    regist address of comment
+| date   | int(11)     |      |     | 0       |                |    regist date of comment
++--------+-------------+------+-----+---------+----------------+
+

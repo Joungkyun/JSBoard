@@ -1,33 +1,34 @@
 <?php
 ########################################################################
-# JSBoard Pre List v2.1.0
-# Scripted By JoungKyun Kim 2005.06.20
-# $Id: prelist.php,v 1.5 2009-11-16 21:52:47 oops Exp $
+# JSBoard Pre List v0.4
+# Scripted By JoungKyun Kim 2002.07.30
+# $Id: prelist.php,v 1.6 2009-11-19 05:29:51 oops Exp $
 ########################################################################
 
-isset ($_prlist_init) || $_prlist_init = 0;
+# JSBoard가 설치되어 있는 절대 경로
+# 마지막에 /를 붙이면 안됨
+$prlist['path'] = "/webroot/jsboard-version";
 
-if ( $_prlist_init === 0 ) {
-  echo "<script type=\"text/javascript\" src=\"{$prlist['wpath']}/theme/common/lib.js\"></script>\n" .
-       "<div id=\"overDiv\" style=\"position: absolute; z-index: 50; width: 260px; visibility: hidden;\"></div>\n" .
-       "<script type=\"text/javascript\" src=\"{$prlist['wpath']}/theme/common/preview.js\"></script>\n";
-}
-
-$_prlist_init++;
-
-$prcode = isset ($prlist['code']) ? $prlist['code'] : 'en';
-putenv ("JSLANG={$prcode}");
-
-require_once "{$prlist['path']}/language/lang.php";
-include_once "{$prlist['path']}/include/variable.php";
+# JSBoard가 설치되어 있는 웹 경로
+# 마지막에 /를 붙이면 안됨
+$prlist['wpath'] = "http://도메인/jsboard-version";
 
 include_once "{$prlist['path']}/config/global.php";
+include_once "{$prlist['path']}/include/variable.php";
 include_once "{$prlist['path']}/include/error.php";
 include_once "{$prlist['path']}/include/parse.php";
 include_once "{$prlist['path']}/include/check.php";
-include_once "{$prlist['path']}/database/db.php";
+include_once "{$prlist['path']}/include/sql.php";
 include_once "{$prlist['path']}/include/get.php";
 include_once "{$prlist['path']}/include/print.php";
+
+if ( $prlist['starttag'] )
+  echo $prlist['starttag'];
+
+print_preview_src(1);
+
+if ( $prlist['endtag'] )
+  echo $prlist['endtag'];
 
 # 글리스트들을 출력하는 design
 #   echo 문의 "" 사이에서 디자인을 넣으면 됨
@@ -58,7 +59,7 @@ function print_prlist($p) {
     $des[] = $p['count'];
     if ($p['email']) {
       $src[] = "/P_LNAME_/i";
-      $des[] = "<a href=\"mailto:{$p['email']}\">{$p['name']}</a>";
+      $des[] = "<A HREF=mailto:{$p['email']}>{$p['name']}</A>";
     } else {
       $src[] = "/P_LNAME_/i";
       $des[] = $p['name'];
@@ -66,7 +67,7 @@ function print_prlist($p) {
 
     echo preg_replace($src,$des,$temp)."\n";
   } else {
-    echo "{$p['link']} {$p['name']} {$p['date']} {$p['count']}<br>\n";
+    echo "{$p['link']} {$p['name']} {$p['date']} {$p['count']}<BR>\n";
   }
 }
 
@@ -78,14 +79,17 @@ function print_prlist($p) {
 function prelist($t,$limit=3,$cut=30) {
   global $prlist, $db;
 
-  $_pvc = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
-  $GLOBALS['_pvc'] = $_pvc;
+  sql_connect($db['server'], $db['user'], $db['pass']);
+  sql_select_db($db['name']);
 
-  $_limit = compatible_limit (0, $limit);
-  $sql = "SELECT * FROM $t ORDER BY date DESC $_limit";
-  $result = sql_query($sql, $_pvc);
+  $sql = "SELECT * FROM $t ORDER BY date DESC LIMIT $limit";
+  $result = sql_query($sql);
+  $total = sql_num_rows($result);
 
-  while ( $row = sql_fetch_array ($result) ) {
+  for ($i=0;$i<$total;$i++) {
+    mysql_data_seek($result,$i);
+    $row = mysql_fetch_array($result);
+
     $p['no'] = $row['no'];
     $p['title'] = $row['title'];
 
@@ -93,13 +97,13 @@ function prelist($t,$limit=3,$cut=30) {
     $p['date'] = date("y.m.d",$row['date']);
     $p['email'] = $row['email'];
     $p['count'] = $row['refer'];
-    if ( $GLOBALS['prlistOpt'] )	
+    if ( $GLOBALS['prlistOpt'] )
       $p['l'] = " ".$GLOBALS['prlistOpt'];
 
     $p['preview'] = cut_string(htmlspecialchars($row['text']),100);
     $p['preview'] = preg_replace_callback ('/[#\'\x5c]/','escape_callback',$p['preview']);
     $p['preview'] = htmlspecialchars(htmlspecialchars($p['preview']));
-    $p['preview'] = preg_replace("/\r?\n/i","<BR>",$p['preview']);
+    $p['preview'] = preg_replace("/\r?\n/i","<br>",$p['preview']);
     $p['preview'] = trim(str_replace("&amp;amp;","&amp;",$p['preview']));
     $p['preview'] = " onMouseOver=\"drs('{$p['preview']}'); return true;\" onMouseOut=\"nd(); return true;\"";
 
@@ -115,7 +119,7 @@ function prelist($t,$limit=3,$cut=30) {
   }
 
   sql_free_result($result);
-  sql_close($_pvc);
+  mysql_close();
 }
 
 function escape_callback ($matches) {

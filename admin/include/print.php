@@ -1,51 +1,55 @@
 <?php
-# $Id: print.php,v 1.2 2009-11-16 21:52:46 oops Exp $
+# $Id: print.php,v 1.2 2009-11-19 05:29:50 oops Exp $
 
 # html head 읽어오기
 function htmlhead() {
-  global $version, $board, $_, $_code, $table;
-  global $path, $print, $dpath, $_csscode;
+  global $version,$color,$langs,$board;
 
   $file_lo = $_SERVER['PHP_SELF'];
-  $fileself = basename ($file_lo);
+  $fileself = explode("admin/",$file_lo);
+  $fileself = $fileself[1];
 
-  switch ( $fileself ) {
-    case 'auth.php' :
-      $sub_title = $_('p_wa');
-      break;
-    case 'admin.php' :
-      $sub_title = $_('p_aa');
-      break;
-    case 'admin_info.php' :
-      $sub_title = $_('p_wv');
-      break;
-    case 'userlist.php' :
-      $sub_title = $_('p_ul');
-      break;
-    case 'uadmin.php' :
-      $sub_title = strtoupper ($table) . ' User Admin';
-      break;
-  }
+  if ($fileself == "auth.php") $sub_title = "{$langs['p_wa']}";
+  elseif ($fileself == "admin.php") $sub_title = "{$langs['p_aa']}";
+  elseif ($fileself == "admin_info.php") $sub_title = "{$langs['p_wv']}";
+  elseif ($fileself == "userlist.php") $sub_title = "{$langs['p_ul']}";
 
-  if ( ! preg_match ('/admin/i', $file_lo) ) $_title = get_title();
-  else  $_title = $sub_title;
-
-  include "$dpath/skin/header.template";
+  include "./include/html_ahead.php";
 }
 
 # html tail 읽어오기
 function htmltail() {
-  global $dpath;
+  include "./include/html_atail.php";
+}
 
-  include "{$dpath}/skin/footer.template";
+function java_scr() {
+  echo "<script language='JavaScript'>\n" .
+       "<!--\n  var child = null;\n" .
+       "  var count = 0;\n\n" .
+       "  function fork ( type , url ) {\n" .
+       "    var childname = 'BoardManager' + count++;\n\n" .
+       "    if(child != null) {    // child was created before.\n" .
+       "    if(!child.closed) {  // if child window is still opened, close window.\n" .
+       "      child.close();\n" .
+       "      }\n" .
+       "    }\n" .
+       "    // here, we can ensure that child window is closes.\n" .
+       "    if(type == 'popup' ) child = window.open(url, childname, 'toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=650,height=500');\n" .
+       "    else if(type == 'popup1' ) child = window.open(url, childname, 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=400,height=300');\n" .
+       "    else                       alert('Fatal : in function fork()');\n" .
+       "    return;\n" .
+       "  }\n\n" .
+       "function logout () {\n" .
+       "  document.location='../session.php?m=logout';\n" .
+       "}\n\n// -->\n</script>";
 }
 
 # Admin Center 변경 완료 메세지
 #
 function complete_adminpass() {
-  global $_;
-  $str = str_replace("\n", "\\n", $_('p_cp'));
-  echo "<script type=\"text/javascript\">\nalert('$str')\n" .
+  global $langs;
+  $str = str_replace("\n","\\n",$langs['p_cp']);
+  echo "<script>\nalert('$str')\n" .
        "window.close()\n</script>";
   exit;
 }
@@ -76,8 +80,9 @@ function get_theme_list($pt,$current="") {
   $num = sizeof($theme);
 
   for($i=0;$i<$num;$i++) {
-    $select = ($current == $theme[$i]) ? ' selected=selected' : '';
-    echo "<option{$select} value=\"{$theme[$i]}\">{$theme[$i]}</option>\n";
+    if($current == $theme[$i]) $select = " SELECTED";
+    else $select = "";
+    echo "<OPTION VALUE=\"$theme[$i]\"$select>$theme[$i]\n";
   }
 
 }
@@ -85,7 +90,7 @@ function get_theme_list($pt,$current="") {
 function err_msg($str = "Ocourrenct unknown error",$mode = 0) {
   $str = str_replace("\n","\\n",$str);
   $str = str_replace("'","\'",$str);
-  echo "<script type=\"text/javascript\">\nalert('$str')\n";
+  echo "<script>\nalert('$str')\n";
   if (!$mode) echo "history.back()\n";
   echo "</script>\n";
   if (!$mode) die;
@@ -93,34 +98,28 @@ function err_msg($str = "Ocourrenct unknown error",$mode = 0) {
 
 # 패스워드 변경을 안하면 변경을 하게끔 귀찮게 메시지 뿌리기 :-)
 function print_chgpass($pass) {
-  global $_;
-  if ($pass == crypt("0000",$pass)) print_notice($_('p_chm'), 250, 35);
+  global $langs;
+  if ($pass == crypt("0000",$pass)) print_notice($langs['p_chm'],250,35);
 }
 
 function userlist_sortlink($t,$c='') {
-  global $_pself;
-
-  if ( ! $c ) {
-    for ( $i=a; $i<=z; $i++) {
-      if ( strlen ($i) == 2 ) break;
-      if ( $t != $i ) $index .= "<a href=\"{$_pself}?t={$i}\"><span class=\"sortlink\">".strtoupper($i)."</span></a>\n";
-      else $index .= "<span class=\"sortlink_c\">".strtoupper($i)."</span>\n";
+  global $color;
+  if(!$c) {
+    for($i=a;$i<=z;$i++) {
+      if(strlen($i) == 2) break;
+      if($t != $i) $index .= "<A HREF={$_SERVER['PHP_SELF']}?t=$i><FONT STYLE=\"color:{$color['text']}\">".strtoupper($i)."</FONT></A>\n";
+      else $index .= "<FONT STYLE=\"color:{$color['t_bg']};font-weight:bold\">".strtoupper($i)."</FONT>\n";
     }
-    if ( $t ) $index .= "<a href=\"{$_pself}\"><span class=\"sortlink\">ALL</span></a>\n";
-    else $index .= "<span class=\"sortlink_c\">ALL</span>\n";
+    if($t) $index .= "<A HREF={$_SERVER['PHP_SELF']}><FONT STYLE=\"color:{$color['text']}\">ALL</FONT></A>\n";
+    else $index .= "<FONT STYLE=\"color:{$color['t_bg']};font-weight:bold\">ALL</FONT>\n";
   } else {
-    $p = array("1"  => "가", "2"  => "나", "3"  => "다", "4"  => "라",
-               "5"  => "마", "6"  => "바", "7"  => "사", "8"  => "아",
-               "9"  => "자", "10" => "차", "11" => "카", "12" => "타",
+    $p = array("1" => "가", "2" => "나", "3" => "다", "4" => "라",
+               "5" => "마", "6" => "바", "7" => "사", "8" => "아",
+               "9" => "자", "10" => "차", "11" => "카", "12" => "타",
                "13" => "파", "14" => "하");
-
-    for ( $i=1; $i<=14; $i++) {
-      if ( $t != $p[$i] ) {
-        $_p = urlencode ($p[$i]);
-        $index .= "<a href=\"{$_pself}?t={$_p}\">" .
-                  "<span class=\"sortlink\">{$p[$i]}</span></a>\n";
-      } else
-        $index .= "<span class=\"sortlink_c\">{$p[$i]}</span>\n";
+    for($i=1;$i<=14;$i++) {
+      if($t != $p[$i]) $index .= "<A HREF={$_SERVER['PHP_SELF']}?t={$p[$i]}><FONT STYLE=\"color:{$color['text']}\">{$p[$i]}</FONT></A>\n";
+      else $index .= "<FONT STYLE=\"color:{$color['t_bg']};font-weight:bold\">{$p[$i]}</FONT>\n";
     }
   }
   return $index;

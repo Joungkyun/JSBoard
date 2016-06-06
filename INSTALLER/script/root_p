@@ -1,0 +1,144 @@
+#!/bin/sh
+# $Id: root_p,v 1.9 2009-11-19 05:29:50 oops Exp $
+clear
+echo "########################################################"
+echo "# JSBoard Config File Permissioner v2.0                #"
+echo "# Scripted By JoungKyun Kim < http://www.oops.org >    #"
+echo "########################################################"
+echo
+
+echo "STEP 1 Language Check"
+echo "---------------------"
+echo -n "Do you want to use Korean during the installation? [Y/N](default Y) : "
+read langs
+
+case "${langs}" in
+  N*|n*)
+    langs=en ;;
+  *)
+    langs=ko ;;
+esac
+
+# location of apache configuration file
+if [ -f "/etc/httpd/conf/httpd.conf" ] ;then
+  CONF="/etc/httpd/conf/httpd.conf"
+elif [ -f "/etc/www/conf/httpd.conf" ]; then
+  CONF="/etc/www/conf/httpd.conf"
+elif [ -f "/etc/www/httpd.conf" ]; then
+  CONF="/etc/www/httpd.conf"
+elif [ -f "/usr/local/apache/conf/httpd.conf" ]; then
+  CONF="/usr/local/apache/conf/httpd.conf"
+elif [ -f "/usr/local/etc/apache/httpd.conf" ]; then
+  CONF="/usr/local/etc/apache/httpd.conf"
+elif [ -f "/etc/apache/conf/commonapache.conf" ]; then
+  CONF="/etc/apache/conf/commonapache.conf"
+else
+  while [ true ];
+  do
+    if [ "${langs}" = "ko" ]; then
+      echo
+      echo "^[[1;31mERROR^[[7;0m : httpd.conf 를 찾을 수가 없습니다."
+      echo -n "httpd.conf 의 절대 경로를 지정해 주십시오 : "
+    else
+      echo
+      echo "^[[1;31mERROR^[[7;0m : Can't find httpd.conf"
+      echo -n "Please specify the location of httpd.conf : "
+    fi
+    read CONF
+
+    [ -f "${CONF}" ] && break
+  done
+fi
+
+DIST=`uname -s`
+Auser=$(ps uax | grep -E "apache|httpd" | grep -v ^root | grep -v grep | awk '{print $1}' | uniq)
+Agroup=$(cat ${CONF} | grep -E "^(`echo -ne "\t"`|[ ])*Group " | awk '{print $2}')
+
+if [ "${langs}" = "ko" ]; then
+  . ./LANG/ko.conf
+else
+  . ./LANG/en.conf
+fi
+
+echo
+echo "########################################################"
+echo "${SYSTEM_IN}"
+echo "########################################################"
+echo "#"
+echo "${SYSTEM_LN}"
+echo "${SYSTEM_OS}"
+echo "${SYSTEM_HU}"
+echo "${SYSTEM_HG}"
+echo "#"
+echo "########################################################"
+echo
+echo
+
+if [ "${Agroup}" = "#-1" ]; then
+  echo -e "${SYSTEM_GE}"
+  exit 1
+else
+  echo "${SYSTEM_MN}"
+  echo -n "${SYSTEM_AL}"
+  read INFO
+fi
+
+case "${INFO}" in
+  N*|n*)
+    INFO=N ;;
+  *)
+    INFO=Y ;;
+esac
+
+if [ "$INFO" = "N" ] ; then
+  echo
+  echo "1. Webserver user configuration"
+  echo -n "${RECONF_HU}"
+  read Auser
+
+  while [ true ]; do
+    if [ ${Auser} ]; then
+      break;
+    else
+      echo -n "${RECONF_HU}"
+      read Auser
+    fi
+  done
+
+  echo
+  echo "2. Webserver group configuration"
+  echo -n "${RECONF_HG}"
+  read Agroup
+
+  while [ true ]; do
+    if [ ${Agroup} ]; then
+      break;
+    else
+      echo -n "${RECONF_HG}"
+      read Agroup
+    fi
+  done
+fi
+
+# owner configuration
+chgrp ${Agroup} ../../config
+chgrp -R ${Agroup} ../../data/
+chgrp ${Agroup} ../../config/global.php
+chgrp ${Agroup} ../../config/spam_list.txt
+
+# permission configuration
+chmod 731 ../../config
+chmod 775 ../../data
+chmod 775 ../../data/*
+chmod 775 ../../data/*/files
+chmod 775 ../../data/*/files/*
+chmod 664 ../../data/*/files/*/*
+chmod 664 ../../data/*/*.*
+chmod 664 ../../config/spam_list.txt
+chmod 660 ../../config/global.php
+
+echo
+echo "${ENDMSG}"
+echo
+
+exit 0

@@ -1,12 +1,12 @@
 <?
-# $Id: make_key.php,v 1.3 2012-10-11 16:25:39 oops Exp $
+# $Id: make_key.php,v 1.2 2009-11-19 05:29:50 oops Exp $
 # alphabat uper case range 65 ~ 90
 
 $fname = 'captcha-' . getmypid () . '.db';
 
 $ascii = array ('35-38', 47, '50-57', '63-90');
 foreach ( $ascii as $v ) :
-	if ( is_numeric ($v) ) :
+	if ( is_int ($v) ) :
 		$list[] = chr ($v);
 	else :
 		$_v = explode ('-', $v);

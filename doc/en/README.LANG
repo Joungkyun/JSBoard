@@ -1,0 +1,18 @@
+Multi Language Support
+$Id: README.LANG,v 1.3 2009-11-19 05:29:50 oops Exp $
+
+1. copy include/LANG/en.php to include/LANG/NATION_CODE.php.
+   For example Japanese
+
+   cp en.php jp.php
+
+2. translate to japanese from english in jp.php
+
+3. Added japanese theme.
+   See also README.THEME
+
+Attention
+Can't exist any file or directory in include/LANG except language file
+
+
+Sep  4 2001 JoungKyun Kim <http://www.oops.org>

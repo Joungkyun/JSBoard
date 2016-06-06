@@ -1,6 +1,5 @@
 <?php
-# $Id: ostype.php,v 1.2 2009-11-16 21:52:47 oops Exp $
-#
+# $Id: ostype.php,v 1.2 2009-11-19 05:29:51 oops Exp $
 # OS 마다 틀리게 적용되는 변수값을 지정을 한다.
 # get OS type for password field in MySQL and
 # sample files

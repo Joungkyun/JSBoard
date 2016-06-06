@@ -1,7 +1,7 @@
 <?php
 #
 # minimal wikify module for jsboard by wkpark@kldp.org
-# $Id: wikify.php,v 1.3 2009-11-16 21:52:47 oops Exp $
+# $Id: wikify.php,v 1.3 2009-11-19 05:29:51 oops Exp $
 #
 
 $_config=array();

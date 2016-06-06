@@ -1,5 +1,6 @@
 <?
-# $Id: captchacommon.php,v 1.5 2009-11-21 16:58:29 oops Exp $
+# $Id: captchacommon.php,v 1.4 2009-11-19 05:29:50 oops Exp $
+
 if ( $board['captcha'] ) {
 	require_once 'captcha/captcha.php';
 	$capt = new Captcha ($board['captcha']);
@@ -18,7 +19,7 @@ if ( $board['captcha'] ) {
 	if ( preg_match ('/reply\.php$/', $_SERVER['PHP_SELF']) )
 		$pattern = '/^[25-7]$/';
 	else
-		$pattern = '/^[2457]$/';
+		$pattern = '/^[24-7]$/';
 
 	if ( preg_match ($pattern, $board['mode']) ) {
 		$pcaptcharcolspan = ' colspan=3';
@@ -26,7 +27,6 @@ if ( $board['captcha'] ) {
 		return;
 	}
 
-	$pcaptcharcolspan = ' style="width: 80px;"';
 	$ckey = $capt->captchakey ();
 	$captsize = $size['pass'] * 2;
 
@@ -40,7 +40,7 @@ function captcha_insert() {
 </script>
 <img src="./captcha/captchaimg.php?{$ckey}" alt="Input {$capt->captchadata($ckey)}" onclick="captcha_insert(); return false;"></td>
 <td valign="top">
-{$_('captstr')}<br />
+{$langs['captstr']}<br />
 <input type="text" size="{$captsize}" name="atc[ckeyv]" id="id_ckeyv" onclick="captcha_insert(); return false;">
 <input type="hidden" name="atc[ckey]" value="{$ckey}">
 EOF;

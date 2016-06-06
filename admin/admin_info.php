@@ -1,58 +1,89 @@
 <?php
-# $Id: admin_info.php,v 1.2 2009-11-16 21:52:46 oops Exp $
+# $Id: admin_info.php,v 1.7 2009-11-19 05:29:50 oops Exp $
 $path['type'] = "admin";
-require_once "./include/admin_head.php";
+include "./include/admin_head.php";
 
-htmlhead ();
+htmlhead();
 # session 이 등록되어 있지 않으면 로그인 화면으로.
-if ( ! session_is_registered ($jsboard) || $_SESSION[$jsboard]['pos'] != 1 )
-  print_error ($_('login_err'));
+if(!session_is_registered("$jsboard") || $_SESSION[$jsboard]['pos'] != 1)
+  print_error($langs['login_err']);
 
 # input 문의 size를 browser별로 맞추기 위한 설정
-$size = form_size (9);
-$textsize = form_size (40);
+$size = form_size(9);
+$textsize = form_size(36);
 
-$configfile = "../config/global.php";
-$spamlistfile = "../config/spam_list.txt";
+if(!$mode) {
+  echo "<!--------------------------- Upper is HTML_HEAD --------------------------->\n".
+       "<table width=100% height=100% border=0 cellpadding=0 cellspacing=0>\n".
+       "<tr><td align=center>\n".
 
-# global 설정 가져오기
-$global_con = readfile_r ($configfile);
-$global_con = preg_replace ("/<\?|\?>/i","",$global_con);
+       "<font color={$color['t_bg']}><b>Admin Center Password Change</b></font>\n".
+       "<table width=240 border=0 cellpadding=2>\n".
+       "<tr bgcolor={$color['t_bg']}><form method=POST action=\"act.php\">\n".
+       "<td><font color={$color['t_fg']}>Passwd</font></td>\n".
+       "<td align=center><input type=password name=admincenter_pass size=$size></td>\n".
+       "</tr>\n\n".
 
-# spam list 가져오기
-if ( file_exists ($spamlistfile) ) $spamlist = readfile_r ($spamlistfile);
-else $spamlist = "spam_list.txt is not found into jsboard/config";
+       "<tr bgcolor={$color['t_bg']}>\n".
+       "<td><font color={$color['t_fg']}>Re Passwd</font></td>\n".
+       "<td align=center><input type=password name=readmincenter_pass size=$size></td>\n".
+       "</tr>\n\n".
 
-$global_con = trim ($global_con);
-$spamlist = trim ($spamlist);
+       "<tr>\n<td colspan=2 align=center>\n".
+       "<input type=submit value={$langs['b_sm']}>\n".
+       "<input type=reset value={$langs['b_reset']}>\n".
+       "</td>\n</tr>\n\n".
+
+       "<input type=hidden name=mode value=manager_config>\n".
+       "</form>\n\n</table>\n\n".
+
+       "<br>\n<font color=#999999 size=-1>\n";
+
+  copyright($copy);
+
+  echo "</font>\n\n</td></tr>\n</table>\n".
+       "<!----------------- Follow is HTML_TAIL ---------------------->\n";
+} elseif($mode == "global") {
+
+  $configfile = "../config/global.php";
+  $spamlistfile = "../config/spam_list.txt";
+
+  # global 설정 가져오기
+  $global_con = file_operate($configfile,"r","Don't open $configfile");
+  $global_con = preg_replace("/<\?|\?>/i","",$global_con);
+
+  # spam list 가져오기
+  if(file_exists($spamlistfile)) $spamlist = file_operate($spamlistfile,"r");
+  else $spamlist = "jsboard/config 에 spam_list.txt 가 존재하지 않습니다";
+
+  $global_con = trim($global_con);
+  $spamlist = trim($spamlist);
+
+  echo "<BR>\n".
+       "<form name='global_chg' method='post' action='act.php'>\n".
+       "<table border=0 cellpadding=2 cellspacing=1 width=100%>\n".
+       "<tr><td bgcolor={$color['t_bg']} align=center>\n\n".
+       "<table border=0 cellpadding=1 cellspacing=1 width=100%>\n".
+       "<tr><td align=center>\n".
+       "<font style=\"font-size:20px;font-family:tahoma;color:{$color['t_fg']}\"><b>Global Configuration</b></font>\n".
+       "</td></tr>\n".
+       "<tr><td bgcolor={$color['b_bg']} align=center>\n".
+       "<textarea name=glob[vars] rows=25 cols=\"$textsize\">$global_con</textarea>\n".
+       "</td></tr>\n\n".
+       "<tr><td align=center>\n".
+       "<font style=\"font-size:20px;font-family:tahoma;color:{$color['t_fg']}\"><b>SPAMER LIST</b></font>\n".
+       "</td></tr>\n".
+       "<tr><td bgcolor={$color['b_bg']}>&nbsp;\n".
+       "<br><font color={$color['text']}>{$langs['spamer_m']}</font><p>".
+       "<center><textarea name=glob[spam] rows=10 cols=\"$textsize\">$spamlist</textarea></center>\n</td></tr>\n\n".
+       "<tr><td align=center>\n".
+       "<input type=submit value={$langs['b_sm']}>\n".
+       "<input type=reset value={$langs['b_reset']}>\n".
+       "<input type=hidden name=mode value=global_chg>\n".
+       "</td></tr>\n</table>\n\n".
+       "</td></tr>\n</table>\n</form>\n";
+}
+
+htmltail(); 
+
 ?>
-
-<br>
-<form name="global_chg" method="post" action="act.php">
-<table border=0 cellpadding=2 cellspacing=1 width="100%">
-<tr><td class="gbtitle">
-
-<table border=0 cellpadding=1 cellspacing=1 width="100%">
-<tr><td class="gbtitle">Global Configuration</td></tr>
-<tr><td class="gbbackground">
-<textarea name="glob[vars]" rows=25 cols="<?=$textsize?>"><?=$global_con?></textarea>
-</td></tr>
-
-<tr><td class="gbtitle">SPAMER LIST</td></tr>
-<tr><td class="gbbackground">&nbsp;
-<div class="spamcomment"><?=$_('spamer_m')?></div>
-<center><textarea name="glob[spam]" rows=10 cols="<?=$textsize?>"><?=$spamlist?></textarea></center>
-</td></tr>
-
-<tr><td align="center">
-<input type="submit" value="<?=$_('b_sm')?>">
-<input type="reset" value="<?=$_('b_reset')?>">
-<input type="hidden" name="mode" value="global_chg">
-</td></tr>
-</table>
-
-</td></tr>
-</table>
-</form>
-
-<?  htmltail (); ?>

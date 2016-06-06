@@ -1,9 +1,9 @@
 <?php
-# $Id: locate.php,v 1.2 2009-11-16 21:52:45 oops Exp $
+# $Id: locate.php,v 1.7 2009-11-19 05:29:49 oops Exp $
 include "include/header.php";
 
 $go = $o['go'];
-$url = search2url ($o);
+$url = search2url($o);
 $url = str_replace ('&amp;', '&', $url);
 
 switch($go) {

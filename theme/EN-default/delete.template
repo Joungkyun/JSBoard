@@ -1,28 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!-- $Id: delete.template,v 1.23 2009-11-19 05:29:51 oops Exp $ -->
+<!-- ==================================================================== -->
+<!-- $langs['charset'] : print charset code                               -->
+<!-- $board['ver']     : bersion information in webboard                  -->
+<!-- get_title()     : print header title in webbared                     -->
+<!-- $user_stylesheet : User Defined StyleSheet                           -->
+<!-- ==================================================================== -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
 
-<form method="post" action="act.php">
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td valign="bottom" colspan=2>
-<img src="./theme/EN-default/img/icon_over.gif" align="middle" alt=''>
-<span class="counter">&gt;&gt; Delete <?=$list['num']?> article</span>
-</td>
-</tr>
+<STYLE TYPE="text/css">
+<!--
+body, td {
+  font-size: 12px;
+  font-family: tahoma, sans-serif;
+  color: #555555;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #555555;
+}
+a:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font: 11px tahoma,sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #FFFFFF;
+}
+SELECT {
+  font: 11px tahoma,sans-serif;
+  color: #555555;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  background-Color: #FFFFFF;
+}
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
+form { display: inline; }
+pre { font-family: tahoma, sans-serif; }
+
+<?=$user_stylesheet?>
+-->
+</style>
+
+<!-- ==================================================================== -->
+<!-- print_newwindow_src()  : print java script for open new window to    -->
+<!--                          use in jsboard                              -->
+<!-- ==================================================================== -->
+<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!-- ======================= Start Header Design ======================= -->
+<?
+if(!$np) {
+  # Design per user
+  include "{$board['headpath']}";
+  # Input by whole admin
+  include "html/head.php";
+ }
+?>
+<!-- ======================= End Header Design   ======================= -->
+
+<!-- ==================================================================== -->
+<!-- $board['align'] : print align of webboard. It's config in board admin-->
+<!-- $board['width'] : print width of webboard. It's config in board admin-->
+<!-- $list['num']    : Number of article                                  -->
+<!-- ==================================================================== -->
+<DIV ALIGN="<?=$board['align']?>">
+<FORM METHOD="post" ACTION="act.php">
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; <B>Delete</B> <?=$list['num']?> article</FONT></TD>
+</TR>
 
 <!-- ==================================================================== -->
 <!-- $list['title']  : subject of article                                 -->
 <!-- ==================================================================== -->
-<? $list['title'] = preg_replace("/<br>\n/i","\\0<img src=\"images/blank.gif\" width=40 height=1>",$list['title']); ?>
-<tr bgcolor="#a0dc10">
-<td colspan=2>
-<img src="./theme/EN-default/img/board_no.gif" align=middle alt='No.'>
-<span class="rtitle"><?=$list['title']?></span>
-</td>
-</tr>
+<? $list['title'] = preg_replace("/<br>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
+<TR BGCOLOR="#FFAE00">
+<TD COLSPAN=2>
+<IMG SRC="./theme/EN-default/img/board_no.gif" ALIGN="middle" ALT='TITLE: '>
+<FONT STYLE="color:#FFFFFF; font-weight:bold"><?=$list['title']?></FONT>
+</TD>
+</TR>
 
-<tr>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td>
-</tr>
-</table>
+<TR>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
 
 <!-- ==================================================================== -->
 <!-- $list['date']   : Regist date                                        -->
@@ -33,60 +115,81 @@
 <!-- $list['attach'] : attached file                                      -->
 <!-- ==================================================================== -->
 <? if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
-<td width=4 bgcolor="#6d7bc9" valign=middle><img src="images/blank.gif" width=4 height=1 border=0 alt=''></td>
-<td width=5><img src="images/blank.gif" width=5 height=1 border=0 alt=''></td>
-<td>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=''><br>
-<font Style="font-weight:bold">Date</font> <?=$list['date']?> <?=$list['dhost']?> &nbsp; &nbsp; 
-<font Style="font-weight:bold">Read</font> <?=$list['refer']?><br>
-<font Style="font-weight:bold">Name</font> <?=$list['uname']?> &nbsp; &nbsp;
-<? if($list['attach']) echo "<font Style=\"font-weight:bold\">ÆÄÀÏ</font> {$list['attach']}" ?><br>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=''><br>
-</td>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
-</tr>
-</table>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=5><IMG SRC="images/blank.gif" WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+<FONT Style="font-weight:bold">Date</FONT> <?=$list['date']?> <?=$list['dhost']?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">Read</FONT> <?=$list['refer']?><BR>
+<FONT Style="font-weight:bold">Name</FONT> <?=$list['uname']?> &nbsp; &nbsp;
+<? if($list['attach']) echo "<FONT Style=\"font-weight:bold\">File</FONT> {$list['attach']}" ?><BR>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+</TD>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
 
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td></tr>
-</table>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
 
 <!-- ==================================================================== -->
 <!-- $preview['up']   : print if attach file is gif/jpg/png format        -->
 <!-- $list['text']    : print content of article                          -->
 <!-- $preview['down'] : print if attach file is ascii type                -->
 <!-- ==================================================================== -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td class="rbodybg">
-<div class="rbody">
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?=$color['l5_bg']?>">
+<DIV style="color:<?=$color['l5_fg']?>;font-family:thoam,sans-serif">
 <?=$preview['up']?>
-<!-- ============================= Content ============================== -->
+<!-- =============================== Content =============================== -->
 <?=$list['text']?>
 
-<!-- ============================= Content ============================== -->
+<!-- =============================== Content =============================== -->
 <?=$preview['down']?>
-</div>
-</td></tr>
-</table>
+</DIV>
+</TD></TR>
+</TABLE>
 
 <!-- ==================================================================== -->
 <!-- $warning          : print needed warn message when delete            -->
 <!-- $table.$page      : print link option to back list                   -->
 <!-- $print['passform']  : hidden value for delete                        -->
 <!-- ==================================================================== -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td align="right">
-<?=$warning?>
-[ <a href="list.php?table=<?=$table.$page?>"><span class="regip">List</span></a> | <a href="javascript:history.back()"><span class="regip">Back</span></a> ]
-</td></tr>
-<tr><td bgcolor="#a0dc10" align="center" class="delpassfd">
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN="right">
+<?=$warning?>&nbsp;
+[ <A HREF="list.php?table=<?=$table.$page?>"><FONT STYLE="color:#555555">List</FONT></A> | <A HREF="javascript:history.back()"><FONT STYLE="color:#555555">Back</FONT></A> ]
+</TD></TR>
+<TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
+<FONT STYLE="color:#FFFFFF;font-weight:bold">
 <?=$print['passform']?>
-<input type="submit" value="Delete">&nbsp;
-<input type="button" onClick="history.back()" value="Cancle">
-</td></tr>
-</table>
-</form>
+<INPUT TYPE="submit" VALUE="Delete">&nbsp;
+<INPUT TYPE="button" onClick="history.back()" VALUE="Cancel">
+</FONT>
+</TD></TR>
+</TABLE>
 
+<!-- ==================================================================== -->
+<!-- print_license()  : Printed Licese table                              -->
+<!-- ==================================================================== -->
+<?=print_license()?>
+
+</FORM>
+</DIV>
+
+<!-- ======================= Start Tail Design ====================== -->
+<?
+if(!$np) {
+  # Input by whole admin
+  include "html/tail.php";
+  # Design per user
+  include "{$board['tailpath']}";
+}
+?>
+<!-- ======================= End   Tail Design ====================== -->
+</BODY>
+</HTML>

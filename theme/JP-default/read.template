@@ -1,3 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!--  ====================================================================  -->
+<!--  $langs['charset'] : 掲示板の 言語 タイプに よって charset を 持って来る.    -->
+<!--  $board['ver']     : 掲示板の バージョン 情報を 持って 来る.                 -->
+<!--  get_title()     : 掲示板の ヘッダー タイトルを 持って 来る.                 -->
+<!--  $user_stylesheet : 使用者 正義 スタイル シーツ                            -->
+<!--  ====================================================================  -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs['charset']?>">
+<TITLE><?=get_title()?> - Jsboard <?=$board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!-- 
+BODY,TD {
+  font-size: 12px;
+  font-family: <?=$langs['font']?>, sans-serif;
+  color: #555555;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font:  11px tahoma, sans-serif;
+  color: <?=$color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?=$color['l4_bg']?>;
+}
+SELECT {
+  font:  11px tahoma, sans-serif;
+  color: <?=$color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  background-Color: <?=$color['l4_bg']?>;
+}
+TEXTAREA {
+  font: 13px <?=$langs['font']?>, sans-serif;
+  color: <?=$color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?=$color['l4_gu']?>;
+  padding-left: 1px;
+  background-Color: <?=$color['l4_bg']?>;
+}
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
+
+/* Quote block */
+blockquote {
+  background: #ebebeb none 6px 8px no-repeat;
+  background-image: url("./images/quote.gif");
+  border: 1px solid #dbdbdb;
+  font-size: 1em;
+  margin: 0.5em 1px 0 25px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+blockquote blockquote {
+  /* Nested quotes */
+  background-color: #bababa;
+  font-size: 1em;
+  margin: 0.5em 1px 0 15px;    
+}
+
+blockquote blockquote blockquote {
+  /* Nested quotes */
+  background-color: #e4e4e4;
+}
+
+blockquote cite {
+  /* Username/source of quoter */
+  font-style: normal;
+  font-weight: bold;
+  margin-left: 20px;
+  display: block;
+  font-size: 0.95em;
+}
+
+blockquote cite cite {
+  font-size: 1em;
+}
+
+blockquote.uncited {
+  padding-top: 25px;
+}
+form { display: inline; }
+
+<?=$user_stylesheet?>
+ -->
+</style>
+
+<!--  ====================================================================  -->
+<!--  print_newwindow_src()  : jsboard 義 機能で 必要な 新しいウィンドーを 浮かべる     -->
+<!--                           java script を 出力するように 日 与える.             -->
+<!--  $print['preview_script'] : list で 予め見るのを ための java scriptを    -->
+<!--                           出力する.                                    -->
+<!--  ====================================================================  -->
+<? print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<?=$print['preview_script']?>
+
+<!--  ======================= ヘッダー デザイン 手始め =======================  -->
+<?
+if(!$np) {
+  # 各 ユーザー別 Design
+  include "{$board['headpath']}";
+  # 全体 管理者に 義解 強制 input なる Design
+  include "html/head.php";
+ }
+?>
+<!--  ======================= ヘッダー デザイン 終り   =======================  -->
 
 <!--  ====================================================================  -->
 <!--  print_keymenu() : keyboard 路 掲示板を 制御                           -->
@@ -7,6 +136,8 @@
 <?=print_keymenu(1)?>
 
 <!--  ====================================================================  -->
+<!--  $board['align'] : 掲示板の align を 定義する. おこる 掲示板 管理者で  -->
+<!--                  設定を すること ある.                                     -->
 <!--  $print['dsearch'] : 詳細 検索 テーブル 出力                             -->
 <!--  $board['width'] : 掲示板の 広さを 指定する. 掲示板 管理者で 調整    -->
 <!--  $list['num']    : 左側 上端の 掲示板 文 番号                          -->
@@ -15,29 +146,30 @@
 <!--                  だ. 掲示板 管理者で 見えないように 設定を することができる    -->
 <!--  $print['lout']  : ログ寅時 ログアウト ボタンを 出力                       -->
 <!--  ====================================================================  -->
+<DIV ALIGN="<?=$board['align']?>">
 <?=$print['dsearch']?>
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td valign="bottom" width=44><img src="./theme/JP-default/img/icon_over.gif" align="middle" alt=""></td>
-<td class="counter" width="95%"> &gt;&gt; Read <?=$list['num']?> article</td>
-<td class="admin"><?=$print['lout']?><?=$print['admin']?></td>
-</tr>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/JP-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Read <?=$list['num']?> article</FONT></TD>
+<TD ALIGN="right" VALIGN="bottom"><?=$print['lout']?>&nbsp;<?=$print['admin']?></TD>
+</TR>
 
 <!--  ====================================================================  -->
 <!--  $list['title']  : 掲示板 文 題目                                      -->
 <!--  ====================================================================  -->
-<? $list['title'] = preg_replace ("/<br>\n/i", "\\0<img src=\"images/blank.gif\" width=40 height=1 alt=\"\">", $list['title']); ?>
-<tr bgcolor="#a0dc10">
-<td colspan=3>
-<img src="./theme/JP-default/img/board_no.gif" align="middle" alt="TITLE: ">
-<span class="rtitle"><?=$list['title']?></span>
-</td>
-</tr>
+<? $list['title'] = preg_replace("/<BR>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
+<TR BGCOLOR="#FFAE00">
+<TD COLSPAN=3>
+<IMG SRC="./theme/JP-default/img/board_no.gif" ALIGN="middle" ALT='TITLE: '>
+<FONT STYLE="color:#FFFFFF; font-weight:bold;"><?=$list['title']?></FONT>
+</TD>
+</TR>
 
-<tr>
-<td colspan=3><img src="images/blank.gif" width=1 height=3 border=0 alt=""></td>
-</tr>
-</table>
+<TR>
+<TD COLSPAN=3><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
 
 
 <!--  ====================================================================  -->
@@ -47,26 +179,26 @@
 <!--  $list['uname']  : 著者 名前 (homepage link 含み)                    -->
 <!--  $list['attach'] : 添付 ファイル リンク                                      -->
 <!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=""></td>
-<td width=4 bgcolor="#6d7bc9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=""></td>
-<td width=5><img src="images/blank.gif" width=5 height=1 border=0 alt=""></td>
-<td>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=""><br>
-<span class="ritem">登録</span> <?=$list['date']?> &nbsp; &nbsp; 
-<span class="ritem">読み</span> <?=$list['refer']?><br>
-<span class="ritem">名前</span> <?=$list['uname']?> &nbsp; &nbsp;
-<?=$list['attach'] ? "<span class=\"ritem\">ファイル</span> {$list['attach']}" : "" ?><br>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=""><br>
-</td>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=""></td>
-</tr>
-</table>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=5><IMG SRC="images/blank.gif" WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+<FONT Style="font-weight:bold">登録</FONT> <?=$list['date']?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">問い合わせ</FONT> <?=$list['refer']?><BR>
+<FONT Style="font-weight:bold">名前</FONT> <?=$list['uname']?> &nbsp; &nbsp;
+<? if($list['attach']) echo "<FONT Style=\"font-weight:bold\">ファイル</FONT> {$list['attach']}" ?><BR>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+</TD>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
 
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="images/blank.gif" width=1 height=3 border=0 alt=""></td></tr>
-</table>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
 
 <!--  ====================================================================  -->
 <!--  $preview['up']   : 添付された イメージ ファイルが gif/jpg/png 仕事 場合 出力      -->
@@ -74,9 +206,9 @@
 <!--  $preview['down'] : 添付された ファイルが ascii 仕事 場合 出力                   -->
 <!--  $print['rlists'] : 本文の デッグルが 存在する 場合 デッグル リスト 出力         -->
 <!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td class="rbodybg">
-<div class="rbody">
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?=$color['l5_bg']?>">
+<DIV style="color:<?=$color['l5_fg']?>;font-family:<?=$langs['font']?>,monospace">
 <?=$preview['up']?>
 <!--  =============================== 文内容 ===============================  -->
 <?=$list['text']?>
@@ -88,23 +220,23 @@
 <!--  =============================== コメント ===============================  -->
 <?=$print['comment']?>
 <!--  =============================== コメント ===============================  -->
-</td></tr>
-</table>
+</TD></TR>
+</TABLE>
 
 <? if ($print['rlists']) { ?>
-<br>
-<table width="<?=$board['width']?>" border=0 cellpadding=1 cellspacing=0>
-<tr><td class="row1"><img src="./images/blank.gif" width=1 height=1 border=0 alt=""></td></tr>
-<tr>
-<td>
-<img src="./images/blank.gif" width=1 height=3 border=0 alt=""><br>
-&gt;&gt; <?=$_('conj')?>
+<P>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR><TD BGCOLOR="<?=$color['l3_bg']?>"><IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+<TR>
+<TD>
+<IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+&gt;&gt; <?=$langs['conj']?>
 <!--  =============================== 回答文 ===============================  -->
 <?=$print['rlists']?>
 <!--  =============================== 回答文 ===============================  -->
-</td></tr>
-<tr><td class="row1"><img src="./images/blank.gif" width=1 height=1 border=0 alt=""></td></tr>
-</table>
+</TD></TR>
+<TR><TD BGCOLOR="<?=$color['l3_bg']?>"><IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+</TABLE>
 <? } ?>
 
 <!--  ====================================================================  -->
@@ -112,79 +244,99 @@
 <!--                    夏期 だから 設定を 日 与えること!                         -->
 <!--  read_cmd(0,1)   : list page 義  list_cmd(0,1) 参照 (右側 下端 メニュー)   -->
 <!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td class="sqltime">
-<?=$print['regist']?><img src="images/blank.gif" width=1 height=25 border=0 align="middle" alt=""></td>
-<td align="right"><? read_cmd(0,1) ?></td>
-</tr>
-</table>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD>
+<FONT style="font-family:tahoma,sans-serif;font-size:11px;"><?=$print['regist']?>&nbsp;</FONT><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
+<TD ALIGN="right"><? read_cmd(0,1) ?></TD>
+</TR>
+</TABLE>
 
 <!--  ====================================================================  -->
-<!--  ゴムセックポムと ページ フォームは doc/en/README.THEME 参照                         -->
+<!--  ゴムセックポムと ページ フォームは doc/ko/README.THEME 参照                         -->
 <!--  $print['dserlink'] : 詳細 検索 リンク 出力                              -->
 <!--  $print['pagetime']  : 右側 下端 ページ ローディング 時間 出力                 -->
 <!--  $print['sqltime']   : 右側 下端 sql ローディング 時間 出力                    -->
 <!--  ====================================================================  -->
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td>
+<TABLE WIDTH="<?=$board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD>
 <!--  =============================== ゴムセックポム ===============================  -->
-<form method="post" action="locate.php?table=<?=$table?>">
-<table width="100%" border=0 cellpadding=0 cellspacing=1>
-<tr>
-<td>
-<select name="o[sc]">
-<option value="t"<?=$sform['sc']['t']?>>Title</option>
-<option value="c"<?=$sform['sc']['c']?>>Contents</option>
-<option value="n"<?=$sform['sc']['n']?>>Writer</option>
-<option value="a"<?=$sform['sc']['a']?>>All</option>
-</select>
-<input type="text" name="o[ss]" size="<?=form_size(8)?>" maxlength=255 value="<?=$sform['ss']?>">
-<input type="submit" value="Search">
-</td>
-</tr><tr>
-<td>
-<select name="o[st]">
-<option value="m"<?=$sform['st']['m']?>>A Month</option>
-<option value="w"<?=$sform['st']['w']?>>A Week</option>
-<option value="a"<?=$sform['st']['a']?>>All</option>
-</select>
-<input type="checkbox" name="o[er]" value="y"<?=$sform['er']['y']?>>
-正規表現式 <?=$print['dserlink']?>
-</td>
-</tr>
-</table>
-<input type="hidden" name="o[at]" value="s">
-<input type="hidden" name="o[go]" value="p">
-<input type="hidden" name="o[sct]" value="s">
-<input type="hidden" name="o[stt]" value="s">
+<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD>
+<SELECT NAME="o[sc]" style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?=$color['l4_fg']?>">
+<OPTION VALUE="t"<?=$sform['sc']['t']?>>Title
+<OPTION VALUE="c"<?=$sform['sc']['c']?>>Contents
+<OPTION VALUE="n"<?=$sform['sc']['n']?>>Writer
+<OPTION VALUE="a"<?=$sform['sc']['a']?>>All
+</SELECT>
+<INPUT TYPE="text" ID="searchstr" NAME="o[ss]" SIZE="<?=form_size(8)?>" MAXLENGTH=255 style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font-size:12px;color:<?=$color['l4_fg']?>;" VALUE="<?=$sform['ss']?>">
+<INPUT TYPE="submit" VALUE="Search" style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?=$color['l4_fg']?>;">
+</TD>
+</TR><TR>
+<TD>
+<SELECT NAME="o[st]" style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?=$color['l4_fg']?>">
+<OPTION VALUE="m"<?=$sform['st']['m']?>>A Month
+<OPTION VALUE="w"<?=$sform['st']['w']?>>A Week
+<OPTION VALUE="a"<?=$sform['st']['a']?>>All
+</SELECT>
+<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?=$sform['er']['y']?> style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>">
+<FONT STYLE="font-family:<?=$langs['vfont']?>,sans-serif;color:#555555">正規表現式</FONT> <?=$print['dserlink']?>
+</TD>
+</TR>
+</TABLE>
+<INPUT TYPE="hidden" NAME="o[at]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[go]" VALUE="p">
+<INPUT TYPE="hidden" NAME="o[sct]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[stt]" VALUE="s">
 </FORM>
 <!--  =============================== ゴムセックポム ===============================  -->
-</td>
-<td align="right">
-<span class="sqltime">
+</TD>
+<TD ALIGN="right">
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;">
 Page Loading [ <?=$print['pagetime']?> Sec ]
-SQL Time [ <?=$print['sqltime']?> Sec ]<br>
-</span>
+SQL Time [ <?=$print['sqltime']?> Sec ]<BR>
+</FONT>
 <!--  ============================== ペイジポム ==============================  -->
-<form method="post" action="locate.php?table=<?=$table?>">
-<table width="100%" border=0 cellpadding=0 cellspacing=1>
-<tr>
-<td align="right">
+<FORM METHOD="post" ACTION="locate.php?table=<?=$table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD ALIGN="right">
+<FONT STYLE="font-size:10px;font-family:tahoma,sans-serif;">
 <?=$pform['post']?>
-<select name="o[go]">
-<option value="p" selected="selected">Page No.</option>
-<option value="n">Article No.</option>
-</select>
-<input type="text" name="o[no]" size="<?=form_size(2)?>" maxlength=6 value="<?=$pform['value']?>">
-<input type="submit" value="Go!">
-</td>
-</tr>
-</table></form>
+<SELECT NAME="o[go]" style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?=$color['l4_fg']?>">
+<OPTION VALUE="p" SELECTED>Page No.
+<OPTION VALUE="n">Article No.
+</SELECT>
+<INPUT TYPE="text" NAME="o[no]" SIZE="<?=form_size(2)?>" MAXLENGTH=6 style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font-size:12px;color:<?=$color['l4_fg']?>" VALUE='<?=$pform['value']?>'>
+<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid <?=$color['l4_gu']?>;background-Color:<?=$color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?=$color['l4_fg']?>">
+</FONT>
+</TD>
+</TR>
+</TABLE></FORM>
 <!--  ============================== ペイジポム ==============================  -->
-</td>
-</tr>
-</table>
+</TD>
+</TR>
+</TABLE>
 
+<!--  ====================================================================  -->
+<!--  print_license()  : ライセンス 出力                                      -->
+<!--  ====================================================================  -->
+<?=print_license()?>
 
+</DIV>
+
+<!--  ======================= しっぽ デザイン 手始め =======================  -->
+<?
+if(!$np) {
+  # 全体 管理者に 義解 強制 input なる Design
+  include "html/tail.php";
+  # 各 ユーザー別 Design
+  include "{$board['tailpath']}";
+}
+?>
+<!--  ======================= しっぽ デザイン 終り   =======================  -->
+</BODY>
+</HTML>
