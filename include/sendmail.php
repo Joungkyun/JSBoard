@@ -1,20 +1,22 @@
 <?php
-# mail ∫∏≥ª±‚ «‘ºˆ 2001.11.30 ±Ë¡§±’
-# $Id: sendmail.php,v 1.2 2009-11-16 21:52:47 oops Exp $
+# mail Î≥¥ÎÇ¥Í∏∞ Ìï®Ïàò 2001.11.30 ÍπÄÏ†ïÍ∑†
+# $Id: sendmail.php,v 1.5 2014/03/02 17:11:31 oops Exp $
 
-# º≠πˆªÛ¿« smtp daemon ø° ¿«¡∏«œ¡ˆ æ ∞Ì ¡˜¡¢ πﬂº€«œ¥¬ smtp class
+# ÏÑúÎ≤ÑÏÉÅÏùò smtp daemon Ïóê ÏùòÏ°¥ÌïòÏßÄ ÏïäÍ≥† ÏßÅÏ†ë Î∞úÏÜ°ÌïòÎäî smtp class
 #
-# ∆Ø¡§ πËø≠∑Œ class ø° ¿¸¥ﬁ¿ª «œø© ∏ﬁ¿œ¿ª πﬂº€«—¥Ÿ. πËø≠¿∫ æ∆∑°¿ª ¬¸¡∂«—¥Ÿ.
+# ÌäπÏ†ï Î∞∞Ïó¥Î°ú class Ïóê Ï†ÑÎã¨ÏùÑ ÌïòÏó¨ Î©îÏùºÏùÑ Î∞úÏÜ°ÌïúÎã§. Î∞∞Ïó¥ÏùÄ ÏïÑÎûòÏùÑ Ï∞∏Ï°∞ÌïúÎã§.
 #
-# debug -> debug ∏¶ «“¡ˆ æ»«“¡ˆ∏¶ ∞·¡§«—¥Ÿ.
-# ofhtml -> ¿•ªÛø°º≠ ªÁøÎ«“¡ˆ Ω©ªÛø°º≠ ªÁøÎ«“¡ˆ∏¶ ∞·¡§«—¥Ÿ.
-# from -> ∏ﬁ¿œ¿ª πﬂº€«œ¥¬ ªÁ∂˜¿« ∏ﬁ¿œ¡÷º“
-# to -> ∏ﬁ¿œ¿ª πﬁ¿ª ªÁ∂˜¿« ∏ﬁ¿œ ¡÷º“
-# text -> «Ï¥ı ≥ªøÎ¿ª ∆˜«‘«— ∏ﬁ¿œ ∫ªπÆ
+# debug -> debug Î•º Ìï†ÏßÄ ÏïàÌï†ÏßÄÎ•º Í≤∞Ï†ïÌïúÎã§.
+# ofhtml -> ÏõπÏÉÅÏóêÏÑú ÏÇ¨Ïö©Ìï†ÏßÄ ÏâòÏÉÅÏóêÏÑú ÏÇ¨Ïö©Ìï†ÏßÄÎ•º Í≤∞Ï†ïÌïúÎã§.
+# from -> Î©îÏùºÏùÑ Î∞úÏÜ°ÌïòÎäî ÏÇ¨ÎûåÏùò Î©îÏùºÏ£ºÏÜå
+# to -> Î©îÏùºÏùÑ Î∞õÏùÑ ÏÇ¨ÎûåÏùò Î©îÏùº Ï£ºÏÜå
+# text -> Ìó§Îçî ÎÇ¥Ïö©ÏùÑ Ìè¨Ìï®Ìïú Î©îÏùº Î≥∏Î¨∏
 #
+# {{{ +-- class maildaemon
 class maildaemon {
   var $failed = 0;
 
+  // {{{ +-- public maildaemon($v)
   function maildaemon($v) {
     $this->debug = $v['debug'];
     $this->ofhtml = $v['ofhtml'];
@@ -42,7 +44,9 @@ class maildaemon {
     $this->send("quit");
     $this->sockets("close");
   }
+  // }}}
 
+  // {{{ +-- public getMX($email)
   function getMX($email) {
     $dev = explode("@",$email);
     $account = $dev[0];
@@ -60,8 +64,10 @@ class maildaemon {
     } else return $host;
     return $mx[$idx];
   }
+  // }}}
 
-  # µπˆ±◊ «‘ºˆ
+  # // {{{ +-- public debug($str,$t=0,$p=0)
+  # ÎîîÎ≤ÑÍ∑∏ Ìï®Ïàò
   #  $t -> 1 (debug of socket open,close)
   #        0 (regular smtp message)
   #  $p -> 1 (print detail debug)
@@ -78,7 +84,7 @@ class maildaemon {
         $this->failed = 1;
     }
 
-    # DEBUG mode -> ∏µÁ ∏ﬁºº¡ˆ √‚∑¬
+    # DEBUG mode -> Î™®Îì† Î©îÏÑ∏ÏßÄ Ï∂úÎ†•
     if($p) {
       if($t) {
         $str = "Conncet ".$this->mx;
@@ -88,13 +94,15 @@ class maildaemon {
       echo "DEBUG: $str".$this->newline;
     }
 
-    # DEBUG ∏µÂ∞° æ∆¥“∂ß, ø°∑Ø ∏ﬁºº¡ˆ √‚∑¬
+    # DEBUG Î™®ÎìúÍ∞Ä ÏïÑÎãêÎïå, ÏóêÎü¨ Î©îÏÑ∏ÏßÄ Ï∂úÎ†•
     if(!$p && $this->failed) {
-      if($this->ofhtml) echo "<script type=\"text/javascript\">\nalert('$str')\n</script>\n";
+      if($this->ofhtml) echo "<SCRIPT>\nalert('$str')\n</SCRIPT>\n";
       else "ERROR: $str\n";
     }
   }
+  // }}}
 
+  // {{{ +-- public sockets($option=0)
   function sockets($option=0) {
     switch($option) {
       case "open" :
@@ -106,7 +114,9 @@ class maildaemon {
         break;
     }
   }
+  // }}}
 
+  // {{{ +-- public send($str,$chk=0)
   function send($str,$chk=0) {
     if(!$this->failed) {
       if($this->debug) {
@@ -125,16 +135,21 @@ class maildaemon {
       }
     }
   }
+  // }}}
 }
+// }}}
 
+// {{{ +-- public mailcheck($to,$from,$title,$body)
 function mailcheck($to,$from,$title,$body) {
-  global $_;
-  if(!trim($to)) print_error($_('mail_to_chk_err'),250,150,1);
-  if(!trim($from)) print_error($_('mail_from_chk_err'),250,150,1);
-  if(!trim($title)) print_error($_('mail_title_chk_err'),250,150,1);
-  if(!trim($body)) print_error($_('mail_body_chk_drr'),250,150,1);
+  global $langs;
+  if(!trim($to)) print_error($langs['mail_to_chk_err'],250,150,1);
+  if(!trim($from)) print_error($langs['mail_from_chk_err'],250,150,1);
+  if(!trim($title)) print_error($langs['mail_title_chk_err'],250,150,1);
+  if(!trim($body)) print_error($langs['mail_body_chk_drr'],250,150,1);
 }
+// }}}
 
+// {{{ +-- public get_boundary_msg(void)
 function get_boundary_msg() {
   $uniqchr = uniqid("");
   $one = strtoupper($uniqchr[0]);
@@ -142,7 +157,9 @@ function get_boundary_msg() {
   $three = strtoupper(substr(strrev($uniqchr),0,8));
   return "----=_NextPart_000_000${one}_${two}.${three}";
 }
+// }}}
 
+// {{{ +-- public generate_mail_id($uid)
 function generate_mail_id($uid) {
   $id = date("YmdHis",time());
   mt_srand((float) microtime() * 1000000);
@@ -150,19 +167,23 @@ function generate_mail_id($uid) {
   $id .= $randval."@$uid";
   return $id;
 }
+// }}}
 
+// {{{ +-- public body_encode_lib($str)
 function body_encode_lib($str) {
   $return = base64_encode(trim($str));
   $return = wordwrap($return,60,"\r\n",1);
   return $return;
 }
+// }}}
 
+// {{{ +-- public html_to_plain_lib($str)
 function html_to_plain_lib($str) {
   $src[] = "/\n|\r\n/i";
   $des[] = "||ENTER||";
-  $src[] = "/^.*<body[^>]*>/i";
+  $src[] = "/^.*<BODY[^>]*>/i";
   $des[] = "";
-  $src[] = "/<\/body>.*$/i";
+  $src[] = "/<\/BODY>.*$/i";
   $des[] = "";
   $src[] = "/\|\|ENTER\|\|/i";
   $des[] = "\r\n";
@@ -170,40 +191,39 @@ function html_to_plain_lib($str) {
 
   return $str;
 }
+// }}}
 
+// {{{ +-- public get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm)
 function get_htmltext($rmail,$year,$day,$ampm,$hms,$nofm) {
-  global $_;
+  global $langs,$color;
 
   if($nofm) $nofm = auto_link($nofm);
   if($rmail['url']) $homeurl = "HomeURL           : ".auto_link($rmail['url'])."\r\n";
   if($rmail['email']) {
     $rmail['pemail'] = (preg_match("/^nobody@/i",$rmail['email'])) ? "" : $rmail['email'];
     if($rmail['pemail']) {
-      $rmail['pemail'] = preg_replace("/{$rmail['pemail']}/i","mailto:<a href=mailto:\\0>\\0</a>",$rmail['pemail']);
+      $rmail['pemail'] = preg_replace("/{$rmail['pemail']}/i","mailto:<A HREF=mailto:\\0>\\0</A>",$rmail['pemail']);
       $mailurl = "Email             : {$rmail['pemail']}\r\n";
     }
   }
-  $addressinfo = trim($mailurl.$homeurl);
+  $addressinfo = $mailurl.$homeurl;
   $rmail['text'] = !$rmail['html'] ? html_to_plain_lib($rmail['text']) : $rmail['text'];
   $servername = strtoupper($_SERVER['SERVER_NAME']);
 
   $themepath = "theme/{$rmail['theme']}/mail.template";
-  $htmltext = readfile_r ($themepath);
-
-  $htmltext = str_replace ("\$_('charset')", $_('charset'), $htmltext);
-  $htmltext = str_replace ("\$_('html_msg')", $_('html_msg'), $htmltext);
-  $htmltext = str_replace ("\$_('u_name')", $_('u_name'), $htmltext);
-  $htmltext = str_replace ("\$_('reg')", $_('reg'), $htmltext);
+  $htmltext = file_operate("$themepath","r","can't open $themepath",sizeof($themepath));
   $htmltext = str_replace ("\"", "\\\"", $htmltext);
   eval("\$htmltext = \"$htmltext\";");
 
   return $htmltext;
 }
+// }}}
 
+// {{{ +-- public mail_header($to,$from,$title,$mta=0)
 function mail_header($to,$from,$title,$mta=0) {
-  global $_, $boundary;
+  global $langs,$boundary;
 
-  # mail header ∏¶ ¿€º∫ 
+  # mail header Î•º ÏûëÏÑ± 
   $boundary = get_boundary_msg();
   $header = "Message-ID: <".generate_mail_id(preg_replace("/@.+$/i","",$to)).">\r\n".
             "From: JSBoard Message <$from>\r\n".
@@ -218,27 +238,29 @@ function mail_header($to,$from,$title,$mta=0) {
 
   return $header;
 }
+// }}}
 
+// {{{ +-- public socketmail($mta,$to,$from,$title,$pbody,$hbody)
 function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
-  global $_,$boundary;
+  global $langs,$boundary;
 
-  # ∫Û πÆ¿⁄ø≠ √º≈©
+  # Îπà Î¨∏ÏûêÏó¥ Ï≤¥ÌÅ¨
   mailcheck($to,$from,$title,$pbody);
 
-  $title = "=?" . $_('charset') . "?B?".trim(base64_encode($title))."?=";
+  $title = "=?{$langs['charset']}?B?".trim(base64_encode($title))."?=";
   $title = preg_replace("/[\s]+/i"," ",str_replace("\r\n","\n",$title));
   
-  # mail header ∏¶ ¿€º∫ 
+  # mail header Î•º ÏûëÏÑ± 
   $mail_header = mail_header($to,$from,$title,$mta);
 
-  # body ∏¶ ±∏º∫
+  # body Î•º Íµ¨ÏÑ±
   $body = "This is a multi-part message in MIME format.\r\n".
           "\r\n--$boundary\r\n".
-          "Content-Type: text/plain; charset=" . $_('charset') . "\r\n".
+          "Content-Type: text/plain; charset={$langs['charset']}\r\n".
           "Content-Transfer-Encoding: base64\r\n\r\n".
           body_encode_lib($pbody).
           "\r\n\r\n--$boundary\r\n".
-          "Content-Type: text/html; charset=" . $_('charset') . "\r\n".
+          "Content-Type: text/html; charset={$langs['charset']}\r\n".
           "Content-Transfer-Encoding: base64\r\n\r\n".
           body_encode_lib($hbody).
           "\r\n--$boundary--\r\n";
@@ -250,7 +272,7 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
   $mails['text'] = $mail_header.$body;
 
   if($mta) {
-    ini_set("SMTP","$smtp");
+    ini_set('SMTP','$smtp');
     $body = str_replace("\r\n","\n",$body);
     $mail_header = str_replace("\r\n","\n",$mail_header);
     mail($mails['to'],$title,$body,$mail_header,"-f{$mails['from']}");
@@ -258,15 +280,17 @@ function socketmail($mta,$to,$from,$title,$pbody,$hbody) {
     new maildaemon($mails);
   }
 }
+// }}}
 
+// {{{ +-- public sendmail($rmail)
 function sendmail($rmail) {
-  global $_, $_code;
+  global $langs;
 
   if($rmail['smtp']) $rmail['mta'] = $rmail['smtp'];
   $rmail['mta'] = $rmail['mta'] ? $rmail['mta'] : 0;
-  $mail_msg_head = $_('sm_dr');
+  $mail_msg_head = $langs['sm_dr'];
 
-  if ($_code == "ko") $time = date("Y/m/d (D) a hΩ√i∫–");
+  if ($langs['code'] == "ko") $time = date("Y/m/d (D) a hÏãúiÎ∂Ñ");
   else $time = date("Y/m/d (D) a h:i");
 
   $time=explode(" ",$time);
@@ -276,7 +300,7 @@ function sendmail($rmail) {
   $ampm=$time[2];
   $hms=$time[3];
 
-  # ∏ﬁ¿œø°º≠¿« double quoteøÕ single quote √≥∏Æ
+  # Î©îÏùºÏóêÏÑúÏùò double quoteÏôÄ single quote Ï≤òÎ¶¨
   $rmail['text'] = stripslashes($rmail['text']);
   $rmail['name'] = stripslashes($rmail['name']);
   $rmail['title'] = stripslashes($rmail['title']);
@@ -286,26 +310,26 @@ function sendmail($rmail) {
 
   $rmail['pemail'] = (preg_match("/^nobody@/i",$rmail['email'])) ? "" : "mailto:{$rmail['email']}";
 
-  if ($_code == "ko") {
-    if ($day == "(Mon)") $day="(ø˘)";
-    else if ($day == "(Tue)") $day="(»≠)";
-    else if ($day == "(Wed)") $day="(ºˆ)";
-    else if ($day == "(Thu)") $day="(∏Ò)";
-    else if ($day == "(Fri)") $day="(±›)";
-    else if ($day == "(Sat)") $day="(≈‰)";
-    else if ($day == "(Sun)") $day="(¿œ)";
-  } else if ($__code == "jp") {
-    if ($day == "(Mon)") $day="(Í≈)";
-    else if ($day == "(Tue)") $day="(˚˝)";
-    else if ($day == "(Wed)") $day="(‚©)";
-    else if ($day == "(Thu)") $day="(Ÿ )";
-    else if ($day == "(Fri)") $day="(–›)";
-    else if ($day == "(Sat)") $day="(˜œ)";
-    else if ($day == "(Sun)") $day="(ÏÌ)";
+  if ($langs['code'] == "ko") {
+    if ($day == "(Mon)") $day="(Ïõî)";
+    else if ($day == "(Tue)") $day="(Ìôî)";
+    else if ($day == "(Wed)") $day="(Ïàò)";
+    else if ($day == "(Thu)") $day="(Î™©)";
+    else if ($day == "(Fri)") $day="(Í∏à)";
+    else if ($day == "(Sat)") $day="(ÌÜ†)";
+    else if ($day == "(Sun)") $day="(Ïùº)";
+  } else if ($langs['code'] == "jp") {
+    if ($day == "(Mon)") $day="(Êúà)";
+    else if ($day == "(Tue)") $day="(ÁÅ´)";
+    else if ($day == "(Wed)") $day="(Ê∞¥)";
+    else if ($day == "(Thu)") $day="(Êú®)";
+    else if ($day == "(Fri)") $day="(Ô§ä)";
+    else if ($day == "(Sat)") $day="(Âúü)";
+    else if ($day == "(Sun)") $day="(Êó•)";
   }
 
-  $webboard_address =  sprintf("%s%s",$rmail['path'],"read.php?table={$rmail['table']}&amp;no={$rmail['no']}");
-  $reply_article    =  sprintf("%s%s",$rmail['path'],"reply.php?table={$rmail['table']}&amp;no={$rmail['no']}");
+  $webboard_address =  sprintf("%s%s",$rmail['path'],"read.php?table={$rmail['table']}&no={$rmail['no']}");
+  $reply_article    =  sprintf("%s%s",$rmail['path'],"reply.php?table={$rmail['table']}&no={$rmail['no']}");
 
   $dbname  = "DB Name           : {$rmail['table']}";
   $dbloca  = "DB Location       : $webboard_address";
@@ -318,7 +342,7 @@ function sendmail($rmail) {
              "\r\n".
              "$mail_msg_header\r\n".
              "\r\n".
-             "°· JSBOARD {$rmail['table']} message\r\n".
+             "‚ñ† JSBOARD {$rmail['table']} message\r\n".
              "\r\n".
              "[ Server Infomation ]------------------------------------------------------\r\n".
              "ServerWare        : JSBoard-{$rmail['version']}\r\n".
@@ -326,10 +350,10 @@ function sendmail($rmail) {
              "\r\n".
              "\r\n".
              "[ Article Infomation ]-----------------------------------------------------\r\n".
-             $_('u_name') . "               : {$rmail['name']}\r\n".
+             "{$langs['u_name']}              : {$rmail['name']}\r\n".
              "$mailurl".
              "$homeurl".
-             $_('a_t13') . "               : $year $day $ampm $hms\r\n".
+             "{$langs['a_t13']}              : $year $day $ampm $hms\r\n".
              "---------------------------------------------------------------------------\r\n".
              "\r\n".
              html_to_plain_lib($rmail['text'])."\r\n".
@@ -354,4 +378,16 @@ function sendmail($rmail) {
     socketmail($rmail['mta'],$rmail['toadmin'],$rmail['email'],$rmail['title'],$message,$htmltext);
   }
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

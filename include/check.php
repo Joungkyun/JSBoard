@@ -1,47 +1,53 @@
 <?php
-# $Id: check.php,v 1.15 2012-10-02 17:44:17 oops Exp $
-
-# table ÀÌ¸§¿¡ meta character °¡ Æ÷ÇÔµÇ¾î ÀÖ´ÂÁö °Ë»çÇÏ´Â ÇÔ¼ö
-# $name -> º¯¼ö°ª
-# $i    -> null ÀÌ¶óµµ »ó°ü¾øÀ» °æ¿ì 1
-# $t    -> table ÀÌ¸§ °Ë»ç½Ã 1
+# $Id: check.php,v 1.29 2014/03/02 17:11:31 oops Exp $
+# table ì´ë¦„ì— meta character ê°€ í¬í•¨ë˜ì–´ ìˆëŠ”ì§€ ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜
+# $name -> ë³€ìˆ˜ê°’
+# $i    -> null ì´ë¼ë„ ìƒê´€ì—†ì„ ê²½ìš° 1
+# $t    -> table ì´ë¦„ ê²€ì‚¬ì‹œ 1
 #
+// {{{ +-- public meta_char_check($name,$i=0,$t=0)
 function meta_char_check($name,$i=0,$t=0) {
   if (!$i && !trim($name))  print_error("Table Value Name Missing! You must specify a value",250,150,1);
   if ($t && !preg_match("/^[a-z]/i",$name)) print_error("$name Value must start with an alphabet",250,150,1);
   if (preg_match("/[^a-z0-9_-]/i",$name)) print_error("Can't use special characters except alphabat, numberlic , _, - charcters",250,150,1);
   if ($t && preg_match("/^as$/i",$name)) print_error("Cat't use table name as &quot;as&quot;",250,150,1);
 }
+// }}}
 
-# ·Î±×ÀÎ¿¡ »ç¿ëµÇ´Â Password ºñ±³ ÇÔ¼ö
+# // {{{ +-- public compare_pass($l)
+# ë¡œê·¸ì¸ì— ì‚¬ìš©ë˜ëŠ” Password ë¹„êµ í•¨ìˆ˜
 #
 function compare_pass($l) {
-  global $_, $edb;
+  global $langs,$edb;
   $r = get_authinfo($l['id'],$edb['crypts']);
 
   if($edb['uses'] && $edb['crypts']) {
-    if (crypt($r['passwd'],$l['pass']) != $l['pass']) print_pwerror($_('ua_pw_c'));
+    if (crypt($r['passwd'],$l['pass']) != $l['pass']) print_pwerror($langs['ua_pw_c']);
   } else {
-    if ($r['passwd'] != $l['pass']) print_pwerror($_('ua_pw_c'));
+    if ($r['passwd'] != $l['pass']) print_pwerror($langs['ua_pw_c']);
   }
 }
+// }}}
 
-# ¹®ÀÚ¿­¿¡ ÇÑ±ÛÀÌ Æ÷ÇÔµÇ¾î ÀÖ´ÂÁö °Ë»çÇÏ´Â ÇÔ¼ö
+# // {{{ +-- public is_hangul($char)
+# ë¬¸ìì—´ì— í•œê¸€ì´ í¬í•¨ë˜ì–´ ìˆëŠ”ì§€ ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜
 #
-# ord    - ¹®ÀÚÀÇ ASCII °ªÀ» °¡Á®¿È
+# ord    - ë¬¸ìì˜ ASCII ê°’ì„ ê°€ì ¸ì˜´
 #          http://www.php.net/manual/function.ord.php
 function is_hangul($char) {
-  # Æ¯Á¤ ¹®ÀÚ°¡ ÇÑ±ÛÀÇ ¹üÀ§³»(0xA1A1 - 0xFEFE)¿¡ ÀÖ´ÂÁö °Ë»ç
+  # íŠ¹ì • ë¬¸ìê°€ í•œê¸€ì˜ ë²”ìœ„ë‚´(0xA1A1 - 0xFEFE)ì— ìˆëŠ”ì§€ ê²€ì‚¬
   $char = ord($char);
 
   if($char >= 0xa1 && $char <= 0xfe)
     return 1;
 }
+// }}}
 
-# ¾ËÆÄºªÀÎÁö ±×¸®°í ´ë¹®ÀÚ(0x41 - 0x5a)ÀÎÁö ¼Ò¹®ÀÚ(0x61 - 0x7a)ÀÎÁö
-# °Ë»çÇÏ´Â ÇÔ¼ö
+# // {{{ +-- public is_alpha($char)
+# ì•ŒíŒŒë²³ì¸ì§€ ê·¸ë¦¬ê³  ëŒ€ë¬¸ì(0x41 - 0x5a)ì¸ì§€ ì†Œë¬¸ì(0x61 - 0x7a)ì¸ì§€
+# ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜
 #
-# ord - ¹®ÀÚÀÇ ASCII °ªÀ» °¡Á®¿È
+# ord - ë¬¸ìì˜ ASCII ê°’ì„ ê°€ì ¸ì˜´
 #       http://www.php.net/manual/function.ord.php
 function is_alpha($char) {
   $char = ord($char);
@@ -51,14 +57,16 @@ function is_alpha($char) {
   if($char >= 0x41 && $char <= 0x5a)
     return 2;
 }
+// }}}
 
-# URLÀÌ Á¤È®ÇÑ °ÍÀÎÁö °Ë»çÇÏ´Â ÇÔ¼ö
+# // {{{ +-- public check_url($url)
+# URLì´ ì •í™•í•œ ê²ƒì¸ì§€ ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜
 #
 function check_url($url) {
   $url = trim($url);
 
-  # ÇÁ·ÎÅäÄİ(http://, ftp://...)À» ³ªÅ¸³»´Â ºÎºĞÀÌ ¾øÀ» ¶§ ±âº»°ªÀ¸·Î
-  # http://¸¦ ºÙÀÓ
+  # í”„ë¡œí† ì½œ(http://, ftp://...)ì„ ë‚˜íƒ€ë‚´ëŠ” ë¶€ë¶„ì´ ì—†ì„ ë•Œ ê¸°ë³¸ê°’ìœ¼ë¡œ
+  # http://ë¥¼ ë¶™ì„
   if(!preg_match("/^(http|https|ftp|telnet|news):\/\//i", $url))
     $url = "http://$url";
 
@@ -67,24 +75,26 @@ function check_url($url) {
     
   return $url;
 }
+// }}}
 
-# E-MAIL ÁÖ¼Ò°¡ Á¤È®ÇÑ °ÍÀÎÁö °Ë»çÇÏ´Â ÇÔ¼ö
+# // {{{ +-- public check_email($email,$hchk=0)
+# E-MAIL ì£¼ì†Œê°€ ì •í™•í•œ ê²ƒì¸ì§€ ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜
 #
-# gethostbynamel - È£½ºÆ® ÀÌ¸§À¸·Î ip ¸¦ ¾ò¾î¿È
+# gethostbynamel - í˜¸ìŠ¤íŠ¸ ì´ë¦„ìœ¼ë¡œ ip ë¥¼ ì–»ì–´ì˜´
 #          http://www.php.net/manual/function.gethostbynamel.php
-# checkdnsrr - ÀÎÅÍ³İ È£½ºÆ® ³×ÀÓÀÌ³ª IP ¾îµå·¹½º¿¡ ´ëÀÀµÇ´Â DNS ·¹ÄÚµå¸¦ Ã¼Å©ÇÔ
+# checkdnsrr - ì¸í„°ë„· í˜¸ìŠ¤íŠ¸ ë„¤ì„ì´ë‚˜ IP ì–´ë“œë ˆìŠ¤ì— ëŒ€ì‘ë˜ëŠ” DNS ë ˆì½”ë“œë¥¼ ì²´í¬í•¨
 #          http://www.php.net/manual/function.checkdnsrr.php
 function check_email($email,$hchk=0) {
   $url = trim($email);
   if($hchk) {
     $host = explode("@",$url);
     if(preg_match("/^[\xA1-\xFEa-z0-9_-]+@[\xA1-\xFEa-z0-9_-]+\.[a-z0-9._-]+$/i", $url)) {
-      if(!check_windows() || version_compare('5.3.0',phpversion(),'>=') {
-        if(checkdnsrr($host[1],"MX") || gethostbynamel($host[1])) return $url;
-        else return;
+      if(!check_windows() || version_compare('5.3.0',js_wrapper('phpversion'),'>=')) {
+	   if(checkdnsrr($host[1],"MX") || gethostbynamel($host[1])) return $url;
+   	   else return;
       } else {
-        if(gethostbynamel($host[1])) return $url;
-        else return;
+	   if(gethostbynamel($host[1])) return $url;
+   	   else return;
       }
     }
   } else {
@@ -92,15 +102,16 @@ function check_email($email,$hchk=0) {
     else return;
   }
 }
+// }}}
 
-# ÆĞ½º¿öµå ºñ±³ ÇÔ¼ö
+# // {{{ +-- public check_passwd($table,$no,$passwd)
+# íŒ¨ìŠ¤ì›Œë“œ ë¹„êµ í•¨ìˆ˜
 #
-# crpyt - ¹®ÀÚ¿­À» DES·Î ¾ÏÈ£È­ÇÔ
+# crpyt - ë¬¸ìì—´ì„ DESë¡œ ì•”í˜¸í™”í•¨
 #         http://www.php.net/manual/function.crypt.php
 function check_passwd($table,$no,$passwd) {
-  global $jsboard, $board, $o, $c, $db;
-
-  if($board['mode'] && session_is_registered("$jsboard")) $sql_field = "name";
+  global $jsboard, $board, $o, $c;
+  if($board['mode'] && isset($_SESSION[$jsboard])) $sql_field = "name";
   else $sql_field = "passwd";
 
   $passwd = !trim($passwd) ? "null passwd" : $passwd;
@@ -108,12 +119,12 @@ function check_passwd($table,$no,$passwd) {
   $table = ($table && $o['at'] == "c_del") ? $table."_comm" : $table;
 
   if ($table && $no) {
-    $result = sql_query("SELECT $sql_field FROM $table WHERE no = '$no'", $c);
-    $r['chk'] = sql_result($result,0,"$sql_field");
-    sql_free_result($result);
+    $result = sql_query("SELECT $sql_field FROM $table WHERE no = '$no'",$c);
+    $r['chk'] = sql_result($result,0,$sql_field,$c);
+    sql_free_result($result,$c);
   }
 
-  if (session_is_registered("$jsboard")) {
+  if (isset($_SESSION[$jsboard])) {
     if($_SESSION[$jsboard]['id'] == $r['chk']) $chk = 1;
     if($_SESSION[$jsboard]['pos'] == 1) $chk = 2;
   }
@@ -123,22 +134,22 @@ function check_passwd($table,$no,$passwd) {
   }
 
   if(!$chk || $chk == 1) {
-    # ÀüÃ¼ °ü¸®ÀÚ ÆĞ½º¿öµå
-    $result = sql_query("SELECT passwd FROM userdb WHERE position = 1", $c);
-    $r['su'] = sql_result($result,0,"passwd");
-    sql_free_result($result);
+    # ì „ì²´ ê´€ë¦¬ì íŒ¨ìŠ¤ì›Œë“œ
+    $result = sql_query('SELECT passwd FROM userdb WHERE position = 1',$c);
+    $r['su'] = sql_result($result,0,'passwd',$c);
+    sql_free_result($result,$c);
 
     if($r['su'] == crypt($passwd,$r['su'])) $chk =2;
 
     if($chk != 2) {
       $arrayadm = explode(";",$board['ad']);
       for($i=0;$i<sizeof($arrayadm);$i++) {
-        # °Ô½ÃÆÇ °ü¸®ÀÚ ÆĞ½º¿öµå
-        $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$i]'", $c);
-        $r['ad'] = sql_result($result,0,"passwd");
-        sql_free_result($result);
+        # ê²Œì‹œíŒ ê´€ë¦¬ì íŒ¨ìŠ¤ì›Œë“œ
+        $result = sql_query("SELECT passwd FROM userdb WHERE nid = '$arrayadm[$i]'",$c);
+        $r['ad'] = sql_result($result,0,'passwd',$c);
+        sql_free_result($result,$c);
 
-        # °Ô½ÃÆÇ °ü¸®ÀÚ°¡ Á¸ÀçÇÏÁö ¾ÊÀ» °æ¿ì¸¦ ´ëºñ
+        # ê²Œì‹œíŒ ê´€ë¦¬ìê°€ ì¡´ì¬í•˜ì§€ ì•Šì„ ê²½ìš°ë¥¼ ëŒ€ë¹„
         $r['ad'] = !$r['ad'] ? "null admin" : $r['ad'];
 
         if($r['ad'] == crypt($passwd,$r['ad'])) {
@@ -151,64 +162,68 @@ function check_passwd($table,$no,$passwd) {
 
   if($chk) return $chk;
 }
+// }}}
 
-# ÀÎÁõ È®ÀÎ ÇÔ¼ö
+# // {{{ +-- public check_auth($user,$chk)
+# ì¸ì¦ í™•ì¸ í•¨ìˆ˜
 #
 function check_auth($user,$chk) {
   if(crypt($user,$chk) == $chk) return 1;
 }
+// }}}
 
-# ½ºÆÔ °Ë»ç ÇÔ¼ö
+# // {{{ +-- public check_spam($str, $spam_list = "config/spam_list.txt")
+# ìŠ¤íŒ¸ ê²€ì‚¬ í•¨ìˆ˜
 #
 function check_spam($str, $spam_list = "config/spam_list.txt") {
-  global $_;
+  global $langs;
   $mbext = 0;
 
   $open_fail = "Don't open spam list file";
-  $list = readfile_r ($spam_list, 1);
+  $list = file_operate($spam_list,"r",$open_fail,0,1);
 
   # php versin check
   if ( function_exists ("version_compare") ) {
-    if ( version_compare ("4.3.0", phpversion(), '<=') ) {
+    if ( version_compare ("4.3.0", PHP_VERSION, '<=') ) {
       $mbext = 1;
     }
   }
 
-  # PHP 4.1 ¿¡¼­ Á¦°øÇÏ´Â mbstring ÇÔ¼ö Áö¿ø ¿©ºÎ¸¦ Ã¼Å©ÇÑ´Ù.
+  # PHP 4.1 ì—ì„œ ì œê³µí•˜ëŠ” mbstring í•¨ìˆ˜ ì§€ì› ì—¬ë¶€ë¥¼ ì²´í¬í•œë‹¤.
   if(extension_loaded("mbstring")) $mbt = 1;
 
-  # mbstring ÇÔ¼ö¸¦ Áö¿øÇÏ¸é ¹®ÀÚ¿­À» UTF-8 ·Î º¯È¯ÇÑ´Ù.
+  # mbstring í•¨ìˆ˜ë¥¼ ì§€ì›í•˜ë©´ ë¬¸ìì—´ì„ UTF-8 ë¡œ ë³€í™˜í•œë‹¤.
   if ( $mbt ) {
-    if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $_('charset')) ) {
+    if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $langs['charset']) ) {
       if ( $mbext ) {
-        $str = mb_convert_encoding ($str, "UTF-8", $_('charset'));
+        $str = mb_convert_encoding ($str, "UTF-8", $langs['charset']);
       } else {
         $str = mb_convert_encoding ($str, "UTF-8");
       }
     }
   }
 
-  # $list ¹è¿­ÀÇ °¹¼ö ¸¸Å­ for¹®À» µ¹·Á $spam_list ÆÄÀÏ¿¡ ÁöÁ¤µÇ¾î ÀÖ´ø
-  # ¹®ÀÚ¿­µé°ú ÀÏÄ¡ÇÏ´Â ¹®ÀÚ¿­ÀÌ $spam_str¿¡ ÀÖ´ÂÁö °Ë»çÇÔ, ÀÖÀ» °æ¿ì
-  # ½ºÆÔÀ¸·Î ÆÇ´ÜÇÏ°í Á¤¼öÇü 1À» ¹İÈ¯ÇÔ, ¾øÀ» °æ¿ì´Â 0À» ¹İÈ¯ÇÔ
+  # $list ë°°ì—´ì˜ ê°¯ìˆ˜ ë§Œí¼ forë¬¸ì„ ëŒë ¤ $spam_list íŒŒì¼ì— ì§€ì •ë˜ì–´ ìˆë˜
+  # ë¬¸ìì—´ë“¤ê³¼ ì¼ì¹˜í•˜ëŠ” ë¬¸ìì—´ì´ $spam_strì— ìˆëŠ”ì§€ ê²€ì‚¬í•¨, ìˆì„ ê²½ìš°
+  # ìŠ¤íŒ¸ìœ¼ë¡œ íŒë‹¨í•˜ê³  ì •ìˆ˜í˜• 1ì„ ë°˜í™˜í•¨, ì—†ì„ ê²½ìš°ëŠ” 0ì„ ë°˜í™˜í•¨
   for($co = 0; $co < count($list); $co++) {
-    # 2byte °¡ ¾ÈµÇ´Â Å°¿öµå´Â ¹«Á¶°Ç ¹«½Ã
+    # 2byte ê°€ ì•ˆë˜ëŠ” í‚¤ì›Œë“œëŠ” ë¬´ì¡°ê±´ ë¬´ì‹œ
     if(strlen($list[$co]) < 2) continue;
 
-    # mbstirng ÇÔ¼ö°¡ Áö¿øÇÏÁö ¾ÊÀ» °æ¿ì¿¡´Â ÇÑ±Û 2ÀÚ ÀÌ»ó ¿µ¹® 3ÀÚ ÀÌ»óºÎÅÍ Áö¿ø
+    # mbstirng í•¨ìˆ˜ê°€ ì§€ì›í•˜ì§€ ì•Šì„ ê²½ìš°ì—ëŠ” í•œê¸€ 2ì ì´ìƒ ì˜ë¬¸ 3ì ì´ìƒë¶€í„° ì§€ì›
     if(!$mbt && strlen($list[$co]) < 3) continue;
 
-    # °ø¹é¶óÀÎ ÀÌ°Å³ª Ã³À½ÀÌ # ·Î ½ÃÀÛÇÏ´Â ¶óÀÎÀº ¹«½Ã
+    # ê³µë°±ë¼ì¸ ì´ê±°ë‚˜ ì²˜ìŒì´ # ë¡œ ì‹œì‘í•˜ëŠ” ë¼ì¸ì€ ë¬´ì‹œ
     if(preg_match("/^#|^$/i",trim($list[$co]))) continue;
 
-    # preg ÇÔ¼ö¸¦ »ç¿ëÇÏ±â À§ÇØ / ¹®ÀÚ¸¦ \/ ·Î Ä¡È¯
+    # preg í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ / ë¬¸ìë¥¼ \/ ë¡œ ì¹˜í™˜
     $list[$co] = trim (str_replace("/","\/",$list[$co]));
 
-    # mbstring À» Áö¿øÇÏ¸é ÇÊÅÍ¸µ Å°¿öµå¸¦ UTF-8 ·Î º¯È¯
+    # mbstring ì„ ì§€ì›í•˜ë©´ í•„í„°ë§ í‚¤ì›Œë“œë¥¼ UTF-8 ë¡œ ë³€í™˜
     if ( $mbt ) {
-      if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $_('charset')) ) {
+      if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $langs['charset']) ) {
         if ( $mbext ) {
-          $list[$co] = mb_convert_encoding ($list[$co], "UTF-8", $_('charset'));
+          $list[$co] = mb_convert_encoding ($list[$co], "UTF-8", $langs['charset']);
         } else {
           $list[$co] = mb_convert_encoding ($list[$co], "UTF-8");
         }
@@ -217,9 +232,9 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
 
     if(preg_match("/$list[$co]/i", $str, $spam_string)) {
       if ( $mbt ) {
-        if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $_('charset')) ) {
+        if ( preg_match ("/EUC-KR|EUC-JP|SHIFT_JIS|SHIFT-JIS/i", $langs['charset']) ) {
           if ( $mbext ) {
-            $spamstr_t = mb_convert_encoding ($spam_string[0], $_('charset'), "UTF-8");
+            $spamstr_t = mb_convert_encoding ($spam_string[0], $langs['charset'], "UTF-8");
           } else {
             $spamstr_t = "Unsupported";
           }
@@ -237,7 +252,9 @@ function check_spam($str, $spam_list = "config/spam_list.txt") {
 
   return 0;
 }
+// }}}
 
+// {{{ +-- public check_net($ipaddr, $network, $netmask)
 function check_net($ipaddr, $network, $netmask) {
   $net['ip'] = explode(".", $ipaddr);
   $net['nw'] = explode(".", $network);
@@ -254,10 +271,12 @@ function check_net($ipaddr, $network, $netmask) {
   if($mask1 == $mask2)
     return 1;
 }
+// }}}
 
-# upload file ¹Ì¸®º¸±â¸¦ À§ÇÑ file type °Ë»ç
-# substr - ¹®ÀÚ¿­ÀÇ ÀÏºÎºĞÀ» ¹İÈ¯ÇÑ´Ù.
-# strchr - ¹®ÀÚ¿­ÀÌ ¸¶Áö¸·À¸·Î ³ªÅ¸³ª´Â À§Ä¡¸¦ ±¸ÇÑ´Ù
+# // {{{ +-- public check_filetype($filetype)
+# upload file ë¯¸ë¦¬ë³´ê¸°ë¥¼ ìœ„í•œ file type ê²€ì‚¬
+# substr - ë¬¸ìì—´ì˜ ì¼ë¶€ë¶„ì„ ë°˜í™˜í•œë‹¤.
+# strchr - ë¬¸ìì—´ì´ ë§ˆì§€ë§‰ìœ¼ë¡œ ë‚˜íƒ€ë‚˜ëŠ” ìœ„ì¹˜ë¥¼ êµ¬í•œë‹¤
 #
 function check_filetype($filetype) {
   $filetype = preg_replace("/\.$/", "", $filetype);
@@ -265,7 +284,9 @@ function check_filetype($filetype) {
   $tail = strtolower($tail);
   return $tail;
 }
+// }}}
 
+// {{{ +-- public icon_check($t,$fn)
 function icon_check($t,$fn) {
   if (preg_match("/^(hwp|mov|txt)$/i",$t)) $icon = "$t.gif";
   else if (preg_match("/^(exe|com)$/i",$t)) $icon = "exe.gif";
@@ -282,7 +303,9 @@ function icon_check($t,$fn) {
 
   return $icon;
 }
+// }}}
 
+// {{{ +-- public check_dnlink($table,$list)
 function check_dnlink($table,$list) {
   global $upload, $cupload;
 
@@ -299,34 +322,38 @@ function check_dnlink($table,$list) {
   }
   return $dn;
 }
+// }}}
 
-# upload file ÀÌ¸§¿¡ Æ¯¼ö ¹®ÀÚ°¡ µé¾î °¡ ÀÖ´ÂÁö °Ë»ç
+# // {{{ +-- public upload_name_chk($f)
+# upload file ì´ë¦„ì— íŠ¹ìˆ˜ ë¬¸ìê°€ ë“¤ì–´ ê°€ ìˆëŠ”ì§€ ê²€ì‚¬
 #
 function upload_name_chk($f) {
-  global $_;
+  global $langs;
 
-  if(!trim($f)) print_error($_('act_de'),250,150,1);
+  if(!trim($f)) print_error($langs['act_de'],250,150,1);
 
-  # file ÀÌ¸§¿¡¼­ Æ¯¼ö¹®ÀÚ°¡ ÀÖÀ¸¸é ¿¡·¯ Ãâ·Â
-  # ÇÑ±Û ¿µ¿ª°ú ÇÑÀÚ ¿µ¿ªÀº Çã¶ô ÇÔ
+  # file ì´ë¦„ì—ì„œ íŠ¹ìˆ˜ë¬¸ìê°€ ìˆìœ¼ë©´ ì—ëŸ¬ ì¶œë ¥
+  # í•œê¸€ ì˜ì—­ê³¼ í•œì ì˜ì—­ì€ í—ˆë½ í•¨
   if ( preg_replace ("/[\w\d._\-]|[\xB0-\xC8\xCA-\xFD][\xA1-\xFE]/",'', urldecode ($f)) ) {
-    print_error($_('act_de'),250,150,1);
+    print_error($langs['act_de'],250,150,1);
     exit;
   }
 
-  # hidden file ÀÌ³ª multiple dot Çã¶ôÇÏÁö ¾ÊÀ½
+  # hidden file ì´ë‚˜ multiple dot í—ˆë½í•˜ì§€ ì•ŠìŒ
   if ( preg_match ("/^\.|\.\.+/", urldecode ($f)) ) {
-    print_error($_('act_de'), 250, 150, 1);
+    print_error($langs['act_de'], 250, 150, 1);
     exit;
   }
 }
+// }}}
 
-# ºñÁ¤»óÀûÀÎ Á¢±ÙÀ» ¸·±â À§ÇÑ Ã¼Å© ÇÔ¼ö.
-# referer °ª°ú rmail['bbs'] º¯¼ö¿¡ ÁöÁ¤ÇÑ °ªÀÌ µ¿ÀÏÇÒ °æ¿ì¿¡¸¸
-# Çã¶ôµÊ
+# // {{{ +-- public check_location($n=0)
+# ë¹„ì •ìƒì ì¸ ì ‘ê·¼ì„ ë§‰ê¸° ìœ„í•œ ì²´í¬ í•¨ìˆ˜.
+# referer ê°’ê³¼ rmail['bbs'] ë³€ìˆ˜ì— ì§€ì •í•œ ê°’ì´ ë™ì¼í•  ê²½ìš°ì—ë§Œ
+# í—ˆë½ë¨
 #
 function check_location($n=0) {
-  global $board, $_, $agent;
+  global $board, $langs, $agent;
 
   if($n && !$agent['tx']) {
     $board['referer'] = $_SERVER['HTTP_REFERER'];
@@ -340,31 +367,35 @@ function check_location($n=0) {
     $l = gethostbyname(preg_replace($sre,$tre,$board['path']));
 
     if ($r != $l) {
-      print_error($_('chk_lo'), 250, 150, 1);
+      print_error("{$langs['chk_lo']}",250,150,1);
       return 0;
     } else return 1;
   } else return 1;
 }
+// }}}
 
-# IIS(isapi) ÀÎÁö ¾Æ´ÑÁö ÆÇ´Ü ÇÔ¼ö
+# // {{{ +-- public check_iis(void)
+# IIS(isapi) ì¸ì§€ ì•„ë‹Œì§€ íŒë‹¨ í•¨ìˆ˜
 function check_iis() {
   if(php_sapi_name() == "isapi") return 1;
   else return 0;
 }
+// }}}
 
-# À©µµ¿ì¿ë php ÀÎÁö ¾Æ´ÑÁö¸¦ ÆÇ´Ü.
-# À©µµ¿ì¿ë php ÀÏ °æ¿ì turn ¸¦ ¹İÈ¯
+# // {{{ +-- public check_windows(void)
+# ìœˆë„ìš°ìš© php ì¸ì§€ ì•„ë‹Œì§€ë¥¼ íŒë‹¨.
+# ìœˆë„ìš°ìš© php ì¼ ê²½ìš° turn ë¥¼ ë°˜í™˜
 function check_windows() {
-  if ( preg_match ("/Windows/i", php_uname ()) )
-    return 1;
-
-  return 0;
+  if(preg_match("/Windows/i",js_wrapper('php_uname'))) return 1;
+  else return 0;
 }
+// }}}
 
-# TABLE À» Á¤È®ÇÏ°Ô »ç¿ëÇß´ÂÁö Ã¼Å©ÇÏ´Â ÇÔ¼ö
+# // {{{ +-- public check_htmltable($str)
+# TABLE ì„ ì •í™•í•˜ê²Œ ì‚¬ìš©í–ˆëŠ”ì§€ ì²´í¬í•˜ëŠ” í•¨ìˆ˜
 #
 function check_htmltable($str) {
-  global $_;
+  global $langs;
 
   if(!preg_match(';</?TABLE[^>]*>;i',$str)) return;
 
@@ -385,10 +416,10 @@ function check_htmltable($str) {
   $check = preg_replace($from,$to,$str);
 
   if(strlen($check)%3) {
-    print_error($_('chk_ta'), 250, 150, 1);
+    print_error($langs['chk_ta'], 250, 150, 1);
   }
   if(!preg_match('/^12(3|4).+9291$/',$check)) {
-    print_error($_('chk_tb'), 250, 150, 1);
+    print_error($langs['chk_tb'], 250, 150, 1);
   }
 
   while(preg_match('/([\d])9\1/',$check))
@@ -398,11 +429,13 @@ function check_htmltable($str) {
     print_error("TABLE, TH, TR, TD array(open/close) TAG error", 250, 150, 1);
   }
 }
+// }}}
 
-# IFRAME À» Á¤È®ÇÏ°Ô »ç¿ëÇß´ÂÁö Ã¼Å©ÇÏ´Â ÇÔ¼ö
+# // {{{ +-- public check_iframe($str)
+# IFRAME ì„ ì •í™•í•˜ê²Œ ì‚¬ìš©í–ˆëŠ”ì§€ ì²´í¬í•˜ëŠ” í•¨ìˆ˜
 #
 function check_iframe($str) {
-  global $_;
+  global $langs;
 
   if (!preg_match(';</?iframe[^>]*>;i', $str)) return 0;
 
@@ -411,38 +444,40 @@ function check_iframe($str) {
   $check = preg_replace($from, $to, $str);
 
   if ($check) {
-    print_error($_('chk_if'), 250, 150, 1);
+    print_error($langs['chk_if'], 250, 150, 1);
   }
 }
+// }}}
 
-# hyper link ¸¦ ÅëÇÑ Á¢±ÙÀ» Á¦¾î
-# m -> 0 : ips ¿¡ µî·ÏµÈ Ip ¿¡¼­ÀÇ ¸µÅ©¸¸ Çã¶ô
-#      1 : ips ¿¡ µî·ÏµÈ Ip ¿¡¼­ÀÇ ¸µÅ©¸¸ ¸·À½
+# // {{{ +-- public check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='')
+# hyper link ë¥¼ í†µí•œ ì ‘ê·¼ì„ ì œì–´
+# m -> 0 : ips ì— ë“±ë¡ëœ Ip ì—ì„œì˜ ë§í¬ë§Œ í—ˆë½
+#      1 : ips ì— ë“±ë¡ëœ Ip ì—ì„œì˜ ë§í¬ë§Œ ë§‰ìŒ
 #
 function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
-  global $_;
+  global $langs;
 
-  # $c ¼³Á¤ÀÌ ÀÖ°í, list read from write page ¿¡¼­¸¸ Ã¼Å©
+  # $c ì„¤ì •ì´ ìˆê³ , list read from write page ì—ì„œë§Œ ì²´í¬
   if($c && preg_match("/(list|read|form|write)\.php/i",$_SERVER['PHP_SELF'])) {
-    # global.php ¿¡ $board['dhyper'] °¡ Á¤ÀÇ µÇ¾î ÀÖÀ¸¸é Ã¼Å© ¸ñ·ÏÀ» ÇÕÄ§
+    # global.php ì— $board['dhyper'] ê°€ ì •ì˜ ë˜ì–´ ìˆìœ¼ë©´ ì²´í¬ ëª©ë¡ì„ í•©ì¹¨
     $ips = trim($wips) ? "$wips;$ips" : $ips;
 
-    # $i = 0 -> ÀüÃ¼ ¾îµå¹Î¿¡¼­ÀÇ ¼³Á¤ Ã¼Å©
-    # $i = 1 -> °Ô½ÃÆÇ ¾îµå¹Î¿¡¼­ÀÇ ¼³Á¤ Ã¼Å©
+    # $i = 0 -> ì „ì²´ ì–´ë“œë¯¼ì—ì„œì˜ ì„¤ì • ì²´í¬
+    # $i = 1 -> ê²Œì‹œíŒ ì–´ë“œë¯¼ì—ì„œì˜ ì„¤ì • ì²´í¬
     for($i=0;$i<2;$i++) {
       if($i === 0 && !trim($wips)) continue;
       $ips_value = ($i === 0) ? $wips : $ips;
       $m_value = ($i === 0) ? $am : $m;
 
-      # ·¹ÆÛ·²ÀÌ Á¸ÀçÇÏÁö ¾Ê°Å³ª ips_value º¯¼ö°¡ ¾øÀ¸¸é Ã¼Å© ÁßÁö
+      # ë ˆí¼ëŸ´ì´ ì¡´ì¬í•˜ì§€ ì•Šê±°ë‚˜ ips_value ë³€ìˆ˜ê°€ ì—†ìœ¼ë©´ ì²´í¬ ì¤‘ì§€
       if(!trim($ips_value) || !$_SERVER['HTTP_REFERER']) return;
 
-      # ·¹ÆÛ·²¿¡¼­ ¼­¹ö ÀÌ¸§¸¸ ÃßÃâ
+      # ë ˆí¼ëŸ´ì—ì„œ ì„œë²„ ì´ë¦„ë§Œ ì¶”ì¶œ
       preg_match("/^(http:\/\/)?([^\/]+)/i",$_SERVER['HTTP_REFERER'],$chks);
-      # ÃßÃâÇÑ ÀÌ¸§ÀÇ ip ¸¦ ±¸ÇÔ
+      # ì¶”ì¶œí•œ ì´ë¦„ì˜ ip ë¥¼ êµ¬í•¨
       $chk = gethostbyname($chks[2]);
 
-      # chk °¡ ÀÚ½Å°ú µ¿ÀÏÇÏ¸é Ã¼Å© ÁßÁö
+      # chk ê°€ ìì‹ ê³¼ ë™ì¼í•˜ë©´ ì²´í¬ ì¤‘ì§€
       if($chk == $_SERVER['SERVER_ADDR']) return;
 
       $addr = explode(";",$ips_value);
@@ -453,34 +488,36 @@ function check_dhyper($c=0,$am=0,$wips='',$m=0,$ips='') {
       }
       switch($m_value) {
         case '1' :
-          if($val) print_error($_('chk_hy'),250,250,1);
+          if($val) print_error($langs['chk_hy'],250,250,1);
           break;
         default:
-          if(!$val) print_error($_('chk_hy'),250,250,1);
+          if(!$val) print_error($langs['chk_hy'],250,250,1);
           break;
       }
     }
   }
 }
+// }}}
 
-# IP blocking ÇÔ¼ö
+# // {{{ +-- public check_access($c=0,$wips='',$ips='')
+# IP blocking í•¨ìˆ˜
 #
 function check_access($c=0,$wips='',$ips='') {
-  global $_;
+  global $langs;
 
   if($c) {
-    # global.php ¿¡ $board['ipbl'] ÀÌ Á¸ÀçÇÏ¸é ÇÔÄ§
+    # global.php ì— $board['ipbl'] ì´ ì¡´ì¬í•˜ë©´ í•¨ì¹¨
     $ips = trim($wips) ? "$wips;$ips" : $ips;
 
-    # ¿ø°İ Á¢¼ÓÁö°¡ Á¸ÀçÇÏÁö ¾Ê°Å³ª ips º¯¼ö°¡ ¾ø°Å³ª, Á¢¼ÓÁö°¡ ÀÚ½ÅÀÌ¶ó¸é Ã¼Å© ÁßÁö
+    # ì›ê²© ì ‘ì†ì§€ê°€ ì¡´ì¬í•˜ì§€ ì•Šê±°ë‚˜ ips ë³€ìˆ˜ê°€ ì—†ê±°ë‚˜, ì ‘ì†ì§€ê°€ ìì‹ ì´ë¼ë©´ ì²´í¬ ì¤‘ì§€
     if(!trim($ips) || !$_SERVER['REMOTE_ADDR'] || $_SERVER['REMOTE_ADDR'] == $_SERVER['SERVE_ADDR']) return;
 
-    # spoofing Ã¼Å©
+    # spoofing ì²´í¬
     $ipchk = explode(".",$_SERVER['REMOTE_ADDR']);
     for($j=1;$j<4;$j++) $ipchk[$j] = $ipchk[$j] ? $ipchk[$j] : 0;
-    # °¢ ÀÚ¸®¼ö ¸¶´Ù 255 º¸´Ù Å©¸é ip ÁÖ¼Ò¸¦ ¹ù¾î³ª¹Ç·Î Ã¼Å© 
+    # ê° ìë¦¬ìˆ˜ ë§ˆë‹¤ 255 ë³´ë‹¤ í¬ë©´ ip ì£¼ì†Œë¥¼ ë²‹ì–´ë‚˜ë¯€ë¡œ ì²´í¬ 
     if($ipchk[0] > 255 || $ipchk[1] > 255 || $ipchk[2] > 255 || $ipchk[3] > 255)
-      print_error($_('chk_sp'),250,250,1);
+      print_error($langs['chk_sp'],250,250,1);
  
     $addr = explode(";",$ips);
     for($i=0;$i<sizeof($addr);$i++) {
@@ -489,11 +526,13 @@ function check_access($c=0,$wips='',$ips='') {
       if(preg_match("/^$addr[$i]/i",$_SERVER['REMOTE_ADDR'])) $val = 1;
     }
 
-    if($val) print_error($_('chk_bl'),250,250,1);
+    if($val) print_error($langs['chk_bl'],250,250,1);
   }
 }
+// }}}
 
-# spam µî·Ï±â Ã¼Å© ÇÔ¼ö
+# // {{{ +-- public check_rw_referer ($referer, $type)
+# spam ë“±ë¡ê¸° ì²´í¬ í•¨ìˆ˜
 function check_rw_referer ($referer, $type) {
   #if ($type != 'reply' && $type != 'write')
   #  return 0;
@@ -503,7 +542,9 @@ function check_rw_referer ($referer, $type) {
 
   return 1;
 }
+// }}}
 
+// {{{ +-- public check_proxy(void)
 function check_proxy() {
   foreach($_POST as $k => $v) {
     switch($k) {
@@ -523,7 +564,9 @@ function check_proxy() {
   }
   return 0;
 }
+// }}}
 
+// {{{ +-- public check_rw_method ($agent)
 function check_rw_method ($agent) {
   # if text browser, pass
   if($agent['tx'])
@@ -543,18 +586,19 @@ function check_rw_method ($agent) {
 
   return 0;
 }
+// }}}
 
+// {{{ +-- public check_spamer($v)
 function check_spamer($v) {
-  global $_, $o, $board;
-
+  global $langs,$o, $board;
   if($o['at'] != 'write' && $o['at'] != 'reply')
     return;
 
-  if ( $v['goaway'] )
-    print_error($_('chk_rp'),250,250,1);
+  if($v['goaway'])
+    print_error($langs['chk_rp'],250,250,1);
 
   if (check_rw_referer($_SERVER['HTTP_REFERER'],$o['at']))
-    print_error($_('chk_rp'),250,250,1);
+    print_error($langs['chk_rp'],250,250,1);
 
   $url = parse_url ($board['path']);
   $reg = preg_quote ($url['host']);
@@ -565,23 +609,17 @@ function check_spamer($v) {
   $reg = '!^http[s]?://' . $reg . '!';
 
   if ( ! preg_match ($reg, $_SERVER['HTTP_REFERER']) )
-    print_error($_('chk_rp'),250,250,1);
+    print_error($langs['chk_rp'],250,250,1);
 
   if (check_rw_method ($v['agent']))
-    print_error($_('chk_rp'),250,250,1);
+    print_error($langs['chk_rp'],250,250,1);
 }
+// }}}
 
-# Session Temp Directory Init
-function sessionInit($dir) {
-  if ( ! is_dir ($dir) )
-    mkdir($dir);
-
-  session_save_path ($dir);
-}
-
+#// {{{ +-- public init_htmltag (void)
 #
-# html code µÚ¿¡ ':' °¡ ºÙ¾î ÀÖÀ¸¸é block À» À¯Áö ½ÃÄÑ Áà¾ß ÇÏ´Â
-# ÅÂ±×·Î ÀÎ½ÄÇÑ´Ù. (wordwrap ÀÌ µÇ¸é ¾ÈµÇ´Â code)
+# html code ë’¤ì— ':' ê°€ ë¶™ì–´ ìˆìœ¼ë©´ block ì„ ìœ ì§€ ì‹œì¼œ ì¤˜ì•¼ í•˜ëŠ”
+# íƒœê·¸ë¡œ ì¸ì‹í•œë‹¤. (wordwrap ì´ ë˜ë©´ ì•ˆë˜ëŠ” code)
 #
 function init_htmltag () {
   global $enable;
@@ -594,7 +632,9 @@ function init_htmltag () {
   $p = explode (',', $p);
   $enable['tag'] = (object) $p;
 }
+// }}}
 
+// {{{ +-- public check_utf8_conv ($charset)
 function check_utf8_conv ($charset) {
   if ( preg_match ('/^utf[-]?8$/i', $charset) )
     return false;
@@ -604,4 +644,16 @@ function check_utf8_conv ($charset) {
 
   return true;
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

@@ -1,8 +1,8 @@
 <?php
-# $Id: write.php,v 1.9 2009-11-16 21:52:45 oops Exp $
+# $Id: write.php,v 1.27 2014/03/02 17:11:28 oops Exp $
 include "include/header.php";
 
-if ( ! $_SERVER['HTTP_REFERER'] ) { 
+if ( ! $_SERVER['HTTP_REFERER'] ) {
   header('HTTP/1.1 403 Forbidden');
   exit;
 }
@@ -12,47 +12,43 @@ $board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/ht
 
 $board['super'] = $board['adm'] ? 1 : $board['super'];
 
-if ( preg_match ('/^(1|3|4|5)$/', $board['mode']) )
-  if ( $board['super'] != 1)
-    print_error ($_('perm_err'), 250, 150, 1);
+if(preg_match("/^(1|3|4|5)$/",$board['mode'])) { if($board['super'] != 1) print_error($langs['perm_err'],250,150,1); }
+if(!preg_match("/^(0|6)/",$board['mode']) && !$_SESSION[$jsboard]['id']) print_error($langs['perm_err'],250,150,1);
 
-if ( ! preg_match ('/^(0|6)/', $board['mode']) && !$_SESSION[$jsboard]['id'] )
-  print_error($_('perm_err'), 250, 150, 1);
-
-if ( $board['mode'] && $_SESSION[$jsboard]['id'] ) {
-  if ( ! preg_match ('/^(1|4)$/', $board['mode']) && $_SESSION[$jsboard]['pos'] != 1 ) $disable = " disabled";
+if($board['mode'] && $_SESSION[$jsboard]['id']) {
+  if(!preg_match("/^(1|4)$/",$board['mode']) && $_SESSION[$jsboard]['pos'] != 1) $disable = " disabled";
   else $nodisable = 1;
 } else $nodisable = 1;
 
-if ( (preg_match ('/^(2|3|5|7)$/',$board['mode']) && $_SESSION[$jsboard]['id']) || $board['super'] ) {
+if((preg_match("/^(2|3|5|7)$/",$board['mode']) && $_SESSION[$jsboard]['id']) || $board['super']) {
   $pre_regist['name'] = $_SESSION[$jsboard]['id'];
   $pre_regist['rname'] = $_SESSION[$jsboard]['name'];
   $pre_regist['email'] = $_SESSION[$jsboard]['email'];
   $pre_regist['url'] = $_SESSION[$jsboard]['url'];
 } else {
-  $pre_regist['name'] = str_replace ("\\","",$_COOKIE['board_cookie']['name']);
-  $pre_regist['email'] = str_replace ("\\","",$_COOKIE['board_cookie']['email']);
-  $pre_regist['url'] = str_replace ("\\","",$_COOKIE['board_cookie']['url']);
+  $pre_regist['name'] = str_replace("\\","",$_COOKIE['board_cookie']['name']);
+  $pre_regist['email'] = str_replace("\\","",$_COOKIE['board_cookie']['email']);
+  $pre_regist['url'] = str_replace("\\","",$_COOKIE['board_cookie']['url']);
 }
 
-# ¾²±â ±ÇÇÑÀ» °ü¸®ÀÚ¿¡°Ô¸¸ ÁÖ¾úÀ» °æ¿ì ÆÐ½º¿öµå Ã¼Å©
+# ì“°ê¸° ê¶Œí•œì„ ê´€ë¦¬ìžì—ê²Œë§Œ ì£¼ì—ˆì„ ê²½ìš° íŒ¨ìŠ¤ì›Œë“œ ì²´í¬
 $kind = "write";
 if($board['notice']) print_notice($board['notice']);
 
-# Browser°¡ text browser ÀÏ¶§ multim form »èÁ¦
+# Browserê°€ Lynxì¼ë•Œ multim form ì‚­ì œ
 if($noup == 1) $board['formtype'] = "";
-else $board['formtype'] = " enctype=\"multipart/form-data\"";
+else $board['formtype'] = " ENCTYPE=\"multipart/form-data\"";
 
-$print['passform'] = "<input type=\"hidden\" name=\"o[at]\" value=\"write\">\n".
-                   "<input type=\"hidden\" name=\"table\" value=\"$table\">\n";
+$print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" VALUE=\"write\">\n".
+                   "<INPUT TYPE=hidden NAME=\"table\" VALUE=\"$table\">\n";
 
-$pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<input type=\"hidden\" name=\"atc[rname]\" value=\"{$pre_regist['rname']}\">";
+$pre_regist['rname'] = !$pre_regist['rname'] ? "" : "\n<INPUT TYPE=hidden NAME=\"atc[rname]\" VALUE=\"{$pre_regist['rname']}\">";
 
 if(!$nodisable) {
-  $print['passform'] .= "<input type=\"hidden\" name=\"atc[name]\" value=\"{$pre_regist['name']}\">".
+  $print['passform'] .= "<INPUT TYPE=hidden NAME=\"atc[name]\" VALUE=\"{$pre_regist['name']}\">".
                       "{$pre_regist['rname']}".
-                      "\n<input type=\"hidden\" name=\"atc[email]\" value=\"{$pre_regist['email']}\">".
-                      "\n<input type=\"hidden\" name=\"atc[url]\" value=\"{$pre_regist['url']}\">\n";
+                      "\n<INPUT TYPE=hidden NAME=\"atc[email]\" VALUE=\"{$pre_regist['email']}\">".
+                      "\n<INPUT TYPE=hidden NAME=\"atc[url]\" VALUE=\"{$pre_regist['url']}\">\n";
 } elseif($_SESSION[$jsboard]['pos'] == 1) {
   $print['passform'] .= "{$pre_regist['rname']}\n";
 }
@@ -70,7 +66,6 @@ $print['preview_script'] = <<<EOF
 EOF;
 
 meta_char_check($print['theme'], 1, 1);
-$bodyType = 'write';
 require_once 'captcha/captchacommon.php';
-require_once "theme/{$print['theme']}/index.template";
+include "theme/{$print['theme']}/write.template";
 ?>

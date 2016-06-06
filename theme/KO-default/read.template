@@ -1,189 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!-- $Id: read.template,v 1.30 2014/03/02 17:11:33 oops Exp $ -->
+<!-- ==================================================================== -->
+<!-- $langs['charset'] : Í≤åÏãúÌåêÏùò Ïñ∏Ïñ¥ ÌÉÄÏûÖÏóê Îî∞Îùº charset ÏùÑ Í∞ÄÏ†∏Ïò®Îã§.   -->
+<!-- $board['ver']     : Í≤åÏãúÌåêÏùò Î≤ÑÏ†º Ï†ïÎ≥¥Î•º Í∞ÄÏßÄÍ≥† Ïò®Îã§.                -->
+<!-- get_title()     : Í≤åÏãúÌåêÏùò Ìó§Îçî ÌÉÄÏù¥ÌãÄÏùÑ Í∞ÄÏßÄÍ≥† Ïò®Îã§.                -->
+<!-- $user_stylesheet : ÏÇ¨Ïö©Ïûê Ï†ïÏùò Ïä§ÌÉÄÏùº ÏãúÌä∏                           -->
+<!-- ==================================================================== -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+BODY,TD {
+  font-size: 12px;
+  font-family: <?php echo $langs['font']?>, sans-serif;
+  color: #555555;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font:  11px tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?php echo $color['l4_bg']?>;
+}
+SELECT {
+  font:  11px tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  background-Color: <?php echo $color['l4_bg']?>;
+}
+TEXTAREA {
+  font: 13px <?php echo $langs['font']?>, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  padding-left: 1px;
+  background-Color: <?php echo $color['l4_bg']?>;
+}
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
+
+/* Quote block */
+blockquote {
+  background: #ebebeb none 6px 8px no-repeat;
+  background-image: url("./images/quote.gif");
+  border: 1px solid #dbdbdb;
+  font-size: 1em;
+  margin: 0.5em 1px 0 25px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+blockquote blockquote {
+  /* Nested quotes */
+  background-color: #bababa;
+  font-size: 1em;
+  margin: 0.5em 1px 0 15px;    
+}
+
+blockquote blockquote blockquote {
+  /* Nested quotes */
+  background-color: #e4e4e4;
+}
+
+blockquote cite {
+  /* Username/source of quoter */
+  font-style: normal;
+  font-weight: bold;
+  margin-left: 20px;
+  display: block;
+  font-size: 0.95em;
+}
+
+blockquote cite cite {
+  font-size: 1em;
+}
+
+blockquote.uncited {
+  padding-top: 25px;
+}
+form { display: inline; }
+
+<?php echo $user_stylesheet?>
+-->
+</style>
 
 <!-- ==================================================================== -->
-<!-- print_keymenu() : keyboard ∑Œ ∞‘Ω√∆«¿ª ¡¶æÓ                          -->
-<!--                   'n or +' = ¿≠±€                                    -->  
-<!--                   'b or -' = æ∆∑°±€                                  -->  
+<!-- print_newwindow_src()  : jsboard Ïùò Í∏∞Îä•ÏóêÏÑú ÌïÑÏöîÌïú ÏÉàÏ∞ΩÏùÑ ÎùÑÏö∞Îäî    -->
+<!--                          java script Î•º Ï∂úÎ†•ÌïòÍ≤å Ìï¥ Ï§ÄÎã§.            -->
+<!-- $print['preview_script'] : list ÏóêÏÑú ÎØ∏Î¶¨Î≥¥Í∏∞Î•º ÏúÑÌïú java scriptÎ•º   -->
+<!--                          Ï∂úÎ†•ÌïúÎã§.                                   -->
 <!-- ==================================================================== -->
-<?=print_keymenu(1)?>
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<?php echo $print['preview_script']?>
+
+<!-- ======================= Ìó§Îçî ÎîîÏûêÏù∏ ÏãúÏûë ======================= -->
+<?php
+if(!$np) {
+  # Í∞Å Ïú†Ï†ÄÎ≥Ñ Design
+  include "{$board['headpath']}";
+  # Ï†ÑÏ≤¥ Í¥ÄÎ¶¨ÏûêÏóê ÏùòÌï¥ Í∞ïÏ†ú input ÎêòÎäî Design
+  include "html/head.php";
+ }
+?>
+<!-- ======================= Ìó§Îçî ÎîîÏûêÏù∏ ÎÅù   ======================= -->
 
 <!-- ==================================================================== -->
-<!-- $print['dsearch'] : ªÛºº ∞Àªˆ ≈◊¿Ã∫Ì √‚∑¬                            -->
-<!-- $board['width'] : ∞‘Ω√∆«¿« ≥–¿Ã∏¶ ¡ˆ¡§«—¥Ÿ. ∞‘Ω√∆« ∞¸∏Æ¿⁄ø°º≠ ¡∂¡§   -->
-<!-- $list['num']    : ¡¬√¯ ªÛ¥‹¿« ∞‘Ω√∆« ±€ π¯»£                         -->
-<!-- $print['admin'] : ∞‘Ω√∆« øÏ√¯¿« admin ∏µ≈©∏¶ √‚∑¬ ¿Ã¥¬ admin link ¿Ã -->
-<!--                 πÃ¡ˆ∏¶ ∫“∑Ø ø¿¥¬ ∞Õ¿∏∑Œ ≤¿ admin.gif∞° ¡∏¿Á«ÿæﬂ «—   -->
-<!--                 ¥Ÿ. ∞‘Ω√∆« ∞¸∏Æ¿⁄ø°º≠ æ»∫∏¿Ãµµ∑œ º≥¡§¿ª «“ºˆ∞°¿÷¥Ÿ   -->
-<!-- $print['lout']  : ∑Œ±◊¿ŒΩ√ ∑Œ±◊æ∆øÙ πˆ∆∞¿ª √‚∑¬                      -->
+<!-- print_keymenu() : keyboard Î°ú Í≤åÏãúÌåêÏùÑ Ï†úÏñ¥                          -->
+<!--                   'n or +' = ÏúóÍ∏Ä                                    -->  
+<!--                   'b or -' = ÏïÑÎûòÍ∏Ä                                  -->  
 <!-- ==================================================================== -->
-<?=$print['dsearch']?>
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=""></td>
-<td class="counter" width="95%"> &gt;&gt; Read <?=$list['num']?> article</td>
-<td class="admin"><?=$print['lout']?><?=$print['admin']?></td>
-</tr>
+<?php echo print_keymenu(1)?>
 
 <!-- ==================================================================== -->
-<!-- $list['title']  : ∞‘Ω√∆« ±€ ¡¶∏Ò                                     -->
+<!-- $board['align'] : Í≤åÏãúÌåêÏùò align ÏùÑ Ï†ïÏùòÌïúÎã§. Ïù¥Îäî Í≤åÏãúÌåê Í¥ÄÎ¶¨ÏûêÏóêÏÑú -->
+<!--                 ÏÑ§Ï†ïÏùÑ Ìï†Ïàò ÏûàÎã§.                                    -->
+<!-- $print['dsearch'] : ÏÉÅÏÑ∏ Í≤ÄÏÉâ ÌÖåÏù¥Î∏î Ï∂úÎ†•                            -->
+<!-- $board['width'] : Í≤åÏãúÌåêÏùò ÎÑìÏù¥Î•º ÏßÄÏ†ïÌïúÎã§. Í≤åÏãúÌåê Í¥ÄÎ¶¨ÏûêÏóêÏÑú Ï°∞Ï†ï   -->
+<!-- $list['num']    : Ï¢åÏ∏° ÏÉÅÎã®Ïùò Í≤åÏãúÌåê Í∏Ä Î≤àÌò∏                         -->
+<!-- $print['admin'] : Í≤åÏãúÌåê Ïö∞Ï∏°Ïùò admin ÎßÅÌÅ¨Î•º Ï∂úÎ†• Ïù¥Îäî admin link Ïù¥ -->
+<!--                 ÎØ∏ÏßÄÎ•º Î∂àÎü¨ Ïò§Îäî Í≤ÉÏúºÎ°ú Íº≠ admin.gifÍ∞Ä Ï°¥Ïû¨Ìï¥Ïïº Ìïú   -->
+<!--                 Îã§. Í≤åÏãúÌåê Í¥ÄÎ¶¨ÏûêÏóêÏÑú ÏïàÎ≥¥Ïù¥ÎèÑÎ°ù ÏÑ§Ï†ïÏùÑ Ìï†ÏàòÍ∞ÄÏûàÎã§   -->
+<!-- $print['lout']  : Î°úÍ∑∏Ïù∏Ïãú Î°úÍ∑∏ÏïÑÏõÉ Î≤ÑÌäºÏùÑ Ï∂úÎ†•                      -->
 <!-- ==================================================================== -->
-<? $list['title'] = preg_replace ("/<br>\n/i", "\\0<img src=\"images/blank.gif\" width=40 height=1 alt=\"\">", $list['title']); ?>
-<tr bgcolor="#a0dc10">
-<td colspan=3>
-<img src="./theme/KO-default/img/board_no.gif" align="middle" alt="TITLE: ">
-<span class="rtitle"><?=$list['title']?></span>
-</td>
-</tr>
-
-<tr>
-<td colspan=3><img src="images/blank.gif" width=1 height=3 border=0 alt=""></td>
-</tr>
-</table>
-
-
-<!-- ==================================================================== -->
-<!-- $list['date']   : ±€ µÓ∑œ ≥Ø¬•                                       -->
-<!-- $list['refer']  : ±€ ¡∂»∏ºˆ                                          -->
-<!-- $list['name']   : ±€æ¥¿Ã ¿Ã∏ß                                        -->
-<!-- $list['uname']  : ±€æ¥¿Ã ¿Ã∏ß (homepage link ∆˜«‘)                   -->
-<!-- $list['attach'] : √∑∫Œ ∆ƒ¿œ ∏µ≈©                                     -->
-<!-- ==================================================================== -->
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=""></td>
-<td width=4 bgcolor="#6d7bc9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=""></td>
-<td width=5><img src="images/blank.gif" width=5 height=1 border=0 alt=""></td>
-<td>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=""><br>
-<span class="ritem">µÓ∑œ</span> <?=$list['date']?> &nbsp; &nbsp; 
-<span class="ritem">¡∂»∏</span> <?=$list['refer']?><br>
-<span class="ritem">¿Ã∏ß</span> <?=$list['uname']?> &nbsp; &nbsp;
-<?=$list['attach'] ? "<span class=\"ritem\">∆ƒ¿œ</span> {$list['attach']}" : "" ?><br>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=""><br>
-</td>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=""></td>
-</tr>
-</table>
-
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="images/blank.gif" width=1 height=3 border=0 alt=""></td></tr>
-</table>
+<DIV ALIGN="<?php echo $board['align']?>">
+<?php echo $print['dsearch']?>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Read <?php echo $list['num']?> article</FONT></TD>
+<TD ALIGN="right" VALIGN="bottom"><?php echo $print['lout']?>&nbsp;<?php echo $print['admin']?></TD>
+</TR>
 
 <!-- ==================================================================== -->
-<!-- $preview['up']   : √∑∫Œµ» ¿ÃπÃ¡ˆ ∆ƒ¿œ¿Ã gif/jpg/png ¿œ ∞ÊøÏ √‚∑¬     -->
-<!-- $list['text']    : ±€ ∫ªπÆ √‚∑¬                                      -->
-<!-- $preview['down'] : √∑∫Œµ» ∆ƒ¿œ¿Ã ascii ¿œ ∞ÊøÏ √‚∑¬                  -->
-<!-- $print['rlists'] : ∫ª±€¿« ¥Ò±€¿Ã ¡∏¿Á«“ ∞ÊøÏ ¥Ò±€ ∏ÆΩ∫∆Æ √‚∑¬        -->
+<!-- $list['title']  : Í≤åÏãúÌåê Í∏Ä Ï†úÎ™©                                     -->
 <!-- ==================================================================== -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td class="rbodybg">
-<div class="rbody">
-<?=$preview['up']?>
-<!-- =============================== ±€≥ªøÎ =============================== -->
-<?=$list['text']?>
+<?php $list['title'] = preg_replace("/<BR>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
+<TR BGCOLOR="#FFAE00">
+<TD COLSPAN=3>
+<IMG SRC="./theme/KO-default/img/board_no.gif" ALIGN="middle" ALT='TITLE: '>
+<FONT STYLE="color:#FFFFFF; font-weight:bold;"><?php echo $list['title']?></FONT>
+</TD>
+</TR>
 
-<!-- =============================== ±€≥ªøÎ =============================== -->
-<?=$preview['down']?>
+<TR>
+<TD COLSPAN=3><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+
+<!-- ==================================================================== -->
+<!-- $list['date']   : Í∏Ä Îì±Î°ù ÎÇ†Ïßú                                       -->
+<!-- $list['refer']  : Í∏Ä Ï°∞ÌöåÏàò                                          -->
+<!-- $list['name']   : Í∏ÄÏì¥Ïù¥ Ïù¥Î¶Ñ                                        -->
+<!-- $list['uname']  : Í∏ÄÏì¥Ïù¥ Ïù¥Î¶Ñ (homepage link Ìè¨Ìï®)                   -->
+<!-- $list['attach'] : Ï≤®Î∂Ä ÌååÏùº ÎßÅÌÅ¨                                     -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=5><IMG SRC="images/blank.gif" WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+<FONT Style="font-weight:bold">Îì±Î°ù</FONT> <?php echo $list['date']?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">Ï°∞Ìöå</FONT> <?php echo $list['refer']?><BR>
+<FONT Style="font-weight:bold">Ïù¥Î¶Ñ</FONT> <?php echo $list['uname']?> &nbsp; &nbsp;
+<?php if($list['attach']) echo "<FONT Style=\"font-weight:bold\">ÌååÏùº</FONT> {$list['attach']}" ?><BR>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+</TD>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- $preview['up']   : Ï≤®Î∂ÄÎêú Ïù¥ÎØ∏ÏßÄ ÌååÏùºÏù¥ gif/jpg/png Ïùº Í≤ΩÏö∞ Ï∂úÎ†•     -->
+<!-- $list['text']    : Í∏Ä Î≥∏Î¨∏ Ï∂úÎ†•                                      -->
+<!-- $preview['down'] : Ï≤®Î∂ÄÎêú ÌååÏùºÏù¥ ascii Ïùº Í≤ΩÏö∞ Ï∂úÎ†•                  -->
+<!-- $print['rlists'] : Î≥∏Í∏ÄÏùò ÎåìÍ∏ÄÏù¥ Ï°¥Ïû¨Ìï† Í≤ΩÏö∞ ÎåìÍ∏Ä Î¶¨Ïä§Ìä∏ Ï∂úÎ†•        -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>">
+<DIV style="color:<?php echo $color['l5_fg']?>;font-family:<?php echo $langs['font']?>,monospace">
+<?php echo $preview['up']?>
+<!-- =============================== Í∏ÄÎÇ¥Ïö© =============================== -->
+<?php echo $list['text']?>
+
+<!-- =============================== Í∏ÄÎÇ¥Ïö© =============================== -->
+<?php echo $preview['down']?>
 </DIV>
 
-<!-- =============================== ƒ⁄∏‡∆Æ =============================== -->
-<?=$print['comment']?>
-<!-- =============================== ƒ⁄∏‡∆Æ =============================== -->
-</td></tr>
-</table>
+<!-- =============================== ÏΩîÎ©òÌä∏ =============================== -->
+<?php echo $print['comment']?>
+<!-- =============================== ÏΩîÎ©òÌä∏ =============================== -->
+</TD></TR>
+</TABLE>
 
-<? if ($print['rlists']) { ?>
-<br>
-<table width="<?=$board['width']?>" border=0 cellpadding=1 cellspacing=0>
-<tr><td class="row1"><img src="./images/blank.gif" width=1 height=1 border=0 alt=""></td></tr>
-<tr>
-<td>
-<img src="./images/blank.gif" width=1 height=3 border=0 alt=""><br>
-&gt;&gt; <?=$_('conj')?>
-<!-- =============================== ¿¿¥‰±€ =============================== -->
-<?=$print['rlists']?>
-<!-- =============================== ¿¿¥‰±€ =============================== -->
-</td></tr>
-<tr><td class="row1"><img src="./images/blank.gif" width=1 height=1 border=0 alt=""></td></tr>
-</table>
-<? } ?>
-
-<!-- ==================================================================== -->
-<!-- $print['regist']  : ±€ µÓ∑œ¡ˆ∏¶ √‚∑¬. (∞‘Ω√∆« æÓµÂπŒø°º≠ ∞¸∏Æ∞° ∞°¥… -->
-<!--                   «œ±‚ ∂ßπÆø° º≥¡§¿ª «ÿ ¡Ÿ∞Õ!                        -->
-<!-- read_cmd(0,1)   : list page ¿«  list_cmd(0,1) ¬¸¡∂ (øÏ√¯ «œ¥‹ ∏ﬁ¥∫)  -->
-<!-- ==================================================================== -->
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td class="sqltime">
-<?=$print['regist']?><img src="images/blank.gif" width=1 height=25 border=0 align="middle" alt=""></td>
-<td align="right"><? read_cmd(0,1) ?></td>
-</tr>
-</table>
+<?php if ($print['rlists']) { ?>
+<P>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l3_bg']?>"><IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+<TR>
+<TD>
+<IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+&gt;&gt; <?php echo $langs['conj']?>
+<!-- =============================== ÏùëÎãµÍ∏Ä =============================== -->
+<?php echo $print['rlists']?>
+<!-- =============================== ÏùëÎãµÍ∏Ä =============================== -->
+</TD></TR>
+<TR><TD BGCOLOR="<?php echo $color['l3_bg']?>"><IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+<?php } ?>
 
 <!-- ==================================================================== -->
-<!-- ∞Àªˆ∆˚∞˙ ∆‰¿Ã¡ˆ ∆˚¿∫ doc/ko/README.THEME ¬¸¡∂                        -->
-<!-- $print['dserlink'] : ªÛºº ∞Àªˆ ∏µ≈© √‚∑¬                             -->
-<!-- $print['pagetime']  : øÏ√¯ «œ¥‹ ∆‰¿Ã¡ˆ ∑Œµ˘ Ω√∞£ √‚∑¬                -->
-<!-- $print['sqltime']   : øÏ√¯ «œ¥‹ sql ∑Œµ˘ Ω√∞£ √‚∑¬                   -->
+<!-- $print['regist']  : Í∏Ä Îì±Î°ùÏßÄÎ•º Ï∂úÎ†•. (Í≤åÏãúÌåê Ïñ¥ÎìúÎØºÏóêÏÑú Í¥ÄÎ¶¨Í∞Ä Í∞ÄÎä• -->
+<!--                   ÌïòÍ∏∞ ÎïåÎ¨∏Ïóê ÏÑ§Ï†ïÏùÑ Ìï¥ Ï§ÑÍ≤É!                        -->
+<!-- read_cmd(0,1)   : list page Ïùò  list_cmd(0,1) Ï∞∏Ï°∞ (Ïö∞Ï∏° ÌïòÎã® Î©îÎâ¥)  -->
 <!-- ==================================================================== -->
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td>
-<!-- =============================== ∞Àªˆ∆˚ =============================== -->
-<form method="post" action="locate.php?table=<?=$table?>">
-<table width="100%" border=0 cellpadding=0 cellspacing=1>
-<tr>
-<td>
-<select name="o[sc]">
-<option value="t"<?=$sform['sc']['t']?>>Title</option>
-<option value="c"<?=$sform['sc']['c']?>>Contents</option>
-<option value="n"<?=$sform['sc']['n']?>>Writer</option>
-<option value="a"<?=$sform['sc']['a']?>>All</option>
-</select>
-<input type="text" name="o[ss]" size="<?=form_size(8)?>" maxlength=255 value="<?=$sform['ss']?>">
-<input type="submit" value="Search">
-</td>
-</tr><tr>
-<td>
-<select name="o[st]">
-<option value="m"<?=$sform['st']['m']?>>A Month</option>
-<option value="w"<?=$sform['st']['w']?>>A Week</option>
-<option value="a"<?=$sform['st']['a']?>>All</option>
-</select>
-<input type="checkbox" name="o[er]" value="y"<?=$sform['er']['y']?>>
-¡§±‘«•«ˆΩƒ <?=$print['dserlink']?>
-</td>
-</tr>
-</table>
-<input type="hidden" name="o[at]" value="s">
-<input type="hidden" name="o[go]" value="p">
-<input type="hidden" name="o[sct]" value="s">
-<input type="hidden" name="o[stt]" value="s">
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD>
+<FONT style="font-family:tahoma,sans-serif;font-size:11px;"><?php echo $print['regist']?>&nbsp;</FONT><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
+<TD ALIGN="right"><?php read_cmd(0,1) ?></TD>
+</TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- Í≤ÄÏÉâÌèºÍ≥º ÌéòÏù¥ÏßÄ ÌèºÏùÄ doc/ko/README.THEME Ï∞∏Ï°∞                        -->
+<!-- $print['dserlink'] : ÏÉÅÏÑ∏ Í≤ÄÏÉâ ÎßÅÌÅ¨ Ï∂úÎ†•                             -->
+<!-- $print['pagetime']  : Ïö∞Ï∏° ÌïòÎã® ÌéòÏù¥ÏßÄ Î°úÎî© ÏãúÍ∞Ñ Ï∂úÎ†•                -->
+<!-- $print['sqltime']   : Ïö∞Ï∏° ÌïòÎã® sql Î°úÎî© ÏãúÍ∞Ñ Ï∂úÎ†•                   -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD>
+<!-- =============================== Í≤ÄÏÉâÌèº =============================== -->
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD>
+<SELECT NAME="o[sc]" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>">
+<OPTION VALUE="t"<?php echo $sform['sc']['t']?>>Title
+<OPTION VALUE="c"<?php echo $sform['sc']['c']?>>Contents
+<OPTION VALUE="n"<?php echo $sform['sc']['n']?>>Writer
+<OPTION VALUE="a"<?php echo $sform['sc']['a']?>>All
+</SELECT>
+<INPUT TYPE="text" ID="searchstr" NAME="o[ss]" SIZE="<?php echo form_size(8)?>" MAXLENGTH=255 style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font-size:12px;color:<?php echo $color['l4_fg']?>;" VALUE="<?php echo $sform['ss']?>">
+<INPUT TYPE="submit" VALUE="Search" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>;">
+</TD>
+</TR><TR>
+<TD>
+<SELECT NAME="o[st]" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>">
+<OPTION VALUE="m"<?php echo $sform['st']['m']?>>A Month
+<OPTION VALUE="w"<?php echo $sform['st']['w']?>>A Week
+<OPTION VALUE="a"<?php echo $sform['st']['a']?>>All
+</SELECT>
+<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?php echo $sform['er']['y']?> style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>">
+<FONT STYLE="font-family:<?php echo $langs['vfont']?>,sans-serif;color:#555555">Ï†ïÍ∑úÌëúÌòÑÏãù</FONT> <?php echo $print['dserlink']?>
+</TD>
+</TR>
+</TABLE>
+<INPUT TYPE="hidden" NAME="o[at]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[go]" VALUE="p">
+<INPUT TYPE="hidden" NAME="o[sct]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[stt]" VALUE="s">
 </FORM>
-<!-- =============================== ∞Àªˆ∆˚ =============================== -->
-</td>
-<td align="right">
-<span class="sqltime">
-Page Loading [ <?=$print['pagetime']?> Sec ]
-SQL Time [ <?=$print['sqltime']?> Sec ]<br>
-</span>
-<!-- ============================== ∆‰¿Ã¡ˆ∆˚ ============================== -->
-<form method="post" action="locate.php?table=<?=$table?>">
-<table width="100%" border=0 cellpadding=0 cellspacing=1>
-<tr>
-<td align="right">
-<?=$pform['post']?>
-<select name="o[go]">
-<option value="p" selected="selected">Page No.</option>
-<option value="n">Article No.</option>
-</select>
-<input type="text" name="o[no]" size="<?=form_size(2)?>" maxlength=6 value="<?=$pform['value']?>">
-<input type="submit" value="Go!">
-</td>
-</tr>
-</table></form>
-<!-- ============================== ∆‰¿Ã¡ˆ∆˚ ============================== -->
-</td>
-</tr>
-</table>
+<!-- =============================== Í≤ÄÏÉâÌèº =============================== -->
+</TD>
+<TD ALIGN="right">
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;">
+Page Loading [ <?php echo $print['pagetime']?> Sec ]
+SQL Time [ <?php echo $print['sqltime']?> Sec ]<BR>
+</FONT>
+<!-- ============================== ÌéòÏù¥ÏßÄÌèº ============================== -->
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD ALIGN="right">
+<FONT STYLE="font-size:10px;font-family:tahoma,sans-serif;">
+<?php echo $pform['post']?>
+<SELECT NAME="o[go]" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>">
+<OPTION VALUE="p" SELECTED>Page No.
+<OPTION VALUE="n">Article No.
+</SELECT>
+<INPUT TYPE="text" NAME="o[no]" SIZE="<?php echo form_size(2)?>" MAXLENGTH=6 style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font-size:12px;color:<?php echo $color['l4_fg']?>" VALUE='<?php echo $pform['value']?>'>
+<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid <?php echo $color['l4_gu']?>;background-Color:<?php echo $color['l4_bg']?>;font:11px tahoma,sans-serif;color:<?php echo $color['l4_fg']?>">
+</FONT>
+</TD>
+</TR>
+</TABLE></FORM>
+<!-- ============================== ÌéòÏù¥ÏßÄÌèº ============================== -->
+</TD>
+</TR>
+</TABLE>
 
+<!-- ==================================================================== -->
+<!-- print_license()  : ÎùºÏù¥ÏÑºÏä§ Ï∂úÎ†•                                     -->
+<!-- ==================================================================== -->
+<?php echo print_license()?>
+
+</DIV>
+
+<!-- ======================= Íº¨Î¶¨ ÎîîÏûêÏù∏ ÏãúÏûë ======================= -->
+<?php
+if(!$np) {
+  # Ï†ÑÏ≤¥ Í¥ÄÎ¶¨ÏûêÏóê ÏùòÌï¥ Í∞ïÏ†ú input ÎêòÎäî Design
+  include "html/tail.php";
+  # Í∞Å Ïú†Ï†ÄÎ≥Ñ Design
+  include "{$board['tailpath']}";
+}
+?>
+<!-- ======================= Íº¨Î¶¨ ÎîîÏûêÏù∏ ÎÅù   ======================= -->
+</BODY>
+</HTML>

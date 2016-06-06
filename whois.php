@@ -1,18 +1,18 @@
 <?php
-# $Id: whois.php,v 1.4 2009-11-16 21:52:45 oops Exp $
+# $Id: whois.php,v 1.13 2014/03/02 17:11:28 oops Exp $
 include 'include/variable.php';
 include 'include/print.php';
-# register_globals ¿É¼ÇÀÇ ¿µÇâÀ» ¹ŞÁö ¾Ê±â À§ÇÑ ÇÔ¼ö
+# register_globals ì˜µì…˜ì˜ ì˜í–¥ì„ ë°›ì§€ ì•Šê¸° ìœ„í•œ í•¨ìˆ˜
 parse_query_str();
 
-# table º¯¼ö Ã¼Å©
+# table ë³€ìˆ˜ ì²´í¬
 $table = trim ($table);
 if ( preg_match ('!/\.+|%00$!', $table) ) {
   print_error ("Ugly access with table variable \"{$table}\"");
 }
 
 if($window) {
-  echo "<script type=\"text/javascript\">\n" .
+  echo "<SCRIPT TYPE=\"text/javascript\">\n" .
        "<!--\nvar farwindow = null;\n" .
        "function remoteWindow() {\n" .
        "  farwindow = window.open(\"\",\"Whois\",\"width=600,height=480,scrollbars=1,resizable=1\");\n" .
@@ -24,7 +24,7 @@ if($window) {
        "  }\n" .
        "}\n" .
        "//-->\nremoteWindow();\nhistory.back();\n" .
-       "</script>\n";
+       "</SCRIPT>\n";
   exit;
 }
 
@@ -44,25 +44,28 @@ if ( ! @file_exists("config/global.php") ) {
 if(file_exists("data/$table/config.php")) { include "data/$table/config.php"; }
 if(file_exists("theme/{$print['theme']}/config.php")) { include "theme/{$print['theme']}/config.php"; }
 else { include "theme/KO-default/config.php"; }
+include "include/lang.php";
 
-putenv ("JSLANG={$_code}");
-include "language/lang.php";
-
-$ohost= $host;
-$host = gethostbyname ($host);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
                         "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=<?=$_('charset')?>">
-<title><? echo $host ?> WHOIS Information</title>
-<link rel="stylesheet" type="text/css" href="./theme/<?=$print['theme']?>/default.css">
-</head>
+		      
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo $host ?> WHOIS ì •ë³´</TITLE>
+<STYLE TYPE="text/css">
+<!--
+A:link, A:visited, A:active { text-decoration: none; }
+A:hover { text-decoration:underline; }
+TD { font-size: 12px;font-family: <?php echo $langs['font']?> }
+-->
+</STYLE>
+</HEAD>
 
-<body>
-<pre>
-<?
+<?php
+echo "<BODY BGCOLOR=\"{$color['b_bg']}\" TEXT=\"{$color['text']}\">\n<PRE>";
+
 $server = "whois.krnic.net";
 $port   = "43";
 
@@ -72,21 +75,20 @@ if ($fp) {
   fputs($fp,"$host\n");
 
   while(!feof($fp)) {
-      $list = fgets ($fp, 1024);
-      //if($count > 11) {
-      if ( $count > 0 ) {
-        $list = preg_replace("/^((Phone|ÀüÈ­[ ]*¹øÈ£)[\s]*:[ ]*)(.*)/mi", "\\1<span class=\"whois_tel\">\\3</span>", $list);
-        $list = preg_replace("/((Service Name|Name|¼­ºñ½º¸í|ÀÌ¸§).*:)(.*)/mi", "\\1<span class=\"whois_addr\">\\3</span>", $list);
-        $list = preg_replace("/((Org Name|±â[ ]*°ü[ ]*¸í).*:)(.*)/mi", "\\1<span class=\"whois_net\">\\3</span>", $list);
-        echo $list;
+      $list = fgets($fp, 1024);
+      if($count > 11) {
+        $list = preg_replace("/((Phone|ì „í™” ë²ˆí˜¸).*:)(.*)/i", "\\1<FONT STYLE=\"color:{$color['t_bg']};font-weight:bold\">\\3</FONT>", $list);
+        $list = preg_replace("/((IP Address|IP ì£¼ì†Œ).*:)(.*)/i", "\\1<FONT STYLE=\"color:{$color['m_bg']};font-weight:bold\">\\3</FONT>", $list);
+        $list = preg_replace("/((Network Name|ë„¤íŠ¸ì›Œí¬ ì´ë¦„).*:)(.*)/i", "\\1<FONT STYLE=\"color:red;font-weight:bold\">\\3</FONT>", $list);
+        echo "$list";
       }
       $count++;
   }
   fclose($fp);
-} else echo "$errno $errstr whois.krnic.netÀÇ ¿¬°á¿¡ ½ÇÆĞ Çß½À´Ï´Ù.";
+} else echo "$errno $errstr whois.krnic.netì˜ ì—°ê²°ì— ì‹¤íŒ¨ í–ˆìŠµë‹ˆë‹¤.";
 ?>
 
-</pre>
+</PRE>
 
-</body>
-</html>
+</BODY>
+</HTML>

@@ -1,41 +1,42 @@
 <?php
 # JSboard RSS Feed
-# $Id: rss.php,v 1.13 2009-11-16 21:52:45 oops Exp $
+# $Id: rss.php,v 1.27 2014/03/02 17:11:28 oops Exp $
 #
 
-# header file »ğÀÔ
+# header file ì‚½ì…
 #
 if ( ! @file_exists ("include/header.php") ) {
-  echo "<script type=\"text/javascript\">\nalert('Don\'t exist header file');\n" .
+  echo "<script>\nalert('Don\'t exist header file');\n" .
        "history.back();\nexit;\n</script>\n";
   exit();
 } else {
   include 'include/header.php';
 }
 
-# RSS »ç¿ë ¿©ºÎ Ã¼Å© (user config file ·Î ºÎÅÍ)
+# RSS ì‚¬ìš© ì—¬ë¶€ ì²´í¬ (user config file ë¡œ ë¶€í„°)
 #
 if ( ! $rss['use'] ) {
   echo "Don't rss support on this board\n";
   exit();
 }
 
-# rss ¿¡¼­ Ãâ·ÂÇÒ ¸®½ºÆ®ÀÇ ¼ö¸¦ ÁöÁ¤
+# rss ì—ì„œ ì¶œë ¥í•  ë¦¬ìŠ¤íŠ¸ì˜ ìˆ˜ë¥¼ ì§€ì •
 #
 $rss['default_article_number'] = '30';
 
-# °Ô½ÃÆÇ ÁÖ¼Ò
+# ê²Œì‹œíŒ ì£¼ì†Œ
 #
 $rss['link'] = $board['path'] . "list.php?table=" . $table;
 
 if (!$no)
   $no = $rss['default_article_number'];
 
-# DB Á¤º¸ °¡Á®¿À±â
+# DB ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 #
-$c = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
+$c = sql_connect ($db['server'], $db['user'], $db['pass']);
+sql_select_db ($db['name'], $c);
 
-# Description Á¤º¸°¡ ÀÖ°Ô ÇÒ °ÍÀÎÁö ¾Æ´ÑÁö ¿©ºÎ Ã¼Å© (config file ¿¡¼­ Ã¼Å©)
+# Description ì •ë³´ê°€ ìˆê²Œ í•  ê²ƒì¸ì§€ ì•„ë‹Œì§€ ì—¬ë¶€ ì²´í¬ (config file ì—ì„œ ì²´í¬)
 #
 if ($rss['is_des'])
   $sql = "select no, date, name, rname, title, text from {$table} order by date DESC limit {$no}";
@@ -45,7 +46,7 @@ else
 $result = sql_query ($sql, $c);
 $i = 0;
 
-while( $rss_article[$i] = sql_fetch_array($result) ) {
+while( $rss_article[$i] = sql_fetch_array($result,$c) ) {
   $rss_article[$i]['title'] = htmlspecialchars ($rss_article[$i]['title'], ENT_QUOTES);
   $rss_article[$i]['link'] = "{$board['path']}read.php?table={$table}&amp;no={$rss_article[$i]['no']}";
   $rss_article[$i]['date'] = date ("r", $rss_article[$i]['date']);
@@ -53,14 +54,14 @@ while( $rss_article[$i] = sql_fetch_array($result) ) {
 
   if ( $rss['is_des'] ) {
     #$rss_article[$i]['text'] = preg_replace ("!\n!", "<br />\n", $rss_article[$i]['text']);
-    $rss_article[$i]['text'] = preg_replace ("!([0-9]+;[0-9]+m)?!", "", $rss_article[$i]['text']);
+    $rss_article[$i]['text'] = preg_replace ("!^[([0-9]+;[0-9]+m)?!", "", $rss_article[$i]['text']);
     $rss_article[$i]['text'] = htmlspecialchars ($rss_article[$i]['text']);
     $rss_article[$i]['text'] = auto_link ($rss_article[$i]['text']);
 
     $_body = "<table width=\"100%\" border=0 cellpadding=0 cellspacing=1>\n" .
-             "<tr><td bgcolor=\"#000000\">\n" .
+             "<tr><td bgcolor=#000000>\n" .
              "<table width=\"100%\" border=0 cellpadding=3 cellspacing=1>\n" .
-             "<tr><td style=\"font-weight: bold; color: #ffffff\">\n" .
+             "<tr><td style=\"font: 12px êµ´ë¦¼ì²´; font-weight: bold; color: #ffffff\">\n" .
              "REPLY : <a href={$board['path']}reply.php?table={$table}&no={$rss_article[$i]['no']} style=\"color: #ffffff; text-decoration: none;\">" .
              "{$board['path']}reply.php?table={$table}&no={$rss_article[$i]['no']}</a><br />\n" .
              "DELETE: <a href={$board['path']}delete.php?table={$table}&no={$rss_article[$i]['no']} style=\"color: #ffffff; text-decoration: none;\">" .
@@ -68,9 +69,9 @@ while( $rss_article[$i] = sql_fetch_array($result) ) {
              "</td></tr>\n" .
              "</table>\n" .
              "</td></tr>\n" .
-             "<tr><td bgcolor=\"#000000\">\n" .
+             "<tr><td bgcolor=#000000>\n" .
              "<table width=\"100%\" border=0 cellpadding=3 cellspacing=1>\n" .
-             "<tr><td bgcolor=\"#ffffff\" style=\"font-size: 11px;\"><pre>\n" .
+             "<tr><td bgcolor=#ffffff style=\"font-size: 11px;\"><pre>\n" .
              "{$rss_article[$i]['text']}\n" .
              "</pre></td></tr>\n" .
              "</table>\n" .
@@ -94,17 +95,17 @@ sql_close($c);
 $now = time ();
 $cYear = date ("Y", $now);
 $bdate = date ("r", $now);
-$_charset = strtolower ($_('charset'));
+$_charset = strtolower ($langs['charset']);
 
 $gotoUTF8 = check_utf8_conv ($_charset);
 $cset = $gotoUTF8 ? 'utf-8' : $_charset;
 
-# ¿©±â ±îÁö ÀÌ»óÀÌ ¾øÀ¸¸é, ½ÇÁ¦ RSS Ãâ·Â
+# ì—¬ê¸° ê¹Œì§€ ì´ìƒì´ ì—†ìœ¼ë©´, ì‹¤ì œ RSS ì¶œë ¥
 #
 header ('Cache-Control: no-cache, pre-check=0, post-check=0, max-age=0');
 header ('Expires: ' . gmdate('D, d M Y H:i:s', time()) . ' GMT');
 header ('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-header ('Content-Type: text/xml; charset=' . $cset);
+header ('Content-Type: text/xml');
 
 utf8_fallback ($rss['channel'], $_charset);
 utf8_fallback ($board['title'], $_charset);
@@ -112,18 +113,18 @@ utf8_fallback ($board['title'], $_charset);
 echo "<?xml version=\"1.0\" encoding=\"{$cset}\"?>\n";
 ?>
 <rss version="2.0"
-  xml:base="<?=$board['path']?>"
+  xml:base="<?php echo $board['path']?>"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <atom:link href="http://<?=$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']?>" rel="self" type="application/rss+xml" />
-    <title><?=$rss['channel']?></title>
-    <link><?=$rss['link']?></link>
-    <description><?=$board['title']?></description>
-    <language><?=$_code?></language>
-    <copyright>1999-<?=$cYear?> JSBoard Open Project</copyright>
-    <lastBuildDate><?=$bdate?></lastBuildDate>
-    <generator>JSBoard <?=$board['ver']?></generator>
+    <atom:link href="http://<?php echo $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']?>" rel="self" type="application/rss+xml" />
+    <title><?php echo $rss['channel']?></title>
+    <link><?php echo $rss['link']?></link>
+    <description><?php echo $board['title']?></description>
+    <language><?php echo $langs['code']?></language>
+    <copyright>1999-<?php echo $cYear?> JSBoard Open Project</copyright>
+    <lastBuildDate><?php echo $bdate?></lastBuildDate>
+    <generator>JSBoard <?php echo $board['ver']?></generator>
 
 <?php
 for ( $i=0; $i<$rss_article_num; $i++ ) {

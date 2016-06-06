@@ -1,12 +1,12 @@
 <?php
-# $Id: first_reg.php,v 1.2 2009-11-16 21:52:46 oops Exp $
-# »õ·Î¿î °Ô½ÃÆÇ »ý¼º½Ã¿¡ 1¹ø±Û·Î µî·ÏµÉ ³»¿ëµé
-$_dr['d'] = time();
-$_dr['h'] = '127.0.0.1';
-$_dr['n'] = _lang ('first1', $_code);
-$_dr['p'] = $ostype['dpass'];
-$_dr['e'] = '';
-$_dr['u'] = 'http://jsboard.kldp.net';
-$_dr['s'] = _lang ('first2', $_code);
-$_dr['b'] = _lang ('first3', $_code);
+# $Id: first_reg.php,v 1.3 2014/03/02 17:11:30 oops Exp $
+# ìƒˆë¡œìš´ ê²Œì‹œíŒ ìƒì„±ì‹œì— 1ë²ˆê¸€ë¡œ ë“±ë¡ë  ë‚´ìš©ë“¤
+$date = time();
+$host_ext = "127.0.0.1";
+$name_ext = "{$langs['first1']}";
+$passwd_ext = "{$ostype['dpass']}";
+$email_ext = "";
+$url_ext = "http://www.oops.org";
+$subj_msg = "{$langs['first2']}";
+$text_msg = "{$langs['first3']}";
 ?>

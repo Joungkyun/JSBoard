@@ -1,76 +1,76 @@
 <?php
-# $Id: image.php,v 1.4 2009-11-16 21:52:45 oops Exp $
+# $Id: image.php,v 1.7 2014/03/02 17:11:28 oops Exp $
 include_once 'include/variable.php';
 include_once 'include/print.php';
 include_once 'include/check.php';
 include_once 'include/error.php';
-parse_query_str ();
+parse_query_str();
 
-$ImgPath = rawurldecode ($path);
-$ImgType = check_filetype ($ImgPath);
+$ImgPath = rawurldecode($path);
+$ImgType = check_filetype($ImgPath);
 
-# ¿øº» ÀÌ¹ÌÁö·Î ºÎÅÍ JPEG ÆÄÀÏÀ» »ý¼º
-$otype = GetImageSize ($ImgPath);
-switch ( $otype[2] ) {
+# ì›ë³¸ ì´ë¯¸ì§€ë¡œ ë¶€í„° JPEG íŒŒì¼ì„ ìƒì„±
+$otype = GetImageSize($ImgPath);
+switch($otype[2]) {
   case 1:
-    $img = ImageCreateFromGIF ($ImgPath);
+    $img = ImageCreateFromGIF($ImgPath);
     break;
   case 2:
-    $img = ImageCreateFromJPEG ($ImgPath);
+    $img = ImageCreateFromJPEG($ImgPath);
     break;
   case 3:
-    $img = ImageCreateFromPNG ($ImgPath);
+    $img = ImageCreateFromPNG($ImgPath);
     break;
   default:
-    print_error ('Enable ImgPath file is type of GIF,JPG,PNG', 250, 250, 1);
+    print_error("Enable ImgPath file is type of GIF,JPG,PNG",250,250,1);
 }
 
-# ¿øº» ÀÌ¹ÌÁöÀÇ width, height ¸¦ ±¸ÇÔ
-$owidth = ImagesX ($img);
-$oheight = ImagesY ($img);
+# ì›ë³¸ ì´ë¯¸ì§€ì˜ width, height ë¥¼ êµ¬í•¨
+$owidth = ImagesX($img);
+$oheight = ImagesY($img);
 
-# width ¿Í height ¸¦ ¸ðµÎ 0 À¸·Î ÁÖ¾úÀ» °æ¿ì ±âº»°ª 50
-if ( ! $width && ! $height ) $width = $height = 50;
+# width ì™€ height ë¥¼ ëª¨ë‘ 0 ìœ¼ë¡œ ì£¼ì—ˆì„ ê²½ìš° ê¸°ë³¸ê°’ 50
+if(!$width && !$height) $width = $height = 50;
 
-# width °¡ ¾øÀ» °æ¿ì height ÀÇ Ãà¼Ò/È®´ë ºñÀ²·Î width ¸¦ ±¸ÇÔ
-if ( ! $width ) {
-  $ratio = ((real) $height / $oheight);
-  $width = ((int) $owidth * $ratio);
+# width ê°€ ì—†ì„ ê²½ìš° height ì˜ ì¶•ì†Œ/í™•ëŒ€ ë¹„ìœ¨ë¡œ width ë¥¼ êµ¬í•¨
+if(!$width) {
+  $ratio = ((real)$height/$oheight);
+  $width = ((int)$owidth*$ratio);
 }
 
-# height °¡ ¾øÀ» °æ¿ì width ÀÇ Ãà¼Ò/È®´ë ºñÀ²·Î height ¸¦ ±¸ÇÔ
-if ( ! $height ) {
-  $ratio = ((real) $width / $owidth);
-  $height = ((int) $oheight * $ratio);
+# height ê°€ ì—†ì„ ê²½ìš° width ì˜ ì¶•ì†Œ/í™•ëŒ€ ë¹„ìœ¨ë¡œ height ë¥¼ êµ¬í•¨
+if(!$height) {
+  $ratio = ((real)$width/$owidth);
+  $height = ((int)$oheight*$ratio);
 }
 
-# »õ·Î¿î ÀÌ¹ÌÁö¸¦ »ý¼º
-$newimg = ImageCreate ($width, $height);
-# »õ·Î¿î ÀÌ¹ÌÁö¿¡ ¿øº» ÀÌ¹ÌÁö¸¦ »çÀÌÁî Á¶Á¤ÇÏ¿© º¹»ç.
-ImageCopyResized ($newimg, $img, 0, 0, 0, 0, $width, $height, $owidth, $oheight);
+# ìƒˆë¡œìš´ ì´ë¯¸ì§€ë¥¼ ìƒì„±
+$newimg = ImageCreate($width,$height);
+# ìƒˆë¡œìš´ ì´ë¯¸ì§€ì— ì›ë³¸ ì´ë¯¸ì§€ë¥¼ ì‚¬ì´ì¦ˆ ì¡°ì •í•˜ì—¬ ë³µì‚¬.
+ImageCopyResized($newimg,$img,0,0,0,0,$width,$height,$owidth,$oheight);
 
-# Å¸ÀÔ¿¡ µû¶ó Çì´õ¸¦ Ãâ·Â
-switch ( $ImgType ) {
-  case 'wbmp' :
-    $type_header = 'vnd.wap.wbmp';
+# íƒ€ìž…ì— ë”°ë¼ í—¤ë”ë¥¼ ì¶œë ¥
+switch($ImgType) {
+  case "wbmp" :
+    $type_header = "vnd.wap.wbmp";
     break;
   default :
-    $ImgType = ($ImgType == 'jpg') ? 'jpeg' : $ImgType;
+    $ImgType = ($ImgType == "jpg") ? "jpeg" : $ImgType;
     $type_header = $ImgType;
 }
-Header("Content-type: image/{$type_header}");
+Header("Content-type: image/$type_header");
 
-switch ( $ImgType ) {
-  case 'png' :
-    ImagePNG ($newimg);
+switch($ImgType) {
+  case "png" :
+    ImagePNG($newimg);
     break;
-  case 'wbmp' :
-    ImageWBMP ($newimg);
+  case "wbmp" :
+    ImageWBMP($newimg);
     break;
-  case 'gif' :
-    ImageGIF ($newimg);
+  case "gif" :
+    ImageGIF($newimg);
   default :
-    ImageJPEG ($newimg, '', 80);
+    ImageJPEG($newimg,'',80);
 }
-ImageDestroy ($newimg);
+ImageDestroy($newimg);
 ?>

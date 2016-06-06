@@ -1,84 +1,92 @@
 <?php
 # This flie applied under GPL License
-# $Id: stat.php,v 1.4 2014-02-28 18:41:08 oops Exp $
-if ( preg_match ('/user_admin/', $_SERVER['HTTP_REFERER']) ) $path['type'] = "user_admin";
+# $Id: stat.php,v 1.14 2014/03/02 17:11:30 oops Exp $
+if(preg_match("/user_admin/",$_SERVER['HTTP_REFERER'])) $path['type'] = "user_admin";
 else $path['type'] = "admin";
-require_once './include/admin_head.php';
+include "./include/admin_head.php";
 
-if ( ! session_is_registered ($jsboard) && $_SESSION[$jsboard]['pos'] != 1 )
-  print_error ($_('login_err'));
+if(!isset($_SESSION[$jsboard]) && $_SESSION[$jsboard]['pos'] != 1)
+  print_error($langs['login_err']);
 
-htmlhead();
-?>
+# table ì„ ì²´í¬í•œë‹¤.
+table_name_check($table);
 
-<table width="100%" border=0 cellpadding=10 cellspacing=0>
-<tr><td class="gbtitle">
-JSBoard [ <?=$table?> DB ] Statistics
-</td></tr>
+if($path['type'] != "admin") {
+  include "../data/$table/config.php";
+}
+table_name_check($print['theme']);
+include "../theme/{$print['theme']}/config.php";
+include "../include/lang.php";
 
-<tr align="center"><td>
-<!-- ========================= Åë°è ½ÃÀÛ        ========================= -->
+require "include/html_ahead.php";
 
-<br>
+echo "<table width=100% border=0 align=center>\n".
+     "<tr align=center><td bgcolor={$color['t_bg']}>\n".
+     "<font style=\"font-family:tahoma;font-size:22px;color:{$color['t_fg']};font-weight:bold\">\n".
+     "JSBoard [ $table DB ] Statistics</font>\n".
+     "</td></tr>\n\n".
+     "<tr align=center><td>\n".
+     "<!----------------- í†µê³„ ì‹œì‘ ------------------->\n\n<p><br>";
 
-<?
-$c = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
+$c = sql_connect($db['server'],$db['user'],$db['pass']);
+sql_select_db($db['name'], $c);
 
-function get_stat ($table, $interval) {
-    global $debug, $c, $db;
+function get_stat(&$c, $table, $interval) {
+    global $debug;
     $debug = 1;
 
-    $intv = ( $interval == 0) ? 0 : time () - $interval;
+    if($interval == 0) $intv = 0;
+    else $intv = time() - $interval;
 
-    # ÀüÃ¼ ±Û °¹¼ö
-    $result = sql_query ("SELECT COUNT(*) as co FROM $table WHERE date > '$intv'", $c);
-    $count['all'] = sql_result ($result, 0, 'co');
-    sql_free_result ($result);
+    # ì „ì²´ ê¸€ ê°¯ìˆ˜
+    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$intv'",$c);
+    $count['all'] = sql_result($result,0,"COUNT(*)",$c);
+    sql_free_result($result,$c);
 
-    # ´äÀå ±Û °¹¼ö
-    $result = sql_query ("SELECT COUNT(*) as co FROM $table WHERE date > '$intv' AND reno != 0", $c);
-    $count['rep'] = sql_result ($result, 0, 'co');
-    sql_free_result ($result);
+    # ë‹µì¥ ê¸€ ê°¯ìˆ˜
+    $result = sql_query("SELECT COUNT(*) FROM $table WHERE date > '$intv' AND reno != 0",$c);
+    $count['rep'] = sql_result($result,0,"COUNT(*)",$c);
+    sql_free_result($result,$c);
 
-    # º¸Åë ±Û °¹¼ö
+    # ë³´í†µ ê¸€ ê°¯ìˆ˜
     $count['nor'] = $count['all'] - $count['rep'];
 
-    # Ã³À½ ±Û
-    $result = sql_query ("SELECT * FROM $table WHERE date > '$intv' ORDER BY no LIMIT 1", $c);
-    $article['min'] = sql_fetch_array ($result);
-    sql_free_result ($result);
+    # ì²˜ìŒ ê¸€
+    $result = sql_query("SELECT * FROM $table WHERE date > '$intv' ORDER BY no LIMIT 0, 1",$c);
+    $article['min'] = sql_fetch_array($result,$c);
+    sql_free_result($result,$c);
 
-    # ¸¶Áö¸· ±Û
-    $result = sql_query ("SELECT * FROM $table WHERE date > '$intv' ORDER BY no DESC LIMIT 1", $c);
-    $article['max'] = sql_fetch_array ($result);
-    sql_free_result ($result);
+    # ë§ˆì§€ë§‰ ê¸€
+    $result = sql_query("SELECT * FROM $table WHERE date > '$intv' ORDER BY no DESC LIMIT 0, 1",$c);
+    $article['max'] = sql_fetch_array($result,$c);
+    sql_free_result($result,$c);
 
     if($interval) $article['time'] =  $interval;
     else $article['time'] =  $article['max']['date'] - $article['min']['date'];
 
-    # ÃÖ°í Á¶È¸¼ö
-    $result = sql_query ("SELECT MAX(refer) as maxref FROM $table WHERE date > '$intv'", $c);
-    $refer['max'] = sql_result ($result, 0, 'maxref');
-    sql_free_result ($result);
+    # ìµœê³  ì¡°íšŒìˆ˜
+    $result = sql_query("SELECT MAX(refer) FROM $table WHERE date > '$intv'",$c);
+    $refer['max'] = sql_result($result,0,"MAX(refer)",$c);
+    sql_free_result($result,$c);
 
-    # ÃÖ°í Á¶È¸¼ö ±Û ¹øÈ£
-    if ( $refer['max'] ) {
-      $result = sql_query ("SELECT no FROM $table WHERE refer = '{$refer['max']}' AND date > '$intv'", $c);
-      $refer['mno'] = sql_result ($result, 0, 'no');
-      sql_free_result ($result);
+    # ìµœê³  ì¡°íšŒìˆ˜ ê¸€ ë²ˆí˜¸
+    if($refer['max']) {
+      $result = sql_query("SELECT no FROM $table WHERE refer = '{$refer['max']}' AND date > '$intv'",$c);
+      $refer['mno'] = sql_result($result,0,"no",$c);
+      sql_free_result($result,$c);
     }
 
-    # ÃÖÀú Á¶È¸¼ö
-    $result = sql_query("SELECT MIN(refer) as min FROM $table WHERE date > '$intv'", $c);
-    $refer['min'] = sql_result($result, 0, 'min');
-    sql_free_result($result);
+    # ìµœì € ì¡°íšŒìˆ˜
+    $result = sql_query("SELECT MIN(refer) FROM $table WHERE date > '$intv'",$c);
+    $refer['min'] = sql_result($result,0,"MIN(refer)",$c);
+    sql_free_result($result,$c);
 
-    # Á¶È¸¼ö ÇÕ°è
-    $result = sql_query("SELECT SUM(refer) as sum FROM $table WHERE date > '$intv'", $c);
-    $refer['total'] = sql_result($result, 0, 'sum');
-    sql_free_result($result);
+    # ì¡°íšŒìˆ˜ í•©ê³„
+    $result = sql_query("SELECT SUM(refer) FROM $table WHERE date > '$intv'",$c);
+    $refer['total'] = sql_result($result,0,"SUM(refer)",$c);
+    sql_free_result($result,$c);
     
-    # Æò±Õ Á¶È¸¼ö
+    # í‰ê·  ì¡°íšŒìˆ˜
     if($count['all']) $refer['avg'] = intval($refer['total'] / $count['all']);
 
     $stat['count'] = $count;
@@ -89,8 +97,8 @@ function get_stat ($table, $interval) {
     return $stat;
 }
 
-function display_stat ($stat, $title) {
-  global $table, $_;
+function display_stat($stat, $title) {
+  global $table, $color, $langs;
 
   $count   = $stat['count'];
   $refer   = $stat['refer'];
@@ -107,33 +115,35 @@ function display_stat ($stat, $title) {
     $per['avg'] = $refer['total'] / $count['all'];
   }
 
-  $per['per'] = ( $count['nor'] == 0) ? $per['rep'] * $count['rep'] : 100 * ($count['rep'] / $count['nor']);
+  if($count['nor'] == 0) $per['per'] = $per['rep'] * $count['rep'];
+  else $per['per'] = 100 * ($count['rep'] / $count['nor']);
 
-  $str['count'] = sprintf ("
-<table width=\"200\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"st_tableguide\"><tr><td>
-<table width=\"100%%\" border=\"0\" cellspacing=\"1\" cellpadding=\"4\">
-<tr>
-  <td colspan=\"3\" class=\"st_td_value\" style=\"text-align: left\">" . $_('st_ar_no') . "</td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_pub') . "</td>
-  <td class=\"st_td_value\">%d " . $_('st_ea') . "</td>
-  <td width=\"1%%\" class=\"st_td_value\">%0.2f%%</td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_rep') . "</td>
-  <td align=\"right\" class=\"st_td_value\">%d " . $_('st_ea') . "</td>
-  <td width=\"1%%\" class=\"st_td_value\">%0.2f%%</td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_rep') . $_('st_per') . "</td>
-  <td colspan=\"2\" class=\"st_td_value\">%0.2f%%</td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_tot') . "</td>
-  <td colspan=\"2\" class=\"st_td_value\">%d " . $_('st_ea') . "</td>
-</tr>
-</table>
-</td></tr></table>\n",
-  $count['nor'], $per['nor'], $count['rep'], $per['rep'], $per['per'], $count['all']);
+    $str['count'] = sprintf("
+<TABLE WIDTH=\"200\" BGCOLOR=\"{$color['m_bg']}\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\"><TR><TD>
+<TABLE WIDTH=\"100%%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"4\">
+<TR>
+  <TD BGCOLOR=\"{$color['d_bg']}\" COLSPAN=\"3\"><FONT COLOR=\"{$color['d_fg']}\">{$langs['st_ar_no']}</FONT></TD>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><NOBR><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_pub']}</FONT></NOBR></TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><FONT COLOR=\"{$color['d_fg']}\">%d {$langs['st_ea']}</FONT></TD>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><NOBR><FONT COLOR=\"{$color['d_fg']}\">%0.2f%%</FONT></NOBR></TD>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><NOBR><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_rep']}</FONT></NOBR></TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><FONT COLOR=\"{$color['d_fg']}\">%d {$langs['st_ea']}</FONT></TD>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><NOBR><FONT COLOR=\"{$color['d_fg']}\">%0.2f%%</FONT></NOBR></TD>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><NOBR><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_rep']}{$langs['st_per']}</FONT></NOBR></TD>
+  <TD COLSPAN=\"2\" ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><FONT COLOR=\"{$color['d_fg']}\">%0.2f%%</FONT></TD>
+</TR>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><NOBR><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_tot']}</FONT></NOBR></TD>
+  <TD COLSPAN=\"2\" ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><FONT COLOR=\"{$color['d_fg']}\">%d {$langs['st_ea']}</FONT></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>\n",
+  $count['nor'],$per['nor'],$count['rep'],$per['rep'],$per['per'],$count['all']);
 
-  if ( ! $count['all'] || !$article['time'] ) {
+  if (!$count['all'] || !$article['time']) {
     $for['year'] = 0;
     $for['month'] = 0;
     $for['day'] = 0;
@@ -145,85 +155,95 @@ function display_stat ($stat, $title) {
     $for['hour'] = $count['all'] / ($article['time'] / (60*60));
   }
 
-  $str['avg'] = sprintf ("
-<table width=\"150\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"st_tableguide\"><tr><td>
-<table width=\"100%%\" border=\"0\" cellspacing=\"1\" cellpadding=\"4\">
-<tr>
-  <td colspan=\"2\" class=\"st_td_value\" style=\"text-align: left\">" . $_('st_a_ar_no') . "</td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_year') . "</td>
-  <td class=\"st_td_value\">%0.2f " . $_('st_ea') . "</td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_mon') . "</td>
-  <td class=\"st_td_value\">%0.2f " . $_('st_ea') . "</td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_day') . "</td>
-  <td class=\"st_td_value\">%0.2f " . $_('st_ea') . "</td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_hour') . "</td>
-  <td class=\"st_td_value\">%0.2f " . $_('st_ea') . "</td>
-</tr>
-</table>
-</td></tr></table>\n", 
-  $for['year'], $for['month'], $for['day'], $for['hour']);
+  $str['avg'] = sprintf("
+<TABLE WIDTH=\"150\" BGCOLOR=\"{$color['m_bg']}\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\"><TR><TD>
+<TABLE WIDTH=\"100%%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"4\">
+<TR>
+  <TD BGCOLOR=\"{$color['d_bg']}\" COLSPAN=\"2\"><FONT COLOR=\"{$color['d_fg']}\">{$langs['st_a_ar_no']}</FONT></TD>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_year']}</FONT></TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><FONT COLOR=\"{$color['d_fg']}\">%0.2f {$langs['st_ea']}</FONT></TD>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_mon']}</FONT></TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><FONT COLOR=\"{$color['d_fg']}\">%0.2f {$langs['st_ea']}</FONT></TD>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_day']}</FONT></TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><FONT COLOR=\"{$color['d_fg']}\">%0.2f {$langs['st_ea']}</FONT></TD>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_hour']}</FONT></TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><FONT COLOR=\"{$color['d_fg']}\">%0.2f {$langs['st_ea']}</FONT></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>\n", 
+  $for['year'],$for['month'],$for['day'],$for['hour']);
 
-  $str['refer'] = sprintf ("
-<table width=\"150\"  border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"st_tableguide\"><tr><td>
-<table width=\"100%%\" border=\"0\" cellspacing=\"1\" cellpadding=\"4\">
-<tr>
-  <td colspan=\"2\" class=\"st_td_value\" style=\"text-align: left\">" . $_('st_read') . "</td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_max') . "</td>
-  <td class=\"st_td_value\">%d " . $_('st_read_no') . "</td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_no') . "</td>
-  <td class=\"st_td_value\"><a href=\"../read.php?table=%s&amp;no=%d\" target=_blank>%d " . $_('st_read_no_ar') . "</A></td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_ever') . "</td>
-  <td class=\"st_td_value\">%0.2f " . $_('st_read_no') . "</td>
-</tr><tr>
-  <td width=\"1%%\" class=\"st_td_title\">" . $_('st_tot') . "</td>
-  <td class=\"st_td_value\">%d " . $_('st_read_no') . "</td>
-</tr>
-</table>
-</td></tr></table>\n", 
-  $refer['max'], $table, $refer['mno'], $refer['mno'], $per['avg'], $refer['total']);
+  $str['refer'] = sprintf("
+<TABLE WIDTH=\"150\" BGCOLOR=\"{$color['m_bg']}\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\"><TR><TD>
+<TABLE WIDTH=\"100%%\" BORDER=\"0\" CELLSPACING=\"1\" CELLPADDING=\"4\">
+<TR>
+  <TD BGCOLOR=\"{$color['d_bg']}\" COLSPAN=\"2\"><FONT COLOR=\"{$color['d_fg']}\">{$langs['st_read']}</FONT></TD>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><NOBR><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_max']}</FONT></NOBR></TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><FONT COLOR=\"{$color['d_fg']}\">%d {$langs['st_read_no']}</FONT></TD>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><NOBR><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_no']}</FONT></NOBR></TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><A HREF=\"../read.php?table=%s&no=%d\" target=_blank><FONT COLOR=\"{$color['d_fg']}\">%d {$langs['st_read_no_ar']}</FONT></A></TD>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><NOBR><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_ever']}</FONT></NOBR></TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><FONT COLOR=\"{$color['d_fg']}\">%0.2f {$langs['st_read_no']}</FONT></TD>
+</TR><TR>
+  <TD WIDTH=\"1%%\" ALIGN=\"right\" BGCOLOR=\"{$color['m_bg']}\"><NOBR><FONT COLOR=\"{$color['m_fg']}\">{$langs['st_tot']}</FONT></NOBR></TD>
+  <TD ALIGN=\"right\" BGCOLOR=\"{$color['d_bg']}\"><FONT COLOR=\"{$color['d_fg']}\">%d {$langs['st_read_no']}</TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>\n", 
+  $refer['max'],$table,$refer['mno'],$refer['mno'],$per['avg'],$refer['total']);
 
   printf("
-<table width=\"1%%\" border=\"0\" cellspacing=\"3\" cellpadding=\"0\">
-<tr>
-  <td style=\"vertical-align: top; font-weight: bold;\" width=\"1\">{$title}</td>
-  <td style=\"vertical-align: top;\" width=\"1%%\">%s</td>
-  <td style=\"vertical-align: top;\" width=\"1%%\">%s</td>
-  <td style=\"vertical-align: top;\" width=\"1%%\">%s</td>
-</tr>
-</table>\n", $str['count'], $str['refer'], $str['avg']);
+<TABLE WIDTH=\"1%%\" BORDER=\"0\" CELLSPACING=\"3\" CELLPADDING=\"0\">
+<TR>
+  <TD VALIGN=\"top\" WIDTH=\"1\"><FONT COLOR=\"{$color['text']}\">$title</FONT></TD>
+  <TD VALIGN=\"top\" WIDTH=\"1%%\">%s</TD>
+  <TD VALIGN=\"top\" WIDTH=\"1%%\">%s</TD>
+  <TD VALIGN=\"top\" WIDTH=\"1%%\">%s</TD>
+</TR>
+</TABLE>\n",$str['count'],$str['refer'],$str['avg']);
 }
 
-# ÁÖº°
-$stat = get_stat ($table, 60*60*24*7);
-display_stat ($stat, $_('st_lweek'));
+# ì£¼ë³„
+$stat = get_stat($c, $table, 60*60*24*7);
+display_stat($stat,$langs['st_lweek']);
 
-# ¿ùº°
-$stat = get_stat ($table, 60*60*24*30);
-display_stat ($stat, $_('st_lmonth'));
+# ì›”ë³„
+$stat = get_stat($c, $table, 60*60*24*30);
+display_stat($stat,$langs['st_lmonth']);
 
-# ¹İ³âº°
-$stat = get_stat ($table, 60*60*24*30*6);
-display_stat ($stat, $_('st_lhalfyear'));
+# ë°˜ë…„ë³„
+$stat = get_stat($c, $table, 60*60*24*30*6);
+display_stat($stat,$langs['st_lhalfyear']);
 
-# ³âº°
-$stat = get_stat ($table, (60*60*24*30*12) + (60*60*24*5));
-display_stat ($stat, $_('st_lyear'));
+# ë…„ë³„
+$stat = get_stat($c, $table, (60*60*24*30*12) + (60*60*24*5));
+display_stat($stat,$langs['st_lyear']);
 
-# ÀüÃ¼
-$stat = get_stat ($table, 0);
-display_stat ($stat, $_('st_ltot'));
+# ì „ì²´
+$stat = get_stat($c, $table, 0);
+display_stat($stat,$langs['st_ltot']);
 
 echo "\n<br>\n</td></tr>\n\n".
-     "<tr><td class=\"fieldtitle\">\n".
-     "Copyright by <a href=\"http://jsboard.kldp.net\"><span class=\"fieldtitle\">JSBoard Open Project</span></a><br>\n".
-     "and all right reserved\n</td></tr>\n</table>\n";
+     "<tr align=center><td bgcolor={$color['t_bg']}>\n<font color={$color['t_fg']}>\n".
+     "Copyright by <a href=http://jsboard.kldp.net><font color={$color['t_fg']}>JSBoard Open Project</font></a><br>\n".
+     "and all right reserved\n</font>\n</td></tr>\n</table>\n";
 
-htmltail();
+require("include/html_atail.php");
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
 ?>

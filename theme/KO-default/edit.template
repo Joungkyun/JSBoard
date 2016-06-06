@@ -1,178 +1,276 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!-- $Id: edit.template,v 1.29 2014/03/02 17:11:33 oops Exp $ -->
+<!-- ==================================================================== -->
+<!-- $langs['charset'] : ê²Œì‹œíŒì˜ ì–¸ì–´ íƒ€ì…ì— ë”°ë¼ charset ì„ ê°€ì ¸ì˜¨ë‹¤.   -->
+<!-- $board['ver']     : ê²Œì‹œíŒì˜ ë²„ì ¼ ì •ë³´ë¥¼ ê°€ì§€ê³  ì˜¨ë‹¤.                -->
+<!-- get_title()     : ê²Œì‹œíŒì˜ í—¤ë” íƒ€ì´í‹€ì„ ê°€ì§€ê³  ì˜¨ë‹¤.                -->
+<!-- $user_stylesheet : ì‚¬ìš©ì ì •ì˜ ìŠ¤íƒ€ì¼ ì‹œíŠ¸                           -->
+<!-- ==================================================================== -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+BODY,TD {
+  font-size: 12px;
+  font-family: <?php echo $langs['vfont']?>, sans-serif;
+  color: #555555;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font: 11px tahoma,sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #FFFFFF;
+}
+TEXTAREA {
+  font: 13px <?php echo $langs['vfont']?>, sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  background-Color: #ffffff;
+  width: 100%;
+  height: 150px;
+}
+
+.resizable-textarea .grippie {
+  height: 14px;
+  background: #ECE9D6 url(theme/EN-default/img/grippie.png) no-repeat 100% 100%;
+  border: 1px solid #DFDBCA;
+  border-top-width: 0;
+  cursor: se-resize;
+}
+
+.resizable-textarea {
+  width: 100% !important;
+  width: 98%; /* for IE */
+}
+form { display: inline; }
+
+<?php echo $user_stylesheet?>
+-->
+</style>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<!-- ======================= í—¤ë” ë””ìì¸ ì‹œì‘ ======================= -->
+<?php
+print_keymenu(2);
+echo $print['preview_script'] . "\n";
+
+if(!$np) {
+  # ê° ìœ ì €ë³„ Design
+  include "{$board['headpath']}";
+  # ì „ì²´ ê´€ë¦¬ìì— ì˜í•´ ê°•ì œ input ë˜ëŠ” Design
+  include "html/head.php";
+ }
+?>
+<!-- ======================= í—¤ë” ë””ìì¸ ë   ======================= -->
 
 <!-- ==================================================================== -->
-<!-- print_keymenu() : keyboard ·Î °Ô½ÃÆÇÀ» Á¦¾î                          -->
-<!--                   'b' = ÀÌÀü ÆäÀÌÁö                                  -->
+<!-- $board['align'] : ê²Œì‹œíŒì˜ align ì„ ì •ì˜í•œë‹¤. ì´ëŠ” ê²Œì‹œíŒ ê´€ë¦¬ìì—ì„œ -->
+<!--                 ì„¤ì •ì„ í• ìˆ˜ ìˆë‹¤.                                    -->
+<!-- $board['width'] : ê²Œì‹œíŒì˜ ë„“ì´ë¥¼ ì§€ì •í•œë‹¤. ê²Œì‹œíŒ ê´€ë¦¬ìì—ì„œ ì¡°ì •   -->
+<!-- $board['formtype'] : ì´ë¯¸ì§€ ì—…ë¡œë“œë¥¼ ì§€ì› ì—¬ë¶€ë¥¼ ìœ„í•´ ê¼­ í•„ìš”        -->
 <!-- ==================================================================== -->
-<?=print_keymenu(2)?>
+<DIV ALIGN="<?php echo $board['align']?>">
+<FORM NAME="editp" METHOD="post" ACTION="act.php"<?php echo $board['formtype']?>>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom" WIDTH=34><IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Edit article</FONT></TD>
+</TD>
+</TR>
 
-<form name="editp" method=post action="act.php"<?=$board['formtype']?> onsubmit="return registCheck();">
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''></td>
-<td class="counter"> &gt;&gt; Edit article</td>
-</tr>
+<TR BGCOLOR="#FFAE00">
+<TD COLSPAN=2>
+<IMG SRC="./theme/KO-default/img/board_no.gif" ALIGN="middle" ALT=''>
+<FONT STYLE="color:#FFFFFF"><IMG SRC="theme/KO-default/img/edit_title.gif" BORDER=0 ALT=''></FONT>
+</TD>
+</TR>
 
-<tr bgcolor="#a0dc10">
-<td colspan=2>
-<img src="./theme/KO-default/img/board_no.gif" align="middle" alt=''>
-<span style="color: #ffffff; font-weight: bold;">±Û ¼öÁ¤</span>
-</td>
-</tr>
+<TR>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
 
-<tr>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td>
-</tr>
-</table>
-
-<table width="<?=$board['width']?>" border=0 cellpadding=1 cellspacing=0>
-<tr>
-<td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
-<td rowspan=9 width=4 bgcolor="#6D7BC9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=''></td>
-<td rowspan=9 width=10><img src="images/blank.gif" width=10 height=1 border=0 alt=''></td>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''><br></td>
-<td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
-</tr>
-
-<!-- ==================================================================== -->
-<!-- $size['name']  : input ¹®ÀÇ »çÀÌÁî theme config ¿¡¼­ ¼³Á¤            -->
-<!-- $list['name']  : ¼öÁ¤ÇÒ ÀÌ¸§À» Ãâ·Â                                  -->
-<!-- ==================================================================== -->
-<tr>
-<td width=80>ÀÌ¸§</td>
-<td><input type="text" id="name" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$list['name']?>"<?=$disable?> tabindex="1"></td>
-</tr>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD ROWSPAN=9 WIDTH=10><IMG SRC="images/blank.gif" WIDTH=10 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
 
 <!-- ==================================================================== -->
-<!-- $view['email']          : email µî·Ï ¿©ºÎ °áÁ¤                       -->
-<!-- $list['email']          : ¼öÁ¤ÇÒ ÀÌ¸ŞÀÏÀ» Ãâ·Â                       -->
+<!-- $size['name']  : input ë¬¸ì˜ ì‚¬ì´ì¦ˆ theme config ì—ì„œ ì„¤ì •            -->
+<!-- $list['name']  : ìˆ˜ì •í•  ì´ë¦„ì„ ì¶œë ¥                                  -->
 <!-- ==================================================================== -->
-<?
+<TR>
+<TD WIDTH=80>ì´ë¦„</TD>
+<TD><INPUT TYPE="text" NAME="atc[name]" SIZE="<?php echo $size['name']?>" MAXLENGTH=50 VALUE="<?php echo $list['name']?>"<?php echo $disable?> tabindex="1"></TD>
+</TR>
+
+<!-- ==================================================================== -->
+<!-- $view['email']          : email ë“±ë¡ ì—¬ë¶€ ê²°ì •                       -->
+<!-- $list['email']          : ìˆ˜ì •í•  ì´ë©”ì¼ì„ ì¶œë ¥                       -->
+<!-- ==================================================================== -->
+<?php
 if($view['email'] || trim($list['email'])) {
   echo <<<EOF
-
-<tr>
-<td>¸ŞÀÏ</td>
-<td><input type="text" id="email" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$list['email']}"{$disable} tabindex="2"></td>
-</tr>
-
+<TR>
+<TD>ë©”ì¼</TD>
+<TD><INPUT TYPE="text" NAME="atc[email]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['email']}"{$disable} tabindex="2"></TD>
+</TR>
 EOF;
 }
 ?>
 
 <!-- ==================================================================== -->
-<!-- $view['url']             : url µî·Ï ¿©ºÎ °áÁ¤                        -->
-<!-- $list['url']             : ¼öÁ¤ÇÒ url À» Ãâ·Â                        -->
+<!-- $view['url']             : url ë“±ë¡ ì—¬ë¶€ ê²°ì •                        -->
+<!-- $list['url']             : ìˆ˜ì •í•  url ì„ ì¶œë ¥                        -->
 <!-- ==================================================================== -->
-<?
+<?php
 if($view['url'] || trim($list['url'])) {
   echo <<<EOF
-
-<tr>
-<td>È¨ÆäÀÌÁö</td>
-<td><input type="text" id="url" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$list['url']}"{$disable} tabindex="3"></td>
-</tr>
-
+<TR>
+<TD>í™ˆí˜ì´ì§€</TD>
+<TD><INPUT TYPE="text" NAME="atc[url]" SIZE="{$size['name']}" MAXLENGTH=255 VALUE="{$list['url']}"{$disable} tabindex="3"></TD>
+</TR>
 EOF;
 }
 ?>
 
 <!-- ==================================================================== -->
-<!-- upload ºÎºĞ Ãâ·Â¿©ºÎ ¼³Á¤ (¿Ø¸¸ÇÏ¸é ±×³É ¾²¸é µÊ)                    -->
+<!-- upload ë¶€ë¶„ ì¶œë ¥ì—¬ë¶€ ì„¤ì • (ì™ ë§Œí•˜ë©´ ê·¸ëƒ¥ ì“°ë©´ ë¨)                    -->
 <!-- ==================================================================== -->
-<?
+<?php
 if($list['bofile']) {
   echo <<<EOF
-<tr>
-<td>ÆÄÀÏ</td>
-<td>
-<a href="$down_link">
-<img src="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" align="middle">
-<span class="attachfn">{$list['bofile']}</span></a> - $hfsize &nbsp; &nbsp;
-<input type="checkbox" name="atc[fdel]" value=1 tabindex="4"> ÆÄÀÏ»èÁ¦
-</td>
-</tr>
-
+<TR>
+<TD>íŒŒì¼</TD>
+<TD>
+<A HREF="$down_link">
+<IMG SRC="images/$icon" width=16 height=16 border=0 alt="{$list['bofile']}" valign="middle">
+<FONT style="color:{$color['text']}">{$list['bofile']}</FONT></A> - $hfsize &nbsp; &nbsp;
+<INPUT TYPE="CHECKBOX" NAME="atc[fdel]" VALUE=1 tabindex="4"> íŒŒì¼ì‚­ì œ
+</TD>
+</TR>
 EOF;
 }
 
 if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
   echo <<<EOF
-<tr>
-<td>ÆÄÀÏ¼öÁ¤</td>
-<td>
-<input type="hidden" name="max_file_size" value="{$upload['maxsize']}">
-<input type="file" name="userfile" size="{$size['uplo']}" maxlength=256 tabindex="5">
-</td>
-</tr>
-
+<TR>
+<TD>íŒŒì¼ìˆ˜ì •</TD>
+<TD>
+<INPUT TYPE="HIDDEN" NAME="max_file_size" VALUE="{$upload['maxsize']}">
+<INPUT TYPE="file" NAME="userfile" SIZE="{$size['uplo']}" MAXLENGTH=256 tabindex="5">
+</TD>
+</TR>
 EOF;
 }
 ?>
 
 <!-- ==================================================================== -->
-<!-- $size['titl']  : title input ¹®ÀÇ »çÀÌÁî                             -->
-<!-- $list['title'] : ¼öÁ¤ÇÒ ±Û Á¦¸ñ                                      -->
+<!-- $size['titl']  : title input ë¬¸ì˜ ì‚¬ì´ì¦ˆ                             -->
+<!-- $list['title'] : ìˆ˜ì •í•  ê¸€ ì œëª©                                      -->
 <!-- ==================================================================== -->
-<tr>
-<td>Á¦¸ñ</td>
-<td><input type="text" id="title" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 value="<?=$list['title']?>" tabindex="6"></td>
-</tr>
+<TR>
+<TD>ì œëª©</TD>
+<TD><INPUT TYPE="text" NAME="atc[title]" SIZE="<?php echo $size['titl']?>" MAXLENGTH=100 VALUE="<?php echo $list['title']?>" tabindex="6"></TD>
+</TR>
 
-<tr>
+<TR>
 <!-- ==================================================================== -->
-<!-- admin login »óÅÂÀÏ °æ¿ì ÆĞ½º¿öµå¸¦ ¾ÈÀû¾îµµ µÇ°Ô²û ÇÏ´Â ·çÆ¾         -->
-<!-- IE, NS6 ÀÇ °æ¿ì¿¡´Â textarea Ã¢ »çÀÌÁî Á¶Á¤ ¹öÆ°µµ °°ÀÌ Ãâ·Â         -->
+<!-- admin login ìƒíƒœì¼ ê²½ìš° íŒ¨ìŠ¤ì›Œë“œë¥¼ ì•ˆì ì–´ë„ ë˜ê²Œë” í•˜ëŠ” ë£¨í‹´         -->
+<!-- IE, NS6 ì˜ ê²½ìš°ì—ëŠ” textarea ì°½ ì‚¬ì´ì¦ˆ ì¡°ì • ë²„íŠ¼ë„ ê°™ì´ ì¶œë ¥         -->
 <!-- ==================================================================== -->
-<?
+<?php
 if(preg_match("/^[046]$/",$board['mode']) && !$board['super']) {
   echo <<<EOF
-<td>ÆĞ½º¿öµå</td>
-<td>
+<TD>íŒ¨ìŠ¤ì›Œë“œ</TD>
+<TD>
 $passment
-<img src="./images/blank.gif" width=15 height=1 border=0 alt=''>
-</td>
+</TD>
 EOF;
 }
 ?>
-</tr>
+</TR>
 
-<tr>
-<td colspan=2><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
-</tr>
-</table>
+<TR>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''><BR></TD>
+</TR>
+</TABLE>
 
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td></tr>
-</table>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
 
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td class="rbodybg">
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>" ALIGN="CENTER">
 
 <!-- ==================================================================== -->
-<!-- $size['text'] : textarea ÀÇ size Ãâ·Â                                -->
-<!-- $list['text'] : ¼öÁ¤ÇÒ ±Û º»¹®À» Ãâ·Â                                -->
+<!-- $size['text'] : textarea ì˜ size ì¶œë ¥                                -->
+<!-- $list['text'] : ìˆ˜ì •í•  ê¸€ ë³¸ë¬¸ì„ ì¶œë ¥                                -->
 <!-- ==================================================================== -->
-<!-- =============================== ±Û³»¿ë =============================== -->
+<!-- =============================== ê¸€ë‚´ìš© =============================== -->
 <script type="text/javascript" src="./theme/common/textarea.js"></script>
-<textarea id="epost" class="resizable" name="atc[text]" tabindex="8"><?="{$list['text']}\n\n"?></textarea>
-<!-- =============================== ±Û³»¿ë =============================== -->
+<TEXTAREA NAME="epost" CLASS="resizable" tabindex="8"><?php echo "{$list['text']}\n\n"?></TEXTAREA>
+<!-- =============================== ê¸€ë‚´ìš© =============================== -->
 
-</td></tr>
-</table>
+</TD></TR>
+</TABLE>
 
 
 <!-- ==================================================================== -->
-<!-- $table.$page      : ¸ñ·ÏÀ¸·Î µ¹¾Æ°¡´Â ¸µÅ©¿¡ ÇÊ¿äÇÑ º¯¼öµé           -->
-<!-- $print['passform']: ¼öÁ¤ÇÑ ±Û µî·ÏÇÏ´Âµ¥ ÇÊ¿äÇÑ hidden º¯¼öµé        -->
-<!-- $orig_option      : ±Û¾²±â Ã¢ Á¶Àı½Ã ¿ø·¡ Å©±â·Î µ¹¾Æ°¡´Â ¿É¼Ç       -->
+<!-- $table.$page      : ëª©ë¡ìœ¼ë¡œ ëŒì•„ê°€ëŠ” ë§í¬ì— í•„ìš”í•œ ë³€ìˆ˜ë“¤           -->
+<!-- $print['passform']: ìˆ˜ì •í•œ ê¸€ ë“±ë¡í•˜ëŠ”ë° í•„ìš”í•œ hidden ë³€ìˆ˜ë“¤        -->
+<!-- $orig_option      : ê¸€ì“°ê¸° ì°½ ì¡°ì ˆì‹œ ì›ë˜ í¬ê¸°ë¡œ ëŒì•„ê°€ëŠ” ì˜µì…˜       -->
 <!-- ==================================================================== -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td bgcolor="#a0dc10" align="center">
-<?=$print['passform']?>
-<input type="submit" value="µî·Ï" tabindex="9">
-<input type="button" value="´Ù½Ã" onclick="document.location.reload(); return true;" tabindex="10">
-<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="¸ñ·Ï" tabindex="11">
-<input type="button" onclick="history.back()" value="ÀÌÀü" tabindex="12">
-</td></tr>
-</table>
-</form>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
+<?php echo $print['passform']?>
+<INPUT TYPE="submit" VALUE="ë“±ë¡" tabindex="9">
+<INPUT TYPE="button" VALUE="ë‹¤ì‹œ" onClick="document.location.reload(); return false;" tabindex="10">
+<INPUT TYPE="button" onClick="document.location='./list.php?table=<?php echo $table.$pages?>'" VALUE="ëª©ë¡" tabindex="11">
+<INPUT TYPE="button" onClick="history.back()" VALUE="ì´ì „" tabindex="12">
+</TD></TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- print_license()  : ë¼ì´ì„¼ìŠ¤ ì¶œë ¥                                     -->
+<!-- ==================================================================== -->
+<?php echo print_license()?>
+
+</FORM>
+</DIV>
+
+<!-- ======================= ê¼¬ë¦¬ ë””ìì¸ ì‹œì‘ ======================= -->
+<?php
+if(!$np) {
+  # ì „ì²´ ê´€ë¦¬ìì— ì˜í•´ ê°•ì œ input ë˜ëŠ” Design
+  include "html/tail.php";
+  # ê° ìœ ì €ë³„ Design
+  include "{$board['tailpath']}";
+}
+?>
+<!-- ======================= ê¼¬ë¦¬ ë””ìì¸ ë   ======================= -->
+</BODY>
+</HTML>

@@ -1,165 +1,189 @@
 <?php
-# $Id: act.php,v 1.4 2009-11-17 17:40:16 oops Exp $
+# $Id: act.php,v 1.19 2014/03/02 17:11:30 oops Exp $
 $path['type'] = "admin";
-require_once './include/admin_head.php';
-require_once '../include/ostype.php';
-require_once '../include/parse.php';
+include "./include/admin_head.php";
+include "../include/ostype.php";
 
-if ( ! session_is_registered ($jsboard) || $_SESSION[$jsboard]['pos'] != 1 )
-  print_error ($_('login_err'));
+if(!isset($_SESSION[$jsboard]) || $_SESSION[$jsboard]['pos'] != 1)
+print_error($langs['login_err']);
 
-if ( $mode == 'global_chg' ) {
+if($mode == "global_chg") {
   $db['rhost'] = $db['server'];
   $db['rmode'] = "";
 }
 
-if ($db['rmode'] == 'r' ) 
-  print_error ("System Checking NOW !! \n\nSorry, Read only enable.", 250, 130, 1);
+if($db['rmode'] == "r") 
+  print_error("System Checking NOW !! \n\nSorry, Read only enable.",250,130,1);
 
 ###########################################
-#          DB¿¡ Á¢¼Ó
+#          DBì— ì ‘ì†
 ###########################################
 
-$c = sql_connect($db['rhost'], $db['user'], $db['pass'], $db['name']);
+$c = @sql_connect($db['rhost'],$db['user'],$db['pass']);
+sql_select_db($db['name'],$c);
 
-# password ºñ±³ÇÔ¼ö - admin/include/auth.php
-compare_pass ($_SESSION[$jsboard]);
+# password ë¹„êµí•¨ìˆ˜ - admin/include/auth.php
+compare_pass($_SESSION[$jsboard]);
 
-# db_nameÀÌ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é ¾Æ·¡¸¦ Ãâ·ÂÇÕ´Ï´Ù.
-exsit_dbname_check ($db['name']);
+# db_nameì´ ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´ ì•„ë˜ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.
+exsit_dbname_check($db['name']);
 
-# ¾ËÆÄºª ±¸ºĞµÈ ÆäÀÌÁö¿¡¼­ ³Ñ¾î ¿ÔÀ» °æ¿ì ÆäÀÌÁö¸¦
-# µÇµ¹¸®±â À§ÇØ ÁöÁ¤
-$tslink = $ts ? "?ts=$ts" : '';
+# ì•ŒíŒŒë²³ êµ¬ë¶„ëœ í˜ì´ì§€ì—ì„œ ë„˜ì–´ ì™”ì„ ê²½ìš° í˜ì´ì§€ë¥¼
+# ë˜ëŒë¦¬ê¸° ìœ„í•´ ì§€ì •
+if($ts) $tslink = "?ts=$ts";
 
-if ( $mode == 'csync' ) {
-  table_name_check ($table_name);
+if ($mode == "csync") {
+  table_name_check($table_name);
 
-  if ( ! preg_match ("/_comm$/", $table_name) ) {
-    print_error ("$table_name is not comment table", 250, 150, 1);
+  if (!preg_match ("/_comm$/", $table_name)) {
+    print_error("$table_name is not comment table",250,150,1);
   }
 
-  $mother_name = preg_replace ('/_comm$/', '', $table_name);
+  $mother_name = preg_replace("/_comm$/", "", $table_name);
 
-  # µ¿ÀÏÇÑ ÀÌ¸§ÀÇ °Ô½ÃÆÇÀÌ ÀÖ´ÂÁö È®ÀÎ
+  # ë™ì¼í•œ ì´ë¦„ì˜ ê²Œì‹œíŒì´ ìˆëŠ”ì§€ í™•ì¸
   $chk = db_table_list ($c, $db['name'], '', $table_name);
 
-  if ( $chk ) {
+  if ($chk) {
     if ( ! field_exist_check ($c, $db['name'], $mother_name, "comm") ) {
-      # comm field Ãß°¡
+      # comm field ì¶”ê°€
       sql_query ('ALTER TABLE ' . $mother_name . ' add comm int(6) DEFAULT 0', $c);
-      # comm field key Ãß°¡
+      # comm field key ì¶”ê°€
       sql_query ('ALTER TABLE ' . $mother_name . ' add key (comm)', $c);
     }
 
     sync_comment ($table_name, $mother_name);
 
-    sql_close ($c);
+    sql_close($c);
   } else {
-    sql_close ($c);
-    print_error ("$table_name is not found", 250, 150, 1);
+    sql_close($c);
+    print_error("$table_name is not found",250,150,1);
   }
 }
 
-else if ( $mode == 'db_del' ) {
-  table_name_check ($table_name);
+else if($mode=='db_del') {
+  table_name_check($table_name);
 
-  # µ¿ÀÏÇÑ ÀÌ¸§ÀÇ °Ô½ÃÆÇÀÌ ÀÖ´ÂÁö È®ÀÎ
+  # ë™ì¼í•œ ì´ë¦„ì˜ ê²Œì‹œíŒì´ ìˆëŠ”ì§€ í™•ì¸
   $chk = db_table_list ($c, $db['name'], '', $table_name);
 
-  if ( $chk ) {
+  if ($chk) {
     # table delete
     $table_del = "drop table $table_name";
-    sql_query ($table_del, $c);
+    sql_query($table_del,$c);
 
-    if ( ! preg_match ('/_comm$/', $table_name) ) {
+    if(!preg_match("/_comm$/",$table_name)) {
       $comm_del = "drop table {$table_name}_comm";
-      sql_query($comm_del,$c, 1);
+      sql_query($comm_del,$c);
 
-      # °Ô½ÃÆÇ °èÁ¤¿¡¼­ »ç¿ëµÇ´Â file »èÁ¦
+      # ê²Œì‹œíŒ ê³„ì •ì—ì„œ ì‚¬ìš©ë˜ëŠ” file ì‚­ì œ
       unlink_r ("../data/{$table_name}");
     }
   }
 
-  sql_close ($c);
+  sql_close($c);
 }
 
-else if ( $mode == 'db_create' )  {
-  # °Ô½ÃÆÇ ÀÌ¸§ ±ÔÄ¢ -> A-Za-z0-9_
-  if ( preg_match ('/[^a-z0-9_]/i', $new_table) )
-    print_error ($_('tb_rule'), 250, 150, 1);
+else if($mode == 'db_create')  {
+  # ê²Œì‹œíŒ ì´ë¦„ ê·œì¹™ -> A-Za-z0-9_-
+  if ( preg_match ('/[^a-z0-9_-]/i', $new_table) )
+    print_error ($langs['tb_rule'], 250, 150, 1);
 
-  # »õ·Î¸¸µé °èÁ¤ÀÌ¸§ÀÇ Á¸ÀçÀ¯¹« Ã¼Å©
-  table_name_check ($new_table);
+  # ìƒˆë¡œë§Œë“¤ ê³„ì •ì´ë¦„ì˜ ì¡´ì¬ìœ ë¬´ ì²´í¬
+  table_name_check($new_table);
 
-  # µ¿ÀÏÇÑ ÀÌ¸§ÀÇ °Ô½ÃÆÇÀÌ ÀÖ´ÂÁö È®ÀÎ
+  # ë™ì¼í•œ ì´ë¦„ì˜ ê²Œì‹œíŒì´ ìˆëŠ”ì§€ í™•ì¸
   if ( $new_table == 'userdb' || db_table_list ($c, $db['name'], '', $new_table) )
     print_error ($_('a_acc'), 250, 150, 1);
 
-  $_sql['r'] = array ('b', 'c');
-  $_sql['b'] = sql_parser ($db['type'], 'board', $new_table, 1);
-  $_sql['c'] = sql_parser ($db['type'], 'comment', $new_table, 1);
+  #include "include/first_reg.php";
+  $create_table = "CREATE TABLE $new_table ( 
+                     no int(6) NOT NULL auto_increment,
+                     num int(6) DEFAULT '0' NOT NULL,
+                     idx int(6) DEFAULT '0' NOT NULL,
+                     date int(11) DEFAULT '0' NOT NULL,
+                     host tinytext,
+                     name tinytext,
+                     rname tinytext,
+                     passwd varchar(56),
+                     email tinytext,
+                     url tinytext,
+                     title tinytext,
+                     text mediumtext,
+                     refer int(6) DEFAULT '0' NOT NULL,
+                     reyn int(1) DEFAULT '0' NOT NULL,
+                     reno int(6) DEFAULT '0' NOT NULL,
+                     rede int(6) DEFAULT '0' NOT NULL,
+                     reto int(6) DEFAULT '0' NOT NULL,
+                     html int(1) DEFAULT '1' NOT NULL,
+                     comm int(6) DEFAULT '0' NOT NULL,
+                     bofile varchar(100),
+                     bcfile varchar(100),
+                     bfsize int(4),
+                     KEY no (no),
+                     KEY num (num),
+                     KEY idx (idx),
+                     KEY reno (reno),
+                     KEY date (date),
+                     KEY reto (reto),
+                     KEY comm (comm),
+                     PRIMARY KEY (no))";
 
-  # create table
-  foreach ( $_sql['r'] as $_o ) {
-    if ( is_array ($_sql[$_o]) ) {
-      foreach ( $_sql[$_o] as $_s ) {
-        sql_query ($_s, $c);
-      }
-    }
-  }
+  $create_comm = "CREATE TABLE {$new_table}_comm (
+                     no int(6) NOT NULL auto_increment,
+                     reno int(20) NOT NULL default '0',
+                     rname tinytext,
+                     name tinytext,
+                     passwd varchar(56) default NULL,
+                     text mediumtext,
+                     host tinytext,
+                     date int(11) NOT NULL default '0',
+                     PRIMARY KEY  (no),
+                     KEY parent (reno))";
 
-  /*
-  require_once "include/first_reg.php";
-  $_dr['p'] = crypt($passwd_ext);
-  $_cr['b'] = "INSERT INTO test (num, idx, date, host, name, passwd, email, url, title," . 
-              "                  text, refer, reyn, reno, rede, reto, html, comm, bofile," .
-              "                  bcfile, bfsize)" .
-              "VALUES (1, 1, '{$_dr['d']}', '127.0.0.1', '{$_dr['n']}', '{$_dr['p']}'," . 
-              "        '{$_dr['e']}', '{$_dr['u']}', '{$_dr['s']}', '{$_dr['b']}', 0, 0," .
-              "        0, 0, 0, 0, 0, '', '', '')";
+  $passwd_ext = crypt($passwd_ext);
 
-  sql_query ($_cr['b'], $c);
-  */
-  sql_close ($c);
+  $insert_data = "INSERT INTO $new_table (no,num,idx,date,host,name,passwd,email,url,title,
+                         text,refer,reyn,reno,rede,reto,html,comm,bofile,bcfile,bfsize)
+                         VALUES ('',1,1,$date,'$host_ext','$name_ext','$passwd_ext','$email_ext',
+                         '$url_ext','$subj_msg','$text_msg',0,0,0,0,0,0,0,'','','')";
 
-  # »õ·Î¿î °Ô½ÃÆÇ¿¡ ÇÊ¿äÇÑ ÆÄÀÏ¹× µğ·ºÅä¸® »ı¼º
-  mkdir("../data/{$new_table}",0770);
-  mkdir("../data/{$new_table}/{$upload['dir']}",0770);
-  chmod("../data/{$new_table}",0775);
-  chmod("../data/{$new_table}/{$upload['dir']}",0775);
+  sql_query($create_table, $c);
+  #$result_insert = sql_query($insert_data, $c);
 
-  $_co = readfile_r ("../utils/sample/data/config.php");
-  $_sr = array ('/@theme@/', '/@table@/', '/@wpath@/');
-  $_dr = array ($print['theme'], $new_table, $board['path']);
-  $_co = preg_replace ($_sr, $_dr, $_co);
+  sql_query($create_comm, $c);
 
-  writefile_r ("../data/{$new_table}/config.php", $_co);
-  chmod("../data/{$new_table}/config.php",0644);
+  # ìƒˆë¡œìš´ ê²Œì‹œíŒì— í•„ìš”í•œ íŒŒì¼ë° ë””ë ‰í† ë¦¬ ìƒì„±
+  mkdir("../data/$new_table",0700);
+  mkdir("../data/$new_table/{$upload['dir']}",0700);
+  chmod("../data/$new_table",0755);
+  chmod("../data/$new_table/{$upload['dir']}",0755);
+  copy("../INSTALLER/sample/data/config.php","../data/$new_table/config.php");
+  chmod("../data/$new_table/config.php",0644);
+  copy("../INSTALLER/sample/data/html_head.php","../data/$new_table/html_head.php");
+  chmod("../data/$new_table/html_head.php",0644);
+  copy("../INSTALLER/sample/data/html_tail.php","../data/$new_table/html_tail.php");
+  chmod("../data/$new_table/html_tail.php",0644);
+  copy("../INSTALLER/sample/data/stylesheet.php","../data/$new_table/stylesheet.php");
+  chmod("../data/$new_table/stylesheet.php",0644);
 
-  copy("../utils/sample/data/html_head.php","../data/$new_table/html_head.php");
-  chmod("../data/{$new_table}/html_head.php",0644);
-  copy("../utils/sample/data/html_tail.php","../data/$new_table/html_tail.php");
-  chmod("../data/{$new_table}/html_tail.php",0644);
-  copy("../utils/sample/data/stylesheet.php","../data/$new_table/stylesheet.php");
-  chmod("../data/{$new_table}/stylesheet.php",0644);
+  sql_close($c);
 }
 
-else if( $mode == 'global_chg' ) {
-  sql_close ($c);
-  # quot º¯È¯µÈ ¹®ÀÚ¸¦ un quot ÇÑ´Ù
+else if($mode == "global_chg") {
+  sql_close($c);
+  # quot ë³€í™˜ëœ ë¬¸ìë¥¼ un quot í•œë‹¤
 
-  $vars = "<?\n" . stripslashes ($glob['vars']) . "\n?>";
-  $spam = stripslashes ($glob['spam']);
+  $vars = "<?php\n".stripslashes($glob['vars'])."\n?>";
+  $spam = stripslashes($glob['spam']);
 
-  writefile_r ('../config/global.php', $vars);
-  writefile_r ('../config/spam_list.txt', $spam);
+  file_operate("../config/global.php","w",0,$vars);
+  file_operate("../config/spam_list.txt","w",0,$spam);
 
-  $_lang['act_complete'] = str_replace ("\n", "\\n", $_('act_complete'));
-  $_lang['act_complete'] = str_replace ("'", "\'", $_lang['act_complete']);
-
-  echo "<script type=\"text/javascript\">\n" .
-       "alert('{$_lang['act_complete']}')\n" .
+  $langs['act_complete'] = str_replace("\n","\\n",$langs['act_complete']);
+  $langs['act_complete'] = str_replace("'","\'",$langs['act_complete']);
+  echo "<script>\n" .
+       "alert('{$langs['act_complete']}')\n" .
        "window.close()\n</script>\n".
        "<NOSCRIPT>Complete this Job. Click <A HREF=./admin.php>here go to admin page!</A></NOSCRIPT>";
   exit;
@@ -168,4 +192,14 @@ else if( $mode == 'global_chg' ) {
 
 Header("Location:admin.php$tslink");
 
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
 ?>

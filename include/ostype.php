@@ -1,7 +1,6 @@
 <?php
-# $Id: ostype.php,v 1.2 2009-11-16 21:52:47 oops Exp $
-#
-# OS ¸¶´Ù Æ²¸®°Ô Àû¿ëµÇ´Â º¯¼ö°ªÀ» ÁöÁ¤À» ÇÑ´Ù.
+# $Id: ostype.php,v 1.3 2014/03/02 17:11:31 oops Exp $
+# OS ë§ˆë‹¤ í‹€ë¦¬ê²Œ ì ìš©ë˜ëŠ” ë³€ìˆ˜ê°’ì„ ì§€ì •ì„ í•œë‹¤.
 # get OS type for password field in MySQL and
 # sample files
 if(preg_match("/linux/i",$OSTYPE)) {
@@ -14,4 +13,15 @@ if(preg_match("/linux/i",$OSTYPE)) {
   $ostypes['name'] = "Others";
   $ostypes['dpass'] = "lHJTjGW8VhHc.";
 }
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

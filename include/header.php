@@ -1,19 +1,17 @@
 <?php
-# $Id: header.php,v 1.13 2009-11-16 21:52:47 oops Exp $
-$_pself = $_SERVER['PHP_SELF'];
-if ( preg_match ('/(write|edit|reply|read)\.php/i',$_pself) )
-  session_cache_limiter ('private');
-else
-  session_cache_limiter ('nocache');
+# $Id: header.php,v 1.18 2014/03/04 21:37:03 oops Exp $
+if(preg_match("/(write|edit|reply|read)\.php/i",$_SERVER['PHP_SELF']))
+  session_cache_limiter('nocache');
 
 # config of magic quotes
-set_magic_quotes_runtime (0); 
-ini_set ('magic_quotes_gpc', 1);
-ini_set ('magic_quotes_sybase', 0);
-ini_set ('precision', 15);
-ini_set ('track_errors', 1);
+if(version_compare(PHP_VERSION,'5.4.0','<')) {
+  set_magic_quotes_runtime(0); 
+  ini_set(magic_quotes_gpc,1);
+  ini_set(magic_quotes_sybase,0);
+}
+ini_set(precision,15);
 
-# table ∫Øºˆ √º≈©
+# table Î≥ÄÏàò Ï≤¥ÌÅ¨
 $table = trim ($table);
 if ( preg_match ('!/\.+|%00$!', $table) ) {
   echo "<script>\nalert('Ugly access with table variable with \'{$table}\'');\n" .
@@ -24,124 +22,145 @@ if ( preg_match ('!/\.+|%00$!', $table) ) {
 include_once 'include/variable.php';
 include_once "include/error.php";
 include_once "include/print.php";
-# GET/POST ∫Øºˆ∏¶ ¡¶æÓ
-parse_query_str ();
+# GET/POST Î≥ÄÏàòÎ•º Ï†úÏñ¥
+parse_query_str();
 
-if ( ! @file_exists ("config/global.php") ) {
+if ( ! @file_exists("config/global.php") ) {
   echo "<script>\nalert('Don\'t exist global\\nconfiguration file');\n" .
        "history.back();\nexit;\n</script>\n";
   exit;
 } else { include_once "config/global.php"; }
 
+session_start();
 
 ##############################################################################
-#  ¿Ã ¡§∫∏µÈ¿∫ ∞«µÈ¡ˆ ∏ªµµ∑œ «—¥Ÿ!!!!!
+#  Ïù¥ Ï†ïÎ≥¥Îì§ÏùÄ Í±¥Îì§ÏßÄ ÎßêÎèÑÎ°ù ÌïúÎã§!!!!!
 ##############################################################################
-if ( trim ($table) ) {
-  if ( @file_exists ("data/$table/config.php") && $board['uconf'] ) {
-    @include_once "data/$table/config.php";
-  }
+if(trim($table)) {
+  if(@file_exists("data/$table/config.php") && $board['uconf'])
+    { @include_once "data/$table/config.php"; }
 
-  if ( @file_exists ("data/$table/stylesheet.php") ) {
+  if(@file_exists("data/$table/stylesheet.php")) {
     @include_once"data/$table/stylesheet.php";
-
-    if( $user_stylesheet ) {
-       $user_stylesheet = preg_replace ('/<[\/]*STYLE[^>]*>/i','',$user_stylesheet);
+    if($user_stylesheet) {
+       $user_stylesheet = preg_replace("/<[\/]*STYLE[^>]*>/i","",$user_stylesheet);
        $user_stylesheet = "<!-- ======================= User define stylesheet ======================= -->\n".
-                          "<style type=\"text/css\">\n" .
                           "$user_stylesheet\n".
-                          "</style>\n".
                           "<!-- ======================= User define stylesheet ======================= -->\n";
     }
   }
 
-  # ∞‘Ω√∆« ∞¸∏Æ¿⁄∞° null ¿œ ∞ÊøÏ∏¶ ¥Î∫Ò«œø© null ¿œ∂ß admin ¿∏∑Œ ∞≠¡¶ º≥¡§
-  $board['ad'] = ! $board['ad'] ? "admin" : $board['ad'];
+  # Í≤åÏãúÌåê Í¥ÄÎ¶¨ÏûêÍ∞Ä null Ïùº Í≤ΩÏö∞Î•º ÎåÄÎπÑÌïòÏó¨ null ÏùºÎïå admin ÏúºÎ°ú Í∞ïÏ†ú ÏÑ§Ï†ï
+  $board['ad'] = !$board['ad'] ? "admin" : $board['ad'];
 
-  # theme ¿« º≥¡§ ∆ƒ¿œ¿ª »£√‚
-  if ( ! $path['type'] ) {
+  # theme Ïùò ÏÑ§Ï†ï ÌååÏùºÏùÑ Ìò∏Ï∂ú
+  if(!$path['type']) {
     include_once "./theme/{$print['theme']}/config.php";
   }
-} else {
-  include_once "theme/{$print['theme']}/config.php";
-}
+} else include_once "theme/{$print['theme']}/config.php";
 
-if ( file_exists ("./config/external.php") ) { 
-  unset ($edb);
+if(file_exists("./config/external.php")) { 
+  unset($edb);
   include_once "./config/external.php";
 }
 
-putenv ("JSLANG={$_code}");
+$sqlfunc = extension_loaded('mysqli') ? 'sqli' : 'sql';
 
 include_once "include/version.php";
-include_once "language/lang.php";
+include_once "include/lang.php";
 include_once "include/check.php";
 if(!check_windows()) { include_once "include/exec.php"; }
 include_once "include/get.php";
 include_once "include/list.php";
 include_once "include/sURI.php";
 include_once "include/parse.php";
-include_once "database/db.php";
+include_once "include/{$sqlfunc}.php";
 include_once "include/replicate.php";
 include_once "include/sendmail.php";
 
-sessionInit($board['sessTmp']);
 init_htmltag();
-session_start ();
-if ( ! session_is_registered ($jsboard) && ! preg_match ('/session\.php/i', $_pself) )
-  session_destroy ();
+$agent = get_agent();
+$db = replication_mode($db);
 
-$agent = get_agent ();
-$db = replication_mode ($db);
+if(!js_wrapper('ini_get','file_uploads') || $agent['tx']) $noup = 1;
 
-if ( ! ini_get ('file_uploads') || $agent['tx'] ) $noup = 1;
+if(preg_match("/(act|write|edit|reply)\.php/i",$_SERVER['PHP_SELF']))
+  $upload['maxsize'] = get_upload_value($upload);
 
-if ( preg_match ('/(act|write|edit|reply)\.php/i', $_pself))
-  $upload['maxsize'] = get_upload_value ($upload);
-
-# ø‹∫Œ hyper link ∏¶ ∏∑±‚ ¿ß«— º≥¡§
-check_dhyper ($board['usedhyper'], $board['endhyper'], $board['dhyper'], $enable['dhyper'], $enable['plink']);
-check_access ($board['useipbl'], $board['ipbl'], $enable['ipbl']);
+# Ïô∏Î∂Ä hyper link Î•º ÎßâÍ∏∞ ÏúÑÌïú ÏÑ§Ï†ï
+check_dhyper($board['usedhyper'],$board['endhyper'],$board['dhyper'],$enable['dhyper'],$enable['plink']);
+check_access($board['useipbl'],$board['ipbl'],$enable['ipbl']);
 
 # write, edit, reply page form size ========================
-$size['name'] = ! $size['name'] ? form_size (14) : form_size ($size['name']);
-$size['pass'] = ! $size['pass'] ? form_size (4) : form_size ($size['pass']);
-$size['titl'] = ! $size['titl'] ? form_size (25) : form_size ($size['titl']);
-$size['text'] = ! $size['text'] ? form_size (30) : form_size ($size['text']);
-$size['uplo'] = ! $size['uplo'] ? form_size (19) : form_size ($size['uplo']);
+$size['name'] = !$size['name'] ? form_size(14) : form_size($size['name']);
+$size['pass'] = !$size['pass'] ? form_size(4) : form_size($size['pass']);
+$size['titl'] = !$size['titl'] ? form_size(25) : form_size($size['titl']);
+$size['text'] = !$size['text'] ? form_size(30) : form_size($size['text']);
+$size['uplo'] = !$size['uplo'] ? form_size(19) : form_size($size['uplo']);
 
 $referer = parse_referer ();
 
-# table ¿Ã æ¯∞≈≥™ meta character ¡∏¿Á ¿Øπ´ √º≈©
-if ( ! preg_match ('/(user|session|regist|error|image)\.php/i', $_pself)) {
-  if ( $dn['tb'] ) $table = $dn['tb'];
-  meta_char_check ($table, 0, 1);
-  meta_char_check ($print['theme'], 0, 1);
+# table Ïù¥ ÏóÜÍ±∞ÎÇò meta character Ï°¥Ïû¨ Ïú†Î¨¥ Ï≤¥ÌÅ¨
+if(!preg_match("/(user|session|regist|error|image)\.php/i",$_SERVER['PHP_SELF'])) {
+  if($dn['tb']) $table = $dn['tb'];
+  meta_char_check($table,0,1);
+  meta_char_check($print['theme'],0,1);
 }
 
-if ( $upload['yesno'] && $cupload['yesno'] ) $colspan = "7";
+if ($upload['yesno'] && $cupload['yesno']) $colspan = "7";
 else $colspan = "6";
 
-# ∞¸∏Æ¿⁄ ¡§∫∏
-if ( session_is_registered ($jsboard) ) {
-  if ( $_SESSION[$jsboard]['pos'] == 1 ) $board['super'] = 1;
-  if ( strstr ($board['ad'],";") ) {
-    if ( preg_match ("/{$_SESSION[$jsboard]['id']};|;{$_SESSION[$jsboard]['id']}/", $board['ad']) ) $board['adm'] = 1;
+if(strtoupper($color['bgcol']) == strtoupper($color['l4_bg']) && preg_match("/list\.php/i",$_SERVER['PHP_SELF'])) {
+  $form_border = "1x";
+} elseif(strtoupper($color['bgcol']) == strtoupper($color['r5_bg']) && preg_match("/read\.php/i",$_SERVER['PHP_SELF'])) {
+  $form_border = "1x";
+} else $form_border = "2x";
+
+# Ïù¥Î©îÏùº Ï£ºÏÜå Î≥ÄÌòï Ï≤¥ÌÅ¨
+$rmail['chars'] = !$rmail['chars'] ? "__at__" : $rmail['chars'];
+
+# ÎùºÏù¥ÏÑºÏä§ Ï∂úÎ†• Í¥ÄÎ†® ÏÑ§Ï†ï
+$gpl_link = "http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt";
+switch ($designer['license']) {
+  case '0' :
+    $designer['license'] = " And follow <A HREF=\"$gpl_link\" TARGET=\"_blank\">GPL2</A>";
+    break;
+  case '1' :
+    $designer['license'] = " All right reserved";
+    break;
+}
+
+# Í¥ÄÎ¶¨Ïûê Ï†ïÎ≥¥
+if (isset($_SESSION[$jsboard])) {
+  if($_SESSION[$jsboard]['pos'] == 1) $board['super'] = 1;
+  if(strstr($board['ad'],";")) {
+    if(preg_match("/{$_SESSION[$jsboard]['id']};|;{$_SESSION[$jsboard]['id']}/",$board['ad'])) $board['adm'] = 1;
   } else {
-    if ( preg_match ("/^{$_SESSION[$jsboard]['id']}$/", $board['ad'])) $board['adm'] = 1;
+    if(preg_match("/^{$_SESSION[$jsboard]['id']}$/",$board['ad'])) $board['adm'] = 1;
   }
 }
 
-if ( preg_match("/(read|list)\.php/i", $_pself) ) {
-  if ( $theme['ver'] != $designer['ver'] ) print_error ($_('nomatch_theme'), 250, 150, 1);
+if(preg_match("/(read|list)\.php/i",$_SERVER['PHP_SELF'])) {
+  if($theme['ver'] != $designer['ver']) print_error($langs['nomatch_theme'],250,150,1);
 }
 
-# login button √‚∑¬
-if ( session_is_registered($jsboard) ) {
-  if ( @file_exists ("./theme/{$print['theme']}/img/logout.gif") )
-    $print['lout'] = "<img src=\"./theme/{$print['theme']}/img/logout.gif\" border=0 alt=\"LOGOUT\">";
-  else $print['lout'] = "&gt;&gt; logout ";
+# login button Ï∂úÎ†•
+if(isset($_SESSION[$jsboard])) {
+  if(@file_exists("./theme/{$print['theme']}/img/logout.gif"))
+    $print['lout'] = "<IMG SRC=./theme/{$print['theme']}/img/logout.gif BORDER=0 ALT='LOGOUT'>";
+  else $print['lout'] = "<FONT STYLE=\"font:12px tahoma;color:{$color['text']}\">&gt;&gt; logout </FONT>";
 
-  $print['lout'] = "<a href=\"./session.php?m=logout&amp;table={$table}\" title=\"LOGOUT\"><font class=\"admintext\">{$print['lout']}</font></a>";
+  $print['lout'] = "<A HREF=./session.php?m=logout&table=$table TITLE='LOGOUT'>{$print['lout']}</A>";
 }
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

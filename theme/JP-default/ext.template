@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!--  ====================================================================  -->
+<!--    ウェンだけ すれば そのまま サヨングハギル :-) デザインが 別に 必要 なし               -->
+<!--  ====================================================================  -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo $print['head']?> - Jsboard <?php echo $board['ver']?></TITLE>
+<STYLE TYPE="text/css">
+<!-- 
+BODY {
+  font-size: 12px;
+  font-family: <?php echo $langs['font']?>, sans-serif;
+  color: <?php echo $color['text']?>;
+  margin: 0px 0px 0px 0px;
+  background-color: #FFFFFF;
+}
+TD {
+  font-size: 12px;
+  font-family: <?php echo $langs['font']?>, sans-serif;
+  color: #555555;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?php echo $color['l4_bg']?>;
+}
+SELECT {
+  font-size: 11px;
+  font-family: tahoma, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  background-Color: <?php echo $color['l4_bg']?>;
+}
+TEXTAREA {
+  font-size: 13px;
+  font-family: <?php echo $langs['font']?>, sans-serif;
+  color: <?php echo $color['l4_fg']?>;
+  border-width: 1px;
+  border-style: solid;
+  border-color: <?php echo $color['l4_gu']?>;
+  padding-left: 1px;
+  background-Color: <?php echo $color['l4_bg']?>;
+}
+ .radio {
+  font: 9pt <?php echo $langs['font']?>,sans-serif;
+  background-color: <?php echo $color['bgcol']?>;
+  color: <?php echo $color['text']?>;
+  border: 2px solid <?php echo $color['bgcol']?>;
+}
+ .title {
+  font: 15pt <?php echo $langs['font']?>,sans-serif;
+  color: <?php echo $color['n0_fg']?>;
+  font-weight: bold
+}
+ .en {
+  font: 15pt Tahoma, sans-serif;
+  font-weight: bold;
+  COLOR: <?php echo $color['text']?>;
+}
+<?php echo $user_stylesheet?>
+ -->
+</STYLE>
+</HEAD>
+
+<BODY>
+
+<?php
+# 全体 管理者に 義解 強制 input なる デザイン
+include "html/head.php";
+
+# メイン 出力
+echo $print['body'];
+
+# 全体 管理者に 義解 強制 input なる デザイン
+include "html/tail.php";
+?>
+
+</BODY>
+</HTML>

@@ -1,48 +1,45 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <!-- =============================== A foreword =============================== -->
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=<?=$_('charset')?>">
-<?
-switch ($path['type']) {
-  case 'user_admin' :
-    $csspath = '../..';
-    break;
-  case 'admin' :
-    $csspath = '..';
-    break;
-  default :
-    $csspath = '.';
-}
-
- if ( ! preg_match ('/admin/i', $file_lo) ) $_title = get_title();
- else  $_title = $sub_title;
-?>
-<title>JSBoard Administration Center [ <?=$_title?> ]</title>
-<link rel="stylesheet" type="text/css" href="<?=$csspath?>/theme/<?=$print['theme']?>/default.css">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset'] ?>">
+<!-- $Id: html_ahead.php,v 1.6 2014/02/28 21:37:17 oops Exp $ -->
+<TITLE>JSBoard Administration Center [ 
+<?php
+ if (!preg_match("/admin/i",$file_lo)) echo get_title();
+ else    echo "$sub_title";
+?> ]</TITLE>
 <STYLE TYPE="text/css">
 <!--
-a:link, a:visited, a:active { text-decoration: none; color:<?=$color['text']?> }
-a:hover { text-decoration: underline; color:<?=$color['text']?> }
-body, td { font: 12px <?=$_('font')?>; color:<?=$color['text']?>; }
-input {font: 9pt <?=$_('font')?>; background-color:<?=$color['b_bg']?>; color:<?=$color['text']?>; border:1x solid <?=$color['n1_fg']?>}
-textarea {font: 10pt <?=$_('font')?>; background-color:<?=$color['l4_bg']?>; color:<?=$color['l4_fg']?>; border:1x solid <?=$color['l4_gu'] ?>}
-form { display: inline; }
- #radio {font: 9pt <?=$_('font')?>; background-color:<?=$color['bgcol']?>; color:<?=$color['l0_bg']?>; border:1x solid <?=$color['bgcol'] ?>}
- #title {font:20pt <?=$_('font')?>; color:<?=$color['n0_bg']?>}
+A:link, A:visited, A:active { TEXT-DECORATION: none; color:<?php echo $color['text'] ?> }
+A:hover { TEXT-DECORATION: underline; color:<?php echo $color['text'] ?> }
+TD { FONT-SIZE: 12px; FONT-FAMILY: <?php echo $langs['font'] ?>, monospace; color:<?php echo $color['text'] ?>; }
+INPUT {font: 11px; font-family: <?php echo $langs['font'] ?>, monospace; BACKGROUND-COLOR:<?php echo $color['b_bg'] ?>; COLOR:<?php echo $color['text'] ?>; BORDER:1x solid <?php echo $color['n1_fg'] ?>}
+TEXTAREA {font-size: 12px; font-family: <?php echo $langs['font'] ?>, monospace; BACKGROUND-COLOR:<?php echo $color['l4_bg'] ?>; COLOR:<?php echo $color['l4_fg'] ?>; BORDER:1x solid <?php echo $color['l4_gu'] ?>}
+ .radio {font-size: 11px; font-family: <?php echo $langs['font'] ?>, monospace; BACKGROUND-COLOR:<?php echo $color['bgcol'] ?>; COLOR:<?php echo $color['l0_bg'] ?>; BORDER:1x solid <?php echo $color['bgcol'] ?>}
+ .title {font-size:20pt; font-family: <?php echo $langs['font'] ?>, monospace; color:<?php echo $color['n0_bg'] ?>}
 -->
-</style>
-<!-- $Id: html_ahead.php,v 1.2 2009-11-16 21:52:46 oops Exp $ -->
-</head>
+</STYLE>
+<?php
+if(preg_match("/auth.php/i",$_SERVER['PHP_SELF'])) {
+  $onload = " onLoad=InputFocus()";
+  echo "<SCRIPT TYPE=\"text/javascript\">\n".
+       "<!--\n function InputFocus() {\n".
+       "  document.auth.logins.focus();\n".
+       "  return;\n".
+       "}\n//-->\n".
+       "</SCRIPT>";
+}
+?>
+</HEAD>
 
-<body bgcolor="<?=$color['b_bg']?>">
+<?php
+echo "<BODY BGCOLOR=\"{$color['b_bg']}\"$onload>";
+?>
 
 <?php
 if($table) {
-  table_name_check ($table);
-  if ( file_exists ("data/{$table}/html_head.php") ) {
-    require_once "data/{$table}/html_head.php";
-  }
+  table_name_check($table);
+  if(file_exists("data/$table/html_head.php")) { include "data/$table/html_head.php"; }
 }
 ?>
 <!-- =============================== A foreword =============================== -->

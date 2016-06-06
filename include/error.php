@@ -1,11 +1,11 @@
 <?php
-# $Id: error.php,v 1.3 2012-10-23 16:29:03 oops Exp $
+# $Id: error.php,v 1.5 2014/03/02 17:11:31 oops Exp $
 
+// {{{ +-- public print_error($str,$width=250,$height=150,$back='')
 function print_error($str,$width=250,$height=150,$back='') {
   global $table, $path, $prlist, $agent, ${$jsboard};
-  global $_;
 
-  echo "<script type=\"text/javascript\">\n<!--\n";
+  echo "<SCRIPT type=\"text/javascript\">\n<!--\n";
 
   if(!is_array($agent))
     $agent = @get_agent();
@@ -16,7 +16,7 @@ function print_error($str,$width=250,$height=150,$back='') {
     $str = preg_replace("/('|#|\))/","\\\\\\1",$str);
     echo "alert('$str');\n";
   } else {
-    $str = str_replace("\n","<br>",$str);
+    $str = str_replace("\n","<BR>",$str);
     $str = urlencode($str);
 
     if ($path['type'] == "admin") $err_fn = "../error.php";
@@ -34,8 +34,8 @@ function print_error($str,$width=250,$height=150,$back='') {
          "remoteWindow();\n";
   }
 
-  echo "//-->\n</script>\n".
-       "<noscript>".urldecode($str)."</noscript>\n";
+  echo "//-->\n</SCRIPT>\n".
+       "<NOSCRIPT>".urldecode($str)."</NOSCRIPT>\n";
 
   if(preg_match("/\/user_admin/i",$_SERVER['PHP_SELF'])) $gopage = "../..";
   elseif(preg_match("/\/admin/i",$_SERVER['PHP_SELF'])) {
@@ -45,28 +45,31 @@ function print_error($str,$width=250,$height=150,$back='') {
 
   $var .= $table ? "&table=$table" : "";
 
-  if($back) echo "<script type=\"text/javascript\">history.back()</script>";
+  if($back) echo "<SCRIPT>history.back()</SCRIPT>";
   else move_page("$gopage/session.php?m=logout$var",0);
   exit;
 }
+// }}}
 
+// {{{ +-- public print_notice($str,$width = 330, $height = 210)
 function print_notice($str,$width = 330, $height = 210) {
-  global $table, $path, $agent, $_;
+  global $table, $path, $agent;
 
   if(!is_array($agent)) 
     $agent = @get_agent();
 
-  echo "<script type=\"text/javascript\">\n<!--\n";
-  if ( preg_match ("/^(WIN|NT)$/i", $agent['os']) ) {
-    $str = wordwrap ($str, 40);
-    $str = preg_replace ("/\n/", "\\n", $str);
-    $str = preg_replace ("/('|#|\))/i", "\\\\1", $str);
-    echo "alert(\"{$str}\");\n";
+  echo "<SCRIPT TYPE=\"text/javascript\">\n<!--\n";
+  if(preg_match("/^(WIN|NT)$/i",$agent['os'])) {
+    $str = wordwrap($str,40);
+    $str = preg_replace("/\n/","\\n",$str);
+    $str = preg_replace("/('|#|\))/i","\\\\1",$str);
+    echo "alert('$str');\n";
   } else {
-    $str = str_replace ("\n", "<br>", $str);
-    $str = urlencode ($str);
+    $str = str_replace("\n","<BR>",$str);
+    $str = urlencode($str);
 
-    $err_fn = ( $path['type'] == 'admin' ) ? '../error.php' : 'error.php';
+    if ($path['type'] == "admin") $err_fn = "../error.php";
+    else $err_fn = "error.php";
 
     echo "var farwindow = null;\n".
          "function remoteWindow() {\n".
@@ -77,12 +80,13 @@ function print_notice($str,$width = 330, $height = 210) {
          "  }\n}\n".
          "remoteWindow();\n";
   }
-  echo "//-->\n</script>\n";
+  echo "//-->\n</SCRIPT>\n";
 }
+// }}}
 
+// {{{ +-- public print_pwerror($str, $width = 250, $height = 130)
 function print_pwerror($str, $width = 250, $height = 130) {
   global $table, $path, $agent, $table, ${$jsboard};
-  global $_;
 
   if(!is_array($agent)) 
     $agent = @get_agent();
@@ -91,16 +95,16 @@ function print_pwerror($str, $width = 250, $height = 130) {
   elseif ($path['type'] == "admin") $err_fn = "..";
   else $err_fn = ".";
 
-  echo "<script type=\"text/javascript\">\n<!--\n";
+  echo "<SCRIPT TYPE=\"text/javascript\">\n<!--\n";
 
-  if ( preg_match ("/^(WIN|NT)$/i", $agent['os']) ) {
-    $str = wordwrap ($str, 40);
-    $str = preg_replace ("/\n/i", "\\n", $str);
-    $str = preg_replace ("/('|#|\))/i", "\\\\1", $str);
-    echo "alert(\"{$str}\");\n";
+  if(preg_match("/^(WIN|NT)$/i",$agent['os'])) {
+    $str = wordwrap($str,40);
+    $str = preg_replace("/\n/i","\\n",$str);
+    $str = preg_replace("/('|#|\))/i","\\\\1",$str);
+    echo "alert('$str');\n";
   } else {
-    $str = str_replace ("\n", "<br>", $str);
-    $str = urlencode ($str);
+    $str = str_replace("\n","<BR>",$str);
+    $str = urlencode($str);
 
     echo "var farwindow = null;\n".
          "function remoteWindow() {\n".
@@ -115,7 +119,19 @@ function print_pwerror($str, $width = 250, $height = 130) {
   $var = $table ? "&table=$table" : "";
 
   echo "document.location='$err_fn/session.php?m=logout$var'\n".
-       "//-->\n</script>\n";
+       "//-->\n</SCRIPT>\n";
   exit;
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

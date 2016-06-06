@@ -1,35 +1,41 @@
 <?php
-# $Id: act.php,v 1.3 2009-11-16 21:52:46 oops Exp $
+# $Id: act.php,v 1.31 2014/03/02 17:11:30 oops Exp $
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
-# header tail º¯¼ö¸¦ Ä¡È¯ÇØÁÜ
+# header tail ë³€ìˆ˜ë¥¼ ì¹˜í™˜í•´ì¤Œ
 $ua['header'] = $uaheader;
 $ua['tail']   = $uatail;
 $ua['style']  = $uastyle;
 
-if(!session_is_registered("$jsboard") || (!$board['adm'] && $board['super'] != 1))
-  print_error($_('login_err'));
+if(!isset($_SESSION[$jsboard]) || (!$board['adm'] && $board['super'] != 1))
+  print_error($langs['login_err']);
 
-$c = sql_connect($db['rhost'], $db['user'], $db['pass'], $db['name']);
+$c = sql_connect($db['rhost'], $db['user'], $db['pass']);
+sql_select_db($db['name'], $c);
+# password ë¹„êµí•¨ìˆ˜ - admin/include/auth.php
+compare_pass($_SESSION[$jsboard]);
 
-# password ºñ±³ÇÔ¼ö - admin/include/auth.php
-compare_pass ($_SESSION[$jsboard]);
-
-## checking @@
-if( $ua['comment'] ) {
-  require_once '../../include/parse.php';
-
-  if ( ! db_table_list ($c, $db['name'], '', $table.'_comm') ) {
-    $cret_comm = sql_parser ($db['type'], 'comment', $table, 2);
-    foreach ( $cret_comm as $_sql )
-      sql_query ($_sql, $c);
+if($ua['comment']) {
+  if (!db_table_list($c, $db['name'], '', $table.'_comm')) {
+    $cret_comm = "CREATE TABLE {$table}_comm (\n".
+                 "       no int(6) NOT NULL auto_increment,\n".
+                 "       reno int(20) NOT NULL default '0',\n".
+                 "       rname tinytext,\n".
+                 "       name tinytext,\n".
+                 "       passwd varchar(56) default NULL,\n".
+                 "       text mediumtext,\n".
+                 "       host tinytext,\n".
+                 "       date int(11) NOT NULL default '0',\n".
+                 "       PRIMARY KEY  (no),\n".
+                 "       KEY parent (reno))";
+    sql_query($cret_comm, $c);
   }
 
-  if ( ! field_exist_check ($c, $db['name'], $table, 'comm')) {
-    # comm field Ãß°¡
+  if (!field_exist_check ($c,$db['name'],$table, "comm")) {
+    # comm field ì¶”ê°€
     sql_query ('ALTER TABLE ' . $table . ' add comm int(6) DEFAULT 0', $c);
-    # comm field key Ãß°¡
+    # comm field key ì¶”ê°€
     sql_query ('ALTER TABLE ' . $table . ' add key (comm)', $c);
   }
 
@@ -120,6 +126,7 @@ else $chg['toadmin'] = "{$rmail['toadmin']}";
 $chg['rss_use'] = !$ua['rss_use'] ? 0 : 1;
 $chg['rss_is_des'] = !$ua['rs_is_des'] ? 0 : 1;
 $chg['rss_align'] = !$ua['rss_align'] ? 0 : 1;
+$chg['rss_color'] = !trim($ua['rss_color']) ? "red" : $ua['rss_color'];
 $chg['rss_channel'] = !trim($ua['rss_channel']) ? "JSBoard {$table} Board" : $ua['rss_channel'];
 
 # ETC Configuration
@@ -168,217 +175,200 @@ $chg['notice_c'] = trim(preg_replace($src,$tar,$chg['notice_c']));
 $chg['notice_c'] = str_replace("#FONT-TAG-OPEN#","<",$chg['notice_c']);
 $chg['notice_c'] = str_replace("#FONT-TAG-CLOSE#",">",$chg['notice_c']);
 
-$chg_conf = "<?
+$chg_conf = "<?php
 ###############################################################################
-#  °Ô½ÃÆÇ °ü¸® ¸ğµå
-#   ad   -> °Ô½ÃÆÇ °ü¸®ÀÚ id
-#   mode -> °Ô½ÃÆÇ °ü¸® ¸ğµå
-#           0 -> °ø°³ °Ô½ÃÆÇ
-#           1 -> °øÁö °Ô½ÃÆÇ (admin only write)
-#           2 -> È¸¿ø Àü¿ë °Ô½ÃÆÇ
-#           3 -> È¸¿ø Àü¿ë °øÁö °Ô½ÃÆÇ (admin only write)
-#           4 -> °ø°³ °Ô½ÃÆÇ (read, reply only)
-#           5 -> È¸¿ø Àü¿ë °Ô½ÃÆÇ (read, reply only)
-#           6 -> °ø°³ °Ô½ÃÆÇ (reply only admin)
-#           7 -> È¸¿ø Àü¿ë °Ô½ÃÆÇ (reply only admin)
-###############################################################################
-#
-\$board['ad']        = '{$ua['ad']}';
-\$board['mode']      = {$ua['mode']};
-
-# ·Î±×ÀÎ ¸ğµå½Ã¿¡ ÀÌ¸§ Ãâ·ÂÀ» ½Ç¸íÀ¸·Î ÇÒÁö Nickname À¸·Î ÇÒÁö °áÁ¤
-# ÀÌ º¯¼ö°ªÀÌ ¼³Á¤ÀÌ ¾ÈµÇ¾î ÀÖÀ¸¸é Nickname À¸·Î Ãâ·Â
-\$board['rnname']    = {$ua['rnname']};
-
-# ·Î±×¾Æ¿ô ÈÄ¿¡ ÀÌµ¿ÇÒ ÆäÀÌÁö¸¦ ÁöÁ¤
-\$print['dopage']    = '{$ua['dopage']}';
-
-###############################################################################
-#  °Ô½ÃÆÇ Çã°¡ ¼³Á¤
+#  ê²Œì‹œíŒ ê´€ë¦¬ ëª¨ë“œ
+#   ad   -> ê²Œì‹œíŒ ê´€ë¦¬ì id
+#   mode -> ê²Œì‹œíŒ ê´€ë¦¬ ëª¨ë“œ
+#           0 -> ê³µê°œ ê²Œì‹œíŒ
+#           1 -> ê³µì§€ ê²Œì‹œíŒ (admin only write)
+#           2 -> íšŒì› ì „ìš© ê²Œì‹œíŒ
+#           3 -> íšŒì› ì „ìš© ê³µì§€ ê²Œì‹œíŒ (admin only write)
+#           4 -> ê³µê°œ ê²Œì‹œíŒ (read, reply only)
+#           5 -> íšŒì› ì „ìš© ê²Œì‹œíŒ (read, reply only)
+#           6 -> ê³µê°œ ê²Œì‹œíŒ (reply only admin)
+#           7 -> íšŒì› ì „ìš© ê²Œì‹œíŒ (reply only admin)
 ###############################################################################
 #
-# ¹Ì¸® º¸±â Çã°¡
-\$enable['pre']      = {$chg['pre']};
-# ¹Ì¸® º¸±â Çã°¡½Ã ±Û ±æÀÌ
-\$enable['preren']   = {$chg['pren']};
+\$board['ad'] = '{$ua['ad']}';
+\$board['mode'] = {$ua['mode']};
 
-# ´äÀå½Ã ¿øº»±Û Æ÷ÇÔÀ» ¼±ÅÃ»çÇ×À¸·Î ¼³Á¤
-# 0 - ¹«Á¶°Ç Ãâ·Â  1 - ¼±ÅÃ»çÇ×
-#
-\$enable['ore']      = {$chg['ore']};
+# ë¡œê·¸ì¸ ëª¨ë“œì‹œì— ì´ë¦„ ì¶œë ¥ì„ ì‹¤ëª…ìœ¼ë¡œ í• ì§€ Nickname ìœ¼ë¡œ í• ì§€ ê²°ì •
+# ì´ ë³€ìˆ˜ê°’ì´ ì„¤ì •ì´ ì•ˆë˜ì–´ ìˆìœ¼ë©´ Nickname ìœ¼ë¡œ ì¶œë ¥
+\$board['rnname'] = {$ua['rnname']};
 
-# ±ÛÀĞ±â¿¡¼­ °ü·Ã±ÛÀÌ ÀÖÀ» °æ¿ì °ü·Ã±Û ¸®½ºÆ®¸¦ º¸¿©ÁÙÁö ¿©ºÎ ¼³Á¤
-# 0 - º¸¿©ÁÖÁö ¾ÊÀ½ 1 - º¸¿©ÁÜ
-#
-\$enable['re_list']  = {$chg['re_list']};
+# ë¡œê·¸ì•„ì›ƒ í›„ì— ì´ë™í•  í˜ì´ì§€ë¥¼ ì§€ì •
+\$print['dopage'] = '{$ua['dopage']}';
 
-# Ä¿¸àÆ® ±â´É »ç¿ë¿©ºÎ
-# 0 - º¸¿©ÁÖÁö ¾ÊÀ½ 1 - º¸¿©ÁÜ
+###############################################################################
+#  ê²Œì‹œíŒ í—ˆê°€ ì„¤ì •
+###############################################################################
 #
-\$enable['comment']  = {$chg['comment']};
+\$enable['pre']     = {$chg['pre']};		# ë¯¸ë¦¬ ë³´ê¸° í—ˆê°€
+\$enable['preren']  = {$chg['pren']};		# ë¯¸ë¦¬ ë³´ê¸° í—ˆê°€ì‹œ ê¸€ ê¸¸ì´
 
-# ÀÌ¸ğÆ¼ÄÜ ±â´É »ç¿ë¿©ºÎ
-# 0 - º¸¿©ÁÖÁö ¾ÊÀ½ 1 - º¸¿©ÁÜ
+# ë‹µì¥ì‹œ ì›ë³¸ê¸€ í¬í•¨ì„ ì„ íƒì‚¬í•­ìœ¼ë¡œ ì„¤ì •
 #
-\$enable['emoticon'] = {$chg['emoticon']};
+\$enable['ore'] = {$chg['ore']};		# 0 - ë¬´ì¡°ê±´ ì¶œë ¥  1 - ì„ íƒì‚¬í•­
+
+# ê¸€ì½ê¸°ì—ì„œ ê´€ë ¨ê¸€ì´ ìˆì„ ê²½ìš° ê´€ë ¨ê¸€ ë¦¬ìŠ¤íŠ¸ë¥¼ ë³´ì—¬ì¤„ì§€ ì—¬ë¶€ ì„¤ì •
+#
+\$enable['re_list'] = {$chg['re_list']};		# 0 - ë³´ì—¬ì£¼ì§€ ì•ŠìŒ 1 - ë³´ì—¬ì¤Œ
+
+# ì»¤ë©˜íŠ¸ ê¸°ëŠ¥ ì‚¬ìš©ì—¬ë¶€
+#
+\$enable['comment'] = {$chg['comment']};		# 0 - ë³´ì—¬ì£¼ì§€ ì•ŠìŒ 1 - ë³´ì—¬ì¤Œ
+
+# ì´ëª¨í‹°ì½˜ ê¸°ëŠ¥ ì‚¬ìš©ì—¬ë¶€
+#
+\$enable['emoticon'] = {$chg['emoticon']};		# 0 - ë³´ì—¬ì£¼ì§€ ì•ŠìŒ 1 - ë³´ì—¬ì¤Œ
 
 
 ###############################################################################
-#  »ç¿ë Çã°¡ÇÒ HTML tag
+#  ì‚¬ìš© í—ˆê°€í•  HTML tag
 ###############################################################################
 #
-\$enable['tag']     = '{$ua['tag']}';
+\$enable['tag'] = '{$ua['tag']}';
 
 
 ###############################################################################
-#  °Ô½ÃÆÇ Á¤·Ä »óÅÂ¸¦ ¼³Á¤
-# <DIV align=\"\$board['align']\">
-###############################################################################
-#
-\$board['align']     = '{$ua['align']}';
-
-
-###############################################################################
-#  °Ô½ÃÆÇ ±âº» ¼³Á¤
+#  ê²Œì‹œíŒ ì •ë ¬ ìƒíƒœë¥¼ ì„¤ì •
 ###############################################################################
 #
-# °Ô½ÃÆÇ Á¦¸ñ
-\$board['title']     = '{$chg['title']}';
-# ±Û ÀĞ±â ½Ã¿¡ ÇÑ ÁÙ´ç Ç¥½ÃÇÒ ±ÛÀÚ ¼ö
-\$board['wwrap']     = {$ua['wwrap']};
-# °Ô½ÃÆÇ ³Êºñ
-\$board['width']     = '{$chg['width']}';
-# Á¦¸ñ ÇÊµå ÃÖ´ë ±æÀÌ
-\$board['tit_l']     = {$chg['tit_l']};
-# ±Û¾´ÀÌ ÇÊµå ÃÖ´ë ±æÀÌ
-\$board['nam_l']     = {$chg['nam_l']};
-# ÆäÀÌÁö ´ç °Ô½Ã¹° ¼ö
-\$board['perno']     = {$chg['perno']};
-# ÆäÀÌÁö ¸ñ·Ï Ãâ·Â °¹¼ö (x2)
-\$board['plist']     = {$chg['plist']};
+\$board['align'] = '{$ua['align']}';	# <DIV align=\"\$board['align']\">
 
-# ÄíÅ° ±â°£ ¼³Á¤ (ìí)
+
+###############################################################################
+#  ê²Œì‹œíŒ ê¸°ë³¸ ì„¤ì •
+###############################################################################
+#
+\$board['title'] = '{$chg['title']}';	# ê²Œì‹œíŒ ì œëª©
+# ê¸€ ì½ê¸° ì‹œì— í•œ ì¤„ë‹¹ í‘œì‹œí•  ê¸€ì ìˆ˜
+\$board['wwrap'] = {$ua['wwrap']};
+\$board['width'] = '{$chg['width']}';		# ê²Œì‹œíŒ ë„ˆë¹„
+\$board['tit_l'] = {$chg['tit_l']};		# ì œëª© í•„ë“œ ìµœëŒ€ ê¸¸ì´
+\$board['nam_l'] = {$chg['nam_l']};		# ê¸€ì“´ì´ í•„ë“œ ìµœëŒ€ ê¸¸ì´
+\$board['perno'] = {$chg['perno']};		# í˜ì´ì§€ ë‹¹ ê²Œì‹œë¬¼ ìˆ˜
+\$board['plist'] = {$chg['plist']};		# í˜ì´ì§€ ëª©ë¡ ì¶œë ¥ ê°¯ìˆ˜ (x2)
+
+# ì¿ í‚¤ ê¸°ê°„ ì„¤ì • (æ—¥)
 \$board['cookie'] = {$chg['cookie']};
 
 ###############################################################################
 #  FORM SIZE
 ###############################################################################
 #
-\$size['name']       = {$ua['s_name']};               # ÀÌ¸§ Æû ±æÀÌ
-\$size['pass']       = {$ua['s_pass']};                # submit button ±æÀÌ
-\$size['titl']       = {$ua['s_titl']};               # Á¦¸ñ Æû ±æÀÌ
-\$size['text']       = {$ua['s_text']};               # TEXTAREA ±æÀÌ
-\$size['uplo']       = {$ua['s_uplo']};               # UPLOAD Æû ±æÀÌ
+\$size['name'] = {$ua['s_name']};		# ì´ë¦„ í¼ ê¸¸ì´
+\$size['pass'] = {$ua['s_pass']};		# submit button ê¸¸ì´
+\$size['titl'] = {$ua['s_titl']};		# ì œëª© í¼ ê¸¸ì´
+\$size['text'] = {$ua['s_text']};		# TEXTAREA ê¸¸ì´
+\$size['uplo'] = {$ua['s_uplo']};		# UPLOAD í¼ ê¸¸ì´
 
 ###############################################################################
-#  È£½ºÆ® Á¤º¸ Ãâ·Â ¼³Á¤ 0 - Failed, 1 - True 
+#  í˜¸ìŠ¤íŠ¸ ì •ë³´ ì¶œë ¥ ì„¤ì • 0 - Failed, 1 - True 
 ###############################################################################
 #
-# IP address Ãâ·Â ¿©ºÎ(»ó´Ü ¸Ş´º Ãâ·Â ¾ÈÇÒ½Ã)
-\$enable['dhost']    = {$ua['dhost']};
-# DNS lookup ¿©ºÎ
-\$enable['dlook']    = {$ua['dlook']};
-# WHOIS °Ë»ö ¿©ºÎ
-\$enable['dwho']     = {$ua['dwho']};
+\$enable['dhost'] = {$ua['dhost']};		# IP address ì¶œë ¥ ì—¬ë¶€(ìƒë‹¨ ë©”ë‰´ ì¶œë ¥ ì•ˆí• ì‹œ)
+\$enable['dlook'] = {$ua['dlook']};		# DNS lookup ì—¬ë¶€
+\$enable['dwho']  = {$ua['dwho']};		# WHOIS ê²€ìƒ‰ ì—¬ë¶€
 
 
 ###############################################################################
 #  Theme Configuration
 ###############################################################################
 #
-# Theme Name
-\$print['theme']     = '{$ua['theme_c']}';
+\$print['theme'] = '{$ua['theme_c']}';	# Theme ì´ë¦„ 
 
 
 ###############################################################################
-#  file upload °ü·Ã ¼³Á¤
-#  ÀüÃ¼ °ü¸®ÀÚ°¡ Çã¶ô ÇÏÁö ¾ÊÀ¸¸é ¿©±â¼­ yes¸¦ ¼±ÅÃÇØµµ ÀÌ±â´ÉÀ» »ç¿ëÇÒ¼ö ¾ø´Ù
+#  file upload ê´€ë ¨ ì„¤ì •
+#  ì „ì²´ ê´€ë¦¬ìê°€ í—ˆë½ í•˜ì§€ ì•Šìœ¼ë©´ ì—¬ê¸°ì„œ yesë¥¼ ì„ íƒí•´ë„ ì´ê¸°ëŠ¥ì„ ì‚¬ìš©í• ìˆ˜ ì—†ë‹¤
 ###############################################################################
 #
-\$cupload['yesno']   = {$chg['upload']};                # upload »ç¿ë ¿©ºÎ
-\$cupload['dnlink']  = {$chg['uplink']};                # 0: Çì´õ¸¦ÅëÇØ 1: ´ÙÀÌ·ºÆ® ¸µÅ©
+\$cupload['yesno'] = {$chg['upload']};	# upload ì‚¬ìš© ì—¬ë¶€
+\$cupload['dnlink'] = {$chg['uplink']};	# 0: í—¤ë”ë¥¼í†µí•´ 1: ë‹¤ì´ë ‰íŠ¸ ë§í¬
 
 
 ###############################################################################
-#  url,email »ç¿ë ¿©ºÎ ¼³Á¤
+#  url,email ì‚¬ìš© ì—¬ë¶€ ì„¤ì •
 ###############################################################################
 #
-\$view['url']        = {$chg['url']};
-\$view['email']      = {$chg['email']};
+\$view['url']	= {$chg['url']};
+\$view['email']	= {$chg['email']};
 
 
 ###############################################################################
-#  mail ¹ß¼Û ¿©ºÎ ¼³Á¤
-#  ÀüÃ¼ °ü¸®ÀÚÀÇ ±â´É on¿¡ ÀÇÇØ »ç¿ëÀ» ÇÒ¼ö ÀÖ´Ù
+#  mail ë°œì†¡ ì—¬ë¶€ ì„¤ì •
+#  ì „ì²´ ê´€ë¦¬ìì˜ ê¸°ëŠ¥ onì— ì˜í•´ ì‚¬ìš©ì„ í• ìˆ˜ ìˆë‹¤
 ###############################################################################
 #
-\$rmail['admin']     = {$chg['admin']};
-\$rmail['user']      = {$chg['user']};
-# ¸ŞÀÏÀ» ¹ŞÀ» °Ô½ÃÆÇ °ü¸®ÀÚÀÇ ¸ŞÀÏ ÁÖ¼Ò
-\$rmail['toadmin']   = '{$chg['toadmin']}';
+\$rmail['admin']   = {$chg['admin']};
+\$rmail['user']    = {$chg['user']};
+\$rmail['toadmin'] = '{$chg['toadmin']}';	# ë©”ì¼ì„ ë°›ì„ ê²Œì‹œíŒ ê´€ë¦¬ìì˜ ë©”ì¼ ì£¼ì†Œ
 
 
 ###############################################################################
-#  ¾Æ·¡ÀÇ Á¤º¸¸¦ »ç¿ëÇÏ¿© ±Û µî·Ï½Ã °ü¸®ÀÚÀÇ password¸¦ ¿ä±¸
+#  ì•„ë˜ì˜ ì •ë³´ë¥¼ ì‚¬ìš©í•˜ì—¬ ê¸€ ë“±ë¡ì‹œ ê´€ë¦¬ìì˜ passwordë¥¼ ìš”êµ¬
 ###############################################################################
 #
-\$ccompare['name']   = '{$chg['d_name']}';
-\$ccompare['email']  = '{$chg['d_email']}';
+\$ccompare['name']  = '{$chg['d_name']}';
+\$ccompare['email'] = '{$chg['d_email']}';
 
 
 ###############################################################################
-#  IP Blocking ±â´É
-#  ¼³Á¤°ªÀÇ ±¸ºĞÀÚ´Â ';' ·Î ÇÑ´Ù.
-#  ¼³Á¤ ¿¹) 1.1.1.1;2.2.2.2;3.3.3.3
+#  IP Blocking ê¸°ëŠ¥
+#  ì„¤ì •ê°’ì˜ êµ¬ë¶„ìëŠ” ';' ë¡œ í•œë‹¤.
+#  ì„¤ì • ì˜ˆ) 1.1.1.1;2.2.2.2;3.3.3.3
 ###############################################################################
-\$enable['ipbl']     = '{$chg['ipbl']}';
+\$enable['ipbl'] = '{$chg['ipbl']}';
 
 
 ###############################################################################
-#  ¿ø°İÀÇ ÇÏÀÌÆÛ¸µÅ©¸¦ ÅëÇØ µé¾î¿À´Â Á¢¼ÓÁ¦¾î
-#  dhyper : 0 -> µî·ÏµÈ °ª¸¸ Çã¶ô
-#           1 -> µî·ÏµÈ °ª¸¸ ¸·À½
-#           plink °¡ ¾øÀ» °æ¿ì¿¡´Â ÀÛµ¿ ¾ÈÇÔ
-#  plink  : dhyper °¡ ÀÛµ¿ÇÒ ip ÁÖ¼Ò. ';' ¸¦ ±¸ºĞÀÚ·Î »ç¿ë
-#  ¼³Á¤ ¿¹) 1.1.1.1;2.2.2.2;3.3.3.3
+#  ì›ê²©ì˜ í•˜ì´í¼ë§í¬ë¥¼ í†µí•´ ë“¤ì–´ì˜¤ëŠ” ì ‘ì†ì œì–´
+#  dhyper : 0 -> ë“±ë¡ëœ ê°’ë§Œ í—ˆë½
+#           1 -> ë“±ë¡ëœ ê°’ë§Œ ë§‰ìŒ
+#           plink ê°€ ì—†ì„ ê²½ìš°ì—ëŠ” ì‘ë™ ì•ˆí•¨
+#  plink  : dhyper ê°€ ì‘ë™í•  ip ì£¼ì†Œ. ';' ë¥¼ êµ¬ë¶„ìë¡œ ì‚¬ìš©
+#  ì„¤ì • ì˜ˆ) 1.1.1.1;2.2.2.2;3.3.3.3
 ###############################################################################
 #
-\$enable['dhyper']   = {$chg['dhyper']};
-\$enable['plink']    = '{$chg['plink']}';
+\$enable['dhyper'] = {$chg['dhyper']};
+\$enable['plink']  = '{$chg['plink']}';
 
 ###############################################################################
-# °Ô½ÃÆÇ °øÁö»çÇ×
+# ê²Œì‹œíŒ ê³µì§€ì‚¬í•­
 #
-# ¹è¿­·Î ÇÏ¿© ¿©·¯°³¸¦ ÁöÁ¤ÇÒ ¼ö ÀÖÀ½
-# \$notice['subject'] -> °øÁö»çÇ× Á¦¸ñ
-# \$notice['body']    -> °øÁö»çÇ× ³»¿ë
-# °øÁö»çÇ× ³»¿ëÀÌ ¾øÀ» °æ¿ì¿¡´Â Á¦¸ñ ¸µÅ©°¡ ¾ÈµÇ°Ô Ãâ·Â
+# ë°°ì—´ë¡œ í•˜ì—¬ ì—¬ëŸ¬ê°œë¥¼ ì§€ì •í•  ìˆ˜ ìˆìŒ
+# \$notice['subject'] -> ê³µì§€ì‚¬í•­ ì œëª©
+# \$notice['body']    -> ê³µì§€ì‚¬í•­ ë‚´ìš©
+# ê³µì§€ì‚¬í•­ ë‚´ìš©ì´ ì—†ì„ ê²½ìš°ì—ëŠ” ì œëª© ë§í¬ê°€ ì•ˆë˜ê²Œ ì¶œë ¥
 ###############################################################################
 #
-\$notice['subject']  = '{$chg['notice_s']}';
+\$notice['subject'] = '{$chg['notice_s']}';
 \$notice['contents'] = {$chg['notice_c']};
 
 ###############################################################################
-# °Ô½ÃÆÇ RSS ¼³Á¤
+# ê²Œì‹œíŒ RSS ì„¤ì •
 #
-# \$rss['use']     -> rss »ç¿ë¿©ºÎ
-# \$rss['channel'] -> rss ¸®´õÀÇ Ã¤³Î¸ñ·Ï ÀÌ¸§
-# \$rss['is_des']  -> ±â»çÀÇ ¼³¸í Ãâ·Â ¿©ºÎ
-# \$rss['align']   -> rss link ÀÇ À§Ä¡ ( 0: left / 1: right )
-# \$rss['color']   -> rss link ÀÇ color
+# \$rss['use']    -> rss ì‚¬ìš©ì—¬ë¶€
+# \$rss['channel']    -> rss ë¦¬ë”ì˜ ì±„ë„ëª©ë¡ ì´ë¦„
+# \$rss['is_des'] -> ê¸°ì‚¬ì˜ ì„¤ëª… ì¶œë ¥ ì—¬ë¶€
+# \$rss['align']  -> rss link ì˜ ìœ„ì¹˜ ( 0: left / 1: right )
+# \$rss['color']  -> rss link ì˜ color
 ###############################################################################
 #
-\$rss['use']         = {$chg['rss_use']};
-\$rss['is_des']      = {$chg['rss_is_des']};
-\$rss['align']       = {$chg['rss_align']};
-\$rss['channel']     = '{$chg['rss_channel']}';
+\$rss['use']     = {$chg['rss_use']};
+\$rss['is_des']  = {$chg['rss_is_des']};
+\$rss['align']   = {$chg['rss_align']};
+\$rss['color']   = '{$chg['rss_color']}';
+\$rss['channel'] = '{$chg['rss_channel']}';
 ?>";
 
-# º¯°æµÈ ¼³Á¤ °ªÀ» config.php ¿¡ ¾´´Ù.
+# ë³€ê²½ëœ ì„¤ì • ê°’ì„ config.php ì— ì“´ë‹¤.
 $wfile = "../../data/$table/config.php";
-writefile_r ($wfile, $chg_conf);
+file_operate("$wfile","w","Can't update $wfile",$chg_conf);
 
-# quot º¯È¯µÈ ¹®ÀÚ¸¦ un quot ÇÑ´Ù
+# quot ë³€í™˜ëœ ë¬¸ìë¥¼ un quot í•œë‹¤
 $head = $ua['header'];
 $tail = $ua['tail'];
 
@@ -391,28 +381,36 @@ if($_SESSION[$jsboard]['pos'] != 1) {
 }
 
 $wfile = "../../data/$table/html_head.php";
-writefile_r ($wfile, $head);
+file_operate("$wfile","w","Can't update $wfile",$head);
 
 $wfile = "../../data/$table/html_tail.php";
-writefile_r ($wfile, $tail);
+file_operate("$wfile","w","Can't update $wfile",$tail);
 
-# style sheet file »ı¼º
+# style sheet file ìƒì„±
 $ua['style'] = eregi_replace("\\\\\"|\"","",$ua['style']);
 $ua['style'] = check_invalid($ua['style']);
-$wstyle = "<?
+$wstyle = "<?php
 \$user_stylesheet = \"{$ua['style']}\";
 ?>";
 
 $wfile = "../../data/$table/stylesheet.php";
-writefile_r ($wfile, $wstyle);
+file_operate("$wfile","w","Can't update $wfile",$wstyle);
 
-$_lang['act_complete'] = str_replace("\n","\\n",$_('act_complete'));
-$_lang['act_complete'] = str_replace("'","\'",$_lang['act_complete']);
-
-header ('Content-Type: text/html;charset=' . $_('charset'));
-echo "<script type=\"text/javascript\">\n" .
-     "  alert('{$_lang['act_complete']}')\n" .
+$langs['act_complete'] = str_replace("\n","\\n",$langs['act_complete']);
+$langs['act_complete'] = str_replace("'","\'",$langs['act_complete']);
+echo "<script>\n" .
+     "alert('{$langs['act_complete']}')\n" .
      "</script>";
 
-move_page ("../../list.php?table=$table");
+move_page("../../list.php?table=$table");
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
 ?>

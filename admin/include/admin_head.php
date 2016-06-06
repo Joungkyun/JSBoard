@@ -1,6 +1,5 @@
 <?php
-# $Id: admin_head.php,v 1.10 2009-11-16 21:52:46 oops Exp $
-$_pself = $_SERVER['PHP_SELF'];
+# $Id: admin_head.php,v 1.8 2014/03/02 17:11:30 oops Exp $
 $sadmin['pern']   = 10;
 if($path['type'] == "user_admin") {
   $dpath = "..";
@@ -10,88 +9,78 @@ if($path['type'] == "user_admin") {
   $ipath = "..";
 }
 
-set_magic_quotes_runtime(0);
-ini_set('magic_quotes_gpc', 1);
-ini_set('magic_quotes_sybase', 0);
-ini_set ('track_errors', 1);
-
-$_ = '_lang';
-
-include_once "$ipath/include/variable.php";
-include_once "$ipath/include/error.php";
-include_once "$ipath/include/check.php";
-include_once "$ipath/include/get.php";
-include_once "$ipath/include/print.php";
-if ( ! check_windows () ) {
-  include_once "$ipath/include/exec.php";
+if(version_compare(PHP_VERSION,'5.4.0','<')) {
+  set_magic_quotes_runtime(0);
+  ini_set(magic_quotes_gpc,1);
+  ini_set(magic_quotes_sybase,0);
 }
 
-# GET/POST º¯¼ö¸¦ Á¦¾î
+include_once "{$ipath}/include/variable.php";
+include_once "{$ipath}/include/error.php";
+include_once "{$ipath}/include/check.php";
+include_once "{$ipath}/include/get.php";
+include_once "{$ipath}/include/print.php";
+if(!check_windows())
+  { include_once "{$ipath}/include/exec.php"; }
+include_once "{$dpath}/include/check.php";
+include_once "{$dpath}/include/first_reg.php";
+
+# GET/POST ë³€ìˆ˜ë¥¼ ì œì–´
 parse_query_str();
 
 $agent = get_agent();
 
-if ( ! @file_exists ("{$ipath}/config/global.php") ) {
-  echo "<script type=\"text/javascript\">alert('Don\'t exist Global configuration file')\n" .
-       "history.back()<\/script>";
+# table ì´ë¦„ì„ ì²´í¬í•œë‹¤.
+if($path['type'] == "user_admin") table_name_check($table);
+
+if(!@file_exists("{$ipath}/config/global.php")) {
+  echo"<script>alert('Don\'t exist Global configuration file')\n" .
+      "history.back()</script>";
   die;
 } else { include_once "{$ipath}/config/global.php"; }
 
-if ( $db['type'] == 'sqlite' ) {
-  $db['server'] = '.' . $db['server'];
-  if ( $path['type'] == 'user_admin' )
-    $db['server'] = '../' . $db['server'];
+$sqlfunc = extension_loaded('mysqli') ? 'sqli' : 'sql';
+include_once "{$ipath}/include/{$sqlfunc}.php";
+
+# sessionì„ ì‹œì‘
+session_start();
+
+if($path['type'] == "user_admin" && $table) {
+  if(file_exists("{$ipath}/data/{$table}/config.php"))
+    { include_once "{$ipath}/data/{$table}/config.php"; }
 }
 
-require_once "{$ipath}/theme/{$print['theme']}/config.php";
-putenv ("JSLANG={$_code}");
-require_once ("{$dpath}/language/lang.php");
-require_once ("{$ipath}/database/db.php");
-require_once "$dpath/include/lib.php";
-table_name_check ($print['theme']);
+# ì™¸ë¶€ íšŒì› DB ë¥¼ ì‚¬ìš©í•  ê²½ìš° ì„¤ì • íŒŒì¼ include
+if(file_exists("$ipath/config/external.php")) { include_once "{$ipath}/config/external.php"; }
 
-# sessionÀ» ½ÃÀÛ
-sessionInit($ipath . '/' . $board['sessTmp']);
-session_start ();
-if( ! session_is_registered ($jsboard) )
-  session_destroy();
+# ì´ë©”ì¼ ì£¼ì†Œ ë³€í˜• ì²´í¬
+$rmail['chars'] = !$rmail['chars'] ? "__at__" : $rmail['chars'];
 
-# table ÀÌ¸§À» Ã¼Å©ÇÑ´Ù.
-if ( $path['type'] == "user_admin" || $table )
-  table_name_check ($table);
+table_name_check($print['theme']);
+include_once "{$ipath}/theme/{$print['theme']}/config.php";
+include_once "{$ipath}/include/lang.php";
+include_once "{$ipath}/include/replicate.php";
+include_once "{$dpath}/include/print.php";
 
-if ( $path['type'] == "user_admin" && $table ) {
-  if ( file_exists ("{$ipath}/data/{$table}/config.php") ) {
-    require_once "{$ipath}/data/{$table}/config.php";
-    require_once "{$ipath}/theme/{$print['theme']}/config.php";
-    putenv ("JSLANG={$_code}");
-    require_once "{$ipath}/language/{$_code}.lang";
-  }
-}
-
-# ¿ÜºÎ È¸¿ø DB ¸¦ »ç¿ëÇÒ °æ¿ì ¼³Á¤ ÆÄÀÏ include
-if ( file_exists ("{$ipath}/config/external.php") ) {
-  require_once "$ipath/config/external.php";
-}
-
-table_name_check ($print['theme']);
-require_once "{$ipath}/include/replicate.php";
-require_once "{$dpath}/include/print.php";
-require_once "$dpath/include/first_reg.php";
-
-# °ü¸®ÀÚ Á¤º¸
-if ( session_is_registered ($jsboard) ) {
-  if( $_SESSION[$jsboard]['pos'] == 1 )
-    $board['super'] = 1;
-
-  if ( strstr ($board['ad'],";") ) {
-    if ( preg_match ("/{$_SESSION[$jsboard]['id']};|;{$_SESSION[$jsboard]['id']}/",$board['ad']) )
-      $board['adm'] = 1;
+# ê´€ë¦¬ì ì •ë³´
+if (isset($_SESSION[$jsboard])) {
+  if($_SESSION[$jsboard]['pos'] == 1) $board['super'] = 1;
+  if(strstr($board['ad'],";")) {
+    if(preg_match("/{$_SESSION[$jsboard]['id']};|;{$_SESSION[$jsboard]['id']}/",$board['ad'])) $board['adm'] = 1;
   } else {
-    if ( preg_match ("/^{$_SESSION[$jsboard]['id']}$/",$board['ad']) )
-      $board['adm'] = 1;
+    if(preg_match("/^{$_SESSION[$jsboard]['id']}$/",$board['ad'])) $board['adm'] = 1;
   }
 }
 
-$db = replication_mode ($db);
+$db = replication_mode($db);
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim: filetype=php et ts=2 sw=2
+ */
 ?>

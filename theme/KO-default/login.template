@@ -1,96 +1,131 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<meta http-equiv="Cache-Control" content="No-Cache">
-<meta http-equiv="Pragma" content="No-Cache">
-<title>JSBoard <?=$board['ver']?> Login page</title>
-<script type="text/javascript" src="./theme/common/lib.js"></script>
-<link rel="stylesheet" type="text/css" href="./theme/KO-default/default.css">
-</head>
+<HTML>
+<HEAD>
+<!-- $Id: login.template,v 1.23 2014/02/26 17:09:13 oops Exp $ -->
+<META HTTP-EQUIV="Cache-Control" CONTENT="No-Cache">
+<META HTTP-EQUIV="Pragma" CONTENT="No-Cache">
+<TITLE>JSBoard <?php echo $board['ver']?> Login page</TITLE>
+<STYLE TYPE="text/css">
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: <?php echo $color['text']?>;
+}
+a:hover {
+  text-decoration: underline;
+  color: <?php echo $color['text']?>;
+}
+TD {
+  font: 12px tahoma,sans-serif;
+  color: #555555;
+}
+INPUT {
+  font: 11px tahoma,sans-serif;
+  color: <?php echo $color['m_fg']?>;
+  border-width: 1;
+  border-style: solid;
+  border-color: <?php echo $color['d_bg']?>;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: <?php echo $color['m_bg']?>;
+}
+form { display: inline; }
+</STYLE>
+<script type="text/javascript">
+<!--
+function InputFocus() {
+<?php if($mode == "comment") { ?>
+  document.auth.lp.focus();
+<?php } else { ?>
+  document.auth.lu.focus();
+<?php } ?>
+  return;
+}
+//-->
+</script>
+</HEAD>
+<BODY BGCOLOR="<?php echo $color['b_bg']?>" onLoad="InputFocus()">
 
-<?
+<?php
 include "html/head.php";
 if($table) { include "data/$table/html_head.php"; }
 
 if($mode == "comment") {
   $actpage = "./act.php";
   $ment = "Comment Delete";
-  $focus = 'lp';
 } else {
   $actpage = "./session.php";
   $ment = "JSBoard Login";
-  $focus = 'lu';
 }
 ?>
-<body onLoad="InputFocus('<?=$focus?>')">
 
-<table width="100%" border=0 cellpadding=0 cellspacing=0 style="height: 100%">
-<tr><td align="center" valign="middle">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="height: 100%;">
+<TR><TD ALIGN="center" VALIGN="middle">
 
-<form name="auth" method="post" action="<?=$actpage?>">
-<table width="200" border=0 cellpadding=3 cellspacing=0>
-<tr>
-<td class="logtitle"><?=$ment?></td>
-</tr>
+<FORM NAME="auth" METHOD="POST" ACTION="<?php echo $actpage?>">
+<TABLE WIDTH="200" BORDER=0 CELLPADDING=3 CELLSPACING=0>
+<TR>
+<TD BGCOLOR="<?php echo $color['t_bg']?>" ALIGN="CENTER"><FONT STYLE="FONT: 14px Tahoma; COLOR:<?php echo $color['t_fg']?>; FONT-WEIGHT:bold"><?php echo $ment?></FONT></TD>
+</TR>
 
-<tr>
-<td class="log_bg">
-<img src="images/blank.gif" width=1 height=4 alt=''><br>
+<TR>
+<TD BGCOLOR="<?php echo $color['m_bg']?>" ALIGN="CENTER">
+<IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=4><BR>
 
-<table border=0 cellpadding=0 cellspacing=0 width="100%">
-<? if($mode == "comment") { ?>
-<tr>
-<td class="log_td">
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH="100%">
+<?php if($mode == "comment") { ?>
+<TR>
+<TD ALIGN="CENTER" STYLE="overflow: hidden; white-space: nowrap"><NOBR>
 Password
-<input type="password" name="lp" id="lp" size="<?=$size?>" tabindex="1">
-<input type="submit" value="DELETE" tabindex="2">
-<br>
-</td>
-</tr>
-<? } else { ?>
-<tr>
-<td align="center">User</td>
-<td align="center"><input type="text" name="lu" id="lu" size="<?=$size?>" tabindex="1"></td>
-</tr>
+<INPUT TYPE="password" NAME="lp" SIZE="<?php echo $size?>" tabindex="1">
+<INPUT TYPE="SUBMIT" VALUE="DELETE" tabindex="2">
+</NOBR>
+<BR>
+</TD>
+</TR>
+<?php } else { ?>
+<TR>
+<TD ALIGN="CENTER">User</TD>
+<TD ALIGN="CENTER"><INPUT TYPE="text" NAME="lu" SIZE="<?php echo $size?>" tabindex="1"></TD>
+</TR>
 
-<tr>
-<td align="center">Password</td>
-<td align="center"><input type="password" name="lp" id="lp" size="<?=$size?>" tabindex="2"></td>
-</tr>
+<TR>
+<TD ALIGN="CENTER">Password</TD>
+<TD ALIGN="CENTER"><INPUT TYPE="password" NAME="lp" SIZE="<?php echo $size?>" tabindex="2"></TD>
+</TR>
 
-<tr>
-<td align="center" colspan=2>
-Session Reset <input type="button" value="RESET" onClick="document.location='./session.php?m=logout<?=$opt?>'" tabindex="4">
-<input type="submit" value="LogIn" tabindex="3">
-<br>
-</td>
-</tr>
-<? } ?>
-</table>
+<TR>
+<TD ALIGN="CENTER" COLSPAN=2>
+Session Reset <INPUT TYPE="BUTTON" VALUE="RESET" onClick="document.location='./session.php?m=logout<?php echo $opt?>'" tabindex="4">
+<INPUT TYPE="SUBMIT" VALUE="LogIn" tabindex="3">
+<BR>
+</TD>
+</TR>
+<?php } ?>
+</TABLE>
 
-<img src="images/blank.gif" width=1 height=4><br>
-<input type="hidden" name="m" value="login">
-<? if ($mode == "comment") { ?>
-<input type="hidden" name="table" value="<?=$table?>">
-<input type="hidden" name="atc[no]" value="<?=$no?>">
-<input type="hidden" name="atc[cid]" value="<?=$cid?>">
-<input type="hidden" name="o[at]" value="c_del">
-<input type="hidden" name="page" value="<?=$page?>">
-<? } ?>
+<IMG ALT="" SRC="images/blank.gif" WIDTH=1 HEIGHT=4><BR>
+<INPUT TYPE="HIDDEN" NAME="m" VALUE="login">
+<?php if ($mode == "comment") { ?>
+<INPUT TYPE="HIDDEN" NAME="table" VALUE="<?php echo $table?>">
+<INPUT TYPE="HIDDEN" NAME="atc[no]" VALUE="<?php echo $no?>">
+<INPUT TYPE="HIDDEN" NAME="atc[cid]" VALUE="<?php echo $cid?>">
+<INPUT TYPE="HIDDEN" NAME="o[at]" VALUE="c_del">
+<INPUT TYPE="HIDDEN" NAME="page" VALUE="<?php echo $page?>">
+<?php } ?>
 
-</td>
-</tr>
-</table>
-<?=$hin?>
-<?=$tin?>
+</TD>
+</TR>
+</TABLE>
+<?php echo $hin?>
+<?php echo $tin?>
 </FORM>
 
-</td></tr>
-</table>
+</TD></TR>
+</TABLE>
 
-<?
+<?php
 if($table) { include "data/$table/html_tail.php"; }
 include "html/tail.php";
 ?>
 
-</body></html>
+</BODY></HTML>

@@ -1,18 +1,21 @@
 <?php
-# $Id: parse.php,v 1.20 2009-11-19 04:05:32 oops Exp $
+# $Id: parse.php,v 1.21 2014/03/02 17:11:31 oops Exp $
 
-# html»ç¿ëÀ» ¾ÈÇÒ °æ¿ì IE¿¡¼­ ¹®¹ı¿¡ ¸ÂÁö ¾Ê´Â ±ÛÀÚ Ç¥Çö½Ã ±úÁö´Â °ÍÀ» ¼öÁ¤
+# // {{{ +-- public ugly_han($text,$html=0)
+# htmlì‚¬ìš©ì„ ì•ˆí•  ê²½ìš° IEì—ì„œ ë¬¸ë²•ì— ë§ì§€ ì•ŠëŠ” ê¸€ì í‘œí˜„ì‹œ ê¹¨ì§€ëŠ” ê²ƒì„ ìˆ˜ì •
 function ugly_han($text,$html=0) {
   if (!$html) $text = preg_replace("/&amp;(#|amp)/i","&\\1",$text);
   else $text = str_replace("&amp;","&",$text);
   return $text;
 }
+// }}}
 
-# °Ë»ö Æû¿¡¼­ ³Ñ¾î¿Â °ªÀ» URL·Î ¹Ù²ãÁÜ (POST -> GET ÀüÈ¯)
+# // {{{ +-- public search2url($o, $method = "get")
+# ê²€ìƒ‰ í¼ì—ì„œ ë„˜ì–´ì˜¨ ê°’ì„ URLë¡œ ë°”ê¿”ì¤Œ (POST -> GET ì „í™˜)
 #
-# trim         - ¹®ÀÚ¿­ ¾çÂÊÀÇ °ø¹é ¹®ÀÚ¸¦ ¾ø¾Ú
+# trim         - ë¬¸ìì—´ ì–‘ìª½ì˜ ê³µë°± ë¬¸ìë¥¼ ì—†ì•°
 #                http://www.php.net/manual/function.trim.php
-# rawurlencode - RFC1738¿¡ ¸Â°Ô URLÀ» ¾ÏÈ£È­
+# rawurlencode - RFC1738ì— ë§ê²Œ URLì„ ì•”í˜¸í™”
 #                http://www.php.net/manual/function.rawurlencode.php
 function search2url($o, $method = "get") {
   if($o['at'] != "s" && $o['at'] != "d") return;
@@ -29,7 +32,7 @@ function search2url($o, $method = "get") {
     if($method == "get") {
       $value = rawurlencode($value);
       $url  .= "&amp;o[$key]=$value";
-    } else $url  .= "\n<input type=\"hidden\" name=\"o[$key]\" value=\"$value\">";
+    } else $url  .= "\n<INPUT TYPE=\"hidden\" NAME=\"o[$key]\" VALUE=\"$value\">";
 
     next($o);
   }
@@ -37,38 +40,40 @@ function search2url($o, $method = "get") {
   $url = preg_replace("/(%5C)%5C/i","\\1",$url);
   return $url;
 }
+// }}}
 
-# °Ë»öÆû¿¡¼­ ³Ñ¾î¿Â °ªÀ» SQL ÁúÀÇ¹®À¸·Î ¹Ù²Ş
+# // {{{ +-- public search2sql($o, $wh = 1, $join = 0)
+# ê²€ìƒ‰í¼ì—ì„œ ë„˜ì–´ì˜¨ ê°’ì„ SQL ì§ˆì˜ë¬¸ìœ¼ë¡œ ë°”ê¿ˆ
 #
-# trim         - ¹®ÀÚ¿­ ¾çÂÊÀÇ °ø¹é ¹®ÀÚ¸¦ ¾ø¾Ú
+# trim         - ë¬¸ìì—´ ì–‘ìª½ì˜ ê³µë°± ë¬¸ìë¥¼ ì—†ì•°
 #                http://www.php.net/manual/function.trim.php
-# rawurldecode - ¾ÏÈ£È­µÈ URL¸¦ º¹È£È­
+# rawurldecode - ì•”í˜¸í™”ëœ URLë¥¼ ë³µí˜¸í™”
 #                http://www.php.net/manual/function.rawurldecode.php
 function search2sql($o, $wh = 1, $join = 0) {
-  global $_;
+  global $langs;
   if($o['at'] != "s" && $o['at'] != "d") return;
 
-  $str = rawurldecode($o['ss']); # °Ë»ö ¹®ÀÚ¿­À» º¹È£È­
+  $str = rawurldecode($o['ss']); # ê²€ìƒ‰ ë¬¸ìì—´ì„ ë³µí˜¸í™”
   $str = trim($str);
   $join = $join ? "tb." : "";
 
   if(strlen(stripslashes($str)) < 3 && !$o['op']) {
     if($o['sc'] != "r" && $o['st'] != "t")
-      print_error($_('nsearch'),250,150,1);
+      print_error($langs['nsearch'],250,150,1);
   }
 
   if(!$o['er']) {
-    # %´Â SQL ÁúÀÇ¿¡¼­ And ¿¬»êÀ¸·Î ¾²ÀÌ¹Ç·Î \¸¦ ºÙ¿©¼­ ÀÏ¹İ ¹®ÀÚÀÓÀ» ³ªÅ¸³¿
+    # %ëŠ” SQL ì§ˆì˜ì—ì„œ And ì—°ì‚°ìœ¼ë¡œ ì“°ì´ë¯€ë¡œ \ë¥¼ ë¶™ì—¬ì„œ ì¼ë°˜ ë¬¸ìì„ì„ ë‚˜íƒ€ëƒ„
     $str = str_replace("%","\%",$str);
     if($o['at'] != "d") {
-      # \%\%¸¦ and ¿¬»êÀ¸·Î °£ÁÖÇÏ¿© %·Î ¼öÁ¤
+      # \%\%ë¥¼ and ì—°ì‚°ìœ¼ë¡œ ê°„ì£¼í•˜ì—¬ %ë¡œ ìˆ˜ì •
       $str = str_replace("\%\%","%",$str);
     }
     $str = addslashes($str);
 
-    if (preg_match("/[\"']/",$str)) print_error($_('nochar'),250,150,1);
+    if (preg_match("/[\"']/",$str)) print_error($langs['nochar'],250,150,1);
   } else {
-    # Á¤±Ô Ç¥Çö½Ä: °Ë»ö¾î°¡ "[,("·Î ½ÃÀÛÇßÁö¸¸ "],)"·Î ´İÁö ¾ÊÀº °æ¿ì Ã¼Å©
+    # ì •ê·œ í‘œí˜„ì‹: ê²€ìƒ‰ì–´ê°€ "[,("ë¡œ ì‹œì‘í–ˆì§€ë§Œ "],)"ë¡œ ë‹«ì§€ ì•Šì€ ê²½ìš° ì²´í¬
     $chk = preg_replace("/\\\([\]\[()])/i","",$str);
     $chk = preg_replace("/[^\[\]()]/i","",$chk);
 
@@ -82,7 +87,7 @@ function search2sql($o, $wh = 1, $join = 0) {
   }
 
   if($o['at'] == "d") {
-    # °Ë»ö ¿¬»êÀÚ¿¡ ÀÇÇØ °Ë»ö¾î ºĞ¸®
+    # ê²€ìƒ‰ ì—°ì‚°ìì— ì˜í•´ ê²€ìƒ‰ì–´ ë¶„ë¦¬
     $src = array("/\\\\\\\\/i","/\\\\\+/i","/\\\\\-/i","/\+/i","/\-/i");
     $tar = array("\\","!pluschar!","!minuschar!","!explode!p!","!explode!m!");
     $strs = preg_replace($src,$tar,$str);
@@ -92,7 +97,7 @@ function search2sql($o, $wh = 1, $join = 0) {
 
     for($i=0;$i<sizeof($strs);$i++) {
       $lenchk = strlen(trim(preg_replace("/!(m|p)!/i","",$strs[$i])));
-      if($lenchk < 3) print_error($_('nsearch'),250,150,1);
+      if($lenchk < 3) print_error($langs['nsearch'],250,150,1);
     }
   }
 
@@ -105,11 +110,11 @@ function search2sql($o, $wh = 1, $join = 0) {
 
     switch($o['st']) {
       case 't': $sql .= "({$join}date >= $today)";
-        break; # ¿À´Ã
+        break; # ì˜¤ëŠ˜
       case 'w': $sql .= "({$join}date >= $week) AND ";
-        break; # ÀÏÁÖÀÏ°£
+        break; # ì¼ì£¼ì¼ê°„
       case 'm': $sql .= "({$join}date >= $month) AND ";
-        break; # ÇÑ´Ş°£
+        break; # í•œë‹¬ê°„
     }
   } else {
     $startday = mktime(0,0,0,$o['m1'],$o['d1'],$o['y1']);
@@ -118,7 +123,8 @@ function search2sql($o, $wh = 1, $join = 0) {
   }
 
   if($o['at'] != "d") {
-    $str = get_like ($o['er'], $str);
+    if($o['er']) $str = "REGEXP \"$str\"";
+    else $str = "LIKE \"%$str%\"";
 
     switch($o['sc']) {
       case 'a': $sql .= "({$join}title $str OR {$join}text $str OR {$join}name $str)";
@@ -133,12 +139,12 @@ function search2sql($o, $wh = 1, $join = 0) {
         break;
     }
   } else {
-    $likeregex = get_like ($o['er']);
-    $pchar = !$o['er'] ? '%' : '';
+    $likeregex = $o['er'] ? "REGEXP" : "LIKE";
+    $pchar = !$o['er'] ? "%" : "";
     switch($o['sc']) {
       case 'a':
         for($i=0;$i<sizeof($strs);$i++) {
-          $strs[$i] = "$likeregex '$pchar".trim($strs[$i])."$pchar'";
+          $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
           $sqltitle .= "{$join}title $strs[$i]";
           $sqltext .= "{$join}text $strs[$i]";
           $sqlname .= "{$join}name $strs[$i]";
@@ -147,47 +153,49 @@ function search2sql($o, $wh = 1, $join = 0) {
         break;
       case 'c':
         for($i=0;$i<sizeof($strs);$i++) {
-          $strs[$i] = "$likeregex '$pchar".trim($strs[$i])."$pchar'";
+          $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
           $sqltext .= "{$join}text $strs[$i]";
         }
         $sql .= "($sqltext)";
         break;
       case 'n':
         for($i=0;$i<sizeof($strs);$i++) {
-          $strs[$i] = "$likeregex '$pchar".trim($strs[$i])."$pchar'";
+          $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
           $sqlname .= "{$join}name $strs[$i]";
         }
         $sql .= "($sqlname)";
         break;
       case 't':
         for($i=0;$i<sizeof($strs);$i++) {
-          $strs[$i] = "$likeregex '$pchar".trim($strs[$i])."$pchar'";
+          $strs[$i] = "$likeregex \"$pchar".trim($strs[$i])."$pchar\"";
           $sqltitle .= "{$join}title $strs[$i]";
         }
         $sql .= "($sqltitle)";
         break;
     }
 
-    $sql = preg_replace("/((tb\.)?(title|name|text) (LIKE|REGEXP) (\"|')%?)!p![ ]*/i"," AND \\1",$sql);
-    $sql = preg_replace("/((tb\.)?(title|name|text) (LIKE|REGEXP) (\"|')%?)!m![ ]*/i"," OR \\1",$sql);
+    $sql = preg_replace("/((tb\.)?(title|name|text) (LIKE|REGEXP) \"%?)!p![ ]*/i"," AND \\1",$sql);
+    $sql = preg_replace("/((tb\.)?(title|name|text) (LIKE|REGEXP) \"%?)!m![ ]*/i"," OR \\1",$sql);
   }
 
   return $sql;
 }
+// }}}
 
-# °Ë»ö ¹®ÀÚ¿­ ÇÏÀÌ¶óÀÌÆÃ ÇÔ¼ö
+# // {{{ +-- public search_hl($list)
+# ê²€ìƒ‰ ë¬¸ìì—´ í•˜ì´ë¼ì´íŒ… í•¨ìˆ˜
 #
 function search_hl($list) {
   global $board ,$o;
 
-  $hl = array ('<font class="hilight">', '</font>');
+  $hl = explode("STR", $board['hl']);
   if(!$o['ss']) return $list;
 
   $str = rawurldecode($o['ss']);
   $str = trim($str);
   $str = stripslashes($str);
 
-  # Á¤±Ô Ç¥Çö½Ä: °Ë»ö¾î°¡ "[,("·Î ½ÃÀÛÇßÁö¸¸ "],)"·Î ´İÁö ¾ÊÀº °æ¿ì Ã¼Å©
+  # ì •ê·œ í‘œí˜„ì‹: ê²€ìƒ‰ì–´ê°€ "[,("ë¡œ ì‹œì‘í–ˆì§€ë§Œ "],)"ë¡œ ë‹«ì§€ ì•Šì€ ê²½ìš° ì²´í¬
   if ($o['er']) {
     $chk = preg_replace("/\\\([\]\[()])/i","",$str);
     $chk = preg_replace("/[^\[\]()]/i","",$chk);
@@ -206,13 +214,13 @@ function search_hl($list) {
     }
   }
 
-  # regex ¿¡¼­ Ãæµ¹µÇ´Â ¹®ÀÚ escape Ã³¸®
+  # regex ì—ì„œ ì¶©ëŒë˜ëŠ” ë¬¸ì escape ì²˜ë¦¬
   $dead = array("/\?|\)|\(|\*|\.|\^|\+|\%/i");
   $live = array("\\\\\\0");
   $str = preg_replace($dead,$live,$str);
 
   if($o['at'] != "d") {
-    # %% °Ë»ö½Ã ÇÊ¿ä Á¶°Ç
+    # %% ê²€ìƒ‰ì‹œ í•„ìš” ì¡°ê±´
     $strs = explode("%%",str_replace("/","\/",$str));
   } else {
     $src = array("/\\\\\\\\/i","/\\\\\+/i","/\\\\\-/i","/\+/i","/\-/i","/\//i");
@@ -281,7 +289,9 @@ function search_hl($list) {
 
   return $list;
 }
+// }}}
 
+// {{{ +-- public quote_len ($buf)
 function quote_len ($buf) {
   $no = 0;
   preg_match_all ('/\[\/?quote[^\]]+\]/', $buf, $matches);
@@ -289,12 +299,22 @@ function quote_len ($buf) {
     $no += strlen (trim ($v));
   return $no;
 }
+// }}}
 
+// {{{ +-- public wordwrap_js (&$buf, $len = 80)
 function wordwrap_js (&$buf, $len = 80) {
+  $tol = &$GLOBALS['langs']['code'];
   $buf = unhtmlspecialchars ($buf);
+
+  if ($tol == 'ko') {
+    if (($ss = iconv ('utf-8', 'cp949', $buf)) !== false)
+      $buf = $ss;
+  }
+
   $_buf = split ("\r?\n", $buf);
   $size = count ($_buf);
   $buf = '';
+
   for ( $i=0; $i<$size; $i++ ) {
     $_buf[$i] = rtrim ($_buf[$i]);
     $_bufs = preg_replace ('/\[(\/)?quote[^\]]*\]/i', '', $_buf[$i]);
@@ -332,9 +352,16 @@ function wordwrap_js (&$buf, $len = 80) {
     } else
       $buf .= $_buf[$i] . "\n";
   }
-  $buf = htmlspecialchars ($buf);
-}
+  $buf = htmlspecialchars ($buf, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 
+  if ($tol == 'ko') {
+    if (($ss = iconv ('cp949', 'utf-8', $buf)) !== false)
+      $buf = $ss;
+  }
+}
+// }}}
+
+// {{{ +-- public js_htmlcode(&$buf)
 function js_htmlcode(&$buf) {
   global $enable, $agent;
 
@@ -364,7 +391,9 @@ function js_htmlcode(&$buf) {
   $conv[] = '<li';
   $buf = preg_replace ($reg, $conv, $buf);
 }
+// }}}
 
+// {{{ +-- public new_read_format(&$buf)
 function new_read_format(&$buf) {
   global $enable, $board;
 
@@ -408,12 +437,13 @@ function new_read_format(&$buf) {
     } else
       $buf .= $v;
   }
-
   js_htmlcode ($buf);
 }
+// }}}
 
+// {{{ +-- public text_nl2br(&$text, $html)
 function text_nl2br(&$text, $html) {
-  global $_code;
+  global $langs;
   if($html == 1) {
     $source = array("/<(\?|%)/i","/(\?|%)>/i","/<img .*src=[a-z0-9\"']*script:[^>]+>/i","/\r\n/",
                     "/<(\/*(script|style|pre|xmp|xml|base|span|html)[^>]*)>/i","/(=[0-9]+%)&gt;/i");
@@ -422,14 +452,14 @@ function text_nl2br(&$text, $html) {
     if(!preg_match("/<--no-autolink>/i",$text)) $text = auto_link($text);
     else $text = chop(str_replace("<--no-autolink>","",$text));
 
-    $text = preg_replace("/(\n)?<table/i","</pre><table",$text);
-    $text = preg_replace("/<\/table>(\n)?/i","</table><pre>",$text);
+    $text = preg_replace("/(\n)?<table/i","</PRE><TABLE",$text);
+    $text = preg_replace("/<\/table>(\n)?/i","</TABLE><PRE>",$text);
     $text = !$text ? "No Contents" : $text;
     $text = "<pre>$text</pre>";
   } else {
     $text = htmlspecialchars($text);
-    # ÇÑ±Û ±úÁö´Â°Í º¸Á¤
-    if ($_code == 'ko') $text = ugly_han($text);
+    # í•œê¸€ ê¹¨ì§€ëŠ”ê²ƒ ë³´ì •
+    if ($langs['code'] == "ko") $text = ugly_han($text);
     if ($html)
       new_read_format($text);
     else
@@ -437,7 +467,9 @@ function text_nl2br(&$text, $html) {
     $text = auto_link($text);
   }
 }
+// }}}
 
+// {{{ +-- public delete_tag(&$var)
 function delete_tag(&$var) {
   if ( $var['html'] != 1 )
     return;
@@ -451,96 +483,117 @@ function delete_tag(&$var) {
 
   $var['text'] = chop(preg_replace($src,$tar,$var['text']));
 }
+// }}}
 
-# ¹®ÀÚ¿­À» ÀÏÁ¤ÇÑ ±æÀÌ·Î ÀÚ¸£´Â ÇÔ¼ö
+# // {{{ +-- public cut_string($s,$l)
+# ë¬¸ìì—´ì„ ì¼ì •í•œ ê¸¸ì´ë¡œ ìë¥´ëŠ” í•¨ìˆ˜
 #
-# substr - ¹®ÀÚ¿­ÀÇ ÁöÁ¤µÈ ¹üÀ§¸¦ Àß¶ó¼­ °¡Á®¿È
+# substr - ë¬¸ìì—´ì˜ ì§€ì •ëœ ë²”ìœ„ë¥¼ ì˜ë¼ì„œ ê°€ì ¸ì˜´
+#          utf-8ì˜ ê²½ìš° 3byteì´ê¸° ë•Œë¬¸ì— ì˜ì–´ê°€ ì„ì—¬ ìˆì„
+#          ê²½ìš° ê¸€ììˆ˜ ê¸¸ì´ ì²˜ë¦¬ê°€ ì¡°ê¸ˆ ê³¤ë€í•˜ë¯€ë¡œ euc-kr
+#          ë¡œ ì „í™˜í•´ì„œ ìë¥´ëŠ” ê½ìˆ˜ë¥¼ ë¶€ë¦°ë‹¤.
 #          http://www.php.net/manual/function.substr.php
 function cut_string($s,$l) {
+  $tol = &$GLOBALS['langs']['code'];
+  if ($tol == 'ko') {
+    if (($ss = iconv ('utf-8', 'cp949', $s)) !== false)
+      $s = $ss;
+  }
+
   if(strlen($s) > $l) {
     $s = substr($s,0,$l);
-    $s = preg_replace("/(([\x80-\xFE].)*)[\x80-\xFE]?$/","\\1",$s);
+    if ($tol)
+      $s = preg_replace("/(([\x80-\xFE].)*)[\x80-\xFE]?$/","\\1",$s);
+  }
+
+  if ($tol == 'ko') {
+    if (($ss = iconv ('cp949', 'utf-8', $s)) !== false)
+      $s = $ss;
   }
   return $s;
 }
+// }}}
 
-
-# ¹®¼­ ³»¿ë¿¡ ÀÖ´Â URLµéÀ» Ã£¾Æ³»¾î ÀÚµ¿À¸·Î ¸µÅ©¸¦ ±¸¼ºÇØÁÖ´Â ÇÔ¼ö
+# // {{{ +-- public auto_link($str)
+# ë¬¸ì„œ ë‚´ìš©ì— ìˆëŠ” URLë“¤ì„ ì°¾ì•„ë‚´ì–´ ìë™ìœ¼ë¡œ ë§í¬ë¥¼ êµ¬ì„±í•´ì£¼ëŠ” í•¨ìˆ˜
 #
-# preg_replace  - ÆŞ Çü½ÄÀÇ Á¤±ÔÇ¥Çö½ÄÀ» ÀÌ¿ëÇÑ Ä¡È¯
+# preg_replace  - í„ í˜•ì‹ì˜ ì •ê·œí‘œí˜„ì‹ì„ ì´ìš©í•œ ì¹˜í™˜
 #                 http://www.php.net/manual/function.preg-replace.php
 function auto_link($str) {
   global $agent,$rmail,$print;
 
-  $regex['file'] = "gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov";
+  $uhan = '\x{1100}-\x{11FF}\x{3130}-\x{318F}\x{AC00}-\x{D7AF}';
+  $ehan = '\xA1-\xFE';
+  $regex['file'] = 'gz|tgz|tar|gzip|zip|rar|mpeg|mpg|exe|rpm|dep|rm|ram|asf|ace|viv|avi|mid|gif|jpg|png|bmp|eps|mov';
   $regex['file'] = "(\.({$regex['file']})\") TARGET=\"_blank\"";
-  $regex['http'] = "(http|https|ftp|telnet|news|mms):\/\/(([\xA1-\xFEa-z0-9:_\-]+\.[\xA1-\xFEa-z0-9,:;&#=_~%\[\]?\/.,+\-]+)([.]*[\/a-z0-9\[\]]|=[\xA1-\xFE]+))";
-  $regex['mail'] = "([\xA1-\xFEa-z0-9_.-]+)@([\xA1-\xFEa-z0-9_-]+\.[\xA1-\xFEa-z0-9._-]*[a-z]{2,3}(\?[\xA1-\xFEa-z0-9=&\?]+)*)";
+  $regex['http'] = "(http|https|ftp|telnet|news|mms):\/\/(([{$uhan}a-z0-9:_\-]+\.[{$uhan}a-z0-9,:;&#=_~%\[\]?\/.,+\-]+)([.]*[\/a-z0-9\[\]]|=[{$uhan}]+))";
+  $regex['mail'] = "([{$uhan}a-z0-9_.-]+)@([{$uhan}a-z0-9_-]+\.[{$uhan}a-z0-9._-]*[a-z]{2,3}(\?[{$uhan}a-z0-9=&\?]+)*)";
 
-  # &lt; ·Î ½ÃÀÛÇØ¼­ 3ÁÙµÚ¿¡ &gt; °¡ ³ª¿Ã °æ¿ì¿Í
-  # IMG tag ¿Í A tag ÀÇ °æ¿ì ¸µÅ©°¡ ¿©·¯ÁÙ¿¡ °ÉÃÄ ÀÌ·ç¾îÁ® ÀÖÀ» °æ¿ì
-  # ÀÌ¸¦ ÇÑÁÙ·Î ÇÕÄ§ (ÇÕÄ¡¸é¼­ ºÎ°¡ ¿É¼ÇµéÀº ¸ğµÎ »èÁ¦ÇÔ)
+  # &lt; ë¡œ ì‹œì‘í•´ì„œ 3ì¤„ë’¤ì— &gt; ê°€ ë‚˜ì˜¬ ê²½ìš°ì™€
+  # IMG tag ì™€ A tag ì˜ ê²½ìš° ë§í¬ê°€ ì—¬ëŸ¬ì¤„ì— ê±¸ì³ ì´ë£¨ì–´ì ¸ ìˆì„ ê²½ìš°
+  # ì´ë¥¼ í•œì¤„ë¡œ í•©ì¹¨ (í•©ì¹˜ë©´ì„œ ë¶€ê°€ ì˜µì…˜ë“¤ì€ ëª¨ë‘ ì‚­ì œí•¨)
   $src[] = "/<([^<>\n]*)\n([^<>\n]+)\n([^<>\n]*)>/i";
   $tar[] = "<\\1\\2\\3>";
   $src[] = "/<([^<>\n]*)\n([^\n<>]*)>/i";
   $tar[] = "<\\1\\2>";
-  $src[] = "/<(A|IMG)[^>]*(HREF|SRC)[^=]*=[ '\"\n]*({$regex['http']}|mailto:{$regex['mail']})[^>]*>/i";
+  $src[] = "/<(A|IMG)[^>]*(HREF|SRC)[^=]*=[ '\"\n]*({$regex['http']}|mailto:{$regex['mail']})[^>]*>/ui";
   $tar[] = "<\\1 \\2=\"\\3\">";
 
-  # email Çü½ÄÀÌ³ª URL ¿¡ Æ÷ÇÔµÉ °æ¿ì URL º¸È£¸¦ À§ÇØ @ À» Ä¡È¯
+  # email í˜•ì‹ì´ë‚˜ URL ì— í¬í•¨ë  ê²½ìš° URL ë³´í˜¸ë¥¼ ìœ„í•´ @ ì„ ì¹˜í™˜
   $src[] = "/(http|https|ftp|telnet|news|mms):\/\/([^ \n@]+)@/i";
   $tar[] = "\\1://\\2_HTTPAT_\\3";
 
-  # Æ¯¼ö ¹®ÀÚ¸¦ Ä¡È¯ ¹× html»ç¿ë½Ã link º¸È£
+  # íŠ¹ìˆ˜ ë¬¸ìë¥¼ ì¹˜í™˜ ë° htmlì‚¬ìš©ì‹œ link ë³´í˜¸
   $src[] = "/&(quot|gt|lt)/i";
   $tar[] = "!\\1";
-  $src[] = "/<a([^>]*)href=[\"' ]*({$regex['http']})[\"']*[^>]*>/i";
+  $src[] = "/<a([^>]*)href=[\"' ]*({$regex['http']})[\"']*[^>]*>/ui";
   $tar[] = "<A\\1href=\"\\3_orig://\\4\" TARGET=\"_blank\">";
-  $src[] = "/href=[\"' ]*mailto:({$regex['mail']})[\"']*>/i";
+  $src[] = "/href=[\"' ]*mailto:({$regex['mail']})[\"']*>/ui";
   $tar[] = "href=\"mailto:\\2#-#\\3\">";
-  $src[] = "/<([^>]*)(background|codebase|src)[ \n]*=[\n\"' ]*({$regex['http']})[\"']*/i";
+  $src[] = "/<([^>]*)(background|codebase|src)[ \n]*=[\n\"' ]*({$regex['http']})[\"']*/ui";
   $tar[] = "<\\1\\2=\"\\4_orig://\\5\"";
 
-  # ¸µÅ©°¡ ¾ÈµÈ url¹× email address ÀÚµ¿¸µÅ©
-  $src[] = "/((SRC|HREF|BASE|GROUND)[ ]*=[ ]*|[^=]|^)({$regex['http']})/i";
+  # ë§í¬ê°€ ì•ˆëœ urlë° email address ìë™ë§í¬
+  $src[] = "/((SRC|HREF|BASE|GROUND)[ ]*=[ ]*|[^=]|^)({$regex['http']})/ui";
   $tar[] = "\\1<a href=\"\\3\" target=\"_blank\">\\3</a>";
-  $src[] = "/({$regex['mail']})/i";
+  $src[] = "/({$regex['mail']})/ui";
   $tar[] = "<a href=\"mailto:\\1\">\\1</a>";
   $src[] = "/<a href=[^>]+>(<a href=[^>]+>)/i";
   $tar[] = "\\1";
   $src[] = "/<\/a><\/a>/i";
   $tar[] = "</a>";
 
-  # º¸È£¸¦ À§ÇØ Ä¡È¯ÇÑ °ÍµéÀ» º¹±¸
+  # ë³´í˜¸ë¥¼ ìœ„í•´ ì¹˜í™˜í•œ ê²ƒë“¤ì„ ë³µêµ¬
   $src[] = "/!(quot|gt|lt)/i";
   $tar[] = "&\\1";
   $src[] = "/(http|https|ftp|telnet|news|mms)_orig/i";
   $tar[] = "\\1";
   $src[] = "'#-#'";
   $tar[] = "@";
-  $src[] = "/{$regex['file']}/i";
+  $src[] = "/{$regex['file']}/ui";
   $tar[] = "\\1";
 
-  # email ÁÖ¼Ò¸¦ º¯Çü½ÃÅ´
-  $src[] = "/mailto:[ ]*{$regex['mail']}/i";
+  # email ì£¼ì†Œë¥¼ ë³€í˜•ì‹œí‚´
+  $src[] = "/mailto:[ ]*{$regex['mail']}/ui";
   $tar[] = "javascript:sendform('\\1','\\2','');";
-  $src[] = "/{$regex['mail']}/i";
+  $src[] = "/{$regex['mail']}/ui";
   #$tar[] = "\\1<img src=\"./images/at.gif\" width=9 height=13 border=0 alt='at'>\\2";
-  $tar[] = "\\1<img src=\"./theme/{$print['theme']}/img/at.gif\" width=9 height=13 border=0 alt='at'>\\2";
+  #$tar[] = "\\1<img src=\"./theme/{$print['theme']}/img/at.gif\" width=9 height=13 border=0 alt='at'>\\2";
+  $tar[] = "\\1&#0064;\\2";
   $src[] = "/<</";
   $tar[] = "&lt;<";
   $src[] = "/>>/";
   $tar[] = ">&gt;";
 
-  # email ÁÖ¼Ò¸¦ º¯ÇüÇÑ µÚ URL ¼ÓÀÇ @ À» º¹±¸
+  # email ì£¼ì†Œë¥¼ ë³€í˜•í•œ ë’¤ URL ì†ì˜ @ ì„ ë³µêµ¬
   $src[] = "/_HTTPAT_/";
   $tar[] = "@";
 
-  # ÀÌ¹ÌÁö¿¡ º¸´õ°ª 0 À» »ğÀÔ
+  # ì´ë¯¸ì§€ì— ë³´ë”ê°’ 0 ì„ ì‚½ì…
   $src[] = "/<(img src=\"[^\"]+\")>/i";
   $tar[] = "<\\1 border=0>";
 
-  # IE °¡ ¾Æ´Ñ °æ¿ì embed tag ¸¦ »èÁ¦ÇÔ
+  # IE ê°€ ì•„ë‹Œ ê²½ìš° embed tag ë¥¼ ì‚­ì œí•¨
   if($agent['br'] != "MSIE" && $agent['br'] != 'Firefox') {
     $src[] = "/<embed/i";
     $tar[] = "&lt;embed";
@@ -549,28 +602,31 @@ function auto_link($str) {
   $str = preg_replace($src,$tar,$str);
   return $str;
 }
+// }}}
 
-# Email ¸µÅ©¸¦ ¸¸µé±â À§ÇÑ ÇÔ¼ö
-function url_link($url, $str = '') {
+# // {{{ +-- public url_link($url, $str = "", $no = 0)
+# Email ë§í¬ë¥¼ ë§Œë“¤ê¸° ìœ„í•œ í•¨ìˆ˜
+function url_link($url, $str = "", $no = 0) {
   global $table, $board, $rmail, $o, $agent;
   $str = $str ? $str : $url;
 
+  if($agent['br'] == "MSIE") {
+    $mailTarget = " Target=noPage";
+    $mailFrame = "<IFRAME NAME=\"noPage\" SRC=\"\" STYLE=\"display:none;\"></IFRAME>";
+  }
+
   if(check_email($url) && $rmail['uses']) {
-    $_estr = urlencode ($str);
-    if ( preg_match ('/^s|d$/i', $o['at']) && ($o['sc'] == "n" || $o['sc'] == "a")) {
-      $strs = preg_replace ('/<[^>]+>/i', '', $str);
-    } else {
-      $strs = $str;
-    }
+    if(preg_match("/^s|d$/i",$o['at']) && ($o['sc'] == "n" || $o['sc'] == "a")) {
+      $strs = preg_replace("/<[^>]+>/i","",$str);
+    } else $strs = $str;
+    $strs = str_replace("'", "\'", $strs);
 
-    $strs = str_replace ("'", "\'", $strs);
-    $_div = explode ('@', $url);
-
-    $str = "<a href=\"javascript:sendform('{$_div[0]}','{$_div[1]}','{$_estr}');\" " .
+    $url = str_replace("@",$rmail['chars'],$url);
+    $str = "<A HREF=./act.php?o[at]=ma&amp;target=$url ".
            "onMouseOut=\"window.status=''; return true;\" ".
-           "onMouseOver=\"window.status='Send mail to $strs'; return true;\">$str</a>";
+           "onMouseOver=\"window.status='Send mail to $strs'; return true;\"{$mailTarget}>$str</A>{$mailFrame}";
   } else if(check_url($url)) {
-    $str = "<a href=\"{$url}\" target=\"_blank\">{$str}</a>";
+    $str = "<A HREF=\"$url\" target=\"_blank\">$str</A>";
   } else {
     if($str == $url) $str = "";
     $str = "$str";
@@ -578,17 +634,19 @@ function url_link($url, $str = '') {
 
   return $str;
 }
+// }}}
 
-# File upload¸¦ À§ÇÑ ÇÔ¼ö
+# // {{{ +-- public file_upload($fn,$updir)
+# File uploadë¥¼ ìœ„í•œ í•¨ìˆ˜
 #
 #
-# mkdir            -> directory »ı¼º
-# is_upload_file   -> upload fileÀÇ Á¸Àç¼º ¿©ºÎ
-# move_upload_file -> tmp·Î uploadµÇ¾î ÀÖ´Â ÆÄÀÏÀ» ¿øÇÏ´Â µğ·¹Åä¸®¿¡ À§Ä¡
-# chmod            -> file, direcotyÀÇ ±ÇÇÑ º¯°æ
+# mkdir            -> directory ìƒì„±
+# is_upload_file   -> upload fileì˜ ì¡´ì¬ì„± ì—¬ë¶€
+# move_upload_file -> tmpë¡œ uploadë˜ì–´ ìˆëŠ” íŒŒì¼ì„ ì›í•˜ëŠ” ë””ë ˆí† ë¦¬ì— ìœ„ì¹˜
+# chmod            -> file, direcotyì˜ ê¶Œí•œ ë³€ê²½
 #
 function file_upload($fn,$updir) {
-  global $upload, $_, $table;
+  global $upload, $langs, $table;
 
   $ufile['name'] = $_FILES[$fn]['name'];
   $ufile['size'] = $_FILES[$fn]['size'];
@@ -597,17 +655,17 @@ function file_upload($fn,$updir) {
 
   if(is_uploaded_file($ufile['tmp_name']) && $ufile['size'] > 0) {
     if ($ufile['size'] > $upload['maxsize']) {
-      print_error($_('act_md'),250,150,1);
+      print_error($langs['act_md'],250,150,1);
       exit;
     }
 
-    # file name¿¡ °ø¹éÀÌ ÀÖÀ» °æ¿ì °ø¹é »èÁ¦
+    # file nameì— ê³µë°±ì´ ìˆì„ ê²½ìš° ê³µë°± ì‚­ì œ
     $ufile['name'] = str_replace(" ","",urldecode($ufile['name']));
 
-    # file name¿¡ Æ¯¼ö ¹®ÀÚ°¡ ÀÖÀ» °æ¿ì µî·Ï °ÅºÎ
+    # file nameì— íŠ¹ìˆ˜ ë¬¸ìê°€ ìˆì„ ê²½ìš° ë“±ë¡ ê±°ë¶€
     upload_name_chk($ufile['name']);
 
-    # php, cgi, pl fileÀ» uploadÇÒ½Ã¿¡´Â ½ÇÇàÀ» ÇÒ¼ö¾ø°Ô phps, cgis, pls·Î filenameÀ» ¼öÁ¤
+    # php, cgi, pl fileì„ uploadí• ì‹œì—ëŠ” ì‹¤í–‰ì„ í• ìˆ˜ì—†ê²Œ phps, cgis, plsë¡œ filenameì„ ìˆ˜ì •
     $_parseName = explode ('.', $ufile['name']);
     $_parsePart = count ($_parseName);
 
@@ -636,21 +694,23 @@ function file_upload($fn,$updir) {
     $up = 1;
   } elseif($ufile['name']) {
     if($ufile['size'] == '0') {
-      print_error($_('act_ud'),250,150,1);
+      print_error($langs['act_ud'],250,150,1);
     } else {
-      print_error($_('act_ed'),250,150,1);
+      print_error($langs['act_ed'],250,150,1);
     }
     exit;
   }
   if($up) return $ufile;
 }
+// }}}
 
-# HTML entry¸¦ Æ¯¼ö Æ¯¼ö ¹®ÀÚ·Î º¯È¯
-# (htmlspecialchars ÇÔ¼öÀÇ ¿ªÇÔ¼ö)
+# // {{{ +-- public unhtmlspecialchars($t)
+# HTML entryë¥¼ íŠ¹ìˆ˜ íŠ¹ìˆ˜ ë¬¸ìë¡œ ë³€í™˜
+# (htmlspecialchars í•¨ìˆ˜ì˜ ì—­í•¨ìˆ˜)
 #
-# get_html_translation_table - htmlspecialchars()¿Í htmlentities() ÇÔ¼ö¿¡¼­
-#                              »ç¿ëÇÏ´Â º¯È¯ Å×ÀÌºíÀ» ¹è¿­·Î ¹İÈ¯
-# array_flip                 - ¹è¿­ °ªµéÀÇ ¼ø¼­¸¦ ¹İ´ë·Î 
+# get_html_translation_table - htmlspecialchars()ì™€ htmlentities() í•¨ìˆ˜ì—ì„œ
+#                              ì‚¬ìš©í•˜ëŠ” ë³€í™˜ í…Œì´ë¸”ì„ ë°°ì—´ë¡œ ë°˜í™˜
+# array_flip                 - ë°°ì—´ ê°’ë“¤ì˜ ìˆœì„œë¥¼ ë°˜ëŒ€ë¡œ 
 #
 function unhtmlspecialchars($t) {
   $tr = array_flip(get_html_translation_table(HTML_SPECIALCHARS));
@@ -659,126 +719,61 @@ function unhtmlspecialchars($t) {
 
   return $t;
 }
+// }}}
 
-# Emoticon º¯È¯ ÇÔ¼ö
+# // {{{ +-- public conv_emoticon(&$str, $opt=0)
+# Emoticon ë³€í™˜ í•¨ìˆ˜
 function conv_emoticon(&$str, $opt=0) {
   if (!$opt) return $str;
 
   $src[] = "/\^\^|\^\.\^/";
-  $con[] = "<img src=\"./emoticon/icon1.gif\" border=0 alt='emoticon'>";
+  $con[] = "<IMG SRC=./emoticon/icon1.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/([^0-9a-z])T\.T([^0-9a-z])/i';
-  $con[] = "\\1<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/\?\.\?/';
-  $con[] = "<img src=\"./emoticon/icon3.gif\" border=0 alt='emoticon'>";
+  $con[] = "<IMG SRC=./emoticon/icon3.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/([^0-9a-z]):-?(\(|<)([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon4.gif\" border=0 alt='emoticon'>\\3";
+  $con[] = "\\1<IMG SRC=./emoticon/icon4.gif BORDER=0 ALT='emoticon'>\\3";
   $src[] = '/([^0-9a-z])(:-?(\)|>)|n\.n)([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon5.gif\" border=0 alt='emoticon'>\\4";
+  $con[] = "\\1<IMG SRC=./emoticon/icon5.gif BORDER=0 ALT='emoticon'>\\4";
   $src[] = '/([^0-9])0\.0([^0-9])/';
-  $con[] = "\\1<img src=\"./emoticon/icon6.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon6.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/([^0-9a-z])O\.O([^0-9a-z])/i';
-  $con[] = "\\1<img src=\"./emoticon/icon6.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon6.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/-\.?-V/';
-  $con[] = "<img src=\"./emoticon/icon7.gif\" border=0 alt='emoticon'>";
+  $con[] = "<IMG SRC=./emoticon/icon7.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/([^0-9a-z])(-_-|-\.-)([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon8.gif\" border=0 alt='emoticon'>\\3";
+  $con[] = "\\1<IMG SRC=./emoticon/icon8.gif BORDER=0 ALT='emoticon'>\\3";
   $src[] = '/-0-|^0^|-O-|^O^/';
-  $con[] = "<img src=\"./emoticon/icon9.gif\" border=0 alt='emoticon'>";
+  $con[] = "<IMG SRC=./emoticon/icon9.gif BORDER=0 ALT='emoticon'>";
   $src[] = '/([^0-9a-z]):-?D([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon10.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon10.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/([^0-9a-z]);-?\)([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon11.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon11.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/([^0-9a-z])\^_\^([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon12.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon12.gif BORDER=0 ALT='emoticon'>\\2";
   $src[] = '/([^0-9a-z]):-P|:P([^0-9a-z])/';
-  $con[] = "\\1<img src=\"./emoticon/icon14.gif\" border=0 alt='emoticon'>\\2";
+  $con[] = "\\1<IMG SRC=./emoticon/icon14.gif BORDER=0 ALT='emoticon'>\\2";
 
   $str = preg_replace($src, $con, $str);
-  $str = str_replace("¤Ì.¤Ì", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
-  $str = str_replace("¤Ğ.¤Ğ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
-  $str = str_replace("¤Ğ_¤Ğ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
-  $str = str_replace("¤Ì¤Ì", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
-  $str = str_replace("¤Ğ¤Ğ", "<img src=\"./emoticon/icon2.gif\" border=0 alt='emoticon'>", $str);
+  $str = str_replace("ã…œ.ã…œ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $str);
+  $str = str_replace("ã… .ã… ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $str);
+  $str = str_replace("ã… _ã… ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $str);
+  $str = str_replace("ã…œã…œ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $str);
+  $str = str_replace("ã… ã… ", "<IMG SRC=./emoticon/icon2.gif BORDER=0 ALT='emoticon'>", $str);
 }
+// }}}
 
+// {{{ +-- public checkquote ( $str )
 function checkquote ( $str ) {
   $str = preg_quote ($str);
   $str = str_replace ("\\\\/", "\\/", $str);
 
   return $str;
 }
+// }}}
 
-function sql_parser () {
-  $_argno = func_num_args ();
-  $_arg   = func_get_args (); 
-
-  $type  = $_arg[0];
-  $table = $_arg[1];
-
-  switch ( $_argno) {
-    case 4 :
-      if ( is_numeric ($_arg[2]) ) {
-        $acc = $_arg[2];
-        $name = $_arg[3];
-      } else {
-        $acc = $_arg[3];
-        $name = $_arg[2];
-      }
-      break;
-    case 3 :
-      if ( is_numeric ($_arg[2]) ) {
-        $acc = $_arg[2];
-        $name = '';
-      } else {
-        $acc = 0;
-        $name = $_arg[2];
-      }
-      break;
-    default :
-      $acc = 0;
-      $name = '';
-  }
-
-
-  switch ( $acc ) {
-    case 2  : $_base = '../../SQL'; break;
-    case 1  : $_base = '../SQL'; break;
-    default : $_base = './SQL';
-  }
-
-  $_file = "{$_base}/{$type}/{$table}.sql";
-
-  #$_rr = trim (readfile_r ($_file));
-  #if ( ! $_rr ) return '';
-  #$_rr = preg_replace ('/#.*|[\s]+$/', '', $_rr);
-  #$_r = explode (';', $_rr);
-  #$_r = preg_replace ('/^[\s]+/', '', $_r);
-
-  $_rr = @file ($_file);
-  $_rr = preg_replace ('/[\s]+$|#.*/', '', $_rr);
-
-  $i = -1;
-  foreach ( $_rr as $_v ) {
-    if ( $_v == '')
-      continue;
-
-    if ( $_v[0] == "\t" || $_v[0] == ' ' )
-       $_r[$i] .= "\n" . $_v;
-    else {
-       if ( $_r[$i] )
-         $_r[$i] = preg_replace ('/;$/', '', trim ($_r[$i]));
-
-       $i++;
-       $_r[$i] = trim ($_v);
-    }
-  }
-
-  if ( $name )
-    $_r = preg_replace ('/@table@/', $name, $_r);
-
-  return $_r;
-}
-
+// {{{ +-- public parse_referer (void)
 function parse_referer () {
   $referer = parse_url ($_SERVER['HTTP_REFERER']);
   $referer['basename'] = basename ($referer['path']);
@@ -793,4 +788,16 @@ function parse_referer () {
 
   return array_merge ($ref, $referer);
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

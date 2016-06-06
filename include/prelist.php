@@ -1,47 +1,51 @@
 <?php
 ########################################################################
-# JSBoard Pre List v2.1.0
-# Scripted By JoungKyun Kim 2005.06.20
-# $Id: prelist.php,v 1.5 2009-11-16 21:52:47 oops Exp $
+# JSBoard Pre List v0.4
+# Scripted By JoungKyun Kim 2002.07.30
+# $Id: prelist.php,v 1.9 2014/03/02 17:11:31 oops Exp $
 ########################################################################
 
-isset ($_prlist_init) || $_prlist_init = 0;
+# JSBoardê°€ ì„¤ì¹˜ë˜ì–´ ìˆëŠ” ì ˆëŒ€ ê²½ë¡œ
+# ë§ˆì§€ë§‰ì— /ë¥¼ ë¶™ì´ë©´ ì•ˆë¨
+$prlist['path'] = "/webroot/jsboard-version";
 
-if ( $_prlist_init === 0 ) {
-  echo "<script type=\"text/javascript\" src=\"{$prlist['wpath']}/theme/common/lib.js\"></script>\n" .
-       "<div id=\"overDiv\" style=\"position: absolute; z-index: 50; width: 260px; visibility: hidden;\"></div>\n" .
-       "<script type=\"text/javascript\" src=\"{$prlist['wpath']}/theme/common/preview.js\"></script>\n";
-}
+# JSBoardê°€ ì„¤ì¹˜ë˜ì–´ ìˆëŠ” ì›¹ ê²½ë¡œ
+# ë§ˆì§€ë§‰ì— /ë¥¼ ë¶™ì´ë©´ ì•ˆë¨
+$prlist['wpath'] = "http://ë„ë©”ì¸/jsboard-version";
 
-$_prlist_init++;
-
-$prcode = isset ($prlist['code']) ? $prlist['code'] : 'en';
-putenv ("JSLANG={$prcode}");
-
-require_once "{$prlist['path']}/language/lang.php";
-include_once "{$prlist['path']}/include/variable.php";
+$sqltype = extension_loaded('mysqli') ? 'sqli' : 'sql';
 
 include_once "{$prlist['path']}/config/global.php";
+include_once "{$prlist['path']}/include/variable.php";
 include_once "{$prlist['path']}/include/error.php";
 include_once "{$prlist['path']}/include/parse.php";
 include_once "{$prlist['path']}/include/check.php";
-include_once "{$prlist['path']}/database/db.php";
+include_once "{$prlist['path']}/include/{$sqltype}.php";
 include_once "{$prlist['path']}/include/get.php";
 include_once "{$prlist['path']}/include/print.php";
 
-# ±Û¸®½ºÆ®µéÀ» Ãâ·ÂÇÏ´Â design
-#   echo ¹®ÀÇ "" »çÀÌ¿¡¼­ µğÀÚÀÎÀ» ³ÖÀ¸¸é µÊ
-#   ´Ü ÁÖÀÇ ÇÒ°ÍÀº µû¿ÈÇ¥(")´Â \" ·Î Ç¥±â¸¦ ÇØ¾ß ÇÔ
-#   $p['link']  -> ±Û ¸®½ºÆ®ÀÇ ¸µÅ©
-#   $p['name']  -> ±Û¾´ÀÌ
-#   $p['date']  -> µî·ÏÀÏ
-#   $p['count'] -> Á¶È¸¼ö
+if ( $prlist['starttag'] )
+  echo $prlist['starttag'];
+
+print_preview_src(1);
+
+if ( $prlist['endtag'] )
+  echo $prlist['endtag'];
+
+# // {{{ +-- public print_prlist($p)
+# ê¸€ë¦¬ìŠ¤íŠ¸ë“¤ì„ ì¶œë ¥í•˜ëŠ” design
+#   echo ë¬¸ì˜ "" ì‚¬ì´ì—ì„œ ë””ìì¸ì„ ë„£ìœ¼ë©´ ë¨
+#   ë‹¨ ì£¼ì˜ í• ê²ƒì€ ë”°ì˜´í‘œ(")ëŠ” \" ë¡œ í‘œê¸°ë¥¼ í•´ì•¼ í•¨
+#   $p['link']  -> ê¸€ ë¦¬ìŠ¤íŠ¸ì˜ ë§í¬
+#   $p['name']  -> ê¸€ì“´ì´
+#   $p['date']  -> ë“±ë¡ì¼
+#   $p['count'] -> ì¡°íšŒìˆ˜
 #
-# table tag¸¦ »ç¿ëÇÏ±â À§ÇØ¼­´Â ¾Æ·¡ÀÇ prelist() ÇÔ¼ö¸¦
-# Àß ¿¬°èÇØ¾ßÇÔ
+# table tagë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ì„œëŠ” ì•„ë˜ì˜ prelist() í•¨ìˆ˜ë¥¼
+# ì˜ ì—°ê³„í•´ì•¼í•¨
 #
-# $prlistTemplate ¶ó´Â º¯¼ö°¡ Á¤ÀÇ µÇ¾î ÀÖÀ» °æ¿ì¿¡´Â ÀÌ º¯¼öÀÇ
-# µğÀÚÀÎÀ» ÀÌ¿ëÇÏ¿© Ãâ·Â
+# $prlistTemplate ë¼ëŠ” ë³€ìˆ˜ê°€ ì •ì˜ ë˜ì–´ ìˆì„ ê²½ìš°ì—ëŠ” ì´ ë³€ìˆ˜ì˜
+# ë””ìì¸ì„ ì´ìš©í•˜ì—¬ ì¶œë ¥
 #
 function print_prlist($p) {
   $temp = trim($GLOBALS['prlistTemplate']) ? $GLOBALS['prlistTemplate'] : "";
@@ -58,7 +62,7 @@ function print_prlist($p) {
     $des[] = $p['count'];
     if ($p['email']) {
       $src[] = "/P_LNAME_/i";
-      $des[] = "<a href=\"mailto:{$p['email']}\">{$p['name']}</a>";
+      $des[] = "<A HREF=mailto:{$p['email']}>{$p['name']}</A>";
     } else {
       $src[] = "/P_LNAME_/i";
       $des[] = $p['name'];
@@ -66,26 +70,27 @@ function print_prlist($p) {
 
     echo preg_replace($src,$des,$temp)."\n";
   } else {
-    echo "{$p['link']} {$p['name']} {$p['date']} {$p['count']}<br>\n";
+    echo "{$p['link']} {$p['name']} {$p['date']} {$p['count']}<BR>\n";
   }
 }
+// }}}
 
-# PHP¿¡ ´ëÇØ¼­ Àß ¸ğ¸£½Å´Ù°í »ı°¢ÇÏ½Ã´Â ºĞµéÀº °Çµå¸®Áö ¸»°Í!!!
-# table ÀÌ¸§
-# $limit ±Û¼ö
-# $cut Ãâ·Â±ÛÀÚ¼ö
+# // {{{ +-- public prelist($t,$limit=3,$cut=30)
+# PHPì— ëŒ€í•´ì„œ ì˜ ëª¨ë¥´ì‹ ë‹¤ê³  ìƒê°í•˜ì‹œëŠ” ë¶„ë“¤ì€ ê±´ë“œë¦¬ì§€ ë§ê²ƒ!!!
+# table ì´ë¦„
+# $limit ê¸€ìˆ˜
+# $cut ì¶œë ¥ê¸€ììˆ˜
 #
 function prelist($t,$limit=3,$cut=30) {
   global $prlist, $db;
 
-  $_pvc = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
-  $GLOBALS['_pvc'] = $_pvc;
+  $c = sql_connect($db['server'], $db['user'], $db['pass']);
+  sql_select_db($db['name'], $c);
 
-  $_limit = compatible_limit (0, $limit);
-  $sql = "SELECT * FROM $t ORDER BY date DESC $_limit";
-  $result = sql_query($sql, $_pvc);
+  $sql = "SELECT * FROM $t ORDER BY date DESC LIMIT $limit";
+  $result = sql_query($sql, $c);
 
-  while ( $row = sql_fetch_array ($result) ) {
+  while (($row = sql_fetch_array ($result,$c)) ) {
     $p['no'] = $row['no'];
     $p['title'] = $row['title'];
 
@@ -93,13 +98,13 @@ function prelist($t,$limit=3,$cut=30) {
     $p['date'] = date("y.m.d",$row['date']);
     $p['email'] = $row['email'];
     $p['count'] = $row['refer'];
-    if ( $GLOBALS['prlistOpt'] )	
+    if ( $GLOBALS['prlistOpt'] )
       $p['l'] = " ".$GLOBALS['prlistOpt'];
 
     $p['preview'] = cut_string(htmlspecialchars($row['text']),100);
     $p['preview'] = preg_replace_callback ('/[#\'\x5c]/','escape_callback',$p['preview']);
     $p['preview'] = htmlspecialchars(htmlspecialchars($p['preview']));
-    $p['preview'] = preg_replace("/\r?\n/i","<BR>",$p['preview']);
+    $p['preview'] = preg_replace("/\r?\n/i","<br>",$p['preview']);
     $p['preview'] = trim(str_replace("&amp;amp;","&amp;",$p['preview']));
     $p['preview'] = " onMouseOver=\"drs('{$p['preview']}'); return true;\" onMouseOut=\"nd(); return true;\"";
 
@@ -110,15 +115,29 @@ function prelist($t,$limit=3,$cut=30) {
 
     $p['link'] = "<a href=\"{$prlist['wpath']}/read.php?table=$t&amp;no={$p['no']}{$p['l']}\" {$p['preview']}>{$p['title']}</a>";
 
-    #¸®½ºÆ® Ãâ·Â
+    #ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
     print_prlist($p);
   }
 
-  sql_free_result($result);
-  sql_close($_pvc);
+  sql_free_result($result,$c);
+  sql_close($c);
 }
+// }}}
 
+// {{{ +-- public escape_callback ($matches)
 function escape_callback ($matches) {
   return '&#x' . strtoupper (dechex (ord ($matches[0]))) . ';';
 }
+// }}}
+
+/*
+ * Local variables:
+ * tab-width: 2
+ * indent-tabs-mode: nil
+ * c-basic-offset: 2
+ * show-paren-mode: t
+ * End:
+ * vim600: filetype=php et ts=2 sw=2 fdm=marker
+ * vim<600: filetype=php et ts=2 sw=2
+ */
 ?>

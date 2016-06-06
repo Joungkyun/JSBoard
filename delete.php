@@ -1,28 +1,29 @@
 <?php
-# $Id: delete.php,v 1.7 2009-11-16 21:52:45 oops Exp $
+# $Id: delete.php,v 1.27 2014/03/02 17:11:28 oops Exp $
 require_once "./include/header.php";
 require_once "./include/wikify.php";
 
 $board['super'] = $board['adm'] ? 1 : $board['super'];
 
-if(preg_match("/^(1|3)$/",$board['mode'])) { if($board['super'] != 1) print_error($_('perm_err'),250,150,1); }
-if(preg_match("/^(2|5)$/",$board['mode']) && !session_is_registered("$jsboard")) print_error($_('perm_err'),250,150,1);
+if(preg_match("/^(1|3)$/",$board['mode'])) { if($board['super'] != 1) print_error($langs['perm_err'],250,150,1); }
+if(preg_match("/^(2|5)$/",$board['mode']) && !isset($_SESSION[$jsboard])) print_error($langs['perm_err'],250,150,1);
 
-# upload['dir'] ¿¡ mata character Æ÷ÇÔ ¿©ºÎ Ã¼Å©
+# upload['dir'] ì— mata character í¬í•¨ ì—¬ë¶€ ì²´í¬
 meta_char_check($upload['dir']);
 
 $board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
 $board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php";
 
-$c = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
+$c = sql_connect($db['server'], $db['user'], $db['pass']);
+sql_select_db($db['name'], $c);
 $list = get_article($table, $no);
 
 if(preg_match("/^(2|3|5|7)$/",$board['mode']) && $board['super'] != 1)
-  if($list['name'] != $_SESSION[$jsboard]['id']) print_error($_('perm_err'),250,150,1);
+  if($list['name'] != $_SESSION[$jsboard]['id']) print_error($langs['perm_err'],250,150,1);
 
 $size = form_size(4);
 
-# ¿öµå·¦ÀÌ ¼³Á¤ÀÌ ¾ÈµÇ¾î ÀÖÀ» °æ¿ì ±âº»°ªÀ» ÁöÁ¤
+# ì›Œë“œë©ì´ ì„¤ì •ì´ ì•ˆë˜ì–´ ìˆì„ ê²½ìš° ê¸°ë³¸ê°’ì„ ì§€ì •
 $board['wwrap'] = !$board['wwrap'] ? 120 : $board['wwrap'];
 
 $list['date']  = date("Y-m-d H:i:s", $list['date']);
@@ -33,7 +34,7 @@ macro_interwiki();
 wikify($list['text']);
 $list['num']   = print_reply($table, $list);
 
-# Á¦¸ñÀ» Å×ÀÌºí Å©±â¿¡ ¸ÂÃç ´ÙÀ½ÁÙ·Î ³Ñ±è
+# ì œëª©ì„ í…Œì´ë¸” í¬ê¸°ì— ë§ì¶° ë‹¤ìŒì¤„ë¡œ ë„˜ê¹€
 $_width = preg_match ('/%/', $board['width']) ? '550' : $board['width'];
 $title_width = $_width / 8;
 settype($title_width,"integer");
@@ -47,9 +48,9 @@ if($list['bofile']) {
   $tail = check_filetype($list['bofile']);
   $fileicon = icon_check($tail,$list['bofile']);
   $down_link = check_dnlink($table,$list);
-  $list['attach'] = "<a href=\"$down_link\">".
-                   "<img src=\"images/$fileicon\" width=16 height=16 border=0 alt=\"{$list['bofile']}\">".
-                   " <font class=\"attachfn\">{$list['bofile']}</font></a> - $hfsize";
+  $list['attach'] = "<A HREF=\"$down_link\">".
+                   "<IMG SRC=\"images/$fileicon\" width=16 height=16 border=0 alt=\"{$list['bofile']}\">".
+                   " <FONT style=\"color:{$color['text']}\">{$list['bofile']}</FONT></A> - $hfsize";
 
   $tail = check_filetype($list['bofile']);
   $preview = viewfile($tail);
@@ -58,52 +59,49 @@ if($list['bofile']) {
 if($enable['dhost']) {
   $list['dhost'] = get_hostname($enable['dlook'],$list['host']);
   if($enable['dwho']) {
-    $list['dhost'] = "<a href=\"javascript:new_windows('./whois.php?table=$table&host={$list['host']}',0,1,0,600,480)\">".
-                   "<span class=\"regip\">{$list['dhost']}</span></a>";
-  } else $list['dhost'] = "<span class=\"regip\">{$list['dhost']}</span>";
+    $list['dhost'] = "<A HREF=\"javascript:new_windows('./whois.php?table=$table&amp;host={$list['host']}',0,1,0,600,480)\">".
+                   "<FONT style=\"color:{$color['text']}\">{$list['dhost']}</FONT></a>";
+  } else $list['dhost'] = "<FONT style=\"color:{$color['text']}\">{$list['dhost']}</FONT>";
 } else $list['dhost'] = "";
 
 if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode'])) 
   $list['ename'] = $list['rname'] ? $list['rname'] : $list['name'];
 else $list['ename'] = $list['name'];
 
-if($list['email']) $list['uname'] = url_link($list['email'], $list['ename']);
+if($list['email']) $list['uname'] = url_link($list['email'], $list['ename'], $color['r2_fg'], $no);
 else $list['uname'] = $list['ename'];
 if($list['url']) {
-  if(preg_match("/^http:\/\//", $list['url'])) $list['uname'] .= " [" . url_link($list['url'], $_('ln_url')) . "]";
-  else $list['uname'] .= " [" . url_link("http://{$list['url']}", $_('ln_url')) . "]";
+  if(preg_match("/^http:\/\//", $list['url'])) $list['uname'] .= " [" . url_link($list['url'], "{$langs['ln_url']}", $color['r2_fg']) . "]";
+  else $list['uname'] .= " [" . url_link("http://{$list['url']}", "{$langs['ln_url']}", $color['r3_fg']) . "]";
 }
 
 if($board['super'] != 1 && $_SESSION[$jsboard]['id'] != $list['name']) { 
   if(!$board['mode']) {
-    $warning = $_('d_wa');
-    # ÆĞ½º¿öµå°¡ ¾ø´Â °Ô½Ã¹°ÀÏ  °æ¿ì °ü¸®ÀÚ ÀÎÁõÀ» °ÅÄ§
-    if(!$list['passwd'] || $list['reyn']) $warning = $_('d_waa');
-    $print['passform'] = $_('w_pass') . ": <input type=\"password\" id=\"passwd\" name=\"passwd\" size=\"$size\" maxlength=\"16\" class=\"passbox\">&nbsp;\n";
+    $warning = $langs['d_wa'];
+    # íŒ¨ìŠ¤ì›Œë“œê°€ ì—†ëŠ” ê²Œì‹œë¬¼ì¼  ê²½ìš° ê´€ë¦¬ì ì¸ì¦ì„ ê±°ì¹¨
+    if(!$list['passwd'] || $list['reyn']) $warning = $langs['d_waa'];
+    $print['passform'] = "{$langs['w_pass']}: <INPUT TYPE=\"password\" NAME=\"passwd\" SIZE=\"$size\" MAXLENGTH=\"16\" STYLE=\"font: 10px tahoma;\">&nbsp;\n";
   } else $warning = "&nbsp;";
 } else $warning = "&nbsp;";
 
-# Page °¡ Á¸ÀçÇÒ °æ¿ì ¸ñ·ÏÀ¸·Î °¥¶§ ÇØ´ç ÆäÀÌÁö·Î ÀÌµ¿
+# Page ê°€ ì¡´ì¬í•  ê²½ìš° ëª©ë¡ìœ¼ë¡œ ê°ˆë•Œ í•´ë‹¹ í˜ì´ì§€ë¡œ ì´ë™
 $page = $page ? $page : 1;
 
-# ÆĞ½º¿öµå Æû Ãâ·ÂÀ» À§ÇÑ º¯¼ö
-$print['passform'] = "<input type=\"hidden\" name=\"o[at]\" value=\"del\">\n".
-                   "<input type=\"hidden\" name=\"page\" value=\"$page\">\n".
-                   "<input type=\"hidden\" name=\"no\" value=\"$no\">\n".
-                   "<input type=\"hidden\" name=\"table\" value=\"$table\">\n".
-                   "<input type=\"hidden\" name=\"delete_dir\" value=\"$deldir\">\n".
-                   "<input type=\"hidden\" name=\"delete_filename\" value=\"$delfile\">\n".
+# íŒ¨ìŠ¤ì›Œë“œ í¼ ì¶œë ¥ì„ ìœ„í•œ ë³€ìˆ˜
+$print['passform'] = "<INPUT TYPE=hidden NAME=\"o[at]\" value=\"del\">\n".
+                   "<INPUT TYPE=hidden NAME=\"page\" value=\"$page\">\n".
+                   "<INPUT TYPE=hidden NAME=\"no\" VALUE=\"$no\">\n".
+                   "<INPUT TYPE=hidden NAME=\"table\" VALUE=\"$table\">\n".
+                   "<INPUT TYPE=hidden NAME=\"delete_dir\" VALUE=\"$deldir\">\n".
+                   "<INPUT TYPE=hidden NAME=\"delete_filename\" VALUE=\"$delfile\">\n".
                    "{$print['passform']}";
 
-# Page °¡ Á¸ÀçÇÒ °æ¿ì ¸ñ·ÏÀ¸·Î °¥¶§ ÇØ´ç ÆäÀÌÁö·Î ÀÌµ¿
+# Page ê°€ ì¡´ì¬í•  ê²½ìš° ëª©ë¡ìœ¼ë¡œ ê°ˆë•Œ í•´ë‹¹ í˜ì´ì§€ë¡œ ì´ë™
 $page = $page ? "&amp;page=$page" : "1";
 
 sql_close($c);
 
-# Template file À» È£Ãâ
+# Template file ì„ í˜¸ì¶œ
 meta_char_check($print['theme'], 1, 1);
-$bodyType = 'delete';
-
-$_focus = "  onLoad=\"InputFocus('passwd')\"";
-include "theme/{$print['theme']}/index.template";
+include "theme/{$print['theme']}/delete.template";
 ?>

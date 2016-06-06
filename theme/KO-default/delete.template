@@ -1,95 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!-- $Id: delete.template,v 1.23 2014/03/02 17:11:33 oops Exp $ -->
+<!-- ==================================================================== -->
+<!-- $langs['charset'] : Í≤åÏãúÌåêÏùò Ïñ∏Ïñ¥ ÌÉÄÏûÖÏóê Îî∞Îùº charset ÏùÑ Í∞ÄÏ†∏Ïò®Îã§.   -->
+<!-- $board['ver']     : Í≤åÏãúÌåêÏùò Î≤ÑÏ†º Ï†ïÎ≥¥Î•º Í∞ÄÏßÄÍ≥† Ïò®Îã§.                -->
+<!-- get_title()     : Í≤åÏãúÌåêÏùò Ìó§Îçî ÌÉÄÏù¥ÌãÄÏùÑ Í∞ÄÏßÄÍ≥† Ïò®Îã§.                -->
+<!-- $user_stylesheet : ÏÇ¨Ïö©Ïûê Ï†ïÏùò Ïä§ÌÉÄÏùº ÏãúÌä∏                           -->
+<!-- ==================================================================== -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
 
-<form method="post" action="act.php">
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td width=44 valign="bottom"><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''></td>
-<td class="counter" width="95%">&gt;&gt; Delete <?=$list['num']?> article</td>
-</tr>
+<STYLE TYPE="text/css">
+<!--
+BODY,TD {
+  font-size: 12px;
+  font-family: <?php echo $langs['font']?>, sans-serif;
+  color: #555555;
+}
+A:LINK, A:VISITED, A:ACTIVE {
+  text-decoration: none;
+  color: #555555;
+}
+A:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+INPUT {
+  font: 11px tahoma, sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #FFFFFF;
+}
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
+
+form { display: inline; }
+
+<?php echo $user_stylesheet?>
+-->
+</style>
 
 <!-- ==================================================================== -->
-<!-- $list['title']  : ∞‘Ω√∆« ±€ ¡¶∏Ò                                     -->
+<!-- print_newwindow_src()  : jsboard Ïùò Í∏∞Îä•ÏóêÏÑú ÌïÑÏöîÌïú ÏÉàÏ∞ΩÏùÑ ÎùÑÏö∞Îäî    -->
+<!--                          java script Î•º Ï∂úÎ†•ÌïòÍ≤å Ìï¥ Ï§ÄÎã§.            -->
 <!-- ==================================================================== -->
-<? $list['title'] = preg_replace("/<br>\n/i","\\0<img src=\"images/blank.gif\" width=40 height=1 alt=\"\">",$list['title']); ?>
-<tr bgcolor="#a0dc10">
-<td colspan=2>
-<img src="./theme/KO-default/img/board_no.gif" align="middle" alt='No.'>
-<span class="rtitle"><?=$list['title']?></span>
-</td>
-</tr>
-
-<tr>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td>
-</tr>
-</table>
-
-<!-- ==================================================================== -->
-<!-- $list['date']   : ±€ µÓ∑œ ≥Ø¬•                                       -->
-<!-- $list['dhost']  : ±€ µÓ∑œ¡ˆ                                          -->
-<!-- $list['refer']  : ±€ ¡∂»∏ºˆ                                          -->
-<!-- $list['name']   : ±€æ¥¿Ã ¿Ã∏ß                                        -->
-<!-- $list['uname']  : ±€æ¥¿Ã ¿Ã∏ß (homepage url ∆˜«‘)                    -->
-<!-- $list['attach'] : √∑∫Œ ∆ƒ¿œ ∏µ≈©                                     -->
-<!-- ==================================================================== -->
-<? if($enable['dhost']) $list['dhost'] = "By ".$list['dhost']; ?>
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
-<td width=4 bgcolor="#6d7bc9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=''></td>
-<td width=5><img src="images/blank.gif" width=5 height=1 border=0 alt=''></td>
-<td>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=''><br>
-<font Style="font-weight:bold">µÓ∑œ</font> <?=$list['date']?> <?=$list['dhost']?> &nbsp; &nbsp; 
-<font Style="font-weight:bold">¡∂»∏</font> <?=$list['refer']?><br>
-<font Style="font-weight:bold">¿Ã∏ß</font> <?=$list['uname']?> &nbsp; &nbsp;
-<?
-if($list['attach'])
-  echo <<<EOF
-<font Style="font-weight:bold">∆ƒ¿œ</font> {$list['attach']}
-EOF;
-?><br>
-<img src="images/blank.gif" width=1 height=3 border=0 alt=''><br>
-</td>
-<td width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
-</tr>
-</table>
-
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td></tr>
-</table>
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!-- ======================= Ìó§Îçî ÎîîÏûêÏù∏ ÏãúÏûë ======================= -->
+<?php
+if(!$np) {
+  # Í∞Å Ïú†Ï†ÄÎ≥Ñ Design
+  include "{$board['headpath']}";
+  # Ï†ÑÏ≤¥ Í¥ÄÎ¶¨ÏûêÏóê ÏùòÌï¥ Í∞ïÏ†ú input ÎêòÎäî Design
+  include "html/head.php";
+}
+?>
+<!-- ======================= Ìó§Îçî ÎîîÏûêÏù∏ ÎÅù   ======================= -->
 
 <!-- ==================================================================== -->
-<!-- $preview['up']   : √∑∫Œµ» ¿ÃπÃ¡ˆ ∆ƒ¿œ¿Ã gif/jpg/png ¿œ ∞ÊøÏ √‚∑¬     -->
-<!-- $list['text']    : ±€ ∫ªπÆ √‚∑¬                                      -->
-<!-- $preview['down'] : √∑∫Œµ» ∆ƒ¿œ¿Ã ascii ¿œ ∞ÊøÏ √‚∑¬                  -->
+<!-- $board['align'] : Í≤åÏãúÌåêÏùò align ÏùÑ Ï†ïÏùòÌïúÎã§. Ïù¥Îäî Í≤åÏãúÌåê Í¥ÄÎ¶¨ÏûêÏóêÏÑú -->
+<!--                 ÏÑ§Ï†ïÏùÑ Ìï†Ïàò ÏûàÎã§.                                    -->
+<!-- $board['width'] : Í≤åÏãúÌåêÏùò ÎÑìÏù¥Î•º ÏßÄÏ†ïÌïúÎã§. Í≤åÏãúÌåê Í¥ÄÎ¶¨ÏûêÏóêÏÑú Ï°∞Ï†ï   -->
+<!-- $list['num']    : Ï¢åÏ∏° ÏÉÅÎã®Ïùò Í≤åÏãúÌåê Í∏Ä Î≤àÌò∏                         -->
 <!-- ==================================================================== -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td class="rbodybg">
-<div class="rbody">
-<?=$preview['up']?>
-<!-- =============================== ±€≥ªøÎ =============================== -->
-<?=$list['text']?>
-
-<!-- =============================== ±€≥ªøÎ =============================== -->
-<?=$preview['down']?>
-</div>
-</td></tr>
-</table>
+<DIV ALIGN="<?php echo $board['align']?>">
+<FORM METHOD="post" ACTION="act.php">
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN="bottom" COLSPAN=2>
+<IMG SRC="./theme/KO-default/img/icon_over.gif" ALIGN="middle" ALT=''>
+<FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Delete <?php echo $list['num']?> article</FONT>
+</TD>
+</TR>
 
 <!-- ==================================================================== -->
-<!-- $warning          : ªË¡¶Ω√ « ø‰«— ∞Ê∞ÌπÆ √‚∑¬                        -->
-<!-- $table.$page      : ∏Ò∑œ¿∏∑Œ µπæ∆∞°¥¬ ∏µ≈©ø° « ø‰«— ∫ØºˆµÈ           -->
-<!-- $print['passform']  : ªË¡¶«œ¥¬µ• « ø‰«— hidden ∫ØºˆµÈ                -->
+<!-- $list['title']  : Í≤åÏãúÌåê Í∏Ä Ï†úÎ™©                                     -->
 <!-- ==================================================================== -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td align="right">
-<?=$warning?>
-[ <a href="list.php?table=<?=$table.$page?>"><span class="regip">∏Ò∑œ</span></a> | <a href="javascript:history.back()"><span class="regip">¿Ã¿¸</span></a> ]
-</td></tr>
-<tr><td bgcolor="#a0dc10" align="center" class="delpassfd">
-<?=$print['passform']?>
-<input type="submit" value="ªË¡¶">&nbsp;
-<input type="button" onClick="history.back()" value="√Îº“">
-</td></tr>
-</table>
-</form>
+<?php
+$list['title'] = preg_replace("/<br>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']);
+?>
+<TR BGCOLOR="#FFAE00">
+<TD COLSPAN=2>
+<IMG SRC="./theme/KO-default/img/board_no.gif" ALIGN="middle" ALT='No.'>
+<FONT STYLE="color:#FFFFFF; font-weight:bold"><?php echo $list['title']?></FONT>
+</TD>
+</TR>
 
+<TR>
+<TD COLSPAN=2><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- $list['date']   : Í∏Ä Îì±Î°ù ÎÇ†Ïßú                                       -->
+<!-- $list['dhost']  : Í∏Ä Îì±Î°ùÏßÄ                                          -->
+<!-- $list['refer']  : Í∏Ä Ï°∞ÌöåÏàò                                          -->
+<!-- $list['name']   : Í∏ÄÏì¥Ïù¥ Ïù¥Î¶Ñ                                        -->
+<!-- $list['uname']  : Í∏ÄÏì¥Ïù¥ Ïù¥Î¶Ñ (homepage url Ìè¨Ìï®)                    -->
+<!-- $list['attach'] : Ï≤®Î∂Ä ÌååÏùº ÎßÅÌÅ¨                                     -->
+<!-- ==================================================================== -->
+<?php if($enable['dhost']) $list['dhost'] = 'By '.$list['dhost']; ?>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=5><IMG SRC="images/blank.gif" WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+<FONT Style="font-weight:bold">Îì±Î°ù</FONT> <?php echo $list['date']?> <?php echo $list['dhost']?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">Ï°∞Ìöå</FONT> <?php echo $list['refer']?><BR>
+<FONT Style="font-weight:bold">Ïù¥Î¶Ñ</FONT> <?php echo $list['uname']?> &nbsp; &nbsp;
+<?php if($list['attach']) echo "<FONT Style=\"font-weight:bold\">ÌååÏùº</FONT> {$list['attach']}" ?><BR>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+</TD>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- $preview['up']   : Ï≤®Î∂ÄÎêú Ïù¥ÎØ∏ÏßÄ ÌååÏùºÏù¥ gif/jpg/png Ïùº Í≤ΩÏö∞ Ï∂úÎ†•     -->
+<!-- $list['text']    : Í∏Ä Î≥∏Î¨∏ Ï∂úÎ†•                                      -->
+<!-- $preview['down'] : Ï≤®Î∂ÄÎêú ÌååÏùºÏù¥ ascii Ïùº Í≤ΩÏö∞ Ï∂úÎ†•                  -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>">
+<DIV style="color:<?php echo $color['l5_fg']?>;font-family: <?php echo $langs['font']?>, sans-serif;">
+<?php echo $preview['up']?>
+<!-- =============================== Í∏ÄÎÇ¥Ïö© =============================== -->
+<?php echo $list['text']?>
+
+<!-- =============================== Í∏ÄÎÇ¥Ïö© =============================== -->
+<?php echo $preview['down']?>
+</DIV>
+</TD></TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- $warning          : ÏÇ≠Ï†úÏãú ÌïÑÏöîÌïú Í≤ΩÍ≥†Î¨∏ Ï∂úÎ†•                        -->
+<!-- $table.$page      : Î™©Î°ùÏúºÎ°ú ÎèåÏïÑÍ∞ÄÎäî ÎßÅÌÅ¨Ïóê ÌïÑÏöîÌïú Î≥ÄÏàòÎì§           -->
+<!-- $print['passform']  : ÏÇ≠Ï†úÌïòÎäîÎç∞ ÌïÑÏöîÌïú hidden Î≥ÄÏàòÎì§                -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN="right">
+<?php echo $warning?>
+[ <A HREF="list.php?table=<?php echo $table.$page?>"><FONT STYLE="color:#555555">Î™©Î°ù</FONT></A> | <A HREF="javascript:history.back()"><FONT STYLE="color:#555555">Ïù¥Ï†Ñ</FONT></A> ]
+</TD></TR>
+<TR><TD BGCOLOR="#FFAE00" ALIGN="CENTER">
+<FONT STYLE="color:#FFFFFF;font-weight:bold">
+<?php echo $print['passform']?>
+<INPUT TYPE="submit" VALUE="ÏÇ≠Ï†ú">&nbsp;
+<INPUT TYPE="button" onClick="history.back()" VALUE="Ï∑®ÏÜå">
+</FONT>
+</TD></TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- print_license()  : ÎùºÏù¥ÏÑºÏä§ Ï∂úÎ†•                                     -->
+<!-- ==================================================================== -->
+<?php echo print_license()?>
+
+</FORM>
+</DIV>
+
+<!-- ======================= Íº¨Î¶¨ ÎîîÏûêÏù∏ ÏãúÏûë ======================= -->
+<?php
+if(!$np) {
+  # Ï†ÑÏ≤¥ Í¥ÄÎ¶¨ÏûêÏóê ÏùòÌï¥ Í∞ïÏ†ú input ÎêòÎäî Design
+  include "html/tail.php";
+  # Í∞Å Ïú†Ï†ÄÎ≥Ñ Design
+  include "{$board['tailpath']}";
+}
+?>
+<!-- ======================= Íº¨Î¶¨ ÎîîÏûêÏù∏ ÎÅù   ======================= -->
+</BODY>
+</HTML>

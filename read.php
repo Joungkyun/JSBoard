@@ -1,18 +1,18 @@
 <?php
-# $Id: read.php,v 1.5 2009-11-16 21:52:45 oops Exp $
-$p_time[] = microtime(); # ¼Óµµ Ã¼Å©
+# $Id: read.php,v 1.37 2014/03/02 17:11:28 oops Exp $
+$p_time[] = microtime(); # ì†ë„ ì²´í¬
 require_once "include/header.php";
 require_once "include/wikify.php";
   
-if(preg_match("/^(2|3|5)$/",$board['mode']) && !session_is_registered("$jsboard"))
-  print_error($_('login_err'));
+if(preg_match("/^(2|3|5)$/",$board['mode']) && !isset($_SESSION[$jsboard]))
+  print_error($langs['login_err']);
   
 $board['headpath'] = @file_exists("data/$table/html_head.php") ? "data/$table/html_head.php" : "html/nofile.php";
 $board['tailpath'] = @file_exists("data/$table/html_tail.php") ? "data/$table/html_tail.php" : "html/nofile.php";
 
 if($alert) {
   $list['title'] = $notice['subject'];
-  $list['text'] = "<pre>\n".auto_link($notice['contents'])."\n</pre>";
+  $list['text'] = "<PRE>\n".auto_link($notice['contents'])."\n</PRE>";
   $list['date'] = filemtime("data/$table/config.php");
   $list['date'] = date("Y.m.d H:i:s",$list['date']);
   $list['uname'] = "Board Admin";
@@ -21,16 +21,15 @@ if($alert) {
   # Admin Link
   if($board['super'] == 1 || $board['adm']) {
     if(@file_exists("./theme/{$print['theme']}/img/admin.gif"))
-      $print['adpath'] = "<img src=\"./theme/{$print['theme']}/img/admin.gif\" border=0 alt='" . $_('ln_titl') . "'>";
-    else $print['adpath'] = "<span class=\"admintext\">[ admin ]</span>";
-    $print['admin'] = "<a href=\"javascript:new_windows('./admin/user_admin/uadmin.php?table=$table','admin','yes','yes',650,600);\" title='" . $_('ln_titl') . "'>".
-                    "{$print['adpath']}</a>";
+      $print['adpath'] = "<IMG SRC=\"./theme/{$print['theme']}/img/admin.gif\" BORDER=0 ALT='{$langs['ln_titl']}'>";
+    else $print['adpath'] = "<FONT STYLE=\"font:12px tahoma;color:{$color['text']}\">[ admin ]</FONT>";
+    $print['admin'] = "<A HREF=\"./admin/user_admin/uadmin.php?table=$table\" TITLE='{$langs['ln_titl']}'>".
+                    "{$print['adpath']}</A>";
   }
 
   # PAGE DISPLAY
   meta_char_check($print['theme'], 1, 1);
-  $bodyType = 'read';
-  include "theme/{$print['theme']}/index.template";
+  include "theme/{$print['theme']}/read.template";
 } else{
   if((preg_match("/^(2|3|5|7)$/",$board['mode']) && $_SESSION[$jsboard]['id']) || $board['super']) {
     $pre_regist['name'] = $_SESSION[$jsboard]['id'];
@@ -44,7 +43,7 @@ if($alert) {
   }
   
   if ($corder && $_COOKIE['cookie_sort'] != $corder) {
-    # ÄÚ¸àÆ® Á¤·ÄÀ» ÄíÅ°·Î µî·Ï
+    # ì½”ë©˜íŠ¸ ì •ë ¬ì„ ì¿ í‚¤ë¡œ ë“±ë¡
     $month = 60 * 60 * 24 * $board['cookie'];
     $cookietime = time() + $month;
   
@@ -53,8 +52,9 @@ if($alert) {
     $corder = $corder ? $corder : $_COOKIE['cookie_sort'];
   }
   
-  $a_time[] = microtime(); # ¼Óµµ Ã¼Å©
-  $c = sql_connect($db['server'], $db['user'], $db['pass'], $db['name']);
+  $a_time[] = microtime(); # ì†ë„ ì²´í¬
+  $c = sql_connect($db['server'], $db['user'], $db['pass']);
+  sql_select_db($db['name'],$c);
   
   if($num && !$no) {
       $num = get_article($table, $num, "no", "num");
@@ -62,13 +62,13 @@ if($alert) {
   }
   
   $list = get_article($table, $no);
-  $page = !$page ? get_current_page($table, $list['idx']) : $page; # ±ÛÀÌ À§Ä¡ÇÑ ÆäÀÌÁö¸¦ °¡Á®¿È
-  $pos  = get_pos($table, $list['idx']); # ´ÙÀ½, ÀÌÀü ±Û ¹øÈ£¸¦ °¡Á®¿È
+  $page = !$page ? get_current_page($table, $list['idx']) : $page; # ê¸€ì´ ìœ„ì¹˜í•œ í˜ì´ì§€ë¥¼ ê°€ì ¸ì˜´
+  $pos  = get_pos($table, $list['idx']); # ë‹¤ìŒ, ì´ì „ ê¸€ ë²ˆí˜¸ë¥¼ ê°€ì ¸ì˜´
   
-  $a_time[] = microtime(); # ¼Óµµ Ã¼Å©
+  $a_time[] = microtime(); # ì†ë„ ì²´í¬
   $sqltime1 = get_microtime($a_time[0], $a_time[1]);
   
-  # ¿öµå·¦ÀÌ ¼³Á¤ÀÌ ¾ÈµÇ¾î ÀÖÀ» °æ¿ì ±âº»°ªÀ» ÁöÁ¤
+  # ì›Œë“œë©ì´ ì„¤ì •ì´ ì•ˆë˜ì–´ ìˆì„ ê²½ìš° ê¸°ë³¸ê°’ì„ ì§€ì •
   $board['wwrap'] = !$board['wwrap'] ? 120 : $board['wwrap'];
   
   $list['num']  = print_reply($table, $list);
@@ -81,7 +81,7 @@ if($alert) {
   macro_interwiki();
   wikify($list['text']);
   
-  # Á¦¸ñ ±æÀÌ¸¦ Å×ÀÌºí Å©±â¿¡ ¸ÂÃç ´ÙÀ½ÁÙ·Î ³Ñ±è
+  # ì œëª© ê¸¸ì´ë¥¼ í…Œì´ë¸” í¬ê¸°ì— ë§ì¶° ë‹¤ìŒì¤„ë¡œ ë„˜ê¹€
   if (!preg_match("/%$/", $board['width'])) {
     $title_width = $board['width'] / 8;
     settype($title_width,"integer");
@@ -89,52 +89,52 @@ if($alert) {
   }
   $list['title'] = preg_replace("/&amp;(amp|lt|gt)/i","&\\1",$list['title']);
   
-  # title ¿¡¼­ ÆùÆ® »ö»ó ÁöÁ¤ÇÒ¼ö ÀÖ°Ô ÇÔ
+  # title ì—ì„œ í°íŠ¸ ìƒ‰ìƒ ì§€ì •í• ìˆ˜ ìˆê²Œ í•¨
   $list['title'] = preg_replace("/&lt;((\/)*font[^&]*)&gt;/i","<\\1>",$list['title']);
   $list['title'] = preg_replace("/<font[^>]*color=([a-z0-9#]+)[^>]*>/i","<font color=\"\\1\">",$list['title']);
   
-  # °Ë»ö ¹®ÀÚ¿­ »ö»ó º¯°æ
+  # ê²€ìƒ‰ ë¬¸ìì—´ ìƒ‰ìƒ ë³€ê²½
   $list = search_hl($list);
   
   if($board['rnname'] && preg_match("/^(2|3|5|7)/",$board['mode']))
     $list['cname'] = $list['rname'] ? $list['rname'] : $list['name'];
   else $list['cname'] = $list['name'];
   
-  if($list['email']) $list['uname'] = url_link($list['email'], $list['cname']);
+  if($list['email']) $list['uname'] = url_link($list['email'], $list['cname'], $no);
   else $list['uname'] = $list['cname'];
   if($list['url']) {
-    if(preg_match("/^http:\/\//i", $list['url'])) $list['uname'] .= " [" . url_link($list['url'], $_('ln_url')) . "]";
-    else $list['uname'] .= " [" . url_link("http://{$list['url']}", $_('ln_url')) . "]";
+    if(preg_match("/^http:\/\//i", $list['url'])) $list['uname'] .= " [" . url_link($list['url'], "{$langs['ln_url']}", $color['r2_fg']) . "]";
+    else $list['uname'] .= " [" . url_link("http://{$list['url']}", "{$langs['ln_url']}") . "]";
   }
   
   # Admin Link
   if($board['super'] == 1 || $board['adm']) {
     if(@file_exists("./theme/{$print['theme']}/img/admin.gif"))
-      $print['adpath'] = "<img src=\"./theme/{$print['theme']}/img/admin.gif\" border=0 alt='" . $_('ln_titl') . "'>";
-    else $print['adpath'] = "<span class=\"admintext\">[ admin ]</span>";
-    $print['admin'] = "<a href=\"javascript:new_windows('./admin/user_admin/uadmin.php?table=$table','admin','yes','yes',650,600);\" title='" . $_('ln_titl') . "'>".
-                    "{$print['adpath']}</a>";
+      $print['adpath'] = "<IMG SRC=\"./theme/{$print['theme']}/img/admin.gif\" BORDER=0 ALT='{$langs['ln_titl']}'>";
+    else $print['adpath'] = "<FONT STYLE=\"font:12px tahoma;color:{$color['text']}\">[ admin ]</FONT>";
+    $print['admin'] = "<A HREF=\"./admin/user_admin/uadmin.php?table=$table\" TITLE='{$langs['ln_titl']}'>".
+                    "{$print['adpath']}</A>";
   }
   
-  # °Ô½ÃÆÇ ÀĞ±â ÆäÀÌÁö »ó´Ü¿¡ ´ÙÀ½, ÀÌÀü ÆäÀÌÁö, ±Û¾²±â µîÀÇ ¸µÅ©¸¦ Ãâ·Â
+  # ê²Œì‹œíŒ ì½ê¸° í˜ì´ì§€ ìƒë‹¨ì— ë‹¤ìŒ, ì´ì „ í˜ì´ì§€, ê¸€ì“°ê¸° ë“±ì˜ ë§í¬ë¥¼ ì¶œë ¥
   if($enable['dhost']) {
     $list['dhost'] = get_hostname($enable['dlook'],$list['host']);
     if($enable['dwho'])
-      $_lang['hlinked'] = "<a href=\"javascript:new_windows('./whois.php?table=$table&amp;host={$list['host']}',0,1,0,600,480)\">".
-                      "<span class=\"regip\">{$list['dhost']}</span></a>";
-    else $_lang['hlinked'] = "<span class=\"regip\">{$list['dhost']}</span>";
-    $print['regist'] = "Register [ {$_lang['hlinked']} ]";
+      $langs['hlinked'] = "<A HREF=\"javascript:new_windows('./whois.php?table=$table&amp;host={$list['host']}',0,1,0,600,480)\">".
+                        "<font color=\"{$color['text']}\">{$list['dhost']}</font></a>";
+    else $langs['hlinked'] = "<font color=\"{$color['text']}\">{$list['dhost']}</font>";
+    $print['regist'] = "Register [ {$langs['hlinked']} ]";
   }
   
-  # Ã·ºÎ ÆÄÀÏ °ü·Ã º¯¼ö
+  # ì²¨ë¶€ íŒŒì¼ ê´€ë ¨ ë³€ìˆ˜
   if($list['bofile']) {
     $hfsize = human_fsize($list['bfsize']);
     $tail = check_filetype($list['bofile']);
     $fileicon = icon_check($tail,$list['bofile']);
     $down_link = check_dnlink($table,$list);
-    $list['attach'] = "<a href=\"$down_link\">".
-                     "<img src=\"images/$fileicon\" width=16 height=16 border=0 alt=\"{$list['bofile']}\">".
-                     " <span class=\"attachfn\">{$list['bofile']}</span></a> - $hfsize";
+    $list['attach'] = "<A HREF=\"$down_link\">".
+                     "<IMG SRC=\"images/$fileicon\" width=16 height=16 border=0 alt=\"{$list['bofile']}\">".
+                     " <FONT style=\"color:{$color['text']}\">{$list['bofile']}</FONT></A> - $hfsize";
   }
   
   if ($list['bofile']) {
@@ -142,41 +142,40 @@ if($alert) {
     $preview = viewfile($tail);
   }
   
-  # °ü·Ã±Û ¸®½ºÆ® Ãâ·Â½Ã preview ±â´É »ç¿ëÇÒ¶§ ÇÊ¿äÇÑ JavaScript Ãâ·Â
-  if ($enable['pre'] && $enable['re_list'] && ($list['reto'] || $list['reyn']))
-    $print['preview_script'] = '<script type="text/javascript" src="./theme/common/preview.js"></script>';
+  # ê´€ë ¨ê¸€ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥ì‹œ preview ê¸°ëŠ¥ ì‚¬ìš©í• ë•Œ í•„ìš”í•œ JavaScript ì¶œë ¥
+  if ($enable['pre'] && $enable['re_list'] && ($list['reto'] || $list['reyn'])) $print['preview_script'] = print_preview_src();
   
-  $b_time[] = microtime(); # ¼Óµµ Ã¼Å©
+  $b_time[] = microtime(); # ì†ë„ ì²´í¬
   
-  # ±ÛÀĞ±â¿¡¼­ °ü·Ã±Û ¸®½ºÆ® Ãâ·Â
+  # ê¸€ì½ê¸°ì—ì„œ ê´€ë ¨ê¸€ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
   if($enable['re_list'] && ($list['reto'] || $list['reyn'])) $print['rlists'] = "\n".article_reply_list($table,$pages,0);
   
-  # Ä¿¸àÆ® ¸®½ºÆ®
+  # ì»¤ë©˜íŠ¸ ë¦¬ìŠ¤íŠ¸
   $print['comment'] = $enable['comment'] ? print_comment($table,$no,0) : "";
   
-  # ±Û ÀĞ¾úÀ» °æ¿ì Á¶È¸¼ö 1 ´Ã¸²
-  #if (get_hostname(0) != $list['host']) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'", $c);
+  # ê¸€ ì½ì—ˆì„ ê²½ìš° ì¡°íšŒìˆ˜ 1 ëŠ˜ë¦¼
+  #if (get_hostname(0) != $list['host']) sql_query("UPDATE $table SET refer = refer + 1 WHERE no = '$no'",$c);
   replication_addrefer($db);
   
-  $b_time[] = microtime(); # ¼Óµµ Ã¼Å©
+  $b_time[] = microtime(); # ì†ë„ ì²´í¬
   $sqltime2 = get_microtime($b_time[0], $b_time[1]);
   
-  # »ó¼¼ °Ë»ö Å×ÀÌºí
+  # ìƒì„¸ ê²€ìƒ‰ í…Œì´ë¸”
   if($o['at'] == "d" || $o['at'] == "dp")
     $print['dsearch'] = detail_searchform();
   else {
     $page = $page ? $page : "1";
-    $print['dserlink'] = "<a href=\"{$_SERVER['PHP_SELF']}?table=$table&amp;no=$no&amp;page=$page&amp;o[at]=dp\">[ " . $_('detable_search_link') . " ]</a>";
+    $print['dserlink'] = "<A HREF=\"{$_SERVER['PHP_SELF']}?table=$table&amp;no=$no&amp;page=$page&amp;o[at]=dp\">[ {$langs['detable_search_link']} ]</A>";
   }
   
-  # °Ë»öÆû, ÆäÀÌÁöÆû °ü·Ã º¯¼ö
+  # ê²€ìƒ‰í¼, í˜ì´ì§€í¼ ê´€ë ¨ ë³€ìˆ˜
   $sform = search_form($o);
   $pform = page_form($pages,$o);
   
-  # SQL ¼öÇà ½Ã°£
+  # SQL ìˆ˜í–‰ ì‹œê°„
   $print['sqltime'] = $sqltime1 + $sqltime2;
   
-  # PAGE ·Îµù ½Ã°£
+  # PAGE ë¡œë”© ì‹œê°„
   $print['pagetime'] = get_microtime($p_time[0],$b_time[1]);
   
   sql_close($c);
@@ -185,8 +184,7 @@ if($alert) {
   
   # PAGE DISPLAY
   meta_char_check($print['theme'], 1, 1);
-  $bodyType = 'read';
-  include "theme/{$print['theme']}/index.template";
+  include "theme/{$print['theme']}/read.template";
   echo $preview['bo'];
 }
 ?>
