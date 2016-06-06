@@ -1,175 +1,239 @@
+<HTML>
+<HEAD>
+<!-#######################################################################-->
+<!-  $langs[charset] : 게시판의 언어 타입에 따라 charset 을 가져온다.     -->
+<!-  $board[ver]     : 게시판의 버젼 정보를 가지고 온다.                  -->
+<!-  get_title()     : 게시판의 헤더 타이틀을 가지고 온다.                -->
+<!-  $user_stylesheet : 사용자 정의 스타일 시트                           -->
+<!-#######################################################################-->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?=$langs[charset]?>">
+<TITLE>Jsboard <?=$board[ver]?> - <?=get_title()?></TITLE>
 
-<!-- ==================================================================== -->
-<!-- print_keymenu() : keyboard 로 게시판을 제어                          -->
-<!--                   'b' = 이전 페이지                                  -->
-<!-- ==================================================================== -->
-<?=print_keymenu(2)?>
+<STYLE TYPE=text/css>
+<!--
+BODY,TD {font-size:12px;font-family:굴림체;color:#555555;}
+A:LINK, A:VISITED, A:ACTIVE {text-decoration:none; color:#555555}
+A:hover {text-decoration:underline; color:#555555}
+INPUT {border:1x solid #555555;background-Color:silver;font-size:11px;font-family:굴림체;color:#555555}
+TEXTAREA {border:1x solid #555555;background-Color:silver;font-size:13px;font-family:굴림체;color:#555555}
 
-<form id="replyp" name="replyp" method="post" action="act.php"<?=$board['formtype']?> onsubmit="return registCheck();">
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr>
-<td valign="bottom" width=44><img src="./theme/KO-default/img/icon_over.gif" align="middle" alt=''></td>
-<td class="counter"> &gt;&gt; Write reply article</td>
-</tr>
+<?=$user_stylesheet?>
+-->
+</style>
+</HEAD>
+<BODY BGCOLOR=#FFFFFF>
 
-<tr bgcolor="#a0dc10">
-<td colspan=2>
-<img src="./theme/KO-default/img/board_no.gif" align="middle" alt=''>
-<span style="color: #ffffff; font-weight: bold;">댓글 쓰기</span>
-</td>
-</tr>
-
-<tr>
-<td colspan=2><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td>
-</tr>
-</table>
-
-<table width="<?=$board['width']?>" border=0 cellpadding=1 cellspacing=0>
-<tr>
-<td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''></td>
-<td rowspan=9 width=4 bgcolor="#6d7bc9" valign="middle"><img src="images/blank.gif" width=4 height=1 border=0 alt=''></td>
-<td rowspan=9 width=10><img src="images/blank.gif" width=10 height=1 border=0 alt=''></td>
-<td colspan=4><img src="images/blank.gif" width=1 height=3 border=0 alt=''><br></td>
-<td rowspan=9 width=20><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
-</tr>
-
-<!-- ==================================================================== -->
-<!-- $size['name']         : input 문의 사이즈 theme config 에서 설정     -->
-<!-- $board_cookie[name] : cookie 에 등록된 이름이 자동 지정되도록        -->
-<!-- ==================================================================== -->
-<tr>
-<td width=80>이름</td>
-<td colspan="3"><input type="text" id="name" name="atc[name]" size="<?=$size['name']?>" maxlength=50 value="<?=$pre_regist[name]?>"<?=$disable?> tabindex="1"></td>
-</tr>
-
-<!-- ==================================================================== -->
-<!-- $view['email']          : email 등록 여부 결정                       -->
-<!-- $board_cookie[email]  : cookie 에 등록된 이 메일이 자동 지정되도록   -->
-<!-- ==================================================================== -->
+<!-------------------- 헤더 디자인 시작 -------------------->
 <?
-if($view['email']) {
-  echo <<<EOF
+if(!$np) {
+  # 각 유저별 Design
+  include "$board[headpath]";
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/head.ph";
+ }
+?>
+<!-------------------- 헤더 디자인 끝   -------------------->
 
-<tr>
-<td>메일</td>
-<td colspan="3"><input type="text" id="email" name="atc[email]" size="{$size['name']}" maxlength=255 value="{$pre_regist['email']}"$disable tabindex="2"></td>
-</tr>
+<!-#######################################################################-->
+<!-  $board[align] : 게시판의 align 을 정의한다. 이는 게시판 관리자에서   -->
+<!-                  설정을 할수 있다.                                    -->
+<!-  $board[width] : 게시판의 넓이를 지정한다. 게시판 관리자에서 조정     -->
+<!-  $board[formtype] : 이미지 업로드를 지원 여부를 위해 꼭 필요          -->
+<!-#######################################################################-->
+<DIV ALIGN=<?=$board[align]?>>
+<FORM NAME=replyp METHOD=post ACTION=act.php<?=$board[formtype]?>>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD VALIGN=bottom COLSPAN=2>
+<IMG SRC=./theme/KO-default/img/icon_over.gif ALIGN=absmiddle>
+<FONT style="font-size:11px;font-family:tahoma;">&gt;&gt; Write reply article</FONT>
+</TD>
+</TR>
 
-EOF;
+<TR BGCOLOR=#FFAE00>
+<TD COLSPAN=2>
+<IMG SRC=./theme/KO-default/img/board_no.gif ALIGN=absmiddle>
+<FONT STYLE="color:#FFFFFF"><IMG SRC=theme/KO-default/img/reply_title.gif BORDER=0></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0></TD>
+<TD ROWSPAN=9 WIDTH=4 BGCOLOR=#6D7BC9 VALIGN=center><IMG SRC=images/blank.gif WIDTH=4 HEIGHT=1 BORDER=0></TD>
+<TD ROWSPAN=9 WIDTH=10><IMG SRC=images/blank.gif WIDTH=10 HEIGHT=1 BORDER=0></TD>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0><BR></TD>
+<TD ROWSPAN=9 WIDTH=20><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0><BR></TD>
+</TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $size[name]         : input 문의 사이즈 theme config 에서 설정       -->
+<!-  $board_cookie[name] : cookie 에 등록된 이름이 자동 지정되도록        -->
+<!-#######################################################################-->
+<TR>
+<TD WIDTH=80>이름</TD>
+<TD><INPUT TYPE=text NAME=atc[name] SIZE=<?=$size[name]?> MAXLENGTH=50 VALUE="<?=$pre_regist[name]?>"<?=$disable?>></TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  $view[email]          : email 등록 여부 결정                         -->
+<!-  $board_cookie[email]  : cookie 에 등록된 이 메일이 자동 지정되도록   -->
+<!-#######################################################################-->
+<?
+if($view[email]) {
+  echo "
+<TR>
+<TD>메일</TD>
+<TD><INPUT TYPE=text NAME=atc[email] SIZE=$size[name] MAXLENGTH=255 VALUE=\"$pre_regist[email]\"$disable></TD>
+</TR>\n";
 }
 ?>
 
-<!-- ==================================================================== -->
-<!-- $view['url']             : url 등록 여부 결정                        -->
-<!-- $board_cookie['url']     : cookie 에 등록된 url이 자동 지정되도록    -->
-<!-- ==================================================================== -->
+<!-#######################################################################-->
+<!-  $view[url]             : url 등록 여부 결정                          -->
+<!-  $board_cookie[url]     : cookie 에 등록된 url이 자동 지정되도록      -->
+<!-#######################################################################-->
 <?
-if($view['url']) {
-  echo <<<EOF
-
-<tr>
-<td>홈페이지</td>
-<td colspan="3"><input type="text" id="url" name="atc[url]" size="{$size['name']}" maxlength=255 value="{$pre_regist['url']}"$disable tabindex="3"></td>
-</tr>
-
-EOF;
+if($view[url]) {
+  echo "
+<TR>
+<TD>홈페이지</TD>
+<TD><INPUT TYPE=text NAME=atc[url] SIZE=$size[name] MAXLENGTH=255 VALUE=\"$pre_regist[url]\"$disable></TD>
+</TR>\n";
 }
 ?>
 
-<!-- ==================================================================== -->
-<!-- upload 부분 출력여부 설정 (왠만하면 그냥 쓰면 됨)                    -->
-<!-- ==================================================================== -->
+<!-#######################################################################-->
+<!-  $html_chk_ok  : 부모글이 html 사용함일때 기본 체크 되게함            -->
+<!-  $html_chk_no  : 부모글이 html 사용안함일때 기본 체크 되게함          -->
+<!-#######################################################################-->
+<TR>
+<TD>HTML</TD>
+<TD>
+<INPUT TYPE=radio NAME=atc[html] VALUE=1<?=$html_chk_ok?>> 사용함
+<INPUT TYPE=radio NAME=atc[html] VALUE=0<?=$html_chk_no?>> 사용안함
+</TD>
+</TR>
+
+<!-#######################################################################-->
+<!-  upload 부분 출력여부 설정 (왠만하면 그냥 쓰면 됨)                    -->
+<!-#######################################################################-->
 <?
-if ($upload['yesno'] && $cupload['yesno'] && $noup != 1) {
-  echo <<<EOF
-<tr>
-<td>파일</td>
-<td colspan="3">
-<input type="hidden" name="max_file_size" value="{$upload['maxsize']}">
-<input type="file" name="userfile" size="{$size['uplo']}" maxlength=256 tabindex="4">
-</td>
-</tr>
-
-EOF;
-} elseif(!$upload['yesno'] && $cupload['yesno']) {
-  echo <<<EOF
-<tr>
-<td>파일</td>
-<td colspan="3"><font class="attachfn_m">" . $_('upload') . "<font></td>
-</tr>
-
-EOF;
+if ($upload[yesno] && $cupload[yesno] && $agent[br] != "LYNX") {
+  echo "<TR>\n".
+       "<TD>파일</TD>\n".
+       "<TD>\n".
+       "<INPUT TYPE=HIDDEN NAME=max_file_size VALUE=$upload[maxsize]>\n".
+       "<INPUT TYPE=file NAME=userfile SIZE=$size[uplo] MAXLENGTH=256>\n".
+       "</TD>\n".
+       "</TR>\n";
+} elseif(!$upload[yesno] && $cupload[yesno]) {
+  echo "<TR>\n".
+       "<TD>파일</TD>\n".
+       "<TD><FONT STYLE=\"color:red;font-weight:bold\">$langs[upload]<FONT></TD>\n".
+       "</TR>\n";
 }
 ?>
 
-<!-- ==================================================================== -->
-<!-- $size['titl']  : title input 문의 사이즈                             -->
-<!-- $reti        : 몇번째 댓글인지 출력                                  -->
-<!-- $list['title'] : 댓글 제목                                           -->
-<!-- ==================================================================== -->
-<tr>
-<td>제목</td>
-<td colspan="3"><input type="text" id="title" name="atc[title]" size="<?=$size['titl']?>" maxlength=100 value="<?="Re$reti: {$list['title']}"?>" tabindex="5"></td>
-</tr>
+<!-#######################################################################-->
+<!-  $size[titl]  : title input 문의 사이즈                               -->
+<!-  $reti        : 몇번째 댓글인지 출력                                  -->
+<!-  $list[title] : 댓글 제목                                             -->
+<!-#######################################################################-->
+<TR>
+<TD>제목</TD>
+<TD><INPUT TYPE=text NAME=atc[title] SIZE=<?=$size[titl]?> MAXLENGTH=100 VALUE="<?="Re$reti: $list[title]"?>"></TD>
+</TR>
 
-<tr>
-<!-- ==================================================================== -->
-<!-- admin login 상태일 경우 패스워드를 안적어도 되게끔 하는 루틴         -->
-<!-- IE, NS6 의 경우에는 textarea 창 사이즈 조정 버튼도 같이 출력         -->
-<!-- ==================================================================== -->
+<TR>
+<!-#######################################################################-->
+<!-  admin login 상태일 경우 패스워드를 안적어도 되게끔 하는 루틴         -->
+<!-  IE, NS6 의 경우에는 textarea 창 사이즈 조정 버튼도 같이 출력         -->
+<!-#######################################################################-->
 <?
-if(preg_match("/^[04]$/",$board['mode']) && !$board['super']) {
-  echo <<<EOF
-<td valign="top">패스워드</td>
-<td valign="top"{$pcaptcharcolspan}>
-<input type="password" id="passwd" name="atc[passwd]" size="{$size['pass']}" maxlength=16 class="passwdbox" tabindex="6">
-{$pcaptcha}
-</td>
-EOF;
+if(eregi("^(0|4)$",$board[mode]) && !$board[super]) {
+  echo "<TD>패스워드</TD>\n".
+       "<TD>\n".
+       "<INPUT TYPE=password NAME=atc[passwd] SIZE=$size[pass] MAXLENGTH=8>\n".
+       "<IMG SRC=./images/blank.gif WIDTH=15 HEIGHT=1 BORDER=0>\n".
+       "TextSize Operation $print[operate]\n".
+       "</TD>\n";
+} else {
+  echo "<TD COLSPAN=2 ALIGN=right>\n".
+       "TextSize Operation $print[operate]\n".
+       "</TD>\n";
 }
 ?>
-</tr>
+</TR>
 
-<tr>
-<td colspan=4><img src="images/blank.gif" width=20 height=1 border=0 alt=''><br></td>
-</tr>
-</table>
+<TR>
+<TD COLSPAN=2><IMG SRC=images/blank.gif WIDTH=20 HEIGHT=1 BORDER=0><BR></TD>
+</TR>
+</TABLE>
 
-<table width="<?=$board['width']?>" border=0 cellpadding=0 cellspacing=0>
-<tr><td><img src="images/blank.gif" width=1 height=3 border=0 alt=''></td></tr>
-</table>
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC=images/blank.gif WIDTH=1 HEIGHT=3 BORDER=0></TD></TR>
+</TABLE>
 
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td class="rbodybg">
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR=<?=$color[l5_bg]?> ALIGN=CENTER>
 
-<!-- ==================================================================== -->
-<!-- $text_area  : 댓글의 TEXTAREA를 출력(즉 글쓰는 부분)                 -->
-<!-- ==================================================================== -->
+<!-#######################################################################-->
+<!-  $text_area  : 댓글의 TEXTAREA를 출력(즉 글쓰는 부분)                 -->
+<!-#######################################################################-->
 <!-- =============================== 글내용 =============================== -->
-<script type="text/javascript" src="./theme/common/textarea.js"></script>
 <?=$text_area?>
 
 <!-- =============================== 글내용 =============================== -->
 
-</td></tr>
-</table>
+</TD></TR>
+</TABLE>
 
 
-<!-- ==================================================================== -->
-<!-- $table.$pages     : 목록으로 돌아가는 링크에 필요한 변수들           -->
-<!-- $print['passform']: 댓글 등록하는데 필요한 hidden 변수들             -->
-<!-- $orig_option      : 글쓰기 창 조절시 원래 크기로 돌아가는 옵션       -->
-<!-- $orig_button      : 원본글 포함 버튼 사용시 출력                     -->
-<!-- ==================================================================== -->
-<table width="<?=$board['width']?>" border=0 cellpadding=5 cellspacing=0>
-<tr><td bgcolor="#a0dc10" align="center">
-<?=$print['passform']?>
-<input type="submit" value="등록" tabindex="8">
-<input type="reset" value="다시" onclick="document.location.reload(); return false;" tabindex="9"><?=$orig_button?>
-<input type="button" onclick="document.location='./list.php?table=<?=$table.$pages?>'" value="목록" tabindex="10">
-<input type="button" onclick="history.back()" value="이전" tabindex="11">
-</td></tr>
-</table>
+<!-#######################################################################-->
+<!- $wrap[ment]       : textarea 에 wrap 이 hard 가 아닐 경우 경고 메세지 -->
+<!- $table.$pages     : 목록으로 돌아가는 링크에 필요한 변수들            -->
+<!- $print[passform]  : 댓글 등록하는데 필요한 hidden 변수들              -->
+<!- $orig_option      : 글쓰기 창 조절시 원래 크기로 돌아가는 옵션        -->
+<!- $orig_button      : 원본글 포함 버튼 사용시 출력                      -->
+<!-#######################################################################-->
+<TABLE WIDTH=<?=$board[width]?> BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD ALIGN=right>
+<?=$wrap[ment]?>
+[ <A HREF=list.php?table=<?=$table.$pages?>><FONT STYLE="color=#555555">목록</FONT></A> | <A HREF=javascript:history.back()><FONT STYLE="color=#555555">이전</FONT></A> ]
+</TD></TR>
+<TR><TD BGCOLOR=#FFAE00 ALIGN=CENTER>
+<?=$print[passform]?>
+<INPUT TYPE=submit VALUE=등록>&nbsp;
+<INPUT TYPE=reset VALUE="다시"<?=$orig_option?>>&nbsp;
+<INPUT TYPE=button onClick=history.back() VALUE=취소>
+<?=$orig_button?>
+</TD></TR>
+</TABLE>
 
-</form>
+<!-#######################################################################-->
+<!-  print_license()  : 라이센스 출력                                     -->
+<!-#######################################################################-->
+<?=print_license()?>
 
+</FORM>
+</DIV>
+
+<!-------------------- 꼬리 디자인 시작 -------------------->
+<?
+if(!$np) {
+  # 전체 관리자에 의해 강제 input 되는 Design
+  include "html/tail.ph";
+  # 각 유저별 Design
+  include "$board[tailpath]";
+}
+?>
+<!-------------------- 꼬리 디자인 끝   -------------------->
+</BODY>
+</HTML>

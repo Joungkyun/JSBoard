@@ -1,0 +1,17 @@
+Known Bug
+
+2001.09.04
+
+1. In writing, if you will write ' or " charactor, value of follow directive is
+   On in php.ini
+
+   magic_quotes_gpc        =       On
+
+   Case of any users, is not located in right path of php.ini.
+
+2. if search string includes url, one of several links is not hilighting.
+
+3. It is enable attack in form mail function. If exists unbelieve local user,
+   changed word "sm" to any word in "elseif (($o[at] == "sm")" of act.php.
+   If changed "sm" and you can't not use form mail function.
+

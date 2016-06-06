@@ -1,232 +1,808 @@
-** JSBoard 2.1 Changelog
-**
-** Maintainer : 김정균 <http://oops.org>
-**
-** $Id: Changelog,v 1.64 2014-01-01 09:30:38 oops Exp $
+***** JSBOARD + OOPS administartion Center *********************************
+
+Original Developer              : Byung Chan Kim <redhands at linux.sarang.net>
+Source Disturibute              : Joung Kyun Kim <admin at oops.org>
+Windog Version                  : Ki Soo Choi <choiks at nuri.net>
+
+## Warning ##
+
+This package turned out to work in Redhat Debian FreeBSD Windows systems.
+Any one who wants install this package on any other platform must revise
+it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
+file.
+
+If you wnat to see windog's change log, see also
+ http://jsboard.kldp.org/download/Changelogwin.txt
+
+Attention : OOPS administration Center is not GPL.
+            See also admin/License !
+
+******************************************************************************
 
 
--------------------------------------------------------------------------------
-버전 2.1.0
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2001년 12월 20일
+버전   : jsboard-2.0pre3
 
-2014.01.01
-by 김정균
-	- 이름, 제목, 내용을 공백 문자로 등록가능한 버그 수정
+* 변경된점
+1. README.THEME 추가 설명
+2. list.ph 에서 list field 에 null field 를 사용할 수 있도록 수정
+3. $board[path] 에 포트를 사용할 경우 오류 나는것 수정
+4. 한글 테마에서 오타 수정
+5. user 등록을 global.ph 에서 어드민만 또는 아무나 가능하게 설정
+6. 전체관리자에서 유저등록 페이지 연결
+7. 게시판 관리자에서 전체 관리자만 관리자를 변경할 수 있도록 수정
+8. 게시판 관리자가 null 로 설정되어 있을때 강제로 admin 으로 설정되게 수정
+9. check_url, check_email 함수 수정 (- 문자 필터링에 실패)
+10. 패스워드 없는 게시물 무단 수정/삭제 되던 문제 재발생및 수정
+11. 외부 DB 를 이용하여 INSTALLER 를 사용할 경우 유저 접근 권한 설정이
+    localhost 로 제한 되는것 수정
+12. Email link 에 mouse over 할때 상태바에 Email link 를 보여주지 않게 수정
+13. get_agent 함수가 중복되어 사용되던 문제 수정
+14. IE 의 UTF8 사용시 한글 파일 업로드 문제 해결 (urlencode 처리)
+15. 이미지 업로드에서 이미지 사이즈(width, height) 잘못 표시 되던것 수정
+16. lynx 에서 글등록 안되던 버그 수정
+17. IE 5.5 미만 버젼에서 쿠키가 브라우져 종료시 삭제 되는 것 수정
+18. 게시판 관리자에서 권한 설정이 잘못 되는것 수정
+19. 이름 검색시 메일 링크되어 있는 이름의 링크가 깨지는 것 수정
+10. search_hl() 함수 완전 수정
+21. KnownBug 문서 update
+22. 유저추가시 유저이름에 공백 문자 사용 못하던것 수정
+23. 관리자 기능에서 유저 추가시 추가후 추가창이 리스트로 향하는것 수정
+24. 글읽기시 조회수가 읽고난 다음 추가되는 것을 읽을때 바로 추가되게 수정
+25. 게시판 관리자에서 중복되게 include 하는 루틴 제거
+26. png 의 icon type 이 잘못 나오는것 수정
+27. 메일주소 링크 형식을 변경 가능 하도록 수정
+28. 메일발송 함수의 FROM 처리 변경
+39. mysql replication 연동 기능 추가
+30. 로그인을 했을 경우만 session_start() 함수 사용(Cookie 이용 체크)
+31. 일반 모드에서 패스워드 없이 글 등록 못하게 수정
+32. 테마 버젼 표기 (include/version.ph)
+33. 상세 검색기능 추가
+34. 검색시 처음 변수값들이 post 로 넘어가는 것을 get 방식으로 전환
+35. mode 4,6 에서 일반 유저의 패스워드가 적용되지 않는 것 수정
+36. 설정 파일 convert 파일 수정
+37. 게시판 등록 안되는 문제 수정
+38. 이름검색시 에러 수정
+39. 유저 등록시 url 에 http:// 가 붙지 않도록 통일
+40. search_hl() 함수의 오타 수정
+41. prelist 의 include bug 수정
+42. auto_link() 함수 수정
+43. whois 검색 기능 사용안할 경우 큰 이미지 원본보기 기능 안되는것 수정
+44. 원본 이미지 보기에서 IE 의 UTF-8(한글 파일 이름) 문제 해결
+45. 게시판 관리자의 include 파일 출력 순서 수정
+46. session_destory() 함수를 session_unregister() 함수로 변경
+47. 오탈자 수정
+48. PHP 4.1.0 에서 패스워드 길이가 변경된것 적용
+49. INSERT query 에서 file 명을 지정
+50. moder 필드 삭제
+51. login mode 시에 이름 출력을 닉네임 또는 리얼네임을 출력하도록 선택을
+    할 수 있게 수정 (rname field 추가)
+52. IE 6.0 에서 cookie 적용되지 않던것 수정
+53. 외부 회원 DB 연동 가능하게 수정 (README.OPERATE 참고)
+54. 내부 보안버그 패치
+55. parse.ph 의 delete_tag(), nl2br() 함수 수정
+56. 1000,000 건 이상의 레코드를 위해 SQL query 변경
 
-2012.10.24
-by 김정균
-	- [#318355] PHP 5.4 및 magic_quotes_runtime = OFF 시의 글등록 문제 해결
 
-2012.10.03
-by 김정균
-	- [#318316] captcha image 출력 잘못 되는 현상 수정
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2001년 11월  4일
+버전   : jsboard-2.0pre2
 
-2012.10.03
-by 김정균
-	- [#301263] windows 5.3 이전 버전에서 checkdnsrr 함수 지원하지 못하는
-	  문제 해결
+* 변경된점
+1. auto_link 함수 수정 (eregi_replace 함수를 preg_replace 로 모두 대체)
+2. no login 모드시에 로그인이 되어 있을경우 글 삭제가 되지 않는것 수정
+3. list.php 의 쓸모없는 </FONT> tag 삭제
+4. login 모드의 게시판을 $board[dpath] 로 지정했을 경우, 로그인 안한 상
+   태로 해당 게시판으로 접근했을때 무한루프 도는것 수정
+5. login.php 의 이미지 경로 잘못된것 수정
+6. 테마에서 마지막의 </HTML> 이 <HTML> 로 되어 있는 것들을 제대로 수정
+7. 테마에서 각 유저별 디자인과 전체 관리자의 디자인의 include 순서 변경
+8. act.php 에서 변수처리 잘못한것 수정
+9. return path 가 없는 경우를 위해 mail() 함수에서 -f 옵션 처리
+10. form size 크기를 테마 설정 파일에서 각 게시판 admin 으로 이동
+11. url 에 포트번호가 들어가는 경우 처리할 수 있게 수정
+12. 게시판 mode 6,7 추가
+    mode 6 -> Reply only admin (No login mode)
+    mode 7 -> Reply only admin (Login mode)
+13. IE 5.5 이상 버젼의 쿠키 적용 잘 안되던것 수정
+14. admin page 에서 로그인 실패시 로그인 페이지에 admin page 의 변수를 첨가
+15. 댓글의 화살표 이미지를 테마에서 수정 가능하도록 수정
+16. 글 list 의 강제 font size 제거
+17. 폰트체를 테마에서 각각 선택할 수 있도록 수정
+18. list 페이지의 필드 순서를 변경할 수 있도록 수정
+19. mail 발송 함수 수정
+20. README.CONFIG 업데이트
+21. list 화면에서 page link 출력 방식 변경
+22. 댓글을 쓸때 원본글이 원본글 표시 문자 때문에 다음줄로 밀리는 것 수정
+23. auto_link() 함수에서 mms:// protocol 처리 추가
+24. email, url check 함수 버그 수정
+25. 검색 폼과 페이지 이동 폼의 디자인을 테마에서 처리({list,read}.template)
+26. 라이센스 부분이 디자인과 충돌을 일으키는 것을 수정
+27. 검색시 이미지 링크가 깨져서 출력되는 현상 수정
+28. 패스워드가 지정되지 않은 게시물이 임의로 수정,삭제 가능한것 수정
 
-2012.01.25
-by 김정균
-	- variable.php에서 URL parameter 체크시에 object parameter 공격 가능성
-	  여부 차단
 
-2009.11.22
-by 김정균
-	- 게시판 모드 6에서 글 등록시 captcha 작동 하지 않는 문제 수정
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2001년 10월  4일
+버전   : jsboard-2.0pre1
 
-2009.11.17
-by 김정균
-	- 외부에서 JSBoard link로 XSS 유도 가능한 버그 수정
-	  http://oops.org/SERVICE/jsboard/read.php?table=jsboard_oopsQnA&no=52055
+* 변경된점
+1. skin theme 기능 추가 (기존의 theme 삭제)
+2. language file 정리(skin 에 의해 필요 없는 부분 삭제)
+3. admin center skin 에 맞게 수정
+4. Installer 에서 db,user 추가를 insert 문에서 grant 문으로 변경
+5. iis 의 환경변수에 대한 부분을 체크
+6. 가장 최근글이 삭제 되었을때 mail 로 보내지는 글 번호가 엉뚱하게 붙는
+   현상 수정
+7. theme readme file 작성완료 및 주석 등록 완료
+8. list table design 변경 가능하게 수정
+9. 글 제목에 font color 를 가능하게 변경
+10. url_link 함수 수정
+11. get_agent() 함수 수정. (NS 와 Mozilla 를 구분)
+12. mail 주소 출력 형식을 변경. @ 을 __at__ 로 변경
+13. form mail 방식 메일발송 삭제
+14. 계정 유저 INSTALLER 지원
+15. 댓글 딸때 깊이가 10 이 넘어갈 경우 Re: 가 계속 붙는것 수정
+16. Linux 용 NS 한글/영문 버젼간 form size 각각 지정
+17. 관련글 테이블 조정
+18. 사용자 정의 스타일 시트 추가
+19. 댓글에 이미지가 있을 경우 삭제시 에러나던것 수정
+20. 수정시 관리자 이름, 이메일 등록시 등록 안되는 것 수정
+21. 컨커러가 인식이 제대로 되지 않는것 수정
+22. 글 본문에서의 이메일 링크를 헤더를 통해 mail 프로그램이 실행되게 변경
+23. 글 등록시 referer 를  체크하여 게시판 글 등록기의 접근을 막음
+24. browser 체크 기능 삭제 (레퍼럴 체크로 인하여 필요성이 없어짐)
+25. 파일 업로그 가능시 업로드를 안해서 bcfile field 에 기록되는것 수정
+26. Galeon 지원 추가
+27. 메일 주소를 클릭했을 경우 Mozilla 의 경우 act 페이지로 넘어가는것 수정
+28. work wrap 이 나중에 적용되어 링크가 된 글이 잘리는 현상 수정
+29. 큰 사이즈 image 를 보는 것에서 인증 에러 나는것 수정
+30. 글 등록수 오타 수정
+31. auto_link() 함수 수정
 
-2009.11.14
-by 김정균
-	- 에러 메시지 popup창에서 XSS 가능성 방지
 
-2009.09.03
-by 김정균
-	- SSL 접근시에 스팸 등록기로 판단되는 문제 수정
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2001년  8월   2일
+버전   : jsboard-1.3.x-rc
 
-2009.08.24
-by 김정균
-	- wrodwrap_js parsing 버그 수정
+* 변경된점
+1. get_date() 함수 수정
+2. 쓰기 권한시 인증후 다시 인증하게 되는것 수정
+3. act.php 에서 include 잘못하는 것 삭제
+4. NS 에서 사이즈가 큰 한글 이미지 upload 시 미리보기에서 에러 발생 하는 것
+   수정
+5. email 등록을 허가 하지 않을 경우 미리 보기 파일 자바 스크립트 에러 발생
+   하는 문제 수정
+6. 유동 ip 에서 운영할 경우 mail 발송 기능 때문에 글등록이 안되는 현상 수정
+7. email link 에 subject 가 붙을 경우 링크가 깨지는 것 수정
+8. admin center 의 최초 패스워드인 0000 을 변경하지 않았을 경우 경고 메세지
+   출력이 제대로 되지 않던것 수정
+9. Installer/include/passwd.ph 의 오타수정(netsatat -> netstat)
+10. sendmail.ph 의 오타 수정
+11. 글 등록시 mail server 접속 실패했을 경우 리스트 페이지로 돌아오지 못하
+    는것 수정
+12. Linux 용 NS form size 를 1.8배 정도로 수정
+13. sendmail.ph 재작성
+14. euc_kr 이 아닐경우 폼사이즈 버튼이 깨지는 것을 방지하기 위해 image 로 교체
+15. .ppt .xls 가 다운로드 되지 않고 열리는 것 수정
+16. qmail 에서 socket 방식으로 메일이 발송되지 않던 현상 수정
+17. 타 OS 와의 호환을 위해 fopen 함수의 인자에 b를 추가
+18. file_operate() 함수 추가 (get_file() 함수 삭제하고 fopen 으로 처리하던
+    루틴들을 모두 file_operate() 함수로 변경
+19. 파일 미리보기에서 텍스트로 출력 될때 1000 자에서 한글이 제대로 안잘리는것
+    수정
+20. 메일 기능 사용할때 https 사용가능하게 수정
+21. auto_link() 함수 수정
+22. 삭제시 댓글의 첨부파일이 삭제되지 않는 문제 수정
+23. upload file 미리보기에서 Orizinal 로 표기되던 오타 수정
+24. IE 5.5를 위한 다운로드 header 추가
+25. IE 5.5 이상 버젼에서의 Cookie 문제 수정
+26. Installer 오타 수정
+27. 폼메일 발송안되던 현상 수정
+28. admin center 에서 스팸처리 설정파일이 엉뚱하게 만들어 지는것 수정
+29. agent 분류에서 konqueror 처리 추가
 
-2009.08.18
-by 김정균
-	- wrodwrap_js parsing 품질을 더 좋게 수정
 
-2009.07.03
-by 김정균
-	- Linux용 Firefox form size 조정
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2001년  5월   9일
+버전   : jsboard-1.3pre7
 
-2009.04.16
-By 김정균
-	- Feed 에서 <> 로 쌓여진 문자열 출력 안되는 문제 해결
+* 변경된점
+1. Exchange Server 로 smtp 가 구성된 메일서버로 메일 보낼 경우 Data Format
+   Error 발생하며 메일이 return 되는 현상 수정. (mail 함수에서 socket 방식
+   으로 변경)
+2. parse.ph 에서 정규표현식들 수정
+3. NOBR 이 적용되지 않는 브라우져를 위해 NOWRAP 을 추가
+4. file_upload() 함수에서 오타 수정
+5. auto_link 에서 .com 들이 file 체크에 걸려 target 이 붙지 않는 현상 수정
+6. 삭제시 html 안한 글에서 wordwrap 이 적용안되는 문제 수정
+7. 글쓰기시 메일 보내기 실패시 함수 정의가 안되어 있다는 오류 메세지 fix
 
-2009.04.09
-By 김정균
-	- RSS feed validator
-	- iconv 사용 가능시에 RSS를 utf8 로 출력하도록 변경
 
-2009.03.20
-By 김정균
-	- prelist javascript 오류 수정
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2001년  4월   5일
+버전   : jsboard-1.3pre6
 
-2009.02.01
-By 김정균
-	- block_devided function 에서 해당 블럭 시작이 0 일 경우 2번 파싱 되는 문제 수정
-	- block_devided function 에서 첫번째 블럭의 마지막 1byte 잘리는 문제 수정
+* 변경된점
+1. 미리보기에서 &lt; 와 같은 문자 오류 나는것 fix
+2. reply 에서 html tag 가 처리 되지 않던것 수정
+3. 글쓰기시 에러창이 뜰 경우 IE 5.01SP1 이상 버젼에서 세션이 초기화
+   되는 현상을 방지 하기 위해 OS가 windowg 일 경우에는 alert 창이 뜨
+   도록 수정(5.01SP1 이상 버젼에서 window.open() 함수가 작동할 경우
+   history.back() 을 해도 세션이 초기화 되는 현상이 있음)
+4. auto_link 에서 applet 사용가능하게 수정.
+5. a link 외에 embed 및 img link 의 경우 여려줄일 경우 link 가 깨지는것
+   보완
+6. auto link 에서 a href tag 를 사용하여 링크한 부분을 처리할때 링크 마
+   지막에 \2 가 붙은 현상 수정
+7. reply 와 edit 에서 원본글의 처리 방식 변경
 
-2009.01.19
-By 김정균
-	- old html format 에서 서식이 잘못 출력되는 문제 수정
 
-2008.12.31
-By 김정균
-	- 글 작성/수정 실패 시에 기입된 폼 정보 사라지는 문제 처리 추가
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2001년  3월  31일
+버전   : jsboard-1.3pre5
 
-2008.12.24
-By 김정균
-	- print_keymenu 에서 document.all 대신 docuemtn.getElementById 를 우선 사용
-	  하도록 변경
-	- captureEvent 만료로 addEventListener 로 변경
+* 변경된점
+1. global.ph 에서 meta character 부분 체크 수정
+2. admin center 에서 alphabat 별로 게시판을 볼수 있도록 수정
+3. write.php 에서 폰트 색상 적용 안되던것 수정
+4. 보안 알림 기능 추가
+5. admin link 를 안보이게 할수 있도록 옵션으로 변경
+6. 검색후 리스트 링크가 검색 리스트로 가지 못하는 버그 수정
+7. html 사용시에 form, input, textarea 등의 tag 삭제
+8. 모질라(NS6) 글쓰기 창 사이즈 조정 가능하게 수정
+9. base tag 사용못하게 삭제
+10. Installer 에서 쓸데없이 urlencode 되어진 것 해결
+11. ko.ph 에서 오타 수정
+12. 글 내용 미리보기에서 글 본문에 \ 문자가 있을 경우 java script
+    error 발생 하는 문제 수정
+13. auto_link 함수에서 한글 링크 처리
+14. auto_link 함수에서 hard wrap 이 적용될 경우 html link 가 여러
+    줄이 되어 링크가 깨지는 것을 3줄까지는 합치게 하는 코드 부분 수정
+15. a href=javascript:function() 의 형태로 java script 사용하는 것을
+    막음
 
-2008.12.23
-By 김정균
-	- reply format 변경
-	- write/edit/reply page 에서 b key 를 이용해서 이전 페이지 이동
 
-by 박원규
-	- jsboard wikify patch (from http://ktug.kldp.org)
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2001년  3월  4일
+버전   : jsboard-1.3pre4
 
-2008.12.13
-By 김정균
-	- textarea 의 wrap 옵션 제거
-	  글 등록시에 강제로 라인 breaking 하던 것을 view page 하도록 변경
-	- html 쓰기 옵션 제거
-	  기본적으로 html 을 사용할 수 있도록 변경
-	  허가할 HTML tag 를 지정해 줘야 함. (BB code 처럼 <> 대신 []를 사용)
-	  [b]굵은 글씨[/b]
-	- code block 지원
-	  [code] ~ [/code] 에서 원본 형태 유지
-	  CSS 에서 jsCodeBlock id 로 design 제어 가능
+* 변경된점
+1. admin center secuirty hole fix
+2. 왠만한 exec 함수는 모두 삭제. admin 에서 게시판 삭제시
+   게시판 디렉토리 삭제할 때만 사용
+3. 경로에 들어가는 변수에서 meta character 존재 유무 체크
+4. 1.2 이하 버젼에서 업데이트를 했을 경우 wordwrap 이 지정이
+   안된 경우 기본값을 가지도록 설정
+5. 설치 문서에 보안관련 글 추가
+6. mail link 를 formmail 과 mailto 선택 방식으로 변경
 
-2008.12.04
-By 김정균
-	- IE 에서 document.location 에서 referer 남지 않는 문제 수정
-	- write/reply 에 referer 없는 접근 막음
-	- board['width'] 에 %가 존재할 경우 삭제 페이지의 타이틀 포맷이 깨지는
-	  문제 수정
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년  2월 24일
+버전   : jsboard-1.3pre3
 
-2008.12.02
-By 김정균
-	- textarea 크기 조절 기능 변경
-	- captcha 지원. doc/ko/README.CAPTCHA 참조
+* 변경된점
+1. include/LANG/ko.ph 에서의 오타 수정
+2. image size 관련 java script 재수정
+3. admin center 인증 관련 버그 수정
+4. Installer에서 환경 체크시 DirectoryIndex 앞에 공백문자가 있을 경우
+   체크 안되던 현상 수정
+5. 게시판 통계의 오타 수정
+6. Netscape 6 지원 시작
+7. 게시판 권한 설정을 관리자 모드로만 사용할수 있을 경우 password check
+   한번만 하면 되도록 수정 (글쓰기시 패스워드는 자동으로 관리자 패스워드
+   가 들어감)
+8. admin center 에 로그인 했을 경우 다른 인증을 생략
+9. 보안상의 약점을 없애기 위해 include/exec.ph 에 지정되어 있는 shell 명령
+   들을 절대 경로로 변경
 
-2008.08.26
-By 김정균
-	- 댓글 작성시에 referer 의 글번호와 부모글 번호가 다를 경우 스팸 처리
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2001년  2월  3일
+버전   : jsboard-1.3pre2
 
-2008.07.27
-By 김정균
-	- IE 외의 브라우저에서 mp3 첨부 파일 자동 실행 지원
+* 변경된점
+1. 한글 file upload 가능하게 수정
+2. html 사용을 이용하여 글쓰기를 할때 본문 내용에 <--no-autolink> 가 포함
+   되어 있으면 auto_link 가 적용안되게 수정. (한글 파일 링크시 사용가능)
+3. global.ph 에서 $upload[dir] 변수를 변경시켰을 경우 admin에서 새로운 게
+   시판 추가시 $upload[dir]이 files로 고정되어 생성되는것 수정
+4. 전체 관리자 인증시 세션값에 평문으로 패스워드가 들어가는 것을 암호화
+   되어진 문자열로 들어가게 수정
+5. include/sendamil.ph 에서 get_send_info() 함수의 $db[host] 함수가 잘못
+   지정되어 있는 것 수정 ($db[server] 로 수정)
+6. 필요없는 $vserion 변수 제거
+7. act.php 로 직접 접근하여 권한 없는 게시판에 글올리는 버그 수정
+8. file download시 fopen후 fclose를 하지 않아 리소스 낭비 되는 현상 수정
+9. 글 내용 미리 보기 기능의 Java Script 수정
+10. 한글 언어 파일에서 오타 수정 (include/LANG/ko.ph)
+11. html/head.ph 에서 새창을 띄우는 자바 스크립트 수정
 
-2008.03.04
-By 김정균
-	- RSS 에서 안시 문자나 ESCAPE 의 ASCII 코드 출력시에 파싱안되는 문제 수정
 
-2007.07.19
-By 김정균
-	- IE7 에서의 RSS 출력 버그 수정
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 12월 31일
+버전   : jsboard-1.3pre1
 
-2007.02.27
-By 김정균
-	- spam 체크 알고리즘 변경
-	- textBrowser 처리 변경
+* 변경된점
+1. PHP4-4.0.3 이상 버젼에서만 사용 가능.
+2. menu에서 윗글이나 아랫글의 제목에 single quote(')가 있을 경우 java
+   script error 나는것 수정
+3. utility directory 추가. (CWB -> jsboard convert program 등록)
+4. 글 수정시 첨부파일 삭제및 변경 기능 추가
+5. 글 입력시 호스트를 ip address로만 insert
+6. IP address 정보를 파악하는 호스트 스크립트의 변경
+7. board wrap 설정을 radio button으로 변경
+8. IP address 출력 여부를 설정할수 있게 변경
+9. DNS lookup 설정 여부 추가
+10. IP address 정보 조회 기능 사용여부 추가
+11. 글쓰기창 사이즈 조정 기능 추가(MSIE 만 가능)
+12. 댓글 처리시 부모글의 html 사용여부를 이어받게 수정
+13. 동시접속이 많을 경우 댓글을 달거나 글 삭제를 할경우 idx가 꼬이는
+    것을 방지 하기 위해 LOCK TABLES $table WRITE 사용
+14. global.ph에서 출력하던 version numbering을 version.ph로 수정
+15. file_upload() 함수 수정
+16. file upload 보안강화를 위해 .htaccess file 추가
+17. upload file 미리 보기에서 html file을 1000 charactor까지만 출력
+18. &가 &amp;로 변환이 되어 잘못 표기되는것 수정.
+19. WRAP=hard 가 적용되지 않는 리눅스용 NS에서 글등록시 게시판이 옆
+    으로 길게 늘어 지는 것을 방지하기 위해 글 출력시 wordwrap을 사용.
+20. Installer 사용시 DirectoryIndex 지시자 체크 하는데서 발생하는 문제해결
 
-2007.02.05
-By 김정균
-	- RSS feed 에 guid tag 지원
 
-2006.07.14
-By 김정균
-	- Opera 브라우저 정보 추가
-	- 첨부 파일 스트리밍시 브라우저별 encoding 지원 (RFC2231,RFC2047,RAW)
-	- 첨부파일 inline link encoding
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 11월 25일
+버전   : jsboard-1.2pre5
 
-2006.07.13
-By 김정균
-	- php stream 을 이용한 다운로드시, fileinfo extension 이용하여 mime type 결정
-	- 첨부 파일 다운로드시 파일에 공백문자가 있을 경우 문제 수정
+* 변경된점
+1. 미리보기 기능의 Java Script 수정 (patched by goyo@netian.com)
+2. file upload시에 글등록이 거부되어도 파일은 업로드 되는 버그 수정
+3. spam bug patch 재수정
+4. list 화면에서 ugly 한글 깨져서 나오는 것 보정
+5. board width가 %로 지정되었을 경우 form mail 창이 뜨지 않는것 수정
+6. admin center에서 as라는 게시판 등록 에러 나는것 수정
+7. 인증 화면에서 패스워드 입력창에 cursor focus를 맞춤
+8. 파일 첨부 되어 있는 댓글 삭제시 첨부 파일 삭제 에러 나는것 수정
+9. Textarea의 wrap 기본모드를 virtual에서 off로 다시 전환
+10. image icon을 사용안할시에도 edit, replay, write, delete 화면에
+    서 image icon을 사용할때의 table size가 적용되는것 수정
 
-2006.07.04
-By 김정균
-	- 글 등록시 스팸 등록기로 처리되는 버그 수정
-	- 자바스크립트 단위 오류 문제 수정
 
-2006.04.30
-By 김정균
-	- login.php 의 $table 변수의 전역화로 XSS attack 가능성 수정
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 11월 3일
+버전   : jsboard-1.2pre4
 
-2006.04.18
-By 김정균
-	- image.php 에서 무조건 JPEG 형식으로 출력되던 버그수정
+* 변경된점
+1. langauge mesage file 수정
+2. 글읽기시 미리보기기능 테마 적용안되는것 수정
+3. SPAM 메일 공격 버그 수정
 
-2006.02.27
-By 김정균
-	- regular expression delimiter 버그 수정
 
-2005.10.26
-By 김정균
-	- 폼 정보를 유지하기 위한 session limiter 의 잘못된 값 수정
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 10월 31일
+버전   : jsboard-1.2pre3
 
-2005.10.12
-By 김정균
-	- 글쓰기 시에, 이름/제목/암호 필드 null 체크를 javascript 로 수행
-	- 삭제 페이지에서 암호 필드에 기본으로 마우스 포커스 위치
+* 변경된점
+1. Installer에서 mysql의 위치를 직접 지정하도록 수정
+2. auto_link 함수에서 url뒤에 dot가 붙을 경우 이를 포함하던것 수정
+3. 메일 발송 기능에서 제목과 이름부분에서 특수 문자가 존재할 경우
+   HTML charactor로 표기 되던것 수정
+4. text_nl2br() 함수에서 html 사용안할시 ugly 한글이 보정 잘못된것 수정
+5. Installer에서 DirectoryIndex 체크시 DirectoryIndex를 여러줄로 설정했
+   을 경우 체크하지 못하는것 수정
+6. 최신글 출력하기 완전 재작성
+7. 접속 ip address 얻어 오는 get_hostname() 함수 수정
+8. htmlspecialchars 역함수 추가
+9. 본문 내용 preview를 title에서 javascript로 변경
+10. autolink() 함수 수정
+11. 오늘 등록된 글표시를 최근 12시간으로 변경
+12. 폼문의 BG color와 font color를 지정할수 있도록 변경
+13. theme file 변수 추가(form 관련)
+14. cut_string() 함수 재작성 (벌레잡이님 작성 - parse.ph)
+15. admin/include/sample 삭제
+16. form_wrap() 함수 수정 - 각 게시판에서 TEXTAREA에 WRAP변수를 지정
+    할수있도록 수정
+17. 미리 보기 기능에 theme 색상 적용
+18. 글수정과 답변쓰기에서 <! 코드가 들어갈 경우 NS에서 깨지는것 방지
 
-2005.10.05
-By 김정균
-	- 스팸 필터링된 문자열 알려주게 수정
 
-2005.08.29
-By 김정균
-	- 테마 config 디자인 파서 수정
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 10월 4일
+버전   : jsboard-1.2pre2
 
-2005.08.15
-By 장현성
-	- sessionInit 함수 추가 (check.php)
-	- admin_head.php parse 에러 수정
-	- mkdir_p 함수 parse 에러 수정
+* 변경된점
+1. theme 사용안할시 화면 색상 배합의 문제 수정
+2. embed link사용시 NS에서 화면이 출력되지 않는 현상 수정
+3. list화면에서 답장글이 많아질 경우 글이 2줄로 출력되는것 수정
+4. 처음 마지막 페이지 링크가 한글환경의 특수문자이므로 영문환경을
+   위해 << >> 로 변경
+5. avi mid 파일 링크시 target안먹게 추가
+6. mid, wav, mp3 file upload시 글읽기에서 바로 노래 출력되게 수정
+7. 폰트에 CSS line-height=120% 적용
+8. mpeg, mpg, avi, asf, mov, swf file 미리 보기 기능 추가
+9. 관리자 기능에서 게시판 정렬상태 조절 기능 추가
+10. <xmp> tag 막음
+11. 글쓰기 에서 html 사용안할시 html tag나 script tag 사라지는 현
+    상 수정
+12. HTML 사용을 좀더 효과적으로 하기 위해 text_nl2br(), delete_tag()
+    함수 수정 하고 delete_tdbr() 함수 삭제
+13. auto_link() 함수 수정. (tag option 부분의 링크 처리 및 속도 향상)
+14. vb script file upload시 확장자 변환 (vbs 로 된 virus 방지)
+15. 제목에서 &가 &amp;로 변환되던것 수정
+16. file upload시에 저장되는 디렉토리명이 겹치는 경우 문제 수정
+17. 일부 영문 배포판 사용자들을 위해 Lang/ko.ph 에 스케일 설정
+18. 메일 기능 사용시 "' 문자에 escape문자(\)가 붙는 것 수정
+19. 메일 기능 사용시 글쓴이의 메일 주소가 없을 경우 JSBoard message
+    만 나타나도록 수정
+20. email link시 id에 .가 존재할때 링크 깨지는것 수정
+21. url이나 email link시 마지막이 .로 끝날경우 이를 포함하는것 수정
 
-2005.08.14
-By 장현성
-	- 최근 12시간내 코멘트 숫자 볼드처리 기능 삭제
 
-2005.08.13
-By 김정균
-	- changelog 형식 변경
-	- comment 등록시에 comment count 올라가지 않는 버그 수정
-	- print_p 함수 추가
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 9월 21일
+버전   : jsboard-1.2pre1
 
-2005.08.11
-By 장현성
-	- 세션템프 파일의 디렉토리를 php 공통 세션 템프 디렉토리에서 JSboard 전용 세
-	  션 디렉토리로 빼옴
-	- user.php 파일 html 태크 오류 수정
-	- 각 게시판 sample config 파일의 로그아웃 후 이동 페이지 링크 파싱오류 수정
-	- theme 글쓰기 폼의 이미지 파일 링크 오류 수정
-	- installer 테마설정 부분 default 값 선정 오류 수정
-	- 코멘트 사용시에 최근 12시간내에 달린 코멘트가 있을경우 코멘트 카운트 볼드
-	  처리
-	- 문서화를 위한 doc 디렉토리 생성
+* 변경된점
+1. auto_link() 함수에서 flash link 적용
+2. html 사용시 앞줄에 띄어 쓰기해도 먹지 않는것 수정
+3. 최신글 보기 기능 지원(INSTALL 문서 하단 참조)
+4. 모더레이트 기능 사용시 원래 페이지로 back이 안되는 버그 수정
+5. 글쓰기시 html 사용하고 <pre> tag사용시 블랭크 2칸을 특수문자
+   로 변환하는 것을 <pre> tag 사용안할 때로만 국한 시킴
+6. Install script syntax error 수정
+7. image 등록시 size가 table width보다클 경우 테이블이 늘어나지
+   않게 고정 시킨후 축소된 image를 원본 이지미로 link를 함
+8. 제목에 &nbsp;문자를 이용하여 공백상태로 만드는것 수정
+9. 글읽기시 앞에 몇줄 띄어 쓰기할때 제일 첫줄만 먹지 않는것 수정
+10. php3 확장자를 php로 변경
+12. color themes 색상 지정 종류 추가
+13. account.sh 버그 수정
+14. get_hostname 함수 수정
+15. move_page() 함수에서 공백문자 사용가능하게 수정
+16. basic themes 변경
+17. auto_link() 함수에서 ftp link시에 link가 httpd로 걸리는 것 수정
+18. user_admin에서 html header의 출력 부분이 이상하게 나오는것 수정
+19. 최신글 출력 기능 수정
+20. auto_link() 함수에서 파일을 링크 시킬 경우 taget이 적용안되게 함
+21. cut_string() 함수 수정
+22. sql time 속도 측정을 정확하게 하기 위해 순서 변경
+23. Lynx에서 글쓰기 안되는것 수정
+24. 수정시 &lt; 같은 특수 문자가 < 로 바뀌어서 나오는것 수정
 
-2005.07.24
-By 김정균
-	- jsboard 2.1 트리 시작
-	- 언어구조 변경
-	- 테마 구조 변경
-	- sqlite / pgsql / mysql / mysqli 지원
-	- web 설치 모드 제거
-	- 쉘 모드 설치 스크립트 지원
 
+* OOPS administration center update
+
+1. 통계에서 최고 조회수 글의 링크가 깨진것 수정
+2. 통계에서 0으로 나누는 경우 발생하는 버그 수정
+3. 통계에서 Syntax error 수정
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 8월 30일
+버전   : jsboard-1.1pre5
+
+* 변경된점
+
+1. download header를 이용한 security hole 수정
+2. global.ph에서 upload directory를 files에서 다른 이름으로 수정 하였을때
+   삭제시 파일이 삭제되지 않는 버그 수정
+3. permission script에서 GROUPS 변수명이 debian에서 충돌나는것 수정
+4. target=xxx 라는 내용이 들어갈때 내용이 사라지는 문제 수정
+5. email이 등록되어 있을 경우 mailto 로 링크 되어 있던 것을 form mail을
+   이용하여 처리하도록 함
+6. formmail 관련 함수 수정
+7. html 사용시 table tag앞에 공백있을 경우 <br> tag로 인하여 아래로 밀리
+   는것 수정
+8. 관련글 작성할때 원본 포함기능 사용시 부모글에 따옴표가 존재할 경우
+   페이지가 깨지는것 재수정
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 8월 11일
+버전   : jsboard-1.1pre4
+
+* 변경된점
+
+1. patch file을 header를 통해 download받게끔 변경
+2. 글읽기에서 관련글 보여주는 것 전면 수정
+3. BGimage 설정시에 table bgcolor가 강제로 보여지는것 수정
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 8월  2일
+버전   : jsboard-1.1pre3
+
+* 변경된점
+
+1. Permission check script에서 Debian checked. (nobody를 www-data로 지정)
+2. Installer에서 Debian check하게 하며, httpd.conf file을 수동으로 지정
+   하게 변경(Installer/include/passwd.ph)
+3. FreeBSD에서 패스워드 암호화시에 $문자가들어 가는 것을 \$로 변경 시킴
+4. QUICK_INSTALL 문서에서 오타 수정
+5. Installer에서 white.themes include error나는것 수정
+6. 자동으로 table 생성시 os간의 패스워드 필드 체크 (include/ostype.ph)
+7. 영문 메세지 파일 수정
+8. admin에서 새로운 게시판 생성시 theme가 적용안되던것 수정
+
+
+* OOPS administration center update
+
+1. jsboard 에서 사용하지 않는 table이 같은 DB에 존재할 경우 에러 메세지
+   줄력 되는것 fix. (jsboard에서 사용하지 않는 table일 경우 설정 버튼
+   대신 "Not JSBoard table" message 출력)
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 7월 26일
+버전   : jsboard-1.1pre2
+
+* 변경된점
+
+1. 글읽기시 글쓴곳에서 접근시 조회수 올리지 않게 수정
+2. 답장을 쓸때 원본글을 포함할지 포함 여부를 선택 하도록 할지
+   설정을 할수 있게 수정
+3. upload file 미리보기시 upload file이 1000자 일때 생략이 나오는
+   것 수정.
+4. 글읽기시 관련글이 있으면 관련글 리스트를 보여줄지 여부 추가
+6. 퍼미션 설정 script의 버그 수정
+7. white.themes를 basic.themes 로 수정
+8. tdbr() delete_tag() text_nl2nr() 함수 수정 (in parse.ph)
+9. Installer에서 default theme link가 잘못 되어 있는것 수정
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 7월 16일
+버전   : jsboard-1.1pre1
+
+* 변경된점
+
+1. fget() 함수를 fread() 함수로 모두 대체
+2. 첨부 파일 link가 깨졌을 경우 미리 보기에서 에러 메세지 출력
+3. if문이나 조건문에서 include() 함수 사용할때의 버그 수정
+4. 글등록시 관리자 패스워드가 있어야 등록되는 이름과 email을 체크
+   하는 방식을 word 비교에서 해당변수가 포함된 parse 비교로 수정
+5. 글등록시 browser를 판별하여 등록허가 여부를 가능하게 수정
+6. 글읽기에서 text file이 첨부 되어 있을 경우 미리 보기 기능에서 약 1000자
+   까지만 제한해서 보여주게 patch
+7. 등록 완료 멘트를 위한 java script외의 ment들을 undecode로 처리
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 7월 3일
+버전   : jsboard-1.0pre2
+
+* 변경된점
+
+1. Source 정리
+2. upload file 이름에 특수 문자($,#,%)가 들어갈 경우 등록 거부
+3. ms office file등록시 icon type을 MS word 문서 icon으로 표현
+4. 검색에서 AND 검색 가능하게 수정 (%%를 and 검색어로 사용)
+5. 검색에서 "' 문자 사용 불가하게 수정
+6. whois 기능 추가
+7. 게시판 통계 기능 추가(적수님 ^^) - admin center update to v1.6
+8. auto_link() 함수 버그 fix
+9. Installer bug fix
+10. message 오타 수정
+11. html head 수정
+12. admin center os 구분 버그 fix (for win2000)
+13. jsboard의 cookie 기능을 session으로 변경
+14. 글쓰기시 cookie 값에 double quote가 존재할시 앞에 \\ 가 붙는것 수정
+15. Password가 있어도 delete link가 비활성화 되는것 수정
+16. auto_link() function 정규 표현식 버그 수정
+17. INSTALL 문서 보강(upgrade 부분 지원)
+18. 제목에 double quote가 존재할 경우 &quot; 를 철자 하나씩 세어 cut
+    하는 것 patch
+19. upload file size를 일기 편한게 byte, kbyte, mbyte 단위로 표현
+20. list 화면에서 첨부 파일에 file size 표시
+21. list 화면에서 날짜를 오른쪽으로 정렬
+22. list의 name filed에서 double quote 때문에 이름이 잘리는것 fix
+23. download 시에 file type에 상관없이 모두 다운로드되게 수정
+24. image icon 사용시 table width를 %로 사용할 경우 table 배열 이상해
+    지는것 fix
+25. zip file의 섬네일 icon이 unknown type으로 나오는것 수정
+26. reply시에 부모글의 유저에게 메일이 발송되지 않던 문제 수정
+27. php 문법 에러 버그 수정
+28. image menu사용시에 옆쪽에 아이콘이 있는 화면과 그렇지 않은 화면간
+   의 table 사이즈가 틀린것 맞춤
+29. spam 검사 안되던것 수정
+30. url로 검색시 link가 깨지는 것 부분 수정
+31. 계정 유저의 경우 admin/include/config.ph 의 퍼미션 수정(664)
+32. Document 의 버그및 오타 수정
+33. KnownBug document 추가
+34. 게시판 관리자만 사용할수 있는 기능에서 인증 버그 수정.
+35. 게시판 관리자의 기능과 전체 관리자만의 기능에 대한 멘트 수정
+36. CREDIT 문서에 임은재님 추가
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 5월 21일
+버전   : jsboard-1.0pre1
+
+* 변경된점
+
+1. Installer에서 JSBoard를 사용하기 위한 환경 테스트 추가
+2. include/tableratio.ph 추가. - table width및 input 문 size 지정 분리
+3. image menu bar 사용 여부 추가
+4. theme에별 image menu 추가
+5. user admin 에서 theme사용안할때 변경전 색상이 user admin page에서
+   복원되는 현상 fix
+6. write, reply, edit, delete page의 하단 list link에서 list로 돌아갈때
+   왔던 list page로 복원 시킴
+7. 쓰기 화면에서 하단 table bug fix
+8. user admin에서 잘못된 변수 이름 fix
+9. list page에서 상단 text menu bar가 무조건 출력 되던것 fix
+10. list 화면에서 글내용 미리 보기 기능 추가 (IE만 가능)
+11. table width를 %로 지정할수 있게 fix
+12. global.ph 의 퍼미션을 660으로 변경
+13. admin center update
+    - 게시판 삭제시 삭제 여부 확인
+    - theme list를 불러오는 함수에서 exec()함수를 php 자체 함수로 변경
+14. global.ph 에서 $rmail[use] 변수 이름이 php4와 충돌하여 $rmail[uses]로
+    변경. (act.php3와 include/sendmail.ph)
+15. NS에서 upload file에 공백 문자가 있을 경우 찾지 못하는 문제 해결
+    (list.ph print.ph act.php3, read.php3, edit.php3)
+16. html, cgi, pl, php3 등 script file의 확장자들은 모두 phps로 변경함.
+    file name 형식은 xxxxx_html.phps, xxxx_cgi.phps 등으로 변경.
+17. script 강제 삭제 부분 버그 수정.
+18. install script 수정.
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 4월 29일
+버전   : jsboard-0.8pre6
+
+* 변경된점
+
+1. IE에서 글 등록시 "쬬, 떄" 와 같은 ugly 한글이 깨지는 것 fix
+2. 제목에 특수 문자 사용할 경우 글자 제한시에 코드가 잘려 코드로
+   출력되는 것 fix
+3. NT 변수값 변경 - input size
+4. html file upload시에 확장자를 .htmls 로 변경 (html에서 php를 사용하는
+   경우를 대비. htm, shtml 역시 변경)
+5. Install시에 영문 모드에서 오타 수정
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 4월 13일
+버전   : jsboard-0.8pre5
+
+* 변경된점
+
+1. admin page link에 게시판 버젼 표시
+2. 패스워드가 없을 경우 하단 command bar의 수정 출력이 답장쓰기로
+   출력 되는 것 fix
+3. Installer의 account.sh와 root.sh에서 오타 수정
+   (spma_list.txt.orig -> spam_list.txt.orig)
+4. list page에서 하단의 page link에서 마지막 페이지로 갈경우 이상하게
+   링크되는 것 fix
+5. 언어를 영어로 선택했을 경우 Netscape(NT)에서 폼문이 엄청나게
+   길어지는것 fix.
+6. 언어를 영어로 선택했을 경우 edit page에 한글 나오던 것을 fix
+7. PHP4에서 IP resolving이 안되던 문제 fix
+8. PHP4에서 $mail 함수 충돌나는 것 fix
+
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 3월 19일
+버전   : jsboard-0.8pre4
+
+* 변경된점
+
+1. upload file 미리 보기 기능에서 파일 확장자가 대문자 일
+   경우 미리 보기 기능이 작동하지 않던 것을 fix
+2. upload file 중 .phtml 확장자 phps로 변환하여 upload되게함.
+3. modified get_hostname function in get.ph
+4. upload 불허시 table 구조 깨지는 것 patch
+5. $lang -> $langs 로 변경 (PHP4에서 충돌)
+6. header.ph 수정
+7. read page에서 글쓴이의 주소 추가
+8. 영문 게시판 선택시 폰트타입을 Arial 로 fix
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 3월 5일
+버전   : jsboard-0.8pre3
+
+* 변경된점
+
+1. reply 화면에서 html 사용안함을 default로 변경
+2. reply.php3 의 20line 에서 php4에서 에러나는 부분 수정
+3. admin/admin_info.ph, get_theme_list() 의 색상 변경
+4. read page의 상단 command bar의 java script error 수정
+5. global.ph 에서 잘못된 변수값 수정 ( yse -> yes )
+5. act.php3 의 66번째 라인의 sql query bug patch (AS를 빼먹음 T.T)
+6. $cupload 변수값 적용 버그 패치
+7. write, reply, edit page에서 java script 부분 삭제. (farwindow 관련함수)
+8. modified delete_tag() function in include/parse.ph
+9. modified text_nl2br() function in include/parse.ph
+10. modified form_wrap() function in print.ph
+11. added remove_tbbr() function in parse.ph
+12. textarea 에서 WRAP 사용여부 결정할수 있게함.
+13. Installer 추가
+14. admin.sh 를 root.sh로 파일이름 변경 및 수정
+15. GPL 한글 문서 추가
+16. 간단한 MySQL query 문서 추가
+17. cgi, sh, pl file upload시에 file name에 위의 문자열이 있을때 file 이름이
+    변형되는 것 수정
+18. Install 문서 추가
+19. admin center에서 패스워드 변경 안하면 계속 에러 메세지 출력되게함
+20. language file에 charactor set 변수 지정
+21. root_p.sh, account_p.sh 추가(root.sh, account.sh에서 퍼미션 설정
+    부분 삭제)
+22. COPYING, COPYING.en, CREDIT, Changelog, README 문서추가
+    (기존의 README, LICENSE file 삭제)
+
+-----------------------------------------------------------------------------
+작성자 : 김정균 (admin at oops.org)
+작성일 : 2000년 2월 20일
+버전   : jsboard-0.8pre2
+
+* 변경된점
+
+1. 관련글 제목 표현 수정 (Re^3 -> 세번째 관련글)
+2. upload 기능 추가
+3. 썸네일 기능을 이용하여 txt, jpg, gif, php 파일 형식은 글읽기에서 바로 출력
+4. Agent 분류와 form문 보정 함수에서 WinNT 변수 추가
+5. Email, Url 사용 여부 설정
+6. 글쓰기, 수정, 삭제, 관련글 쓰기 페이지 하단에 리스트, 이전페이지 링크 추가
+7. 글이 posting되었을때 메일 발송 기능 추가
+   (sendmail() 함수 추가 in include/sendmail.ph)
+8. table tag 사용시 table tag(table,tr,td) 에만 nl2br()과 들여쓰기 기능이
+   적용되지 않게 수정
+9. 글 등록 시에 쓸데 없는 tab 사용하는 것 삭제. 예를 들어 <html> <div> 
+   <head> <meta> 등. <table> tag는 사용가능.
+10. autolink 정규 표현식 수정
+11. white theme 추가
+12. command bar 상단에 출력
+13. 검색시에 정규표현식으로 검색시 [a-z]로 검색시 리스트의 링크가 깨지는 것 수정
+14. php, cgi, pl file upload시에 phps, cgis, pls로 file name 강제 변경 시킴
+15. user data directory를 data/user_data_dir 로 수정
+16. admin 기능 추가 (admin center 1.4로 update - 게시판의 theme기능과 접목)
+17. 이름과 이메일에 등록 금지시키고 싶은 이름이나 주소를 하나 등록할수 있게함.
+18. upload file type image 추가. (php,html,word,text)
+19. 관리자 기능에서 Spam, theme 설정 가능. (config/README.THEME 참고)
+20. 삭제 화면에서 email, url이 없으면 출력을 안하게 함
+21. 몇몇 설정 변수중 global에 우선권을 줌 (upload 기능, mail 보내기 기능. 쓰기 허가권등)
+22. useradmin 기능 추가
+23. 내용 검색시에 html 미사용 등록글들에서 검색어 하이라이팅이 안되는 부분 수정
+24. 다른 system으로 porting을 편리하게 하기 위하여 exec() 함수 부분 분리 (jsbaord/include/exec.ph)
+25. Multi Language 구현 (현재는 ko. en만 가능)
+26. 소유권, 권한 설정 script 추가
+27. Quick Install 문서 추가
+
+-----------------------------------------------------------------------------
+작성자 : 적수 (redhands@linux.sarang.net)
+작성일 : 2000년 1월 ??일
+버전   : jsboard-0.8pre1
+
+* 변경된점
+
+1. 새로운 알고리즘으로 변경 (DB table 구조 변경)
+2. Theme 기능 추가
+
+그외 다수 ^^; (모름)
+
+*참고*
+0.7 이하 버젼과는 전혀 다른 기능으로 개선되었음.
+호환성의 문제 발생 여지가 있음.

@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# 아래의 정보들은 global.ph 의 DB 정보와 동일하게 입력함.
+# jsboard 에 접근할 유저이름
+DB_USER=
+
+# jsboard 에 접근할 유저 패스워드
+DB_PASS=
+
+# jsboard 가 사용할 database 이름
+DB_NAME=
+
+# 만약 사용하는 database 에 JSBoard 가 사용하는 table 외의 다른
+# 테이블이 존재할 경우에는 JSBoard 가 사용할 table 들을 직접 지
+# 정해 줘야 한다.
+# ex> TARGET="qna faq freeboard"
+#
+TARGET=""
+
+# mysql client path
+# find /usr -name mysql 로 찾도록 한다.
+MPATH=/usr/bin/mysql
+
+if [ ${TARGET} = "" ]; then
+  TARGET=$(mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME} -e "show tables" | grep  -v "Tables_in_\|userdb")
+fi
+
+for i in ${TARGET}
+do
+  if [ ${TARGET} != "userdb" ]; then
+    echo "Converting ${i} table ......."
+    ${MPATH} -u${DB_USER} -p${DB_PASS} ${DB_NAME} -e "ALTER TABLE ${i} ADD rname tinytext"
+    ${MPATH} -u${DB_USER} -p${DB_PASS} ${DB_NAME} -e "ALTER TABLE ${i} DROP moder"
+    ${MPATH} -u${DB_USER} -p${DB_PASS} ${DB_NAME} -e "ALTER TABLE ${i} MODIFY passwd varchar(56)"
+  fi
+done
+
+exit 0
