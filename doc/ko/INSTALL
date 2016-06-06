@@ -1,0 +1,645 @@
+##### JSBOARD + OOPS administartion Center #####################################
+#
+#  Original Developer   : 김병찬 <redhands at linux.sarang.net>
+#  Maintainer           : 김정균 <admin at oops.org>
+#
+#  Special Thanks       : 권순선 <http://kldp.org>
+#                       : 임은재 <eunjea at kldp.org>
+#                       : 차경묵 <dimanche at dimanche.co.kr>
+#                       : 방창현 <winchild at kldp.org>
+#
+#################################################################################
+#
+# $Id: INSTALL,v 1.21 2014-03-02 17:11:31 oops Exp $
+#                               Installation in JSBoard 2.0 v0.6
+#
+#################################################################################
+
+작성 : 김정균 <http://oops.org>
+일시 : 2014.03.01
+
+이 문서는 JSBoard 2.0  version의 설치를 위해 제공을 한다. 이 문서로 인한 피
+해나 JSBoard의 사용으로 인한 피해에 대해서는 아무런 책임을 질수 없으니 신중
+하게 판단 하고 설치를 시도하도록 하기를 바란다.
+
+
+  ##  좀더 자세한 설명을 보기를 원하거나 INSTALLER 가 아닌  ##
+  ##  수동 설치를 원하면  INSTALL.MANUALY 문서를 참조 하라  ##
+
+
+===================================   주의   ===================================
+
+하나.
+JSBoard v2.0 은 PHP4 v4.1.0 이상 버젼에서 정상 작동을 하며, compile 을 할때
+configure 시에 --disable-session 옵션을 놓으면 절대 안된다.
+
+하나.
+업그레이드 문서는 UGRADE 문서에서 따로 다루도록 한다.
+
+하나.
+Redhat,Debian,FreeBSD 이외의 OS 에서 설치시에는 꼭 jsboard/README.OTHERS.OS
+문서를 읽어보고 설치를 해야한다. Windows 용은 win32 버젼의
+INSTALL.MANUALY.WIN32 문서를 참조 하도록 한다.
+
+하나.
+계정유저가 INSTALLER 를 이용할 시에는 MySQL 의 database 가 생성이 되어 있어
+야 하며 MySQL 유저와 패스워드가 등록이 되어 있는 상태에서 INSTALLER 를 사용
+해야 한다.
+
+================================================================================
+
+
+**** 목 차 ****
+
+  1. 사용환경
+    1-1. MySQL API test
+    1-2. php.ini 의 설정
+    1-3. shell 확인 작업 (SunOS 또는 Solaris 지원)
+  2. JSBoard 설치
+  3. JSBoard 운영
+  4. JSBoard 보안
+  5. 최신글 출력하기
+    5-1. 최신글 보기 구성
+    5-2. 최신글 보기 설정
+  6. Bug report
+
+***************
+
+1. 사용환경
+
+  [ web server ]
+
+    Apache, lighttpd, nginx
+  
+  [ MySQL ]
+
+    4.1 이상
+
+  [ PHP ]
+
+    4.1.0 이상 (5.3 이상일 경우 php-fpm 지원)
+      - msyqli(권장) 또는 mysql extension 필요
+      - mbstring extension 필요
+
+
+  * 체크 사항 *
+
+  서버의 php가 MySQL API가 지원되는지 확인한다.
+
+  1-1. MySQL API test
+
+    JSBoard v2는 
+
+    info.php 라는 파일을 아래와 같은 내용으로 생성한다.
+
+    <?php
+    phpinfo();
+    ?>
+
+    그리고 웹상에서 호출을 하여, mysql 또는 mysqli 정보를 확인 하도록 한다.
+    JSBoard는 2.0.16 부터 기본적으로 mysqli extesion을 지원하면 mysqli를 사
+    용을 하게 되며, mysqli가 지원되지 않을 경우, mysql extension을 사용하게
+    된다. 2.0.15까지는 mysql extension만 지원을 한다.
+
+    제대로 지원을 하고 있는지 확인을 위해서는 다음의 코드를 실행해 본다.
+
+    root 사용자라면
+
+    <?php
+    $sqlfunc = extension_loaded('mysqli') ? 'mysqli_connect' : 'mysql_connect';
+    $con = $sqlfunc("localhost","root","MYSQL_ROOT_PW");
+    if($con) echo "yes";
+    else echo "no";
+    ?>
+
+    계정 사용자라면
+
+    <?php
+    $sqlfunc = extension_loaded('mysqli') ? 'mysqli_connect' : 'mysql_connect';
+    $con = $sqlfunc("locahost","MySQL_USER","MYSQL_PW");
+    if($con) echo "yes";
+    else echo "no";
+    ?>
+
+    와 같이 문서를 만든뒤 웹상에서 호출을 했을 경우 "yes"가 나오면 된다. 위의
+    MYSQL_ROOT_PW 는 mysql 의 root 패스워드를 적어 주면 되며 계정 사용자의 경
+    우에는 MySQL_USER 와 MySQL_PW 는 시스템 관리자가 생성해준 MySQL 에 로그인
+    을 할 유저와 패스워드를 지정하면 된다. db server 가 외부에 존재할 때는 db
+    서버의 ipaddress 를 locahost 대신 적어 주면 된다.
+
+    일단 위의 결과에서 "no"만 나온다면, 접속 정보가 잘못 되었다고 판단을 할수
+    있다. 이련 경우,  shell 상에서
+
+
+    shell> mysql -u root -p
+
+    명령으로 접근이 가능한지를 테스트 한다. 만약 DB 서버가 외부의 서버일 경우
+    에는
+
+    shell> mysql -u root -p -h DB_server_address
+
+    로 접근이 가능한지 테스트를 하고난 다음, 위의 코드에서 접속 정보를 정확하
+    게 적어주면 된다.
+
+    웹에서 호출한 결과 "yes" 또는 "no" 외의 출력이 생긴다면 PHP에서 mysql API
+    가 지원이 되지 않거나, 코드 오류일 가능성이 높다.
+
+  1-2. php.ini 의 설정
+
+    JSBoard 를 운영하기 위해서는 우선 php.ini 의 short_open_tag = On 설정이 있어
+    야 한다. 일부 배포본에서 short_open_tag = Off 로 되어 있는 경우가 있는데, 이
+    경우 정상 작동을 하지 않는다.
+
+    또한 글쓰기를 할때 ' 또는 " 문자가 제대로 입력이 안되고 에러가나는 경우가 존
+    재한다. 이는 php.ini 에서
+
+    magic_quotes_gpc = ON
+    magic_quotes_runtime = OFF
+    magic_quotes_sybase = OFF
+
+    값들이 제대로 지정이 되어 있는지 확인을 해야 한다. 위의 값으로 맞추어 놓으면
+    된다.
+
+    또한 upload 를 할때 2M 이상 되지 않는 경우가 존재한다. 이 경우를 대비하기 위
+    해서
+
+    post 값으로 넘어온 data 의 용량 upload_max_filesize 보다 5M 정도 크게 잡아준
+    다.
+    post_max_size       = 8M
+
+    php 가 실행될 시간(초단위)
+    max_execution_time  = 30
+
+    upload 파일 최대 크기
+    upload_max_filesize = 2M
+
+    의 값들을 적절하게 지정해 주어야 한다.
+
+  1-3. shell 확인 작업 (SunOS 또는 Solaris 지원)
+
+    SunOS 와 Solaris 에서는 설치 전,  INSTALLER/script 에 존재하는 스크립트의 제
+    일 첫 라인을 다음과 같이 수정을 한다.
+
+    각 스크립트의 첫라인인
+
+    #!/bin/sh
+
+    를 아래의 2 줄로 변경한다.
+
+    #!/bin/ksh
+    PATH=/usr/ucb:/usr/xpg4/bin:/usr/bin:/usr/sbin
+
+
+2. JSBoard 설치
+
+
+  일단 설정 파일들을 위치 시키고 그 파일들의 퍼미션을 조정하도록 한다.
+  jsboard/INSTALLER/script 에서 아래의 명령을 실행 한다. 실행이 되지 않으면
+  퍼미션 을 755로 수정하기 바란다.
+
+    $ ./preinstall
+    ########################################################
+    # JSBoard Pre Installer v2.0                           #
+    # Scripted By JoungKyun Kim < http://oops.org >        #
+    ########################################################
+
+    STEP 1 Language Check
+    ---------------------
+    Can you enable to use KOREAN in this console? [Y/N](default Y) : y <--Enter
+
+    웹서버가 nobody 의 권한으로 작동하고 있는듯 싶습니다.
+    맞습니까? [Y/N](default Y) : Y <--Enter
+
+  위에서 아파치 그룹권한이 맞는지 확인을 해야 한다. 이 값은  httpd.conf 의 GROUP
+  지시자의 값과 동일해야 한다. 같으면 y 를 틀리면 n 을 선택 하도록 한다. n 을 선
+  택하면 다음의 과정을 거친다.
+
+    웹서버의 Group 권한을 입력 하십시오 : nobody
+
+    작업이 완료 되었습니다. 브라우져로 jsboard/INSTALLER/ 로 접속하여
+    설치를 계속 하시기 바랍니다.
+    $
+
+
+  계정 유저의 경우에는 약간 다르게 나오는데, 나오는 메세지대로 따라서 하면 된다.
+
+  그리고 다시 jsboard/INSTALLER/include/passwd.php 를 편집한다.
+
+  <?php
+  ######################################################
+  # MySQL root 의 권한 소지 여부
+  # MySQL root 의 패스워드를 알면 1, 모르면 0
+  #
+  # 만약 MySQL 패스워드를 몰라 0 으로 설정을 하려면 MySQL
+  # root 의 권한을 가지고 있는 사람이 database 를 생성하고
+  # 유저 등록과 패스워드를 등록해 준 후에 INSTALLER 를 사용
+  # 할 수 있음. 이 값들은 아래에 등록해 줘야 함.
+  # 
+  $mysqlroot = 1;
+
+  # Specify MySQL Root Password
+  # mysql을 관리할 root의 password 를 지정
+  # 위에서 $mysqlroot 의 값을 0 으로 지정했을 경우에는 MySQL
+  # root 가 알려준 mysql 계정 패스워드를 지정함.
+  #
+  $passwd = "MySQL_ROOT_PASSWORD";
+
+  # $mysqlroot = 0 일 경우에는 아래를 설정함
+  #
+  # mysql root 가 생성해준 database name 을 지정
+  $mysqldatabasename = "";
+
+  # mysql root 가 생성해준 database user name 을 지정
+  $mysqlusername = "";
+
+  # MySQL의 socket file 위치를 지정. socket file이 무엇인지
+  # 모르겠으면 localhost 나 127.0.0.1 을 적도록 한다. DB 서
+  # 버가 외부에 있을 경우에는 해당 DB서버의 ip address나 도
+  # 메인 이름을 적어주도록 하며, 이 경우에는 DB서버의 mysql
+  # 에서 설정한 접근 권한으로 설정을 하여야 한다. 즉
+  #  mysql -u USER_NAME -p DB_NAME -h DB_address
+  # 로 쉘에서 접근이 가능해야 한다.
+  #
+  # socket file의 위치를 알고 싶다면 mysql_config --socket
+  # 명령으로 알수가 있다.
+  #
+  $mysql_sock = ":/var/lib/mysql/mysql.sock";
+  ######################################################
+  ?>
+
+  위는 passwd.php 의 내용이며, "MySQL_ROOT_PASSWORD" 부분에 MySQL 의 root
+  password 를 넣어 준다. 
+
+  계정 유저 즉 MySQL 의 root 패스워드를 모르고 시스템 root 의 권한이 없을경
+  우에는 위의 메세지를 잘 읽으면서 적는다.
+
+  그리고 그 아래에는 apache web server의 설정 파일인 httpd.conf가 있는 경로
+  를 적어 주도록 한다. 만약 DirectoryIndex 지시자를 srm.conf 에서 지정을 하
+  는 유저들은 srm.conf의 위치를 지정하기 바란다.
+
+  마지막으로 mysql의 sockfile 경로를 지정해 준다. 이것은 보통
+  
+  netstat -anp | grep mysql 또는 mysql_config --socket
+  
+  명령으로 얻을수 있다. 도저히 모르겠는 사람은 127.0.0.1이나 localhost를 적
+  어 주도록 한다. 보통은 tcp/ip를 사용하는 것보다 unix socket을 이용하는 것
+  이 속도 가 빠르기 때문에 sock file 의 경로를 알수 있다면 이를 지정해 주는
+  것이 좋다.
+
+  참고로 주의 할것은 unix socket 으로 지정을 할 경우에는 socket file의 경로
+  앞에 : 가 붙어야 한다. (예 - :/var/lib/mysql/mysql.sock)
+
+  소켓 파일 위치를 도저히 못찼겠다면, 'localhost'를 입력해 주도록 한다.
+
+  다음 웹 브라우져로 http://domain.com/jsboard/INSTALLER/로 접근을 한다.
+
+  -------------------------------------------------------------------------
+                             JSBoard Installer
+  -------------------------------------------------------------------------
+
+                          [ ] Korean [ ] English
+
+  -------------------------------------------------------------------------
+                                 [submit]
+  -------------------------------------------------------------------------
+
+  과 같은 화면을 볼수 있을 것이다. 여기서 언어를 선택하도록 한다. 현재는 국
+  문과 영문만을 지원한다. 선택하고 [submit] 을 click 하도록 한다.
+
+
+  -------------------------------------------------------------------------
+                             JSBoard License
+  -------------------------------------------------------------------------
+
+  주절주절주절주절 ...........................................
+  주절주절주절주절 ...........................................
+  주절주절주절주절 ...........................................
+
+  -------------------------------------------------------------------------
+                                  [AGREE]
+  -------------------------------------------------------------------------
+
+  언어를 선택하고 나면 위의 JSBoard를 사용하기 위한 License가 나온다. 읽어
+  보고 동의를 하면 [AGREE]를 click 한다.
+
+
+  -------------------------------------------------------------------------
+                         JSBoard Environment Check
+  -------------------------------------------------------------------------
+
+          Jsboard를 사용하기 위한 환경 설정을 검사하고 있습니다
+          5초 후에 결과를 보실수 있습니다
+
+          만약 Linux용 Browser를 사용하신다면 다음 페이지로
+          자동으로 넘어가지 않을수도 있습니다.
+          이때에는 INATALL.MANUALY 문서를 참조하셔서 설치를 하십시오 
+
+  -------------------------------------------------------------------------
+                          [ 5초간 기다려 주세요 ]
+  -------------------------------------------------------------------------
+
+  새로이 추가된 부분이다. 이 부분에서는 특별히 할것없이 5초간 기다리기만 하
+  면 된다. 이 부분에서 OS Type, MySQL 연동 체크, exec() 함수 사용여부,
+  httpd.conf의 index file 설정 여부, jsbaord 를 사용하기 위한 권한설정 여부
+  를 체크를 한다.
+
+  * 주의 할것은 이 부분은 meta tag 로 체크후에 결과 페이지로 넘어 가게 되어
+    있는데 Linux용 Netscape 4.x 는 Meta tag 가 제대로 작동을 하지 못하는 경
+    우가 많다. 이런 경우에는 windog 에서 install program을 다시 실행 하던지
+    또는 INSTALL.MANUALY 문서를 참조해서 수동으로 설치를 하기 바란다.
+
+  -------------------------------------------------------------------------
+                      JSBoard Enviornment Check Reuslt
+  -------------------------------------------------------------------------
+
+  OS Type               : RedHat
+  MySQL check           : Failed 
+
+  MySQL login에 실패를 했습니다. jsboard/INSTALLER/include/passwd.php 에
+  MySQL의 root password가 정확한지 확인해 주시고 맞으면 PHP의 설치시에
+  --with-mysql 옵션이 들어갔는지 확인해 주십시오
+  만약 DB server가 독립되어 있다면 INSTALL.MANUALY 문서를 참조하여 설치
+  를 하시기 바랍니다  
+
+  index file check      : OK 
+
+  이 부분에서 제대로 설정이 되어 있을 경우에도 에러를 계속 뿌리는 경우가
+  존재한다. 이럴때에는 httpd.conf의 DirectoryIndex 지시자의 앞에 공백 문
+  자가 있는지 살펴 보고 만약 공백 문자가 있으면 이를 삭제해 주면 된다.
+
+  Permission check      : OK 
+
+
+  -------------------------------------------------------------------------
+
+  -------------------------------------------------------------------------
+
+  위의 화면은 환경체크 결과를 보여준다. 위에서는 에러가 하나 뜬것을 보여 주
+  고 있는데 위의 결과가 모두 OK이면 다음 화면으로 넘어가고 위와 같이 에러가
+  발생하면 다시 처음 화면으로 가게 된다. 에러가 발생할 경우에 위와같이 점검
+  할 사항들을 제시해 준다.
+
+  혹시 위와 같이 MySQL login failed error 가 발생하면 임의의 php file 을 다
+  음과 같은 내용으로 만들고 테스트를 해 보기 바란다.
+
+  <?php
+  $sqlfunc = extension_loaded('mysqli') ? 'mysqli_connect' : 'mysql_connect';
+  $c = $sqlfunc("localhost","root","MYSQL_ROOT_PW");
+  if ($c) echo "OK";
+  else echo "Failed";
+  ?>
+
+  위와같이 만들어서 실행을 했을경우 OK가 떨어져야지만 된다. 아마 Installer
+  에서 failed가 나온다면 이것 역시 failed가 나오게 될것이다.
+
+
+  -------------------------------------------------------------------------
+                             JSBoard Installer
+  -------------------------------------------------------------------------
+
+                              MySQL password
+                             [              ]
+
+                          Password 초기화 [reset]
+
+  -------------------------------------------------------------------------
+
+  -------------------------------------------------------------------------
+
+  이 화면에서 MySQL의 root password 를 넣고선 엔터를 누른다. 아래의 Password
+  초기화의 [reset] 을 클릭하면 session 에 있는 기존의 password 를 지워버리는
+  역할을 한다.
+
+  계정 유저는 MySQL root password 대신 systme 관리자가 생성해준 db 로그인 패
+  스워드를 넣으면 된다.
+
+
+  -------------------------------------------------------------------------
+                             JSBoard Installer
+  -------------------------------------------------------------------------
+
+           DB value                    Admin value
+           ---------------------------------------------------
+           DB name [               ]   ID    [               ]
+           DB user [               ]   NAME  [               ]
+           DB pass [               ]   EMAIL [               ]
+
+                               [ E N T E R ]
+  -------------------------------------------------------------------------
+  DB name과 DB user는 MySQL에 등록이 되어 있지 않은 것을 지정하셔야 합니다.
+  -------------------------------------------------------------------------
+
+  JSBoard 가 사용할 DB 정보들을 입력한다. 주의 할 것은 아래에 적어 놓았듯이
+  MySQL에 존재하지 않는 새로운 DB name, DB user를 기입해야 한다.
+
+  Admin value 는 2.0 부터 추가되는 인증 모듈을 위해 설정을 해 주도록 한다.
+  여기서 지정하는 id, name, email 은 jsboard 2.0 의 전체 관리자 정보를 부여
+  하는 것이다.
+
+  계정 유저의 경우에는 DB value 쪽은 수정을 못하게 고정이 된다.
+
+  그리고 Enter 를 click하면, 별다른 에러가 없다면 다음과 같은 경고창이 뜨면
+  서 로그인 페이지로 가게 될것이다.
+
+        등록이 완료 되었습니다.
+        Admin Page로 이동을 합니다.
+        Admin User의 초기 Password는
+        0000 입니다.
+
+
+3. JSBoard 운영
+
+  설치가 완료 되었다면 브라우져는 로그인 창으로 이동을 하게 된다. 여기서 User
+  에는 아까 Admin value 에 지정해 주었던 id 를 적어주고, Password 에는 '0000'
+  을 넣어주도록 한다.
+
+  로그인 후에 간혹가다가 IE의 경우 다음과 같은 메세지를 보내는 경우가 있다.
+
+  "http://domain.com/jsboard/admin/admin.php 인터넷 사이트를 열 수 없습니다.
+   지정된 파일을 찾을 수 없습니다."
+
+  이 메세지를 만나더라도 당황하지 말고 확인을 누른 후에 F5 또는 reload 를 해
+  주면 admin page 에 접속이 된다. 이 에러 메세지는 관리자의 패스워드를  0000
+  에서 변경을 하고 나면 다시는 나지 않는다.
+
+  일단 admin 에 로그인을 한 후에 제일 먼저 할 것은 "유저 관리" 버튼을 누르고
+  admin user 의 password 를 0000 에서 다른 것으로 바꾸어 주도록 한다. 패스워
+  드를 변경한 후에는 로그아웃을 한 후에 다시 로그인을 하도록 한다.
+
+  어드민 페이지는 http://domain.com/jsboard/admin/ 으로 접근을 할수가 있다.
+  패스워드 변경후 다시 로그인을 하였으면 "전역변수 설정" 을 클릭하여 다음의
+  정보를 변경해 줘야 한다.
+
+
+  # login variation name (This value must be modified as security problem)
+  $jsboard         = "login";
+
+  이 값은 로그인 변수명을 변경한다. 즉 보안 위험 요소가 발생할지라도 이 값이
+  다르면 접근이 어렵게 된다. 기본값으로 나두지 말고 꼭 변경하도록 한다.
+
+  # location of default page after login
+  $print[dpage] = "http://domain.com/jsboard/list.php?table=test";
+
+  이 값은 login 을 한 후에 기본으로 갈 위치를 지정을 하도록 한다. 이 부분은
+  login 창 설명을 하는 README.OPERATE 문서에서 따로 다루도록 할 것이다.
+
+  # web path of installed jsboard
+  $board[path]  = "http://domain.com/jsboard/";
+
+  이 값은 jsboard 가 설치 되어 있는 웹 경로를 지정한다. 메일 기능을 사용할때
+  게시판 위치를 링크시키기 위해 사용이 되며, 또한 글 등록을 할때 referrer 를
+  체크하여, 게시판에 스팸을 올리는 프로그램들이 접근하는 것을 방지하게 된다.
+  경로의 가장 마지막은 / 로 막혀 있어야 한다.
+
+  ##############################################################################
+  #  If registed article as follow information, requried passwd of super user
+  ##############################################################################
+  $compare[name]   = "쥔장";
+  $compare[email]  = "user@localhost.com";
+
+  이 설정은 전체 관리자의 패스워드로만 이름과 email 을 등록할수 있도록 제한을
+  하는 기능이다. 관심이 있으면 설정을 하도록 한다.
+
+  일단은 기본적으로 이정도만 설정을 하면 전체적인 운영에 별 지장은 없다. 각각
+  게시판에 대한 설명은 README.OPERATE에 관한 문서를 참조하도록 한다.
+
+
+4. JSBoard 보안
+
+  보통 CGI 방식을 통한 upload 에 관련하여 보안문제가 많이 발생을 하고 있다.
+  하지만 단순히 CGI 의 코드만 의존하여 보안문제를 방지 한다는 것은 무리라고
+  생각이 되어 apache의 설정 file 에서 원천적으로 업로드 file 에 대해서 실행
+  이 되지 않도록 하는 설정을 적용 시켜 보았다. 현재 필자의 개인 서버와 kldp
+  server에서 적용이 되어 있으며 특히 호스팅서버와 같이 여러 계정들이 사용을
+  하는 경우에 JSBoard 를 사용할수도 있기 때문에 이 셋팅을 해 놓는 것을 권장
+  한다.
+
+  설정은 다음과 같이 할수 있다.
+
+  <DirectoryMatch "^/.*/(data|pds|upload|logs|temp|tmp|files)/">
+    php_admin_flag engine off
+  </DirectoryMatch>
+
+  # limit execution on world wide writeable directory
+  <DirectoryMatch "^/(tmp|var/tmp|dev/shm|var/lib/php)">
+      php_admin_flag engine off
+  </DirectoryMatch>
+
+  이 설정은, 시스템 tmp 디렉토리와, data, pds, upload, logs, temp, tmp, files
+  디렉토리에서는 PHP를 동작하지 않게 하라는 설정이다.
+
+  <FilesMatch "(global|config)(.inc).(php|inc)$">
+      Order allow,deny
+      Deny from all
+  </FilesMatch>
+
+  이 설정은 config.inc.php, config.php, config.inc, config.inc.inc 파일에는
+  웹상에서 직접 접근할 수 없도록 하는 설정이다.
+
+  이 설정은 root 의 권한만 가지고 있으면 누구나 다 설정을 해 주는 것이 좋으
+  며 만약 계정 유저들이라고 해도 서버 관리자에게 이 설정을 해 달라고 하는것
+  이 좋다. 이 설정을 안해서 좋을것이 하나도 없을테니 아마 다 해줄 것이다.
+
+  만약, 해 주지 않을 경우. .htaccess 에서 접속 권한 설정이 가능하다면 이 파
+  일에서 하는 방법도 있다.
+
+
+5. 최신글 출력하기
+
+  5-1. 최신글 보기 구성
+
+   JSBoard 의 최신글 목록을 출력하는 기능이다. 이 기능은 include/prelist.php
+   에 의해 구동이 되며 어느 파일에나 삽입을 하여 사용을 할수가 있다.(단 php
+   가 구동될수 있는 파일이어야 한다)
+
+  5-2. 최신글 보기 설정
+
+   일단 먼저 jsboard/include/prelist.php에서 $prlist[path] 와 $prlist[wpath]
+   변수값을 설정을 해야 한다. $prlist[path] 는 JSBoard 가 설치 되어 있는 절
+   대 경로를 적어 주며, $prlist[wpath] 는 JSBoard 가 출력되는 웹경로를 적어
+   줘야 한다. 주의 할것은 마지막에 / 는 적지 않도록 한다.
+
+   예)
+   $prlist[path] = "/home/httpd/html/PHP/jsboard";
+   $prlist[wpath] = "http://domain.com/PHP/jsboard";
+   
+   일단 사용방법을 설명하자면 우선 최신글을 보여줄 page 의 <BODY> tag 바로 아래에
+   다음과 같은 코드를 삽입한다. (중요한 것은 이 기능을 적용시킬 file 은 php 가 구
+   동이 될 수 있는 file 이어야 한다.  확장자가 .php3 에서만 php 를 인식할 수 있을
+   경우에는 .php3 file 에서만 이 기능을 사용할수 있다.  그리고 prelist.php 를 불러
+   들이는 위치는 꼭 <body> 와 </body> 태그 사이어야 한다는 것이 아주 중요하다.)
+
+   <?php include "절대경로/prelist.php"; ?>
+
+   다음 리스트 출력을 원하는 부분에 다음과 같은 함수를 적어 주도록 한다.
+
+   <?php prelist("a","b","c"); ?>
+
+   prelist() 함수의 값들에 대해서는 아래를 참고하라.
+
+   a 테이블 이름(게시판 이름)
+   b 글 리스트 수
+   c 출력글자수
+
+   만약 여러개의 게시판을 한 페이지에서 출력하고 싶다면 위의 코드의 값만 적
+   당히 변경 시켜서 여러번 적어 주면 된다.
+
+   예)
+
+   test 게시판 3개 미리보기<br>
+   <?php prelist("test",3,30); ?>
+
+   <p>
+   test1 게시판 5개 미리보기<br>
+   <?php prelist("test1",5,30); ?>
+
+   일단, 위와 같이 출력을 하면 현재로서는 아무런 디자인없이 제목만 한 줄씩
+   출력하게 된다. 원하는 디자인을 구성하고 싶다면 prlist() 함수를 호출하기
+   전에 $prlistTemplate 라는 변수에 원하는 디자인을 정의하면 된다.
+
+   간단하게 예를 들어 보도록 하겠다.
+
+   예>
+
+   <table>
+   <?php
+   $prlistTemplate = "<tr>\n".
+                     "<td>P_SUBJECT_</td>\n".
+                     "<td>P_LNAME_</td>\n".
+                     "<td>P_DATE_</td>\n".
+                     "<td>P_REFER_</td>\n".
+                     "</tr>\n";
+   prelist(......)
+   ?>
+   </table>
+
+   과 같이 할 수 있다.
+
+   prlist 에서 출력을 할 수 있는 원형은 다음과 같다.
+
+   P_SUBJECT_    =>  제목을 치환
+   P_NAME_       =>  이름을 치환
+   P_EMAIL_      =>  이메일을 치환
+   P_DATE_       =>  글 등록시간을 치환
+   P_REFER_      =>  조회수를 치환
+   P_LNAME_      =>  이메일이 있을 경우 이메일 링크가 된 이름을 치환
+
+   만약 제목 링크에 target 이나 onClick 같은 것을 넣고 싶다면 $prlistTemplate
+   변수 앞에 $prlistOpt 변수를 아래와 같이 지정해 주면 된다.
+
+   $prlistOpt = "TARGET=_blnak";
+   또는
+   $prlistOpt = "onClick(...)";
+
+   간혹, prlist 함수 호출시 <ul> 등의 list tag 로 감쌀 경우 include 되는 javascript
+   때문에 html validation 에러 에러가 발생할 수 있다. 이 경우에는
+
+   $prlist['starttag'] = "<li style=\"list-style: none;\">\n";
+   $prlist['endtag']   = "</li>";
+
+   를 지정하여 처리를 할 수 있다.
+
+6. Bug report
+
+   버그를 발견할 경우 http://kldp.net/tracker/?atid=100148&group_id=148&func=browse
+   에 리포팅을 해 주면 감사하겠다

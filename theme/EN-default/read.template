@@ -1,0 +1,358 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<!-- $Id: read.template,v 1.31 2014-02-26 17:09:13 oops Exp $ -->
+<!-- ==================================================================== -->
+<!-- $langs['charset'] : print charset code                               -->
+<!-- $board['ver']     : bersion information in webboard                  -->
+<!-- get_title()     : print header title in webbared                     -->
+<!-- $user_stylesheet : User Defined StyleSheet                           -->
+<!-- ==================================================================== -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $langs['charset']?>">
+<TITLE><?php echo get_title()?> - Jsboard <?php echo $board['ver']?></TITLE>
+
+<STYLE TYPE="text/css">
+<!--
+BODY,TD {
+  font-size: 12px;
+  font-family: tahoma, sans-serif;
+  color: #555555;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #555555;
+}
+a:hover {
+  text-decoration: underline;
+  color: #555555;
+}
+input {
+  font: 11px tahoma,sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: #FFFFFF;
+}
+select {
+  font: 11px tahoma,sans-serif;
+  color: #555555;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  background-Color: #FFFFFF;
+}
+textarea {
+  font: 13px tahoma,sans-serif;
+  color: #333333;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555555;
+  padding-left: 1px;
+  background-Color: #ffffff;
+}
+
+/* code block */
+.jsCodeBlock {
+  border: 1px dotted #a0dc10;
+  background-color: #dedede;
+  margin: 10px 10px;
+  padding: 10px 10px;
+}
+
+/* Quote block */
+blockquote {
+  background: #ebebeb none 6px 8px no-repeat;
+  background-image: url("./images/quote.gif");
+  border: 1px solid #dbdbdb;
+  font-size: 1em;
+  margin: 0.5em 1px 0 25px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+blockquote blockquote {
+  /* Nested quotes */
+  background-color: #bababa;
+  font-size: 1em;
+  margin: 0.5em 1px 0 15px;    
+}
+
+blockquote blockquote blockquote {
+  /* Nested quotes */
+  background-color: #e4e4e4;
+}
+
+blockquote cite {
+  /* Username/source of quoter */
+  font-style: normal;
+  font-weight: bold;
+  margin-left: 20px;
+  display: block;
+  font-size: 0.95em;
+}
+
+blockquote cite cite {
+  font-size: 1em;
+}
+
+blockquote.uncited {
+  padding-top: 25px;
+}
+form { display: inline; }
+pre {
+  font-size: 12px;
+  font-family: tahoma, sans-serif;
+}
+
+<?php echo $user_stylesheet?>
+-->
+</style>
+
+<!-- ==================================================================== -->
+<!-- print_newwindow_src()  : print java script for open new window to    -->
+<!--                          use in jsboard                              -->
+<!-- $print['preview_script'] : print jsva script for preview function in -->
+<!--                          list page                                   -->
+<!-- ==================================================================== -->
+<?php print_newwindow_src($upload['yesno'],$cupload['yesno'],$enable['dwho']) ?>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<?php echo $print['preview_script']?>
+
+<!-- ======================= Start Header design ======================= -->
+<?php
+if(!$np) {
+  # Design per user
+  include "{$board['headpath']}";
+  # Input by whole admin
+  include "html/head.php";
+}
+?>
+<!-- ======================= End   Header design ======================= -->
+
+<!-- ==================================================================== -->
+<!-- print_keymenu() : controled board with keyboard                      -->
+<!--                   'n or +' = upper article                           -->
+<!--                   'b or -' = follw article                           -->
+<!-- ==================================================================== -->
+<?php echo print_keymenu(1)?>
+
+<!-- ==================================================================== -->
+<!-- $board['align'] : print align of webboard. It's config in board admin-->
+<!-- $print['dsearch'] : print detail search table                        -->
+<!-- $board['width'] : print width of webboard. It's config in board admin-->
+<!-- $print['admin'] : print admin link.                                  -->
+<!-- $list['num']    : Number of article                                  -->
+<!-- $print['lout']  : print logout link.                                 -->
+<!-- ==================================================================== -->
+<DIV ALIGN="<?php echo $board['align']?>">
+<?php echo $print['dsearch']?>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=34 VALIGN="bottom"><IMG SRC="./theme/EN-default/img/icon_over.gif" ALIGN="middle" ALT=''></TD>
+<TD WIDTH="95%"><FONT style="font-size:11px;font-family:tahoma,sans-serif;">&gt;&gt; Read <?php echo $list['num']?> article</FONT></TD>
+<TD ALIGN="right" VALIGN="bottom"><?php echo $print['lout']?>&nbsp;<?php echo $print['admin']?></TD>
+</TR>
+
+<!-- ==================================================================== -->
+<!-- $list['title']  : Subject of article                                 -->
+<!-- ==================================================================== -->
+<?php $list['title'] = preg_replace("/<BR>\n/i","\\0<IMG SRC=\"{$board['path']}images/blank.gif\" width=40 height=1>",$list['title']); ?>
+<TR BGCOLOR="#FFAE00">
+<TD COLSPAN=3>
+<IMG SRC="./theme/EN-default/img/board_no.gif" ALIGN="middle" ALT='TITLE: '>
+<FONT STYLE="color:#FFFFFF font-weight:bold;"><?php echo $list['title']?></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD COLSPAN=3><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+
+<!-- ==================================================================== -->
+<!-- $list['date']   : Regist date of article                             -->
+<!-- $list['refer']  : Read Number of article                             -->
+<!-- $list['name']   : Register Name                                      -->
+<!-- $list['uname']  : Register Name ( include homepage url )             -->
+<!-- $list['attach'] : Attach file link                                   -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=4 BGCOLOR="#6D7BC9" VALIGN="middle"><IMG SRC="images/blank.gif" WIDTH=4 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD WIDTH=5><IMG SRC="images/blank.gif" WIDTH=5 HEIGHT=1 BORDER=0 ALT=''></TD>
+<TD>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+<FONT Style="font-weight:bold">Date</FONT> <?php echo $list['date']?> &nbsp; &nbsp; 
+<FONT Style="font-weight:bold">Read</FONT> <?php echo $list['refer']?><BR>
+<FONT Style="font-weight:bold">Name</FONT> <?php echo $list['uname']?> &nbsp; &nbsp;
+<?php if($list['attach']) echo "<FONT Style=\"font-weight:bold\">File</FONT> {$list['attach']}" ?><BR>
+<IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+</TD>
+<TD WIDTH=20><IMG SRC="images/blank.gif" WIDTH=20 HEIGHT=1 BORDER=0 ALT=''></TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- $preview['up']   : print attach file if file is gif/jpg/png format   -->
+<!-- $list['text']    : print text of article                             -->
+<!-- $preview['down'] : print attach file if file is ascii type           -->
+<!-- $print['rlists'] : print reply list if exist reply article in this   -->
+<!--                  article                                             -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=5 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l5_bg']?>">
+<DIV style="color:<?php echo $color['l5_fg']?>;font-family:tahoma,sans-serif">
+<?php echo $preview['up']?>
+<!-- =============================== BODY =============================== -->
+<?php echo $list['text']?>
+
+<!-- =============================== BODY =============================== -->
+<?php echo $preview['down']?>
+</DIV>
+
+<!-- ============================= comment ============================== -->
+<?php echo $print['comment']?>
+<!-- ============================= comment ============================== -->
+</TD></TR>
+</TABLE>
+
+<?php if ($print['rlists']) { ?>
+<P>
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR><TD BGCOLOR="<?php echo $color['l3_bg']?>"><IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+<TR>
+<TD>
+<IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=3 BORDER=0 ALT=''><BR>
+&gt;&gt; <?php echo $langs['conj']?>
+<!-- ============================== reply ============================== -->
+<?php echo $print['rlists']?>
+<!-- ============================== reply ============================== -->
+</TD></TR>
+<TR><TD BGCOLOR="<?php echo $color['l3_bg']?>"><IMG SRC="./images/blank.gif" WIDTH=1 HEIGHT=1 BORDER=0 ALT=''></TD></TR>
+</TABLE>
+<?php } ?>
+
+<!-- ==================================================================== -->
+<!-- $print['regist']  : registed ipaddress                               -->
+<!-- read_cmd(0,1)  : print menu link. default type is used text menu     -->
+<!--                  if U use image menu,                                -->
+<!--                                                                      -->
+<!--                  prev.gif        - previous article or page          -->
+<!--                  next.gif        - next article or page              -->
+<!--                  list.gif        - articles list                     -->
+<!--                  write.gif       - write article                     -->
+<!--                  today.gif       - articles before last 12 hour      -->
+<!--                  delete.gif      - delete article                    -->
+<!--                  edit.gif        - modify article                    -->
+<!--                  reply.gif       - reply article                     -->
+<!--                  conj.gif        - conjunction article               -->
+<!--                                                                      -->
+<!--                  upper image is located in theme/theme_name/img      -->
+<!--                  and use read_cmd option with read_cmd(1,1)          -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD>
+<FONT style="font-family:tahomatahoma,sans-serif;font-size:11px;"><?php echo $print['regist']?></FONT><IMG SRC="images/blank.gif" WIDTH=1 HEIGHT=25 BORDER=0 ALIGN="middle" ALT=''></TD>
+<TD ALIGN="right"><?php read_cmd(0,1) ?></TD>
+</TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- See also doc/en/README.THEME for Search and Page form                -->
+<!-- $print['dserlink']  : print detail search link                       -->
+<!-- $print['pagetime']  : print page loading time                        -->
+<!-- $print['sqltime']   : print sql loading time                         -->
+<!-- ==================================================================== -->
+<TABLE WIDTH="<?php echo $board['width']?>" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR>
+<TD>
+<!-- =============================== SEARCH FORM =============================== -->
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD>
+<SELECT NAME="o[sc]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<OPTION VALUE="t"<?php echo $sform['sc']['t']?>>Title
+<OPTION VALUE="c"<?php echo $sform['sc']['c']?>>Contents
+<OPTION VALUE="n"<?php echo $sform['sc']['n']?>>Writer
+<OPTION VALUE="a"<?php echo $sform['sc']['a']?>>All
+</SELECT>
+<INPUT TYPE="text" ID="searchstr" NAME="o[ss]" SIZE="<?php echo form_size(8)?>" MAXLENGTH=255 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555;" VALUE="<?php echo $sform['ss']?>">
+<INPUT TYPE="submit" VALUE="Search" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555;">
+</TD>
+</TR><TR>
+<TD>
+<SELECT NAME="o[st]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<OPTION VALUE="m"<?php echo $sform['st']['m']?>>A Month
+<OPTION VALUE="w"<?php echo $sform['st']['w']?>>A Week
+<OPTION VALUE="a"<?php echo $sform['st']['a']?>>All
+</SELECT>
+<INPUT TYPE="checkbox" NAME="o[er]" VALUE="y"<?php echo $sform['er']['y']?> style="border:1px solid #555555;background-Color:#ffffff">
+<FONT STYLE="font-family:tahomatahoma,sans-serif;color:#555555;font-weight:bold">REGEX</FONT> <?php echo $print['dserlink']?>
+</TD>
+</TR>
+</TABLE>
+<INPUT TYPE="hidden" NAME="o[at]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[go]" VALUE="p">
+<INPUT TYPE="hidden" NAME="o[sct]" VALUE="s">
+<INPUT TYPE="hidden" NAME="o[stt]" VALUE="s">
+</FORM>
+<!-- =============================== SEARCH FORM=============================== -->
+</TD>
+<TD ALIGN="right">
+<FONT style="font-size:11px;font-family:tahomatahoma,sans-serif;">
+Page Loading [ <?php echo $print['pagetime']?> Sec ]
+SQL Time [ <?php echo $print['sqltime']?> Sec ]<BR>
+</FONT>
+<!-- ============================== PAGE FORM ============================== -->
+<FORM METHOD="post" ACTION="locate.php?table=<?php echo $table?>">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=1>
+<TR>
+<TD ALIGN="right">
+<FONT STYLE="font-size:10px;font-family:tahomatahoma,sans-serif;">
+<?php echo $pform['post']?>
+<SELECT NAME="o[go]" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+<OPTION VALUE="p" SELECTED>Page No.
+<OPTION VALUE="n">Article No.
+</SELECT>
+<INPUT TYPE="text" NAME="o[no]" SIZE="<?php echo form_size(2)?>" MAXLENGTH=6 style="border:1px solid #555555;background-Color:#ffffff;font-size:12px;color:#555555" VALUE='<?php echo $pform['value']?>'>
+<INPUT TYPE="submit" VALUE="Go!" style="border:1px solid #555555;background-Color:#ffffff;font:11px tahoma,sans-serif;color:#555555">
+</FONT>
+</TD>
+</TR>
+</TABLE></FORM>
+<!-- ============================== PAGE FORM ============================== -->
+</TD>
+</TR>
+</TABLE>
+
+<!-- ==================================================================== -->
+<!-- print_license()  : Printed Licese table                              -->
+<!-- ==================================================================== -->
+<?php echo print_license()?>
+
+</DIV>
+
+<!-- ======================= Start Tail Design ====================== -->
+<?php
+if(!$np) {
+  # Input by whole admin
+  include "html/tail.php";
+  # Design per user
+  include "{$board['tailpath']}";
+}
+?>
+<!-- ======================= End   Tail Design ====================== -->
+</BODY>
+</HTML>

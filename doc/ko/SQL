@@ -1,0 +1,62 @@
+$Id: SQL,v 1.6 2014-03-02 17:11:31 oops Exp $
+
+JSBoard main table
+
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| no     | int(6)       |      | PRI | 0       | auto_increment |  고유번호
+| num    | int(6)       |      | MUL | 0       |                |  게시판 글 번호
+| idx    | int(6)       |      | MUL | 0       |                |  index 번호
+| date   | int(11)      |      | MUL | 0       |                |  날짜
+| host   | tinytext     | YES  |     | NULL    |                |  글쓴이 주소
+| name   | tinytext     | YES  |     | NULL    |                |  글쓴이 NICK
+| rname  | tinytext     | YES  |     | NULL    |                |  글쓴이 실명
+| passwd | varchar(56)  | YES  |     | NULL    |                |  글쓴이 암호
+| email  | tinytext     | YES  |     | NULL    |                |  글쓴이 메일
+| url    | tinytext     | YES  |     | NULL    |                |  글쓴이 홈페이지
+| title  | tinytext     | YES  |     | NULL    |                |  글 제목
+| text   | mediumtext   | YES  |     | NULL    |                |  글 본문
+| refer  | int(6)       |      |     | 0       |                |  조회수
+| reyn   | int(1)       |      |     | 0       |                |  댓글 존재 여부
+| reno   | int(6)       |      | MUL | 0       |                |  부모글 번호
+| rede   | int(6)       |      |     | 0       |                |  댓글 깊이
+| reto   | int(6)       |      | MUL | 0       |                |  댓글중 최상위 부모글
+| html   | int(1)       |      |     | 1       |                |  HTML tag 사용여부
+| bofile | varchar(100) | YES  |     | NULL    |                |  업로드 파일 이름
+| bcfile | varchar(100) | YES  |     | NULL    |                |  업로드 파일 디렉토리
+| bfsize | int(4)       | YES  |     | NULL    |                |  파일 사이즈
++--------+--------------+------+-----+---------+----------------+
+
+
+
+JSBoard userdb table
+
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| no       | int(6)       |      | PRI | NULL    | auto_increment | 고유번호
+| nid      | varchar(100) |      | UNI |         |                | 회원 ID(중복 불가능)
+| name     | varchar(100) |      | MUL |         |                | 회원 이름(본명)
+| email    | tinytext     |      |     |         |                | 회원 이메일
+| url      | tinytext     |      |     |         |                | 회원 홈페이지
+| passwd   | varchar(100) |      |     |         |                | 회원 패스워드(암호화)
+| position | int(1)       |      | MUL | 0       |                | 전체 관리자여부
++----------+--------------+------+-----+---------+----------------+
+
+
+
+JSBoard comment table
+
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| no     | int(6)      |      | PRI | NULL    | auto_increment |    고유 번호
+| reno   | int(20)     |      | MUL | 0       |                |    부모글 번호
+| rname  | tinytext    | YES  |     | NULL    |                |    글쓴이 본명
+| name   | tinytext    | YES  |     | NULL    |                |    글쓴이 NICK
+| passwd | varchar(56) | YES  |     | NULL    |                |    패스워드
+| text   | mediumtext  | YES  |     | NULL    |                |    코멘트 본문
+| host   | tinytext    | YES  |     | NULL    |                |    코멘트 등록지
+| date   | int(11)     |      |     | 0       |                |    코멘트 등록일
++--------+-------------+------+-----+---------+----------------+
