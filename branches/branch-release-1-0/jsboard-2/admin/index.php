@@ -1,1 +1,0 @@
-<? header("location:admin.php") ?>
