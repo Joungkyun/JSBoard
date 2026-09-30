@@ -1,9 +1,13 @@
 <?php
-# $Id: act.php,v 1.4 2009-11-17 17:40:16 oops Exp $
 $path['type'] = "admin";
 require_once './include/admin_head.php';
 require_once '../include/ostype.php';
 require_once '../include/parse.php';
+
+$referer = isset ($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+if ( ! preg_match ('!/(user_)*admin/!', $referer) ) {
+  print_error ('Invalid request. This request does not appear to originate from an authorized source.');
+}
 
 if ( ! session_is_registered ($jsboard) || $_SESSION[$jsboard]['pos'] != 1 )
   print_error ($_('login_err'));

@@ -7,7 +7,10 @@
 -------------------------------------------------------------------------------
 Version 2.1.0
 
-Wed, Jan, 01 2013
+Wed, Sep, 30 2026
+	- #2 fix(security): Fix invalid request handling in admin act.php from error.php
+
+Wed, Jan, 01 2014
 by JoungKyun.Kim
 	- fixed registed article with blank name, subject, context
 
