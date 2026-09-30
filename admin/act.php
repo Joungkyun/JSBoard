@@ -4,6 +4,11 @@ $path['type'] = "admin";
 include "./include/admin_head.php";
 include "../include/ostype.php";
 
+$referer = isset ($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+if ( ! preg_match ('!/(user_)*admin/!', $referer) ) {
+    print_error ('Invalid request. This request does not appear to originate from an authorized source.');
+}
+
 if(!isset($_SESSION[$jsboard]) || $_SESSION[$jsboard]['pos'] != 1)
 print_error($langs['login_err']);
 

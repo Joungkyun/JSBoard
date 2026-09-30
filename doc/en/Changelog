@@ -11,11 +11,15 @@ it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
 ******************************************************************************
-$Id: Changelog,v 1.300 2016-01-15 14:15:53 oops Exp $
+$Id: Changelog,v 1.301 2026-09-30 18:26:24 oops Exp $
 
 
 -----------------------------------------------------------------------------
 version   : jsboard 2.0.17
+
+Wed, Sep, 30 2026
+by Joungkyun.KIm
+	- [#2] fix(security): Fix invalid request handling in admin act.php from error.php
 
 Fri, Jan, 15 2016
 by Joungkyun.KIm

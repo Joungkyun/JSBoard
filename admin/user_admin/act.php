@@ -3,6 +3,11 @@
 $path['type'] = "user_admin";
 include "../include/admin_head.php";
 
+$referer = isset ($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+if ( ! preg_match ('!/(user_)*admin/!', $referer) ) {
+    print_error ('Invalid request. This request does not appear to originate from an authorized source.');
+}
+
 # header tail 변수를 치환해줌
 $ua['header'] = $uaheader;
 $ua['tail']   = $uatail;

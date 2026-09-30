@@ -4,6 +4,7 @@ include "include/header.php";
 
 $str = urldecode($str);
 $str = stripslashes($str);
+$str = htmlspecialchars ($str);
 
 $title = $notice ? $langs['er_msg'] : $langs['er_msgs'];
 

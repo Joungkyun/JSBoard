@@ -11,7 +11,7 @@ Any one who wants install this package on any other platform must revise
 it as needed for himeself/herself and must read jsboard/README.OTHERS.OS
 file.
 
-$Id: Changelog,v 1.317 2016-01-15 14:15:53 oops Exp $
+$Id: Changelog,v 1.318 2026-09-30 18:26:22 oops Exp $
 
 ******************************************************************************
 
@@ -19,6 +19,10 @@ $Id: Changelog,v 1.317 2016-01-15 14:15:53 oops Exp $
 
 -----------------------------------------------------------------------------
 버전   : jsboard 2.0.17
+
+2026.09.30
+  by 김정균
+	- #2 fix(security): error.php 를 이용한 admin injection 수정
 
 2016.01.15
   by 김정균
